@@ -8,67 +8,133 @@
     body {
       margin: 0;
       font-family: Arial, sans-serif;
-      background-color: #b30000;
-      color: white;
+      background-color: #ffffff;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 90%;
+      max-width: 600px;
+      text-align: center;
+    }
+
+    .logo-header img {
+      width: 180px;
+      height: auto;
+      margin-bottom: 40px;
+    }
+
+    .menu-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      gap: 25px;
+      width: 100%;
+      justify-items: center;
+    }
+
+    .menu-item {
+      background-color: #ffffff;
+      border: 2px solid #006400;
+      border-radius: 12px;
+      padding: 20px;
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      height: 100vh;
-      text-align: center;
     }
-    .logo img {
-      width: 200px;
-      max-width: 80%;
-      margin-bottom: 20px;
+
+    .menu-item:hover {
+      transform: scale(1.05);
+      box-shadow: 0 4px 10px rgba(0,0,0,0.15);
     }
-    h2 {
-      margin-bottom: 30px;
+
+    .menu-item img {
+      width: 80px;
+      height: 80px;
+      object-fit: contain;
+      margin-bottom: 10px;
     }
-    .menu-btn {
-      display: block;
-      width: 220px;
-      padding: 15px;
-      margin: 12px auto;
-      background-color: #00aaff;
-      color: white;
-      font-size: 18px;
+
+    .menu-label {
       font-weight: bold;
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
-      transition: transform 0.1s ease, box-shadow 0.1s ease;
+      color: #006400;
+      font-size: 16px;
     }
-    .menu-btn:active {
-      transform: scale(0.97);
-      box-shadow: inset 2px 2px 6px rgba(0,0,0,0.4);
+
+    .nickname {
+      margin-top: 30px;
+      font-size: 14px;
+      color: #333;
+    }
+
+    @media (max-width: 480px) {
+      .logo-header img {
+        width: 140px;
+      }
+
+      .menu-item img {
+        width: 60px;
+        height: 60px;
+      }
+
+      .menu-label {
+        font-size: 14px;
+      }
     }
   </style>
 </head>
 <body>
-  <div class="logo">
-    <img src="https://i.ibb.co/q7KNcY9/azko.png" alt="AZKO Logo">
-  </div>
-  <h2>Hi! <span id="nickname"></span> 👋</h2>
+  <div class="container">
+    <div class="logo-header">
+      <img src="logo.png" alt="AZ•KO Logo">
+    </div>
 
-  <button class="menu-btn" onclick="goInput()">Input StockCard</button>
-  <button class="menu-btn" onclick="goLokasi()">Lihat Lokasi</button>
+    <div class="menu-grid">
+      <div class="menu-item" onclick="goTo('inputdata.html')">
+        <img src="dataentry.png" >
+        <div class="menu-label">Input Stockcard</div>
+      </div>
+
+      <div class="menu-item" onclick="goTo('expired.html')">
+        <img src="expiredlogo.png" >
+        <div class="menu-label">Lihat Lokasi</div>
+      </div>
+
+      <div class="menu-item" onclick="goTo('lihat.html')">
+        <img src="lihatlogo.png">
+        <div class="menu-label">Laporan</div>
+      </div>
+    </div>
+
+    <div class="nickname" id="nickname"></div>
+  </div>
 
   <script>
+    // Ambil data dari session login
     const nickname = sessionStorage.getItem("nickname");
-    if (!nickname) {
-      window.location.href = "index.html"; // kalau belum login
-    } else {
-      document.getElementById("nickname").textContent = nickname;
+    const username = sessionStorage.getItem("username");
+
+    // Cegah akses langsung tanpa login
+    if (!username) {
+      window.location.href = "index.html";
     }
 
-    function goInput() {
-      // ganti dengan halaman form input stockcard
-      window.location.href = "input.html";
+    // Tampilkan nama user
+    if (nickname) {
+      document.getElementById("nickname").textContent = `Hai, ${nickname}!`;
     }
-    function goLokasi() {
-      // ganti dengan halaman lihat lokasi
-      window.location.href = "lokasi.html";
+
+    // Fungsi navigasi
+    function goTo(page) {
+      window.location.href = page;
     }
   </script>
 </body>
