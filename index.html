@@ -8,7 +8,7 @@
     body {
       margin: 0;
       font-family: Arial, sans-serif;
-      background-color: #ffffff; /* latar putih */
+      background-color: #ffffff; /* Latar putih */
       height: 100vh;
       display: flex;
       justify-content: center;
@@ -21,17 +21,23 @@
       align-items: center;
       width: 90%;
       max-width: 400px;
-      padding: 30px 25px;
+      padding: 40px 30px;
       border-radius: 16px;
       box-shadow: 0 4px 15px rgba(0,0,0,0.15);
       background-color: #fff;
+      text-align: center;
+    }
+
+    .logo {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 30px;
     }
 
     .logo img {
-      width: 140px;
-      max-width: 80%;
+      width: 200px; /* diperbesar */
       height: auto;
-      margin-bottom: 25px;
     }
 
     input {
@@ -82,7 +88,10 @@
 
     @media (max-width: 480px) {
       .container {
-        padding: 25px 20px;
+        padding: 30px 20px;
+      }
+      .logo img {
+        width: 160px; /* agar tetap proporsional di HP */
       }
     }
   </style>
@@ -105,7 +114,7 @@
       const password = document.getElementById("password").value.trim();
       const errorMsg = document.getElementById("errorMsg");
 
-      errorMsg.textContent = ""; // reset pesan error
+      errorMsg.textContent = "";
 
       if (!username || !password) {
         errorMsg.textContent = "Username dan password harus diisi!";
@@ -135,7 +144,6 @@
       }
     }
 
-    // Tekan Enter untuk login
     document.addEventListener("keydown", e => {
       if (e.key === "Enter") login();
     });
