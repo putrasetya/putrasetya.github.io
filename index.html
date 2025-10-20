@@ -15,15 +15,31 @@
 <div class="login-box">
   <h2>Login AZ•KO</h2>
   <input type="text" id="username" placeholder="Username"><br>
-  <button onclick="nextStep()">Lanjut</button>
+  <button onclick="checkUsername()">Lanjut</button>
 </div>
 
 <script>
-function nextStep(){
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbw-C9LksZ_UoOMotoaEoNOPg7F_eK09DoexsD8ViF9kls3eod3Kt5uDlvcb-TmV7O-T/exec";
+
+function checkUsername(){
   const username = document.getElementById("username").value.trim();
   if(!username) return alert("Masukkan username!");
-  localStorage.setItem("tempUser", username);
-  window.location.href = "confirmpin.html";
+
+  fetch(SCRIPT_URL)
+    .then(res => res.json())
+    .then(data => {
+      const userExists = data.some(u => u.username === username);
+      if(userExists){
+        localStorage.setItem("tempUser", username);
+        window.location.href = "confirmpin.html";
+      } else {
+        alert("Username tidak ditemukan!");
+      }
+    })
+    .catch(err => {
+      console.error(err);
+      alert("Gagal menghubungkan ke server.");
+    });
 }
 </script>
 </body>
