@@ -8,7 +8,7 @@
     body {
       margin: 0;
       font-family: Arial, sans-serif;
-      background-color: #ffffff; /* Latar putih */
+      background-color: #ffffff;
       height: 100vh;
       display: flex;
       justify-content: center;
@@ -36,7 +36,7 @@
     }
 
     .logo img {
-      width: 200px; /* diperbesar */
+      width: 200px;
       height: auto;
     }
 
@@ -47,7 +47,6 @@
       border: 1px solid #ccc;
       border-radius: 6px;
       font-size: 16px;
-      box-sizing: border-box;
       text-align: center;
       outline: none;
       transition: border-color 0.2s ease;
@@ -91,7 +90,7 @@
         padding: 30px 20px;
       }
       .logo img {
-        width: 160px; /* agar tetap proporsional di HP */
+        width: 160px;
       }
     }
   </style>
@@ -103,21 +102,19 @@
     </div>
 
     <input type="text" id="username" placeholder="username" autocomplete="off" required>
-    <input type="password" id="password" placeholder="password" required>
-    <button onclick="login()">Masuk</button>
+    <button onclick="lanjutkan()">Lanjutkan</button>
     <div class="error" id="errorMsg"></div>
   </div>
 
   <script>
-    async function login() {
+    async function lanjutkan() {
       const username = document.getElementById("username").value.trim();
-      const password = document.getElementById("password").value.trim();
       const errorMsg = document.getElementById("errorMsg");
 
       errorMsg.textContent = "";
 
-      if (!username || !password) {
-        errorMsg.textContent = "Username dan password harus diisi!";
+      if (!username) {
+        errorMsg.textContent = "Masukkan username terlebih dahulu!";
         return;
       }
 
@@ -128,15 +125,15 @@
         const data = await response.json();
 
         const user = data.find(
-          row => row.username?.trim() === username && row.password?.trim() === password
+          row => row.username?.trim().toLowerCase() === username.toLowerCase()
         );
 
         if (user) {
           sessionStorage.setItem("username", user.username);
           sessionStorage.setItem("nickname", user.nickname);
-          window.location.href = "menu.html";
+          window.location.href = "confirmpin.html";
         } else {
-          errorMsg.textContent = "Username atau password salah!";
+          errorMsg.textContent = "Username tidak ditemukan!";
         }
       } catch (error) {
         console.error(error);
@@ -145,7 +142,7 @@
     }
 
     document.addEventListener("keydown", e => {
-      if (e.key === "Enter") login();
+      if (e.key === "Enter") lanjutkan();
     });
   </script>
 </body>
