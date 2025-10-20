@@ -28,7 +28,8 @@ function checkUsername(){
   fetch(SCRIPT_URL)
     .then(res => res.json())
     .then(data => {
-      const userExists = data.some(u => u.username === username);
+      console.log("Data dari Sheet:", data); // Debug
+      const userExists = data.some(u => u.username.toString().trim() === username);
       if(userExists){
         localStorage.setItem("tempUser", username);
         window.location.href = "confirmpin.html";
