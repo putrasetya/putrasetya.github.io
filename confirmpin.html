@@ -7,8 +7,8 @@
   <style>
     body {
       margin: 0;
-      font-family: Arial, sans-serif;
-      background-color: #ffffff;
+      font-family: "Poppins", Arial, sans-serif;
+      background-color: #f5f6f7;
       height: 100vh;
       display: flex;
       justify-content: center;
@@ -16,96 +16,112 @@
     }
 
     .container {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
+      background-color: #fff;
+      border-radius: 20px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+      padding: 40px 30px;
       width: 90%;
       max-width: 400px;
-      padding: 40px 30px;
-      border-radius: 16px;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
-      background-color: #fff;
       text-align: center;
-      transition: transform 0.2s ease;
+    }
+
+    .logo {
+      margin-bottom: 25px;
     }
 
     .logo img {
       width: 180px;
       height: auto;
-      margin-bottom: 20px;
     }
 
     h2 {
-      margin-bottom: 20px;
+      margin-bottom: 25px;
+      font-weight: 500;
       color: #333;
     }
 
+    /* PIN bulat clean */
     .pin-input {
       display: flex;
       justify-content: center;
-      gap: 10px;
+      gap: 12px;
       margin-bottom: 30px;
     }
 
     .pin-input input {
       width: 45px;
-      height: 55px;
+      height: 45px;
+      border-radius: 50%;
+      border: 2px solid #ccc;
+      background-color: #fff;
       text-align: center;
       font-size: 24px;
-      border: 1px solid #ccc;
-      border-radius: 8px;
+      font-weight: bold;
       outline: none;
-      transition: border-color 0.2s;
+      transition: border-color 0.2s, background-color 0.2s;
     }
 
     .pin-input input:focus {
-      border-color: #006400;
+      border-color: #007BFF;
+      background-color: #eef6ff;
     }
 
     .keypad {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 10px;
-      width: 100%;
       max-width: 250px;
       margin: 0 auto;
     }
 
     .keypad button {
-      padding: 15px;
+      padding: 14px;
       font-size: 18px;
-      background-color: #006400;
-      color: white;
+      background-color: #007BFF;
+      color: #fff;
       border: none;
-      border-radius: 8px;
+      border-radius: 12px;
       cursor: pointer;
-      transition: transform 0.1s ease, box-shadow 0.1s ease;
+      transition: background-color 0.2s ease, transform 0.1s ease;
     }
 
     .keypad button:hover {
-      background-color: #008000;
+      background-color: #005fcc;
     }
 
     .keypad button:active {
-      transform: scale(0.95);
-      box-shadow: inset 2px 2px 5px rgba(0,0,0,0.4);
+      transform: scale(0.97);
+      box-shadow: inset 2px 2px 5px rgba(0,0,0,0.3);
+    }
+
+    /* Tombol centang bulat biru */
+    .ok-btn {
+      background-color: #007BFF;
+      font-size: 22px;
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 0 auto;
+    }
+
+    .ok-btn:hover {
+      background-color: #005fcc;
     }
 
     .error {
-      color: #b30000;
+      color: #c62828;
       margin-top: 15px;
       font-size: 14px;
       min-height: 20px;
     }
 
-    /* 🔥 Efek getar layar */
     @keyframes shake {
-      0% { transform: translateX(0); }
-      20% { transform: translateX(-10px); }
-      40% { transform: translateX(10px); }
-      60% { transform: translateX(-10px); }
-      80% { transform: translateX(10px); }
-      100% { transform: translateX(0); }
+      0%, 100% { transform: translateX(0); }
+      20%, 60% { transform: translateX(-8px); }
+      40%, 80% { transform: translateX(8px); }
     }
 
     .shake {
@@ -115,7 +131,7 @@
     @media (max-width: 480px) {
       .pin-input input {
         width: 40px;
-        height: 50px;
+        height: 40px;
         font-size: 20px;
       }
       .keypad button {
@@ -128,7 +144,7 @@
 <body>
 
   <script>
-    // 🔒 Cegah akses langsung
+    // 🚫 Cegah akses langsung tanpa login
     const username = sessionStorage.getItem("username");
     if (!username) {
       window.location.href = "index.html";
@@ -137,18 +153,18 @@
 
   <div class="container" id="container">
     <div class="logo">
-      <img src="logo.png" alt="AZ•KO Logo" />
+      <img src="logo.png" alt="AZ•KO Logo">
     </div>
 
     <h2>Masukkan PIN Anda</h2>
 
     <div class="pin-input">
-      <input type="password" maxlength="1" disabled />
-      <input type="password" maxlength="1" disabled />
-      <input type="password" maxlength="1" disabled />
-      <input type="password" maxlength="1" disabled />
-      <input type="password" maxlength="1" disabled />
-      <input type="password" maxlength="1" disabled />
+      <input type="password" maxlength="1" disabled>
+      <input type="password" maxlength="1" disabled>
+      <input type="password" maxlength="1" disabled>
+      <input type="password" maxlength="1" disabled>
+      <input type="password" maxlength="1" disabled>
+      <input type="password" maxlength="1" disabled>
     </div>
 
     <div class="keypad">
@@ -163,7 +179,7 @@
       <button onclick="press(9)">9</button>
       <button onclick="backspace()">←</button>
       <button onclick="press(0)">0</button>
-      <button onclick="submitPin()">OK</button>
+      <button class="ok-btn" onclick="submitPin()">✓</button>
     </div>
 
     <div class="error" id="errorMsg"></div>
@@ -207,24 +223,21 @@
         );
         const data = await response.json();
         const user = data.find(
-          row => row.username?.trim() === sessionStorage.getItem("username") && row.password?.trim() === pin
+          row =>
+            row.username?.trim() === sessionStorage.getItem("username") &&
+            row.password?.trim() === pin
         );
 
         if (user) {
           vibrate(100);
           window.location.href = "menu.html";
         } else {
-          // ❌ PIN salah
           errorMsg.textContent = "PIN salah!";
           vibrate(300);
-
-          // 🔥 Efek getar layar
           container.classList.add("shake");
           setTimeout(() => container.classList.remove("shake"), 400);
-
-          // Reset PIN input
           pin = "";
-          inputs.forEach(input => (input.value = ""));
+          inputs.forEach(i => (i.value = ""));
         }
       } catch (error) {
         console.error(error);
