@@ -19,7 +19,7 @@
 </div>
 
 <script>
-const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbw-C9LksZ_UoOMotoaEoNOPg7F_eK09DoexsD8ViF9kls3eod3Kt5uDlvcb-TmV7O-T/exec"; // Ganti dengan Web App Apps Script
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbw-C9LksZ_UoOMotoaEoNOPg7F_eK09DoexsD8ViF9kls3eod3Kt5uDlvcb-TmV7O-T/exec";
 const tempUser = localStorage.getItem("tempUser");
 if(!tempUser) window.location.href = "index.html";
 
@@ -30,20 +30,30 @@ function checkPin(){
   fetch(SCRIPT_URL)
     .then(res => res.json())
     .then(data => {
-      const user = data.find(u => u.username === tempUser);
+      const user = data.find(u => u.username.toString().trim() === tempUser);
       
-      // Fix PIN salah padahal benar
-      if(user && user.password.toString().trim() === pin.trim()){
+      if(!user){
+        alert("Username tidak ditemukan!");
+        return;
+      }
+
+      if(user.password.toString().replace(/\s/g,'') === pin){
+        // Simpan session & nickname
         localStorage.setItem("username", tempUser);
         localStorage.setItem("nickname", user.nickname || tempUser);
         localStorage.setItem("loginTime", Date.now());
         localStorage.removeItem("tempUser");
+
+        // Redirect ke menu.html
         window.location.href = "menu.html";
       } else {
         alert("PIN salah!");
       }
     })
-    .catch(()=>alert("Gagal menghubungkan ke server."));
+    .catch(err=>{
+      console.error(err);
+      alert("Gagal menghubungkan ke server.");
+    });
 }
 </script>
 </body>
