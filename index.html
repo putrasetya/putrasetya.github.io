@@ -1,95 +1,31 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Login | AZ•KO</title>
-<style>
-  body {
-    margin:0;
-    font-family: Inter, system-ui, Arial, sans-serif;
-    background:#fff;
-    display:flex;
-    flex-direction:column;
-    justify-content:center;
-    align-items:center;
-    height:100vh;
-  }
-  .box {
-    width:300px;
-    padding:40px 30px;
-    border-radius:16px;
-    box-shadow:0 10px 30px rgba(0,0,0,0.1);
-    text-align:center;
-  }
-  h2 {
-    margin-bottom:20px;
-    font-weight:600;
-    color:#111;
-  }
-  input {
-    width:100%;
-    padding:12px;
-    margin:10px 0;
-    border-radius:8px;
-    border:1px solid #ccc;
-    font-size:15px;
-  }
-  button {
-    width:100%;
-    padding:12px;
-    background:#111;
-    color:white;
-    border:none;
-    border-radius:8px;
-    font-size:16px;
-    cursor:pointer;
-  }
-  .error {
-    color:red;
-    margin-top:10px;
-    font-size:13px;
-    min-height:18px;
-  }
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login | AZ•KO</title>
+  <style>
+    body {margin:0; font-family: Arial, sans-serif; display:flex; justify-content:center; align-items:center; height:100vh; background:#fff;}
+    .login-box {text-align:center; width:90%; max-width:350px;}
+    input {width:80%; padding:12px; margin:8px 0; border:1px solid #ccc; border-radius:6px; font-size:16px;}
+    button {padding:12px 20px; border:none; border-radius:6px; background:#007BFF; color:#fff; font-size:16px; cursor:pointer;}
+    button:hover {background:#0056b3;}
+  </style>
 </head>
 <body>
-  <div class="box">
+  <div class="login-box">
     <h2>Login AZ•KO</h2>
-    <input type="text" id="username" placeholder="Username" autocomplete="off">
-    <button id="loginBtn">Lanjut</button>
-    <div class="error" id="errorMsg"></div>
+    <input type="text" id="username" placeholder="Username"><br>
+    <button onclick="nextStep()">Lanjut</button>
   </div>
 
-<script>
-const SHEET_URL = "https://opensheet.elk.sh/193U1I1FPzXEgjvb9FDQm5asJklOag-V78HledBv_skc/username";
-const loginBtn = document.getElementById("loginBtn");
-const errorMsg = document.getElementById("errorMsg");
-
-loginBtn.addEventListener("click", async () => {
-  const username = document.getElementById("username").value.trim();
-  if(!username){ errorMsg.textContent = "Masukkan username."; return; }
-
-  try {
-    const res = await fetch(SHEET_URL);
-    const data = await res.json();
-    const user = data.find(r => r.username?.toLowerCase() === username.toLowerCase());
-
-    if(user){
-      // Simpan session + localStorage biar terbaca di confirmpin
-      sessionStorage.setItem("username", user.username);
-      sessionStorage.setItem("password", user.password);
-      localStorage.setItem("username", user.username);
-      localStorage.setItem("password", user.password);
-
+  <script>
+    function nextStep(){
+      const username = document.getElementById("username").value.trim();
+      if(!username) return alert("Masukkan username!");
+      localStorage.setItem("tempUser", username); // simpan sementara
       window.location.href = "confirmpin.html";
-    } else {
-      errorMsg.textContent = "Username tidak ditemukan.";
     }
-  } catch (e){
-    errorMsg.textContent = "Gagal terhubung ke server.";
-  }
-});
-</script>
+  </script>
 </body>
 </html>
