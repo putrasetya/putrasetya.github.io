@@ -1,316 +1,124 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Konfirmasi PIN | AZ•KO</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Konfirmasi PIN</title>
 <style>
-  body {
-    margin: 0;
-    font-family: 'Poppins', sans-serif;
-    background-color: #ffffff;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
-    overflow: hidden;
+  body{
+    margin:0;
+    font-family:Inter, system-ui, Arial, sans-serif;
+    background:#fff;
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
   }
-
-  .container {
-    text-align: center;
-    width: 90%;
-    max-width: 340px;
-    opacity: 0;
-    transform: translateY(10px);
-    transition: opacity 0.6s ease, transform 0.6s ease;
+  .card{
+    width:320px;
+    padding:30px;
+    border-radius:16px;
+    box-shadow:0 10px 30px rgba(0,0,0,0.08);
+    text-align:center;
   }
-
-  .container.visible {
-    opacity: 1;
-    transform: translateY(0);
+  h2{margin-bottom:20px;color:#111;}
+  .dots{display:flex;justify-content:center;gap:10px;margin-bottom:20px;}
+  .dot{
+    width:12px;height:12px;border-radius:50%;
+    border:2px solid #ccc;transition:.2s;
   }
-
-  .fade-out {
-    opacity: 0;
-    transform: translateY(-10px);
+  .dot.filled{background:#333;border-color:#333;}
+  .pad{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:12px;
   }
-
-  .logo {
-    width: 60px;
-    height: 60px;
-    margin: 0 auto 20px;
+  .key{
+    height:55px;
+    border:none;
+    background:#f2f2f2;
+    border-radius:50%;
+    font-size:18px;
+    cursor:pointer;
+    transition:background .15s;
   }
-
-  h2 {
-    font-weight: 500;
-    font-size: 16px;
-    margin-bottom: 25px;
-    color: #333;
+  .key:active{background:#ddd;}
+  .bottom{
+    margin-top:15px;
+    color:#777;
+    font-size:13px;
   }
-
-  .dots {
-    display: flex;
-    justify-content: center;
-    gap: 12px;
-    margin-bottom: 10px;
-  }
-
-  .dot {
-    width: 12px;
-    height: 12px;
-    border-radius: 50%;
-    border: 2px solid #d0d0d0;
-    background: transparent;
-    transition: all 0.25s ease;
-    transform: scale(1);
-    opacity: 0.6;
-  }
-
-  .dot.filled {
-    background-color: #000;
-    border-color: #000;
-    transform: scale(1.2);
-    opacity: 1;
-    animation: pop 0.25s ease;
-  }
-
-  @keyframes pop {
-    0% { transform: scale(0.6); opacity: 0.4; }
-    60% { transform: scale(1.3); opacity: 1; }
-    100% { transform: scale(1.0); opacity: 1; }
-  }
-
-  .status {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #666;
-    font-size: 13px;
-    height: 20px;
-    margin-bottom: 15px;
-    transition: opacity 0.3s, color 0.3s;
-    gap: 8px;
-  }
-
-  .spinner {
-    width: 14px;
-    height: 14px;
-    border: 2px solid #ccc;
-    border-top: 2px solid #000;
-    border-radius: 50%;
-    animation: spin 0.7s linear infinite;
-  }
-
-  @keyframes spin {
-    to { transform: rotate(360deg); }
-  }
-
-  .keypad {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 14px;
-    justify-items: center;
-    max-width: 260px;
-    margin: 0 auto;
-  }
-
-  button {
-    width: 70px;
-    height: 70px;
-    font-size: 20px;
-    border-radius: 50%;
-    border: none;
-    background: #f4f4f4;
-    color: #111;
-    cursor: pointer;
-    transition: background 0.15s, transform 0.1s;
-  }
-
-  button:active {
-    background: #ddd;
-    transform: scale(0.95);
-  }
-
-  .action {
-    font-size: 18px;
-  }
-
-  .reset {
-    margin-top: 20px;
-    color: #999;
-    font-size: 14px;
-    cursor: pointer;
-  }
-
-  .shake {
-    animation: shake 0.3s;
-  }
-
-  @keyframes shake {
-    0%, 100% { transform: translateX(0); }
-    25% { transform: translateX(-6px); }
-    75% { transform: translateX(6px); }
-  }
+  #statusText{margin-top:10px;font-size:13px;min-height:18px;color:red;}
 </style>
 </head>
 <body>
+  <div class="card">
+    <h2>Masukkan PIN</h2>
+    <div class="dots" id="pinContainer">
+      <div class="dot"></div><div class="dot"></div><div class="dot"></div>
+      <div class="dot"></div><div class="dot"></div><div class="dot"></div>
+    </div>
 
-<div class="container" id="pinContainer">
-  <img src="logo.png" class="logo" alt="AZ•KO Logo">
-  <h2>Masukkan PIN Anda</h2>
-
-  <div class="dots" id="dots">
-    <div class="dot"></div>
-    <div class="dot"></div>
-    <div class="dot"></div>
-    <div class="dot"></div>
-    <div class="dot"></div>
-    <div class="dot"></div>
+    <div class="pad">
+      <button class="key">1</button><button class="key">2</button><button class="key">3</button>
+      <button class="key">4</button><button class="key">5</button><button class="key">6</button>
+      <button class="key">7</button><button class="key">8</button><button class="key">9</button>
+      <button class="key" id="reset">⟲</button><button class="key">0</button><button class="key" id="back">⌫</button>
+    </div>
+    <div id="statusText"></div>
+    <div class="bottom">Gunakan PIN sesuai username Anda</div>
   </div>
-
-  <div class="status" id="statusText"></div>
-
-  <div class="keypad">
-    <button class="key">1</button>
-    <button class="key">2</button>
-    <button class="key">3</button>
-    <button class="key">4</button>
-    <button class="key">5</button>
-    <button class="key">6</button>
-    <button class="key">7</button>
-    <button class="key">8</button>
-    <button class="key">9</button>
-    <button class="action" id="back">←</button>
-    <button class="key">0</button>
-    <button class="action" id="ok">✓</button>
-  </div>
-
-  <div class="reset" id="reset">Reset</div>
-</div>
 
 <script>
-  // --- Cek Session dan Username ---
-  let username = sessionStorage.getItem("username") || localStorage.getItem("username");
+  const username = sessionStorage.getItem("username") || localStorage.getItem("username");
+  const password = sessionStorage.getItem("password") || localStorage.getItem("password");
 
-  // Kalau tidak ada data user, redirect ke index
-  if (!username) {
-    window.location.href = "index.html";
-  }
+  if(!username){ window.location.href = "index.html"; }
 
-  const container = document.getElementById("pinContainer");
   const dots = document.querySelectorAll(".dot");
   const keys = document.querySelectorAll(".key");
-  const reset = document.getElementById("reset");
-  const back = document.getElementById("back");
-  const ok = document.getElementById("ok");
   const statusText = document.getElementById("statusText");
-
   let input = "";
-  const SHEET_URL = "https://opensheet.elk.sh/193U1I1FPzXEgjvb9FDQm5asJklOag-V78HledBv_skc/username";
 
-  // --- Fungsi Utility ---
-  function vibrate(ms = 40) {
-    if (navigator.vibrate) navigator.vibrate(ms);
+  function updateDots(){
+    dots.forEach((d,i)=> d.classList.toggle("filled", i < input.length));
   }
 
-  function updateDots() {
-    dots.forEach((dot, i) => {
-      dot.classList.toggle("filled", i < input.length);
-    });
+  function vibrate(ms){ if("vibrate" in navigator) navigator.vibrate(ms); }
+
+  function resetPin(){
+    input="";
+    updateDots();
   }
 
-  function setStatus(text, color="#666", spinner=false) {
-    statusText.innerHTML = spinner
-      ? `<div class="spinner"></div><span>${text}</span>`
-      : `<span>${text}</span>`;
-    statusText.style.color = color;
-    statusText.style.opacity = 1;
+  async function verifyPin(){
+    statusText.style.color="#555";
+    statusText.textContent="Memeriksa...";
+    await new Promise(r=>setTimeout(r,1000)); // lebih lama biar natural
+    if(input===password){
+      statusText.style.color="green";
+      statusText.textContent="PIN benar, masuk...";
+      setTimeout(()=> window.location.href="menu.html", 800);
+    } else {
+      statusText.style.color="red";
+      statusText.textContent="PIN salah, coba lagi.";
+      vibrate(300);
+      resetPin();
+    }
   }
 
-  function showError() {
-    setStatus("PIN salah, coba lagi", "#d33");
-    container.classList.add("shake");
-    vibrate(200);
-    setTimeout(() => {
-      container.classList.remove("shake");
-      statusText.style.opacity = 0;
-    }, 1500);
-  }
-
-  // --- Input PIN ---
-  keys.forEach(btn => {
-    btn.addEventListener("click", () => {
-      if (input.length < 6) {
-        input += btn.textContent;
-        updateDots();
-        vibrate();
+  keys.forEach(k=>{
+    k.addEventListener("click",()=>{
+      const val = k.textContent.trim();
+      vibrate(20);
+      if(val==="⟲"){ resetPin(); return; }
+      if(val==="⌫"){ input=input.slice(0,-1); updateDots(); return; }
+      if(/[0-9]/.test(val)){
+        if(input.length<6){ input+=val; updateDots(); }
+        if(input.length===6){ verifyPin(); }
       }
     });
   });
-
-  back.addEventListener("click", () => {
-    input = input.slice(0, -1);
-    updateDots();
-    vibrate();
-  });
-
-  reset.addEventListener("click", () => {
-    input = "";
-    updateDots();
-    vibrate();
-    statusText.style.opacity = 0;
-  });
-
-  // --- Verifikasi PIN ---
-  ok.addEventListener("click", async () => {
-    if (!username) return;
-
-    setStatus("Memeriksa...", "#999", true);
-    vibrate(20);
-
-    try {
-      const res = await fetch(SHEET_URL);
-      const data = await res.json();
-      const user = data.find(row => row.username === username);
-
-      setTimeout(() => {
-        if (!user) {
-          showError();
-          return;
-        }
-
-        const pinBenar = user.password?.trim();
-        if (input === pinBenar) {
-          setStatus("PIN benar, masuk...", "#333");
-          vibrate(60);
-
-          setTimeout(() => {
-            container.classList.add("fade-out");
-          }, 500);
-
-          setTimeout(() => {
-            window.location.href = "menu.html";
-          }, 1200);
-        } else {
-          showError();
-          input = "";
-          updateDots();
-        }
-      }, 1500);
-
-    } catch (err) {
-      console.error(err);
-      setStatus("Gagal memeriksa data", "#d33");
-    }
-  });
-
-  // --- Fade-in efek saat load ---
-  window.addEventListener("load", () => {
-    setTimeout(() => {
-      container.classList.add("visible");
-    }, 100);
-  });
 </script>
-
 </body>
 </html>
