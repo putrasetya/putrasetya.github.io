@@ -1,148 +1,95 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Login | AZ•KO</title>
-  <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background-color: #ffffff;
-      height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-
-    .container {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      width: 90%;
-      max-width: 400px;
-      padding: 40px 30px;
-      border-radius: 16px;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.15);
-      background-color: #fff;
-      text-align: center;
-    }
-
-    .logo {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      margin-bottom: 30px;
-    }
-
-    .logo img {
-      width: 200px;
-      height: auto;
-    }
-
-    input {
-      width: 100%;
-      padding: 12px;
-      margin: 10px 0;
-      border: 1px solid #ccc;
-      border-radius: 6px;
-      font-size: 16px;
-      text-align: center;
-      outline: none;
-      transition: border-color 0.2s ease;
-    }
-
-    input:focus {
-      border-color: #006400;
-    }
-
-    button {
-      width: 100%;
-      padding: 12px;
-      background-color: #006400;
-      color: white;
-      font-size: 18px;
-      font-weight: bold;
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
-      transition: transform 0.1s ease, box-shadow 0.1s ease, background-color 0.2s;
-    }
-
-    button:hover {
-      background-color: #008000;
-    }
-
-    button:active {
-      transform: scale(0.97);
-      box-shadow: inset 2px 2px 5px rgba(0,0,0,0.4);
-    }
-
-    .error {
-      margin-top: 15px;
-      color: #b30000;
-      font-size: 14px;
-      min-height: 20px;
-    }
-
-    @media (max-width: 480px) {
-      .container {
-        padding: 30px 20px;
-      }
-      .logo img {
-        width: 160px;
-      }
-    }
-  </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Login | AZ•KO</title>
+<style>
+  body {
+    margin:0;
+    font-family: Inter, system-ui, Arial, sans-serif;
+    background:#fff;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    height:100vh;
+  }
+  .box {
+    width:300px;
+    padding:40px 30px;
+    border-radius:16px;
+    box-shadow:0 10px 30px rgba(0,0,0,0.1);
+    text-align:center;
+  }
+  h2 {
+    margin-bottom:20px;
+    font-weight:600;
+    color:#111;
+  }
+  input {
+    width:100%;
+    padding:12px;
+    margin:10px 0;
+    border-radius:8px;
+    border:1px solid #ccc;
+    font-size:15px;
+  }
+  button {
+    width:100%;
+    padding:12px;
+    background:#111;
+    color:white;
+    border:none;
+    border-radius:8px;
+    font-size:16px;
+    cursor:pointer;
+  }
+  .error {
+    color:red;
+    margin-top:10px;
+    font-size:13px;
+    min-height:18px;
+  }
+</style>
 </head>
 <body>
-  <div class="container">
-    <div class="logo">
-      <img src="logo.png" alt="AZ•KO Logo">
-    </div>
-
-    <input type="text" id="username" placeholder="username" autocomplete="off" required>
-    <button onclick="lanjutkan()">Lanjutkan</button>
+  <div class="box">
+    <h2>Login AZ•KO</h2>
+    <input type="text" id="username" placeholder="Username" autocomplete="off">
+    <button id="loginBtn">Lanjut</button>
     <div class="error" id="errorMsg"></div>
   </div>
 
-  <script>
-    const sheetURL = "https://opensheet.elk.sh/193U1I1FPzXEgjvb9FDQm5asJklOag-V78HledBv_skc/username";
+<script>
+const SHEET_URL = "https://opensheet.elk.sh/193U1I1FPzXEgjvb9FDQm5asJklOag-V78HledBv_skc/username";
+const loginBtn = document.getElementById("loginBtn");
+const errorMsg = document.getElementById("errorMsg");
 
-    async function lanjutkan() {
-      const username = document.getElementById("username").value.trim();
-      const errorMsg = document.getElementById("errorMsg");
-      errorMsg.textContent = "";
+loginBtn.addEventListener("click", async () => {
+  const username = document.getElementById("username").value.trim();
+  if(!username){ errorMsg.textContent = "Masukkan username."; return; }
 
-      if (!username) {
-        errorMsg.textContent = "Masukkan username terlebih dahulu!";
-        return;
-      }
+  try {
+    const res = await fetch(SHEET_URL);
+    const data = await res.json();
+    const user = data.find(r => r.username?.toLowerCase() === username.toLowerCase());
 
-      try {
-        const response = await fetch(sheetURL);
-        const data = await response.json();
-        const user = data.find(
-          row => row.username?.trim().toLowerCase() === username.toLowerCase()
-        );
+    if(user){
+      // Simpan session + localStorage biar terbaca di confirmpin
+      sessionStorage.setItem("username", user.username);
+      sessionStorage.setItem("password", user.password);
+      localStorage.setItem("username", user.username);
+      localStorage.setItem("password", user.password);
 
-        if (user) {
-          sessionStorage.setItem("username", user.username);
-          sessionStorage.setItem("nickname", user.nickname || "");
-          sessionStorage.setItem("pinSet", user.password || "");
-          window.location.href = "confirmpin.html";
-        } else {
-          errorMsg.textContent = "Username tidak ditemukan!";
-        }
-      } catch (error) {
-        console.error(error);
-        errorMsg.textContent = "Gagal menghubungi server!";
-      }
+      window.location.href = "confirmpin.html";
+    } else {
+      errorMsg.textContent = "Username tidak ditemukan.";
     }
-
-    document.addEventListener("keydown", e => {
-      if (e.key === "Enter") lanjutkan();
-    });
-  </script>
+  } catch (e){
+    errorMsg.textContent = "Gagal terhubung ke server.";
+  }
+});
+</script>
 </body>
 </html>
