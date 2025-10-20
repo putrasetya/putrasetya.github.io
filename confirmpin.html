@@ -126,13 +126,17 @@
     const container = document.querySelector(".container");
     let enteredPin = "";
 
-    // 🔒 Cegah akses langsung
-    if (!sessionStorage.getItem("pinSet")) {
+    // 🔒 Cegah akses langsung tanpa username
+    const username = sessionStorage.getItem("username");
+    if (!username) {
       window.location.href = "index.html";
     }
 
+    // URL endpoint Google Apps Script
+    const endpoint = "https://script.google.com/macros/s/AKfycbxc0I4EWBVyDdTWqNzAgBBS4PHO8HSvB4RYjeL4NV1kFUnBaCLP10VASPbno_JLNs2a/exec";
+
     keys.forEach(key => {
-      key.addEventListener("click", () => {
+      key.addEventListener("click", async () => {
         if (key.classList.contains("back")) {
           enteredPin = enteredPin.slice(0, -1);
         } else if (key.id === "reset") {
@@ -144,17 +148,7 @@
         updateDots();
 
         if (enteredPin.length === 4) {
-          const storedPin = sessionStorage.getItem("pinSet");
-          if (enteredPin === storedPin) {
-            alert("PIN berhasil dikonfirmasi!");
-            window.location.href = "menu.html";
-          } else {
-            enteredPin = "";
-            updateDots();
-            container.classList.add("shake");
-            navigator.vibrate?.(200);
-            setTimeout(() => container.classList.remove("shake"), 300);
-          }
+          await verifyPin(enteredPin);
         }
       });
     });
@@ -163,6 +157,33 @@
       dots.forEach((dot, index) => {
         dot.classList.toggle("filled", index < enteredPin.length);
       });
+    }
+
+    async function verifyPin(pin) {
+      try {
+        const response = await fetch(`${endpoint}?action=getUser&username=${encodeURIComponent(username)}`);
+        const data = await response.json();
+
+        if (data && data.password === pin) {
+          // PIN benar
+          alert("PIN berhasil dikonfirmasi!");
+          window.location.href = "menu.html";
+        } else {
+          // PIN salah
+          wrongPinEffect();
+        }
+      } catch (error) {
+        console.error("Gagal mengambil data:", error);
+        wrongPinEffect();
+      }
+    }
+
+    function wrongPinEffect() {
+      enteredPin = "";
+      updateDots();
+      container.classList.add("shake");
+      navigator.vibrate?.(200);
+      setTimeout(() => container.classList.remove("shake"), 300);
     }
   </script>
 </body>
