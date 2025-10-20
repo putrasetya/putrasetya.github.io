@@ -5,17 +5,126 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Konfirmasi PIN | AZ•KO</title>
 <style>
-  body {margin:0; font-family: Arial; display:flex; justify-content:center; align-items:center; height:100vh; background:#fff;}
-  .pin-box {text-align:center; width:90%; max-width:350px;}
-  input {width:80%; padding:12px; margin:8px 0; border:1px solid #ccc; border-radius:6px; text-align:center;}
-  button {padding:12px 20px; border:none; border-radius:6px; background:#28a745; color:#fff; cursor:pointer;}
+  body {
+    margin:0;
+    font-family: Arial, sans-serif;
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:#fff;
+  }
+  .pin-container {
+    text-align:center;
+    width:90%;
+    max-width:350px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:16px;
+  }
+  .pin-container img {
+    max-width:150px;
+  }
+  .pin-box {
+    display:flex;
+    justify-content:center;
+    gap:8px;
+    margin-bottom:16px;
+  }
+  .pin-box input {
+    width:40px;
+    height:50px;
+    text-align:center;
+    font-size:24px;
+    border:1px solid #ccc;
+    border-radius:8px;
+    transition:0.1s;
+  }
+  .keypad {
+    display:grid;
+    grid-template-columns: repeat(3, 70px);
+    gap:12px;
+    justify-content:center;
+    margin-bottom:16px;
+  }
+  .keypad button {
+    width:70px;
+    height:70px;
+    border:none;
+    border-radius:50%;
+    background:#eee; /* default clean */
+    color:#000;
+    font-size:24px;
+    cursor:pointer;
+    transition:0.2s;
+    user-select:none;
+  }
+  .keypad button:active {
+    background:#000;
+    color:#fff;
+  }
+  #enterBtn {
+    width:70px;
+    height:70px;
+    border:none;
+    border-radius:50%;
+    background:#000;
+    color:#fff;
+    font-size:32px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    cursor:pointer;
+    transition:0.2s;
+  }
+  #enterBtn:hover {
+    background:#333;
+  }
+
+  /* Shake animation */
+  @keyframes shake {
+    0% { transform: translateX(0); }
+    20% { transform: translateX(-8px); }
+    40% { transform: translateX(8px); }
+    60% { transform: translateX(-8px); }
+    80% { transform: translateX(8px); }
+    100% { transform: translateX(0); }
+  }
+  .shake {
+    animation: shake 0.3s;
+  }
 </style>
 </head>
 <body>
-<div class="pin-box">
-  <h2>Masukkan PIN 6 Digit</h2>
-  <input type="password" id="pin" maxlength="6" placeholder="******"><br>
-  <button onclick="checkPin()">Masuk</button>
+
+<div class="pin-container">
+  <img src="logo.png" alt="AZ•KO Logo">
+  <div class="pin-box" id="pinBox">
+    <input type="text" maxlength="1" class="pin-digit" autofocus>
+    <input type="text" maxlength="1" class="pin-digit">
+    <input type="text" maxlength="1" class="pin-digit">
+    <input type="text" maxlength="1" class="pin-digit">
+    <input type="text" maxlength="1" class="pin-digit">
+    <input type="text" maxlength="1" class="pin-digit">
+  </div>
+
+  <div class="keypad">
+    <button onclick="pressKey('1')">1</button>
+    <button onclick="pressKey('2')">2</button>
+    <button onclick="pressKey('3')">3</button>
+    <button onclick="pressKey('4')">4</button>
+    <button onclick="pressKey('5')">5</button>
+    <button onclick="pressKey('6')">6</button>
+    <button onclick="pressKey('7')">7</button>
+    <button onclick="pressKey('8')">8</button>
+    <button onclick="pressKey('9')">9</button>
+    <button onclick="backspace()">←</button>
+    <button onclick="pressKey('0')">0</button>
+    <button onclick="clearAll()">C</button>
+  </div>
+
+  <button id="enterBtn" onclick="checkPin()">✓</button>
 </div>
 
 <script>
@@ -23,38 +132,93 @@ const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbw-C9LksZ_UoOMotoaEo
 const tempUser = localStorage.getItem("tempUser");
 if(!tempUser) window.location.href = "index.html";
 
+const digits = document.querySelectorAll(".pin-digit");
+const pinBox = document.getElementById("pinBox");
+
+// Auto fokus saat mengetik manual keyboard
+digits.forEach((input, index) => {
+  input.addEventListener("input", () => {
+    if(input.value.length === 1 && index < digits.length - 1){
+      digits[index + 1].focus();
+    }
+  });
+  input.addEventListener("keydown", (e) => {
+    if(e.key === "Backspace" && !input.value && index > 0){
+      digits[index - 1].focus();
+    }
+  });
+});
+
+// Fungsi keypad
+function pressKey(num){
+  for(let input of digits){
+    if(!input.value){
+      input.value = num;
+      const nextIndex = Array.from(digits).indexOf(input) + 1;
+      if(nextIndex < digits.length){
+        digits[nextIndex].focus();
+      }
+      break;
+    }
+  }
+}
+
+function backspace(){
+  for(let i = digits.length-1; i>=0; i--){
+    if(digits[i].value){
+      digits[i].value = '';
+      digits[i].focus();
+      break;
+    }
+  }
+}
+
+function clearAll(){
+  digits.forEach(d => d.value = '');
+  digits[0].focus();
+}
+
+// Validasi PIN
 function checkPin(){
-  const pin = document.getElementById("pin").value.trim();
-  if(pin.length !== 6) return alert("PIN harus 6 digit!");
+  const pin = Array.from(digits).map(d => d.value).join("").trim();
+  if(pin.length !== 6){
+    triggerShake();
+    return alert("PIN harus 6 digit!");
+  }
 
   fetch(SCRIPT_URL)
     .then(res => res.json())
     .then(data => {
       const user = data.find(u => u.username.toString().trim() === tempUser);
-      
       if(!user){
+        triggerShake();
         alert("Username tidak ditemukan!");
         return;
       }
 
       if(user.password.toString().replace(/\s/g,'') === pin){
-        // Simpan session & nickname
         localStorage.setItem("username", tempUser);
         localStorage.setItem("nickname", user.nickname || tempUser);
         localStorage.setItem("loginTime", Date.now());
         localStorage.removeItem("tempUser");
-
-        // Redirect ke menu.html
         window.location.href = "menu.html";
       } else {
+        triggerShake();
         alert("PIN salah!");
       }
     })
     .catch(err=>{
       console.error(err);
+      triggerShake();
       alert("Gagal menghubungkan ke server.");
     });
 }
+
+function triggerShake(){
+  pinBox.classList.add("shake");
+  setTimeout(()=> pinBox.classList.remove("shake"), 300);
+}
 </script>
+
 </body>
 </html>
