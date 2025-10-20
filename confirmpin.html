@@ -49,10 +49,7 @@ body {
   animation: spin 1s linear infinite;
   margin:12px 0;
 }
-@keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
-}
+@keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 #pinStatus {
   font-weight:bold;
   margin-bottom:12px;
@@ -76,7 +73,6 @@ body {
   user-select:none;
   transition:0.1s;
 }
-.keypad button.active { background:#000; color:#fff; }
 #enterBtn {
   width:70px;
   height:70px;
@@ -92,18 +88,9 @@ body {
   transition:0.2s;
 }
 #enterBtn:hover { background:#333; }
-
 /* Shake effect */
-@keyframes shake {
-  0% { transform: translateX(0); }
-  20% { transform: translateX(-8px); }
-  40% { transform: translateX(8px); }
-  60% { transform: translateX(-8px); }
-  80% { transform: translateX(8px); }
-  100% { transform: translateX(0); }
-}
+@keyframes shake { 0% { transform: translateX(0); } 20% { transform: translateX(-8px); } 40% { transform: translateX(8px); } 60% { transform: translateX(-8px); } 80% { transform: translateX(8px); } 100% { transform: translateX(0); } }
 .shake { animation: shake 0.3s; }
-
 </style>
 </head>
 <body>
@@ -151,33 +138,23 @@ const pinBox = document.getElementById("pinBox");
 const loader = document.getElementById("loader");
 const pinStatus = document.getElementById("pinStatus");
 
-// Keypad real-time
+// Keypad real-time instant
 function pressKey(num, btn){
-  btn.classList.add("active");
-  for(let input of digits){
-    if(!input.value){
-      input.value = num;
-      break;
-    }
-  }
+  btn.style.background="#000"; btn.style.color="#fff"; // langsung hitam
+  for(let input of digits){ if(!input.value){ input.value=num; break; } }
 }
-function releaseKey(btn){ btn.classList.remove("active"); }
-function backspaceKey(btn){
-  btn.classList.add("active");
-  for(let i=digits.length-1;i>=0;i--){
-    if(digits[i].value){ digits[i].value=''; break; }
-  }
-}
-function clearKey(btn){ btn.classList.add("active"); digits.forEach(d=>d.value=''); }
+function releaseKey(btn){ btn.style.background="#eee"; btn.style.color="#000"; }
+function backspaceKey(btn){ btn.style.background="#000"; btn.style.color="#fff"; for(let i=digits.length-1;i>=0;i--){ if(digits[i].value){ digits[i].value=''; break; } } }
+function clearKey(btn){ btn.style.background="#000"; btn.style.color="#fff"; digits.forEach(d=>d.value=''); }
 digits.forEach(d=>d.addEventListener('mouseup',()=>d.blur()));
 
 // Validasi PIN
 function checkPin(){
   const pin = Array.from(digits).map(d=>d.value).join('').trim();
-  if(pin.length !==6){ triggerShake(); return showStatus('PIN harus 6 digit!', 'red'); }
+  if(pin.length!==6){ triggerShake(); return showStatus('PIN harus 6 digit!','red'); }
 
   loader.style.display='block';
-  showStatus('Memeriksa PIN...', '#000');
+  showStatus('Memeriksa PIN...','#000');
 
   setTimeout(()=>{
     fetch(SCRIPT_URL)
@@ -185,38 +162,23 @@ function checkPin(){
       .then(data=>{
         loader.style.display='none';
         const user = data.find(u=>u.username.toString().trim()===tempUser);
-        if(!user){ triggerShake(); return showStatus('Username tidak ditemukan!', 'red'); }
+        if(!user){ triggerShake(); return showStatus('Username tidak ditemukan!','red'); }
 
         if(user.password.toString().replace(/\s/g,'')===pin){
-          showStatus('PIN benar!', 'green');
+          showStatus('PIN benar!','green');
           localStorage.setItem("username", tempUser);
           localStorage.setItem("nickname", user.nickname||tempUser);
           localStorage.setItem("loginTime", Date.now());
           localStorage.removeItem("tempUser");
           setTimeout(()=>window.location.href="menu.html",500);
-        } else {
-          triggerShake();
-          showStatus('PIN salah!', 'red');
-        }
+        } else { triggerShake(); showStatus('PIN salah!','red'); }
       })
-      .catch(err=>{
-        loader.style.display='none';
-        triggerShake();
-        showStatus('Gagal menghubungkan ke server.', 'red');
-        console.error(err);
-      });
+      .catch(err=>{ loader.style.display='none'; triggerShake(); showStatus('Gagal menghubungkan ke server.','red'); console.error(err); });
   },1500);
 }
 
-function triggerShake(){
-  pinBox.classList.add('shake');
-  setTimeout(()=>pinBox.classList.remove('shake'),300);
-}
-
-function showStatus(text,color){
-  pinStatus.textContent = text;
-  pinStatus.style.color = color;
-}
+function triggerShake(){ pinBox.classList.add('shake'); setTimeout(()=>pinBox.classList.remove('shake'),300); }
+function showStatus(text,color){ pinStatus.textContent=text; pinStatus.style.color=color; }
 </script>
 
 </body>
