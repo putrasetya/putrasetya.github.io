@@ -38,7 +38,7 @@
     display: flex;
     justify-content: center;
     gap: 12px;
-    margin-bottom: 25px;
+    margin-bottom: 10px;
   }
 
   .dot {
@@ -64,6 +64,31 @@
     0% { transform: scale(0.6); opacity: 0.4; }
     60% { transform: scale(1.3); opacity: 1; }
     100% { transform: scale(1.0); opacity: 1; }
+  }
+
+  .status {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #666;
+    font-size: 13px;
+    height: 20px;
+    margin-bottom: 15px;
+    transition: opacity 0.3s, color 0.3s;
+    gap: 8px;
+  }
+
+  .spinner {
+    width: 14px;
+    height: 14px;
+    border: 2px solid #ccc;
+    border-top: 2px solid #000;
+    border-radius: 50%;
+    animation: spin 0.7s linear infinite;
+  }
+
+  @keyframes spin {
+    to { transform: rotate(360deg); }
   }
 
   .keypad {
@@ -129,6 +154,8 @@
     <div class="dot"></div>
   </div>
 
+  <div class="status" id="statusText"></div>
+
   <div class="keypad">
     <button class="key">1</button>
     <button class="key">2</button>
@@ -159,8 +186,10 @@
   const reset = document.getElementById("reset");
   const back = document.getElementById("back");
   const ok = document.getElementById("ok");
+  const statusText = document.getElementById("statusText");
 
   let input = "";
+  const SHEET_URL = "https://opensheet.elk.sh/193U1I1FPzXEgjvb9FDQm5asJklOag-V78HledBv_skc/username";
 
   function vibrate(ms = 40) {
     if (navigator.vibrate) navigator.vibrate(ms);
@@ -172,10 +201,22 @@
     });
   }
 
-  function wrongPinEffect() {
+  function setStatus(text, color="#666", spinner=false) {
+    statusText.innerHTML = spinner
+      ? `<div class="spinner"></div><span>${text}</span>`
+      : `<span>${text}</span>`;
+    statusText.style.color = color;
+    statusText.style.opacity = 1;
+  }
+
+  function showError() {
+    setStatus("PIN salah, coba lagi", "#d33");
     container.classList.add("shake");
-    setTimeout(() => container.classList.remove("shake"), 400);
     vibrate(200);
+    setTimeout(() => {
+      container.classList.remove("shake");
+      statusText.style.opacity = 0;
+    }, 1500);
   }
 
   keys.forEach(btn => {
@@ -198,16 +239,38 @@
     input = "";
     updateDots();
     vibrate();
+    statusText.style.opacity = 0;
   });
 
-  ok.addEventListener("click", () => {
-    const savedPIN = sessionStorage.getItem("password");
-    if (input === savedPIN) {
-      window.location.href = "menu.html";
-    } else {
-      wrongPinEffect();
-      input = "";
-      updateDots();
+  ok.addEventListener("click", async () => {
+    const username = sessionStorage.getItem("username");
+    if (!username) return;
+
+    setStatus("Memeriksa...", "#999", true);
+    vibrate(20);
+
+    try {
+      const res = await fetch(SHEET_URL);
+      const data = await res.json();
+      const user = data.find(row => row.username === username);
+
+      if (!user) {
+        showError();
+        return;
+      }
+
+      const pinBenar = user.password?.trim();
+      if (input === pinBenar) {
+        setStatus("PIN benar, masuk...", "#333");
+        setTimeout(() => window.location.href = "menu.html", 500);
+      } else {
+        showError();
+        input = "";
+        updateDots();
+      }
+    } catch (err) {
+      console.error(err);
+      setStatus("Gagal memeriksa data", "#d33");
     }
   });
 </script>
