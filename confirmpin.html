@@ -5,11 +5,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Konfirmasi PIN | AZ•KO</title>
 <style>
-  body {margin:0; font-family: Arial, sans-serif; display:flex; justify-content:center; align-items:center; height:100vh; background:#fff;}
+  body {margin:0; font-family: Arial; display:flex; justify-content:center; align-items:center; height:100vh; background:#fff;}
   .pin-box {text-align:center; width:90%; max-width:350px;}
-  input {width:80%; padding:12px; margin:8px 0; border:1px solid #ccc; border-radius:6px; font-size:16px; text-align:center;}
-  button {padding:12px 20px; border:none; border-radius:6px; background:#28a745; color:#fff; font-size:16px; cursor:pointer;}
-  button:hover {background:#1e7e34;}
+  input {width:80%; padding:12px; margin:8px 0; border:1px solid #ccc; border-radius:6px; text-align:center;}
+  button {padding:12px 20px; border:none; border-radius:6px; background:#28a745; color:#fff; cursor:pointer;}
 </style>
 </head>
 <body>
@@ -20,9 +19,7 @@
 </div>
 
 <script>
-const sheetUrl = "https://opensheet.elk.sh/1ummQarznzKNiT3PXnj2rHS-0AWJRmC4wAuj07SjQdkg/username";
-
-// Redirect langsung jika akses langsung tanpa username
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbw-C9LksZ_UoOMotoaEoNOPg7F_eK09DoexsD8ViF9kls3eod3Kt5uDlvcb-TmV7O-T/exec"; // Ganti dengan URL Web App Apps Script
 const tempUser = localStorage.getItem("tempUser");
 if(!tempUser) window.location.href = "index.html";
 
@@ -30,9 +27,9 @@ function checkPin(){
   const pin = document.getElementById("pin").value.trim();
   if(pin.length !== 6) return alert("PIN harus 6 digit!");
 
-  fetch(sheetUrl)
-    .then(res=>res.json())
-    .then(data=>{
+  fetch(SCRIPT_URL)
+    .then(res => res.json())
+    .then(data => {
       const user = data.find(u => u.username === tempUser);
       if(user && user.password === pin){
         localStorage.setItem("username", tempUser);
