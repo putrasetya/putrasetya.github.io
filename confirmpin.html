@@ -13,12 +13,18 @@
     align-items: center;
     justify-content: center;
     height: 100vh;
+    overflow: hidden;
   }
 
   .container {
     text-align: center;
     width: 90%;
     max-width: 340px;
+    transition: opacity 0.6s ease;
+  }
+
+  .fade-out {
+    opacity: 0;
   }
 
   .logo {
@@ -254,20 +260,34 @@
       const data = await res.json();
       const user = data.find(row => row.username === username);
 
-      if (!user) {
-        showError();
-        return;
-      }
+      // Simulasikan waktu loading 1.5 detik agar terlihat natural
+      setTimeout(() => {
+        if (!user) {
+          showError();
+          return;
+        }
 
-      const pinBenar = user.password?.trim();
-      if (input === pinBenar) {
-        setStatus("PIN benar, masuk...", "#333");
-        setTimeout(() => window.location.href = "menu.html", 500);
-      } else {
-        showError();
-        input = "";
-        updateDots();
-      }
+        const pinBenar = user.password?.trim();
+        if (input === pinBenar) {
+          setStatus("PIN benar, masuk...", "#333");
+          vibrate(60);
+
+          // Fade-out sebelum redirect
+          setTimeout(() => {
+            container.classList.add("fade-out");
+          }, 500);
+
+          // Redirect setelah fade-out selesai
+          setTimeout(() => {
+            window.location.href = "menu.html";
+          }, 1100);
+        } else {
+          showError();
+          input = "";
+          updateDots();
+        }
+      }, 1500);
+
     } catch (err) {
       console.error(err);
       setStatus("Gagal memeriksa data", "#d33");
