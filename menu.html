@@ -27,17 +27,20 @@
 </main>
 
 <script>
+// Ambil session dari localStorage
 const username = localStorage.getItem("username");
 const nickname = localStorage.getItem("nickname");
 const loginTime = localStorage.getItem("loginTime");
 
-// Cek session 24 jam
+// Cek session 24 jam dan keberadaan username
 if(!username || !loginTime || Date.now() - parseInt(loginTime) > 24*60*60*1000){
-  logout();
+  // Jika tidak login atau session expired → redirect ke index
+  window.location.href = "index.html";
 } else {
   document.getElementById("sapaUser").textContent = `Halo, ${nickname}!`;
 }
 
+// Fungsi logout
 function logout(){
   localStorage.clear();
   window.location.href = "index.html";
