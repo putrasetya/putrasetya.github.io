@@ -1,1 +1,300 @@
 
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Data Customer | AZ•KO</title>
+  <style>
+    body {
+      font-family: "Poppins", sans-serif;
+      background-color: #fff;
+      margin: 0;
+      padding: 20px;
+      color: #333;
+    }
+
+    h1 {
+      text-align: center;
+      font-weight: 600;
+      margin-bottom: 20px;
+    }
+
+    .container {
+      max-width: 850px;
+      margin: 0 auto;
+      background: #fff;
+      padding: 20px;
+      border-radius: 16px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+    }
+
+    form {
+      display: grid;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    input {
+      padding: 10px;
+      font-size: 15px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      width: 100%;
+      box-sizing: border-box;
+    }
+
+    button {
+      padding: 10px;
+      font-size: 15px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .btn-save {
+      background: #007bff;
+      color: white;
+    }
+
+    .btn-save:hover {
+      background: #0056b3;
+    }
+
+    .btn-export {
+      background: #28a745;
+      color: white;
+      margin-bottom: 15px;
+    }
+
+    .btn-export:hover {
+      background: #1e7e34;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+    }
+
+    th, td {
+      text-align: left;
+      padding: 10px;
+      border-bottom: 1px solid #eee;
+    }
+
+    th {
+      background: #f9f9f9;
+    }
+
+    .btn-edit {
+      background: #ffc107;
+      color: #fff;
+    }
+
+    .btn-delete {
+      background: #dc3545;
+      color: #fff;
+    }
+
+    .btn-edit:hover { background: #e0a800; }
+    .btn-delete:hover { background: #c82333; }
+
+    .search-box {
+      margin-bottom: 15px;
+    }
+
+    .search-box input {
+      width: 100%;
+      border-radius: 8px;
+      border: 1px solid #ddd;
+      padding: 10px;
+      font-size: 15px;
+    }
+
+    .toast {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      background: #333;
+      color: #fff;
+      padding: 12px 20px;
+      border-radius: 8px;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 0.4s ease;
+      z-index: 9999;
+      font-size: 14px;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @media (max-width: 600px) {
+      .container {
+        padding: 15px;
+      }
+      input, button {
+        font-size: 14px;
+      }
+      th, td {
+        font-size: 13px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <h1>Data Customer</h1>
+  <div class="container">
+    <form id="customerForm">
+      <input type="hidden" id="rowId">
+      <input type="text" id="namaCustomer" placeholder="Nama Customer" required>
+      <input type="text" id="nomorTelepon" placeholder="Nomor Telepon" required>
+      <button type="submit" class="btn-save">Simpan</button>
+    </form>
+
+    <div class="search-box">
+      <input type="text" id="searchInput" placeholder="Cari nama customer atau nomor telepon...">
+    </div>
+
+    <button class="btn-export" id="exportBtn">⬇️ Export ke Excel (CSV)</button>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Nama Customer</th>
+          <th>Nomor Telepon</th>
+          <th>PIC Sales</th>
+          <th>Aksi</th>
+        </tr>
+      </thead>
+      <tbody id="dataBody"></tbody>
+    </table>
+  </div>
+
+  <div id="toast" class="toast"></div>
+
+  <script>
+    const scriptURL = "https://script.google.com/macros/s/AKfycbxc0I4EWBVyDdTWqNzAgBBS4PHO8HSvB4RYjeL4NV1kFUnBaCLP10VASPbno_JLNs2a/exec";
+    const form = document.getElementById("customerForm");
+    const dataBody = document.getElementById("dataBody");
+    const searchInput = document.getElementById("searchInput");
+    const exportBtn = document.getElementById("exportBtn");
+    const toast = document.getElementById("toast");
+
+    const picSales = sessionStorage.getItem("username") || "Guest";
+    let allData = [];
+
+    async function loadData() {
+      const res = await fetch(`${scriptURL}?action=read`);
+      const data = await res.json();
+      allData = data;
+      renderTable(data);
+    }
+
+    function renderTable(data) {
+      dataBody.innerHTML = "";
+      data.forEach(item => {
+        const row = document.createElement("tr");
+        row.innerHTML = `
+          <td>${item.namaCustomer}</td>
+          <td>${item.nomorTelepon}</td>
+          <td>${item.picSales}</td>
+          <td>
+            <button class="btn-edit" onclick="editData('${item.id}','${item.namaCustomer}','${item.nomorTelepon}')">Edit</button>
+            <button class="btn-delete" onclick="deleteData('${item.id}')">Hapus</button>
+          </td>
+        `;
+        dataBody.appendChild(row);
+      });
+    }
+
+    searchInput.addEventListener("input", (e) => {
+      const keyword = e.target.value.toLowerCase();
+      const filtered = allData.filter(item =>
+        item.namaCustomer.toLowerCase().includes(keyword) ||
+        item.nomorTelepon.toLowerCase().includes(keyword)
+      );
+      renderTable(filtered);
+    });
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const rowId = document.getElementById("rowId").value;
+      const namaCustomer = document.getElementById("namaCustomer").value.trim();
+      const nomorTelepon = document.getElementById("nomorTelepon").value.trim();
+      const action = rowId ? "update" : "create";
+
+      const data = { action, rowId, namaCustomer, nomorTelepon, picSales };
+      try {
+        const res = await fetch(scriptURL, {
+          method: "POST",
+          body: JSON.stringify(data)
+        });
+        const result = await res.json();
+        showToast(result.message);
+        form.reset();
+        document.getElementById("rowId").value = "";
+        loadData();
+      } catch {
+        showToast("❌ Gagal menyimpan data");
+      }
+    });
+
+    async function deleteData(rowId) {
+      if (confirm("Yakin ingin menghapus data ini?")) {
+        try {
+          const res = await fetch(scriptURL, {
+            method: "POST",
+            body: JSON.stringify({ action: "delete", rowId })
+          });
+          const result = await res.json();
+          showToast(result.message);
+          loadData();
+        } catch {
+          showToast("❌ Gagal menghapus data");
+        }
+      }
+    }
+
+    function editData(id, namaCustomer, nomorTelepon) {
+      document.getElementById("rowId").value = id;
+      document.getElementById("namaCustomer").value = namaCustomer;
+      document.getElementById("nomorTelepon").value = nomorTelepon;
+      showToast("✏️ Mode edit aktif");
+    }
+
+    function showToast(message) {
+      toast.textContent = message;
+      toast.classList.add("show");
+      setTimeout(() => toast.classList.remove("show"), 2000);
+    }
+
+    // Export ke CSV
+    exportBtn.addEventListener("click", () => {
+      if (allData.length === 0) {
+        showToast("⚠️ Tidak ada data untuk diekspor");
+        return;
+      }
+      const header = ["Nama Customer", "Nomor Telepon", "PIC Sales"];
+      const rows = allData.map(item => [
+        item.namaCustomer,
+        item.nomorTelepon,
+        item.picSales
+      ]);
+      const csvContent = [header, ...rows].map(e => e.join(",")).join("\n");
+      const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+      const link = document.createElement("a");
+      link.href = URL.createObjectURL(blob);
+      link.download = `DataCustomer_${picSales}_${new Date().toISOString().split("T")[0]}.csv`;
+      link.click();
+      showToast("✅ File CSV berhasil diunduh");
+    });
+
+    loadData();
+  </script>
+</body>
+</html>
