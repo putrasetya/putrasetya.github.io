@@ -2,7 +2,7 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8">
-<title>AZKO TV DISPLAY FINAL</title>
+<title>AZKO TV RESPONSIVE</title>
 
 <style>
 body{
@@ -10,155 +10,216 @@ body{
     font-family:Arial;
     background:#020617;
     color:white;
-    overflow:hidden;
 }
 
+/* HEADER */
 .header{
     text-align:center;
-    padding:20px;
-    font-size:32px;
+    padding:15px;
+    font-size:28px;
     font-weight:bold;
     background:#22c55e;
 }
 
-.hero{
-    text-align:center;
-    margin-top:20px;
+/* HERO TOP 3 */
+.hero-wrap{
+    display:flex;
+    justify-content:center;
+    gap:15px;
+    padding:15px;
+    flex-wrap:wrap;
 }
 
+/* CARD BESAR (TOP 3) */
+.hero-card{
+    background:#1e293b;
+    border-radius:18px;
+    padding:20px;
+    text-align:center;
+    width:30%;
+    min-width:250px;
+    box-shadow:0 0 15px rgba(34,197,94,0.3);
+}
+
+.hero-card h1{
+    font-size:22px;
+    margin:10px 0;
+}
+
+.hero-card h2{
+    color:#22c55e;
+}
+
+/* AVATAR */
 .avatar{
-    width:140px;height:140px;
+    width:90px;
+    height:90px;
     border-radius:50%;
     background:#334155;
     margin:auto;
     display:flex;
     align-items:center;
     justify-content:center;
-    font-size:50px;
+    font-size:30px;
     font-weight:bold;
 }
 
+/* LIST RANK 4-5 */
 .container{
     display:grid;
-    grid-template-columns:repeat(4,1fr);
-    gap:20px;
-    padding:20px;
+    grid-template-columns:repeat(3,1fr);
+    gap:15px;
+    padding:15px;
 }
 
 .card{
     background:#1e293b;
-    border-radius:15px;
-    padding:20px;
+    border-radius:12px;
+    padding:15px;
     text-align:center;
 }
 
+/* SLIDE */
 .slide{display:none;}
 .active{display:block;}
+
+/* ========================= */
+/* 📱 MOBILE RESPONSIVE */
+/* ========================= */
+@media (max-width:768px){
+
+    .hero-wrap{
+        flex-direction:column;
+        align-items:center;
+    }
+
+    .hero-card{
+        width:90%;
+    }
+
+    .container{
+        grid-template-columns:1fr;
+    }
+
+    .header{
+        font-size:20px;
+    }
+}
 </style>
 </head>
 
 <body>
 
-<div class="header">🔥 AZKO PERFORMANCE</div>
+<div class="header">🔥 AZKO PERFORMANCE DASHBOARD</div>
 
 <!-- SLIDE 1 -->
 <div class="slide active">
-<h1 style="text-align:center;">TOP SALES</h1>
-<div id="salesHero" class="hero"></div>
+<h2 style="text-align:center;">TOP SALES</h2>
+
+<div id="salesHero" class="hero-wrap"></div>
 <div id="salesList" class="container"></div>
 </div>
 
 <!-- SLIDE 2 -->
 <div class="slide">
-<h1 style="text-align:center;">TOP PROTEKSI</h1>
-<div id="proteksiHero" class="hero"></div>
+<h2 style="text-align:center;">TOP PROTEKSI</h2>
+
+<div id="proteksiHero" class="hero-wrap"></div>
 <div id="proteksiList" class="container"></div>
 </div>
 
 <!-- SLIDE 3 -->
 <div class="slide">
-<h1 style="text-align:center;">TOP TRX</h1>
-<div id="trxHero" class="hero"></div>
+<h2 style="text-align:center;">TOP TRX</h2>
+
+<div id="trxHero" class="hero-wrap"></div>
 <div id="trxList" class="container"></div>
 </div>
 
 <script>
 
-// ✅ PAKAI APPS SCRIPT (WAJIB URL KAMU)
 const URL = "https://script.google.com/macros/s/AKfycbzeehvUo6QYriMFJTR4A88lN6IIHV6Qop9UphkdOTMkRLVxhVuJ13y69momo6h1pn9dTQ/exec";
 
-// CLEAN ANGKA
-function clean(val){
-    if(!val) return 0;
-    return parseInt(val.toString().replace(/[^\d]/g,'')) || 0;
+function clean(v){
+    return parseInt((v||"0").toString().replace(/[^\d]/g,'')) || 0;
 }
 
-// AVATAR
 function avatar(name){
-    return name.split(" ").map(n=>n[0]).join("").substring(0,2).toUpperCase();
+    return name ? name.split(" ").map(n=>n[0]).join("").substring(0,2).toUpperCase() : "NA";
 }
 
-// AMBIL DATA DARI APPS SCRIPT
 async function getData(){
     let res = await fetch(URL);
-    let json = await res.json();
+    let data = await res.json();
 
-    console.log("DATA:", json);
-
-    return json.map(row => ({
-        name: row["EMPLOYEE NAME"] || "Unknown",
-        sales: clean(row["SALES MTD"]),
-        proteksi: clean(row["PROTEKSI"]),
-        trx: clean(row["TRX"])
+    return data.map(r=>({
+        name: r["EMPLOYEE NAME"] || "Unknown",
+        sales: clean(r["SALES MTD"]),
+        proteksi: clean(r["PROTEKSI"]),
+        trx: clean(r["TRX"])
     }));
 }
 
-// RENDER
-function render(data,key,heroId,listId){
+/* RENDER TOP 3 HERO */
+function renderHero(data,key,containerId){
 
-    let sorted = data
-        .filter(d=>d[key] > 0)
+    let top3 = data
+        .filter(d=>d[key]>0)
         .sort((a,b)=>b[key]-a[key])
-        .slice(0,5);
-
-    if(sorted.length === 0) return;
-
-    let top = sorted[0];
-
-    document.getElementById(heroId).innerHTML=`
-        <div class="avatar">${avatar(top.name)}</div>
-        <h1>👑 ${top.name}</h1>
-        <h2 style="color:#22c55e">${top[key].toLocaleString()}</h2>
-    `;
+        .slice(0,3);
 
     let html="";
-    sorted.slice(1).forEach((d,i)=>{
+
+    top3.forEach((d,i)=>{
+        html+=`
+        <div class="hero-card">
+            <div style="font-size:18px;font-weight:bold;">#${i+1}</div>
+            <div class="avatar">${avatar(d.name)}</div>
+            <h1>${d.name}</h1>
+            <h2>${d[key].toLocaleString()}</h2>
+        </div>`;
+    });
+
+    document.getElementById(containerId).innerHTML = html;
+}
+
+/* RENDER RANK 4-5 */
+function renderList(data,key,containerId){
+
+    let list = data
+        .filter(d=>d[key]>0)
+        .sort((a,b)=>b[key]-a[key])
+        .slice(3,5);
+
+    let html="";
+
+    list.forEach((d,i)=>{
         html+=`
         <div class="card">
-            <h2>#${i+2}</h2>
-            <div style="font-size:30px">${avatar(d.name)}</div>
+            <div>#${i+4}</div>
+            <div class="avatar">${avatar(d.name)}</div>
             <h3>${d.name}</h3>
             <h2 style="color:#22c55e">${d[key].toLocaleString()}</h2>
         </div>`;
     });
 
-    document.getElementById(listId).innerHTML=html;
+    document.getElementById(containerId).innerHTML = html;
 }
 
-// UPDATE
 async function update(){
-    try{
-        let data = await getData();
+    let data = await getData();
 
-        render(data,"sales","salesHero","salesList");
-        render(data,"proteksi","proteksiHero","proteksiList");
-        render(data,"trx","trxHero","trxList");
-    }catch(err){
-        console.error("ERROR:", err);
-    }
+    renderHero(data,"sales","salesHero");
+    renderList(data,"sales","salesList");
+
+    renderHero(data,"proteksi","proteksiHero");
+    renderList(data,"proteksi","proteksiList");
+
+    renderHero(data,"trx","trxHero");
+    renderList(data,"trx","trxList");
 }
 
-// SLIDE OTOMATIS
+/* SLIDE AUTO */
 let i=0;
 setInterval(()=>{
     let slides=document.querySelectorAll(".slide");
@@ -167,16 +228,12 @@ setInterval(()=>{
     slides[i].classList.add("active");
 },6000);
 
-// AUTO REFRESH DATA
+/* AUTO REFRESH */
 setInterval(update,15000);
 
-// LOAD PERTAMA
 update();
 
-// FULLSCREEN MODE
-document.body.onclick=()=>{
-    document.documentElement.requestFullscreen();
-}
+document.body.onclick=()=>document.documentElement.requestFullscreen();
 
 </script>
 
