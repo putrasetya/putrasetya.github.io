@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<title>AZKO TV DISPLAY FINAL</title>
+
+<style>
+body{
+    margin:0;
+    font-family:Arial;
+    background:#020617;
+    color:white;
+    overflow:hidden;
+}
+
+.header{
+    text-align:center;
+    padding:20px;
+    font-size:32px;
+    font-weight:bold;
+    background:#22c55e;
+}
+
+.hero{
+    text-align:center;
+    margin-top:20px;
+}
+
+.avatar{
+    width:140px;height:140px;
+    border-radius:50%;
+    background:#334155;
+    margin:auto;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:50px;
+    font-weight:bold;
+}
+
+.container{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:20px;
+    padding:20px;
+}
+
+.card{
+    background:#1e293b;
+    border-radius:15px;
+    padding:20px;
+    text-align:center;
+}
+
+.slide{display:none;}
+.active{display:block;}
+</style>
+</head>
+
+<body>
+
+<div class="header">🔥 AZKO PERFORMANCE</div>
+
+<!-- SLIDE 1 -->
+<div class="slide active">
+<h1 style="text-align:center;">TOP SALES</h1>
+<div id="salesHero" class="hero"></div>
+<div id="salesList" class="container"></div>
+</div>
+
+<!-- SLIDE 2 -->
+<div class="slide">
+<h1 style="text-align:center;">TOP PROTEKSI</h1>
+<div id="proteksiHero" class="hero"></div>
+<div id="proteksiList" class="container"></div>
+</div>
+
+<!-- SLIDE 3 -->
+<div class="slide">
+<h1 style="text-align:center;">TOP TRX</h1>
+<div id="trxHero" class="hero"></div>
+<div id="trxList" class="container"></div>
+</div>
+
+<script>
+
+// ✅ PAKAI APPS SCRIPT (WAJIB URL KAMU)
+const URL = "https://script.google.com/macros/s/AKfycbzeehvUo6QYriMFJTR4A88lN6IIHV6Qop9UphkdOTMkRLVxhVuJ13y69momo6h1pn9dTQ/exec";
+
+// CLEAN ANGKA
+function clean(val){
+    if(!val) return 0;
+    return parseInt(val.toString().replace(/[^\d]/g,'')) || 0;
+}
+
+// AVATAR
+function avatar(name){
+    return name.split(" ").map(n=>n[0]).join("").substring(0,2).toUpperCase();
+}
+
+// AMBIL DATA DARI APPS SCRIPT
+async function getData(){
+    let res = await fetch(URL);
+    let json = await res.json();
+
+    console.log("DATA:", json);
+
+    return json.map(row => ({
+        name: row["EMPLOYEE NAME"] || "Unknown",
+        sales: clean(row["SALES MTD"]),
+        proteksi: clean(row["PROTEKSI"]),
+        trx: clean(row["TRX"])
+    }));
+}
+
+// RENDER
+function render(data,key,heroId,listId){
+
+    let sorted = data
+        .filter(d=>d[key] > 0)
+        .sort((a,b)=>b[key]-a[key])
+        .slice(0,5);
+
+    if(sorted.length === 0) return;
+
+    let top = sorted[0];
+
+    document.getElementById(heroId).innerHTML=`
+        <div class="avatar">${avatar(top.name)}</div>
+        <h1>👑 ${top.name}</h1>
+        <h2 style="color:#22c55e">${top[key].toLocaleString()}</h2>
+    `;
+
+    let html="";
+    sorted.slice(1).forEach((d,i)=>{
+        html+=`
+        <div class="card">
+            <h2>#${i+2}</h2>
+            <div style="font-size:30px">${avatar(d.name)}</div>
+            <h3>${d.name}</h3>
+            <h2 style="color:#22c55e">${d[key].toLocaleString()}</h2>
+        </div>`;
+    });
+
+    document.getElementById(listId).innerHTML=html;
+}
+
+// UPDATE
+async function update(){
+    try{
+        let data = await getData();
+
+        render(data,"sales","salesHero","salesList");
+        render(data,"proteksi","proteksiHero","proteksiList");
+        render(data,"trx","trxHero","trxList");
+    }catch(err){
+        console.error("ERROR:", err);
+    }
+}
+
+// SLIDE OTOMATIS
+let i=0;
+setInterval(()=>{
+    let slides=document.querySelectorAll(".slide");
+    slides[i].classList.remove("active");
+    i=(i+1)%slides.length;
+    slides[i].classList.add("active");
+},6000);
+
+// AUTO REFRESH DATA
+setInterval(update,15000);
+
+// LOAD PERTAMA
+update();
+
+// FULLSCREEN MODE
+document.body.onclick=()=>{
+    document.documentElement.requestFullscreen();
+}
+
+</script>
+
+</body>
+</html>
