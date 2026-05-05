@@ -2,7 +2,7 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8">
-<title>AZKO TV TOP 3</title>
+<title>AZKO TV LEADERBOARD</title>
 
 <style>
 body{
@@ -21,66 +21,43 @@ body{
     background:#22c55e;
 }
 
-/* TOP 3 WRAP */
-.hero-wrap{
-    display:flex;
-    justify-content:center;
-    gap:15px;
-    padding:15px;
-    flex-wrap:wrap;
-}
-
-/* CARD TOP 3 */
-.hero-card{
-    border-radius:18px;
-    padding:20px;
+/* SECTION TITLE */
+h2{
     text-align:center;
-    width:30%;
-    min-width:240px;
+    margin:15px 0;
 }
 
-/* 🥇 */
-.rank-1{
-    background:linear-gradient(145deg,#fbbf24,#f59e0b);
-    box-shadow:0 0 25px rgba(251,191,36,0.6);
+/* TOP 3 LIST (VERTICAL) */
+.top3-list{
+    padding:20px;
+    font-size:24px;
 }
 
-/* 🥈 */
-.rank-2{
-    background:linear-gradient(145deg,#cbd5e1,#94a3b8);
-}
-
-/* 🥉 */
-.rank-3{
-    background:linear-gradient(145deg,#d97706,#b45309);
-}
-
-/* AVATAR */
-.avatar{
-    width:80px;
-    height:80px;
-    border-radius:50%;
-    background:#0f172a;
-    margin:auto;
+/* ITEM */
+.item{
     display:flex;
-    align-items:center;
-    justify-content:center;
-    font-size:26px;
+    justify-content:space-between;
+    padding:12px 10px;
+    border-bottom:1px solid #334155;
+}
+
+/* RANK COLORS */
+.rank-1{
+    background:rgba(251,191,36,0.15);
+    color:#fbbf24;
     font-weight:bold;
 }
 
-/* FULL LIST (NO CARD) */
-.list{
-    padding:20px;
-    font-size:22px;
-    line-height:2;
+.rank-2{
+    background:rgba(148,163,184,0.15);
+    color:#cbd5e1;
+    font-weight:bold;
 }
 
-.list-item{
-    display:flex;
-    justify-content:space-between;
-    border-bottom:1px solid #334155;
-    padding:8px 0;
+.rank-3{
+    background:rgba(180,83,9,0.15);
+    color:#d97706;
+    font-weight:bold;
 }
 
 /* SLIDE */
@@ -89,17 +66,7 @@ body{
 
 /* RESPONSIVE */
 @media (max-width:768px){
-
-    .hero-wrap{
-        flex-direction:column;
-        align-items:center;
-    }
-
-    .hero-card{
-        width:90%;
-    }
-
-    .list{
+    .top3-list{
         font-size:18px;
     }
 }
@@ -109,30 +76,24 @@ body{
 
 <body>
 
-<div class="header">🔥 AZKO PERFORMANCE TOP 3</div>
+<div class="header">🔥 AZKO PERFORMANCE LEADERBOARD</div>
 
 <!-- SALES -->
 <div class="slide active">
-<h2 style="text-align:center;">TOP SALES</h2>
-
-<div id="salesHero" class="hero-wrap"></div>
-<div id="salesList" class="list"></div>
+<h2>TOP SALES</h2>
+<div id="salesList" class="top3-list"></div>
 </div>
 
 <!-- PROTEKSI -->
 <div class="slide">
-<h2 style="text-align:center;">TOP PROTEKSI</h2>
-
-<div id="proteksiHero" class="hero-wrap"></div>
-<div id="proteksiList" class="list"></div>
+<h2>TOP PROTEKSI</h2>
+<div id="proteksiList" class="top3-list"></div>
 </div>
 
 <!-- TRX -->
 <div class="slide">
-<h2 style="text-align:center;">TOP TRX</h2>
-
-<div id="trxHero" class="hero-wrap"></div>
-<div id="trxList" class="list"></div>
+<h2>TOP TRX</h2>
+<div id="trxList" class="top3-list"></div>
 </div>
 
 <script>
@@ -141,10 +102,6 @@ const URL = "https://script.google.com/macros/s/AKfycbzeehvUo6QYriMFJTR4A88lN6II
 
 function clean(v){
     return parseInt((v||"0").toString().replace(/[^\d]/g,'')) || 0;
-}
-
-function avatar(name){
-    return name ? name.split(" ").map(n=>n[0]).join("").substring(0,2).toUpperCase() : "NA";
 }
 
 /* DATA */
@@ -160,8 +117,8 @@ async function getData(){
     }));
 }
 
-/* TOP 3 */
-function renderHero(data,key,id){
+/* RENDER TOP 3 LIST ONLY */
+function renderTop3(data,key,id){
 
     let top3 = data
         .filter(d=>d[key]>0)
@@ -172,32 +129,13 @@ function renderHero(data,key,id){
 
     top3.forEach((d,i)=>{
 
-        let cls = i===0 ? "rank-1" : i===1 ? "rank-2" : "rank-3";
+        let cls = "";
+        if(i===0) cls="rank-1";
+        if(i===1) cls="rank-2";
+        if(i===2) cls="rank-3";
 
         html+=`
-        <div class="hero-card ${cls}">
-            <div style="font-size:18px;font-weight:bold;">🏆 #${i+1}</div>
-            <div class="avatar">${avatar(d.name)}</div>
-            <h2>${d.name}</h2>
-            <h1>${d[key].toLocaleString()}</h1>
-        </div>`;
-    });
-
-    document.getElementById(id).innerHTML = html;
-}
-
-/* FULL LIST (TEXT SIMPLE) */
-function renderList(data,key,id){
-
-    let list = data
-        .filter(d=>d[key]>0)
-        .sort((a,b)=>b[key]-a[key]);
-
-    let html="";
-
-    list.forEach((d,i)=>{
-        html+=`
-        <div class="list-item">
+        <div class="item ${cls}">
             <div>#${i+1} ${d.name}</div>
             <div>${d[key].toLocaleString()}</div>
         </div>`;
@@ -210,14 +148,9 @@ function renderList(data,key,id){
 async function update(){
     let data = await getData();
 
-    renderHero(data,"sales","salesHero");
-    renderList(data,"sales","salesList");
-
-    renderHero(data,"proteksi","proteksiHero");
-    renderList(data,"proteksi","proteksiList");
-
-    renderHero(data,"trx","trxHero");
-    renderList(data,"trx","trxList");
+    renderTop3(data,"sales","salesList");
+    renderTop3(data,"proteksi","proteksiList");
+    renderTop3(data,"trx","trxList");
 }
 
 /* SLIDE */
