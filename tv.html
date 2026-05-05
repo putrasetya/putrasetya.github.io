@@ -2,7 +2,7 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8">
-<title>AZKO TV RESPONSIVE FINAL</title>
+<title>AZKO TV TOP 3</title>
 
 <style>
 body{
@@ -21,7 +21,7 @@ body{
     background:#22c55e;
 }
 
-/* HERO TOP 3 */
+/* TOP 3 WRAP */
 .hero-wrap{
     display:flex;
     justify-content:center;
@@ -30,69 +30,64 @@ body{
     flex-wrap:wrap;
 }
 
-/* CARD BASE */
+/* CARD TOP 3 */
 .hero-card{
     border-radius:18px;
     padding:20px;
     text-align:center;
     width:30%;
     min-width:240px;
-    transition:0.3s;
 }
 
-/* 🥇 GOLD */
+/* 🥇 */
 .rank-1{
     background:linear-gradient(145deg,#fbbf24,#f59e0b);
     box-shadow:0 0 25px rgba(251,191,36,0.6);
-    transform:scale(1.05);
 }
 
-/* 🥈 SILVER */
+/* 🥈 */
 .rank-2{
     background:linear-gradient(145deg,#cbd5e1,#94a3b8);
-    box-shadow:0 0 20px rgba(148,163,184,0.5);
 }
 
-/* 🥉 BRONZE */
+/* 🥉 */
 .rank-3{
     background:linear-gradient(145deg,#d97706,#b45309);
-    box-shadow:0 0 20px rgba(180,83,9,0.5);
 }
 
 /* AVATAR */
 .avatar{
-    width:85px;
-    height:85px;
+    width:80px;
+    height:80px;
     border-radius:50%;
     background:#0f172a;
     margin:auto;
     display:flex;
     align-items:center;
     justify-content:center;
-    font-size:28px;
+    font-size:26px;
     font-weight:bold;
 }
 
-/* LIST RANK 4-5 */
-.container{
-    display:grid;
-    grid-template-columns:repeat(3,1fr);
-    gap:15px;
-    padding:15px;
+/* FULL LIST (NO CARD) */
+.list{
+    padding:20px;
+    font-size:22px;
+    line-height:2;
 }
 
-.card{
-    background:#1e293b;
-    border-radius:12px;
-    padding:15px;
-    text-align:center;
+.list-item{
+    display:flex;
+    justify-content:space-between;
+    border-bottom:1px solid #334155;
+    padding:8px 0;
 }
 
 /* SLIDE */
 .slide{display:none;}
 .active{display:block;}
 
-/* 📱 RESPONSIVE */
+/* RESPONSIVE */
 @media (max-width:768px){
 
     .hero-wrap{
@@ -104,40 +99,40 @@ body{
         width:90%;
     }
 
-    .container{
-        grid-template-columns:1fr;
-    }
-
-    .header{
-        font-size:20px;
+    .list{
+        font-size:18px;
     }
 }
+
 </style>
 </head>
 
 <body>
 
-<div class="header">🔥 AZKO PERFORMANCE DASHBOARD</div>
+<div class="header">🔥 AZKO PERFORMANCE TOP 3</div>
 
-<!-- TOP SALES -->
+<!-- SALES -->
 <div class="slide active">
 <h2 style="text-align:center;">TOP SALES</h2>
+
 <div id="salesHero" class="hero-wrap"></div>
-<div id="salesList" class="container"></div>
+<div id="salesList" class="list"></div>
 </div>
 
-<!-- TOP PROTEKSI -->
+<!-- PROTEKSI -->
 <div class="slide">
 <h2 style="text-align:center;">TOP PROTEKSI</h2>
+
 <div id="proteksiHero" class="hero-wrap"></div>
-<div id="proteksiList" class="container"></div>
+<div id="proteksiList" class="list"></div>
 </div>
 
-<!-- TOP TRX -->
+<!-- TRX -->
 <div class="slide">
 <h2 style="text-align:center;">TOP TRX</h2>
+
 <div id="trxHero" class="hero-wrap"></div>
-<div id="trxList" class="container"></div>
+<div id="trxList" class="list"></div>
 </div>
 
 <script>
@@ -152,7 +147,7 @@ function avatar(name){
     return name ? name.split(" ").map(n=>n[0]).join("").substring(0,2).toUpperCase() : "NA";
 }
 
-/* AMBIL DATA */
+/* DATA */
 async function getData(){
     let res = await fetch(URL);
     let data = await res.json();
@@ -165,22 +160,22 @@ async function getData(){
     }));
 }
 
-/* TOP 3 HIGHLIGHT */
-function renderHero(data,key,containerId){
+/* TOP 3 */
+function renderHero(data,key,id){
 
     let top3 = data
         .filter(d=>d[key]>0)
         .sort((a,b)=>b[key]-a[key])
         .slice(0,3);
 
-    let html = "";
+    let html="";
 
     top3.forEach((d,i)=>{
 
-        let rankClass = i===0 ? "rank-1" : i===1 ? "rank-2" : "rank-3";
+        let cls = i===0 ? "rank-1" : i===1 ? "rank-2" : "rank-3";
 
-        html += `
-        <div class="hero-card ${rankClass}">
+        html+=`
+        <div class="hero-card ${cls}">
             <div style="font-size:18px;font-weight:bold;">🏆 #${i+1}</div>
             <div class="avatar">${avatar(d.name)}</div>
             <h2>${d.name}</h2>
@@ -188,30 +183,27 @@ function renderHero(data,key,containerId){
         </div>`;
     });
 
-    document.getElementById(containerId).innerHTML = html;
+    document.getElementById(id).innerHTML = html;
 }
 
-/* RANK 4-5 */
-function renderList(data,key,containerId){
+/* FULL LIST (TEXT SIMPLE) */
+function renderList(data,key,id){
 
     let list = data
         .filter(d=>d[key]>0)
-        .sort((a,b)=>b[key]-a[key])
-        .slice(3,5);
+        .sort((a,b)=>b[key]-a[key]);
 
     let html="";
 
     list.forEach((d,i)=>{
         html+=`
-        <div class="card">
-            <div>#${i+4}</div>
-            <div class="avatar">${avatar(d.name)}</div>
-            <h3>${d.name}</h3>
-            <h2 style="color:#22c55e">${d[key].toLocaleString()}</h2>
+        <div class="list-item">
+            <div>#${i+1} ${d.name}</div>
+            <div>${d[key].toLocaleString()}</div>
         </div>`;
     });
 
-    document.getElementById(containerId).innerHTML = html;
+    document.getElementById(id).innerHTML = html;
 }
 
 /* UPDATE */
@@ -228,7 +220,7 @@ async function update(){
     renderList(data,"trx","trxList");
 }
 
-/* SLIDE AUTO */
+/* SLIDE */
 let i=0;
 setInterval(()=>{
     let slides=document.querySelectorAll(".slide");
@@ -242,7 +234,7 @@ setInterval(update,15000);
 
 update();
 
-/* FULLSCREEN CLICK */
+/* FULLSCREEN */
 document.body.onclick=()=>{
     document.documentElement.requestFullscreen();
 }
