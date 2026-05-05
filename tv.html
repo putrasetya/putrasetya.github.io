@@ -2,7 +2,7 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8">
-<title>AZKO TV RESPONSIVE</title>
+<title>AZKO TV RESPONSIVE FINAL</title>
 
 <style>
 body{
@@ -30,37 +30,46 @@ body{
     flex-wrap:wrap;
 }
 
-/* CARD BESAR (TOP 3) */
+/* CARD BASE */
 .hero-card{
-    background:#1e293b;
     border-radius:18px;
     padding:20px;
     text-align:center;
     width:30%;
-    min-width:250px;
-    box-shadow:0 0 15px rgba(34,197,94,0.3);
+    min-width:240px;
+    transition:0.3s;
 }
 
-.hero-card h1{
-    font-size:22px;
-    margin:10px 0;
+/* 🥇 GOLD */
+.rank-1{
+    background:linear-gradient(145deg,#fbbf24,#f59e0b);
+    box-shadow:0 0 25px rgba(251,191,36,0.6);
+    transform:scale(1.05);
 }
 
-.hero-card h2{
-    color:#22c55e;
+/* 🥈 SILVER */
+.rank-2{
+    background:linear-gradient(145deg,#cbd5e1,#94a3b8);
+    box-shadow:0 0 20px rgba(148,163,184,0.5);
+}
+
+/* 🥉 BRONZE */
+.rank-3{
+    background:linear-gradient(145deg,#d97706,#b45309);
+    box-shadow:0 0 20px rgba(180,83,9,0.5);
 }
 
 /* AVATAR */
 .avatar{
-    width:90px;
-    height:90px;
+    width:85px;
+    height:85px;
     border-radius:50%;
-    background:#334155;
+    background:#0f172a;
     margin:auto;
     display:flex;
     align-items:center;
     justify-content:center;
-    font-size:30px;
+    font-size:28px;
     font-weight:bold;
 }
 
@@ -83,9 +92,7 @@ body{
 .slide{display:none;}
 .active{display:block;}
 
-/* ========================= */
-/* 📱 MOBILE RESPONSIVE */
-/* ========================= */
+/* 📱 RESPONSIVE */
 @media (max-width:768px){
 
     .hero-wrap{
@@ -112,26 +119,23 @@ body{
 
 <div class="header">🔥 AZKO PERFORMANCE DASHBOARD</div>
 
-<!-- SLIDE 1 -->
+<!-- TOP SALES -->
 <div class="slide active">
 <h2 style="text-align:center;">TOP SALES</h2>
-
 <div id="salesHero" class="hero-wrap"></div>
 <div id="salesList" class="container"></div>
 </div>
 
-<!-- SLIDE 2 -->
+<!-- TOP PROTEKSI -->
 <div class="slide">
 <h2 style="text-align:center;">TOP PROTEKSI</h2>
-
 <div id="proteksiHero" class="hero-wrap"></div>
 <div id="proteksiList" class="container"></div>
 </div>
 
-<!-- SLIDE 3 -->
+<!-- TOP TRX -->
 <div class="slide">
 <h2 style="text-align:center;">TOP TRX</h2>
-
 <div id="trxHero" class="hero-wrap"></div>
 <div id="trxList" class="container"></div>
 </div>
@@ -148,6 +152,7 @@ function avatar(name){
     return name ? name.split(" ").map(n=>n[0]).join("").substring(0,2).toUpperCase() : "NA";
 }
 
+/* AMBIL DATA */
 async function getData(){
     let res = await fetch(URL);
     let data = await res.json();
@@ -160,7 +165,7 @@ async function getData(){
     }));
 }
 
-/* RENDER TOP 3 HERO */
+/* TOP 3 HIGHLIGHT */
 function renderHero(data,key,containerId){
 
     let top3 = data
@@ -168,22 +173,25 @@ function renderHero(data,key,containerId){
         .sort((a,b)=>b[key]-a[key])
         .slice(0,3);
 
-    let html="";
+    let html = "";
 
     top3.forEach((d,i)=>{
-        html+=`
-        <div class="hero-card">
-            <div style="font-size:18px;font-weight:bold;">#${i+1}</div>
+
+        let rankClass = i===0 ? "rank-1" : i===1 ? "rank-2" : "rank-3";
+
+        html += `
+        <div class="hero-card ${rankClass}">
+            <div style="font-size:18px;font-weight:bold;">🏆 #${i+1}</div>
             <div class="avatar">${avatar(d.name)}</div>
-            <h1>${d.name}</h1>
-            <h2>${d[key].toLocaleString()}</h2>
+            <h2>${d.name}</h2>
+            <h1>${d[key].toLocaleString()}</h1>
         </div>`;
     });
 
     document.getElementById(containerId).innerHTML = html;
 }
 
-/* RENDER RANK 4-5 */
+/* RANK 4-5 */
 function renderList(data,key,containerId){
 
     let list = data
@@ -206,6 +214,7 @@ function renderList(data,key,containerId){
     document.getElementById(containerId).innerHTML = html;
 }
 
+/* UPDATE */
 async function update(){
     let data = await getData();
 
@@ -233,7 +242,10 @@ setInterval(update,15000);
 
 update();
 
-document.body.onclick=()=>document.documentElement.requestFullscreen();
+/* FULLSCREEN CLICK */
+document.body.onclick=()=>{
+    document.documentElement.requestFullscreen();
+}
 
 </script>
 
