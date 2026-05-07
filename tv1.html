@@ -1,14 +1,19 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>AZKO PREMIUM TV DISPLAY</title>
+<title>AZKO ULTRA TV DISPLAY</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800;900&display=swap" rel="stylesheet">
 
 <style>
+
+/* =========================================
+   RESET
+========================================= */
 
 *{
     margin:0;
@@ -16,52 +21,92 @@
     box-sizing:border-box;
 }
 
-:root{
-    --dark:#020617;
-    --text:#ffffff;
-}
+/* =========================================
+   BODY
+========================================= */
 
 body{
+
     font-family:'Poppins',sans-serif;
-    background:
-        radial-gradient(circle at top,#0f172a 0%,#020617 65%);
+
     overflow:hidden;
+
     color:white;
+
+    background:
+        radial-gradient(circle at top left,#1e3a8a 0%,transparent 30%),
+        radial-gradient(circle at top right,#facc15 0%,transparent 25%),
+        radial-gradient(circle at bottom,#0f172a 0%,#020617 70%);
+
 }
 
 /* =========================================
-   BACKGROUND EFFECT
+   BACKGROUND LIGHT
 ========================================= */
 
-.bg-glow{
+body::before{
+
+    content:"";
+
     position:fixed;
-    width:100%;
-    height:100%;
-    overflow:hidden;
-    z-index:-1;
+
+    inset:0;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(255,255,255,.04),
+            transparent 30%,
+            rgba(255,255,255,.03)
+        );
+
+    pointer-events:none;
 }
 
-.glow{
-    position:absolute;
-    border-radius:50%;
-    filter:blur(120px);
-    opacity:.25;
+/* =========================================
+   MOVING LIGHT
+========================================= */
+
+body::after{
+
+    content:"";
+
+    position:fixed;
+
+    width:200%;
+    height:200%;
+
+    top:-50%;
+    left:-50%;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            rgba(255,255,255,.04),
+            transparent
+        );
+
+    transform:rotate(25deg);
+
+    animation:lightMove 10s linear infinite;
+
+    pointer-events:none;
 }
 
-.glow1{
-    width:500px;
-    height:500px;
-    background:#facc15;
-    top:-100px;
-    left:-100px;
-}
+@keyframes lightMove{
 
-.glow2{
-    width:500px;
-    height:500px;
-    background:#60a5fa;
-    bottom:-150px;
-    right:-100px;
+    0%{
+        transform:
+            translateX(-20%)
+            rotate(25deg);
+    }
+
+    100%{
+        transform:
+            translateX(20%)
+            rotate(25deg);
+    }
 }
 
 /* =========================================
@@ -69,10 +114,14 @@ body{
 ========================================= */
 
 .slide{
+
     width:100vw;
     height:100vh;
+
     padding:2vh 2vw;
+
     display:none;
+
     flex-direction:column;
 }
 
@@ -85,23 +134,35 @@ body{
 ========================================= */
 
 .header{
+
     text-align:center;
+
     margin-bottom:2vh;
 }
 
 .header h1{
+
     font-size:4vw;
+
     font-weight:900;
-    letter-spacing:4px;
+
+    letter-spacing:5px;
+
     text-transform:uppercase;
+
     text-shadow:
         0 0 20px rgba(255,255,255,.2);
 }
 
 .header p{
-    font-size:1.2vw;
-    opacity:.7;
+
     margin-top:.5vh;
+
+    font-size:1vw;
+
+    opacity:.75;
+
+    letter-spacing:3px;
 }
 
 /* =========================================
@@ -109,9 +170,13 @@ body{
 ========================================= */
 
 .rank-list{
+
     display:flex;
+
     flex-direction:column;
+
     gap:2vh;
+
     flex:1;
 }
 
@@ -120,77 +185,30 @@ body{
 ========================================= */
 
 .rank-card{
+
     position:relative;
+
     display:flex;
+
     align-items:center;
+
     height:28vh;
-    border-radius:30px;
+
+    border-radius:32px;
+
     overflow:hidden;
-    backdrop-filter:blur(15px);
-    transform:scale(1);
+
+    animation:fadeUp .7s ease;
+
     transition:.3s;
-    animation:fadeUp .6s ease;
+
+    border:
+        1px solid rgba(255,255,255,.08);
 }
 
 .rank-card:hover{
+
     transform:scale(1.01);
-}
-
-/* =========================================
-   GOLD
-========================================= */
-
-.gold{
-    background:
-        linear-gradient(
-            135deg,
-            #7a5b00 0%,
-            #facc15 20%,
-            #fff1a8 50%,
-            #facc15 80%,
-            #7a5b00 100%
-        );
-
-    box-shadow:
-        0 0 40px rgba(250,204,21,.45);
-}
-
-/* =========================================
-   SILVER
-========================================= */
-
-.silver{
-    background:
-        linear-gradient(
-            135deg,
-            #6b7280 0%,
-            #d1d5db 20%,
-            #ffffff 50%,
-            #d1d5db 80%,
-            #6b7280 100%
-        );
-
-    box-shadow:
-        0 0 35px rgba(255,255,255,.18);
-}
-
-/* =========================================
-   BRONZE
-========================================= */
-
-.bronze{
-    background:
-        linear-gradient(
-            135deg,
-            #6b3f1d 0%,
-            #c97a3d 20%,
-            #f3c08d 50%,
-            #c97a3d 80%,
-            #6b3f1d 100%
-        );
-
-    box-shadow:
-        0 0 35px rgba(201,122,61,.35);
 }
 
 /* =========================================
@@ -198,10 +216,17 @@ body{
 ========================================= */
 
 .rank-card::before{
+
     content:"";
+
     position:absolute;
-    width:35%;
+
+    top:0;
+    left:-40%;
+
+    width:30%;
     height:200%;
+
     background:
         linear-gradient(
             90deg,
@@ -210,110 +235,10 @@ body{
             transparent
         );
 
-    transform:rotate(20deg);
+    transform:rotate(25deg);
+
     animation:shine 5s linear infinite;
 }
-
-/* =========================================
-   RANK
-========================================= */
-
-.rank-number{
-    width:14%;
-    min-width:120px;
-    text-align:center;
-    font-size:9vw;
-    font-weight:900;
-    color:white;
-    text-shadow:
-        0 6px 18px rgba(0,0,0,.35);
-}
-
-/* =========================================
-   PHOTO
-========================================= */
-
-.photo-box{
-    width:14vw;
-    height:14vw;
-    max-width:180px;
-    max-height:180px;
-    min-width:100px;
-    min-height:100px;
-
-    border-radius:24px;
-    overflow:hidden;
-
-    background:white;
-
-    box-shadow:
-        0 10px 25px rgba(0,0,0,.25);
-
-    flex-shrink:0;
-}
-
-.photo-box img{
-    width:100%;
-    height:100%;
-    object-fit:cover;
-}
-
-/* =========================================
-   NAME
-========================================= */
-
-.employee{
-    flex:1;
-    padding-left:2.5vw;
-    overflow:hidden;
-}
-
-.employee-name{
-    font-size:3vw;
-    font-weight:900;
-    color:#111827;
-    text-transform:uppercase;
-    white-space:nowrap;
-    overflow:hidden;
-    text-overflow:ellipsis;
-}
-
-.employee-label{
-    margin-top:.5vh;
-    font-size:1vw;
-    color:#111827;
-    opacity:.7;
-    font-weight:600;
-    letter-spacing:2px;
-}
-
-/* =========================================
-   SCORE
-========================================= */
-
-.score{
-    width:28%;
-    padding-right:3vw;
-    text-align:right;
-}
-
-.score-value{
-    font-size:3.5vw;
-    font-weight:900;
-    color:#111827;
-}
-
-.score-text{
-    font-size:1vw;
-    font-weight:700;
-    color:#111827;
-    opacity:.65;
-    letter-spacing:2px;
-}
-
-/* =========================================
-   ANIMATION
-========================================= */
 
 @keyframes shine{
 
@@ -322,20 +247,232 @@ body{
     }
 
     100%{
-        left:120%;
+        left:130%;
     }
 }
+
+/* =========================================
+   GOLD
+========================================= */
+
+.gold{
+
+    background:
+        linear-gradient(
+            135deg,
+            #6b5300 0%,
+            #d4a514 18%,
+            #fff0a6 50%,
+            #d4a514 82%,
+            #6b5300 100%
+        );
+
+    box-shadow:
+        0 0 40px rgba(250,204,21,.3);
+}
+
+/* =========================================
+   SILVER
+========================================= */
+
+.silver{
+
+    background:
+        linear-gradient(
+            135deg,
+            #737373 0%,
+            #cfcfcf 18%,
+            #ffffff 50%,
+            #cfcfcf 82%,
+            #737373 100%
+        );
+
+    box-shadow:
+        0 0 30px rgba(255,255,255,.18);
+}
+
+/* =========================================
+   BRONZE
+========================================= */
+
+.bronze{
+
+    background:
+        linear-gradient(
+            135deg,
+            #6d3f1d 0%,
+            #c87c3d 18%,
+            #efc08c 50%,
+            #c87c3d 82%,
+            #6d3f1d 100%
+        );
+
+    box-shadow:
+        0 0 30px rgba(200,124,61,.28);
+}
+
+/* =========================================
+   RANK NUMBER
+========================================= */
+
+.rank-number{
+
+    width:14%;
+
+    min-width:120px;
+
+    text-align:center;
+
+    font-size:9vw;
+
+    font-weight:900;
+
+    color:white;
+
+    text-shadow:
+        0 8px 18px rgba(0,0,0,.35);
+}
+
+/* =========================================
+   PHOTO
+========================================= */
+
+.photo-box{
+
+    width:14vw;
+    height:14vw;
+
+    max-width:180px;
+    max-height:180px;
+
+    min-width:100px;
+    min-height:100px;
+
+    background:white;
+
+    border-radius:24px;
+
+    overflow:hidden;
+
+    flex-shrink:0;
+
+    border:
+        4px solid rgba(255,255,255,.6);
+
+    box-shadow:
+        0 10px 25px rgba(0,0,0,.25);
+}
+
+.photo-box img{
+
+    width:100%;
+    height:100%;
+
+    object-fit:cover;
+}
+
+/* =========================================
+   EMPLOYEE
+========================================= */
+
+.employee{
+
+    flex:1;
+
+    padding-left:2.5vw;
+
+    overflow:hidden;
+}
+
+.employee-name{
+
+    font-size:3vw;
+
+    font-weight:900;
+
+    color:#111827;
+
+    text-transform:uppercase;
+
+    white-space:nowrap;
+
+    overflow:hidden;
+
+    text-overflow:ellipsis;
+}
+
+.employee-label{
+
+    margin-top:.5vh;
+
+    font-size:1vw;
+
+    font-weight:700;
+
+    color:#111827;
+
+    opacity:.7;
+
+    letter-spacing:2px;
+}
+
+/* =========================================
+   SCORE
+========================================= */
+
+.score{
+
+    width:28%;
+
+    padding-right:3vw;
+
+    text-align:right;
+}
+
+.score-value{
+
+    font-size:3.6vw;
+
+    font-weight:900;
+
+    color:#111827;
+}
+
+.score-label{
+
+    margin-top:.5vh;
+
+    font-size:1vw;
+
+    font-weight:700;
+
+    color:#111827;
+
+    opacity:.65;
+
+    letter-spacing:2px;
+}
+
+/* =========================================
+   ANIMATION
+========================================= */
 
 @keyframes fadeUp{
 
     from{
+
         opacity:0;
-        transform:translateY(30px);
+
+        transform:
+            translateY(40px);
     }
 
     to{
+
         opacity:1;
-        transform:translateY(0);
+
+        transform:
+            translateY(0);
     }
 }
 
@@ -350,39 +487,51 @@ body{
     }
 
     .slide{
-        height:auto;
+
         min-height:100vh;
+
+        height:auto;
+
         padding:15px;
     }
 
     .header h1{
-        font-size:40px;
+        font-size:38px;
     }
 
     .header p{
-        font-size:14px;
+        font-size:12px;
     }
 
     .rank-card{
+
         height:120px;
+
         border-radius:20px;
     }
 
     .rank-number{
+
         width:60px;
+
         min-width:60px;
-        font-size:65px;
+
+        font-size:60px;
     }
 
     .photo-box{
+
         width:75px;
         height:75px;
+
         min-width:75px;
         min-height:75px;
-        border-radius:14px;
+
+        border-radius:16px;
     }
 
     .employee{
+
         padding-left:15px;
     }
 
@@ -395,7 +544,9 @@ body{
     }
 
     .score{
+
         width:auto;
+
         padding-right:15px;
     }
 
@@ -403,27 +554,27 @@ body{
         font-size:24px;
     }
 
-    .score-text{
+    .score-label{
         font-size:10px;
     }
 }
 
 /* =========================================
-   ULTRA TV
+   TV 4K
 ========================================= */
 
 @media(min-width:1920px){
 
     .header h1{
-        font-size:70px;
+        font-size:72px;
     }
 
     .employee-name{
-        font-size:55px;
+        font-size:58px;
     }
 
     .score-value{
-        font-size:65px;
+        font-size:70px;
     }
 }
 
@@ -432,20 +583,18 @@ body{
 
 <body>
 
-<div class="bg-glow">
-    <div class="glow glow1"></div>
-    <div class="glow glow2"></div>
-</div>
-
 <!-- =========================================
-     SLIDE SALES
+     SALES
 ========================================= -->
 
 <div class="slide active">
 
     <div class="header">
+
         <h1>TOP SALES</h1>
+
         <p>AZKO PERFORMANCE LEADERBOARD</p>
+
     </div>
 
     <div class="rank-list" id="salesList"></div>
@@ -453,14 +602,17 @@ body{
 </div>
 
 <!-- =========================================
-     SLIDE PROTEKSI
+     PROTEKSI
 ========================================= -->
 
 <div class="slide">
 
     <div class="header">
+
         <h1>TOP PROTEKSI</h1>
+
         <p>AZKO PERFORMANCE LEADERBOARD</p>
+
     </div>
 
     <div class="rank-list" id="proteksiList"></div>
@@ -468,14 +620,17 @@ body{
 </div>
 
 <!-- =========================================
-     SLIDE TRX
+     TRX
 ========================================= -->
 
 <div class="slide">
 
     <div class="header">
+
         <h1>TOP TRX</h1>
+
         <p>AZKO PERFORMANCE LEADERBOARD</p>
+
     </div>
 
     <div class="rank-list" id="trxList"></div>
@@ -556,7 +711,7 @@ async function getData(){
    RENDER
 ========================================= */
 
-function render(data,key,container){
+function render(data,key,containerId){
 
     const styles = [
         "gold",
@@ -605,7 +760,7 @@ function render(data,key,container){
                     ${d[key].toLocaleString('id-ID')}
                 </div>
 
-                <div class="score-text">
+                <div class="score-label">
                     TOTAL SCORE
                 </div>
 
@@ -616,7 +771,7 @@ function render(data,key,container){
         `;
     });
 
-    document.getElementById(container)
+    document.getElementById(containerId)
         .innerHTML = html;
 }
 
@@ -629,7 +784,9 @@ async function update(){
     const data = await getData();
 
     render(data,"sales","salesList");
+
     render(data,"proteksi","proteksiList");
+
     render(data,"trx","trxList");
 }
 
