@@ -255,10 +255,6 @@ body::after{
     flex-shrink:0;
 }
 
-/* =========================================
-   CARD ANIMATION
-========================================= */
-
 .rank-card:nth-child(1){
     animation-delay:.2s;
 }
@@ -333,7 +329,7 @@ body::after{
 }
 
 /* =========================================
-   GOLD CARD
+   CARD COLORS
 ========================================= */
 
 .gold{
@@ -352,10 +348,6 @@ body::after{
         0 0 40px rgba(250,204,21,.35);
 }
 
-/* =========================================
-   SILVER CARD
-========================================= */
-
 .silver{
 
     background:
@@ -371,10 +363,6 @@ body::after{
     box-shadow:
         0 0 30px rgba(255,255,255,.2);
 }
-
-/* =========================================
-   BRONZE CARD
-========================================= */
 
 .bronze{
 
@@ -393,7 +381,7 @@ body::after{
 }
 
 /* =========================================
-   RANK NUMBER
+   RANK NUMBER CLEAR TV
 ========================================= */
 
 .rank-number{
@@ -414,16 +402,19 @@ body::after{
 
     line-height:1;
 
-    opacity:.22;
-
     pointer-events:none;
 
     user-select:none;
 
     letter-spacing:-12px;
 
-    text-shadow:
-        0 8px 30px rgba(0,0,0,.25);
+    opacity:.42;
+
+    filter:
+        drop-shadow(0 8px 12px rgba(0,0,0,.35));
+
+    -webkit-text-stroke:
+        3px rgba(255,255,255,.18);
 }
 
 /* =========================================
@@ -435,14 +426,19 @@ body::after{
     background:
         linear-gradient(
             180deg,
-            #fff7b1,
-            #facc15,
-            #a16207
+            rgba(255,255,255,.95) 0%,
+            #fff7b1 10%,
+            #facc15 38%,
+            #ca8a04 72%,
+            #78350f 100%
         );
 
     -webkit-background-clip:text;
 
     -webkit-text-fill-color:transparent;
+
+    text-shadow:
+        0 0 30px rgba(250,204,21,.45);
 }
 
 /* =========================================
@@ -454,14 +450,19 @@ body::after{
     background:
         linear-gradient(
             180deg,
-            #ffffff,
-            #cbd5e1,
-            #64748b
+            rgba(255,255,255,.98) 0%,
+            #ffffff 15%,
+            #cbd5e1 45%,
+            #94a3b8 75%,
+            #475569 100%
         );
 
     -webkit-background-clip:text;
 
     -webkit-text-fill-color:transparent;
+
+    text-shadow:
+        0 0 30px rgba(255,255,255,.35);
 }
 
 /* =========================================
@@ -473,14 +474,19 @@ body::after{
     background:
         linear-gradient(
             180deg,
-            #fed7aa,
-            #fb923c,
-            #7c2d12
+            #fff7ed 0%,
+            #fed7aa 12%,
+            #fb923c 42%,
+            #c2410c 75%,
+            #7c2d12 100%
         );
 
     -webkit-background-clip:text;
 
     -webkit-text-fill-color:transparent;
+
+    text-shadow:
+        0 0 30px rgba(251,146,60,.35);
 }
 
 /* =========================================
@@ -669,6 +675,11 @@ body::after{
         font-size:110px;
 
         left:-10px;
+
+        opacity:.5;
+
+        -webkit-text-stroke:
+            2px rgba(255,255,255,.18);
     }
 
     .photo-box{
@@ -753,7 +764,11 @@ body::after{
     }
 
     .rank-number{
+
         font-size:360px;
+
+        -webkit-text-stroke:
+            5px rgba(255,255,255,.16);
     }
 }
 
@@ -763,7 +778,6 @@ body::after{
 <body>
 
 <!-- SALES -->
-
 <div class="slide active">
 
     <div class="header">
@@ -783,7 +797,6 @@ body::after{
 </div>
 
 <!-- PROTEKSI -->
-
 <div class="slide">
 
     <div class="header">
@@ -803,7 +816,6 @@ body::after{
 </div>
 
 <!-- TRX -->
-
 <div class="slide">
 
     <div class="header">
@@ -989,9 +1001,7 @@ async function update(){
     updateTime();
 }
 
-/* =========================================
-   AUTO SLIDE 5 DETIK
-========================================= */
+/* AUTO SLIDE */
 
 let current = 0;
 
@@ -1011,17 +1021,13 @@ setInterval(()=>{
 
 },5000);
 
-/* =========================================
-   AUTO REFRESH
-========================================= */
+/* AUTO REFRESH */
 
 setInterval(update,15000);
 
 update();
 
-/* =========================================
-   FULLSCREEN
-========================================= */
+/* FULLSCREEN */
 
 document.body.onclick = () => {
 
