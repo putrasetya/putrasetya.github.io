@@ -96,12 +96,14 @@ body::after{
 @keyframes lightMove{
 
     0%{
+
         transform:
             translateX(-20%)
             rotate(25deg);
     }
 
     100%{
+
         transform:
             translateX(20%)
             rotate(25deg);
@@ -164,6 +166,28 @@ body::after{
     letter-spacing:4px;
 
     text-transform:uppercase;
+}
+
+/* =========================================
+   UPDATE TIME
+========================================= */
+
+.update-time{
+
+    margin-top:1vh;
+
+    font-size:1vw;
+
+    font-weight:700;
+
+    letter-spacing:2px;
+
+    opacity:.85;
+
+    color:#ffffff;
+
+    text-shadow:
+        0 0 10px rgba(255,255,255,.15);
 }
 
 /* =========================================
@@ -523,6 +547,13 @@ body::after{
         font-size:12px;
     }
 
+    .update-time{
+
+        font-size:11px;
+
+        margin-top:8px;
+    }
+
     .rank-card{
 
         height:120px;
@@ -613,6 +644,10 @@ body::after{
 
         <p>AZKO CITIMALL TUBAN</p>
 
+        <div class="update-time" id="updateTimeSales">
+            UPDATE AT : -
+        </div>
+
     </div>
 
     <div class="rank-list" id="salesList"></div>
@@ -629,6 +664,10 @@ body::after{
 
         <p>AZKO CITIMALL TUBAN</p>
 
+        <div class="update-time" id="updateTimeProteksi">
+            UPDATE AT : -
+        </div>
+
     </div>
 
     <div class="rank-list" id="proteksiList"></div>
@@ -644,6 +683,10 @@ body::after{
         <h1>TOP TRX</h1>
 
         <p>AZKO CITIMALL TUBAN</p>
+
+        <div class="update-time" id="updateTimeTrx">
+            UPDATE AT : -
+        </div>
 
     </div>
 
@@ -680,6 +723,47 @@ function clean(val){
 function avatar(name){
 
     return `https://ui-avatars.com/api/?name=${encodeURIComponent(name)}&background=random&color=fff&size=512`;
+}
+
+/* =========================================
+   UPDATE TIME
+========================================= */
+
+function updateTime(){
+
+    const now = new Date();
+
+    const options = {
+
+        day:'2-digit',
+        month:'long',
+        year:'numeric',
+
+        hour:'2-digit',
+        minute:'2-digit',
+        second:'2-digit'
+    };
+
+    const formatted =
+        now.toLocaleDateString(
+            'id-ID',
+            options
+        );
+
+    document.getElementById(
+        "updateTimeSales"
+    ).innerHTML =
+        "UPDATE AT : " + formatted;
+
+    document.getElementById(
+        "updateTimeProteksi"
+    ).innerHTML =
+        "UPDATE AT : " + formatted;
+
+    document.getElementById(
+        "updateTimeTrx"
+    ).innerHTML =
+        "UPDATE AT : " + formatted;
 }
 
 /* =========================================
@@ -804,6 +888,8 @@ async function update(){
     render(data,"proteksi","proteksiList");
 
     render(data,"trx","trxList");
+
+    updateTime();
 }
 
 /* =========================================
