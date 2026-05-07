@@ -11,7 +11,7 @@
 <style>
 
 /* =========================
-RESET
+   RESET
 ========================= */
 
 *{
@@ -21,7 +21,7 @@ RESET
 }
 
 /* =========================
-BODY
+   BODY
 ========================= */
 
 body{
@@ -39,7 +39,7 @@ body{
 }
 
 /* =========================
-BACKGROUND EFFECT
+   BACKGROUND FX
 ========================= */
 
 body::before{
@@ -104,7 +104,7 @@ body::after{
 }
 
 /* =========================
-SLIDE
+   SLIDE
 ========================= */
 
 .slide{
@@ -128,7 +128,7 @@ SLIDE
 }
 
 /* =========================
-HEADER
+   HEADER
 ========================= */
 
 .header{
@@ -166,7 +166,7 @@ HEADER
 }
 
 /* =========================
-UPDATE TIME
+   UPDATE TIME
 ========================= */
 
 .update-time{
@@ -204,7 +204,7 @@ UPDATE TIME
 }
 
 /* =========================
-LIST
+   LIST
 ========================= */
 
 .rank-list{
@@ -219,7 +219,7 @@ LIST
 }
 
 /* =========================
-CARD
+   CARD
 ========================= */
 
 .rank-card{
@@ -246,6 +246,10 @@ CARD
 
     animation:
         slideRight .8s forwards;
+
+    padding:
+        1vh
+        1vw;
 
     flex-shrink:0;
 }
@@ -284,7 +288,7 @@ CARD
 }
 
 /* =========================
-SHINE
+   SHINE
 ========================= */
 
 .rank-card::before{
@@ -324,7 +328,7 @@ SHINE
 }
 
 /* =========================
-CARD COLORS
+   CARD COLORS
 ========================= */
 
 .gold{
@@ -376,7 +380,7 @@ CARD COLORS
 }
 
 /* =========================
-RANK NUMBER
+   RANK NUMBER
 ========================= */
 
 .rank-number{
@@ -464,7 +468,7 @@ RANK NUMBER
 }
 
 /* =========================
-PHOTO FULL TRANSPARENT
+   PHOTO
 ========================= */
 
 .photo-box{
@@ -473,26 +477,30 @@ PHOTO FULL TRANSPARENT
 
     z-index:2;
 
-    width:15vw;
-    height:100%;
+    width:11vw;
+    height:11vw;
 
-    min-width:180px;
+    max-width:150px;
+    max-height:150px;
 
-    align-self:stretch;
+    min-width:90px;
+    min-height:90px;
+
+    background:white;
+
+    border-radius:24px;
 
     overflow:hidden;
 
     flex-shrink:0;
 
-    margin-left:0;
+    margin-left:6vw;
 
-    border:none;
+    border:
+        4px solid rgba(255,255,255,.6);
 
-    border-radius:0;
-
-    background:transparent;
-
-    box-shadow:none;
+    box-shadow:
+        0 10px 25px rgba(0,0,0,.25);
 }
 
 .photo-box img{
@@ -501,32 +509,10 @@ PHOTO FULL TRANSPARENT
     height:100%;
 
     object-fit:cover;
-
-    opacity:.92;
-
-    filter:
-        contrast(1.05)
-        saturate(1.05);
-
-    mask-image:
-        linear-gradient(
-            to right,
-            rgba(0,0,0,1) 55%,
-            rgba(0,0,0,.65) 75%,
-            transparent 100%
-        );
-
-    -webkit-mask-image:
-        linear-gradient(
-            to right,
-            rgba(0,0,0,1) 55%,
-            rgba(0,0,0,.65) 75%,
-            transparent 100%
-        );
 }
 
 /* =========================
-EMPLOYEE
+   EMPLOYEE
 ========================= */
 
 .employee{
@@ -577,7 +563,7 @@ EMPLOYEE
 }
 
 /* =========================
-SCORE
+   SCORE
 ========================= */
 
 .score{
@@ -620,7 +606,7 @@ SCORE
 }
 
 /* =========================
-MOBILE
+   MOBILE
 ========================= */
 
 @media(max-width:768px){
@@ -659,8 +645,12 @@ MOBILE
     }
 
     .photo-box{
-        width:95px;
-        min-width:95px;
+        width:68px;
+        height:68px;
+        min-width:68px;
+        min-height:68px;
+        margin-left:45px;
+        border-radius:16px;
     }
 
     .employee{
@@ -690,7 +680,7 @@ MOBILE
 }
 
 /* =========================
-TV 4K
+   TV 4K
 ========================= */
 
 @media(min-width:1920px){
@@ -727,11 +717,6 @@ TV 4K
     .rank-number{
         font-size:360px;
     }
-
-    .photo-box{
-        width:280px;
-        min-width:280px;
-    }
 }
 
 </style>
@@ -739,6 +724,7 @@ TV 4K
 
 <body>
 
+<!-- SALES -->
 <div class="slide active">
 
     <div class="header">
@@ -757,13 +743,51 @@ TV 4K
 
 </div>
 
+<!-- PROTEKSI -->
+<div class="slide">
+
+    <div class="header">
+
+        <h1>TOP PROTEKSI</h1>
+
+        <p>AZKO CITIMALL TUBAN</p>
+
+        <div class="update-time" id="updateTimeProteksi">
+            UPDATE AT : -
+        </div>
+
+    </div>
+
+    <div class="rank-list" id="proteksiList"></div>
+
+</div>
+
+<!-- TRX -->
+<div class="slide">
+
+    <div class="header">
+
+        <h1>TOP TRX</h1>
+
+        <p>AZKO CITIMALL TUBAN</p>
+
+        <div class="update-time" id="updateTimeTrx">
+            UPDATE AT : -
+        </div>
+
+    </div>
+
+    <div class="rank-list" id="trxList"></div>
+
+</div>
+
 <script>
 
 const URL =
 "https://script.google.com/macros/s/AKfycbzeehvUo6QYriMFJTR4A88lN6IIHV6Qop9UphkdOTMkRLVxhVuJ13y69momo6h1pn9dTQ/exec";
 
 /* =========================
-CLEAN NUMBER
+   CLEAN NUMBER
 ========================= */
 
 function clean(val){
@@ -776,7 +800,7 @@ function clean(val){
 }
 
 /* =========================
-UPDATE TIME
+   UPDATE TIME
 ========================= */
 
 function updateTime(){
@@ -801,12 +825,17 @@ function updateTime(){
         );
 
     document.getElementById("updateTimeSales")
-        .innerHTML =
-        "UPDATE AT : " + formatted;
+        .innerHTML = "UPDATE AT : " + formatted;
+
+    document.getElementById("updateTimeProteksi")
+        .innerHTML = "UPDATE AT : " + formatted;
+
+    document.getElementById("updateTimeTrx")
+        .innerHTML = "UPDATE AT : " + formatted;
 }
 
 /* =========================
-GET DATA
+   GET DATA
 ========================= */
 
 async function getData(){
@@ -828,6 +857,12 @@ async function getData(){
             sales:
                 clean(row["SALES MTD"]),
 
+            proteksi:
+                clean(row["PROTEKSI"]),
+
+            trx:
+                clean(row["TRX"]),
+
             photo:
                 row["PHOTO"] || ""
 
@@ -842,10 +877,10 @@ async function getData(){
 }
 
 /* =========================
-RENDER
+   RENDER
 ========================= */
 
-function render(data){
+function render(data,key,containerId){
 
     const styles = [
         "gold",
@@ -854,8 +889,8 @@ function render(data){
     ];
 
     let sorted = data
-        .filter(v => v.sales > 0)
-        .sort((a,b)=>b.sales-a.sales)
+        .filter(v => v[key] > 0)
+        .sort((a,b)=>b[key]-a[key])
         .slice(0,3);
 
     let html = "";
@@ -899,11 +934,11 @@ function render(data){
             <div class="score">
 
                 <div class="score-value">
-                    ${d.sales.toLocaleString('id-ID')}
+                    ${d[key].toLocaleString('id-ID')}
                 </div>
 
                 <div class="score-label">
-                    TOTAL SALES
+                    TOTAL SCORE
                 </div>
 
             </div>
@@ -913,25 +948,51 @@ function render(data){
         `;
     });
 
-    document.getElementById("salesList")
+    document.getElementById(containerId)
         .innerHTML = html;
 }
 
 /* =========================
-UPDATE
+   UPDATE
 ========================= */
 
 async function update(){
 
     const data = await getData();
 
-    render(data);
+    render(data,"sales","salesList");
+
+    render(data,"proteksi","proteksiList");
+
+    render(data,"trx","trxList");
 
     updateTime();
 }
 
 /* =========================
-AUTO REFRESH
+   AUTO SLIDE
+========================= */
+
+let current = 0;
+
+setInterval(()=>{
+
+    const slides =
+        document.querySelectorAll(".slide");
+
+    slides[current]
+        .classList.remove("active");
+
+    current =
+        (current + 1) % slides.length;
+
+    slides[current]
+        .classList.add("active");
+
+},5000);
+
+/* =========================
+   AUTO REFRESH
 ========================= */
 
 setInterval(update,15000);
@@ -939,7 +1000,7 @@ setInterval(update,15000);
 update();
 
 /* =========================
-FULLSCREEN
+   FULLSCREEN
 ========================= */
 
 document.body.onclick = () => {
