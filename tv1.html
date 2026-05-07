@@ -1,4 +1,454 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>AZKO ULTRA TV DISPLAY</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+
 <style>
+
+/* =========================
+RESET
+========================= */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+/* =========================
+BODY
+========================= */
+
+body{
+
+    font-family:'Poppins',sans-serif;
+
+    overflow:hidden;
+
+    color:white;
+
+    background:
+        radial-gradient(circle at top left,#1e3a8a 0%,transparent 30%),
+        radial-gradient(circle at top right,#facc15 0%,transparent 25%),
+        radial-gradient(circle at bottom,#0f172a 0%,#020617 70%);
+}
+
+/* =========================
+BACKGROUND FX
+========================= */
+
+body::before{
+
+    content:"";
+
+    position:fixed;
+
+    inset:0;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(255,255,255,.03),
+            transparent 35%,
+            rgba(255,255,255,.02)
+        );
+
+    pointer-events:none;
+}
+
+body::after{
+
+    content:"";
+
+    position:fixed;
+
+    width:200%;
+    height:200%;
+
+    top:-50%;
+    left:-50%;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            rgba(255,255,255,.04),
+            transparent
+        );
+
+    transform:rotate(25deg);
+
+    animation:bgMove 12s linear infinite;
+
+    pointer-events:none;
+}
+
+@keyframes bgMove{
+
+    0%{
+        transform:
+            translateX(-20%)
+            rotate(25deg);
+    }
+
+    100%{
+        transform:
+            translateX(20%)
+            rotate(25deg);
+    }
+}
+
+/* =========================
+SLIDE
+========================= */
+
+.slide{
+
+    width:100vw;
+    height:100vh;
+
+    padding:
+        1vh
+        2vw;
+
+    display:none;
+
+    flex-direction:column;
+
+    justify-content:flex-start;
+}
+
+.active{
+    display:flex;
+}
+
+/* =========================
+HEADER
+========================= */
+
+.header{
+
+    text-align:center;
+
+    margin-bottom:1vh;
+
+    flex-shrink:0;
+}
+
+.header h1{
+
+    font-size:3vw;
+
+    font-weight:900;
+
+    letter-spacing:6px;
+
+    text-transform:uppercase;
+
+    text-shadow:
+        0 0 20px rgba(255,255,255,.25);
+}
+
+.header p{
+
+    margin-top:.2vh;
+
+    font-size:1vw;
+
+    letter-spacing:4px;
+
+    opacity:.9;
+}
+
+/* =========================
+UPDATE TIME
+========================= */
+
+.update-time{
+
+    margin:
+        .8vh auto 0 auto;
+
+    width:fit-content;
+
+    padding:
+        .7vh
+        1.8vw;
+
+    border-radius:999px;
+
+    background:
+        rgba(255,255,255,.1);
+
+    border:
+        2px solid rgba(255,255,255,.18);
+
+    font-size:1vw;
+
+    font-weight:800;
+
+    letter-spacing:2px;
+
+    box-shadow:
+        0 0 20px rgba(255,255,255,.08);
+}
+
+/* =========================
+LIST
+========================= */
+
+.rank-list{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:1.2vh;
+
+    flex:1;
+
+    justify-content:space-evenly;
+}
+
+/* =========================
+CARD
+========================= */
+
+.rank-card{
+
+    position:relative;
+
+    display:flex;
+
+    align-items:center;
+
+    height:25vh;
+
+    border-radius:34px;
+
+    overflow:hidden;
+
+    border:
+        1px solid rgba(255,255,255,.08);
+
+    opacity:0;
+
+    transform:
+        translateX(-100px);
+
+    animation:
+        slideRight .8s forwards;
+}
+
+.rank-card:nth-child(1){
+    animation-delay:.2s;
+}
+
+.rank-card:nth-child(2){
+    animation-delay:.5s;
+}
+
+.rank-card:nth-child(3){
+    animation-delay:.8s;
+}
+
+@keyframes slideRight{
+
+    from{
+
+        opacity:0;
+
+        transform:
+            translateX(-100px)
+            scale(.95);
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:
+            translateX(0)
+            scale(1);
+    }
+}
+
+/* =========================
+SHINE
+========================= */
+
+.rank-card::before{
+
+    content:"";
+
+    position:absolute;
+
+    top:0;
+    left:-40%;
+
+    width:30%;
+    height:200%;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            rgba(255,255,255,.18),
+            transparent
+        );
+
+    transform:rotate(25deg);
+
+    animation:shine 5s linear infinite;
+}
+
+@keyframes shine{
+
+    0%{
+        left:-40%;
+    }
+
+    100%{
+        left:130%;
+    }
+}
+
+/* =========================
+CARD COLOR
+========================= */
+
+.gold{
+
+    background:
+        linear-gradient(
+            135deg,
+            #6b5300,
+            #d4a514,
+            #fff0a6,
+            #d4a514,
+            #6b5300
+        );
+
+    box-shadow:
+        0 0 40px rgba(250,204,21,.3);
+}
+
+.silver{
+
+    background:
+        linear-gradient(
+            135deg,
+            #737373,
+            #d1d5db,
+            #ffffff,
+            #d1d5db,
+            #737373
+        );
+
+    box-shadow:
+        0 0 35px rgba(255,255,255,.18);
+}
+
+.bronze{
+
+    background:
+        linear-gradient(
+            135deg,
+            #6d3f1d,
+            #c87c3d,
+            #efc08c,
+            #c87c3d,
+            #6d3f1d
+        );
+
+    box-shadow:
+        0 0 35px rgba(194,65,12,.25);
+}
+
+/* =========================
+RANK NUMBER
+========================= */
+
+.rank-number{
+
+    position:absolute;
+
+    left:-.5vw;
+
+    top:50%;
+
+    transform:
+        translateY(-50%)
+        skew(-10deg);
+
+    font-size:16vw;
+
+    font-weight:900;
+
+    opacity:.38;
+
+    letter-spacing:-10px;
+
+    line-height:1;
+
+    pointer-events:none;
+
+    user-select:none;
+}
+
+.gold .rank-number{
+
+    background:
+        linear-gradient(
+            180deg,
+            #fff9c4,
+            #facc15,
+            #ca8a04,
+            #78350f
+        );
+
+    -webkit-background-clip:text;
+
+    -webkit-text-fill-color:transparent;
+}
+
+.silver .rank-number{
+
+    background:
+        linear-gradient(
+            180deg,
+            #ffffff,
+            #dbe4ee,
+            #94a3b8,
+            #334155
+        );
+
+    -webkit-background-clip:text;
+
+    -webkit-text-fill-color:transparent;
+}
+
+.bronze .rank-number{
+
+    background:
+        linear-gradient(
+            180deg,
+            #ffedd5,
+            #fb923c,
+            #c2410c,
+            #7c2d12
+        );
+
+    -webkit-background-clip:text;
+
+    -webkit-text-fill-color:transparent;
+}
 
 /* =========================
 PHOTO FULL TRANSPARENT
@@ -23,10 +473,6 @@ PHOTO FULL TRANSPARENT
     justify-content:center;
 }
 
-/* =========================
-PHOTO IMAGE
-========================= */
-
 .photo-box img{
 
     width:100%;
@@ -47,8 +493,6 @@ PHOTO IMAGE
 
     opacity:.96;
 
-    /* transparan menyatu ke card */
-
     -webkit-mask-image:
         linear-gradient(
             to right,
@@ -67,10 +511,6 @@ PHOTO IMAGE
             transparent 100%
         );
 }
-
-/* =========================
-GLOW EFFECT
-========================= */
 
 .photo-box::after{
 
@@ -91,20 +531,153 @@ GLOW EFFECT
 }
 
 /* =========================
+EMPLOYEE
+========================= */
+
+.employee{
+
+    position:relative;
+
+    z-index:2;
+
+    flex:1;
+
+    padding-left:1.5vw;
+
+    overflow:hidden;
+}
+
+.employee-name{
+
+    font-size:2vw;
+
+    font-weight:900;
+
+    color:#111827;
+
+    text-transform:uppercase;
+
+    white-space:nowrap;
+
+    overflow:hidden;
+
+    text-overflow:ellipsis;
+}
+
+.employee-label{
+
+    margin-top:.5vh;
+
+    font-size:.9vw;
+
+    font-weight:800;
+
+    color:#111827;
+
+    opacity:.72;
+
+    letter-spacing:2px;
+
+    text-transform:uppercase;
+}
+
+/* =========================
+SCORE
+========================= */
+
+.score{
+
+    position:relative;
+
+    z-index:2;
+
+    width:22%;
+
+    padding-right:2vw;
+
+    text-align:right;
+}
+
+.score-value{
+
+    font-size:2.6vw;
+
+    font-weight:900;
+
+    color:#111827;
+}
+
+.score-label{
+
+    margin-top:.4vh;
+
+    font-size:.8vw;
+
+    font-weight:700;
+
+    color:#111827;
+
+    opacity:.65;
+
+    letter-spacing:2px;
+}
+
+/* =========================
 MOBILE
 ========================= */
 
 @media(max-width:768px){
 
-    .photo-box{
-
-        width:110px;
-        min-width:110px;
+    body{
+        overflow:auto;
     }
 
-    .photo-box img{
+    .slide{
+        min-height:100vh;
+        height:auto;
+        padding:12px;
+    }
 
-        object-fit:contain;
+    .header h1{
+        font-size:30px;
+    }
+
+    .header p{
+        font-size:11px;
+    }
+
+    .update-time{
+        font-size:11px;
+    }
+
+    .rank-card{
+        height:118px;
+        border-radius:22px;
+    }
+
+    .rank-number{
+        font-size:95px;
+    }
+
+    .photo-box{
+        width:100px;
+        min-width:100px;
+    }
+
+    .employee-name{
+        font-size:16px;
+    }
+
+    .employee-label{
+        font-size:10px;
+    }
+
+    .score-value{
+        font-size:20px;
+    }
+
+    .score-label{
+        font-size:10px;
     }
 }
 
@@ -114,11 +687,347 @@ TV 4K
 
 @media(min-width:1920px){
 
-    .photo-box{
+    .header h1{
+        font-size:68px;
+    }
 
+    .header p{
+        font-size:20px;
+    }
+
+    .update-time{
+        font-size:24px;
+    }
+
+    .rank-card{
+        height:24vh;
+    }
+
+    .rank-number{
+        font-size:300px;
+    }
+
+    .employee-name{
+        font-size:44px;
+    }
+
+    .employee-label{
+        font-size:18px;
+    }
+
+    .score-value{
+        font-size:52px;
+    }
+
+    .score-label{
+        font-size:16px;
+    }
+
+    .photo-box{
         width:320px;
         min-width:320px;
     }
 }
 
 </style>
+</head>
+
+<body>
+
+<!-- TOP SALES -->
+<div class="slide active">
+
+    <div class="header">
+
+        <h1>TOP SALES</h1>
+
+        <p>AZKO CITIMALL TUBAN</p>
+
+        <div class="update-time" id="updateTimeSales">
+            UPDATE AT : -
+        </div>
+
+    </div>
+
+    <div class="rank-list" id="salesList"></div>
+
+</div>
+
+<!-- TOP PROTEKSI -->
+<div class="slide">
+
+    <div class="header">
+
+        <h1>TOP PROTEKSI</h1>
+
+        <p>AZKO CITIMALL TUBAN</p>
+
+        <div class="update-time" id="updateTimeProteksi">
+            UPDATE AT : -
+        </div>
+
+    </div>
+
+    <div class="rank-list" id="proteksiList"></div>
+
+</div>
+
+<!-- TOP TRX -->
+<div class="slide">
+
+    <div class="header">
+
+        <h1>TOP TRX</h1>
+
+        <p>AZKO CITIMALL TUBAN</p>
+
+        <div class="update-time" id="updateTimeTrx">
+            UPDATE AT : -
+        </div>
+
+    </div>
+
+    <div class="rank-list" id="trxList"></div>
+
+</div>
+
+<script>
+
+const URL =
+"https://script.google.com/macros/s/AKfycbzeehvUo6QYriMFJTR4A88lN6IIHV6Qop9UphkdOTMkRLVxhVuJ13y69momo6h1pn9dTQ/exec";
+
+/* =========================
+CLEAN NUMBER
+========================= */
+
+function clean(val){
+
+    if(!val) return 0;
+
+    return parseInt(
+        val.toString().replace(/[^\d]/g,'')
+    ) || 0;
+}
+
+/* =========================
+UPDATE TIME
+========================= */
+
+function updateTime(){
+
+    const now = new Date();
+
+    const options = {
+
+        day:'2-digit',
+        month:'long',
+        year:'numeric',
+
+        hour:'2-digit',
+        minute:'2-digit',
+        second:'2-digit'
+    };
+
+    const formatted =
+        now.toLocaleDateString(
+            'id-ID',
+            options
+        );
+
+    document.getElementById("updateTimeSales").innerHTML =
+    "UPDATE AT : " + formatted;
+
+    document.getElementById("updateTimeProteksi").innerHTML =
+    "UPDATE AT : " + formatted;
+
+    document.getElementById("updateTimeTrx").innerHTML =
+    "UPDATE AT : " + formatted;
+}
+
+/* =========================
+GET DATA
+========================= */
+
+async function getData(){
+
+    try{
+
+        const res = await fetch(URL);
+
+        const json = await res.json();
+
+        return json.map(row => ({
+
+            name: row["EMPLOYEE NAME"] || "UNKNOWN",
+
+            dept: row["DEPT"] || "-",
+
+            sales: clean(row["SALES MTD"]),
+
+            proteksi: clean(row["PROTEKSI"]),
+
+            trx: clean(row["TRX"]),
+
+            photo: row["PHOTO"] || ""
+
+        }));
+
+    }catch(err){
+
+        console.log(err);
+
+        return [];
+    }
+}
+
+/* =========================
+RENDER
+========================= */
+
+function render(data,key,containerId,label){
+
+    const styles = [
+        "gold",
+        "silver",
+        "bronze"
+    ];
+
+    let sorted = data
+        .filter(v => v[key] > 0)
+        .sort((a,b)=>b[key]-a[key])
+        .slice(0,3);
+
+    let html = "";
+
+    sorted.forEach((d,i)=>{
+
+        html += `
+
+        <div class="rank-card ${styles[i]}">
+
+            <div class="rank-number">
+                ${i+1}
+            </div>
+
+            <div class="photo-box">
+
+                <img
+                    src="https://lh3.googleusercontent.com/d/${d.photo}"
+
+                    onerror="
+                    this.src='https://ui-avatars.com/api/?name=${encodeURIComponent(d.name)}&background=random&color=fff&size=512'
+                    "
+                >
+
+            </div>
+
+            <div class="employee">
+
+                <div class="employee-name">
+                    ${d.name}
+                </div>
+
+                <div class="employee-label">
+                    ${d.dept}
+                </div>
+
+            </div>
+
+            <div class="score">
+
+                <div class="score-value">
+                    ${d[key].toLocaleString('id-ID')}
+                </div>
+
+                <div class="score-label">
+                    ${label}
+                </div>
+
+            </div>
+
+        </div>
+
+        `;
+    });
+
+    document.getElementById(containerId).innerHTML = html;
+}
+
+/* =========================
+UPDATE
+========================= */
+
+async function update(){
+
+    const data = await getData();
+
+    render(
+        data,
+        "sales",
+        "salesList",
+        "TOTAL SALES"
+    );
+
+    render(
+        data,
+        "proteksi",
+        "proteksiList",
+        "TOTAL PROTEKSI"
+    );
+
+    render(
+        data,
+        "trx",
+        "trxList",
+        "TOTAL TRX"
+    );
+
+    updateTime();
+}
+
+/* =========================
+AUTO SLIDE
+========================= */
+
+let current = 0;
+
+setInterval(()=>{
+
+    const slides =
+        document.querySelectorAll(".slide");
+
+    slides[current]
+        .classList.remove("active");
+
+    current =
+        (current + 1) % slides.length;
+
+    slides[current]
+        .classList.add("active");
+
+},5000);
+
+/* =========================
+AUTO REFRESH
+========================= */
+
+setInterval(update,15000);
+
+update();
+
+/* =========================
+FULLSCREEN
+========================= */
+
+document.body.onclick = () => {
+
+    if(!document.fullscreenElement){
+
+        document.documentElement.requestFullscreen();
+    }
+};
+
+</script>
+
+</body>
+</html>
