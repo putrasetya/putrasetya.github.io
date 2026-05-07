@@ -78,7 +78,7 @@ body::after{
         linear-gradient(
             90deg,
             transparent,
-            rgba(255,255,255,.05),
+            rgba(255,255,255,.04),
             transparent
         );
 
@@ -217,8 +217,6 @@ body::after{
     gap:1.4vh;
 
     flex:1;
-
-    justify-content:flex-start;
 }
 
 /* =========================================
@@ -258,7 +256,7 @@ body::after{
 }
 
 /* =========================================
-   ANIMATION DELAY
+   CARD ANIMATION
 ========================================= */
 
 .rank-card:nth-child(1){
@@ -272,10 +270,6 @@ body::after{
 .rank-card:nth-child(3){
     animation-delay:.8s;
 }
-
-/* =========================================
-   ANIMATION
-========================================= */
 
 @keyframes slideRight{
 
@@ -299,7 +293,7 @@ body::after{
 }
 
 /* =========================================
-   SHINE CARD
+   SHINE EFFECT
 ========================================= */
 
 .rank-card::before{
@@ -318,7 +312,7 @@ body::after{
         linear-gradient(
             90deg,
             transparent,
-            rgba(255,255,255,.25),
+            rgba(255,255,255,.2),
             transparent
         );
 
@@ -339,7 +333,7 @@ body::after{
 }
 
 /* =========================================
-   GOLD
+   GOLD CARD
 ========================================= */
 
 .gold{
@@ -359,7 +353,7 @@ body::after{
 }
 
 /* =========================================
-   SILVER
+   SILVER CARD
 ========================================= */
 
 .silver{
@@ -379,7 +373,7 @@ body::after{
 }
 
 /* =========================================
-   BRONZE
+   BRONZE CARD
 ========================================= */
 
 .bronze{
@@ -399,134 +393,94 @@ body::after{
 }
 
 /* =========================================
-   RANK NUMBER ULTRA
+   RANK NUMBER
 ========================================= */
 
 .rank-number{
 
-    position:relative;
+    position:absolute;
 
-    width:16%;
+    left:-1vw;
 
-    min-width:150px;
+    top:50%;
 
-    height:100%;
+    transform:
+        translateY(-50%)
+        skew(-10deg);
 
-    display:flex;
-
-    align-items:center;
-
-    justify-content:center;
-
-    font-size:10vw;
+    font-size:20vw;
 
     font-weight:900;
 
     line-height:1;
 
-    transform:
-        skew(-12deg);
+    opacity:.22;
 
-    overflow:hidden;
+    pointer-events:none;
 
-    border-right:
-        2px solid rgba(255,255,255,.15);
+    user-select:none;
+
+    letter-spacing:-12px;
 
     text-shadow:
-        0 10px 25px rgba(0,0,0,.35);
+        0 8px 30px rgba(0,0,0,.25);
 }
 
-/* GOLD NUMBER */
+/* =========================================
+   GOLD NUMBER
+========================================= */
 
 .gold .rank-number{
 
     background:
         linear-gradient(
             180deg,
-            #fff9d7 0%,
-            #ffe066 20%,
-            #facc15 45%,
-            #ca8a04 70%,
-            #78350f 100%
+            #fff7b1,
+            #facc15,
+            #a16207
         );
 
-    color:white;
+    -webkit-background-clip:text;
+
+    -webkit-text-fill-color:transparent;
 }
 
-/* SILVER NUMBER */
+/* =========================================
+   SILVER NUMBER
+========================================= */
 
 .silver .rank-number{
 
     background:
         linear-gradient(
             180deg,
-            #ffffff 0%,
-            #e5e7eb 20%,
-            #cbd5e1 45%,
-            #94a3b8 70%,
-            #475569 100%
+            #ffffff,
+            #cbd5e1,
+            #64748b
         );
 
-    color:white;
+    -webkit-background-clip:text;
+
+    -webkit-text-fill-color:transparent;
 }
 
-/* BRONZE NUMBER */
+/* =========================================
+   BRONZE NUMBER
+========================================= */
 
 .bronze .rank-number{
 
     background:
         linear-gradient(
             180deg,
-            #fed7aa 0%,
-            #fdba74 20%,
-            #fb923c 45%,
-            #c2410c 70%,
-            #7c2d12 100%
+            #fed7aa,
+            #fb923c,
+            #7c2d12
         );
 
-    color:white;
-}
+    -webkit-background-clip:text;
 
-/* NUMBER SHINE */
-
-.rank-number::before{
-
-    content:"";
-
-    position:absolute;
-
-    top:-20%;
-
-    left:-50%;
-
-    width:40%;
-
-    height:150%;
-
-    background:
-        linear-gradient(
-            90deg,
-            transparent,
-            rgba(255,255,255,.45),
-            transparent
-        );
-
-    transform:
-        rotate(20deg);
-
-    animation:
-        rankShine 4s linear infinite;
-}
-
-@keyframes rankShine{
-
-    0%{
-        left:-50%;
-    }
-
-    100%{
-        left:140%;
-    }
+    -webkit-text-fill-color:transparent;
 }
 
 /* =========================================
@@ -534,6 +488,10 @@ body::after{
 ========================================= */
 
 .photo-box{
+
+    position:relative;
+
+    z-index:2;
 
     width:11vw;
     height:11vw;
@@ -552,7 +510,7 @@ body::after{
 
     flex-shrink:0;
 
-    margin-left:1vw;
+    margin-left:6vw;
 
     border:
         4px solid rgba(255,255,255,.6);
@@ -574,6 +532,10 @@ body::after{
 ========================================= */
 
 .employee{
+
+    position:relative;
+
+    z-index:2;
 
     flex:1;
 
@@ -597,8 +559,6 @@ body::after{
     overflow:hidden;
 
     text-overflow:ellipsis;
-
-    line-height:1.1;
 }
 
 .employee-label{
@@ -623,6 +583,10 @@ body::after{
 ========================================= */
 
 .score{
+
+    position:relative;
+
+    z-index:2;
 
     width:24%;
 
@@ -693,10 +657,6 @@ body::after{
             18px;
     }
 
-    .rank-list{
-        gap:14px;
-    }
-
     .rank-card{
 
         min-height:110px;
@@ -706,11 +666,9 @@ body::after{
 
     .rank-number{
 
-        width:70px;
+        font-size:110px;
 
-        min-width:70px;
-
-        font-size:58px;
+        left:-10px;
     }
 
     .photo-box{
@@ -720,6 +678,8 @@ body::after{
 
         min-width:68px;
         min-height:68px;
+
+        margin-left:45px;
 
         border-radius:16px;
     }
@@ -793,7 +753,7 @@ body::after{
     }
 
     .rank-number{
-        font-size:180px;
+        font-size:360px;
     }
 }
 
@@ -867,10 +827,6 @@ body::after{
 const URL =
 "https://script.google.com/macros/s/AKfycbzeehvUo6QYriMFJTR4A88lN6IIHV6Qop9UphkdOTMkRLVxhVuJ13y69momo6h1pn9dTQ/exec";
 
-/* =========================================
-   CLEAN NUMBER
-========================================= */
-
 function clean(val){
 
     if(!val) return 0;
@@ -880,18 +836,10 @@ function clean(val){
     ) || 0;
 }
 
-/* =========================================
-   AVATAR
-========================================= */
-
 function avatar(name){
 
     return `https://ui-avatars.com/api/?name=${encodeURIComponent(name)}&background=random&color=fff&size=512`;
 }
-
-/* =========================================
-   UPDATE TIME
-========================================= */
 
 function updateTime(){
 
@@ -926,10 +874,6 @@ function updateTime(){
         .innerHTML =
         "UPDATE AT : " + formatted;
 }
-
-/* =========================================
-   GET DATA
-========================================= */
 
 async function getData(){
 
@@ -967,10 +911,6 @@ async function getData(){
         return [];
     }
 }
-
-/* =========================================
-   RENDER
-========================================= */
 
 function render(data,key,containerId){
 
@@ -1036,10 +976,6 @@ function render(data,key,containerId){
         .innerHTML = html;
 }
 
-/* =========================================
-   UPDATE
-========================================= */
-
 async function update(){
 
     const data = await getData();
@@ -1054,7 +990,7 @@ async function update(){
 }
 
 /* =========================================
-   AUTO SLIDE
+   AUTO SLIDE 5 DETIK
 ========================================= */
 
 let current = 0;
@@ -1080,10 +1016,6 @@ setInterval(()=>{
 ========================================= */
 
 setInterval(update,15000);
-
-/* =========================================
-   LOAD
-========================================= */
 
 update();
 
