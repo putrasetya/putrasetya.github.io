@@ -37,7 +37,6 @@ body{
         radial-gradient(circle at top left,#1e3a8a 0%,transparent 30%),
         radial-gradient(circle at top right,#facc15 0%,transparent 25%),
         radial-gradient(circle at bottom,#0f172a 0%,#020617 70%);
-
 }
 
 /* =========================================
@@ -162,7 +161,9 @@ body::after{
 
     opacity:.75;
 
-    letter-spacing:3px;
+    letter-spacing:4px;
+
+    text-transform:uppercase;
 }
 
 /* =========================================
@@ -198,17 +199,57 @@ body::after{
 
     overflow:hidden;
 
-    animation:fadeUp .7s ease;
-
-    transition:.3s;
-
     border:
         1px solid rgba(255,255,255,.08);
+
+    transform:
+        translateX(-120px);
+
+    opacity:0;
+
+    animation:
+        slideRight .8s forwards;
 }
 
-.rank-card:hover{
+/* =========================================
+   ANIMATION DELAY
+========================================= */
 
-    transform:scale(1.01);
+.rank-card:nth-child(1){
+    animation-delay:.2s;
+}
+
+.rank-card:nth-child(2){
+    animation-delay:.6s;
+}
+
+.rank-card:nth-child(3){
+    animation-delay:1s;
+}
+
+/* =========================================
+   SLIDE RIGHT EFFECT
+========================================= */
+
+@keyframes slideRight{
+
+    from{
+
+        opacity:0;
+
+        transform:
+            translateX(-120px)
+            scale(.95);
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:
+            translateX(0)
+            scale(1);
+    }
 }
 
 /* =========================================
@@ -414,6 +455,8 @@ body::after{
     opacity:.7;
 
     letter-spacing:2px;
+
+    text-transform:uppercase;
 }
 
 /* =========================================
@@ -451,29 +494,6 @@ body::after{
     opacity:.65;
 
     letter-spacing:2px;
-}
-
-/* =========================================
-   ANIMATION
-========================================= */
-
-@keyframes fadeUp{
-
-    from{
-
-        opacity:0;
-
-        transform:
-            translateY(40px);
-    }
-
-    to{
-
-        opacity:1;
-
-        transform:
-            translateY(0);
-    }
 }
 
 /* =========================================
@@ -583,9 +603,7 @@ body::after{
 
 <body>
 
-<!-- =========================================
-     SALES
-========================================= -->
+<!-- SALES -->
 
 <div class="slide active">
 
@@ -593,7 +611,7 @@ body::after{
 
         <h1>TOP SALES</h1>
 
-        <p>AZKO PERFORMANCE LEADERBOARD</p>
+        <p>AZKO CITIMALL TUBAN</p>
 
     </div>
 
@@ -601,9 +619,7 @@ body::after{
 
 </div>
 
-<!-- =========================================
-     PROTEKSI
-========================================= -->
+<!-- PROTEKSI -->
 
 <div class="slide">
 
@@ -611,7 +627,7 @@ body::after{
 
         <h1>TOP PROTEKSI</h1>
 
-        <p>AZKO PERFORMANCE LEADERBOARD</p>
+        <p>AZKO CITIMALL TUBAN</p>
 
     </div>
 
@@ -619,9 +635,7 @@ body::after{
 
 </div>
 
-<!-- =========================================
-     TRX
-========================================= -->
+<!-- TRX -->
 
 <div class="slide">
 
@@ -629,7 +643,7 @@ body::after{
 
         <h1>TOP TRX</h1>
 
-        <p>AZKO PERFORMANCE LEADERBOARD</p>
+        <p>AZKO CITIMALL TUBAN</p>
 
     </div>
 
@@ -680,13 +694,15 @@ async function getData(){
 
         const json = await res.json();
 
-        console.log(json);
-
         return json.map(row => ({
 
             name:
                 row["EMPLOYEE NAME"] ||
                 "UNKNOWN",
+
+            dept:
+                row["DEPT"] ||
+                "-",
 
             sales:
                 clean(row["SALES MTD"]),
@@ -749,7 +765,7 @@ function render(data,key,containerId){
                 </div>
 
                 <div class="employee-label">
-                    TOP PERFORMANCE EMPLOYEE
+                    ${d.dept}
                 </div>
 
             </div>
