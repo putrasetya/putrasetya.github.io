@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>AZKO TV RANKING</title>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family:Arial, Helvetica, sans-serif;
+    background:
+        radial-gradient(circle at top,#0f172a,#020617 70%);
+    color:white;
+    overflow:hidden;
+}
+
+/* =========================
+   SLIDE
+========================= */
+
+.slide{
+    width:100vw;
+    height:100vh;
+    display:none;
+    padding:2vh 2vw;
+    flex-direction:column;
+}
+
+.active{
+    display:flex;
+}
+
+/* =========================
+   TITLE
+========================= */
+
+.title{
+    text-align:center;
+    font-size:4vw;
+    font-weight:900;
+    letter-spacing:2px;
+    margin-bottom:2vh;
+    text-shadow:0 0 20px rgba(255,255,255,.2);
+}
+
+/* =========================
+   LIST
+========================= */
+
+.rank-container{
+    display:flex;
+    flex-direction:column;
+    gap:2vh;
+    width:100%;
+    flex:1;
+}
+
+/* =========================
+   ROW
+========================= */
+
+.rank-row{
+    display:flex;
+    align-items:center;
+    width:100%;
+    height:28vh;
+    border-radius:2vh;
+    overflow:hidden;
+    position:relative;
+    box-shadow:
+        0 10px 30px rgba(0,0,0,.4);
+}
+
+/* =========================
+   GOLD
+========================= */
+
+.gold{
+    background:
+        linear-gradient(
+            90deg,
+            #8f6b00 0%,
+            #d4af37 20%,
+            #ffe27a 50%,
+            #d4af37 80%,
+            #8f6b00 100%
+        );
+}
+
+/* =========================
+   SILVER
+========================= */
+
+.silver{
+    background:
+        linear-gradient(
+            90deg,
+            #7b7b7b 0%,
+            #bfc0c2 20%,
+            #f4f4f4 50%,
+            #bfc0c2 80%,
+            #7b7b7b 100%
+        );
+}
+
+/* =========================
+   BRONZE
+========================= */
+
+.bronze{
+    background:
+        linear-gradient(
+            90deg,
+            #6d432d 0%,
+            #b87333 20%,
+            #e0a96d 50%,
+            #b87333 80%,
+            #6d432d 100%
+        );
+}
+
+/* =========================
+   RANK NUMBER
+========================= */
+
+.rank-number{
+    width:12%;
+    min-width:120px;
+    text-align:center;
+    font-size:10vw;
+    font-weight:900;
+    color:#ffffff;
+    text-shadow:
+        0 5px 15px rgba(0,0,0,.4);
+}
+
+/* =========================
+   PHOTO
+========================= */
+
+.photo{
+    width:14vw;
+    height:14vw;
+    max-width:180px;
+    max-height:180px;
+    min-width:90px;
+    min-height:90px;
+    background:white;
+    border-radius:1.5vh;
+    overflow:hidden;
+    flex-shrink:0;
+    box-shadow:
+        0 5px 20px rgba(0,0,0,.25);
+}
+
+.photo img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+}
+
+/* =========================
+   NAME
+========================= */
+
+.employee{
+    flex:1;
+    padding-left:3vw;
+    overflow:hidden;
+}
+
+.employee-name{
+    font-size:3vw;
+    font-weight:900;
+    color:#111827;
+    text-transform:uppercase;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+}
+
+/* =========================
+   SCORE
+========================= */
+
+.score{
+    width:25%;
+    text-align:right;
+    padding-right:3vw;
+    font-size:3.5vw;
+    font-weight:900;
+    color:#111827;
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+@media(max-width:768px){
+
+    body{
+        overflow:auto;
+    }
+
+    .slide{
+        height:auto;
+        min-height:100vh;
+        padding:15px;
+    }
+
+    .title{
+        font-size:40px;
+        margin-bottom:20px;
+    }
+
+    .rank-row{
+        height:110px;
+        border-radius:15px;
+    }
+
+    .rank-number{
+        width:60px;
+        min-width:60px;
+        font-size:70px;
+    }
+
+    .photo{
+        width:70px;
+        height:70px;
+        min-width:70px;
+        min-height:70px;
+        border-radius:10px;
+    }
+
+    .employee{
+        padding-left:15px;
+    }
+
+    .employee-name{
+        font-size:22px;
+    }
+
+    .score{
+        width:auto;
+        padding-right:15px;
+        font-size:24px;
+    }
+}
+
+/* =========================
+   TV ULTRA HD
+========================= */
+
+@media(min-width:1920px){
+
+    .title{
+        font-size:70px;
+    }
+
+    .employee-name{
+        font-size:55px;
+    }
+
+    .score{
+        font-size:60px;
+    }
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- =========================
+     SLIDE SALES
+========================= -->
+
+<div class="slide active">
+
+    <div class="title">
+        TOP SALES
+    </div>
+
+    <div class="rank-container" id="salesList"></div>
+
+</div>
+
+<!-- =========================
+     SLIDE PROTEKSI
+========================= -->
+
+<div class="slide">
+
+    <div class="title">
+        TOP PROTEKSI
+    </div>
+
+    <div class="rank-container" id="proteksiList"></div>
+
+</div>
+
+<!-- =========================
+     SLIDE TRX
+========================= -->
+
+<div class="slide">
+
+    <div class="title">
+        TOP TRX
+    </div>
+
+    <div class="rank-container" id="trxList"></div>
+
+</div>
+
+<script>
+
+/* =========================================
+   APPS SCRIPT URL
+========================================= */
+
+const URL =
+"https://script.google.com/macros/s/AKfycbzeehvUo6QYriMFJTR4A88lN6IIHV6Qop9UphkdOTMkRLVxhVuJ13y69momo6h1pn9dTQ/exec";
+
+/* =========================================
+   CLEAN NUMBER
+========================================= */
+
+function clean(val){
+
+    if(!val) return 0;
+
+    return parseInt(
+        val.toString().replace(/[^\d]/g,'')
+    ) || 0;
+}
+
+/* =========================================
+   AVATAR IMAGE
+========================================= */
+
+function avatar(name){
+
+    return `https://ui-avatars.com/api/?name=${encodeURIComponent(name)}&background=random&color=fff&size=256`;
+}
+
+/* =========================================
+   GET DATA
+========================================= */
+
+async function getData(){
+
+    try{
+
+        const res = await fetch(URL);
+
+        const json = await res.json();
+
+        console.log(json);
+
+        return json.map(row => ({
+
+            name:
+                row["EMPLOYEE NAME"] ||
+                "UNKNOWN",
+
+            sales:
+                clean(row["SALES MTD"]),
+
+            proteksi:
+                clean(row["PROTEKSI"]),
+
+            trx:
+                clean(row["TRX"])
+
+        }));
+
+    }catch(err){
+
+        console.log(err);
+
+        return [];
+    }
+}
+
+/* =========================================
+   RENDER
+========================================= */
+
+function render(data,key,containerId){
+
+    const colors = [
+        "gold",
+        "silver",
+        "bronze"
+    ];
+
+    let sorted = data
+        .filter(v => v[key] > 0)
+        .sort((a,b)=>b[key]-a[key])
+        .slice(0,3);
+
+    let html = "";
+
+    sorted.forEach((d,i)=>{
+
+        html += `
+
+        <div class="rank-row ${colors[i]}">
+
+            <div class="rank-number">
+                ${i+1}
+            </div>
+
+            <div class="photo">
+                <img src="${avatar(d.name)}">
+            </div>
+
+            <div class="employee">
+
+                <div class="employee-name">
+                    ${d.name}
+                </div>
+
+            </div>
+
+            <div class="score">
+                ${d[key].toLocaleString('id-ID')}
+            </div>
+
+        </div>
+
+        `;
+    });
+
+    document.getElementById(containerId)
+        .innerHTML = html;
+}
+
+/* =========================================
+   UPDATE
+========================================= */
+
+async function update(){
+
+    const data = await getData();
+
+    render(data,"sales","salesList");
+    render(data,"proteksi","proteksiList");
+    render(data,"trx","trxList");
+}
+
+/* =========================================
+   AUTO SLIDE
+========================================= */
+
+let current = 0;
+
+setInterval(()=>{
+
+    const slides =
+        document.querySelectorAll(".slide");
+
+    slides[current]
+        .classList.remove("active");
+
+    current =
+        (current + 1) % slides.length;
+
+    slides[current]
+        .classList.add("active");
+
+},6000);
+
+/* =========================================
+   AUTO REFRESH
+========================================= */
+
+setInterval(update,15000);
+
+/* =========================================
+   LOAD
+========================================= */
+
+update();
+
+/* =========================================
+   FULLSCREEN TV
+========================================= */
+
+document.body.onclick = () => {
+
+    if(!document.fullscreenElement){
+
+        document.documentElement
+            .requestFullscreen();
+    }
+};
+
+</script>
+
+</body>
+</html>
