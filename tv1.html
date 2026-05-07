@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -11,7 +12,7 @@
 <style>
 
 /* =========================
-   RESET
+RESET
 ========================= */
 
 *{
@@ -21,7 +22,7 @@
 }
 
 /* =========================
-   BODY
+BODY
 ========================= */
 
 body{
@@ -39,7 +40,7 @@ body{
 }
 
 /* =========================
-   BACKGROUND FX
+BACKGROUND EFFECT
 ========================= */
 
 body::before{
@@ -104,7 +105,7 @@ body::after{
 }
 
 /* =========================
-   SLIDE
+SLIDE
 ========================= */
 
 .slide{
@@ -128,7 +129,7 @@ body::after{
 }
 
 /* =========================
-   HEADER
+HEADER
 ========================= */
 
 .header{
@@ -166,7 +167,7 @@ body::after{
 }
 
 /* =========================
-   UPDATE TIME
+UPDATE TIME
 ========================= */
 
 .update-time{
@@ -204,7 +205,7 @@ body::after{
 }
 
 /* =========================
-   LIST
+LIST
 ========================= */
 
 .rank-list{
@@ -219,7 +220,7 @@ body::after{
 }
 
 /* =========================
-   CARD
+CARD
 ========================= */
 
 .rank-card{
@@ -246,10 +247,6 @@ body::after{
 
     animation:
         slideRight .8s forwards;
-
-    padding:
-        1vh
-        1vw;
 
     flex-shrink:0;
 }
@@ -288,7 +285,7 @@ body::after{
 }
 
 /* =========================
-   SHINE
+SHINE
 ========================= */
 
 .rank-card::before{
@@ -328,7 +325,7 @@ body::after{
 }
 
 /* =========================
-   CARD COLORS
+CARD COLORS
 ========================= */
 
 .gold{
@@ -380,7 +377,7 @@ body::after{
 }
 
 /* =========================
-   RANK NUMBER
+RANK NUMBER
 ========================= */
 
 .rank-number{
@@ -468,7 +465,7 @@ body::after{
 }
 
 /* =========================
-   PHOTO
+PHOTO FULL TRANSPARENT
 ========================= */
 
 .photo-box{
@@ -477,30 +474,18 @@ body::after{
 
     z-index:2;
 
-    width:11vw;
-    height:11vw;
+    width:15vw;
+    height:100%;
 
-    max-width:150px;
-    max-height:150px;
+    min-width:180px;
 
-    min-width:90px;
-    min-height:90px;
-
-    background:white;
-
-    border-radius:24px;
+    align-self:stretch;
 
     overflow:hidden;
 
     flex-shrink:0;
 
-    margin-left:6vw;
-
-    border:
-        4px solid rgba(255,255,255,.6);
-
-    box-shadow:
-        0 10px 25px rgba(0,0,0,.25);
+    background:transparent;
 }
 
 .photo-box img{
@@ -509,10 +494,32 @@ body::after{
     height:100%;
 
     object-fit:cover;
+
+    opacity:.92;
+
+    filter:
+        contrast(1.05)
+        saturate(1.05);
+
+    mask-image:
+        linear-gradient(
+            to right,
+            rgba(0,0,0,1) 55%,
+            rgba(0,0,0,.65) 75%,
+            transparent 100%
+        );
+
+    -webkit-mask-image:
+        linear-gradient(
+            to right,
+            rgba(0,0,0,1) 55%,
+            rgba(0,0,0,.65) 75%,
+            transparent 100%
+        );
 }
 
 /* =========================
-   EMPLOYEE
+EMPLOYEE
 ========================= */
 
 .employee{
@@ -563,7 +570,7 @@ body::after{
 }
 
 /* =========================
-   SCORE
+SCORE
 ========================= */
 
 .score{
@@ -606,7 +613,7 @@ body::after{
 }
 
 /* =========================
-   MOBILE
+MOBILE
 ========================= */
 
 @media(max-width:768px){
@@ -645,12 +652,8 @@ body::after{
     }
 
     .photo-box{
-        width:68px;
-        height:68px;
-        min-width:68px;
-        min-height:68px;
-        margin-left:45px;
-        border-radius:16px;
+        width:95px;
+        min-width:95px;
     }
 
     .employee{
@@ -680,7 +683,7 @@ body::after{
 }
 
 /* =========================
-   TV 4K
+TV 4K
 ========================= */
 
 @media(min-width:1920px){
@@ -717,6 +720,11 @@ body::after{
     .rank-number{
         font-size:360px;
     }
+
+    .photo-box{
+        width:280px;
+        min-width:280px;
+    }
 }
 
 </style>
@@ -724,7 +732,10 @@ body::after{
 
 <body>
 
-<!-- SALES -->
+<!-- =========================
+TOP SALES
+========================= -->
+
 <div class="slide active">
 
     <div class="header">
@@ -743,7 +754,10 @@ body::after{
 
 </div>
 
-<!-- PROTEKSI -->
+<!-- =========================
+TOP PROTEKSI
+========================= -->
+
 <div class="slide">
 
     <div class="header">
@@ -762,7 +776,10 @@ body::after{
 
 </div>
 
-<!-- TRX -->
+<!-- =========================
+TOP TRX
+========================= -->
+
 <div class="slide">
 
     <div class="header">
@@ -787,7 +804,7 @@ const URL =
 "https://script.google.com/macros/s/AKfycbzeehvUo6QYriMFJTR4A88lN6IIHV6Qop9UphkdOTMkRLVxhVuJ13y69momo6h1pn9dTQ/exec";
 
 /* =========================
-   CLEAN NUMBER
+CLEAN NUMBER
 ========================= */
 
 function clean(val){
@@ -800,7 +817,7 @@ function clean(val){
 }
 
 /* =========================
-   UPDATE TIME
+UPDATE TIME
 ========================= */
 
 function updateTime(){
@@ -825,17 +842,20 @@ function updateTime(){
         );
 
     document.getElementById("updateTimeSales")
-        .innerHTML = "UPDATE AT : " + formatted;
+        .innerHTML =
+        "UPDATE AT : " + formatted;
 
     document.getElementById("updateTimeProteksi")
-        .innerHTML = "UPDATE AT : " + formatted;
+        .innerHTML =
+        "UPDATE AT : " + formatted;
 
     document.getElementById("updateTimeTrx")
-        .innerHTML = "UPDATE AT : " + formatted;
+        .innerHTML =
+        "UPDATE AT : " + formatted;
 }
 
 /* =========================
-   GET DATA
+GET DATA
 ========================= */
 
 async function getData(){
@@ -877,10 +897,10 @@ async function getData(){
 }
 
 /* =========================
-   RENDER
+RENDER
 ========================= */
 
-function render(data,key,containerId){
+function render(data,key,containerId,label){
 
     const styles = [
         "gold",
@@ -938,7 +958,7 @@ function render(data,key,containerId){
                 </div>
 
                 <div class="score-label">
-                    TOTAL SCORE
+                    ${label}
                 </div>
 
             </div>
@@ -953,24 +973,39 @@ function render(data,key,containerId){
 }
 
 /* =========================
-   UPDATE
+UPDATE
 ========================= */
 
 async function update(){
 
     const data = await getData();
 
-    render(data,"sales","salesList");
+    render(
+        data,
+        "sales",
+        "salesList",
+        "TOTAL SALES"
+    );
 
-    render(data,"proteksi","proteksiList");
+    render(
+        data,
+        "proteksi",
+        "proteksiList",
+        "TOTAL PROTEKSI"
+    );
 
-    render(data,"trx","trxList");
+    render(
+        data,
+        "trx",
+        "trxList",
+        "TOTAL TRX"
+    );
 
     updateTime();
 }
 
 /* =========================
-   AUTO SLIDE
+AUTO SLIDE
 ========================= */
 
 let current = 0;
@@ -992,7 +1027,7 @@ setInterval(()=>{
 },5000);
 
 /* =========================
-   AUTO REFRESH
+AUTO REFRESH
 ========================= */
 
 setInterval(update,15000);
@@ -1000,7 +1035,7 @@ setInterval(update,15000);
 update();
 
 /* =========================
-   FULLSCREEN
+FULLSCREEN
 ========================= */
 
 document.body.onclick = () => {
