@@ -40,7 +40,7 @@ body{
 }
 
 /* =========================================
-   BACKGROUND LIGHT
+   BACKGROUND EFFECT
 ========================================= */
 
 body::before{
@@ -54,17 +54,13 @@ body::before{
     background:
         linear-gradient(
             135deg,
-            rgba(255,255,255,.04),
-            transparent 30%,
-            rgba(255,255,255,.03)
+            rgba(255,255,255,.03),
+            transparent 35%,
+            rgba(255,255,255,.02)
         );
 
     pointer-events:none;
 }
-
-/* =========================================
-   MOVING LIGHT
-========================================= */
 
 body::after{
 
@@ -82,18 +78,18 @@ body::after{
         linear-gradient(
             90deg,
             transparent,
-            rgba(255,255,255,.04),
+            rgba(255,255,255,.05),
             transparent
         );
 
     transform:rotate(25deg);
 
-    animation:lightMove 10s linear infinite;
+    animation:bgMove 12s linear infinite;
 
     pointer-events:none;
 }
 
-@keyframes lightMove{
+@keyframes bgMove{
 
     0%{
         transform:
@@ -118,7 +114,7 @@ body::after{
     height:100vh;
 
     padding:
-        1.2vh
+        1vh
         2vw
         2vh
         2vw;
@@ -140,7 +136,7 @@ body::after{
 
     text-align:center;
 
-    margin-bottom:1.2vh;
+    margin-bottom:1vh;
 }
 
 .header h1{
@@ -149,7 +145,7 @@ body::after{
 
     font-weight:900;
 
-    letter-spacing:5px;
+    letter-spacing:6px;
 
     text-transform:uppercase;
 
@@ -161,7 +157,7 @@ body::after{
 
     margin-top:.3vh;
 
-    font-size:1.2vw;
+    font-size:1.1vw;
 
     opacity:.9;
 
@@ -191,9 +187,9 @@ body::after{
         rgba(255,255,255,.12);
 
     border:
-        2px solid rgba(255,255,255,.2);
+        2px solid rgba(255,255,255,.18);
 
-    font-size:1.5vw;
+    font-size:1.4vw;
 
     font-weight:800;
 
@@ -218,13 +214,11 @@ body::after{
 
     flex-direction:column;
 
-    gap:1.5vh;
+    gap:1.4vh;
 
     flex:1;
 
     justify-content:flex-start;
-
-    padding-bottom:2vh;
 }
 
 /* =========================================
@@ -241,17 +235,17 @@ body::after{
 
     min-height:21vh;
 
-    border-radius:32px;
+    border-radius:34px;
 
     overflow:hidden;
 
     border:
         1px solid rgba(255,255,255,.08);
 
-    transform:
-        translateX(-120px);
-
     opacity:0;
+
+    transform:
+        translateX(-100px);
 
     animation:
         slideRight .8s forwards;
@@ -280,7 +274,7 @@ body::after{
 }
 
 /* =========================================
-   SLIDE RIGHT EFFECT
+   ANIMATION
 ========================================= */
 
 @keyframes slideRight{
@@ -290,7 +284,7 @@ body::after{
         opacity:0;
 
         transform:
-            translateX(-120px)
+            translateX(-100px)
             scale(.95);
     }
 
@@ -305,7 +299,7 @@ body::after{
 }
 
 /* =========================================
-   SHINE EFFECT
+   SHINE CARD
 ========================================= */
 
 .rank-card::before{
@@ -324,7 +318,7 @@ body::after{
         linear-gradient(
             90deg,
             transparent,
-            rgba(255,255,255,.35),
+            rgba(255,255,255,.25),
             transparent
         );
 
@@ -381,7 +375,7 @@ body::after{
         );
 
     box-shadow:
-        0 0 30px rgba(255,255,255,.22);
+        0 0 30px rgba(255,255,255,.2);
 }
 
 /* =========================================
@@ -405,14 +399,18 @@ body::after{
 }
 
 /* =========================================
-   RANK NUMBER
+   RANK NUMBER ULTRA
 ========================================= */
 
 .rank-number{
 
-    width:13%;
+    position:relative;
 
-    min-width:120px;
+    width:16%;
+
+    min-width:150px;
+
+    height:100%;
 
     display:flex;
 
@@ -420,16 +418,115 @@ body::after{
 
     justify-content:center;
 
-    font-size:7vw;
-
-    line-height:1;
+    font-size:10vw;
 
     font-weight:900;
 
-    color:white;
+    line-height:1;
+
+    transform:
+        skew(-12deg);
+
+    overflow:hidden;
+
+    border-right:
+        2px solid rgba(255,255,255,.15);
 
     text-shadow:
-        0 8px 18px rgba(0,0,0,.35);
+        0 10px 25px rgba(0,0,0,.35);
+}
+
+/* GOLD NUMBER */
+
+.gold .rank-number{
+
+    background:
+        linear-gradient(
+            180deg,
+            #fff9d7 0%,
+            #ffe066 20%,
+            #facc15 45%,
+            #ca8a04 70%,
+            #78350f 100%
+        );
+
+    color:white;
+}
+
+/* SILVER NUMBER */
+
+.silver .rank-number{
+
+    background:
+        linear-gradient(
+            180deg,
+            #ffffff 0%,
+            #e5e7eb 20%,
+            #cbd5e1 45%,
+            #94a3b8 70%,
+            #475569 100%
+        );
+
+    color:white;
+}
+
+/* BRONZE NUMBER */
+
+.bronze .rank-number{
+
+    background:
+        linear-gradient(
+            180deg,
+            #fed7aa 0%,
+            #fdba74 20%,
+            #fb923c 45%,
+            #c2410c 70%,
+            #7c2d12 100%
+        );
+
+    color:white;
+}
+
+/* NUMBER SHINE */
+
+.rank-number::before{
+
+    content:"";
+
+    position:absolute;
+
+    top:-20%;
+
+    left:-50%;
+
+    width:40%;
+
+    height:150%;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            rgba(255,255,255,.45),
+            transparent
+        );
+
+    transform:
+        rotate(20deg);
+
+    animation:
+        rankShine 4s linear infinite;
+}
+
+@keyframes rankShine{
+
+    0%{
+        left:-50%;
+    }
+
+    100%{
+        left:140%;
+    }
 }
 
 /* =========================================
@@ -438,14 +535,14 @@ body::after{
 
 .photo-box{
 
-    width:12vw;
-    height:12vw;
+    width:11vw;
+    height:11vw;
 
-    max-width:160px;
-    max-height:160px;
+    max-width:150px;
+    max-height:150px;
 
-    min-width:95px;
-    min-height:95px;
+    min-width:90px;
+    min-height:90px;
 
     background:white;
 
@@ -454,6 +551,8 @@ body::after{
     overflow:hidden;
 
     flex-shrink:0;
+
+    margin-left:1vw;
 
     border:
         4px solid rgba(255,255,255,.6);
@@ -485,7 +584,7 @@ body::after{
 
 .employee-name{
 
-    font-size:2.5vw;
+    font-size:2.4vw;
 
     font-weight:900;
 
@@ -574,11 +673,11 @@ body::after{
 
         height:auto;
 
-        padding:15px;
+        padding:14px;
     }
 
     .header h1{
-        font-size:36px;
+        font-size:34px;
     }
 
     .header p{
@@ -587,7 +686,7 @@ body::after{
 
     .update-time{
 
-        font-size:13px;
+        font-size:12px;
 
         padding:
             10px
@@ -602,25 +701,25 @@ body::after{
 
         min-height:110px;
 
-        border-radius:20px;
+        border-radius:22px;
     }
 
     .rank-number{
 
-        width:50px;
+        width:70px;
 
-        min-width:50px;
+        min-width:70px;
 
-        font-size:48px;
+        font-size:58px;
     }
 
     .photo-box{
 
-        width:70px;
-        height:70px;
+        width:68px;
+        height:68px;
 
-        min-width:70px;
-        min-height:70px;
+        min-width:68px;
+        min-height:68px;
 
         border-radius:16px;
     }
@@ -678,7 +777,7 @@ body::after{
     }
 
     .employee-name{
-        font-size:50px;
+        font-size:48px;
     }
 
     .employee-label{
@@ -686,11 +785,15 @@ body::after{
     }
 
     .score-value{
-        font-size:58px;
+        font-size:56px;
     }
 
     .score-label{
         font-size:18px;
+    }
+
+    .rank-number{
+        font-size:180px;
     }
 }
 
@@ -951,7 +1054,7 @@ async function update(){
 }
 
 /* =========================================
-   AUTO SLIDE 5 DETIK
+   AUTO SLIDE
 ========================================= */
 
 let current = 0;
