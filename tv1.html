@@ -417,8 +417,6 @@ RANK NUMBER
         3px rgba(255,255,255,.18);
 }
 
-/* GOLD NUMBER */
-
 .gold .rank-number{
 
     background:
@@ -434,12 +432,7 @@ RANK NUMBER
     -webkit-background-clip:text;
 
     -webkit-text-fill-color:transparent;
-
-    text-shadow:
-        0 0 30px rgba(250,204,21,.45);
 }
-
-/* SILVER NUMBER */
 
 .silver .rank-number{
 
@@ -456,12 +449,7 @@ RANK NUMBER
     -webkit-background-clip:text;
 
     -webkit-text-fill-color:transparent;
-
-    text-shadow:
-        0 0 30px rgba(255,255,255,.35);
 }
-
-/* BRONZE NUMBER */
 
 .bronze .rank-number{
 
@@ -478,9 +466,6 @@ RANK NUMBER
     -webkit-background-clip:text;
 
     -webkit-text-fill-color:transparent;
-
-    text-shadow:
-        0 0 30px rgba(251,146,60,.35);
 }
 
 /* =========================================
@@ -632,11 +617,8 @@ MOBILE
     }
 
     .slide{
-
         min-height:100vh;
-
         height:auto;
-
         padding:14px;
     }
 
@@ -649,48 +631,30 @@ MOBILE
     }
 
     .update-time{
-
         font-size:12px;
-
-        padding:
-            10px
-            18px;
+        padding:10px 18px;
     }
 
     .rank-card{
-
         min-height:110px;
-
         border-radius:22px;
     }
 
     .rank-number{
-
         font-size:110px;
-
         left:-10px;
-
-        opacity:.5;
-
-        -webkit-text-stroke:
-            2px rgba(255,255,255,.18);
     }
 
     .photo-box{
-
         width:68px;
         height:68px;
-
         min-width:68px;
         min-height:68px;
-
         margin-left:45px;
-
         border-radius:16px;
     }
 
     .employee{
-
         padding-left:12px;
     }
 
@@ -703,9 +667,7 @@ MOBILE
     }
 
     .score{
-
         width:auto;
-
         padding-right:10px;
     }
 
@@ -733,12 +695,8 @@ TV 4K
     }
 
     .update-time{
-
         font-size:28px;
-
-        padding:
-            18px
-            38px;
+        padding:18px 38px;
     }
 
     .employee-name{
@@ -758,11 +716,7 @@ TV 4K
     }
 
     .rank-number{
-
         font-size:360px;
-
-        -webkit-text-stroke:
-            5px rgba(255,255,255,.16);
     }
 }
 
@@ -847,17 +801,6 @@ function clean(val){
 }
 
 /* =========================================
-FOTO BERDASARKAN NIP
-========================================= */
-
-function avatar(nip,name){
-
-    return `
-    https://drive.google.com/thumbnail?id=${nip}&sz=w1000
-    `;
-}
-
-/* =========================================
 UPDATE TIME
 ========================================= */
 
@@ -883,16 +826,13 @@ function updateTime(){
         );
 
     document.getElementById("updateTimeSales")
-        .innerHTML =
-        "UPDATE AT : " + formatted;
+        .innerHTML = "UPDATE AT : " + formatted;
 
     document.getElementById("updateTimeProteksi")
-        .innerHTML =
-        "UPDATE AT : " + formatted;
+        .innerHTML = "UPDATE AT : " + formatted;
 
     document.getElementById("updateTimeTrx")
-        .innerHTML =
-        "UPDATE AT : " + formatted;
+        .innerHTML = "UPDATE AT : " + formatted;
 }
 
 /* =========================================
@@ -909,16 +849,11 @@ async function getData(){
 
         return json.map(row => ({
 
-            nip:
-                row["NIP"] || "",
-
             name:
-                row["EMPLOYEE NAME"] ||
-                "UNKNOWN",
+                row["EMPLOYEE NAME"] || "UNKNOWN",
 
             dept:
-                row["DEPT"] ||
-                "-",
+                row["DEPT"] || "-",
 
             sales:
                 clean(row["SALES MTD"]),
@@ -927,7 +862,10 @@ async function getData(){
                 clean(row["PROTEKSI"]),
 
             trx:
-                clean(row["TRX"])
+                clean(row["TRX"]),
+
+            photo:
+                row["PHOTO"] || ""
 
         }));
 
@@ -971,11 +909,13 @@ function render(data,key,containerId){
             <div class="photo-box">
 
                 <img
-                    src="${avatar(d.nip,d.name)}"
+
+                    src="https://drive.google.com/thumbnail?id=${d.photo}&sz=w1000"
 
                     onerror="
                     this.src='https://ui-avatars.com/api/?name=${encodeURIComponent(d.name)}&background=random&color=fff&size=512'
                     "
+
                 >
 
             </div>
