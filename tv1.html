@@ -119,7 +119,11 @@ body::after{
     width:100vw;
     height:100vh;
 
-    padding:2vh 2vw;
+    padding:
+        1.5vh
+        2vw
+        3vh
+        2vw;
 
     display:none;
 
@@ -157,11 +161,11 @@ body::after{
 
 .header p{
 
-    margin-top:.5vh;
+    margin-top:.3vh;
 
-    font-size:1vw;
+    font-size:1.2vw;
 
-    opacity:.75;
+    opacity:.9;
 
     letter-spacing:4px;
 
@@ -174,20 +178,36 @@ body::after{
 
 .update-time{
 
-    margin-top:1vh;
+    margin:
+        1.2vh auto 0 auto;
 
-    font-size:1vw;
+    width:fit-content;
 
-    font-weight:700;
+    padding:
+        1vh
+        2vw;
+
+    border-radius:999px;
+
+    background:
+        rgba(255,255,255,.12);
+
+    border:
+        2px solid rgba(255,255,255,.2);
+
+    font-size:1.5vw;
+
+    font-weight:800;
 
     letter-spacing:2px;
 
-    opacity:.85;
-
-    color:#ffffff;
+    color:white;
 
     text-shadow:
-        0 0 10px rgba(255,255,255,.15);
+        0 0 10px rgba(255,255,255,.25);
+
+    box-shadow:
+        0 0 25px rgba(255,255,255,.08);
 }
 
 /* =========================================
@@ -203,6 +223,8 @@ body::after{
     gap:2vh;
 
     flex:1;
+
+    justify-content:center;
 }
 
 /* =========================================
@@ -217,7 +239,7 @@ body::after{
 
     align-items:center;
 
-    height:28vh;
+    min-height:24vh;
 
     border-radius:32px;
 
@@ -233,6 +255,10 @@ body::after{
 
     animation:
         slideRight .8s forwards;
+
+    padding:
+        1vh
+        1vw;
 }
 
 /* =========================================
@@ -382,13 +408,19 @@ body::after{
 
 .rank-number{
 
-    width:14%;
+    width:13%;
 
     min-width:120px;
 
-    text-align:center;
+    display:flex;
 
-    font-size:9vw;
+    align-items:center;
+
+    justify-content:center;
+
+    font-size:8vw;
+
+    line-height:1;
 
     font-weight:900;
 
@@ -396,6 +428,8 @@ body::after{
 
     text-shadow:
         0 8px 18px rgba(0,0,0,.35);
+
+    padding-bottom:.5vh;
 }
 
 /* =========================================
@@ -404,11 +438,11 @@ body::after{
 
 .photo-box{
 
-    width:14vw;
-    height:14vw;
+    width:13vw;
+    height:13vw;
 
-    max-width:180px;
-    max-height:180px;
+    max-width:170px;
+    max-height:170px;
 
     min-width:100px;
     min-height:100px;
@@ -444,14 +478,14 @@ body::after{
 
     flex:1;
 
-    padding-left:2.5vw;
+    padding-left:2vw;
 
     overflow:hidden;
 }
 
 .employee-name{
 
-    font-size:3vw;
+    font-size:2.8vw;
 
     font-weight:900;
 
@@ -464,19 +498,21 @@ body::after{
     overflow:hidden;
 
     text-overflow:ellipsis;
+
+    line-height:1.1;
 }
 
 .employee-label{
 
-    margin-top:.5vh;
+    margin-top:.8vh;
 
-    font-size:1vw;
+    font-size:1.2vw;
 
-    font-weight:700;
+    font-weight:800;
 
     color:#111827;
 
-    opacity:.7;
+    opacity:.75;
 
     letter-spacing:2px;
 
@@ -489,25 +525,27 @@ body::after{
 
 .score{
 
-    width:28%;
+    width:26%;
 
-    padding-right:3vw;
+    padding-right:2vw;
 
     text-align:right;
 }
 
 .score-value{
 
-    font-size:3.6vw;
+    font-size:3.3vw;
 
     font-weight:900;
 
     color:#111827;
+
+    line-height:1;
 }
 
 .score-label{
 
-    margin-top:.5vh;
+    margin-top:.8vh;
 
     font-size:1vw;
 
@@ -549,45 +587,51 @@ body::after{
 
     .update-time{
 
-        font-size:11px;
+        font-size:13px;
 
-        margin-top:8px;
+        padding:
+            10px
+            18px;
+    }
+
+    .rank-list{
+        gap:15px;
     }
 
     .rank-card{
 
-        height:120px;
+        min-height:115px;
 
         border-radius:20px;
     }
 
     .rank-number{
 
-        width:60px;
+        width:55px;
 
-        min-width:60px;
+        min-width:55px;
 
-        font-size:60px;
+        font-size:52px;
     }
 
     .photo-box{
 
-        width:75px;
-        height:75px;
+        width:72px;
+        height:72px;
 
-        min-width:75px;
-        min-height:75px;
+        min-width:72px;
+        min-height:72px;
 
         border-radius:16px;
     }
 
     .employee{
 
-        padding-left:15px;
+        padding-left:12px;
     }
 
     .employee-name{
-        font-size:22px;
+        font-size:20px;
     }
 
     .employee-label{
@@ -598,11 +642,11 @@ body::after{
 
         width:auto;
 
-        padding-right:15px;
+        padding-right:10px;
     }
 
     .score-value{
-        font-size:24px;
+        font-size:22px;
     }
 
     .score-label{
@@ -617,15 +661,36 @@ body::after{
 @media(min-width:1920px){
 
     .header h1{
-        font-size:72px;
+        font-size:76px;
+    }
+
+    .header p{
+        font-size:22px;
+    }
+
+    .update-time{
+
+        font-size:28px;
+
+        padding:
+            18px
+            38px;
     }
 
     .employee-name{
-        font-size:58px;
+        font-size:54px;
+    }
+
+    .employee-label{
+        font-size:22px;
     }
 
     .score-value{
-        font-size:70px;
+        font-size:64px;
+    }
+
+    .score-label{
+        font-size:18px;
     }
 }
 
@@ -912,7 +977,7 @@ setInterval(()=>{
     slides[current]
         .classList.add("active");
 
-},7000);
+},4000);
 
 /* =========================================
    AUTO REFRESH
