@@ -403,22 +403,19 @@ RANK NUMBER
 }
 
 .gold .rank-number{
-
     color:#facc15;
 }
 
 .silver .rank-number{
-
     color:#e2e8f0;
 }
 
 .bronze .rank-number{
-
     color:#fb923c;
 }
 
 /* =========================
-PHOTO FULL SOLID
+PHOTO
 ========================= */
 
 .photo-box{
@@ -496,21 +493,28 @@ EMPLOYEE
     text-overflow:ellipsis;
 }
 
+/* =========================
+DEPT BESAR
+========================= */
+
 .employee-label{
 
     margin-top:.5vh;
 
-    font-size:.9vw;
+    font-size:1.3vw;
 
-    font-weight:800;
+    font-weight:900;
 
     color:#111827;
 
-    opacity:.72;
+    opacity:.85;
 
     letter-spacing:2px;
 
     text-transform:uppercase;
+
+    text-shadow:
+        0 2px 4px rgba(255,255,255,.18);
 }
 
 /* =========================
@@ -601,7 +605,7 @@ MOBILE
     }
 
     .employee-label{
-        font-size:10px;
+        font-size:13px;
     }
 
     .score-value{
@@ -644,7 +648,7 @@ TV 4K
     }
 
     .employee-label{
-        font-size:18px;
+        font-size:26px;
     }
 
     .score-value{
@@ -859,26 +863,9 @@ async function update(){
 
     const data = await getData();
 
-    render(
-        data,
-        "sales",
-        "salesList",
-        "TOTAL SALES"
-    );
-
-    render(
-        data,
-        "proteksi",
-        "proteksiList",
-        "TOTAL PROTEKSI"
-    );
-
-    render(
-        data,
-        "trx",
-        "trxList",
-        "TOTAL TRX"
-    );
+    render(data,"sales","salesList","TOTAL SALES");
+    render(data,"proteksi","proteksiList","TOTAL PROTEKSI");
+    render(data,"trx","trxList","TOTAL TRX");
 
     updateTime();
 }
