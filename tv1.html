@@ -391,7 +391,7 @@ RANK NUMBER
 
     font-weight:900;
 
-    opacity:.38;
+    opacity:.22;
 
     letter-spacing:-10px;
 
@@ -404,54 +404,21 @@ RANK NUMBER
 
 .gold .rank-number{
 
-    background:
-        linear-gradient(
-            180deg,
-            #fff9c4,
-            #facc15,
-            #ca8a04,
-            #78350f
-        );
-
-    -webkit-background-clip:text;
-
-    -webkit-text-fill-color:transparent;
+    color:#facc15;
 }
 
 .silver .rank-number{
 
-    background:
-        linear-gradient(
-            180deg,
-            #ffffff,
-            #dbe4ee,
-            #94a3b8,
-            #334155
-        );
-
-    -webkit-background-clip:text;
-
-    -webkit-text-fill-color:transparent;
+    color:#e2e8f0;
 }
 
 .bronze .rank-number{
 
-    background:
-        linear-gradient(
-            180deg,
-            #ffedd5,
-            #fb923c,
-            #c2410c,
-            #7c2d12
-        );
-
-    -webkit-background-clip:text;
-
-    -webkit-text-fill-color:transparent;
+    color:#fb923c;
 }
 
 /* =========================
-PHOTO SOLID FULL CARD
+PHOTO FULL SOLID
 ========================= */
 
 .photo-box{
@@ -482,50 +449,17 @@ PHOTO SOLID FULL CARD
 
     object-position:center top;
 
-    background:transparent;
-
     opacity:1;
 
+    background:transparent;
+
     filter:
-        contrast(1.06)
+        contrast(1.08)
         saturate(1.08)
         brightness(1.02);
 
-    -webkit-mask-image:
-        linear-gradient(
-            to right,
-            rgba(0,0,0,1) 70%,
-            rgba(0,0,0,.92) 82%,
-            rgba(0,0,0,.55) 94%,
-            transparent 100%
-        );
-
-    mask-image:
-        linear-gradient(
-            to right,
-            rgba(0,0,0,1) 70%,
-            rgba(0,0,0,.92) 82%,
-            rgba(0,0,0,.55) 94%,
-            transparent 100%
-        );
-}
-
-.photo-box::after{
-
-    content:"";
-
-    position:absolute;
-
-    inset:0;
-
-    background:
-        linear-gradient(
-            to right,
-            rgba(255,255,255,.10),
-            transparent 65%
-        );
-
-    pointer-events:none;
+    -webkit-mask-image:none;
+    mask-image:none;
 }
 
 /* =========================
@@ -794,10 +728,6 @@ TV 4K
 const URL =
 "https://script.google.com/macros/s/AKfycbzeehvUo6QYriMFJTR4A88lN6IIHV6Qop9UphkdOTMkRLVxhVuJ13y69momo6h1pn9dTQ/exec";
 
-/* =========================
-CLEAN NUMBER
-========================= */
-
 function clean(val){
 
     if(!val) return 0;
@@ -807,30 +737,12 @@ function clean(val){
     ) || 0;
 }
 
-/* =========================
-UPDATE TIME
-========================= */
-
 function updateTime(){
 
     const now = new Date();
 
-    const options = {
-
-        day:'2-digit',
-        month:'long',
-        year:'numeric',
-
-        hour:'2-digit',
-        minute:'2-digit',
-        second:'2-digit'
-    };
-
     const formatted =
-        now.toLocaleDateString(
-            'id-ID',
-            options
-        );
+    now.toLocaleString('id-ID');
 
     document.getElementById("updateTimeSales").innerHTML =
     "UPDATE AT : " + formatted;
@@ -841,10 +753,6 @@ function updateTime(){
     document.getElementById("updateTimeTrx").innerHTML =
     "UPDATE AT : " + formatted;
 }
-
-/* =========================
-GET DATA
-========================= */
 
 async function getData(){
 
@@ -877,10 +785,6 @@ async function getData(){
         return [];
     }
 }
-
-/* =========================
-RENDER
-========================= */
 
 function render(data,key,containerId,label){
 
@@ -951,10 +855,6 @@ function render(data,key,containerId,label){
     document.getElementById(containerId).innerHTML = html;
 }
 
-/* =========================
-UPDATE
-========================= */
-
 async function update(){
 
     const data = await getData();
@@ -983,10 +883,6 @@ async function update(){
     updateTime();
 }
 
-/* =========================
-AUTO SLIDE
-========================= */
-
 let current = 0;
 
 setInterval(()=>{
@@ -1005,17 +901,9 @@ setInterval(()=>{
 
 },5000);
 
-/* =========================
-AUTO REFRESH
-========================= */
-
 setInterval(update,15000);
 
 update();
-
-/* =========================
-FULLSCREEN
-========================= */
 
 document.body.onclick = () => {
 
