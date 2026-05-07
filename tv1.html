@@ -40,7 +40,7 @@ body{
 }
 
 /* =========================
-BACKGROUND EFFECT
+BACKGROUND FX
 ========================= */
 
 body::before{
@@ -114,14 +114,16 @@ SLIDE
     height:100vh;
 
     padding:
-        1vh
+        1.2vh
         2vw
-        2vh
+        1.2vh
         2vw;
 
     display:none;
 
     flex-direction:column;
+
+    justify-content:flex-start;
 }
 
 .active{
@@ -137,11 +139,13 @@ HEADER
     text-align:center;
 
     margin-bottom:1vh;
+
+    flex-shrink:0;
 }
 
 .header h1{
 
-    font-size:4vw;
+    font-size:3vw;
 
     font-weight:900;
 
@@ -157,7 +161,7 @@ HEADER
 
     margin-top:.3vh;
 
-    font-size:1.1vw;
+    font-size:1vw;
 
     opacity:.9;
 
@@ -178,8 +182,8 @@ UPDATE TIME
     width:fit-content;
 
     padding:
-        .9vh
-        2vw;
+        .7vh
+        1.8vw;
 
     border-radius:999px;
 
@@ -189,7 +193,7 @@ UPDATE TIME
     border:
         2px solid rgba(255,255,255,.18);
 
-    font-size:1.4vw;
+    font-size:1vw;
 
     font-weight:800;
 
@@ -214,9 +218,11 @@ LIST
 
     flex-direction:column;
 
-    gap:1.4vh;
+    gap:1.2vh;
 
     flex:1;
+
+    justify-content:space-evenly;
 }
 
 /* =========================
@@ -231,7 +237,7 @@ CARD
 
     align-items:center;
 
-    min-height:21vh;
+    height:26vh;
 
     border-radius:34px;
 
@@ -304,7 +310,7 @@ SHINE
         linear-gradient(
             90deg,
             transparent,
-            rgba(255,255,255,.2),
+            rgba(255,255,255,.22),
             transparent
         );
 
@@ -325,7 +331,7 @@ SHINE
 }
 
 /* =========================
-CARD COLORS
+CARD COLOR
 ========================= */
 
 .gold{
@@ -333,11 +339,11 @@ CARD COLORS
     background:
         linear-gradient(
             135deg,
-            #6b5300 0%,
-            #d4a514 18%,
-            #fff0a6 50%,
-            #d4a514 82%,
-            #6b5300 100%
+            #6b5300,
+            #d4a514,
+            #fff0a6,
+            #d4a514,
+            #6b5300
         );
 
     box-shadow:
@@ -349,15 +355,15 @@ CARD COLORS
     background:
         linear-gradient(
             135deg,
-            #737373 0%,
-            #cfcfcf 18%,
-            #ffffff 50%,
-            #cfcfcf 82%,
-            #737373 100%
+            #737373,
+            #d1d5db,
+            #ffffff,
+            #d1d5db,
+            #737373
         );
 
     box-shadow:
-        0 0 30px rgba(255,255,255,.2);
+        0 0 35px rgba(255,255,255,.2);
 }
 
 .bronze{
@@ -365,15 +371,15 @@ CARD COLORS
     background:
         linear-gradient(
             135deg,
-            #6d3f1d 0%,
-            #c87c3d 18%,
-            #efc08c 50%,
-            #c87c3d 82%,
-            #6d3f1d 100%
+            #6d3f1d,
+            #c87c3d,
+            #efc08c,
+            #c87c3d,
+            #6d3f1d
         );
 
     box-shadow:
-        0 0 30px rgba(200,124,61,.28);
+        0 0 35px rgba(194,65,12,.28);
 }
 
 /* =========================
@@ -384,7 +390,7 @@ RANK NUMBER
 
     position:absolute;
 
-    left:-1vw;
+    left:-.5vw;
 
     top:50%;
 
@@ -392,7 +398,7 @@ RANK NUMBER
         translateY(-50%)
         skew(-10deg);
 
-    font-size:20vw;
+    font-size:16vw;
 
     font-weight:900;
 
@@ -402,15 +408,15 @@ RANK NUMBER
 
     user-select:none;
 
-    letter-spacing:-12px;
+    opacity:.38;
 
-    opacity:.42;
+    letter-spacing:-10px;
 
     filter:
-        drop-shadow(0 8px 12px rgba(0,0,0,.35));
+        drop-shadow(0 10px 15px rgba(0,0,0,.35));
 
     -webkit-text-stroke:
-        3px rgba(255,255,255,.18);
+        3px rgba(255,255,255,.15);
 }
 
 .gold .rank-number{
@@ -418,10 +424,9 @@ RANK NUMBER
     background:
         linear-gradient(
             180deg,
-            rgba(255,255,255,.95) 0%,
-            #fff7b1 10%,
-            #facc15 38%,
-            #ca8a04 72%,
+            #fff9c4 0%,
+            #facc15 35%,
+            #ca8a04 70%,
             #78350f 100%
         );
 
@@ -435,11 +440,10 @@ RANK NUMBER
     background:
         linear-gradient(
             180deg,
-            rgba(255,255,255,.98) 0%,
-            #ffffff 15%,
-            #cbd5e1 45%,
-            #94a3b8 75%,
-            #475569 100%
+            #ffffff 0%,
+            #dbe4ee 35%,
+            #94a3b8 70%,
+            #334155 100%
         );
 
     -webkit-background-clip:text;
@@ -452,10 +456,9 @@ RANK NUMBER
     background:
         linear-gradient(
             180deg,
-            #fff7ed 0%,
-            #fed7aa 12%,
-            #fb923c 42%,
-            #c2410c 75%,
+            #ffedd5 0%,
+            #fb923c 35%,
+            #c2410c 70%,
             #7c2d12 100%
         );
 
@@ -465,27 +468,20 @@ RANK NUMBER
 }
 
 /* =========================
-PHOTO FULL TRANSPARENT
+PHOTO
 ========================= */
 
 .photo-box{
 
     position:relative;
 
-    z-index:2;
+    width:18%;
 
-    width:15vw;
     height:100%;
-
-    min-width:180px;
-
-    align-self:stretch;
 
     overflow:hidden;
 
     flex-shrink:0;
-
-    background:transparent;
 }
 
 .photo-box img{
@@ -495,25 +491,25 @@ PHOTO FULL TRANSPARENT
 
     object-fit:cover;
 
-    opacity:.92;
+    opacity:.95;
 
     filter:
         contrast(1.05)
-        saturate(1.05);
-
-    mask-image:
-        linear-gradient(
-            to right,
-            rgba(0,0,0,1) 55%,
-            rgba(0,0,0,.65) 75%,
-            transparent 100%
-        );
+        saturate(1.08);
 
     -webkit-mask-image:
         linear-gradient(
             to right,
             rgba(0,0,0,1) 55%,
-            rgba(0,0,0,.65) 75%,
+            rgba(0,0,0,.5) 80%,
+            transparent 100%
+        );
+
+    mask-image:
+        linear-gradient(
+            to right,
+            rgba(0,0,0,1) 55%,
+            rgba(0,0,0,.5) 80%,
             transparent 100%
         );
 }
@@ -530,14 +526,14 @@ EMPLOYEE
 
     flex:1;
 
-    padding-left:2vw;
+    padding-left:1.5vw;
 
     overflow:hidden;
 }
 
 .employee-name{
 
-    font-size:2.4vw;
+    font-size:2vw;
 
     font-weight:900;
 
@@ -554,15 +550,15 @@ EMPLOYEE
 
 .employee-label{
 
-    margin-top:.7vh;
+    margin-top:.5vh;
 
-    font-size:1vw;
+    font-size:.9vw;
 
     font-weight:800;
 
     color:#111827;
 
-    opacity:.75;
+    opacity:.72;
 
     letter-spacing:2px;
 
@@ -579,7 +575,7 @@ SCORE
 
     z-index:2;
 
-    width:24%;
+    width:22%;
 
     padding-right:2vw;
 
@@ -588,7 +584,7 @@ SCORE
 
 .score-value{
 
-    font-size:3vw;
+    font-size:2.6vw;
 
     font-weight:900;
 
@@ -599,9 +595,9 @@ SCORE
 
 .score-label{
 
-    margin-top:.6vh;
+    margin-top:.4vh;
 
-    font-size:.9vw;
+    font-size:.8vw;
 
     font-weight:700;
 
@@ -623,37 +619,40 @@ MOBILE
     }
 
     .slide{
-        min-height:100vh;
         height:auto;
-        padding:14px;
+        min-height:100vh;
+        padding:12px;
     }
 
     .header h1{
-        font-size:34px;
+        font-size:30px;
     }
 
     .header p{
-        font-size:12px;
+        font-size:11px;
     }
 
     .update-time{
-        font-size:12px;
-        padding:10px 18px;
+        font-size:11px;
+        padding:8px 14px;
+    }
+
+    .rank-list{
+        gap:12px;
     }
 
     .rank-card{
-        min-height:110px;
+        height:120px;
         border-radius:22px;
     }
 
     .rank-number{
-        font-size:110px;
-        left:-10px;
+        font-size:95px;
+        left:-8px;
     }
 
     .photo-box{
         width:95px;
-        min-width:95px;
     }
 
     .employee{
@@ -661,7 +660,7 @@ MOBILE
     }
 
     .employee-name{
-        font-size:18px;
+        font-size:17px;
     }
 
     .employee-label{
@@ -670,7 +669,7 @@ MOBILE
 
     .score{
         width:auto;
-        padding-right:10px;
+        padding-right:12px;
     }
 
     .score-value{
@@ -689,41 +688,39 @@ TV 4K
 @media(min-width:1920px){
 
     .header h1{
-        font-size:74px;
+        font-size:68px;
     }
 
     .header p{
-        font-size:22px;
-    }
-
-    .update-time{
-        font-size:28px;
-        padding:18px 38px;
-    }
-
-    .employee-name{
-        font-size:48px;
-    }
-
-    .employee-label{
         font-size:20px;
     }
 
-    .score-value{
-        font-size:56px;
+    .update-time{
+        font-size:24px;
     }
 
-    .score-label{
+    .rank-card{
+        height:25vh;
+    }
+
+    .employee-name{
+        font-size:44px;
+    }
+
+    .employee-label{
         font-size:18px;
     }
 
-    .rank-number{
-        font-size:360px;
+    .score-value{
+        font-size:52px;
     }
 
-    .photo-box{
-        width:280px;
-        min-width:280px;
+    .score-label{
+        font-size:16px;
+    }
+
+    .rank-number{
+        font-size:300px;
     }
 }
 
@@ -732,10 +729,7 @@ TV 4K
 
 <body>
 
-<!-- =========================
-TOP SALES
-========================= -->
-
+<!-- TOP SALES -->
 <div class="slide active">
 
     <div class="header">
@@ -754,10 +748,7 @@ TOP SALES
 
 </div>
 
-<!-- =========================
-TOP PROTEKSI
-========================= -->
-
+<!-- TOP PROTEKSI -->
 <div class="slide">
 
     <div class="header">
@@ -776,10 +767,7 @@ TOP PROTEKSI
 
 </div>
 
-<!-- =========================
-TOP TRX
-========================= -->
-
+<!-- TOP TRX -->
 <div class="slide">
 
     <div class="header">
