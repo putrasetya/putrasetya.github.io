@@ -4,7 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>AZKO TV RANKING</title>
+<title>AZKO PREMIUM TV DISPLAY</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800;900&display=swap" rel="stylesheet">
 
 <style>
 
@@ -14,23 +16,63 @@
     box-sizing:border-box;
 }
 
-body{
-    font-family:Arial, Helvetica, sans-serif;
-    background:
-        radial-gradient(circle at top,#0f172a,#020617 70%);
-    color:white;
-    overflow:hidden;
+:root{
+    --dark:#020617;
+    --text:#ffffff;
 }
 
-/* =========================
+body{
+    font-family:'Poppins',sans-serif;
+    background:
+        radial-gradient(circle at top,#0f172a 0%,#020617 65%);
+    overflow:hidden;
+    color:white;
+}
+
+/* =========================================
+   BACKGROUND EFFECT
+========================================= */
+
+.bg-glow{
+    position:fixed;
+    width:100%;
+    height:100%;
+    overflow:hidden;
+    z-index:-1;
+}
+
+.glow{
+    position:absolute;
+    border-radius:50%;
+    filter:blur(120px);
+    opacity:.25;
+}
+
+.glow1{
+    width:500px;
+    height:500px;
+    background:#facc15;
+    top:-100px;
+    left:-100px;
+}
+
+.glow2{
+    width:500px;
+    height:500px;
+    background:#60a5fa;
+    bottom:-150px;
+    right:-100px;
+}
+
+/* =========================================
    SLIDE
-========================= */
+========================================= */
 
 .slide{
     width:100vw;
     height:100vh;
-    display:none;
     padding:2vh 2vw;
+    display:none;
     flex-direction:column;
 }
 
@@ -38,142 +80,191 @@ body{
     display:flex;
 }
 
-/* =========================
-   TITLE
-========================= */
+/* =========================================
+   HEADER
+========================================= */
 
-.title{
+.header{
     text-align:center;
-    font-size:4vw;
-    font-weight:900;
-    letter-spacing:2px;
     margin-bottom:2vh;
-    text-shadow:0 0 20px rgba(255,255,255,.2);
 }
 
-/* =========================
-   LIST
-========================= */
+.header h1{
+    font-size:4vw;
+    font-weight:900;
+    letter-spacing:4px;
+    text-transform:uppercase;
+    text-shadow:
+        0 0 20px rgba(255,255,255,.2);
+}
 
-.rank-container{
+.header p{
+    font-size:1.2vw;
+    opacity:.7;
+    margin-top:.5vh;
+}
+
+/* =========================================
+   LIST
+========================================= */
+
+.rank-list{
     display:flex;
     flex-direction:column;
     gap:2vh;
-    width:100%;
     flex:1;
 }
 
-/* =========================
-   ROW
-========================= */
+/* =========================================
+   CARD
+========================================= */
 
-.rank-row{
+.rank-card{
+    position:relative;
     display:flex;
     align-items:center;
-    width:100%;
     height:28vh;
-    border-radius:2vh;
+    border-radius:30px;
     overflow:hidden;
-    position:relative;
-    box-shadow:
-        0 10px 30px rgba(0,0,0,.4);
+    backdrop-filter:blur(15px);
+    transform:scale(1);
+    transition:.3s;
+    animation:fadeUp .6s ease;
 }
 
-/* =========================
+.rank-card:hover{
+    transform:scale(1.01);
+}
+
+/* =========================================
    GOLD
-========================= */
+========================================= */
 
 .gold{
     background:
         linear-gradient(
-            90deg,
-            #8f6b00 0%,
-            #d4af37 20%,
-            #ffe27a 50%,
-            #d4af37 80%,
-            #8f6b00 100%
+            135deg,
+            #7a5b00 0%,
+            #facc15 20%,
+            #fff1a8 50%,
+            #facc15 80%,
+            #7a5b00 100%
         );
+
+    box-shadow:
+        0 0 40px rgba(250,204,21,.45);
 }
 
-/* =========================
+/* =========================================
    SILVER
-========================= */
+========================================= */
 
 .silver{
     background:
         linear-gradient(
-            90deg,
-            #7b7b7b 0%,
-            #bfc0c2 20%,
-            #f4f4f4 50%,
-            #bfc0c2 80%,
-            #7b7b7b 100%
+            135deg,
+            #6b7280 0%,
+            #d1d5db 20%,
+            #ffffff 50%,
+            #d1d5db 80%,
+            #6b7280 100%
         );
+
+    box-shadow:
+        0 0 35px rgba(255,255,255,.18);
 }
 
-/* =========================
+/* =========================================
    BRONZE
-========================= */
+========================================= */
 
 .bronze{
     background:
         linear-gradient(
-            90deg,
-            #6d432d 0%,
-            #b87333 20%,
-            #e0a96d 50%,
-            #b87333 80%,
-            #6d432d 100%
+            135deg,
+            #6b3f1d 0%,
+            #c97a3d 20%,
+            #f3c08d 50%,
+            #c97a3d 80%,
+            #6b3f1d 100%
         );
+
+    box-shadow:
+        0 0 35px rgba(201,122,61,.35);
 }
 
-/* =========================
-   RANK NUMBER
-========================= */
+/* =========================================
+   SHINE EFFECT
+========================================= */
+
+.rank-card::before{
+    content:"";
+    position:absolute;
+    width:35%;
+    height:200%;
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            rgba(255,255,255,.35),
+            transparent
+        );
+
+    transform:rotate(20deg);
+    animation:shine 5s linear infinite;
+}
+
+/* =========================================
+   RANK
+========================================= */
 
 .rank-number{
-    width:12%;
+    width:14%;
     min-width:120px;
     text-align:center;
-    font-size:10vw;
+    font-size:9vw;
     font-weight:900;
-    color:#ffffff;
+    color:white;
     text-shadow:
-        0 5px 15px rgba(0,0,0,.4);
+        0 6px 18px rgba(0,0,0,.35);
 }
 
-/* =========================
+/* =========================================
    PHOTO
-========================= */
+========================================= */
 
-.photo{
+.photo-box{
     width:14vw;
     height:14vw;
     max-width:180px;
     max-height:180px;
-    min-width:90px;
-    min-height:90px;
-    background:white;
-    border-radius:1.5vh;
+    min-width:100px;
+    min-height:100px;
+
+    border-radius:24px;
     overflow:hidden;
-    flex-shrink:0;
+
+    background:white;
+
     box-shadow:
-        0 5px 20px rgba(0,0,0,.25);
+        0 10px 25px rgba(0,0,0,.25);
+
+    flex-shrink:0;
 }
 
-.photo img{
+.photo-box img{
     width:100%;
     height:100%;
     object-fit:cover;
 }
 
-/* =========================
+/* =========================================
    NAME
-========================= */
+========================================= */
 
 .employee{
     flex:1;
-    padding-left:3vw;
+    padding-left:2.5vw;
     overflow:hidden;
 }
 
@@ -187,22 +278,70 @@ body{
     text-overflow:ellipsis;
 }
 
-/* =========================
+.employee-label{
+    margin-top:.5vh;
+    font-size:1vw;
+    color:#111827;
+    opacity:.7;
+    font-weight:600;
+    letter-spacing:2px;
+}
+
+/* =========================================
    SCORE
-========================= */
+========================================= */
 
 .score{
-    width:25%;
-    text-align:right;
+    width:28%;
     padding-right:3vw;
+    text-align:right;
+}
+
+.score-value{
     font-size:3.5vw;
     font-weight:900;
     color:#111827;
 }
 
-/* =========================
+.score-text{
+    font-size:1vw;
+    font-weight:700;
+    color:#111827;
+    opacity:.65;
+    letter-spacing:2px;
+}
+
+/* =========================================
+   ANIMATION
+========================================= */
+
+@keyframes shine{
+
+    0%{
+        left:-40%;
+    }
+
+    100%{
+        left:120%;
+    }
+}
+
+@keyframes fadeUp{
+
+    from{
+        opacity:0;
+        transform:translateY(30px);
+    }
+
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
+
+/* =========================================
    MOBILE
-========================= */
+========================================= */
 
 @media(max-width:768px){
 
@@ -216,28 +355,31 @@ body{
         padding:15px;
     }
 
-    .title{
+    .header h1{
         font-size:40px;
-        margin-bottom:20px;
     }
 
-    .rank-row{
-        height:110px;
-        border-radius:15px;
+    .header p{
+        font-size:14px;
+    }
+
+    .rank-card{
+        height:120px;
+        border-radius:20px;
     }
 
     .rank-number{
         width:60px;
         min-width:60px;
-        font-size:70px;
+        font-size:65px;
     }
 
-    .photo{
-        width:70px;
-        height:70px;
-        min-width:70px;
-        min-height:70px;
-        border-radius:10px;
+    .photo-box{
+        width:75px;
+        height:75px;
+        min-width:75px;
+        min-height:75px;
+        border-radius:14px;
     }
 
     .employee{
@@ -248,20 +390,31 @@ body{
         font-size:22px;
     }
 
+    .employee-label{
+        font-size:10px;
+    }
+
     .score{
         width:auto;
         padding-right:15px;
+    }
+
+    .score-value{
         font-size:24px;
+    }
+
+    .score-text{
+        font-size:10px;
     }
 }
 
-/* =========================
-   TV ULTRA HD
-========================= */
+/* =========================================
+   ULTRA TV
+========================================= */
 
 @media(min-width:1920px){
 
-    .title{
+    .header h1{
         font-size:70px;
     }
 
@@ -269,8 +422,8 @@ body{
         font-size:55px;
     }
 
-    .score{
-        font-size:60px;
+    .score-value{
+        font-size:65px;
     }
 }
 
@@ -279,45 +432,53 @@ body{
 
 <body>
 
-<!-- =========================
+<div class="bg-glow">
+    <div class="glow glow1"></div>
+    <div class="glow glow2"></div>
+</div>
+
+<!-- =========================================
      SLIDE SALES
-========================= -->
+========================================= -->
 
 <div class="slide active">
 
-    <div class="title">
-        TOP SALES
+    <div class="header">
+        <h1>TOP SALES</h1>
+        <p>AZKO PERFORMANCE LEADERBOARD</p>
     </div>
 
-    <div class="rank-container" id="salesList"></div>
+    <div class="rank-list" id="salesList"></div>
 
 </div>
 
-<!-- =========================
+<!-- =========================================
      SLIDE PROTEKSI
-========================= -->
+========================================= -->
 
 <div class="slide">
 
-    <div class="title">
-        TOP PROTEKSI
+    <div class="header">
+        <h1>TOP PROTEKSI</h1>
+        <p>AZKO PERFORMANCE LEADERBOARD</p>
     </div>
 
-    <div class="rank-container" id="proteksiList"></div>
+    <div class="rank-list" id="proteksiList"></div>
 
 </div>
 
-<!-- =========================
+<!-- =========================================
      SLIDE TRX
-========================= -->
+========================================= -->
 
 <div class="slide">
 
-    <div class="title">
-        TOP TRX
+    <div class="header">
+        <h1>TOP TRX</h1>
+        <p>AZKO PERFORMANCE LEADERBOARD</p>
     </div>
 
-    <div class="rank-container" id="trxList"></div>
+    <div class="rank-list" id="trxList"></div>
 
 </div>
 
@@ -344,12 +505,12 @@ function clean(val){
 }
 
 /* =========================================
-   AVATAR IMAGE
+   AVATAR
 ========================================= */
 
 function avatar(name){
 
-    return `https://ui-avatars.com/api/?name=${encodeURIComponent(name)}&background=random&color=fff&size=256`;
+    return `https://ui-avatars.com/api/?name=${encodeURIComponent(name)}&background=random&color=fff&size=512`;
 }
 
 /* =========================================
@@ -395,9 +556,9 @@ async function getData(){
    RENDER
 ========================================= */
 
-function render(data,key,containerId){
+function render(data,key,container){
 
-    const colors = [
+    const styles = [
         "gold",
         "silver",
         "bronze"
@@ -414,14 +575,16 @@ function render(data,key,containerId){
 
         html += `
 
-        <div class="rank-row ${colors[i]}">
+        <div class="rank-card ${styles[i]}">
 
             <div class="rank-number">
                 ${i+1}
             </div>
 
-            <div class="photo">
+            <div class="photo-box">
+
                 <img src="${avatar(d.name)}">
+
             </div>
 
             <div class="employee">
@@ -430,10 +593,22 @@ function render(data,key,containerId){
                     ${d.name}
                 </div>
 
+                <div class="employee-label">
+                    TOP PERFORMANCE EMPLOYEE
+                </div>
+
             </div>
 
             <div class="score">
-                ${d[key].toLocaleString('id-ID')}
+
+                <div class="score-value">
+                    ${d[key].toLocaleString('id-ID')}
+                </div>
+
+                <div class="score-text">
+                    TOTAL SCORE
+                </div>
+
             </div>
 
         </div>
@@ -441,7 +616,7 @@ function render(data,key,containerId){
         `;
     });
 
-    document.getElementById(containerId)
+    document.getElementById(container)
         .innerHTML = html;
 }
 
@@ -478,7 +653,7 @@ setInterval(()=>{
     slides[current]
         .classList.add("active");
 
-},6000);
+},7000);
 
 /* =========================================
    AUTO REFRESH
@@ -493,7 +668,7 @@ setInterval(update,15000);
 update();
 
 /* =========================================
-   FULLSCREEN TV
+   FULLSCREEN
 ========================================= */
 
 document.body.onclick = () => {
