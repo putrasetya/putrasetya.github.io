@@ -212,30 +212,6 @@ UPDATE TIME
     backdrop-filter:blur(8px);
 }
 
-@media(max-width:768px){
-
-    .update-time{
-
-        font-size:14px;
-
-        padding:10px 18px;
-
-        border-radius:14px;
-    }
-}
-
-@media(min-width:1920px){
-
-    .update-time{
-
-        font-size:32px;
-
-        padding:18px 42px;
-
-        border-radius:20px;
-    }
-}
-
 /* =========================
 LIST
 ========================= */
@@ -452,7 +428,7 @@ RANK NUMBER
 }
 
 /* =========================
-PHOTO TRANSPARENT
+PHOTO
 ========================= */
 
 .photo-box{
@@ -526,14 +502,7 @@ EMPLOYEE
     overflow:hidden;
 
     text-overflow:ellipsis;
-
-    text-shadow:
-        0 2px 4px rgba(255,255,255,.18);
 }
-
-/* =========================
-DEPT
-========================= */
 
 .employee-label{
 
@@ -552,9 +521,6 @@ DEPT
     letter-spacing:3px;
 
     text-transform:uppercase;
-
-    text-shadow:
-        0 1px 2px rgba(255,255,255,.15);
 }
 
 /* =========================
@@ -623,7 +589,7 @@ MOBILE
     }
 
     .update-time{
-        font-size:13px;
+        font-size:14px;
         padding:10px 18px;
     }
 
@@ -673,7 +639,7 @@ TV 4K
     }
 
     .update-time{
-        font-size:30px;
+        font-size:32px;
         padding:18px 42px;
     }
 
@@ -917,25 +883,56 @@ async function update(){
 
     const data = await getData();
 
-    const currentHash =
-    JSON.stringify(data);
+    /* HASH STABIL */
+    const currentHash = data.map(d => [
 
+        d.name,
+        d.dept,
+        d.sales,
+        d.proteksi,
+        d.trx,
+        d.photo
+
+    ].join("|")).join("||");
+
+    /* UPDATE HANYA JIKA DATA BERUBAH */
     if(currentHash !== lastDataHash){
+
+        console.log("DATA BERUBAH");
 
         lastDataHash = currentHash;
 
         lastUpdateText =
         formatTanggalIndonesia(new Date());
 
-        render(data,"sales","salesList","TOTAL SALES");
+        render(
+            data,
+            "sales",
+            "salesList",
+            "TOTAL SALES"
+        );
 
-        render(data,"proteksi","proteksiList","TOTAL PROTEKSI");
+        render(
+            data,
+            "proteksi",
+            "proteksiList",
+            "TOTAL PROTEKSI"
+        );
 
-        render(data,"trx","trxList","TOTAL TRX");
+        render(
+            data,
+            "trx",
+            "trxList",
+            "TOTAL TRX"
+        );
     }
 
     setUpdateTime(lastUpdateText);
 }
+
+/* =========================
+SLIDE AUTO
+========================= */
 
 let current = 0;
 
@@ -956,28 +953,74 @@ function showNextSlide(){
 
 setInterval(showNextSlide,7000);
 
+/* =========================
+AUTO UPDATE DATA
+========================= */
+
 setInterval(update,15000);
 
 update();
 
-document.body.onclick = () => {
+/* =========================
+FULLSCREEN + AUDIO
+========================= */
 
-    if(!document.fullscreenElement){
+const bgm =
+document.getElementById("bgm");
 
-        document.documentElement.requestFullscreen();
+bgm.volume = 0.35;
+
+async function startApp(){
+
+    try{
+
+        if(!document.fullscreenElement){
+
+            await document.documentElement
+            .requestFullscreen();
+        }
+
+    }catch(e){}
+
+    try{
+
+        await bgm.play();
+
+    }catch(err){
+
+        console.log("Autoplay blocked");
+    }
+}
+
+document.body.addEventListener(
+    "click",
+    startApp,
+    { once:true }
+);
+
+document.body.addEventListener(
+    "touchstart",
+    startApp,
+    { once:true }
+);
+
+setInterval(()=>{
+
+    if(bgm.paused){
+
+        bgm.play()
+        .catch(()=>{});
     }
 
-    const bgm =
-    document.getElementById("bgm");
-
-    bgm.muted = false;
-
-    bgm.play();
-};
+},3000);
 
 </script>
 
-<audio id="bgm" autoplay loop >
+<audio
+    id="bgm"
+    loop
+    playsinline
+    preload="auto">
 
     <source
         src="https://putrasetya.github.io/223am.mp3"
