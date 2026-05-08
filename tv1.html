@@ -740,8 +740,19 @@ TV 4K
 const URL =
 "https://script.google.com/macros/s/AKfycbzeehvUo6QYriMFJTR4A88lN6IIHV6Qop9UphkdOTMkRLVxhVuJ13y69momo6h1pn9dTQ/exec";
 
-let lastDataHash = "";
-let lastUpdateText = "-";
+/* =========================
+LAST UPDATE STORAGE
+========================= */
+
+let lastDataHash =
+localStorage.getItem("lastDataHash") || "";
+
+let lastUpdateText =
+localStorage.getItem("lastUpdateText") || "-";
+
+/* =========================
+HELPER
+========================= */
 
 function clean(val){
 
@@ -778,6 +789,10 @@ function setUpdateTime(text){
     "DATA UPDATE : " + text;
 }
 
+/* =========================
+GET DATA
+========================= */
+
 async function getData(){
 
     try{
@@ -809,6 +824,10 @@ async function getData(){
         return [];
     }
 }
+
+/* =========================
+RENDER
+========================= */
 
 function render(data,key,containerId,label){
 
@@ -879,11 +898,14 @@ function render(data,key,containerId,label){
     document.getElementById(containerId).innerHTML = html;
 }
 
+/* =========================
+UPDATE DATA
+========================= */
+
 async function update(){
 
     const data = await getData();
 
-    /* HASH STABIL */
     const currentHash = data.map(d => [
 
         d.name,
@@ -895,37 +917,48 @@ async function update(){
 
     ].join("|")).join("||");
 
-    /* UPDATE HANYA JIKA DATA BERUBAH */
+    /* HANYA UPDATE JIKA SPREADSHEET BERUBAH */
     if(currentHash !== lastDataHash){
 
-        console.log("DATA BERUBAH");
+        console.log("DATA SPREADSHEET BERUBAH");
 
         lastDataHash = currentHash;
 
         lastUpdateText =
         formatTanggalIndonesia(new Date());
 
-        render(
-            data,
-            "sales",
-            "salesList",
-            "TOTAL SALES"
+        /* SIMPAN */
+        localStorage.setItem(
+            "lastDataHash",
+            lastDataHash
         );
 
-        render(
-            data,
-            "proteksi",
-            "proteksiList",
-            "TOTAL PROTEKSI"
-        );
-
-        render(
-            data,
-            "trx",
-            "trxList",
-            "TOTAL TRX"
+        localStorage.setItem(
+            "lastUpdateText",
+            lastUpdateText
         );
     }
+
+    render(
+        data,
+        "sales",
+        "salesList",
+        "TOTAL SALES"
+    );
+
+    render(
+        data,
+        "proteksi",
+        "proteksiList",
+        "TOTAL PROTEKSI"
+    );
+
+    render(
+        data,
+        "trx",
+        "trxList",
+        "TOTAL TRX"
+    );
 
     setUpdateTime(lastUpdateText);
 }
@@ -954,7 +987,7 @@ function showNextSlide(){
 setInterval(showNextSlide,7000);
 
 /* =========================
-AUTO UPDATE DATA
+AUTO UPDATE
 ========================= */
 
 setInterval(update,15000);
