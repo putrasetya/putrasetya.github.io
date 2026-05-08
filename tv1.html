@@ -189,13 +189,13 @@ UPDATE TIME
     border:
         2px solid rgba(255,255,255,.22);
 
-    font-family:'Poppins',sans-serif;
+    font-family:'Orbitron',sans-serif;
 
-    font-size:1.35vw;
+    font-size:1.45vw;
 
-    font-weight:800;
+    font-weight:700;
 
-    letter-spacing:1px;
+    letter-spacing:2px;
 
     color:#ffffff;
 
@@ -448,8 +448,6 @@ PHOTO
     align-items:flex-end;
 
     justify-content:center;
-
-    background:transparent;
 }
 
 .photo-box img{
@@ -590,7 +588,6 @@ MOBILE
 
     .update-time{
         font-size:14px;
-        padding:10px 18px;
     }
 
     .rank-card{
@@ -621,55 +618,6 @@ MOBILE
 
     .score-label{
         font-size:10px;
-    }
-}
-
-/* =========================
-TV 4K
-========================= */
-
-@media(min-width:1920px){
-
-    .header h1{
-        font-size:68px;
-    }
-
-    .header p{
-        font-size:20px;
-    }
-
-    .update-time{
-        font-size:32px;
-        padding:18px 42px;
-    }
-
-    .rank-card{
-        height:24vh;
-    }
-
-    .rank-number{
-        font-size:300px;
-    }
-
-    .employee-name{
-        font-size:44px;
-    }
-
-    .employee-label{
-        font-size:22px;
-    }
-
-    .score-value{
-        font-size:52px;
-    }
-
-    .score-label{
-        font-size:16px;
-    }
-
-    .photo-box{
-        width:320px;
-        min-width:320px;
     }
 }
 
@@ -899,7 +847,7 @@ function render(data,key,containerId,label){
 }
 
 /* =========================
-UPDATE DATA
+UPDATE
 ========================= */
 
 async function update(){
@@ -918,7 +866,6 @@ async function update(){
     .sort((a,b)=>b.trx-a.trx)
     .slice(0,3);
 
-    /* HASH STABIL */
     const currentHash = JSON.stringify({
 
         sales:salesTop.map(v=>[
@@ -938,10 +885,7 @@ async function update(){
 
     });
 
-    /* HANYA UPDATE SAAT DATA BERUBAH */
     if(currentHash !== lastDataHash){
-
-        console.log("DATA SPREADSHEET BERUBAH");
 
         lastDataHash = currentHash;
 
@@ -950,41 +894,16 @@ async function update(){
             currentHash
         );
 
-        /* CEK APAKAH SUDAH ADA JAM */
-        if(
-            !localStorage.getItem(
-                "lastUpdateText"
-            )
-            ||
-            currentHash !==
-            localStorage.getItem(
-                "lastDataHashBackup"
-            )
-        ){
+        lastUpdateText =
+        formatTanggalIndonesia(
+            new Date()
+        );
 
-            lastUpdateText =
-            formatTanggalIndonesia(
-                new Date()
-            );
-
-            localStorage.setItem(
-                "lastUpdateText",
-                lastUpdateText
-            );
-
-            localStorage.setItem(
-                "lastDataHashBackup",
-                currentHash
-            );
-        }
-
+        localStorage.setItem(
+            "lastUpdateText",
+            lastUpdateText
+        );
     }
-
-    /* AMBIL JAM LAMA */
-    lastUpdateText =
-    localStorage.getItem(
-        "lastUpdateText"
-    ) || "-";
 
     render(
         data,
@@ -1011,7 +930,7 @@ async function update(){
 }
 
 /* =========================
-SLIDE AUTO
+SLIDE
 ========================= */
 
 let current = 0;
@@ -1042,13 +961,13 @@ setInterval(update,15000);
 update();
 
 /* =========================
-FULLSCREEN + AUDIO
+AUDIO + FULLSCREEN
 ========================= */
 
 const bgm =
 document.getElementById("bgm");
 
-bgm.volume = 0.35;
+bgm.volume = 0.4;
 
 async function startApp(){
 
@@ -1064,31 +983,54 @@ async function startApp(){
 
     try{
 
+        bgm.muted = false;
+
         await bgm.play();
 
     }catch(err){
 
-        console.log("Autoplay blocked");
+        console.log(err);
     }
 }
 
+window.addEventListener(
+    "load",
+    ()=>{
+
+        bgm.play()
+        .catch(()=>{});
+    }
+);
+
 document.body.addEventListener(
     "click",
-    startApp,
-    { once:true }
+    startApp
 );
 
 document.body.addEventListener(
     "touchstart",
-    startApp,
-    { once:true }
+    startApp
 );
+
+setInterval(()=>{
+
+    if(bgm.paused){
+
+        bgm.play()
+        .catch(()=>{});
+    }
+
+},3000);
 
 </script>
 
 <audio
     id="bgm"
-    loop auto>
+    autoplay
+    loop
+    muted
+    playsinline
+    preload="auto">
 
     <source
         src="https://putrasetya.github.io/223am.mp3"
