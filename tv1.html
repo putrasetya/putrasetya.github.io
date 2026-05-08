@@ -741,7 +741,7 @@ const URL =
 "https://script.google.com/macros/s/AKfycbzeehvUo6QYriMFJTR4A88lN6IIHV6Qop9UphkdOTMkRLVxhVuJ13y69momo6h1pn9dTQ/exec";
 
 /* =========================
-LAST UPDATE STORAGE
+LOCAL STORAGE
 ========================= */
 
 let lastDataHash =
@@ -906,38 +906,85 @@ async function update(){
 
     const data = await getData();
 
-    const currentHash = data.map(d => [
+    const salesTop = [...data]
+    .sort((a,b)=>b.sales-a.sales)
+    .slice(0,3);
 
-        d.name,
-        d.dept,
-        d.sales,
-        d.proteksi,
-        d.trx,
-        d.photo
+    const proteksiTop = [...data]
+    .sort((a,b)=>b.proteksi-a.proteksi)
+    .slice(0,3);
 
-    ].join("|")).join("||");
+    const trxTop = [...data]
+    .sort((a,b)=>b.trx-a.trx)
+    .slice(0,3);
 
-    /* HANYA UPDATE JIKA SPREADSHEET BERUBAH */
+    /* HASH STABIL */
+    const currentHash = JSON.stringify({
+
+        sales:salesTop.map(v=>[
+            v.name,
+            v.sales
+        ]),
+
+        proteksi:proteksiTop.map(v=>[
+            v.name,
+            v.proteksi
+        ]),
+
+        trx:trxTop.map(v=>[
+            v.name,
+            v.trx
+        ])
+
+    });
+
+    /* HANYA UPDATE SAAT DATA BERUBAH */
     if(currentHash !== lastDataHash){
 
         console.log("DATA SPREADSHEET BERUBAH");
 
         lastDataHash = currentHash;
 
-        lastUpdateText =
-        formatTanggalIndonesia(new Date());
-
-        /* SIMPAN */
         localStorage.setItem(
             "lastDataHash",
-            lastDataHash
+            currentHash
         );
 
-        localStorage.setItem(
-            "lastUpdateText",
-            lastUpdateText
-        );
+        /* CEK APAKAH SUDAH ADA JAM */
+        if(
+            !localStorage.getItem(
+                "lastUpdateText"
+            )
+            ||
+            currentHash !==
+            localStorage.getItem(
+                "lastDataHashBackup"
+            )
+        ){
+
+            lastUpdateText =
+            formatTanggalIndonesia(
+                new Date()
+            );
+
+            localStorage.setItem(
+                "lastUpdateText",
+                lastUpdateText
+            );
+
+            localStorage.setItem(
+                "lastDataHashBackup",
+                currentHash
+            );
+        }
+
     }
+
+    /* AMBIL JAM LAMA */
+    lastUpdateText =
+    localStorage.getItem(
+        "lastUpdateText"
+    ) || "-";
 
     render(
         data,
@@ -1036,16 +1083,6 @@ document.body.addEventListener(
     startApp,
     { once:true }
 );
-
-setInterval(()=>{
-
-    if(bgm.paused){
-
-        bgm.play()
-        .catch(()=>{});
-    }
-
-},3000);
 
 </script>
 
