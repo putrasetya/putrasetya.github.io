@@ -164,13 +164,13 @@ body{
 
     left:50%;
 
-    bottom:40px;
+    bottom:95px;
 
     transform:translateX(-50%);
 
-    width:115%;
+    width:112%;
 
-    height:82%;
+    height:74%;
 
     object-fit:contain;
 
@@ -181,7 +181,7 @@ body{
     pointer-events:none;
 
     filter:
-    drop-shadow(0 18px 28px rgba(0,0,0,.65));
+    drop-shadow(0 18px 28px rgba(0,0,0,.45));
 
 }
 
@@ -199,7 +199,7 @@ body{
 
     width:100%;
 
-    height:220px;
+    height:190px;
 
     z-index:16;
 
@@ -208,10 +208,9 @@ body{
     background:
     linear-gradient(
         to top,
-        rgba(0,0,0,1) 0%,
-        rgba(0,0,0,.82) 28%,
-        rgba(0,0,0,.45) 58%,
-        rgba(0,0,0,.12) 82%,
+        rgba(0,0,0,.55) 0%,
+        rgba(0,0,0,.32) 30%,
+        rgba(0,0,0,.12) 58%,
         transparent 100%
     );
 
@@ -686,8 +685,6 @@ function updatePhoto(nama){
                 "https://drive.google.com/thumbnail?id="
                 + person.photo +
                 "&sz=w2000";
-
-                console.log(foto.src);
 
                 found = true;
 
