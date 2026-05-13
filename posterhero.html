@@ -33,7 +33,7 @@ body{
 
 /* PANEL */
 .panel{
-    width:340px;
+    width:360px;
     background:rgba(255,255,255,0.03);
     border:1px solid rgba(255,255,255,0.08);
     border-radius:24px;
@@ -41,34 +41,84 @@ body{
 }
 
 .panel-title{
-    font-family:'Anton',sans-serif;
+    font-family:'Anton';
     font-size:34px;
     text-align:center;
-    margin-bottom:20px;
+    margin-bottom:22px;
     color:#ffd400;
+    letter-spacing:2px;
 }
 
-/* INPUT */
-input{
+/* FORM GROUP */
+.form-group{
+    margin-bottom:16px;
+}
+
+.label{
+    font-size:11px;
+    opacity:0.6;
+    margin-bottom:6px;
+    display:block;
+}
+
+/* INPUT STYLE */
+.input{
     width:100%;
     height:52px;
-    margin-top:10px;
     border:none;
     outline:none;
-    background:rgba(255,255,255,0.04);
+    background:rgba(255,255,255,0.05);
+    border-bottom:1px solid rgba(255,255,255,0.15);
     color:#fff;
-    padding:0 10px;
+    padding:0 12px;
+    border-radius:10px 10px 0 0;
+}
+
+/* RUPIAH INPUT */
+.rupiah-wrap{
+    display:flex;
+    align-items:center;
+    height:52px;
+    background:rgba(255,255,255,0.05);
+    border-bottom:1px solid rgba(255,255,255,0.15);
+    border-radius:10px 10px 0 0;
+}
+
+.rp{
+    padding:0 12px;
+    opacity:0.7;
+    font-weight:700;
+}
+
+.rupiah-input{
+    width:100%;
+    border:none;
+    outline:none;
+    background:transparent;
+    color:#fff;
+    font-size:16px;
+}
+
+/* FILE INPUT */
+.file{
+    width:100%;
+    padding:12px;
+    background:rgba(255,255,255,0.05);
+    border:1px dashed rgba(255,255,255,0.2);
+    color:#fff;
+    border-radius:10px;
 }
 
 /* BUTTON */
 button{
     width:100%;
     height:52px;
-    margin-top:15px;
-    background:red;
+    margin-top:10px;
+    background:linear-gradient(135deg,#ff1a1a,#7a0000);
     border:none;
     color:#fff;
     font-weight:800;
+    border-radius:12px;
     cursor:pointer;
 }
 
@@ -85,7 +135,7 @@ button{
     display:block;
 }
 
-/* ===== FOTO ORANG (NO GRADIENT) ===== */
+/* FOTO SISTEM */
 .foto-wrap{
     position:absolute;
     left:50%;
@@ -94,14 +144,11 @@ button{
     height:70%;
     display:flex;
     align-items:flex-end;
-    z-index:1;
 }
 
-.foto-wrap img{
-    height:100%;
-}
+.foto-wrap img{height:100%;}
 
-/* ===== UPLOAD FOTO (BESAR + TANPA OUTLINE) ===== */
+/* UPLOAD FOTO */
 .upload-layer{
     position:absolute;
     bottom:110px;
@@ -111,15 +158,13 @@ button{
 }
 
 .upload-layer img{
-    width:180px;   /* 🔥 diperbesar */
+    width:180px;
     height:180px;
     object-fit:cover;
     border-radius:12px;
-    border:none;
-    background:transparent;
 }
 
-/* ===== TEXT ===== */
+/* TEXT */
 .nama1,.nama2,.nama3{
     position:absolute;
     width:100%;
@@ -127,7 +172,7 @@ button{
 }
 
 .nama1{top:150px;font-family:'Anton';font-size:76px;}
-.nama2{top:230px;font-family:'Anton';font-size:72px;color:transparent;-webkit-text-stroke:1.5px #fff;}
+.nama2{top:230px;font-family:'Anton';font-size:72px;-webkit-text-stroke:1.5px #fff;color:transparent;}
 .nama3{bottom:42px;font-family:'Roboto Condensed';}
 
 .sales{
@@ -139,7 +184,7 @@ button{
     white-space:nowrap;
 }
 
-/* ===== CROPPER ===== */
+/* MODAL CROPPER */
 .modal{
     position:fixed;
     inset:0;
@@ -147,7 +192,6 @@ button{
     display:none;
     align-items:center;
     justify-content:center;
-    z-index:999;
 }
 
 .modal-box{
@@ -155,11 +199,7 @@ button{
     max-width:400px;
     background:#111;
     padding:15px;
-    border-radius:15px;
-}
-
-.modal-box img{
-    width:100%;
+    border-radius:12px;
 }
 
 .modal-actions{
@@ -184,13 +224,28 @@ button{
 
 <div class="panel-title">MENYALA</div>
 
-<input id="namaInput" placeholder="Nama">
+<!-- NAMA -->
+<div class="form-group">
+    <span class="label">Nama Sales</span>
+    <input class="input" id="namaInput" placeholder="Masukkan nama">
+</div>
 
-<input id="salesInput" placeholder="Sales">
+<!-- NOMINAL -->
+<div class="form-group">
+    <span class="label">Nominal</span>
+    <div class="rupiah-wrap">
+        <span class="rp">Rp</span>
+        <input class="rupiah-input" id="salesInput" placeholder="0">
+    </div>
+</div>
 
-<input type="file" id="uploadInput" accept="image/*">
+<!-- UPLOAD STRUK -->
+<div class="form-group">
+    <span class="label">Upload Foto Struk</span>
+    <input type="file" class="file" id="uploadInput" accept="image/*">
+</div>
 
-<button onclick="downloadPoster()">DOWNLOAD</button>
+<button onclick="downloadPoster()">DOWNLOAD POSTER</button>
 
 </div>
 
@@ -199,17 +254,14 @@ button{
 
 <img class="bg" src="https://putrasetya.github.io/template_posterhero1.png">
 
-<!-- FOTO SISTEM LAMA -->
 <div class="foto-wrap">
     <img id="foto">
 </div>
 
-<!-- FOTO UPLOAD -->
 <div class="upload-layer">
     <img id="uploadPreview">
 </div>
 
-<!-- TEXT -->
 <div class="nama1" id="n1">NAMA</div>
 <div class="nama2" id="n2">NAMA</div>
 <div class="nama3" id="n3">NAMA</div>
@@ -233,7 +285,7 @@ button{
 
 <script>
 
-/* ===== FOTO SYSTEM LAMA ===== */
+/* FOTO SYSTEM LAMA */
 const people=[
 {keywords:["AFIF"],photo:"https://lh3.googleusercontent.com/d/12pjk_-ZJhbqbPZDzdH4sJSkE5qWwzrf7=w1000"},
 {keywords:["PUTRA"],photo:"https://lh3.googleusercontent.com/d/1Pxw-wIUKTcyA_inIcqpYY833f_3AtZe2=w1000"}
@@ -242,7 +294,6 @@ const people=[
 function updatePhoto(n){
 let up=n.toUpperCase();
 let img=document.getElementById("foto");
-
 let found=null;
 
 people.forEach(p=>{
@@ -252,8 +303,8 @@ if(p.keywords.some(k=>up.includes(k))) found=p.photo;
 img.src=found||"";
 }
 
-/* INPUT */
-document.getElementById("namaInput").oninput=(e)=>{
+/* INPUT NAMA */
+namaInput.oninput=(e)=>{
 let v=e.target.value||"NAMA";
 updatePhoto(v);
 n1.innerText=v;
@@ -261,25 +312,28 @@ n2.innerText=v;
 n3.innerText=v;
 };
 
-document.getElementById("salesInput").oninput=(e)=>{
+/* RUPIAH FORMAT */
+salesInput.oninput=(e)=>{
 let v=e.target.value.replace(/[^0-9]/g,"")||"0";
-s.innerText="Rp "+new Intl.NumberFormat("id-ID").format(v);
+let f=new Intl.NumberFormat("id-ID").format(v);
+e.target.value=f;
+s.innerText="Rp "+f;
 };
 
-/* ===== CROPPER ===== */
+/* CROPPER */
 let cropper;
 
-document.getElementById("uploadInput").onchange=(e)=>{
+uploadInput.onchange=(e)=>{
 let file=e.target.files[0];
 if(!file) return;
 
 let reader=new FileReader();
 reader.onload=(ev)=>{
-document.getElementById("modal").style.display="flex";
-document.getElementById("cropImage").src=ev.target.result;
+modal.style.display="flex";
+cropImage.src=ev.target.result;
 
 setTimeout(()=>{
-cropper=new Cropper(document.getElementById("cropImage"),{
+cropper=new Cropper(cropImage,{
 aspectRatio:1,
 viewMode:1
 });
@@ -289,23 +343,18 @@ reader.readAsDataURL(file);
 };
 
 function cropSave(){
-let canvas=cropper.getCroppedCanvas({
-width:300,
-height:300
-});
-
-document.getElementById("uploadPreview").src=canvas.toDataURL();
-
+let canvas=cropper.getCroppedCanvas({width:300,height:300});
+uploadPreview.src=canvas.toDataURL();
 cropper.destroy();
-document.getElementById("modal").style.display="none";
+modal.style.display="none";
 }
 
 function closeModal(){
 cropper.destroy();
-document.getElementById("modal").style.display="none";
+modal.style.display="none";
 }
 
-/* ===== DOWNLOAD ===== */
+/* DOWNLOAD */
 async function downloadPoster(){
 
 let poster=document.getElementById("poster");
@@ -328,7 +377,6 @@ let a=document.createElement("a");
 a.download="poster.png";
 a.href=canvas.toDataURL("image/png");
 a.click();
-
 }
 
 </script>
