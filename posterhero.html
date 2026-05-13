@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+<title>Poster Pahlawan Hari Ini</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    background:#111;
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding:20px;
+    font-family:'Poppins',sans-serif;
+}
+
+/* POSTER */
+.poster{
+    position:relative;
+    width:430px;
+    height:860px;
+    overflow:hidden;
+    border-radius:18px;
+    background:
+        radial-gradient(circle at top right,#ff6b6b33 0%,transparent 30%),
+        radial-gradient(circle at bottom left,#ffffff15 0%,transparent 25%),
+        linear-gradient(180deg,#e30613 0%,#c10010 50%,#ff1e2f 100%);
+    box-shadow:0 20px 60px rgba(0,0,0,.45);
+}
+
+/* TEXTURE */
+.poster::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    background-image:
+    radial-gradient(rgba(255,255,255,.10) 1px, transparent 1px);
+    background-size:10px 10px;
+    opacity:.15;
+}
+
+/* HEADER */
+.header{
+    position:absolute;
+    top:0;
+    left:50%;
+    transform:translateX(-50%);
+    width:280px;
+    background:#fff;
+    border-radius:0 0 35px 35px;
+    padding:18px 20px;
+    z-index:5;
+}
+
+.logo{
+    text-align:center;
+    line-height:1;
+}
+
+.logo-top{
+    display:flex;
+    justify-content:center;
+    align-items:flex-end;
+    gap:8px;
+}
+
+.azko{
+    font-size:34px;
+    font-weight:900;
+    color:#d71920;
+}
+
+.citimall{
+    font-size:28px;
+    font-weight:800;
+    color:#f0d400;
+}
+
+.tuban{
+    display:block;
+    margin-top:2px;
+    font-size:18px;
+    font-weight:700;
+    font-style:italic;
+    color:#111;
+    text-align:right;
+    padding-right:20px;
+}
+
+/* DECOR */
+.zigzag-left,
+.zigzag-right{
+    position:absolute;
+    width:55px;
+    height:240px;
+    opacity:.95;
+}
+
+.zigzag-left{
+    left:-5px;
+    top:160px;
+}
+
+.zigzag-right{
+    right:-5px;
+    top:430px;
+    transform:rotate(180deg);
+}
+
+.zigzag{
+    width:100%;
+    height:100%;
+    background:
+    linear-gradient(135deg,transparent 75%,#fff 75%) 0 0/28px 28px,
+    linear-gradient(225deg,transparent 75%,#fff 75%) 0 0/28px 28px;
+}
+
+/* TITLE BAR */
+.title-bar{
+    position:absolute;
+    top:130px;
+    left:50%;
+    transform:translateX(-50%);
+    width:320px;
+    height:52px;
+    background:#fff;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    z-index:5;
+}
+
+.title-bar::before,
+.title-bar::after{
+    content:"";
+    position:absolute;
+    width:16px;
+    height:16px;
+    border-radius:50%;
+    background:#e30613;
+    top:50%;
+    transform:translateY(-50%);
+}
+
+.title-bar::before{
+    left:18px;
+}
+
+.title-bar::after{
+    right:18px;
+}
+
+.title-bar h3{
+    font-size:22px;
+    letter-spacing:4px;
+    color:#d70011;
+    font-weight:700;
+}
+
+/* BIG TEXT */
+.big-text{
+    position:absolute;
+    top:190px;
+    left:50%;
+    transform:translateX(-50%);
+    z-index:1;
+    text-align:center;
+    line-height:.9;
+}
+
+.big-text .solid{
+    font-size:130px;
+    font-weight:900;
+    color:#fff;
+    letter-spacing:2px;
+}
+
+.big-text .outline{
+    font-size:118px;
+    font-weight:900;
+    color:transparent;
+    -webkit-text-stroke:3px rgba(255,255,255,.85);
+}
+
+/* MODEL */
+.model{
+    position:absolute;
+    bottom:150px;
+    left:50%;
+    transform:translateX(-50%);
+    width:340px;
+    z-index:3;
+}
+
+.model img{
+    width:100%;
+    object-fit:contain;
+    filter:
+        drop-shadow(0 18px 35px rgba(0,0,0,.45));
+}
+
+/* BOTTOM INFO */
+.bottom{
+    position:absolute;
+    bottom:58px;
+    width:100%;
+    text-align:center;
+    z-index:5;
+}
+
+.divider{
+    width:260px;
+    height:3px;
+    background:#fff;
+    margin:0 auto 25px;
+    position:relative;
+}
+
+.divider::before{
+    content:"✦";
+    position:absolute;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%);
+    background:#d30011;
+    color:#fff;
+    padding:0 12px;
+    font-size:24px;
+}
+
+.nama{
+    font-size:72px;
+    line-height:1;
+    font-weight:900;
+    color:#fff;
+    letter-spacing:2px;
+}
+
+.role{
+    margin-top:12px;
+    font-size:28px;
+    color:#fff;
+    font-weight:300;
+}
+
+.role b{
+    font-weight:800;
+}
+
+/* CORNER */
+.corner-left,
+.corner-right{
+    position:absolute;
+    bottom:-15px;
+    width:140px;
+    height:140px;
+    background:#fff;
+    transform:rotate(45deg);
+    opacity:.95;
+}
+
+.corner-left{
+    left:-70px;
+}
+
+.corner-right{
+    right:-70px;
+}
+
+.corner-line-left,
+.corner-line-right{
+    position:absolute;
+    width:150px;
+    height:4px;
+    background:#ffffff88;
+    bottom:65px;
+    z-index:5;
+}
+
+.corner-line-left{
+    left:-15px;
+    transform:rotate(45deg);
+}
+
+.corner-line-right{
+    right:-15px;
+    transform:rotate(-45deg);
+}
+
+/* RESPONSIVE */
+@media(max-width:500px){
+
+    .poster{
+        width:100%;
+        max-width:430px;
+        height:860px;
+    }
+
+}
+</style>
+</head>
+
+<body>
+
+<div class="poster">
+
+    <!-- HEADER -->
+    <div class="header">
+        <div class="logo">
+            <div class="logo-top">
+                <span class="azko">az•KO</span>
+                <span class="citimall">Citimall</span>
+            </div>
+            <span class="tuban">Tuban</span>
+        </div>
+    </div>
+
+    <!-- DECOR -->
+    <div class="zigzag-left">
+        <div class="zigzag"></div>
+    </div>
+
+    <div class="zigzag-right">
+        <div class="zigzag"></div>
+    </div>
+
+    <!-- TITLE -->
+    <div class="title-bar">
+        <h3>PAHLAWAN HARI INI</h3>
+    </div>
+
+    <!-- BIG TEXT -->
+    <div class="big-text">
+        <div class="solid">NAMA</div>
+        <div class="outline">NAMA</div>
+    </div>
+
+    <!-- MODEL -->
+    <div class="model">
+        <!-- GANTI FOTO -->
+        <img src="https://i.imgur.com/7D7I6dI.png" alt="model">
+    </div>
+
+    <!-- BOTTOM -->
+    <div class="bottom">
+
+        <div class="divider"></div>
+
+        <div class="nama">NAMA</div>
+
+        <div class="role">
+            sales <b>Rp....</b>
+        </div>
+
+    </div>
+
+    <!-- CORNER -->
+    <div class="corner-left"></div>
+    <div class="corner-right"></div>
+
+    <div class="corner-line-left"></div>
+    <div class="corner-line-right"></div>
+
+</div>
+
+</body>
+</html>
