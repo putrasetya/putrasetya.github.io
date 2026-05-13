@@ -135,12 +135,12 @@ label{display:block;margin-bottom:10px;font-weight:600;}
 }
 
 /* =========================
-   NAMA
+   2 BARIS NAMA (NAIK POSISI)
 ========================= */
 
 .nama-putih{
     position:absolute;
-    top:170px;
+    top:150px;   /* 🔥 dinaikkan */
     left:50%;
     transform:translateX(-50%);
     width:92%;
@@ -156,7 +156,7 @@ label{display:block;margin-bottom:10px;font-weight:600;}
 
 .nama-outline{
     position:absolute;
-    top:250px;
+    top:230px;   /* 🔥 dinaikkan */
     left:50%;
     transform:translateX(-50%);
     width:92%;
@@ -187,10 +187,7 @@ label{display:block;margin-bottom:10px;font-weight:600;}
     letter-spacing:1px;
 }
 
-/* =========================
-   SALES (FIX ANTI WRAP)
-========================= */
-
+/* SALES */
 .sales-bawah{
     position:absolute;
     bottom:14px;
@@ -217,7 +214,7 @@ label{display:block;margin-bottom:10px;font-weight:600;}
     font-size:20px;
     font-weight:700;
 
-    white-space:nowrap;   /* 🔥 STOP TURUN BARIS */
+    white-space:nowrap;
     overflow:hidden;
 }
 
@@ -303,7 +300,7 @@ function updatePhoto(nama){
     if(!found) img.src="";
 }
 
-/* NAMA */
+/* INPUT */
 document.getElementById("namaInput").addEventListener("input",e=>{
     let n=e.target.value.toUpperCase()||"NAMA";
 
@@ -326,7 +323,6 @@ document.getElementById("salesInput").addEventListener("input",e=>{
 
     el.innerText = "Rp " + formatted;
 
-    // 🔥 AUTO SHRINK BIAR TIDAK TURUN BARIS
     let size = 20;
     el.style.fontSize = size + "px";
 
