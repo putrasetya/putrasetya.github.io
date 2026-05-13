@@ -88,6 +88,10 @@ label{
     color:#fff;
 }
 
+.download-btn{
+    background:#00c853;
+}
+
 /* POSTER */
 .poster-wrapper{
     position:relative;
@@ -101,17 +105,26 @@ label{
     display:block;
 }
 
-/* FOTO */
+/* =========================
+   FOTO FIX (ANTI KETARIK)
+========================= */
+
 .foto-orang{
     position:absolute;
     left:50%;
     bottom:120px;
     transform:translateX(-50%);
-    width:112%;
-    height:80%;
-    object-fit:contain;
+
+    height:70%;
+    width:auto;
+    max-width:120%;
+
+    object-fit:cover;
+    object-position:center bottom;
+
     z-index:15;
     pointer-events:none;
+
     filter: drop-shadow(0 18px 28px rgba(0,0,0,.45));
 }
 
@@ -167,11 +180,6 @@ label{
     z-index:20;
 }
 
-/* DOWNLOAD BUTTON */
-.download-btn{
-    background:#00c853;
-}
-
 </style>
 </head>
 
@@ -198,7 +206,6 @@ label{
 
     <button class="btn" onclick="generatePoster()">GENERATE</button>
 
-    <!-- DOWNLOAD BUTTON -->
     <button class="btn download-btn" onclick="downloadPoster()">
         DOWNLOAD POSTER
     </button>
@@ -288,7 +295,7 @@ function generatePoster(){
     document.getElementById("salesBawah").innerText = "Rp" + sales;
 }
 
-/* DOWNLOAD POSTER */
+/* DOWNLOAD FIX HD */
 function downloadPoster(){
 
     const poster = document.getElementById("poster");
@@ -296,8 +303,9 @@ function downloadPoster(){
     html2canvas(poster, {
         useCORS: true,
         allowTaint: false,
-        scale: 2,
-        backgroundColor: null
+        scale: 3,
+        backgroundColor: null,
+        imageTimeout: 0
     }).then(canvas => {
 
         const link = document.createElement("a");
