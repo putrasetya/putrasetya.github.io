@@ -84,12 +84,8 @@ label{
     font-size:16px;
     font-weight:800;
     cursor:pointer;
-    background:#ff1a1a;
-    color:#fff;
-}
-
-.download-btn{
     background:#00c853;
+    color:#fff;
 }
 
 /* =========================
@@ -109,59 +105,7 @@ label{
 }
 
 /* =========================
-   NAMA BESAR (2 BARIS)
-========================= */
-
-.nama-putih{
-    position:absolute;
-    top:165px;
-    left:50%;
-    transform:translateX(-50%) scaleY(1.1);
-
-    width:90%;
-    text-align:center;
-
-    font-family:'Anton',sans-serif;
-    font-size:88px;
-    font-weight:900;
-
-    color:#fff;
-    text-transform:uppercase;
-    line-height:0.9;
-    letter-spacing:3px;
-
-    z-index:8;
-    white-space:nowrap;
-    overflow:hidden;
-}
-
-.nama-outline{
-    position:absolute;
-    top:250px;
-    left:50%;
-    transform:translateX(-50%) scaleY(1.1);
-
-    width:90%;
-    text-align:center;
-
-    font-family:'Anton',sans-serif;
-    font-size:78px;
-    font-weight:900;
-
-    color:transparent;
-    -webkit-text-stroke:3px #fff;
-
-    text-transform:uppercase;
-    line-height:0.9;
-    letter-spacing:3px;
-
-    z-index:7;
-    white-space:nowrap;
-    overflow:hidden;
-}
-
-/* =========================
-   FOTO (ANTI KETARIK)
+   FOTO
 ========================= */
 
 .foto-orang{
@@ -183,6 +127,82 @@ label{
     filter: drop-shadow(0 18px 28px rgba(0,0,0,.45));
 }
 
+/* GRADASI FOTO */
+.foto-gradient{
+    position:absolute;
+    left:0;
+    bottom:0;
+    width:100%;
+    height:220px;
+
+    z-index:14;
+    pointer-events:none;
+
+    background: linear-gradient(
+        to top,
+        rgba(0,0,0,0.80) 0%,
+        rgba(0,0,0,0.35) 35%,
+        rgba(0,0,0,0.12) 65%,
+        transparent 100%
+    );
+}
+
+/* =========================
+   2 BARIS NAMA BESAR
+========================= */
+
+.nama-putih{
+    position:absolute;
+    top:150px;
+    left:50%;
+    transform:translateX(-50%) scaleY(1.15);
+
+    width:95%;
+    text-align:center;
+
+    font-family:'Anton',sans-serif;
+    font-size:104px;
+
+    font-weight:900;
+    color:#fff;
+
+    text-transform:uppercase;
+    line-height:0.85;
+    letter-spacing:4px;
+
+    z-index:8;
+
+    white-space:nowrap;
+    overflow:hidden;
+}
+
+.nama-outline{
+    position:absolute;
+    top:245px;
+    left:50%;
+    transform:translateX(-50%) scaleY(1.15);
+
+    width:95%;
+    text-align:center;
+
+    font-family:'Anton',sans-serif;
+    font-size:92px;
+
+    font-weight:900;
+
+    color:transparent;
+    -webkit-text-stroke:3.5px #fff;
+
+    text-transform:uppercase;
+    line-height:0.85;
+    letter-spacing:4px;
+
+    z-index:7;
+
+    white-space:nowrap;
+    overflow:hidden;
+}
+
 /* =========================
    NAMA BAWAH
 ========================= */
@@ -201,7 +221,7 @@ label{
 }
 
 /* =========================
-   SALES ANIMASI
+   SALES CLEAN + LABEL
 ========================= */
 
 .sales-bawah{
@@ -215,20 +235,18 @@ label{
 
     font-size:18px;
     font-weight:800;
+    color:#fff;
+
+    display:flex;
+    justify-content:center;
+    align-items:baseline;
+    gap:6px;
 }
 
-/* POP EFFECT */
-@keyframes pop {
-    0% { transform: scale(1); }
-    40% { transform: scale(1.25); }
-    70% { transform: scale(0.95); }
-    100% { transform: scale(1); }
-}
-
-.sales-pop {
-    animation: pop 0.35s ease;
-    color:#00ff88;
-    text-shadow:0 0 12px rgba(0,255,136,.6);
+.sales-label{
+    font-size:13px;
+    font-style:italic;
+    opacity:0.8;
 }
 
 </style>
@@ -255,9 +273,7 @@ label{
         </div>
     </div>
 
-    <button class="btn" onclick="generatePoster()">GENERATE</button>
-
-    <button class="btn download-btn" onclick="downloadPoster()">
+    <button class="btn" onclick="downloadPoster()">
         DOWNLOAD POSTER
     </button>
 
@@ -269,20 +285,24 @@ label{
     <img src="https://putrasetya.github.io/template_posterhero1.png" class="poster-template">
 
     <img id="fotoOrang" class="foto-orang" src="">
+    <div class="foto-gradient"></div>
 
+    <!-- NAMA BESAR -->
     <div class="nama-putih" id="namaPutih">NAMA</div>
     <div class="nama-outline" id="namaOutline">NAMA</div>
 
+    <!-- NAMA BAWAH -->
     <div class="nama-bawah" id="namaBawah"></div>
 
-    <div class="sales-bawah" id="salesBawah">Rp0</div>
+    <!-- SALES -->
+    <div class="sales-bawah">
+        <span id="salesBawah">Rp0</span>
+        <span class="sales-label">sales</span>
+    </div>
 
 </div>
 
 </div>
-
-<!-- AUDIO (opsional) -->
-<audio id="cashSound" src="https://assets.mixkit.co/sfx/preview/mixkit-coins-handling-1939.mp3" preload="auto"></audio>
 
 <script>
 
@@ -328,7 +348,7 @@ function updatePhoto(nama){
     if(!found) foto.src = "";
 }
 
-/* FORMAT RUPIAH INPUT */
+/* FORMAT RUPIAH */
 document.getElementById("salesInput").addEventListener("input", function(){
 
     let value = this.value.replace(/[^0-9]/g,"");
@@ -339,17 +359,18 @@ document.getElementById("salesInput").addEventListener("input", function(){
     }
 
     this.value = new Intl.NumberFormat("id-ID").format(value);
+
+    animateSales(value);
 });
 
-/* SALES ANIMASI */
+/* ANIMASI SALES CLEAN */
 function animateSales(target){
 
     const el = document.getElementById("salesBawah");
-    const sound = document.getElementById("cashSound");
 
     let start = 0;
     let end = parseInt(target) || 0;
-    let duration = 900;
+    let duration = 800;
     let startTime = null;
 
     function step(t){
@@ -363,50 +384,27 @@ function animateSales(target){
 
         el.innerText = "Rp " + new Intl.NumberFormat("id-ID").format(value);
 
-        if(value % Math.ceil(end/20) === 0){
-            el.classList.remove("sales-pop");
-            void el.offsetWidth;
-            el.classList.add("sales-pop");
-        }
-
         if(percent < 1){
             requestAnimationFrame(step);
-        } else {
-
-            el.classList.add("sales-pop");
-
-            if(sound){
-                sound.currentTime = 0;
-                sound.play();
-            }
-
-            setTimeout(()=>{
-                el.classList.remove("sales-pop");
-            },800);
         }
     }
 
     requestAnimationFrame(step);
 }
 
-/* GENERATE */
-function generatePoster(){
+/* AUTO UPDATE NAMA */
+document.getElementById("namaInput").addEventListener("input", function(){
 
-    let nama = document.getElementById("namaInput").value.trim().toUpperCase();
-    let sales = document.getElementById("salesInput").value.trim();
+    let nama = this.value.trim().toUpperCase();
 
     if(!nama) nama="NAMA";
-    if(!sales) sales="0";
 
     updatePhoto(nama);
 
     document.getElementById("namaPutih").innerText = nama;
     document.getElementById("namaOutline").innerText = nama;
     document.getElementById("namaBawah").innerText = nama;
-
-    let cleanSales = sales.replace(/[^0-9]/g,"");
-    animateSales(cleanSales);
-}
+});
 
 /* DOWNLOAD */
 function downloadPoster(){
@@ -421,18 +419,13 @@ function downloadPoster(){
         imageTimeout:0
     }).then(canvas=>{
 
-        const link = document.createElement("a");
+        const link=document.createElement("a");
         link.download="poster.png";
         link.href=canvas.toDataURL("image/png");
         link.click();
 
     });
-
 }
-
-/* AUTO UPDATE */
-document.getElementById("namaInput").addEventListener("input", generatePoster);
-document.getElementById("salesInput").addEventListener("input", generatePoster);
 
 </script>
 
