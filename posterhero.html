@@ -14,7 +14,6 @@
 
 <style>
 
-/* BASE */
 *{margin:0;padding:0;box-sizing:border-box;}
 
 body{
@@ -49,9 +48,7 @@ body{
 }
 
 /* INPUT */
-.form-group{
-    margin-bottom:14px;
-}
+.form-group{margin-bottom:14px;}
 
 label{
     font-size:11px;
@@ -173,11 +170,10 @@ button{
     -webkit-text-stroke:1.5px #fff;
 }
 
-/* 🔥 PERUBAHAN DI SINI */
 .nama3{
     bottom:42px;
     font-family:'Poppins',sans-serif;
-    font-weight:900; /* sebelumnya 600 → sekarang BOLD */
+    font-weight:900;
     font-size:18px;
 }
 
@@ -193,7 +189,8 @@ button{
     white-space:nowrap;
 }
 
-/* MODAL CROPPER */
+/* ================= CROPPER (DIPULIHKAN) ================= */
+
 .modal{
     position:fixed;
     inset:0;
@@ -215,8 +212,10 @@ button{
 #cropImage{
     width:100%;
     max-height:420px;
+    display:block;
 }
 
+/* tombol crop */
 .modal-actions{
     display:flex;
     gap:10px;
@@ -232,8 +231,13 @@ button{
     cursor:pointer;
 }
 
-.modal-actions button:first-child{background:#00c853;}
-.modal-actions button:last-child{background:#d50000;}
+.modal-actions button:first-child{
+    background:#00c853;
+}
+
+.modal-actions button:last-child{
+    background:#d50000;
+}
 
 /* LOADING */
 .spinner{
@@ -317,6 +321,20 @@ button{
 
 </div>
 
+<!-- CROPPER DIPULIHKAN -->
+<div class="modal" id="modal">
+
+<div class="modal-box">
+    <img id="cropImage">
+
+    <div class="modal-actions">
+        <button onclick="cropSave()">CROP</button>
+        <button onclick="closeModal()">BATAL</button>
+    </div>
+</div>
+
+</div>
+
 <script>
 
 /* FOTO SYSTEM */
@@ -353,7 +371,7 @@ e.target.value=f;
 s.innerText="Rp "+f;
 };
 
-/* CROPPER */
+/* CROPPER (FIX ACTIVE) */
 let cropper;
 
 uploadInput.onchange=(e)=>{
@@ -362,29 +380,31 @@ if(!file) return;
 
 let reader=new FileReader();
 reader.onload=(ev)=>{
-modal.style.display="flex";
-cropImage.src=ev.target.result;
+
+document.getElementById("modal").style.display="flex";
+document.getElementById("cropImage").src=ev.target.result;
 
 setTimeout(()=>{
-cropper=new Cropper(cropImage,{
+cropper=new Cropper(document.getElementById("cropImage"),{
 aspectRatio:1,
 viewMode:1
 });
 },200);
+
 };
 reader.readAsDataURL(file);
 };
 
 function cropSave(){
 let canvas=cropper.getCroppedCanvas({width:300,height:300});
-uploadPreview.src=canvas.toDataURL("image/png");
+document.getElementById("uploadPreview").src=canvas.toDataURL("image/png");
 cropper.destroy();
-modal.style.display="none";
+document.getElementById("modal").style.display="none";
 }
 
 function closeModal(){
 cropper.destroy();
-modal.style.display="none";
+document.getElementById("modal").style.display="none";
 }
 
 /* DOWNLOAD */
