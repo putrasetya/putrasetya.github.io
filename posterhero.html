@@ -8,6 +8,8 @@
 
 <link href="https://fonts.googleapis.com/css2?family=Anton&family=Montserrat:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
 <style>
 
 *{
@@ -165,6 +167,11 @@ label{
     z-index:20;
 }
 
+/* DOWNLOAD BUTTON */
+.download-btn{
+    background:#00c853;
+}
+
 </style>
 </head>
 
@@ -190,6 +197,11 @@ label{
     </div>
 
     <button class="btn" onclick="generatePoster()">GENERATE</button>
+
+    <!-- DOWNLOAD BUTTON -->
+    <button class="btn download-btn" onclick="downloadPoster()">
+        DOWNLOAD POSTER
+    </button>
 
 </div>
 
@@ -231,7 +243,7 @@ const people = [
 }
 ];
 
-/* FOTO FIX 100% TAMPIL */
+/* FOTO FIX */
 function updatePhoto(nama){
 
     const foto = document.getElementById("fotoOrang");
@@ -259,26 +271,6 @@ function updatePhoto(nama){
     }
 }
 
-/* SPLIT NAMA */
-function splitName(nama){
-    let w = nama.split(" ");
-    if(w.length <= 1) return [nama,nama];
-    let mid = Math.ceil(w.length/2);
-    return [w.slice(0,mid).join(" "), w.slice(mid).join(" ")];
-}
-
-/* FIT TEXT */
-function fitText(el,text,max){
-    el.innerText = text;
-    let size = max;
-    el.style.fontSize = size+"px";
-
-    while(el.scrollWidth > el.clientWidth && size > 18){
-        size--;
-        el.style.fontSize = size+"px";
-    }
-}
-
 /* GENERATE */
 function generatePoster(){
 
@@ -290,14 +282,31 @@ function generatePoster(){
 
     updatePhoto(nama);
 
-    let [n1,n2] = splitName(nama);
-
-    fitText(document.getElementById("namaPutih"), n1, 110);
-    fitText(document.getElementById("namaOutline"), n2, 100);
-    fitText(document.getElementById("namaBawah"), nama, 32);
-
+    document.getElementById("namaPutih").innerText = nama;
+    document.getElementById("namaOutline").innerText = nama;
     document.getElementById("namaBawah").innerText = nama;
     document.getElementById("salesBawah").innerText = "Rp" + sales;
+}
+
+/* DOWNLOAD POSTER */
+function downloadPoster(){
+
+    const poster = document.getElementById("poster");
+
+    html2canvas(poster, {
+        useCORS: true,
+        allowTaint: false,
+        scale: 2,
+        backgroundColor: null
+    }).then(canvas => {
+
+        const link = document.createElement("a");
+        link.download = "poster.png";
+        link.href = canvas.toDataURL("image/png");
+        link.click();
+
+    });
+
 }
 
 /* AUTO UPDATE */
