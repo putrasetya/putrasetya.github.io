@@ -6,7 +6,8 @@
 
 <title>Generator Poster</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Anton&family=Montserrat:wght@300;400;500;600;700;800;900&family=Poppins:wght@500;600;700;800&display=swap" rel="stylesheet">
+<!-- FONT -->
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Montserrat:wght@400;600;700;800;900&family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 
@@ -21,7 +22,6 @@
 body{
     background:#000;
     font-family:'Montserrat',sans-serif;
-    min-height:100vh;
     padding:30px;
     color:#fff;
 }
@@ -37,7 +37,6 @@ body{
 .panel{
     width:340px;
     background:#070707;
-    border:1px solid #ff1a1a;
     border-radius:28px;
     padding:28px;
 }
@@ -82,26 +81,9 @@ label{display:block;margin-bottom:10px;font-weight:600;}
     background:#1b1b1b;
     font-weight:800;
     border-right:1px solid #2a2a2a;
-    display:flex;
-    align-items:center;
 }
 
-/* BUTTON */
-.btn{
-    width:100%;
-    height:60px;
-    margin-top:18px;
-    border:none;
-    border-radius:16px;
-    font-weight:800;
-    background:#00c853;
-    color:#fff;
-}
-
-/* =========================
-   POSTER
-========================= */
-
+/* POSTER */
 .poster-wrapper{
     position:relative;
     width:430px;
@@ -114,10 +96,7 @@ label{display:block;margin-bottom:10px;font-weight:600;}
     display:block;
 }
 
-/* =========================
-   FOTO (MASK CINEMATIC)
-========================= */
-
+/* FOTO (GRADIENT ONLY OBJECT) */
 .foto-wrap{
     position:absolute;
     left:50%;
@@ -125,16 +104,15 @@ label{display:block;margin-bottom:10px;font-weight:600;}
     transform:translateX(-50%);
     width:100%;
     height:70%;
-    z-index:10; /* FOTO DI DEPAN TEKS */
+    z-index:10;
 }
 
 .foto-inner{
     width:100%;
     height:100%;
     display:flex;
-    align-items:flex-end;
     justify-content:center;
-    overflow:hidden;
+    align-items:flex-end;
 }
 
 .foto-orang{
@@ -158,7 +136,7 @@ label{display:block;margin-bottom:10px;font-weight:600;}
 }
 
 /* =========================
-   NAMA (UPGRADE TYPOGRAPHY)
+   2 BARIS NAMA (TETAP)
 ========================= */
 
 .nama-putih{
@@ -170,15 +148,11 @@ label{display:block;margin-bottom:10px;font-weight:600;}
     text-align:center;
 
     font-family:'Anton',sans-serif;
-
-    font-size:76px;        /* 🔥 LEBIH BESAR */
-    letter-spacing:3px;    /* 🔥 LEBIH LEGAAAA */
-    line-height:0.95;
-
+    font-size:76px;
+    letter-spacing:3px;
     color:#fff;
-    font-weight:900;
 
-    z-index:4; /* DI BELAKANG FOTO */
+    z-index:4;
 }
 
 .nama-outline{
@@ -190,20 +164,17 @@ label{display:block;margin-bottom:10px;font-weight:600;}
     text-align:center;
 
     font-family:'Anton',sans-serif;
-
-    font-size:72px;        /* 🔥 LEBIH BESAR */
-    letter-spacing:3px;    /* 🔥 LEBIH LEGAAAA */
+    font-size:72px;
+    letter-spacing:3px;
 
     color:transparent;
     -webkit-text-stroke:1.5px #fff;
 
-    font-weight:900;
-
-    z-index:3; /* PALING BELAKANG */
+    z-index:3;
 }
 
 /* =========================
-   NAMA BAWAH
+   NAMA BAWAH (FONT BARU)
 ========================= */
 
 .nama-bawah{
@@ -214,15 +185,17 @@ label{display:block;margin-bottom:10px;font-weight:600;}
     width:90%;
     text-align:center;
 
-    font-size:28px;
-    font-weight:900;
+    font-family:'Montserrat',sans-serif;
+    font-size:26px;
+    font-weight:800;
+    letter-spacing:1px;
     color:#fff;
 
     z-index:20;
 }
 
 /* =========================
-   SALES
+   SALES (FONT BARU)
 ========================= */
 
 .sales-bawah{
@@ -240,13 +213,13 @@ label{display:block;margin-bottom:10px;font-weight:600;}
 }
 
 .sales-label{
-    font-size:13px;
+    font-size:12px;
     font-style:italic;
     opacity:0.75;
 }
 
 .sales-value{
-    font-family:'Poppins',sans-serif;
+    font-family:'Inter',sans-serif;
     font-size:22px;
     font-weight:700;
 }
@@ -272,19 +245,15 @@ label{display:block;margin-bottom:10px;font-weight:600;}
         <label>Sales</label>
 
         <div class="sales-box">
-
             <span class="sales-prefix">sales</span>
 
             <div class="sales-input-wrap">
                 <span class="rp">Rp</span>
                 <input id="salesInput" type="text">
             </div>
-
         </div>
 
     </div>
-
-    <button class="btn" onclick="downloadPoster()">DOWNLOAD</button>
 
 </div>
 
@@ -299,11 +268,14 @@ label{display:block;margin-bottom:10px;font-weight:600;}
         </div>
     </div>
 
+    <!-- 2 BARIS NAMA (TETAP) -->
     <div class="nama-putih" id="namaPutih">NAMA</div>
     <div class="nama-outline" id="namaOutline">NAMA</div>
 
+    <!-- NAMA BAWAH -->
     <div class="nama-bawah" id="namaBawah">NAMA</div>
 
+    <!-- SALES -->
     <div class="sales-bawah">
         <span class="sales-label">sales</span>
         <span class="sales-value" id="salesBawah">Rp 0</span>
@@ -315,7 +287,7 @@ label{display:block;margin-bottom:10px;font-weight:600;}
 
 <script>
 
-/* FOTO DB */
+/* DATABASE FOTO */
 const people=[
 {keywords:["AFIF"],photo:"12pjk_-ZJhbqbPZDzdH4sJSkE5qWwzrf7"},
 {keywords:["PUTRA"],photo:"1Pxw-wIUKTcyA_inIcqpYY833f_3AtZe2"}
@@ -360,20 +332,6 @@ document.getElementById("salesInput").addEventListener("input",e=>{
     document.getElementById("salesBawah").innerText=
         "Rp "+new Intl.NumberFormat("id-ID").format(v);
 });
-
-/* DOWNLOAD */
-function downloadPoster(){
-    html2canvas(document.getElementById("poster"),{
-        scale:3,
-        useCORS:true,
-        backgroundColor:null
-    }).then(canvas=>{
-        let a=document.createElement("a");
-        a.download="poster.png";
-        a.href=canvas.toDataURL("image/png");
-        a.click();
-    });
-}
 
 </script>
 
