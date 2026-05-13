@@ -6,7 +6,7 @@
 
 <title>Generator Poster</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Montserrat:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 
 <style>
 
@@ -153,7 +153,7 @@ body{
 }
 
 /* =========================
-   NAMA BARIS 1
+   BARIS 1
 ========================= */
 
 .nama-putih{
@@ -170,7 +170,9 @@ body{
 
     text-align:center;
 
-    font-weight:900;
+    font-family:'Anton',sans-serif;
+
+    font-weight:400;
 
     color:#fff;
 
@@ -178,7 +180,7 @@ body{
 
     line-height:1;
 
-    letter-spacing:0;
+    letter-spacing:2px;
 
     z-index:10;
 
@@ -188,13 +190,14 @@ body{
 }
 
 /* =========================
-   NAMA BARIS 2
+   BARIS 2 OUTLINE ONLY
 ========================= */
 
 .nama-outline{
+
     position:absolute;
 
-    top:285px;
+    top:288px;
 
     left:50%;
 
@@ -206,18 +209,21 @@ body{
 
     text-align:center;
 
-    font-weight:900;
+    font-family:'Anton',sans-serif;
 
-    /* HANYA OUTLINE */
+    font-weight:400;
+
+    /* BENAR-BENAR TRANSPARAN */
     color:transparent;
 
-    -webkit-text-stroke:3px #fff;
+    /* OUTLINE PUTIH */
+    -webkit-text-stroke:2.5px #fff;
 
     text-transform:uppercase;
 
     line-height:1;
 
-    letter-spacing:0;
+    letter-spacing:2px;
 
     z-index:9;
 
@@ -225,9 +231,17 @@ body{
 
     overflow:hidden;
 
+    /* HILANGKAN EFEK ANEH */
+    text-shadow:none;
+
+    filter:none;
+
     paint-order:stroke fill;
 
-    text-shadow:none;
+    /* AGAR TIDAK DOUBLE */
+    -webkit-font-smoothing:antialiased;
+
+    text-rendering:geometricPrecision;
 }
 
 /* =========================
@@ -237,7 +251,7 @@ body{
 .nama-bawah{
     position:absolute;
 
-    bottom:38px;
+    bottom:40px;
 
     left:50%;
 
@@ -247,7 +261,7 @@ body{
 
     text-align:center;
 
-    font-size:34px;
+    font-size:32px;
 
     font-weight:900;
 
@@ -267,7 +281,7 @@ body{
 .sales-bawah{
     position:absolute;
 
-    bottom:12px;
+    bottom:14px;
 
     left:50%;
 
@@ -591,11 +605,11 @@ function generatePoster(){
     document.getElementById("namaBawah");
 
     // AUTO FIT
-    fitText(putih, nama1, 115);
+    fitText(putih, nama1, 110);
 
-    fitText(outline, nama2, 105);
+    fitText(outline, nama2, 100);
 
-    fitText(bawah, nama, 34);
+    fitText(bawah, nama, 32);
 
     // SALES
     document.getElementById("salesBawah")
