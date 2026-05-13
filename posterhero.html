@@ -110,6 +110,7 @@ label{
     object-fit:contain;
     z-index:15;
     pointer-events:none;
+    filter: drop-shadow(0 18px 28px rgba(0,0,0,.45));
 }
 
 /* NAMA */
@@ -197,7 +198,7 @@ label{
 
     <img src="https://putrasetya.github.io/template_posterhero1.png" class="poster-template">
 
-    <img id="fotoOrang" class="foto-orang">
+    <img id="fotoOrang" class="foto-orang" src="">
 
     <div class="nama-putih" id="namaPutih">NAMA</div>
     <div class="nama-outline" id="namaOutline">NAMA</div>
@@ -230,7 +231,7 @@ const people = [
 }
 ];
 
-/* FOTO FIX (INI YANG SUDAH DIPERBAIKI) */
+/* FOTO FIX 100% TAMPIL */
 function updatePhoto(nama){
 
     const foto = document.getElementById("fotoOrang");
@@ -242,8 +243,9 @@ function updatePhoto(nama){
             if(nama.includes(key)){
 
                 foto.src =
-                "https://drive.googleusercontent.com/uc?export=view&id="
-                + person.photo;
+                "https://lh3.googleusercontent.com/d/"
+                + person.photo
+                + "=w1000";
 
                 found = true;
                 break;
@@ -298,7 +300,7 @@ function generatePoster(){
     document.getElementById("salesBawah").innerText = "Rp" + sales;
 }
 
-/* AUTO */
+/* AUTO UPDATE */
 document.getElementById("namaInput").addEventListener("input", generatePoster);
 document.getElementById("salesInput").addEventListener("input", generatePoster);
 
