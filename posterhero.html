@@ -6,10 +6,7 @@
 
 <title>Generator Poster</title>
 
-<!-- FONT -->
 <link href="https://fonts.googleapis.com/css2?family=Anton&family=Montserrat:wght@400;600;700;800;900&family=Roboto+Condensed:wght@400;700&family=Roboto+Mono:wght@400;600;700&display=swap" rel="stylesheet">
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 
 <style>
 
@@ -41,7 +38,6 @@ body{
     padding:28px;
 }
 
-/* INPUT */
 .form-group{margin-top:20px;}
 label{display:block;margin-bottom:10px;font-weight:600;}
 
@@ -58,7 +54,11 @@ label{display:block;margin-bottom:10px;font-weight:600;}
 }
 
 /* SALES INPUT */
-.sales-box{display:flex;flex-direction:column;gap:8px;}
+.sales-box{
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+}
 
 .sales-prefix{
     font-size:12px;
@@ -135,7 +135,7 @@ label{display:block;margin-bottom:10px;font-weight:600;}
 }
 
 /* =========================
-   2 BARIS NAMA (TETAP)
+   NAMA
 ========================= */
 
 .nama-putih{
@@ -172,10 +172,7 @@ label{display:block;margin-bottom:10px;font-weight:600;}
     z-index:3;
 }
 
-/* =========================
-   NAMA BAWAH (FORMAL)
-========================= */
-
+/* NAMA BAWAH */
 .nama-bawah{
     position:absolute;
     bottom:42px;
@@ -188,14 +185,10 @@ label{display:block;margin-bottom:10px;font-weight:600;}
     font-size:24px;
     font-weight:700;
     letter-spacing:1px;
-
-    color:#fff;
-
-    z-index:20;
 }
 
 /* =========================
-   SALES (FORMAL ANGKA)
+   SALES (FIX ANTI WRAP)
 ========================= */
 
 .sales-bawah{
@@ -209,19 +202,23 @@ label{display:block;margin-bottom:10px;font-weight:600;}
     justify-content:center;
     gap:8px;
 
-    z-index:20;
+    max-width:90%;
 }
 
 .sales-label{
     font-size:12px;
     font-style:italic;
     opacity:0.75;
+    white-space:nowrap;
 }
 
 .sales-value{
     font-family:'Roboto Mono',monospace;
     font-size:20px;
     font-weight:700;
+
+    white-space:nowrap;   /* 🔥 STOP TURUN BARIS */
+    overflow:hidden;
 }
 
 </style>
@@ -306,7 +303,7 @@ function updatePhoto(nama){
     if(!found) img.src="";
 }
 
-/* INPUT */
+/* NAMA */
 document.getElementById("namaInput").addEventListener("input",e=>{
     let n=e.target.value.toUpperCase()||"NAMA";
 
@@ -317,14 +314,27 @@ document.getElementById("namaInput").addEventListener("input",e=>{
     document.getElementById("namaBawah").innerText=n;
 });
 
-/* SALES */
+/* SALES + AUTO SHRINK */
 document.getElementById("salesInput").addEventListener("input",e=>{
     let v=e.target.value.replace(/[^0-9]/g,"")||"0";
 
-    e.target.value=new Intl.NumberFormat("id-ID").format(v);
+    let formatted = new Intl.NumberFormat("id-ID").format(v);
 
-    document.getElementById("salesBawah").innerText=
-        "Rp "+new Intl.NumberFormat("id-ID").format(v);
+    e.target.value = formatted;
+
+    const el = document.getElementById("salesBawah");
+
+    el.innerText = "Rp " + formatted;
+
+    // 🔥 AUTO SHRINK BIAR TIDAK TURUN BARIS
+    let size = 20;
+    el.style.fontSize = size + "px";
+
+    while(el.scrollWidth > el.parentElement.offsetWidth){
+        size--;
+        el.style.fontSize = size + "px";
+        if(size <= 12) break;
+    }
 });
 
 </script>
