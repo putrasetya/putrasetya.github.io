@@ -14,7 +14,7 @@
 
 <style>
 
-/* ===== BASE ===== */
+/* ================= BASE ================= */
 *{margin:0;padding:0;box-sizing:border-box;}
 
 body{
@@ -46,63 +46,55 @@ body{
     text-align:center;
     margin-bottom:22px;
     color:#ffd400;
-    letter-spacing:2px;
 }
 
-/* FORM GROUP */
-.form-group{
-    margin-bottom:16px;
-}
+/* INPUT */
+.form-group{margin-bottom:14px;}
 
-.label{
+label{
     font-size:11px;
     opacity:0.6;
-    margin-bottom:6px;
     display:block;
+    margin-bottom:6px;
 }
 
-/* INPUT STYLE */
 .input{
     width:100%;
     height:52px;
     border:none;
     outline:none;
     background:rgba(255,255,255,0.05);
-    border-bottom:1px solid rgba(255,255,255,0.15);
     color:#fff;
     padding:0 12px;
-    border-radius:10px 10px 0 0;
+    border-radius:10px;
 }
 
-/* RUPIAH INPUT */
-.rupiah-wrap{
+/* RUPIAH */
+.rupiah{
     display:flex;
     align-items:center;
-    height:52px;
     background:rgba(255,255,255,0.05);
-    border-bottom:1px solid rgba(255,255,255,0.15);
-    border-radius:10px 10px 0 0;
+    border-radius:10px;
 }
 
 .rp{
     padding:0 12px;
     opacity:0.7;
-    font-weight:700;
 }
 
-.rupiah-input{
+.rupiah input{
     width:100%;
+    height:52px;
     border:none;
     outline:none;
     background:transparent;
     color:#fff;
-    font-size:16px;
 }
 
-/* FILE INPUT */
+/* FILE */
 .file{
     width:100%;
-    padding:12px;
+    padding:10px;
     background:rgba(255,255,255,0.05);
     border:1px dashed rgba(255,255,255,0.2);
     color:#fff;
@@ -114,7 +106,7 @@ button{
     width:100%;
     height:52px;
     margin-top:10px;
-    background:linear-gradient(135deg,#ff1a1a,#7a0000);
+    background:red;
     border:none;
     color:#fff;
     font-weight:800;
@@ -122,7 +114,7 @@ button{
     cursor:pointer;
 }
 
-/* ===== POSTER ===== */
+/* ================= POSTER ================= */
 .poster{
     width:430px;
     position:relative;
@@ -132,10 +124,9 @@ button{
 
 .poster img.bg{
     width:100%;
-    display:block;
 }
 
-/* FOTO SISTEM */
+/* FOTO */
 .foto-wrap{
     position:absolute;
     left:50%;
@@ -148,7 +139,7 @@ button{
 
 .foto-wrap img{height:100%;}
 
-/* UPLOAD FOTO */
+/* UPLOAD */
 .upload-layer{
     position:absolute;
     bottom:110px;
@@ -184,32 +175,59 @@ button{
     white-space:nowrap;
 }
 
-/* MODAL CROPPER */
+/* ================= MODAL CROPPER FIX ================= */
+
 .modal{
     position:fixed;
     inset:0;
-    background:rgba(0,0,0,0.85);
+    background:rgba(0,0,0,0.92);
     display:none;
     align-items:center;
     justify-content:center;
+    z-index:9999;
 }
 
 .modal-box{
-    width:90%;
-    max-width:400px;
+    width:92%;
+    max-width:420px;
     background:#111;
-    padding:15px;
-    border-radius:12px;
+    padding:14px;
+    border-radius:14px;
+    display:flex;
+    flex-direction:column;
+    gap:12px;
 }
 
+/* gambar crop */
+#cropImage{
+    width:100%;
+    max-height:420px;
+    display:block;
+}
+
+/* tombol selalu terlihat */
 .modal-actions{
     display:flex;
     gap:10px;
-    margin-top:10px;
 }
 
 .modal-actions button{
     flex:1;
+    height:46px;
+    border:none;
+    border-radius:10px;
+    font-weight:800;
+    cursor:pointer;
+}
+
+.modal-actions button:first-child{
+    background:#00c853;
+    color:#fff;
+}
+
+.modal-actions button:last-child{
+    background:#d50000;
+    color:#fff;
 }
 
 </style>
@@ -224,28 +242,25 @@ button{
 
 <div class="panel-title">MENYALA</div>
 
-<!-- NAMA -->
 <div class="form-group">
-    <span class="label">Nama Sales</span>
-    <input class="input" id="namaInput" placeholder="Masukkan nama">
+<label>Nama Sales</label>
+<input class="input" id="namaInput">
 </div>
 
-<!-- NOMINAL -->
 <div class="form-group">
-    <span class="label">Nominal</span>
-    <div class="rupiah-wrap">
-        <span class="rp">Rp</span>
-        <input class="rupiah-input" id="salesInput" placeholder="0">
-    </div>
+<label>Nominal</label>
+<div class="rupiah">
+<span class="rp">Rp</span>
+<input id="salesInput">
+</div>
 </div>
 
-<!-- UPLOAD STRUK -->
 <div class="form-group">
-    <span class="label">Upload Foto Struk</span>
-    <input type="file" class="file" id="uploadInput" accept="image/*">
+<label>Upload Foto Struk</label>
+<input type="file" class="file" id="uploadInput">
 </div>
 
-<button onclick="downloadPoster()">DOWNLOAD POSTER</button>
+<button onclick="downloadPoster()">DOWNLOAD</button>
 
 </div>
 
@@ -255,11 +270,11 @@ button{
 <img class="bg" src="https://putrasetya.github.io/template_posterhero1.png">
 
 <div class="foto-wrap">
-    <img id="foto">
+<img id="foto">
 </div>
 
 <div class="upload-layer">
-    <img id="uploadPreview">
+<img id="uploadPreview">
 </div>
 
 <div class="nama1" id="n1">NAMA</div>
@@ -272,20 +287,23 @@ button{
 
 </div>
 
-<!-- CROPPER -->
+<!-- MODAL -->
 <div class="modal" id="modal">
-    <div class="modal-box">
-        <img id="cropImage">
-        <div class="modal-actions">
-            <button onclick="cropSave()">OK</button>
-            <button onclick="closeModal()">BATAL</button>
-        </div>
-    </div>
+<div class="modal-box">
+
+<img id="cropImage">
+
+<div class="modal-actions">
+<button onclick="cropSave()">CROP</button>
+<button onclick="closeModal()">BATAL</button>
+</div>
+
+</div>
 </div>
 
 <script>
 
-/* FOTO SYSTEM LAMA */
+/* FOTO SYSTEM */
 const people=[
 {keywords:["AFIF"],photo:"https://lh3.googleusercontent.com/d/12pjk_-ZJhbqbPZDzdH4sJSkE5qWwzrf7=w1000"},
 {keywords:["PUTRA"],photo:"https://lh3.googleusercontent.com/d/1Pxw-wIUKTcyA_inIcqpYY833f_3AtZe2=w1000"}
@@ -303,7 +321,7 @@ if(p.keywords.some(k=>up.includes(k))) found=p.photo;
 img.src=found||"";
 }
 
-/* INPUT NAMA */
+/* INPUT */
 namaInput.oninput=(e)=>{
 let v=e.target.value||"NAMA";
 updatePhoto(v);
@@ -312,7 +330,6 @@ n2.innerText=v;
 n3.innerText=v;
 };
 
-/* RUPIAH FORMAT */
 salesInput.oninput=(e)=>{
 let v=e.target.value.replace(/[^0-9]/g,"")||"0";
 let f=new Intl.NumberFormat("id-ID").format(v);
@@ -377,6 +394,7 @@ let a=document.createElement("a");
 a.download="poster.png";
 a.href=canvas.toDataURL("image/png");
 a.click();
+
 }
 
 </script>
