@@ -4,10 +4,10 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Generator Poster</title>
+<title>Poster Generator</title>
 
-<!-- FONT -->
-<link href="https://fonts.googleapis.com/css2?family=Anton&family=Montserrat:wght@400;600;700;800;900&family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+<!-- 🔥 PREMIUM FONT -->
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Montserrat:wght@400;600;700;800;900&family=Sora:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 
@@ -80,7 +80,6 @@ label{display:block;margin-bottom:10px;font-weight:600;}
     padding:0 14px;
     background:#1b1b1b;
     font-weight:800;
-    border-right:1px solid #2a2a2a;
 }
 
 /* POSTER */
@@ -91,12 +90,9 @@ label{display:block;margin-bottom:10px;font-weight:600;}
     border-radius:28px;
 }
 
-.poster-template{
-    width:100%;
-    display:block;
-}
+.poster-template{width:100%;display:block;}
 
-/* FOTO (GRADIENT ONLY OBJECT) */
+/* FOTO */
 .foto-wrap{
     position:absolute;
     left:50%;
@@ -174,7 +170,7 @@ label{display:block;margin-bottom:10px;font-weight:600;}
 }
 
 /* =========================
-   NAMA BAWAH (FONT BARU)
+   🔥 NAMA BAWAH (SORA = PREMIUM)
 ========================= */
 
 .nama-bawah{
@@ -185,9 +181,9 @@ label{display:block;margin-bottom:10px;font-weight:600;}
     width:90%;
     text-align:center;
 
-    font-family:'Montserrat',sans-serif;
+    font-family:'Sora',sans-serif;
     font-size:26px;
-    font-weight:800;
+    font-weight:600;
     letter-spacing:1px;
     color:#fff;
 
@@ -195,7 +191,7 @@ label{display:block;margin-bottom:10px;font-weight:600;}
 }
 
 /* =========================
-   SALES (FONT BARU)
+   🔥 SALES (SPACE GROTESK)
 ========================= */
 
 .sales-bawah{
@@ -219,9 +215,9 @@ label{display:block;margin-bottom:10px;font-weight:600;}
 }
 
 .sales-value{
-    font-family:'Inter',sans-serif;
+    font-family:'Space Grotesk',sans-serif;
     font-size:22px;
-    font-weight:700;
+    font-weight:600;
 }
 
 </style>
@@ -231,7 +227,6 @@ label{display:block;margin-bottom:10px;font-weight:600;}
 
 <div class="container">
 
-<!-- PANEL -->
 <div class="panel">
 
     <div class="form-group">
@@ -245,19 +240,20 @@ label{display:block;margin-bottom:10px;font-weight:600;}
         <label>Sales</label>
 
         <div class="sales-box">
+
             <span class="sales-prefix">sales</span>
 
             <div class="sales-input-wrap">
                 <span class="rp">Rp</span>
                 <input id="salesInput" type="text">
             </div>
+
         </div>
 
     </div>
 
 </div>
 
-<!-- POSTER -->
 <div class="poster-wrapper" id="poster">
 
     <img class="poster-template" src="https://putrasetya.github.io/template_posterhero1.png">
@@ -268,14 +264,11 @@ label{display:block;margin-bottom:10px;font-weight:600;}
         </div>
     </div>
 
-    <!-- 2 BARIS NAMA (TETAP) -->
     <div class="nama-putih" id="namaPutih">NAMA</div>
     <div class="nama-outline" id="namaOutline">NAMA</div>
 
-    <!-- NAMA BAWAH -->
     <div class="nama-bawah" id="namaBawah">NAMA</div>
 
-    <!-- SALES -->
     <div class="sales-bawah">
         <span class="sales-label">sales</span>
         <span class="sales-value" id="salesBawah">Rp 0</span>
@@ -287,13 +280,12 @@ label{display:block;margin-bottom:10px;font-weight:600;}
 
 <script>
 
-/* DATABASE FOTO */
+/* FOTO */
 const people=[
 {keywords:["AFIF"],photo:"12pjk_-ZJhbqbPZDzdH4sJSkE5qWwzrf7"},
 {keywords:["PUTRA"],photo:"1Pxw-wIUKTcyA_inIcqpYY833f_3AtZe2"}
 ];
 
-/* FOTO */
 function updatePhoto(nama){
     const img=document.getElementById("fotoOrang");
     let found=false;
@@ -312,7 +304,7 @@ function updatePhoto(nama){
     if(!found) img.src="";
 }
 
-/* NAMA */
+/* INPUT */
 document.getElementById("namaInput").addEventListener("input",e=>{
     let n=e.target.value.toUpperCase()||"NAMA";
 
