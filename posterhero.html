@@ -32,9 +32,7 @@ body{
     flex-wrap:wrap;
 }
 
-/* =========================
-   PANEL
-========================= */
+/* PANEL */
 
 .panel{
     width:320px;
@@ -67,9 +65,7 @@ body{
     margin:22px 0;
 }
 
-/* =========================
-   INPUT
-========================= */
+/* INPUT */
 
 .form-group{
     margin-top:20px;
@@ -119,9 +115,7 @@ body{
     font-size:22px;
 }
 
-/* =========================
-   BUTTON
-========================= */
+/* BUTTON */
 
 .btn{
     width:100%;
@@ -136,9 +130,7 @@ body{
     color:#fff;
 }
 
-/* =========================
-   POSTER
-========================= */
+/* POSTER */
 
 .poster-wrapper{
     position:relative;
@@ -147,32 +139,40 @@ body{
     border-radius:28px;
 }
 
+/* TEMPLATE */
+
 .poster-template{
     width:100%;
     display:block;
 }
 
-/* =========================
-   BARIS 1
-========================= */
+/* FOTO */
+
+.foto-orang{
+    position:absolute;
+    left:0;
+    bottom:0;
+    width:100%;
+    height:100%;
+    object-fit:contain;
+    z-index:5;
+    pointer-events:none;
+}
+
+/* BARIS 1 */
 
 .nama-putih{
     position:absolute;
-
     top:165px;
     left:50%;
-
     transform:
     translateX(-50%)
     scaleY(1.08);
 
     width:84%;
-
     text-align:center;
 
     font-family:'Anton',sans-serif;
-
-    font-weight:400;
 
     color:#fff;
 
@@ -189,12 +189,9 @@ body{
     overflow:hidden;
 }
 
-/* =========================
-   BARIS 2 OUTLINE ONLY
-========================= */
+/* BARIS 2 */
 
 .nama-outline{
-
     position:absolute;
 
     top:288px;
@@ -211,12 +208,8 @@ body{
 
     font-family:'Anton',sans-serif;
 
-    font-weight:400;
-
-    /* BENAR-BENAR TRANSPARAN */
     color:transparent;
 
-    /* OUTLINE PUTIH */
     -webkit-text-stroke:2.5px #fff;
 
     text-transform:uppercase;
@@ -230,23 +223,9 @@ body{
     white-space:nowrap;
 
     overflow:hidden;
-
-    /* HILANGKAN EFEK ANEH */
-    text-shadow:none;
-
-    filter:none;
-
-    paint-order:stroke fill;
-
-    /* AGAR TIDAK DOUBLE */
-    -webkit-font-smoothing:antialiased;
-
-    text-rendering:geometricPrecision;
 }
 
-/* =========================
-   NAMA BAWAH
-========================= */
+/* NAMA BAWAH */
 
 .nama-bawah{
     position:absolute;
@@ -274,9 +253,7 @@ body{
     overflow:hidden;
 }
 
-/* =========================
-   SALES
-========================= */
+/* SALES */
 
 .sales-bawah{
     position:absolute;
@@ -292,13 +269,14 @@ body{
     text-align:center;
 
     color:#fff;
+
+    z-index:20;
 }
 
 .sales-bawah i{
     font-size:13px;
     font-style:italic;
     margin-right:5px;
-    font-weight:400;
 }
 
 .sales-bawah span{
@@ -306,9 +284,7 @@ body{
     font-weight:700;
 }
 
-/* =========================
-   MOBILE
-========================= */
+/* MOBILE */
 
 @media(max-width:900px){
 
@@ -355,7 +331,7 @@ body{
 
         </div>
 
-        <!-- NAMA -->
+        <!-- INPUT NAMA -->
 
         <div class="form-group">
 
@@ -372,7 +348,7 @@ body{
 
         </div>
 
-        <!-- SALES -->
+        <!-- INPUT SALES -->
 
         <div class="form-group">
 
@@ -412,7 +388,13 @@ body{
         src="https://putrasetya.github.io/template_posterhero1.png"
         class="poster-template">
 
-        <!-- BARIS 1 -->
+        <!-- FOTO -->
+        <img
+        id="fotoOrang"
+        class="foto-orang"
+        src="">
+
+        <!-- NAMA PUTIH -->
         <div
         class="nama-putih"
         id="namaPutih">
@@ -421,7 +403,7 @@ body{
 
         </div>
 
-        <!-- BARIS 2 -->
+        <!-- NAMA OUTLINE -->
         <div
         class="nama-outline"
         id="namaOutline">
@@ -454,9 +436,55 @@ body{
 
 <script>
 
-/* =========================
+/* ====================================
+   DATABASE FOTO
+==================================== */
+/*
+EDIT BAGIAN INI
+- keywords = nama yang bisa dicari
+- photo = ID FILE GOOGLE DRIVE
+*/
+
+const people = [
+
+{
+    keywords:[
+        "AFIF",
+        "AFI",
+        "APIP",
+        "AVIF"
+    ],
+
+    photo:
+    "12pjk_-ZJhbqbPZDzdH4sJSkE5qWwzrf7"
+},
+
+{
+    keywords:[
+        "PUTRA",
+        "PUT",
+        "TRA"
+    ],
+
+    photo:
+    "1Xyz987AAA"
+},
+
+{
+    keywords:[
+        "BUDI",
+        "BUD"
+    ],
+
+    photo:
+    "1PPP999ZZZ"
+}
+
+];
+
+/* ====================================
    FORMAT RUPIAH
-========================= */
+==================================== */
 
 const salesInput =
 document.getElementById("salesInput");
@@ -495,9 +523,9 @@ salesInput.addEventListener("input", function(){
 
 });
 
-/* =========================
+/* ====================================
    AUTO FIT TEXT
-========================= */
+==================================== */
 
 function fitText(element, text, maxSize){
 
@@ -526,9 +554,9 @@ function fitText(element, text, maxSize){
 
 }
 
-/* =========================
+/* ====================================
    SPLIT NAMA
-========================= */
+==================================== */
 
 function splitName(nama){
 
@@ -554,9 +582,54 @@ function splitName(nama){
 
 }
 
-/* =========================
-   GENERATE
-========================= */
+/* ====================================
+   AUTO FOTO
+==================================== */
+
+function updatePhoto(nama){
+
+    const foto =
+    document.getElementById("fotoOrang");
+
+    let found = false;
+
+    for(const person of people){
+
+        for(const key of person.keywords){
+
+            if(
+                nama.includes(key) ||
+                key.includes(nama)
+            ){
+
+                foto.src =
+                "https://drive.google.com/thumbnail?id="
+                + person.photo +
+                "&sz=w1000";
+
+                found = true;
+
+                break;
+
+            }
+
+        }
+
+        if(found) break;
+
+    }
+
+    if(!found){
+
+        foto.src = "";
+
+    }
+
+}
+
+/* ====================================
+   GENERATE POSTER
+==================================== */
 
 function generatePoster(){
 
@@ -584,7 +657,10 @@ function generatePoster(){
 
     nama = nama.toUpperCase();
 
-    // SPLIT
+    // FOTO OTOMATIS
+    updatePhoto(nama);
+
+    // SPLIT NAMA
     let hasil =
     splitName(nama);
 
@@ -617,9 +693,9 @@ function generatePoster(){
 
 }
 
-/* =========================
+/* ====================================
    AUTO UPDATE
-========================= */
+==================================== */
 
 document
 .getElementById("namaInput")
