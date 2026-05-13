@@ -100,10 +100,7 @@ label{
     opacity:0.7;
 }
 
-/* =========================
-   BUTTON LOADING
-========================= */
-
+/* BUTTON */
 .download-btn{
     width:100%;
     height:52px;
@@ -152,7 +149,7 @@ label{
 }
 
 /* =========================
-   FOTO + GRADASI FIX (DOWNLOAD SAFE)
+   FOTO (OBJECT GRADIENT FIX)
 ========================= */
 
 .foto-wrap{
@@ -174,29 +171,33 @@ label{
     align-items:flex-end;
 }
 
-/* FOTO ASLI */
+/* FOTO UTAMA */
 .foto-orang{
     height:100%;
     width:auto;
     object-fit:cover;
-}
 
-/* 🔥 GRADASI OVERLAY (INI YANG IKUT DOWNLOAD) */
-.foto-gradient{
-    position:absolute;
-    bottom:0;
-    left:0;
-    width:100%;
-    height:45%;
-
-    background:linear-gradient(
+    /* 🔥 GRADASI IKUT BENTUK OBJEK */
+    -webkit-mask-image: linear-gradient(
         to top,
-        rgba(0,0,0,0.85) 0%,
-        rgba(0,0,0,0.45) 45%,
-        rgba(0,0,0,0) 100%
+        rgba(0,0,0,0) 0%,
+        rgba(0,0,0,0) 10%,
+        rgba(0,0,0,1) 35%,
+        rgba(0,0,0,1) 100%
     );
 
-    pointer-events:none;
+    mask-image: linear-gradient(
+        to top,
+        rgba(0,0,0,0) 0%,
+        rgba(0,0,0,0) 10%,
+        rgba(0,0,0,1) 35%,
+        rgba(0,0,0,1) 100%
+    );
+
+    -webkit-mask-size: 100% 100%;
+    mask-size: 100% 100%;
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
 }
 
 /* =========================
@@ -308,7 +309,6 @@ label{
     <div class="foto-wrap">
         <div class="foto-inner">
             <img id="fotoOrang" class="foto-orang" crossorigin="anonymous">
-            <div class="foto-gradient"></div>
         </div>
     </div>
 
@@ -329,7 +329,10 @@ label{
 
 <script>
 
-/* FOTO SYSTEM STABLE */
+/* =========================
+   FOTO SYSTEM
+========================= */
+
 const people = [
     {
         keywords:["AFIF","AFI","APIP"],
@@ -374,7 +377,10 @@ async function updatePhoto(nama){
     }
 }
 
-/* INPUT */
+/* =========================
+   INPUT
+========================= */
+
 document.getElementById("namaInput").addEventListener("input",e=>{
     let n=e.target.value.toUpperCase()||"NAMA";
 
@@ -394,7 +400,10 @@ document.getElementById("salesInput").addEventListener("input",e=>{
     document.getElementById("salesBawah").innerText="Rp "+f;
 });
 
-/* DOWNLOAD + LOADING */
+/* =========================
+   DOWNLOAD + LOADING
+========================= */
+
 async function downloadPoster(){
 
     const btn=document.getElementById("downloadBtn");
