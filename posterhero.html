@@ -9,8 +9,6 @@
 <link href="https://fonts.googleapis.com/css2?family=Anton&family=Montserrat:wght@400;600;700;800;900&family=Roboto+Condensed:wght@400;700&family=Roboto+Mono:wght@400;600;700&display=swap" rel="stylesheet">
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-
-<!-- CROPPER JS -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.2/cropper.min.css"/>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.2/cropper.min.js"></script>
 
@@ -46,7 +44,7 @@ body{
     font-family:'Anton',sans-serif;
     font-size:34px;
     text-align:center;
-    margin-bottom:22px;
+    margin-bottom:20px;
     color:#ffd400;
 }
 
@@ -60,18 +58,6 @@ input{
     background:rgba(255,255,255,0.04);
     color:#fff;
     padding:0 10px;
-}
-
-/* SALES */
-.sales-wrap{
-    display:flex;
-    align-items:center;
-    border-bottom:1px solid rgba(255,255,255,0.2);
-}
-
-.sales-wrap span{
-    padding:0 12px;
-    opacity:0.7;
 }
 
 /* BUTTON */
@@ -99,7 +85,7 @@ button{
     display:block;
 }
 
-/* ===== FOTO SYSTEM LAMA (TETAP) ===== */
+/* ===== FOTO ORANG (NO GRADIENT) ===== */
 .foto-wrap{
     position:absolute;
     left:50%;
@@ -115,17 +101,7 @@ button{
     height:100%;
 }
 
-/* gradient tetap */
-.foto-gradient{
-    position:absolute;
-    bottom:0;
-    width:100%;
-    height:60%;
-    background:linear-gradient(to top,rgba(0,0,0,0.85),transparent);
-    z-index:2;
-}
-
-/* ===== CROPPED UPLOAD (NEW LAYER) ===== */
+/* ===== UPLOAD FOTO (BESAR + TANPA OUTLINE) ===== */
 .upload-layer{
     position:absolute;
     bottom:110px;
@@ -135,11 +111,12 @@ button{
 }
 
 .upload-layer img{
-    width:120px;
-    height:120px;
+    width:180px;   /* 🔥 diperbesar */
+    height:180px;
     object-fit:cover;
     border-radius:12px;
-    border:2px solid #fff;
+    border:none;
+    background:transparent;
 }
 
 /* ===== TEXT ===== */
@@ -162,7 +139,7 @@ button{
     white-space:nowrap;
 }
 
-/* ===== MODAL CROPPER ===== */
+/* ===== CROPPER ===== */
 .modal{
     position:fixed;
     inset:0;
@@ -183,7 +160,6 @@ button{
 
 .modal-box img{
     width:100%;
-    max-height:400px;
 }
 
 .modal-actions{
@@ -210,12 +186,8 @@ button{
 
 <input id="namaInput" placeholder="Nama">
 
-<div class="sales-wrap">
-<span>Rp</span>
 <input id="salesInput" placeholder="Sales">
-</div>
 
-<!-- UPLOAD BARU -->
 <input type="file" id="uploadInput" accept="image/*">
 
 <button onclick="downloadPoster()">DOWNLOAD</button>
@@ -230,10 +202,9 @@ button{
 <!-- FOTO SISTEM LAMA -->
 <div class="foto-wrap">
     <img id="foto">
-    <div class="foto-gradient"></div>
 </div>
 
-<!-- FOTO UPLOAD (DEPAN) -->
+<!-- FOTO UPLOAD -->
 <div class="upload-layer">
     <img id="uploadPreview">
 </div>
@@ -249,7 +220,7 @@ button{
 
 </div>
 
-<!-- MODAL CROPPER -->
+<!-- CROPPER -->
 <div class="modal" id="modal">
     <div class="modal-box">
         <img id="cropImage">
@@ -262,7 +233,7 @@ button{
 
 <script>
 
-/* ===== FOTO SYSTEM LAMA (AMAN) ===== */
+/* ===== FOTO SYSTEM LAMA ===== */
 const people=[
 {keywords:["AFIF"],photo:"https://lh3.googleusercontent.com/d/12pjk_-ZJhbqbPZDzdH4sJSkE5qWwzrf7=w1000"},
 {keywords:["PUTRA"],photo:"https://lh3.googleusercontent.com/d/1Pxw-wIUKTcyA_inIcqpYY833f_3AtZe2=w1000"}
@@ -304,7 +275,6 @@ if(!file) return;
 
 let reader=new FileReader();
 reader.onload=(ev)=>{
-
 document.getElementById("modal").style.display="flex";
 document.getElementById("cropImage").src=ev.target.result;
 
@@ -314,9 +284,7 @@ aspectRatio:1,
 viewMode:1
 });
 },200);
-
 };
-
 reader.readAsDataURL(file);
 };
 
@@ -337,7 +305,7 @@ cropper.destroy();
 document.getElementById("modal").style.display="none";
 }
 
-/* ===== DOWNLOAD (CLONE STABLE) ===== */
+/* ===== DOWNLOAD ===== */
 async function downloadPoster(){
 
 let poster=document.getElementById("poster");
