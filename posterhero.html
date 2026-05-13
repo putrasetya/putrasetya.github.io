@@ -75,19 +75,6 @@ label{
     font-size:18px;
 }
 
-.btn{
-    width:100%;
-    height:60px;
-    border:none;
-    border-radius:18px;
-    margin-top:15px;
-    font-size:16px;
-    font-weight:800;
-    cursor:pointer;
-    background:#00c853;
-    color:#fff;
-}
-
 /* =========================
    POSTER
 ========================= */
@@ -105,70 +92,74 @@ label{
 }
 
 /* =========================
-   FOTO
+   FOTO WRAP + GRADIENT
 ========================= */
 
-.foto-orang{
+.foto-wrap{
     position:absolute;
     left:50%;
     bottom:120px;
     transform:translateX(-50%);
 
+    width:100%;
     height:70%;
-    width:auto;
-    max-width:120%;
 
+    z-index:15;
+}
+
+/* FOTO */
+.foto-orang{
+    width:100%;
+    height:100%;
     object-fit:cover;
     object-position:center bottom;
 
-    z-index:15;
-    pointer-events:none;
+    display:block;
 
     filter: drop-shadow(0 18px 28px rgba(0,0,0,.45));
 }
 
-/* GRADASI FOTO */
+/* GRADASI MENEMPEL FOTO */
 .foto-gradient{
     position:absolute;
     left:0;
     bottom:0;
     width:100%;
-    height:220px;
+    height:45%;
 
-    z-index:14;
     pointer-events:none;
 
     background: linear-gradient(
         to top,
-        rgba(0,0,0,0.80) 0%,
-        rgba(0,0,0,0.35) 35%,
-        rgba(0,0,0,0.12) 65%,
+        rgba(0,0,0,0.85) 0%,
+        rgba(0,0,0,0.45) 35%,
+        rgba(0,0,0,0.15) 65%,
         transparent 100%
     );
 }
 
 /* =========================
-   2 BARIS NAMA BESAR
+   2 BARIS NAMA (TIDY)
 ========================= */
 
 .nama-putih{
     position:absolute;
-    top:150px;
+    top:165px;
     left:50%;
-    transform:translateX(-50%) scaleY(1.15);
+    transform:translateX(-50%) scaleY(1.1);
 
-    width:95%;
+    width:92%;
     text-align:center;
 
     font-family:'Anton',sans-serif;
-    font-size:104px;
+    font-size:78px;
 
     font-weight:900;
     color:#fff;
 
     text-transform:uppercase;
-    line-height:0.85;
-    letter-spacing:4px;
+    line-height:0.9;
+    letter-spacing:3px;
 
     z-index:8;
 
@@ -178,24 +169,24 @@ label{
 
 .nama-outline{
     position:absolute;
-    top:245px;
+    top:275px;
     left:50%;
-    transform:translateX(-50%) scaleY(1.15);
+    transform:translateX(-50%) scaleY(1.1);
 
-    width:95%;
+    width:92%;
     text-align:center;
 
     font-family:'Anton',sans-serif;
-    font-size:92px;
+    font-size:70px;
 
     font-weight:900;
 
     color:transparent;
-    -webkit-text-stroke:3.5px #fff;
+    -webkit-text-stroke:2px #fff;
 
     text-transform:uppercase;
-    line-height:0.85;
-    letter-spacing:4px;
+    line-height:0.9;
+    letter-spacing:3px;
 
     z-index:7;
 
@@ -221,7 +212,7 @@ label{
 }
 
 /* =========================
-   SALES CLEAN + LABEL
+   SALES CLEAN
 ========================= */
 
 .sales-bawah{
@@ -261,21 +252,13 @@ label{
 
     <div class="form-group">
         <label>Nama</label>
-        <div class="input-box">
-            <input type="text" id="namaInput" placeholder="Masukkan nama">
-        </div>
+        <input type="text" id="namaInput" placeholder="Masukkan nama">
     </div>
 
     <div class="form-group">
         <label>Sales</label>
-        <div class="input-box">
-            <input type="text" id="salesInput" placeholder="Masukkan sales">
-        </div>
+        <input type="text" id="salesInput" placeholder="Masukkan sales">
     </div>
-
-    <button class="btn" onclick="downloadPoster()">
-        DOWNLOAD POSTER
-    </button>
 
 </div>
 
@@ -284,20 +267,22 @@ label{
 
     <img src="https://putrasetya.github.io/template_posterhero1.png" class="poster-template">
 
-    <img id="fotoOrang" class="foto-orang" src="">
-    <div class="foto-gradient"></div>
+    <!-- FOTO WRAP + GRADIENT -->
+    <div class="foto-wrap">
+        <img id="fotoOrang" class="foto-orang" src="">
+        <div class="foto-gradient"></div>
+    </div>
 
-    <!-- NAMA BESAR -->
+    <!-- NAMA -->
     <div class="nama-putih" id="namaPutih">NAMA</div>
     <div class="nama-outline" id="namaOutline">NAMA</div>
 
-    <!-- NAMA BAWAH -->
     <div class="nama-bawah" id="namaBawah"></div>
 
     <!-- SALES -->
     <div class="sales-bawah">
+        <span>sales</span>
         <span id="salesBawah">Rp0</span>
-        <span class="sales-label">sales</span>
     </div>
 
 </div>
@@ -306,7 +291,7 @@ label{
 
 <script>
 
-/* DATABASE FOTO */
+/* FOTO DATABASE */
 const people = [
 {
     keywords:["AFIF","AFI","APIP"],
@@ -328,14 +313,13 @@ function updatePhoto(nama){
     const foto = document.getElementById("fotoOrang");
     let found = false;
 
-    for(const person of people){
-        for(const key of person.keywords){
+    for(const p of people){
+        for(const k of p.keywords){
 
-            if(nama.includes(key)){
-
+            if(nama.includes(k)){
                 foto.src =
                 "https://lh3.googleusercontent.com/d/"
-                + person.photo
+                + p.photo
                 + "=w1000";
 
                 found = true;
@@ -348,84 +332,54 @@ function updatePhoto(nama){
     if(!found) foto.src = "";
 }
 
-/* FORMAT RUPIAH */
-document.getElementById("salesInput").addEventListener("input", function(){
-
-    let value = this.value.replace(/[^0-9]/g,"");
-
-    if(!value){
-        this.value="";
-        return;
-    }
-
-    this.value = new Intl.NumberFormat("id-ID").format(value);
-
-    animateSales(value);
-});
-
-/* ANIMASI SALES CLEAN */
-function animateSales(target){
+/* SALES */
+function animateSales(val){
 
     const el = document.getElementById("salesBawah");
 
-    let start = 0;
-    let end = parseInt(target) || 0;
-    let duration = 800;
-    let startTime = null;
+    let start=0;
+    let end=parseInt(val)||0;
+    let duration=800;
+    let t0=null;
 
     function step(t){
 
-        if(!startTime) startTime = t;
+        if(!t0) t0=t;
 
-        let progress = t - startTime;
-        let percent = Math.min(progress/duration,1);
+        let p=Math.min((t-t0)/duration,1);
+        let v=Math.floor(p*end);
 
-        let value = Math.floor(percent * end);
+        el.innerText="Rp "+new Intl.NumberFormat("id-ID").format(v);
 
-        el.innerText = "Rp " + new Intl.NumberFormat("id-ID").format(value);
-
-        if(percent < 1){
-            requestAnimationFrame(step);
-        }
+        if(p<1) requestAnimationFrame(step);
     }
 
     requestAnimationFrame(step);
 }
 
-/* AUTO UPDATE NAMA */
-document.getElementById("namaInput").addEventListener("input", function(){
+/* INPUT NAMA */
+document.getElementById("namaInput").addEventListener("input",function(){
 
-    let nama = this.value.trim().toUpperCase();
-
+    let nama=this.value.trim().toUpperCase();
     if(!nama) nama="NAMA";
 
     updatePhoto(nama);
 
-    document.getElementById("namaPutih").innerText = nama;
-    document.getElementById("namaOutline").innerText = nama;
-    document.getElementById("namaBawah").innerText = nama;
+    document.getElementById("namaPutih").innerText=nama;
+    document.getElementById("namaOutline").innerText=nama;
+    document.getElementById("namaBawah").innerText=nama;
 });
 
-/* DOWNLOAD */
-function downloadPoster(){
+/* INPUT SALES */
+document.getElementById("salesInput").addEventListener("input",function(){
 
-    const poster = document.getElementById("poster");
+    let val=this.value.replace(/[^0-9]/g,"");
+    if(!val) val="0";
 
-    html2canvas(poster,{
-        useCORS:true,
-        allowTaint:false,
-        scale:3,
-        backgroundColor:null,
-        imageTimeout:0
-    }).then(canvas=>{
+    this.value=new Intl.NumberFormat("id-ID").format(val);
 
-        const link=document.createElement("a");
-        link.download="poster.png";
-        link.href=canvas.toDataURL("image/png");
-        link.click();
-
-    });
-}
+    animateSales(val);
+});
 
 </script>
 
