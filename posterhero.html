@@ -12,8 +12,15 @@
 
 <style>
 
-/* ===== BASE ===== */
-*{margin:0;padding:0;box-sizing:border-box;}
+/* =========================
+   BASE
+========================= */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
 
 body{
     background:#000;
@@ -29,7 +36,7 @@ body{
     flex-wrap:wrap;
 }
 
-/* ===== PANEL ===== */
+/* PANEL */
 .panel{
     width:340px;
     background:rgba(255,255,255,0.03);
@@ -47,35 +54,57 @@ body{
 }
 
 /* INPUT */
-input{
+.form-group{margin-top:18px;}
+
+label{
+    display:block;
+    margin-bottom:8px;
+    font-size:12px;
+    opacity:0.6;
+}
+
+.input-box input{
     width:100%;
     height:52px;
     border:none;
     outline:none;
     background:rgba(255,255,255,0.04);
+    border-bottom:1px solid rgba(255,255,255,0.15);
     color:#fff;
     padding:0 10px;
     font-size:16px;
-    border-bottom:1px solid rgba(255,255,255,0.15);
 }
 
 /* SALES */
-.sales-wrap{
+.sales-input-wrap{
     display:flex;
     align-items:center;
-    border-bottom:1px solid rgba(255,255,255,0.2);
+    height:52px;
+    border-bottom:1px solid rgba(255,255,255,0.18);
+    background:transparent;
 }
 
-.sales-wrap span{
+.sales-input-wrap input{
+    width:100%;
+    border:none;
+    outline:none;
+    background:transparent;
+    color:#fff;
+    font-size:16px;
+    padding:0 10px;
+}
+
+.rp{
     padding:0 12px;
+    font-weight:800;
     opacity:0.7;
 }
 
 /* BUTTON */
-button{
+.download-btn{
     width:100%;
     height:52px;
-    margin-top:20px;
+    margin-top:24px;
     border:none;
     border-radius:12px;
     background:linear-gradient(135deg,#ff1a1a,#7a0000);
@@ -103,87 +132,137 @@ button{
     100%{transform:rotate(360deg);}
 }
 
-/* ===== POSTER ===== */
-.poster{
-    width:430px;
+/* =========================
+   POSTER
+========================= */
+
+.poster-wrapper{
     position:relative;
+    width:430px;
     overflow:hidden;
     border-radius:28px;
 }
 
-/* BACKGROUND */
-.poster img.bg{
+.poster-template{
     width:100%;
     display:block;
 }
 
-/* ===== FOTO ===== */
+/* =========================
+   FOTO (OBJECT GRADIENT FIX)
+========================= */
+
 .foto-wrap{
     position:absolute;
     left:50%;
     bottom:120px;
     transform:translateX(-50%);
+    width:100%;
     height:70%;
+    z-index:50;
+}
+
+.foto-inner{
+    position:relative;
+    width:100%;
+    height:100%;
     display:flex;
+    justify-content:center;
     align-items:flex-end;
 }
 
-/* FOTO */
-.foto-wrap img{
+/* FOTO UTAMA */
+.foto-orang{
     height:100%;
     width:auto;
     object-fit:cover;
-}
 
-/* 🔥 GRADIENT REAL (DOM SAFE, EXPORT STABLE) */
-.foto-fade{
-    position:absolute;
-    bottom:0;
-    left:0;
-    width:100%;
-    height:60%;
-    pointer-events:none;
-
-    background:linear-gradient(
+    /* 🔥 GRADASI IKUT BENTUK OBJEK */
+    -webkit-mask-image: linear-gradient(
         to top,
-        rgba(0,0,0,0.85),
-        rgba(0,0,0,0.35),
-        transparent
+        rgba(0,0,0,0) 0%,
+        rgba(0,0,0,0) 10%,
+        rgba(0,0,0,1) 35%,
+        rgba(0,0,0,1) 100%
     );
+
+    mask-image: linear-gradient(
+        to top,
+        rgba(0,0,0,0) 0%,
+        rgba(0,0,0,0) 10%,
+        rgba(0,0,0,1) 35%,
+        rgba(0,0,0,1) 100%
+    );
+
+    -webkit-mask-size: 100% 100%;
+    mask-size: 100% 100%;
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
 }
 
-/* ===== TEXT ===== */
-.nama1,.nama2,.nama3{
+/* =========================
+   NAMA
+========================= */
+
+.nama-putih{
     position:absolute;
-    width:100%;
-    text-align:center;
-}
-
-.nama1{
     top:150px;
-    font-family:'Anton';
+    left:50%;
+    transform:translateX(-50%);
+    width:92%;
+    text-align:center;
+    font-family:'Anton',sans-serif;
     font-size:76px;
+    color:#fff;
+    z-index:10;
 }
 
-.nama2{
+.nama-outline{
+    position:absolute;
     top:230px;
-    font-family:'Anton';
+    left:50%;
+    transform:translateX(-50%);
+    width:92%;
+    text-align:center;
+    font-family:'Anton',sans-serif;
     font-size:72px;
     color:transparent;
     -webkit-text-stroke:1.5px #fff;
+    z-index:9;
 }
 
-.nama3{
+.nama-bawah{
+    position:absolute;
     bottom:42px;
-    font-family:'Roboto Condensed';
+    left:50%;
+    transform:translateX(-50%);
+    width:90%;
+    text-align:center;
+    font-family:'Roboto Condensed',sans-serif;
+    font-size:22px;
 }
 
-.sales{
+/* SALES */
+.sales-bawah{
     position:absolute;
     bottom:14px;
-    width:100%;
-    text-align:center;
-    font-family:'Roboto Mono';
+    left:50%;
+    transform:translateX(-50%);
+    display:flex;
+    gap:8px;
+    align-items:center;
+}
+
+.sales-label{
+    font-size:12px;
+    font-style:italic;
+    opacity:0.75;
+}
+
+.sales-value{
+    font-family:'Roboto Mono',monospace;
+    font-size:20px;
+    font-weight:700;
     white-space:nowrap;
 }
 
@@ -197,39 +276,52 @@ button{
 <!-- PANEL -->
 <div class="panel">
 
-<div class="panel-title">MENYALA</div>
+    <div class="panel-title">MENYALA</div>
 
-<input id="namaInput" placeholder="Nama">
+    <div class="form-group">
+        <label>Nama</label>
+        <div class="input-box">
+            <input id="namaInput" type="text">
+        </div>
+    </div>
 
-<div class="sales-wrap">
-<span>Rp</span>
-<input id="salesInput">
-</div>
+    <div class="form-group">
+        <label>Sales</label>
+        <div class="sales-input-wrap">
+            <span class="rp">Rp</span>
+            <input id="salesInput" type="text">
+        </div>
+    </div>
 
-<button onclick="downloadPoster()">
-<div class="spinner" id="spinner"></div>
-DOWNLOAD
-</button>
+    <button class="download-btn" id="downloadBtn" onclick="downloadPoster()">
+        <div class="spinner" id="spinner"></div>
+        <span id="btnText">DOWNLOAD POSTER</span>
+    </button>
 
 </div>
 
 <!-- POSTER -->
-<div class="poster" id="poster">
+<div class="poster-wrapper" id="poster">
 
-<img class="bg" src="https://putrasetya.github.io/template_posterhero1.png">
+    <img class="poster-template" src="https://putrasetya.github.io/template_posterhero1.png">
 
-<!-- FOTO -->
-<div class="foto-wrap">
-    <img id="foto">
-    <div class="foto-fade"></div>
-</div>
+    <!-- FOTO -->
+    <div class="foto-wrap">
+        <div class="foto-inner">
+            <img id="fotoOrang" class="foto-orang" crossorigin="anonymous">
+        </div>
+    </div>
 
-<!-- TEXT -->
-<div class="nama1" id="n1">NAMA</div>
-<div class="nama2" id="n2">NAMA</div>
-<div class="nama3" id="n3">NAMA</div>
+    <!-- NAMA -->
+    <div class="nama-putih" id="namaPutih">NAMA</div>
+    <div class="nama-outline" id="namaOutline">NAMA</div>
+    <div class="nama-bawah" id="namaBawah">NAMA</div>
 
-<div class="sales" id="s">Rp 0</div>
+    <!-- SALES -->
+    <div class="sales-bawah">
+        <span class="sales-label">sales</span>
+        <span class="sales-value" id="salesBawah">Rp 0</span>
+    </div>
 
 </div>
 
@@ -237,72 +329,117 @@ DOWNLOAD
 
 <script>
 
-/* FOTO DATA */
-const people=[
-{keywords:["AFIF"],photo:"https://lh3.googleusercontent.com/d/12pjk_-ZJhbqbPZDzdH4sJSkE5qWwzrf7=w1000"},
-{keywords:["PUTRA"],photo:"https://lh3.googleusercontent.com/d/1Pxw-wIUKTcyA_inIcqpYY833f_3AtZe2=w1000"}
+/* =========================
+   FOTO SYSTEM
+========================= */
+
+const people = [
+    {
+        keywords:["AFIF","AFI","APIP"],
+        photo:"https://lh3.googleusercontent.com/d/12pjk_-ZJhbqbPZDzdH4sJSkE5qWwzrf7=w1000"
+    },
+    {
+        keywords:["PUTRA","PUT"],
+        photo:"https://lh3.googleusercontent.com/d/1Pxw-wIUKTcyA_inIcqpYY833f_3AtZe2=w1000"
+    }
 ];
 
-/* FOTO MATCH */
-function updatePhoto(n){
-let up=n.toUpperCase();
-let img=document.getElementById("foto");
-
-let found=null;
-
-people.forEach(p=>{
-if(p.keywords.some(k=>up.includes(k))) found=p.photo;
-});
-
-img.src=found||"";
+function preload(url){
+    return new Promise((resolve)=>{
+        const img=new Image();
+        img.crossOrigin="anonymous";
+        img.onload=()=>resolve(url);
+        img.onerror=()=>resolve(null);
+        img.src=url;
+    });
 }
 
-/* INPUT */
-document.getElementById("namaInput").oninput=(e)=>{
-let v=e.target.value||"NAMA";
-updatePhoto(v);
-n1.innerText=v;
-n2.innerText=v;
-n3.innerText=v;
-};
+async function updatePhoto(nama){
+    const img=document.getElementById("fotoOrang");
+    const input=nama.toUpperCase().trim();
 
-/* SALES */
-document.getElementById("salesInput").oninput=(e)=>{
-let v=e.target.value.replace(/[^0-9]/g,"")||"0";
-let f=new Intl.NumberFormat("id-ID").format(v);
-e.target.value=f;
-s.innerText="Rp "+f;
-};
+    let found=null;
 
-/* DOWNLOAD STABLE (CLONE RENDER) */
-async function downloadPoster(){
+    for(const p of people){
+        for(const k of p.keywords){
+            if(input.includes(k)){
+                found=p.photo;
+                break;
+            }
+        }
+        if(found) break;
+    }
 
-spinner.style.display="inline-block";
+    if(found){
+        img.src=await preload(found)||"";
+    }else{
+        img.src="";
+    }
+}
 
-let poster=document.getElementById("poster");
-let clone=poster.cloneNode(true);
+/* =========================
+   INPUT
+========================= */
 
-clone.style.position="absolute";
-clone.style.left="-9999px";
-document.body.appendChild(clone);
+document.getElementById("namaInput").addEventListener("input",e=>{
+    let n=e.target.value.toUpperCase()||"NAMA";
 
-let canvas=await html2canvas(clone,{
-scale:3,
-useCORS:true,
-backgroundColor:null
+    updatePhoto(n);
+
+    document.getElementById("namaPutih").innerText=n;
+    document.getElementById("namaOutline").innerText=n;
+    document.getElementById("namaBawah").innerText=n;
 });
 
-document.body.removeChild(clone);
+/* SALES */
+document.getElementById("salesInput").addEventListener("input",e=>{
+    let v=e.target.value.replace(/[^0-9]/g,"")||"0";
+    let f=new Intl.NumberFormat("id-ID").format(v);
 
-let a=document.createElement("a");
-a.download="poster.png";
-a.href=canvas.toDataURL("image/png");
-a.click();
+    e.target.value=f;
+    document.getElementById("salesBawah").innerText="Rp "+f;
+});
 
-spinner.style.display="none";
+/* =========================
+   DOWNLOAD + LOADING
+========================= */
+
+async function downloadPoster(){
+
+    const btn=document.getElementById("downloadBtn");
+    const spinner=document.getElementById("spinner");
+    const text=document.getElementById("btnText");
+
+    btn.disabled=true;
+    spinner.style.display="inline-block";
+    text.innerText="DOWNLOADING...";
+
+    await new Promise(r=>setTimeout(r,300));
+
+    const canvas=await html2canvas(document.getElementById("poster"),{
+        scale:3,
+        useCORS:true,
+        allowTaint:false,
+        backgroundColor:null
+    });
+
+    const nama=document.getElementById("namaInput").value.toUpperCase()||"NAMA";
+    const sales=document.getElementById("salesInput").value.replace(/[^0-9]/g,"")||"0";
+
+    const link=document.createElement("a");
+    link.download=`${nama}_${sales}.png`;
+    link.href=canvas.toDataURL("image/png");
+    link.click();
+
+    setTimeout(()=>{
+        btn.disabled=false;
+        spinner.style.display="none";
+        text.innerText="DOWNLOAD POSTER";
+    },800);
 }
 
 </script>
 
 </body>
 </html>
+
