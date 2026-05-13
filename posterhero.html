@@ -153,7 +153,7 @@ body{
 }
 
 /* =========================
-   BARIS 1 PUTIH
+   NAMA BARIS 1
 ========================= */
 
 .nama-putih{
@@ -188,7 +188,7 @@ body{
 }
 
 /* =========================
-   BARIS 2 MERAH + OUTLINE
+   NAMA BARIS 2
 ========================= */
 
 .nama-outline{
@@ -208,7 +208,8 @@ body{
 
     font-weight:900;
 
-    color:#d50017;
+    /* HANYA OUTLINE */
+    color:transparent;
 
     -webkit-text-stroke:3px #fff;
 
@@ -223,6 +224,10 @@ body{
     white-space:nowrap;
 
     overflow:hidden;
+
+    paint-order:stroke fill;
+
+    text-shadow:none;
 }
 
 /* =========================
