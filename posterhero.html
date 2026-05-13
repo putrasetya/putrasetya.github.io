@@ -4,13 +4,17 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Poster Generator</title>
+<title>Generator Poster</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Anton&family=Montserrat:wght@400;600;700;800;900&family=Roboto+Condensed:wght@400;700&family=Roboto+Mono:wght@400;600;700&display=swap" rel="stylesheet">
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 
 <style>
+
+/* =========================
+   BASE
+========================= */
 
 *{
     margin:0;
@@ -29,6 +33,7 @@ body{
     display:flex;
     justify-content:center;
     gap:35px;
+    flex-wrap:wrap;
 }
 
 /* PANEL */
@@ -44,20 +49,27 @@ body{
     font-family:'Anton',sans-serif;
     font-size:34px;
     text-align:center;
+    margin-bottom:22px;
     color:#ffd400;
-    margin-bottom:20px;
 }
 
 /* INPUT */
 .form-group{margin-top:18px;}
 
-.input-box input,
-.sales-input-wrap input{
+label{
+    display:block;
+    margin-bottom:8px;
+    font-size:12px;
+    opacity:0.6;
+}
+
+.input-box input{
     width:100%;
     height:52px;
     border:none;
     outline:none;
     background:rgba(255,255,255,0.04);
+    border-bottom:1px solid rgba(255,255,255,0.15);
     color:#fff;
     padding:0 10px;
     font-size:16px;
@@ -67,11 +79,24 @@ body{
 .sales-input-wrap{
     display:flex;
     align-items:center;
-    border-bottom:1px solid rgba(255,255,255,0.2);
+    height:52px;
+    border-bottom:1px solid rgba(255,255,255,0.18);
+    background:transparent;
+}
+
+.sales-input-wrap input{
+    width:100%;
+    border:none;
+    outline:none;
+    background:transparent;
+    color:#fff;
+    font-size:16px;
+    padding:0 10px;
 }
 
 .rp{
     padding:0 12px;
+    font-weight:800;
     opacity:0.7;
 }
 
@@ -79,16 +104,38 @@ body{
 .download-btn{
     width:100%;
     height:52px;
-    margin-top:20px;
+    margin-top:24px;
     border:none;
     border-radius:12px;
     background:linear-gradient(135deg,#ff1a1a,#7a0000);
     color:#fff;
     font-weight:800;
     cursor:pointer;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:10px;
 }
 
-/* POSTER */
+.spinner{
+    width:16px;
+    height:16px;
+    border:2px solid rgba(255,255,255,0.3);
+    border-top:2px solid #fff;
+    border-radius:50%;
+    display:none;
+    animation:spin 1s linear infinite;
+}
+
+@keyframes spin{
+    100%{transform:rotate(360deg);}
+}
+
+/* =========================
+   POSTER
+========================= */
+
 .poster-wrapper{
     position:relative;
     width:430px;
@@ -102,7 +149,7 @@ body{
 }
 
 /* =========================
-   FOTO - FIX REAL GRADIENT (NO BOX EFFECT)
+   FOTO (OBJECT GRADIENT FIX)
 ========================= */
 
 .foto-wrap{
@@ -129,39 +176,45 @@ body{
     height:100%;
     width:auto;
     object-fit:cover;
-    display:block;
-}
 
-/* 🔥 GRADIENT SHADOW LAYER (FOLLOW SHAPE VISUALLY) */
-.foto-fade{
-    position:absolute;
-    bottom:0;
-    left:50%;
-    transform:translateX(-50%);
-    width:100%;
-    height:60%;
-
-    /* ini dibuat soft agar tidak terlihat kotak */
-    background:radial-gradient(
-        ellipse at bottom,
-        rgba(0,0,0,0.75) 0%,
-        rgba(0,0,0,0.35) 45%,
-        rgba(0,0,0,0) 100%
+    /* 🔥 GRADASI IKUT BENTUK OBJEK */
+    -webkit-mask-image: linear-gradient(
+        to top,
+        rgba(0,0,0,0) 0%,
+        rgba(0,0,0,0) 10%,
+        rgba(0,0,0,1) 35%,
+        rgba(0,0,0,1) 100%
     );
 
-    pointer-events:none;
+    mask-image: linear-gradient(
+        to top,
+        rgba(0,0,0,0) 0%,
+        rgba(0,0,0,0) 10%,
+        rgba(0,0,0,1) 35%,
+        rgba(0,0,0,1) 100%
+    );
+
+    -webkit-mask-size: 100% 100%;
+    mask-size: 100% 100%;
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
 }
 
-/* NAMA */
+/* =========================
+   NAMA
+========================= */
+
 .nama-putih{
     position:absolute;
     top:150px;
     left:50%;
     transform:translateX(-50%);
+    width:92%;
     text-align:center;
-    font-family:'Anton';
-    font-size:72px;
-    width:90%;
+    font-family:'Anton',sans-serif;
+    font-size:76px;
+    color:#fff;
+    z-index:10;
 }
 
 .nama-outline{
@@ -169,20 +222,24 @@ body{
     top:230px;
     left:50%;
     transform:translateX(-50%);
+    width:92%;
     text-align:center;
-    font-family:'Anton';
-    font-size:68px;
-    -webkit-text-stroke:1.5px #fff;
+    font-family:'Anton',sans-serif;
+    font-size:72px;
     color:transparent;
-    width:90%;
+    -webkit-text-stroke:1.5px #fff;
+    z-index:9;
 }
 
 .nama-bawah{
     position:absolute;
-    bottom:40px;
+    bottom:42px;
     left:50%;
     transform:translateX(-50%);
-    font-family:'Roboto Condensed';
+    width:90%;
+    text-align:center;
+    font-family:'Roboto Condensed',sans-serif;
+    font-size:22px;
 }
 
 /* SALES */
@@ -193,27 +250,20 @@ body{
     transform:translateX(-50%);
     display:flex;
     gap:8px;
+    align-items:center;
+}
+
+.sales-label{
+    font-size:12px;
+    font-style:italic;
+    opacity:0.75;
 }
 
 .sales-value{
-    font-family:'Roboto Mono';
+    font-family:'Roboto Mono',monospace;
+    font-size:20px;
     font-weight:700;
     white-space:nowrap;
-}
-
-/* LOADING */
-.spinner{
-    width:16px;
-    height:16px;
-    border:2px solid rgba(255,255,255,0.3);
-    border-top:2px solid #fff;
-    border-radius:50%;
-    display:none;
-    animation:spin 1s linear infinite;
-}
-
-@keyframes spin{
-    100%{transform:rotate(360deg);}
 }
 
 </style>
@@ -223,38 +273,55 @@ body{
 
 <div class="container">
 
+<!-- PANEL -->
 <div class="panel">
 
     <div class="panel-title">MENYALA</div>
 
-    <input id="namaInput" placeholder="Nama">
-
-    <div class="sales-input-wrap">
-        <span class="rp">Rp</span>
-        <input id="salesInput">
+    <div class="form-group">
+        <label>Nama</label>
+        <div class="input-box">
+            <input id="namaInput" type="text">
+        </div>
     </div>
 
-    <button class="download-btn" onclick="downloadPoster()">
+    <div class="form-group">
+        <label>Sales</label>
+        <div class="sales-input-wrap">
+            <span class="rp">Rp</span>
+            <input id="salesInput" type="text">
+        </div>
+    </div>
+
+    <button class="download-btn" id="downloadBtn" onclick="downloadPoster()">
         <div class="spinner" id="spinner"></div>
-        DOWNLOAD
+        <span id="btnText">DOWNLOAD POSTER</span>
     </button>
 
 </div>
 
+<!-- POSTER -->
 <div class="poster-wrapper" id="poster">
 
     <img class="poster-template" src="https://putrasetya.github.io/template_posterhero1.png">
 
+    <!-- FOTO -->
     <div class="foto-wrap">
         <div class="foto-inner">
-            <img id="fotoOrang" class="foto-orang">
-            <div class="foto-fade"></div>
+            <img id="fotoOrang" class="foto-orang" crossorigin="anonymous">
         </div>
     </div>
 
+    <!-- NAMA -->
     <div class="nama-putih" id="namaPutih">NAMA</div>
     <div class="nama-outline" id="namaOutline">NAMA</div>
     <div class="nama-bawah" id="namaBawah">NAMA</div>
+
+    <!-- SALES -->
+    <div class="sales-bawah">
+        <span class="sales-label">sales</span>
+        <span class="sales-value" id="salesBawah">Rp 0</span>
+    </div>
 
 </div>
 
@@ -262,56 +329,113 @@ body{
 
 <script>
 
-/* FOTO SYSTEM */
-const people=[
- {keywords:["AFIF"],photo:"https://lh3.googleusercontent.com/d/12pjk_-ZJhbqbPZDzdH4sJSkE5qWwzrf7=w1000"},
- {keywords:["PUTRA"],photo:"https://lh3.googleusercontent.com/d/1Pxw-wIUKTcyA_inIcqpYY833f_3AtZe2=w1000"}
+/* =========================
+   FOTO SYSTEM
+========================= */
+
+const people = [
+    {
+        keywords:["AFIF","AFI","APIP"],
+        photo:"https://lh3.googleusercontent.com/d/12pjk_-ZJhbqbPZDzdH4sJSkE5qWwzrf7=w1000"
+    },
+    {
+        keywords:["PUTRA","PUT"],
+        photo:"https://lh3.googleusercontent.com/d/1Pxw-wIUKTcyA_inIcqpYY833f_3AtZe2=w1000"
+    }
 ];
 
-function updatePhoto(nama){
- const img=document.getElementById("fotoOrang");
- const n=nama.toUpperCase();
-
- let found=null;
-
- for(const p of people){
-  for(const k of p.keywords){
-   if(n.includes(k)){
-    found=p.photo;
-    break;
-   }
-  }
- }
-
- img.src=found||"";
+function preload(url){
+    return new Promise((resolve)=>{
+        const img=new Image();
+        img.crossOrigin="anonymous";
+        img.onload=()=>resolve(url);
+        img.onerror=()=>resolve(null);
+        img.src=url;
+    });
 }
 
-/* INPUT */
+async function updatePhoto(nama){
+    const img=document.getElementById("fotoOrang");
+    const input=nama.toUpperCase().trim();
+
+    let found=null;
+
+    for(const p of people){
+        for(const k of p.keywords){
+            if(input.includes(k)){
+                found=p.photo;
+                break;
+            }
+        }
+        if(found) break;
+    }
+
+    if(found){
+        img.src=await preload(found)||"";
+    }else{
+        img.src="";
+    }
+}
+
+/* =========================
+   INPUT
+========================= */
+
 document.getElementById("namaInput").addEventListener("input",e=>{
- let n=e.target.value||"NAMA";
- updatePhoto(n);
- document.getElementById("namaPutih").innerText=n;
- document.getElementById("namaOutline").innerText=n;
- document.getElementById("namaBawah").innerText=n;
+    let n=e.target.value.toUpperCase()||"NAMA";
+
+    updatePhoto(n);
+
+    document.getElementById("namaPutih").innerText=n;
+    document.getElementById("namaOutline").innerText=n;
+    document.getElementById("namaBawah").innerText=n;
 });
 
-/* DOWNLOAD */
+/* SALES */
+document.getElementById("salesInput").addEventListener("input",e=>{
+    let v=e.target.value.replace(/[^0-9]/g,"")||"0";
+    let f=new Intl.NumberFormat("id-ID").format(v);
+
+    e.target.value=f;
+    document.getElementById("salesBawah").innerText="Rp "+f;
+});
+
+/* =========================
+   DOWNLOAD + LOADING
+========================= */
+
 async function downloadPoster(){
 
- document.getElementById("spinner").style.display="inline-block";
+    const btn=document.getElementById("downloadBtn");
+    const spinner=document.getElementById("spinner");
+    const text=document.getElementById("btnText");
 
- const canvas=await html2canvas(document.getElementById("poster"),{
-  scale:3,
-  useCORS:true,
-  backgroundColor:null
- });
+    btn.disabled=true;
+    spinner.style.display="inline-block";
+    text.innerText="DOWNLOADING...";
 
- const a=document.createElement("a");
- a.download="poster.png";
- a.href=canvas.toDataURL();
- a.click();
+    await new Promise(r=>setTimeout(r,300));
 
- document.getElementById("spinner").style.display="none";
+    const canvas=await html2canvas(document.getElementById("poster"),{
+        scale:3,
+        useCORS:true,
+        allowTaint:false,
+        backgroundColor:null
+    });
+
+    const nama=document.getElementById("namaInput").value.toUpperCase()||"NAMA";
+    const sales=document.getElementById("salesInput").value.replace(/[^0-9]/g,"")||"0";
+
+    const link=document.createElement("a");
+    link.download=`${nama}_${sales}.png`;
+    link.href=canvas.toDataURL("image/png");
+    link.click();
+
+    setTimeout(()=>{
+        btn.disabled=false;
+        spinner.style.display="none";
+        text.innerText="DOWNLOAD POSTER";
+    },800);
 }
 
 </script>
