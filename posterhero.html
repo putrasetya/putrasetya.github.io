@@ -8,7 +8,14 @@
 
 <link href="https://fonts.googleapis.com/css2?family=Anton&family=Montserrat:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 
+<!-- LIBRARY DOWNLOAD -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
 <style>
+
+/* =========================
+   BASE
+========================= */
 
 *{
     margin:0;
@@ -42,14 +49,11 @@ body{
     border:1px solid #ff1a1a;
     border-radius:28px;
     padding:28px;
-    box-shadow:
-    0 0 25px rgba(255,0,0,.18),
-    inset 0 0 30px rgba(255,255,255,.02);
+    box-shadow:0 0 25px rgba(255,0,0,.18);
 }
 
 .logo-title h1{
     font-size:34px;
-    line-height:1;
     font-weight:900;
 }
 
@@ -57,7 +61,6 @@ body{
     color:#ff1d25;
     display:block;
     font-size:62px;
-    margin-top:4px;
 }
 
 .line{
@@ -67,10 +70,7 @@ body{
     margin:22px 0;
 }
 
-/* =========================
-   INPUT
-========================= */
-
+/* INPUT */
 .form-group{
     margin-top:20px;
 }
@@ -88,7 +88,6 @@ body{
     border-radius:18px;
     border:1px solid #444;
     background:#121212;
-    overflow:hidden;
     display:flex;
     align-items:center;
 }
@@ -102,27 +101,9 @@ body{
     color:#fff;
     padding:0 20px;
     font-size:18px;
-    font-family:'Montserrat',sans-serif;
 }
 
-.input-box:focus-within{
-    border:1px solid #ff1a1a;
-}
-
-.rp{
-    width:75px;
-    height:100%;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    border-right:1px solid #333;
-    font-size:22px;
-}
-
-/* =========================
-   BUTTON
-========================= */
-
+/* BUTTON */
 .btn{
     width:100%;
     height:64px;
@@ -136,6 +117,11 @@ body{
     color:#fff;
 }
 
+/* DOWNLOAD BUTTON */
+.download-btn{
+    background:#00c853;
+}
+
 /* =========================
    POSTER
 ========================= */
@@ -147,247 +133,80 @@ body{
     border-radius:28px;
 }
 
-/* TEMPLATE */
-
 .poster-template{
     width:100%;
     display:block;
 }
 
-/* =========================
-   FOTO
-========================= */
-
+/* FOTO */
 .foto-orang{
-
     position:absolute;
-
     left:50%;
-
     bottom:120px;
-
     transform:translateX(-50%);
-
     width:112%;
-
     height:80%;
-
     object-fit:contain;
-
     object-position:center bottom;
-
     z-index:15;
-
     pointer-events:none;
-
-    filter:
-    drop-shadow(0 18px 28px rgba(0,0,0,.45));
-
+    filter:drop-shadow(0 18px 28px rgba(0,0,0,.45));
 }
 
-/* =========================
-   GRADASI
-========================= */
-
+/* GRADASI */
 .fade-bawah{
-
     position:absolute;
-
     left:0;
-
     bottom:0;
-
     width:100%;
-
     height:190px;
-
+    background:linear-gradient(to top, rgba(0,0,0,.55), transparent);
     z-index:16;
-
-    pointer-events:none;
-
-    background:
-    linear-gradient(
-        to top,
-        rgba(0,0,0,.55) 0%,
-        rgba(0,0,0,.32) 30%,
-        rgba(0,0,0,.12) 58%,
-        transparent 100%
-    );
-
 }
 
-/* =========================
-   BARIS 1
-========================= */
-
-.nama-putih{
-
+/* NAMA */
+.nama-putih,.nama-outline{
     position:absolute;
-
-    top:165px;
-
     left:50%;
-
-    transform:
-    translateX(-50%)
-    scaleY(1.08);
-
+    transform:translateX(-50%);
     width:84%;
-
     text-align:center;
-
     font-family:'Anton',sans-serif;
-
-    color:#fff;
-
     text-transform:uppercase;
-
-    line-height:1;
-
-    letter-spacing:2px;
-
-    z-index:10;
-
     white-space:nowrap;
-
     overflow:hidden;
-
 }
 
-/* =========================
-   BARIS 2
-========================= */
-
-.nama-outline{
-
-    position:absolute;
-
-    top:288px;
-
-    left:50%;
-
-    transform:
-    translateX(-50%)
-    scaleY(1.08);
-
-    width:84%;
-
-    text-align:center;
-
-    font-family:'Anton',sans-serif;
-
-    color:transparent;
-
-    -webkit-text-stroke:2.5px #fff;
-
-    text-transform:uppercase;
-
-    line-height:1;
-
-    letter-spacing:2px;
-
-    z-index:9;
-
-    white-space:nowrap;
-
-    overflow:hidden;
-
-}
-
-/* =========================
-   NAMA BAWAH
-========================= */
+.nama-putih{top:165px;color:#fff;z-index:10;}
+.nama-outline{top:288px;color:transparent;-webkit-text-stroke:2.5px #fff;z-index:9;}
 
 .nama-bawah{
-
     position:absolute;
-
     bottom:40px;
-
     left:50%;
-
     transform:translateX(-50%);
-
     width:90%;
-
     text-align:center;
-
     font-size:32px;
-
     font-weight:900;
-
-    color:#fff;
-
     text-transform:uppercase;
-
-    white-space:nowrap;
-
-    overflow:hidden;
-
     z-index:20;
-
 }
-
-/* =========================
-   SALES
-========================= */
 
 .sales-bawah{
-
     position:absolute;
-
     bottom:14px;
-
     left:50%;
-
     transform:translateX(-50%);
-
     width:100%;
-
     text-align:center;
-
-    color:#fff;
-
     z-index:20;
-
 }
 
-.sales-bawah i{
-    font-size:13px;
-    font-style:italic;
-    margin-right:5px;
-}
-
-.sales-bawah span{
-    font-size:15px;
-    font-weight:700;
-}
-
-/* =========================
-   MOBILE
-========================= */
-
+/* MOBILE */
 @media(max-width:900px){
-
-    body{
-        padding:15px;
-    }
-
-    .container{
-        flex-direction:column;
-        align-items:center;
-    }
-
-    .panel{
-        width:100%;
-        max-width:430px;
-    }
-
-    .poster-wrapper{
-        width:100%;
-        max-width:430px;
-    }
-
+    .container{flex-direction:column;align-items:center;}
+    .panel,.poster-wrapper{width:100%;max-width:430px;}
 }
 
 </style>
@@ -397,398 +216,156 @@ body{
 
 <div class="container">
 
-    <!-- PANEL -->
+<!-- PANEL -->
+<div class="panel">
 
-    <div class="panel">
-
-        <div class="logo-title">
-
-            <h1>
-                GENERATOR
-                <span>POSTER</span>
-            </h1>
-
-            <div class="line"></div>
-
-        </div>
-
-        <!-- INPUT NAMA -->
-
-        <div class="form-group">
-
-            <label>Nama</label>
-
-            <div class="input-box">
-
-                <input
-                type="text"
-                id="namaInput"
-                placeholder="Masukkan nama">
-
-            </div>
-
-        </div>
-
-        <!-- INPUT SALES -->
-
-        <div class="form-group">
-
-            <label>Jumlah Sales</label>
-
-            <div class="input-box">
-
-                <div class="rp">
-                    Rp
-                </div>
-
-                <input
-                type="text"
-                id="salesInput"
-                placeholder="Masukkan sales">
-
-            </div>
-
-        </div>
-
-        <button
-        class="btn"
-        onclick="generatePoster()">
-
-            GENERATE POSTER
-
-        </button>
-
+    <div class="logo-title">
+        <h1>GENERATOR <span>POSTER</span></h1>
+        <div class="line"></div>
     </div>
 
-    <!-- POSTER -->
-
-    <div class="poster-wrapper">
-
-        <!-- TEMPLATE -->
-        <img
-        src="https://putrasetya.github.io/template_posterhero1.png"
-        class="poster-template">
-
-        <!-- FOTO -->
-        <img
-        id="fotoOrang"
-        class="foto-orang"
-        src="">
-
-        <!-- GRADASI -->
-        <div class="fade-bawah"></div>
-
-        <!-- NAMA PUTIH -->
-        <div
-        class="nama-putih"
-        id="namaPutih">
-
-            NAMA
-
+    <div class="form-group">
+        <label>Nama</label>
+        <div class="input-box">
+            <input type="text" id="namaInput" placeholder="Masukkan nama">
         </div>
-
-        <!-- NAMA OUTLINE -->
-        <div
-        class="nama-outline"
-        id="namaOutline">
-
-            NAMA
-
-        </div>
-
-        <!-- NAMA BAWAH -->
-        <div
-        class="nama-bawah"
-        id="namaBawah">
-
-        </div>
-
-        <!-- SALES -->
-        <div class="sales-bawah">
-
-            <i>sales</i>
-
-            <span id="salesBawah">
-                Rp0
-            </span>
-
-        </div>
-
     </div>
+
+    <div class="form-group">
+        <label>Jumlah Sales</label>
+        <div class="input-box">
+            <input type="text" id="salesInput" placeholder="Masukkan sales">
+        </div>
+    </div>
+
+    <button class="btn" onclick="generatePoster()">
+        GENERATE POSTER
+    </button>
+
+    <!-- DOWNLOAD -->
+    <button class="btn download-btn" onclick="downloadPoster()">
+        DOWNLOAD POSTER
+    </button>
+
+</div>
+
+<!-- POSTER -->
+<div class="poster-wrapper">
+
+    <img src="https://putrasetya.github.io/template_posterhero1.png" class="poster-template">
+
+    <img id="fotoOrang" class="foto-orang">
+
+    <div class="fade-bawah"></div>
+
+    <div class="nama-putih" id="namaPutih">NAMA</div>
+    <div class="nama-outline" id="namaOutline">NAMA</div>
+
+    <div class="nama-bawah" id="namaBawah"></div>
+
+    <div class="sales-bawah">
+        <span id="salesBawah">Rp0</span>
+    </div>
+
+</div>
 
 </div>
 
 <script>
 
-/* ====================================
-   DATABASE FOTO
-==================================== */
+/* =========================
+   DOWNLOAD POSTER
+========================= */
+function downloadPoster(){
 
-const people = [
+    const poster = document.querySelector(".poster-wrapper");
 
-{
-    keywords:[
-        "AFIF",
-        "AFI",
-        "APIP",
-        "AVIF"
-    ],
+    html2canvas(poster, {
+        useCORS: true,
+        scale: 3
+    }).then(canvas => {
 
-    photo:
-    "12pjk_-ZJhbqbPZDzdH4sJSkE5qWwzrf7"
-},
+        const link = document.createElement("a");
 
-{
-    keywords:[
-        "PUTRA",
-        "PUT",
-        "TRA"
-    ],
+        let nama = document.getElementById("namaInput").value.trim();
+        if(!nama) nama = "poster";
 
-    photo:
-    "1Pxw-wIUKTcyA_inIcqpYY833f_3AtZe2"
-},
+        link.download = nama + "-poster.png";
+        link.href = canvas.toDataURL("image/png");
 
-{
-    keywords:[
-        "BUDI",
-        "BUD"
-    ],
+        link.click();
 
-    photo:
-    "1s3OEJyXr-_i5p8D0hKw-aCCbcgLQwWxi"
+    });
+
 }
 
+/* =========================
+   DATABASE FOTO
+========================= */
+const people = [
+{
+    keywords:["AFIF","AFI","APIP","AVIF"],
+    photo:"12pjk_-ZJhbqbPZDzdH4sJSkE5qWwzrf7"
+},
+{
+    keywords:["PUTRA","PUT","TRA"],
+    photo:"1Pxw-wIUKTcyA_inIcqpYY833f_3AtZe2"
+},
+{
+    keywords:["BUDI","BUD"],
+    photo:"1s3OEJyXr-_i5p8D0hKw-aCCbcgLQwWxi"
+}
 ];
 
-/* ====================================
-   FORMAT RUPIAH
-==================================== */
-
-const salesInput =
-document.getElementById("salesInput");
-
-salesInput.addEventListener("input", function(){
-
-    let angka =
-    this.value.replace(/[^,\d]/g,'');
-
-    let split =
-    angka.split(',');
-
-    let sisa =
-    split[0].length % 3;
-
-    let rupiah =
-    split[0].substr(0, sisa);
-
-    let ribuan =
-    split[0]
-    .substr(sisa)
-    .match(/\d{3}/gi);
-
-    if(ribuan){
-
-        let separator =
-        sisa ? '.' : '';
-
-        rupiah +=
-        separator +
-        ribuan.join('.');
-
-    }
-
-    this.value = rupiah;
-
-});
-
-/* ====================================
-   AUTO FIT TEXT
-==================================== */
-
-function fitText(element, text, maxSize){
-
-    element.innerText = text;
-
-    let size = maxSize;
-
-    element.style.fontSize =
-    size + "px";
-
-    while(
-        element.scrollWidth >
-        element.clientWidth
-    ){
-
-        size--;
-
-        element.style.fontSize =
-        size + "px";
-
-        if(size <= 18){
-            break;
-        }
-
-    }
-
-}
-
-/* ====================================
-   SPLIT NAMA
-==================================== */
-
-function splitName(nama){
-
-    let words =
-    nama.split(" ");
-
-    if(words.length <= 1){
-
-        return [nama, nama];
-
-    }
-
-    let tengah =
-    Math.ceil(words.length / 2);
-
-    let baris1 =
-    words.slice(0, tengah).join(" ");
-
-    let baris2 =
-    words.slice(tengah).join(" ");
-
-    return [baris1, baris2];
-
-}
-
-/* ====================================
-   AUTO FOTO
-==================================== */
-
+/* =========================
+   FOTO AUTO
+========================= */
 function updatePhoto(nama){
 
-    const foto =
-    document.getElementById("fotoOrang");
-
+    const foto = document.getElementById("fotoOrang");
     let found = false;
 
     for(const person of people){
-
         for(const key of person.keywords){
 
-            if(
-                nama.includes(key) ||
-                key.includes(nama)
-            ){
-
-                foto.src =
-                "https://drive.google.com/thumbnail?id="
-                + person.photo +
-                "&sz=w2000";
-
+            if(nama.includes(key)){
+                foto.src = "https://drive.google.com/thumbnail?id=" + person.photo + "&sz=w2000";
                 found = true;
-
                 break;
-
             }
-
         }
-
         if(found) break;
-
     }
 
     if(!found){
-
-        foto.src = "";
-
+        foto.src = "https://via.placeholder.com/400x600?text=NO+IMAGE";
     }
-
 }
 
-/* ====================================
-   GENERATE POSTER
-==================================== */
-
+/* =========================
+   GENERATE
+========================= */
 function generatePoster(){
 
-    let nama =
-    document.getElementById("namaInput")
-    .value
-    .trim();
+    let nama = document.getElementById("namaInput").value.trim().toUpperCase();
+    let sales = document.getElementById("salesInput").value.trim();
 
-    let sales =
-    document.getElementById("salesInput")
-    .value
-    .trim();
+    if(!nama) nama = "NAMA";
+    if(!sales) sales = "0";
 
-    if(nama == ""){
-
-        nama = "NAMA";
-
-    }
-
-    if(sales == ""){
-
-        sales = "0";
-
-    }
-
-    nama = nama.toUpperCase();
-
-    // FOTO
     updatePhoto(nama);
 
-    // SPLIT NAMA
-    let hasil =
-    splitName(nama);
-
-    let nama1 =
-    hasil[0];
-
-    let nama2 =
-    hasil[1];
-
-    // ELEMENT
-    const putih =
-    document.getElementById("namaPutih");
-
-    const outline =
-    document.getElementById("namaOutline");
-
-    const bawah =
-    document.getElementById("namaBawah");
-
-    // AUTO FIT
-    fitText(putih, nama1, 110);
-
-    fitText(outline, nama2, 100);
-
-    fitText(bawah, nama, 32);
-
-    // SALES
-    document.getElementById("salesBawah")
-    .innerText = "Rp" + sales;
-
+    document.getElementById("namaPutih").innerText = nama;
+    document.getElementById("namaOutline").innerText = nama;
+    document.getElementById("namaBawah").innerText = nama;
+    document.getElementById("salesBawah").innerText = "Rp" + sales;
 }
 
-/* ====================================
+/* =========================
    AUTO UPDATE
-==================================== */
-
-document
-.getElementById("namaInput")
-.addEventListener(
-    "input",
-    generatePoster
-);
-
-document
-.getElementById("salesInput")
-.addEventListener(
-    "input",
-    generatePoster
-);
+========================= */
+document.getElementById("namaInput").addEventListener("input", generatePoster);
+document.getElementById("salesInput").addEventListener("input", generatePoster);
 
 </script>
 
