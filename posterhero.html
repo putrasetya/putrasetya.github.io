@@ -6,7 +6,7 @@
 
 <title>Generator Poster</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Anton&family=Montserrat:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Montserrat:wght@300;400;500;600;700;800;900&family=Oswald:wght@400;500;600;700&display=swap" rel="stylesheet">
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 
@@ -34,7 +34,7 @@ body{
 }
 
 /* =========================
-   PANEL UI UPGRADE
+   PANEL UI
 ========================= */
 
 .panel{
@@ -43,12 +43,10 @@ body{
     border:1px solid #ff1a1a;
     border-radius:28px;
     padding:28px;
-    box-shadow:0 0 25px rgba(255,0,0,0.12);
 }
 
 .logo-title h1{
     font-size:34px;
-    line-height:1;
     font-weight:900;
 }
 
@@ -65,7 +63,6 @@ body{
     margin:22px 0;
 }
 
-/* FORM */
 .form-group{
     margin-top:20px;
 }
@@ -91,7 +88,7 @@ label{
 }
 
 /* =========================
-   SALES UI MODERN
+   SALES INPUT UI
 ========================= */
 
 .sales-box{
@@ -115,7 +112,6 @@ label{
     background:#121212;
     border:1px solid #333;
     overflow:hidden;
-    transition:0.2s;
 }
 
 .sales-input-wrap:focus-within{
@@ -177,7 +173,7 @@ label{
     display:block;
 }
 
-/* FOTO FIX */
+/* FOTO FIX ANTI STRETCH */
 .foto-wrap{
     position:absolute;
     left:50%;
@@ -206,7 +202,7 @@ label{
 }
 
 /* =========================
-   NAMA CLEAN
+   NAMA
 ========================= */
 
 .nama-putih{
@@ -260,7 +256,6 @@ label{
     overflow:hidden;
 }
 
-/* NAMA BAWAH */
 .nama-bawah{
     position:absolute;
     bottom:42px;
@@ -274,7 +269,7 @@ label{
 }
 
 /* =========================
-   SALES OUTPUT
+   SALES OUTPUT PREMIUM
 ========================= */
 
 .sales-bawah{
@@ -286,20 +281,29 @@ label{
     width:100%;
     text-align:center;
 
-    font-size:18px;
-    font-weight:800;
-    color:#fff;
-
     display:flex;
     justify-content:center;
     align-items:baseline;
-    gap:6px;
+    gap:10px;
+
+    color:#fff;
 }
 
+/* LABEL */
 .sales-label{
+    font-family:'Montserrat',sans-serif;
     font-style:italic;
     font-size:13px;
-    opacity:0.85;
+    opacity:0.75;
+    letter-spacing:1px;
+}
+
+/* VALUE (PREMIUM FONT) */
+.sales-value{
+    font-family:'Oswald',sans-serif;
+    font-size:22px;
+    font-weight:600;
+    letter-spacing:0.5px;
 }
 
 </style>
@@ -363,10 +367,10 @@ label{
 
     <div class="nama-bawah" id="namaBawah"></div>
 
-    <!-- SALES -->
+    <!-- SALES OUTPUT -->
     <div class="sales-bawah">
         <span class="sales-label">sales</span>
-        <span id="salesBawah">Rp0</span>
+        <span class="sales-value" id="salesBawah">Rp 0</span>
     </div>
 
 </div>
@@ -375,7 +379,7 @@ label{
 
 <script>
 
-/* DATABASE FOTO */
+/* FOTO DB */
 const people=[
 {
     keywords:["AFIF","AFI","APIP"],
@@ -393,7 +397,6 @@ const people=[
 
 /* FOTO */
 function updatePhoto(nama){
-
     const foto=document.getElementById("fotoOrang");
     let found=false;
 
@@ -411,7 +414,7 @@ function updatePhoto(nama){
     if(!found) foto.src="";
 }
 
-/* SALES ANIMASI */
+/* SALES ANIMATION */
 function animateSales(val){
 
     const el=document.getElementById("salesBawah");
@@ -422,7 +425,6 @@ function animateSales(val){
     let t0=null;
 
     function step(t){
-
         if(!t0) t0=t;
 
         let p=Math.min((t-t0)/duration,1);
