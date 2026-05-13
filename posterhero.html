@@ -92,7 +92,10 @@ label{
     background:#00c853;
 }
 
-/* POSTER */
+/* =========================
+   POSTER
+========================= */
+
 .poster-wrapper{
     position:relative;
     width:430px;
@@ -106,7 +109,59 @@ label{
 }
 
 /* =========================
-   FOTO FIX (ANTI KETARIK)
+   NAMA BESAR (2 BARIS)
+========================= */
+
+.nama-putih{
+    position:absolute;
+    top:165px;
+    left:50%;
+    transform:translateX(-50%) scaleY(1.1);
+
+    width:90%;
+    text-align:center;
+
+    font-family:'Anton',sans-serif;
+    font-size:88px;
+    font-weight:900;
+
+    color:#fff;
+    text-transform:uppercase;
+    line-height:0.9;
+    letter-spacing:3px;
+
+    z-index:8;
+    white-space:nowrap;
+    overflow:hidden;
+}
+
+.nama-outline{
+    position:absolute;
+    top:250px;
+    left:50%;
+    transform:translateX(-50%) scaleY(1.1);
+
+    width:90%;
+    text-align:center;
+
+    font-family:'Anton',sans-serif;
+    font-size:78px;
+    font-weight:900;
+
+    color:transparent;
+    -webkit-text-stroke:3px #fff;
+
+    text-transform:uppercase;
+    line-height:0.9;
+    letter-spacing:3px;
+
+    z-index:7;
+    white-space:nowrap;
+    overflow:hidden;
+}
+
+/* =========================
+   FOTO (ANTI KETARIK)
 ========================= */
 
 .foto-orang{
@@ -128,35 +183,10 @@ label{
     filter: drop-shadow(0 18px 28px rgba(0,0,0,.45));
 }
 
-/* NAMA */
-.nama-putih,
-.nama-outline{
-    position:absolute;
-    left:50%;
-    transform:translateX(-50%);
-    width:84%;
-    text-align:center;
-    font-family:'Anton',sans-serif;
-    text-transform:uppercase;
-    letter-spacing:2px;
-    white-space:nowrap;
-    overflow:hidden;
-}
+/* =========================
+   NAMA BAWAH
+========================= */
 
-.nama-putih{
-    top:165px;
-    color:#fff;
-    z-index:10;
-}
-
-.nama-outline{
-    top:288px;
-    color:transparent;
-    -webkit-text-stroke:2.5px #fff;
-    z-index:9;
-}
-
-/* BAWAH */
 .nama-bawah{
     position:absolute;
     bottom:40px;
@@ -170,6 +200,10 @@ label{
     z-index:20;
 }
 
+/* =========================
+   SALES ANIMASI
+========================= */
+
 .sales-bawah{
     position:absolute;
     bottom:14px;
@@ -178,6 +212,23 @@ label{
     width:100%;
     text-align:center;
     z-index:20;
+
+    font-size:18px;
+    font-weight:800;
+}
+
+/* POP EFFECT */
+@keyframes pop {
+    0% { transform: scale(1); }
+    40% { transform: scale(1.25); }
+    70% { transform: scale(0.95); }
+    100% { transform: scale(1); }
+}
+
+.sales-pop {
+    animation: pop 0.35s ease;
+    color:#00ff88;
+    text-shadow:0 0 12px rgba(0,255,136,.6);
 }
 
 </style>
@@ -224,13 +275,14 @@ label{
 
     <div class="nama-bawah" id="namaBawah"></div>
 
-    <div class="sales-bawah">
-        <span id="salesBawah">Rp0</span>
-    </div>
+    <div class="sales-bawah" id="salesBawah">Rp0</div>
 
 </div>
 
 </div>
+
+<!-- AUDIO (opsional) -->
+<audio id="cashSound" src="https://assets.mixkit.co/sfx/preview/mixkit-coins-handling-1939.mp3" preload="auto"></audio>
 
 <script>
 
@@ -250,7 +302,7 @@ const people = [
 }
 ];
 
-/* FOTO FIX */
+/* FOTO */
 function updatePhoto(nama){
 
     const foto = document.getElementById("fotoOrang");
@@ -273,9 +325,68 @@ function updatePhoto(nama){
         if(found) break;
     }
 
-    if(!found){
-        foto.src = "";
+    if(!found) foto.src = "";
+}
+
+/* FORMAT RUPIAH INPUT */
+document.getElementById("salesInput").addEventListener("input", function(){
+
+    let value = this.value.replace(/[^0-9]/g,"");
+
+    if(!value){
+        this.value="";
+        return;
     }
+
+    this.value = new Intl.NumberFormat("id-ID").format(value);
+});
+
+/* SALES ANIMASI */
+function animateSales(target){
+
+    const el = document.getElementById("salesBawah");
+    const sound = document.getElementById("cashSound");
+
+    let start = 0;
+    let end = parseInt(target) || 0;
+    let duration = 900;
+    let startTime = null;
+
+    function step(t){
+
+        if(!startTime) startTime = t;
+
+        let progress = t - startTime;
+        let percent = Math.min(progress/duration,1);
+
+        let value = Math.floor(percent * end);
+
+        el.innerText = "Rp " + new Intl.NumberFormat("id-ID").format(value);
+
+        if(value % Math.ceil(end/20) === 0){
+            el.classList.remove("sales-pop");
+            void el.offsetWidth;
+            el.classList.add("sales-pop");
+        }
+
+        if(percent < 1){
+            requestAnimationFrame(step);
+        } else {
+
+            el.classList.add("sales-pop");
+
+            if(sound){
+                sound.currentTime = 0;
+                sound.play();
+            }
+
+            setTimeout(()=>{
+                el.classList.remove("sales-pop");
+            },800);
+        }
+    }
+
+    requestAnimationFrame(step);
 }
 
 /* GENERATE */
@@ -292,25 +403,27 @@ function generatePoster(){
     document.getElementById("namaPutih").innerText = nama;
     document.getElementById("namaOutline").innerText = nama;
     document.getElementById("namaBawah").innerText = nama;
-    document.getElementById("salesBawah").innerText = "Rp" + sales;
+
+    let cleanSales = sales.replace(/[^0-9]/g,"");
+    animateSales(cleanSales);
 }
 
-/* DOWNLOAD FIX HD */
+/* DOWNLOAD */
 function downloadPoster(){
 
     const poster = document.getElementById("poster");
 
-    html2canvas(poster, {
-        useCORS: true,
-        allowTaint: false,
-        scale: 3,
-        backgroundColor: null,
-        imageTimeout: 0
-    }).then(canvas => {
+    html2canvas(poster,{
+        useCORS:true,
+        allowTaint:false,
+        scale:3,
+        backgroundColor:null,
+        imageTimeout:0
+    }).then(canvas=>{
 
         const link = document.createElement("a");
-        link.download = "poster.png";
-        link.href = canvas.toDataURL("image/png");
+        link.download="poster.png";
+        link.href=canvas.toDataURL("image/png");
         link.click();
 
     });
