@@ -8,6 +8,8 @@
 
 <link href="https://fonts.googleapis.com/css2?family=Anton&family=Montserrat:wght@400;600;700;800;900&family=Roboto+Condensed:wght@400;700&family=Roboto+Mono:wght@400;600;700&display=swap" rel="stylesheet">
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
 <style>
 
 *{
@@ -33,53 +35,103 @@ body{
 /* PANEL */
 .panel{
     width:340px;
-    background:#070707;
-    border-radius:28px;
+    background:rgba(255,255,255,0.05);
+    border:1px solid rgba(255,255,255,0.08);
+    border-radius:24px;
     padding:28px;
 }
 
-.form-group{margin-top:20px;}
-label{display:block;margin-bottom:10px;font-weight:600;}
+/* TITLE */
+.panel-title{
+    font-family:'Anton',sans-serif;
+    font-size:34px;
+    text-align:center;
+    margin-bottom:20px;
+    color:#ffd400;
+    letter-spacing:3px;
+    text-shadow:0 0 10px rgba(255,210,0,0.6);
+}
+
+/* INPUT */
+.form-group{margin-top:18px;}
+
+label{
+    display:block;
+    margin-bottom:8px;
+    font-size:13px;
+    opacity:0.7;
+}
 
 .input-box input{
     width:100%;
-    height:60px;
+    height:55px;
     border:none;
     outline:none;
-    background:#121212;
+    background:rgba(255,255,255,0.06);
     color:#fff;
-    padding:0 18px;
-    font-size:18px;
-    border-radius:16px;
+    padding:0 16px;
+    font-size:16px;
+    border-radius:14px;
+    border:1px solid rgba(255,255,255,0.08);
 }
 
-/* SALES INPUT */
+/* SALES */
 .sales-box{
     display:flex;
     flex-direction:column;
-    gap:8px;
+    gap:6px;
 }
 
 .sales-prefix{
-    font-size:12px;
+    font-size:11px;
     font-style:italic;
-    opacity:0.7;
+    opacity:0.6;
 }
 
 .sales-input-wrap{
     display:flex;
     align-items:center;
-    height:60px;
-    border-radius:16px;
-    background:#121212;
-    border:1px solid #333;
-    overflow:hidden;
+    height:55px;
+    border-radius:14px;
+    background:rgba(255,255,255,0.06);
+    border:1px solid rgba(255,255,255,0.08);
 }
 
 .rp{
-    padding:0 14px;
-    background:#1b1b1b;
+    padding:0 12px;
+    background:rgba(255,255,255,0.08);
+    font-weight:700;
+}
+
+/* BUTTON */
+.download-btn{
+    width:100%;
+    height:55px;
+    margin-top:20px;
+    border:none;
+    border-radius:14px;
+    background:linear-gradient(135deg,#ff1a1a,#8b0000);
+    color:#fff;
     font-weight:800;
+    cursor:pointer;
+}
+
+.download-btn:disabled{
+    opacity:0.6;
+}
+
+/* LOADING */
+.loading{
+    position:fixed;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%);
+    background:rgba(0,0,0,0.85);
+    border:1px solid #ff1a1a;
+    padding:16px 22px;
+    border-radius:12px;
+    display:none;
+    z-index:999;
 }
 
 /* POSTER */
@@ -134,45 +186,33 @@ label{display:block;margin-bottom:10px;font-weight:600;}
     );
 }
 
-/* =========================
-   2 BARIS NAMA (NAIK POSISI)
-========================= */
-
+/* NAMA */
 .nama-putih{
     position:absolute;
-    top:150px;   /* 🔥 dinaikkan */
+    top:150px;
     left:50%;
     transform:translateX(-50%);
     width:92%;
     text-align:center;
-
     font-family:'Anton',sans-serif;
     font-size:76px;
-    letter-spacing:3px;
     color:#fff;
-
-    z-index:4;
 }
 
 .nama-outline{
     position:absolute;
-    top:230px;   /* 🔥 dinaikkan */
+    top:230px;
     left:50%;
     transform:translateX(-50%);
     width:92%;
     text-align:center;
-
     font-family:'Anton',sans-serif;
     font-size:72px;
-    letter-spacing:3px;
-
     color:transparent;
     -webkit-text-stroke:1.5px #fff;
-
-    z-index:3;
 }
 
-/* NAMA BAWAH */
+/* BAWAH */
 .nama-bawah{
     position:absolute;
     bottom:42px;
@@ -180,11 +220,9 @@ label{display:block;margin-bottom:10px;font-weight:600;}
     transform:translateX(-50%);
     width:90%;
     text-align:center;
-
     font-family:'Roboto Condensed',sans-serif;
-    font-size:24px;
+    font-size:22px;
     font-weight:700;
-    letter-spacing:1px;
 }
 
 /* SALES */
@@ -193,29 +231,20 @@ label{display:block;margin-bottom:10px;font-weight:600;}
     bottom:14px;
     left:50%;
     transform:translateX(-50%);
-
     display:flex;
-    align-items:baseline;
-    justify-content:center;
     gap:8px;
-
-    max-width:90%;
 }
 
 .sales-label{
     font-size:12px;
     font-style:italic;
     opacity:0.75;
-    white-space:nowrap;
 }
 
 .sales-value{
     font-family:'Roboto Mono',monospace;
     font-size:20px;
     font-weight:700;
-
-    white-space:nowrap;
-    overflow:hidden;
 }
 
 </style>
@@ -223,34 +252,39 @@ label{display:block;margin-bottom:10px;font-weight:600;}
 
 <body>
 
+<div class="loading" id="loading">Generating...</div>
+
 <div class="container">
 
+<!-- PANEL -->
 <div class="panel">
+
+    <div class="panel-title">MENYALA</div>
 
     <div class="form-group">
         <label>Nama</label>
-        <div class="input-box">
-            <input id="namaInput" type="text">
-        </div>
+        <input class="input-box" id="namaInput" type="text">
     </div>
 
     <div class="form-group">
         <label>Sales</label>
-
         <div class="sales-box">
             <span class="sales-prefix">sales</span>
-
             <div class="sales-input-wrap">
                 <span class="rp">Rp</span>
                 <input id="salesInput" type="text">
             </div>
         </div>
-
     </div>
+
+    <button class="download-btn" id="btn" onclick="downloadPoster()">
+        DOWNLOAD POSTER
+    </button>
 
 </div>
 
-<div class="poster-wrapper">
+<!-- POSTER -->
+<div class="poster-wrapper" id="poster">
 
     <img class="poster-template" src="https://putrasetya.github.io/template_posterhero1.png">
 
@@ -262,7 +296,6 @@ label{display:block;margin-bottom:10px;font-weight:600;}
 
     <div class="nama-putih" id="namaPutih">NAMA</div>
     <div class="nama-outline" id="namaOutline">NAMA</div>
-
     <div class="nama-bawah" id="namaBawah">NAMA</div>
 
     <div class="sales-bawah">
@@ -276,62 +309,89 @@ label{display:block;margin-bottom:10px;font-weight:600;}
 
 <script>
 
-/* FOTO */
-const people=[
-{keywords:["AFIF"],photo:"12pjk_-ZJhbqbPZDzdH4sJSkE5qWwzrf7"},
-{keywords:["PUTRA"],photo:"1Pxw-wIUKTcyA_inIcqpYY833f_3AtZe2"}
+/* FOTO DATABASE */
+const people = [
+    {keywords:["AFIF","AFI","APIP"],photo:"12pjk_-ZJhbqbPZDzdH4sJSkE5qWwzrf7"},
+    {keywords:["PUTRA","PUT"],photo:"1Pxw-wIUKTcyA_inIcqpYY833f_3AtZe2"}
 ];
 
+/* FOTO SYSTEM */
 function updatePhoto(nama){
-    const img=document.getElementById("fotoOrang");
-    let found=false;
+
+    const img = document.getElementById("fotoOrang");
+    const input = nama.toUpperCase().trim();
+
+    let found = false;
 
     for(const p of people){
         for(const k of p.keywords){
-            if(nama.includes(k)){
-                img.src="https://lh3.googleusercontent.com/d/"+p.photo+"=w1000";
-                found=true;
+
+            if(input.includes(k)){
+
+                img.src =
+                "https://drive.google.com/thumbnail?id=" +
+                p.photo + "&sz=w1000";
+
+                found = true;
                 break;
             }
         }
         if(found) break;
     }
 
-    if(!found) img.src="";
+    if(!found){
+        img.src = "";
+    }
 }
 
-/* INPUT */
+/* INPUT NAMA */
 document.getElementById("namaInput").addEventListener("input",e=>{
-    let n=e.target.value.toUpperCase()||"NAMA";
+    let n = e.target.value.toUpperCase() || "NAMA";
 
     updatePhoto(n);
 
-    document.getElementById("namaPutih").innerText=n;
-    document.getElementById("namaOutline").innerText=n;
-    document.getElementById("namaBawah").innerText=n;
+    document.getElementById("namaPutih").innerText = n;
+    document.getElementById("namaOutline").innerText = n;
+    document.getElementById("namaBawah").innerText = n;
 });
 
-/* SALES + AUTO SHRINK */
+/* SALES */
 document.getElementById("salesInput").addEventListener("input",e=>{
-    let v=e.target.value.replace(/[^0-9]/g,"")||"0";
+    let v = e.target.value.replace(/[^0-9]/g,"") || "0";
 
-    let formatted = new Intl.NumberFormat("id-ID").format(v);
+    let f = new Intl.NumberFormat("id-ID").format(v);
 
-    e.target.value = formatted;
-
-    const el = document.getElementById("salesBawah");
-
-    el.innerText = "Rp " + formatted;
-
-    let size = 20;
-    el.style.fontSize = size + "px";
-
-    while(el.scrollWidth > el.parentElement.offsetWidth){
-        size--;
-        el.style.fontSize = size + "px";
-        if(size <= 12) break;
-    }
+    e.target.value = f;
+    document.getElementById("salesBawah").innerText = "Rp " + f;
 });
+
+/* DOWNLOAD */
+async function downloadPoster(){
+
+    const btn = document.getElementById("btn");
+    const loading = document.getElementById("loading");
+
+    btn.disabled = true;
+    loading.style.display = "block";
+
+    const canvas = await html2canvas(document.getElementById("poster"),{
+        scale:3,
+        useCORS:true
+    });
+
+    const nama = document.getElementById("namaInput").value.toUpperCase() || "NAMA";
+    const sales = document.getElementById("salesInput").value.replace(/[^0-9]/g,"") || "0";
+
+    const filename = `${nama}_${sales}.png`;
+
+    const link = document.createElement("a");
+    link.download = filename;
+    link.href = canvas.toDataURL("image/png");
+    link.click();
+
+    loading.style.display = "none";
+    btn.disabled = false;
+}
 
 </script>
 
