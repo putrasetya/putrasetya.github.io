@@ -109,7 +109,7 @@ button:hover{
     width:430px;
 }
 
-/* TEMPLATE ASLI */
+/* TEMPLATE */
 .poster-template{
     width:100%;
     display:block;
@@ -122,18 +122,17 @@ button:hover{
 .nama-putih{
     position:absolute;
 
-    top:175px;
+    top:178px;
     left:50%;
 
     transform:
     translateX(-50%)
-    scaleY(1.18);
+    scaleY(1.15);
 
-    width:88%;
+    width:82%;
 
     text-align:center;
 
-    font-size:92px;
     font-weight:900;
 
     color:#fff;
@@ -142,13 +141,15 @@ button:hover{
 
     letter-spacing:1px;
 
-    line-height:.78;
+    line-height:.9;
 
     font-family:'Montserrat',sans-serif;
 
     z-index:10;
 
-    word-break:break-word;
+    white-space:nowrap;
+
+    overflow:hidden;
 }
 
 /* =========================
@@ -158,18 +159,17 @@ button:hover{
 .nama-outline{
     position:absolute;
 
-    top:275px;
+    top:258px;
     left:50%;
 
     transform:
     translateX(-50%)
-    scaleY(1.18);
+    scaleY(1.15);
 
-    width:88%;
+    width:82%;
 
     text-align:center;
 
-    font-size:84px;
     font-weight:900;
 
     color:#d30014;
@@ -180,13 +180,15 @@ button:hover{
 
     letter-spacing:1px;
 
-    line-height:.78;
+    line-height:.9;
 
     font-family:'Montserrat',sans-serif;
 
     z-index:9;
 
-    word-break:break-word;
+    white-space:nowrap;
+
+    overflow:hidden;
 }
 
 /* =========================
@@ -196,7 +198,7 @@ button:hover{
 .nama-bawah{
     position:absolute;
 
-    bottom:78px;
+    bottom:64px;
     left:50%;
 
     transform:translateX(-50%);
@@ -220,7 +222,7 @@ button:hover{
 .sales-bawah{
     position:absolute;
 
-    bottom:45px;
+    bottom:28px;
     left:50%;
 
     transform:translateX(-50%);
@@ -229,10 +231,16 @@ button:hover{
 
     text-align:center;
 
-    font-size:22px;
+    font-size:24px;
     font-weight:700;
 
     color:#fff;
+}
+
+.sales-label{
+    font-style:italic;
+    font-weight:500;
+    margin-right:6px;
 }
 
 /* =========================
@@ -258,14 +266,6 @@ button:hover{
     .poster-wrapper{
         width:100%;
         max-width:430px;
-    }
-
-    .nama-putih{
-        font-size:22vw;
-    }
-
-    .nama-outline{
-        font-size:20vw;
     }
 
 }
@@ -316,7 +316,6 @@ button:hover{
     <div class="poster-wrapper">
 
         <!-- TEMPLATE ASLI -->
-        <!-- GANTI LINK SESUAI TEMPLATE -->
         <img
         src="https://putrasetya.github.io/template_posterhero.png"
         class="poster-template">
@@ -326,7 +325,7 @@ button:hover{
         class="nama-putih"
         id="namaPutih">
 
-            NAMA<br>USER
+            NAMA
 
         </div>
 
@@ -335,7 +334,7 @@ button:hover{
         class="nama-outline"
         id="namaOutline">
 
-            NAMA<br>USER
+            NAMA
 
         </div>
 
@@ -344,16 +343,21 @@ button:hover{
         class="nama-bawah"
         id="namaBawah">
 
-            NAMA USER
+            NAMA
 
         </div>
 
         <!-- SALES -->
         <div
-        class="sales-bawah"
-        id="salesBawah">
+        class="sales-bawah">
 
-            Rp 0
+            <span class="sales-label">
+                sales
+            </span>
+
+            <span id="salesBawah">
+                Rp 0
+            </span>
 
         </div>
 
@@ -404,32 +408,24 @@ salesInput.addEventListener("input", function(){
 });
 
 /* ======================================
-   AUTO 2 BARIS
+   AUTO FONT SIZE
 ====================================== */
 
-function splitNama(nama){
+function autoResizeText(element, text){
 
-    let words =
-    nama.split(" ");
+    element.innerText = text;
 
-    if(words.length >= 2){
+    let length = text.length;
 
-        let tengah =
-        Math.ceil(words.length / 2);
+    let size = 92;
 
-        let baris1 =
-        words.slice(0, tengah).join(" ");
+    if(length > 8) size = 82;
+    if(length > 10) size = 72;
+    if(length > 12) size = 62;
+    if(length > 15) size = 54;
+    if(length > 18) size = 46;
 
-        let baris2 =
-        words.slice(tengah).join(" ");
-
-        return baris1 + "<br>" + baris2;
-
-    }else{
-
-        return nama;
-
-    }
+    element.style.fontSize = size + "px";
 
 }
 
@@ -451,7 +447,7 @@ function generatePoster(){
 
     if(nama == ""){
 
-        nama = "NAMA USER";
+        nama = "NAMA";
 
     }
 
@@ -461,20 +457,23 @@ function generatePoster(){
 
     }
 
-    // AUTO 2 BARIS
-    let nama2Baris =
-    splitNama(nama.toUpperCase());
+    nama = nama.toUpperCase();
 
-    // UPDATE TEXT
-    document.getElementById("namaPutih")
-    .innerHTML = nama2Baris;
+    // UPDATE NAMA
+    autoResizeText(
+        document.getElementById("namaPutih"),
+        nama
+    );
 
-    document.getElementById("namaOutline")
-    .innerHTML = nama2Baris;
+    autoResizeText(
+        document.getElementById("namaOutline"),
+        nama
+    );
 
     document.getElementById("namaBawah")
-    .innerText = nama.toUpperCase();
+    .innerText = nama;
 
+    // UPDATE SALES
     document.getElementById("salesBawah")
     .innerText = "Rp " + sales;
 
