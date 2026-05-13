@@ -6,7 +6,7 @@
 
 <title>Generator Poster</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Anton&family=Montserrat:wght@400;600;700;800;900&family=Roboto+Condensed:wght@400;700&family=Roboto+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Montserrat:wght@400;600;700;800;900&family=Roboto+Condensed:wght@400;700&family=Roboto+Mono:wght@400;600;700&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.2/cropper.min.css"/>
@@ -77,7 +77,10 @@ label{
     border-radius:10px;
 }
 
-.rp{padding:0 12px;opacity:0.7;}
+.rp{
+    padding:0 12px;
+    opacity:0.7;
+}
 
 .rupiah input{
     width:100%;
@@ -114,7 +117,7 @@ button{
     display:block;
 }
 
-/* ================= FOTO ORANG (DEPAN NAMA) ================= */
+/* FOTO DEPAN */
 .foto-wrap{
     position:absolute;
     left:50%;
@@ -123,15 +126,14 @@ button{
     height:70%;
     display:flex;
     align-items:flex-end;
-
-    z-index:50; /* 🔥 DI DEPAN SEMUA TEKS */
+    z-index:50;
 }
 
 .foto-wrap img{
     height:100%;
 }
 
-/* ================= UPLOAD FOTO ================= */
+/* UPLOAD FOTO */
 .upload-layer{
     position:absolute;
     bottom:110px;
@@ -148,13 +150,12 @@ button{
     display:block;
 }
 
-/* ================= TEXT (DI BELAKANG FOTO) ================= */
+/* ================= TEXT ================= */
 .nama1,.nama2,.nama3{
     position:absolute;
     width:100%;
     text-align:center;
-
-    z-index:10; /* 🔥 DI BELAKANG FOTO */
+    z-index:10;
 }
 
 .nama1{
@@ -171,68 +172,24 @@ button{
     -webkit-text-stroke:1.5px #fff;
 }
 
+/* 🔥 FONT BARU: NAMA BAWAH */
 .nama3{
     bottom:42px;
-    font-family:'Roboto Condensed';
+    font-family:'Poppins',sans-serif;
+    font-weight:600;
+    font-size:18px;
 }
 
-/* SALES */
+/* 🔥 FONT BARU: SALES / RP */
 .sales{
     position:absolute;
     bottom:14px;
     width:100%;
     text-align:center;
-    font-family:'Roboto Mono';
+    font-family:'Poppins',sans-serif;
+    font-weight:700;
+    font-size:18px;
     white-space:nowrap;
-}
-
-/* ================= CROPPER MODAL ================= */
-.modal{
-    position:fixed;
-    inset:0;
-    background:rgba(0,0,0,0.92);
-    display:none;
-    align-items:center;
-    justify-content:center;
-    z-index:9999;
-}
-
-.modal-box{
-    width:92%;
-    max-width:420px;
-    background:#111;
-    padding:14px;
-    border-radius:14px;
-    display:flex;
-    flex-direction:column;
-    gap:12px;
-}
-
-#cropImage{
-    width:100%;
-    max-height:420px;
-}
-
-.modal-actions{
-    display:flex;
-    gap:10px;
-}
-
-.modal-actions button{
-    flex:1;
-    height:46px;
-    border:none;
-    border-radius:10px;
-    font-weight:800;
-    cursor:pointer;
-}
-
-.modal-actions button:first-child{
-    background:#00c853;
-}
-
-.modal-actions button:last-child{
-    background:#d50000;
 }
 
 </style>
@@ -265,17 +222,14 @@ button{
 
 <img class="bg" src="https://putrasetya.github.io/template_posterhero1.png">
 
-<!-- FOTO ORANG (DEPAN NAMA) -->
 <div class="foto-wrap">
 <img id="foto">
 </div>
 
-<!-- UPLOAD -->
 <div class="upload-layer">
 <img id="uploadPreview">
 </div>
 
-<!-- TEXT -->
 <div class="nama1" id="n1">NAMA</div>
 <div class="nama2" id="n2">NAMA</div>
 <div class="nama3" id="n3">NAMA</div>
@@ -284,17 +238,6 @@ button{
 
 </div>
 
-</div>
-
-<!-- CROPPER -->
-<div class="modal" id="modal">
-<div class="modal-box">
-<img id="cropImage">
-<div class="modal-actions">
-<button onclick="cropSave()">CROP</button>
-<button onclick="closeModal()">BATAL</button>
-</div>
-</div>
 </div>
 
 <script>
@@ -333,39 +276,17 @@ e.target.value=f;
 s.innerText="Rp "+f;
 };
 
-/* UPLOAD + CROPPER */
-let cropper;
-
+/* UPLOAD */
 uploadInput.onchange=(e)=>{
 let file=e.target.files[0];
 if(!file) return;
 
 let reader=new FileReader();
 reader.onload=(ev)=>{
-modal.style.display="flex";
-cropImage.src=ev.target.result;
-
-setTimeout(()=>{
-cropper=new Cropper(cropImage,{
-aspectRatio:1,
-viewMode:1
-});
-},200);
+uploadPreview.src=ev.target.result;
 };
 reader.readAsDataURL(file);
 };
-
-function cropSave(){
-let canvas=cropper.getCroppedCanvas({width:300,height:300});
-uploadPreview.src=canvas.toDataURL();
-cropper.destroy();
-modal.style.display="none";
-}
-
-function closeModal(){
-cropper.destroy();
-modal.style.display="none";
-}
 
 /* DOWNLOAD */
 async function downloadPoster(){
