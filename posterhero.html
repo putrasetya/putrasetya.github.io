@@ -24,10 +24,6 @@ body{
     color:#fff;
 }
 
-/* =========================
-   LAYOUT
-========================= */
-
 .container{
     display:flex;
     justify-content:center;
@@ -51,10 +47,6 @@ body{
     inset 0 0 30px rgba(255,255,255,.02);
 }
 
-.logo-title{
-    margin-bottom:30px;
-}
-
 .logo-title h1{
     font-size:34px;
     line-height:1;
@@ -72,27 +64,23 @@ body{
     width:100%;
     height:1px;
     background:#333;
-    margin-top:22px;
+    margin:22px 0;
 }
 
-/* =========================
-   INPUT
-========================= */
-
 .form-group{
-    margin-top:28px;
+    margin-top:20px;
 }
 
 .form-group label{
     display:block;
-    margin-bottom:12px;
+    margin-bottom:10px;
     font-size:15px;
     font-weight:600;
 }
 
 .input-box{
     width:100%;
-    height:68px;
+    height:65px;
     border-radius:18px;
     border:1px solid #444;
     background:#121212;
@@ -115,7 +103,6 @@ body{
 
 .input-box:focus-within{
     border:1px solid #ff1a1a;
-    box-shadow:0 0 15px rgba(255,0,0,.25);
 }
 
 .rp{
@@ -126,81 +113,19 @@ body{
     align-items:center;
     border-right:1px solid #333;
     font-size:22px;
-    color:#fff;
 }
-
-/* =========================
-   INFO BOX
-========================= */
-
-.info-box{
-    margin-top:22px;
-    background:#151515;
-    border:1px solid #333;
-    border-radius:18px;
-    padding:18px;
-    font-size:14px;
-    line-height:1.8;
-    color:#d8d8d8;
-}
-
-.info-box b{
-    color:#fff;
-}
-
-/* =========================
-   BUTTON
-========================= */
 
 .btn{
     width:100%;
-    height:66px;
+    height:64px;
     border:none;
     border-radius:18px;
     margin-top:22px;
     font-size:18px;
     font-weight:800;
     cursor:pointer;
-    transition:.2s;
-    font-family:'Montserrat',sans-serif;
-}
-
-.btn-generate{
     background:#ff1a1a;
     color:#fff;
-    box-shadow:0 10px 25px rgba(255,0,0,.3);
-}
-
-.btn-generate:hover{
-    transform:translateY(-2px);
-}
-
-.btn-download{
-    background:#141414;
-    color:#fff;
-    border:1px solid #333;
-}
-
-/* =========================
-   TIPS
-========================= */
-
-.tips{
-    margin-top:28px;
-    background:#121212;
-    border:1px solid #333;
-    border-radius:18px;
-    padding:20px;
-}
-
-.tips h3{
-    color:#ff1a1a;
-    margin-bottom:12px;
-}
-
-.tips p{
-    line-height:1.8;
-    color:#d5d5d5;
 }
 
 /* =========================
@@ -210,31 +135,30 @@ body{
 .poster-wrapper{
     position:relative;
     width:430px;
+    overflow:hidden;
+    border-radius:28px;
 }
 
 .poster-template{
     width:100%;
     display:block;
-    border-radius:28px;
-    box-shadow:
-    0 0 35px rgba(255,0,0,.18);
 }
 
 /* =========================
-   NAMA PUTIH
+   NAMA ATAS PUTIH
 ========================= */
 
 .nama-putih{
     position:absolute;
 
-    top:168px;
+    top:170px;
     left:50%;
 
     transform:
     translateX(-50%)
     scaleY(1.12);
 
-    width:90%;
+    width:84%;
 
     text-align:center;
 
@@ -244,13 +168,15 @@ body{
 
     text-transform:uppercase;
 
-    line-height:.88;
+    line-height:.9;
 
-    letter-spacing:1px;
+    letter-spacing:0;
 
     z-index:10;
 
     white-space:nowrap;
+
+    overflow:hidden;
 }
 
 /* =========================
@@ -267,7 +193,7 @@ body{
     translateX(-50%)
     scaleY(1.12);
 
-    width:90%;
+    width:84%;
 
     text-align:center;
 
@@ -279,13 +205,15 @@ body{
 
     text-transform:uppercase;
 
-    line-height:.88;
+    line-height:.9;
 
-    letter-spacing:1px;
+    letter-spacing:0;
 
     z-index:9;
 
     white-space:nowrap;
+
+    overflow:hidden;
 }
 
 /* =========================
@@ -300,16 +228,20 @@ body{
 
     transform:translateX(-50%);
 
-    width:100%;
+    width:90%;
 
     text-align:center;
 
-    font-size:52px;
+    font-size:46px;
     font-weight:900;
 
     color:#fff;
 
     text-transform:uppercase;
+
+    white-space:nowrap;
+
+    overflow:hidden;
 }
 
 /* =========================
@@ -332,31 +264,14 @@ body{
 }
 
 .sales-bawah i{
-    font-size:16px;
-    font-weight:400;
-    margin-right:6px;
+    font-size:15px;
+    font-style:italic;
+    margin-right:5px;
 }
 
 .sales-bawah span{
-    font-size:18px;
-    font-weight:800;
-}
-
-/* =========================
-   FOOTER
-========================= */
-
-.footer-box{
-    width:100%;
-    max-width:620px;
-    margin:35px auto 0;
-    background:#0d0d0d;
-    border:1px solid #222;
-    border-radius:22px;
-    padding:24px;
-    text-align:center;
-    color:#f2f2f2;
-    font-size:16px;
+    font-size:17px;
+    font-weight:700;
 }
 
 /* =========================
@@ -393,22 +308,23 @@ body{
 
 <div class="container">
 
-    <!-- =========================
-         PANEL
-    ========================== -->
+    <!-- PANEL -->
 
     <div class="panel">
 
         <div class="logo-title">
+
             <h1>
                 GENERATOR
                 <span>POSTER</span>
             </h1>
 
             <div class="line"></div>
+
         </div>
 
         <!-- NAMA -->
+
         <div class="form-group">
 
             <label>Nama</label>
@@ -425,6 +341,7 @@ body{
         </div>
 
         <!-- SALES -->
+
         <div class="form-group">
 
             <label>Jumlah Sales</label>
@@ -438,56 +355,23 @@ body{
                 <input
                 type="text"
                 id="salesInput"
-                placeholder="Masukkan jumlah sales">
+                placeholder="Masukkan sales">
 
             </div>
 
         </div>
 
-        <!-- INFO -->
-        <div class="info-box">
-
-            <b>• Masukkan angka saja.</b><br>
-
-            Contoh: 15000000<br>
-
-            Akan otomatis menjadi:
-            15.000.000
-
-        </div>
-
-        <!-- BUTTON -->
         <button
-        class="btn btn-generate"
+        class="btn"
         onclick="generatePoster()">
 
-            ✨ GENERATE POSTER
+            GENERATE POSTER
 
         </button>
-
-        <button
-        class="btn btn-download">
-
-            ⬇ DOWNLOAD POSTER
-
-        </button>
-
-        <!-- TIPS -->
-        <div class="tips">
-
-            <h3>💡 Tips</h3>
-
-            <p>
-                Nama akan otomatis menyesuaikan ukuran agar tetap proporsional dan tidak terpotong.
-            </p>
-
-        </div>
 
     </div>
 
-    <!-- =========================
-         POSTER
-    ========================== -->
+    <!-- POSTER -->
 
     <div class="poster-wrapper">
 
@@ -536,13 +420,6 @@ body{
 
 </div>
 
-<!-- FOOTER -->
-<div class="footer-box">
-
-    🛡 Poster siap! Silakan download atau screenshot.
-
-</div>
-
 <script>
 
 /* =========================
@@ -586,26 +463,33 @@ salesInput.addEventListener("input", function(){
 });
 
 /* =========================
-   AUTO FONT SIZE
+   AUTO FIT TEXT
 ========================= */
 
-function setAutoSize(text){
+function fitText(element, text, maxSize){
 
-    let length = text.length;
+    element.innerText = text;
 
-    if(length <= 6) return 120;
+    let size = maxSize;
 
-    if(length <= 8) return 102;
+    element.style.fontSize =
+    size + "px";
 
-    if(length <= 10) return 88;
+    while(
+        element.scrollWidth >
+        element.clientWidth
+    ){
 
-    if(length <= 12) return 76;
+        size--;
 
-    if(length <= 14) return 64;
+        element.style.fontSize =
+        size + "px";
 
-    if(length <= 16) return 54;
+        if(size <= 20){
+            break;
+        }
 
-    return 46;
+    }
 
 }
 
@@ -639,31 +523,22 @@ function generatePoster(){
 
     nama = nama.toUpperCase();
 
-    // AUTO SIZE
-    let size =
-    setAutoSize(nama);
-
-    // NAMA PUTIH
+    // ELEMENT
     const putih =
     document.getElementById("namaPutih");
 
-    putih.innerText = nama;
-
-    putih.style.fontSize =
-    size + "px";
-
-    // NAMA OUTLINE
     const outline =
     document.getElementById("namaOutline");
 
-    outline.innerText = nama;
+    const bawah =
+    document.getElementById("namaBawah");
 
-    outline.style.fontSize =
-    (size - 6) + "px";
+    // AUTO FIT
+    fitText(putih, nama, 120);
 
-    // NAMA BAWAH
-    document.getElementById("namaBawah")
-    .innerText = nama;
+    fitText(outline, nama, 110);
+
+    fitText(bawah, nama, 50);
 
     // SALES
     document.getElementById("salesBawah")
@@ -671,7 +546,7 @@ function generatePoster(){
 
 }
 
-/* AUTO GENERATE SAAT KETIK */
+/* AUTO UPDATE */
 
 document.getElementById("namaInput")
 .addEventListener("input", generatePoster);
