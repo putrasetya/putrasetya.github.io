@@ -8,6 +8,8 @@
 
 <link href="https://fonts.googleapis.com/css2?family=Anton&family=Montserrat:wght@400;600;700;800;900&family=Roboto+Condensed:wght@400;700&family=Roboto+Mono:wght@400;600;700&display=swap" rel="stylesheet">
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
 <style>
 
 *{
@@ -33,53 +35,90 @@ body{
 /* PANEL */
 .panel{
     width:340px;
-    background:#070707;
-    border-radius:28px;
+    background:rgba(255,255,255,0.04);
+    border:1px solid rgba(255,255,255,0.08);
+    border-radius:24px;
     padding:28px;
+    backdrop-filter:blur(10px);
 }
 
-.form-group{margin-top:20px;}
-label{display:block;margin-bottom:10px;font-weight:600;}
+.form-group{margin-top:18px;}
 
+label{
+    display:block;
+    margin-bottom:8px;
+    font-size:13px;
+    opacity:0.7;
+}
+
+/* INPUT */
 .input-box input{
     width:100%;
-    height:60px;
+    height:55px;
     border:none;
     outline:none;
-    background:#121212;
+
+    background:rgba(255,255,255,0.06);
     color:#fff;
-    padding:0 18px;
-    font-size:18px;
-    border-radius:16px;
+
+    padding:0 16px;
+    font-size:16px;
+
+    border-radius:14px;
+    border:1px solid rgba(255,255,255,0.08);
 }
 
-/* SALES INPUT */
+/* SALES */
 .sales-box{
     display:flex;
     flex-direction:column;
-    gap:8px;
+    gap:6px;
 }
 
 .sales-prefix{
-    font-size:12px;
+    font-size:11px;
     font-style:italic;
-    opacity:0.7;
+    opacity:0.6;
 }
 
 .sales-input-wrap{
     display:flex;
     align-items:center;
-    height:60px;
-    border-radius:16px;
-    background:#121212;
-    border:1px solid #333;
-    overflow:hidden;
+    height:55px;
+    border-radius:14px;
+
+    background:rgba(255,255,255,0.06);
+    border:1px solid rgba(255,255,255,0.08);
 }
 
 .rp{
-    padding:0 14px;
-    background:#1b1b1b;
+    padding:0 12px;
+    background:rgba(255,255,255,0.08);
+    font-weight:700;
+}
+
+/* DOWNLOAD BUTTON */
+.download-btn{
+    width:100%;
+    height:55px;
+    margin-top:20px;
+
+    border:none;
+    border-radius:14px;
+
+    background:linear-gradient(135deg,#ff1a1a,#8b0000);
+    color:#fff;
+
     font-weight:800;
+    font-size:15px;
+
+    cursor:pointer;
+    transition:0.2s;
+}
+
+.download-btn:disabled{
+    opacity:0.6;
+    cursor:not-allowed;
 }
 
 /* POSTER */
@@ -118,29 +157,12 @@ label{display:block;margin-bottom:10px;font-weight:600;}
     height:100%;
     width:auto;
     object-fit:cover;
-
-    -webkit-mask-image: linear-gradient(
-        to top,
-        rgba(0,0,0,0) 0%,
-        rgba(0,0,0,1) 30%,
-        rgba(0,0,0,1) 100%
-    );
-
-    mask-image: linear-gradient(
-        to top,
-        rgba(0,0,0,0) 0%,
-        rgba(0,0,0,1) 30%,
-        rgba(0,0,0,1) 100%
-    );
 }
 
-/* =========================
-   2 BARIS NAMA (NAIK POSISI)
-========================= */
-
+/* NAMA */
 .nama-putih{
     position:absolute;
-    top:150px;   /* 🔥 dinaikkan */
+    top:150px;
     left:50%;
     transform:translateX(-50%);
     width:92%;
@@ -150,13 +172,11 @@ label{display:block;margin-bottom:10px;font-weight:600;}
     font-size:76px;
     letter-spacing:3px;
     color:#fff;
-
-    z-index:4;
 }
 
 .nama-outline{
     position:absolute;
-    top:230px;   /* 🔥 dinaikkan */
+    top:230px;
     left:50%;
     transform:translateX(-50%);
     width:92%;
@@ -164,27 +184,9 @@ label{display:block;margin-bottom:10px;font-weight:600;}
 
     font-family:'Anton',sans-serif;
     font-size:72px;
-    letter-spacing:3px;
 
     color:transparent;
     -webkit-text-stroke:1.5px #fff;
-
-    z-index:3;
-}
-
-/* NAMA BAWAH */
-.nama-bawah{
-    position:absolute;
-    bottom:42px;
-    left:50%;
-    transform:translateX(-50%);
-    width:90%;
-    text-align:center;
-
-    font-family:'Roboto Condensed',sans-serif;
-    font-size:24px;
-    font-weight:700;
-    letter-spacing:1px;
 }
 
 /* SALES */
@@ -193,35 +195,44 @@ label{display:block;margin-bottom:10px;font-weight:600;}
     bottom:14px;
     left:50%;
     transform:translateX(-50%);
-
     display:flex;
-    align-items:baseline;
-    justify-content:center;
     gap:8px;
-
-    max-width:90%;
 }
 
 .sales-label{
     font-size:12px;
     font-style:italic;
     opacity:0.75;
-    white-space:nowrap;
 }
 
 .sales-value{
     font-family:'Roboto Mono',monospace;
     font-size:20px;
     font-weight:700;
+}
 
-    white-space:nowrap;
-    overflow:hidden;
+/* LOADING TEXT */
+.loading-text{
+    position:fixed;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%);
+    padding:20px 30px;
+    background:rgba(0,0,0,0.8);
+    border:1px solid #ff1a1a;
+    border-radius:12px;
+    display:none;
+    z-index:999;
 }
 
 </style>
 </head>
 
 <body>
+
+<div class="loading-text" id="loadingText">
+    Generating Poster...
+</div>
 
 <div class="container">
 
@@ -248,22 +259,18 @@ label{display:block;margin-bottom:10px;font-weight:600;}
 
     </div>
 
+    <button class="download-btn" id="downloadBtn" onclick="downloadPoster()">
+        DOWNLOAD POSTER
+    </button>
+
 </div>
 
-<div class="poster-wrapper">
+<div class="poster-wrapper" id="poster">
 
     <img class="poster-template" src="https://putrasetya.github.io/template_posterhero1.png">
 
-    <div class="foto-wrap">
-        <div class="foto-inner">
-            <img id="fotoOrang" class="foto-orang">
-        </div>
-    </div>
-
     <div class="nama-putih" id="namaPutih">NAMA</div>
     <div class="nama-outline" id="namaOutline">NAMA</div>
-
-    <div class="nama-bawah" id="namaBawah">NAMA</div>
 
     <div class="sales-bawah">
         <span class="sales-label">sales</span>
@@ -276,62 +283,56 @@ label{display:block;margin-bottom:10px;font-weight:600;}
 
 <script>
 
-/* FOTO */
-const people=[
-{keywords:["AFIF"],photo:"12pjk_-ZJhbqbPZDzdH4sJSkE5qWwzrf7"},
-{keywords:["PUTRA"],photo:"1Pxw-wIUKTcyA_inIcqpYY833f_3AtZe2"}
-];
-
-function updatePhoto(nama){
-    const img=document.getElementById("fotoOrang");
-    let found=false;
-
-    for(const p of people){
-        for(const k of p.keywords){
-            if(nama.includes(k)){
-                img.src="https://lh3.googleusercontent.com/d/"+p.photo+"=w1000";
-                found=true;
-                break;
-            }
-        }
-        if(found) break;
-    }
-
-    if(!found) img.src="";
-}
-
-/* INPUT */
+/* UPDATE NAMA */
 document.getElementById("namaInput").addEventListener("input",e=>{
     let n=e.target.value.toUpperCase()||"NAMA";
 
-    updatePhoto(n);
-
     document.getElementById("namaPutih").innerText=n;
     document.getElementById("namaOutline").innerText=n;
-    document.getElementById("namaBawah").innerText=n;
 });
 
-/* SALES + AUTO SHRINK */
+/* SALES */
 document.getElementById("salesInput").addEventListener("input",e=>{
     let v=e.target.value.replace(/[^0-9]/g,"")||"0";
 
-    let formatted = new Intl.NumberFormat("id-ID").format(v);
+    let formatted=new Intl.NumberFormat("id-ID").format(v);
 
-    e.target.value = formatted;
+    e.target.value=formatted;
 
-    const el = document.getElementById("salesBawah");
-
-    el.innerText = "Rp " + formatted;
-
-    let size = 20;
-    el.style.fontSize = size + "px";
-
-    while(el.scrollWidth > el.parentElement.offsetWidth){
-        size--;
-        el.style.fontSize = size + "px";
-        if(size <= 12) break;
-    }
+    document.getElementById("salesBawah").innerText="Rp "+formatted;
 });
+
+/* DOWNLOAD + LOADING + AUTO NAME */
+async function downloadPoster(){
+
+    const btn=document.getElementById("downloadBtn");
+    const loading=document.getElementById("loadingText");
+
+    btn.disabled=true;
+    btn.innerText="LOADING...";
+    loading.style.display="block";
+
+    const poster=document.getElementById("poster");
+
+    const canvas=await html2canvas(poster,{
+        scale:3,
+        useCORS:true
+    });
+
+    const nama=document.getElementById("namaInput").value.trim().toUpperCase()||"NAMA";
+    const sales=document.getElementById("salesInput").value.replace(/[^0-9]/g,"")||"0";
+
+    const filename=`${nama}_${sales}.png`;
+
+    const link=document.createElement("a");
+    link.download=filename;
+    link.href=canvas.toDataURL("image/png");
+    link.click();
+
+    loading.style.display="none";
+    btn.disabled=false;
+    btn.innerText="DOWNLOAD POSTER";
+}
 
 </script>
 
