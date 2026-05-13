@@ -12,6 +12,10 @@
 
 <style>
 
+/* =========================
+   GLOBAL
+========================= */
+
 *{
     margin:0;
     padding:0;
@@ -33,7 +37,7 @@ body{
 }
 
 /* =========================
-   PANEL CLEAN
+   PANEL
 ========================= */
 
 .panel{
@@ -75,7 +79,7 @@ label{
     font-size:16px;
 }
 
-/* SALES INPUT CLEAN */
+/* SALES CLEAN */
 .sales-input-wrap{
     display:flex;
     align-items:center;
@@ -130,7 +134,7 @@ label{
     display:block;
 }
 
-/* FOTO */
+/* FOTO (DI DEPAN NAMA) */
 .foto-wrap{
     position:absolute;
     left:50%;
@@ -138,6 +142,8 @@ label{
     transform:translateX(-50%);
     width:100%;
     height:70%;
+
+    z-index:50; /* 🔥 DI DEPAN NAMA */
 }
 
 .foto-inner{
@@ -154,7 +160,10 @@ label{
     object-fit:cover;
 }
 
-/* NAMA */
+/* =========================
+   NAMA (DI BELAKANG FOTO)
+========================= */
+
 .nama-putih{
     position:absolute;
     top:150px;
@@ -162,9 +171,12 @@ label{
     transform:translateX(-50%);
     width:92%;
     text-align:center;
+
     font-family:'Anton',sans-serif;
     font-size:76px;
     color:#fff;
+
+    z-index:10;
 }
 
 .nama-outline{
@@ -174,12 +186,17 @@ label{
     transform:translateX(-50%);
     width:92%;
     text-align:center;
+
     font-family:'Anton',sans-serif;
     font-size:72px;
+
     color:transparent;
     -webkit-text-stroke:1.5px #fff;
+
+    z-index:9;
 }
 
+/* NAMA BAWAH */
 .nama-bawah{
     position:absolute;
     bottom:42px;
@@ -187,14 +204,15 @@ label{
     transform:translateX(-50%);
     width:90%;
     text-align:center;
+
     font-family:'Roboto Condensed',sans-serif;
     font-size:22px;
+    font-weight:700;
+
+    z-index:8;
 }
 
-/* =========================
-   SALES FIX NO WRAP
-========================= */
-
+/* SALES OUTPUT */
 .sales-bawah{
     position:absolute;
     bottom:14px;
@@ -203,26 +221,22 @@ label{
     display:flex;
     gap:8px;
     align-items:center;
-    max-width:90%;
+
+    z-index:8;
 }
 
 .sales-label{
     font-size:12px;
     font-style:italic;
     opacity:0.75;
-    white-space:nowrap;
 }
 
-/* 🔥 FIX UTAMA DI SINI */
 .sales-value{
     font-family:'Roboto Mono',monospace;
-    font-weight:700;
     font-size:20px;
+    font-weight:700;
 
-    white-space:nowrap;   /* TIDAK TURUN BARIS */
-    overflow:hidden;
-    text-overflow:ellipsis;
-    max-width:220px;      /* batas aman */
+    white-space:nowrap;
 }
 
 </style>
@@ -232,6 +246,7 @@ label{
 
 <div class="container">
 
+<!-- PANEL -->
 <div class="panel">
 
     <div class="panel-title">MENYALA</div>
@@ -257,6 +272,7 @@ label{
 
 </div>
 
+<!-- POSTER -->
 <div class="poster-wrapper" id="poster">
 
     <img class="poster-template" src="https://putrasetya.github.io/template_posterhero1.png">
@@ -269,6 +285,7 @@ label{
 
     <div class="nama-putih" id="namaPutih">NAMA</div>
     <div class="nama-outline" id="namaOutline">NAMA</div>
+
     <div class="nama-bawah" id="namaBawah">NAMA</div>
 
     <div class="sales-bawah">
@@ -331,15 +348,6 @@ document.getElementById("salesInput").addEventListener("input",e=>{
 
     e.target.value = f;
     document.getElementById("salesBawah").innerText = "Rp " + f;
-
-    // 🔥 auto shrink biar tidak overflow
-    const el = document.getElementById("salesBawah");
-    let size = 20;
-
-    while(el.scrollWidth > el.parentElement.offsetWidth && size > 12){
-        size--;
-        el.style.fontSize = size + "px";
-    }
 });
 
 /* DOWNLOAD */
