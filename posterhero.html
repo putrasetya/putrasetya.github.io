@@ -113,39 +113,60 @@ button:hover{
 .poster-template{
     width:100%;
     display:block;
-    border-radius:0;
 }
 
 /* =========================
-   TEXT OVERLAY
+   NAMA PUTIH
 ========================= */
 
-/* NAMA PUTIH */
 .nama-putih{
     position:absolute;
-    top:170px;
+
+    top:175px;
     left:50%;
-    transform:translateX(-50%);
-    width:100%;
+
+    transform:
+    translateX(-50%)
+    scaleY(1.18);
+
+    width:88%;
+
     text-align:center;
 
     font-size:92px;
     font-weight:900;
+
     color:#fff;
 
-    line-height:.85;
     text-transform:uppercase;
 
-    letter-spacing:2px;
+    letter-spacing:1px;
+
+    line-height:.78;
+
+    font-family:'Montserrat',sans-serif;
+
+    z-index:10;
+
+    word-break:break-word;
 }
 
-/* NAMA OUTLINE */
+/* =========================
+   NAMA OUTLINE
+========================= */
+
 .nama-outline{
     position:absolute;
-    top:255px;
+
+    top:275px;
     left:50%;
-    transform:translateX(-50%);
-    width:100%;
+
+    transform:
+    translateX(-50%)
+    scaleY(1.18);
+
+    width:88%;
+
     text-align:center;
 
     font-size:84px;
@@ -155,17 +176,29 @@ button:hover{
 
     -webkit-text-stroke:3px #fff;
 
-    line-height:.85;
     text-transform:uppercase;
 
-    letter-spacing:2px;
+    letter-spacing:1px;
+
+    line-height:.78;
+
+    font-family:'Montserrat',sans-serif;
+
+    z-index:9;
+
+    word-break:break-word;
 }
 
-/* NAMA BAWAH */
+/* =========================
+   NAMA BAWAH
+========================= */
+
 .nama-bawah{
     position:absolute;
+
     bottom:78px;
     left:50%;
+
     transform:translateX(-50%);
 
     width:100%;
@@ -174,16 +207,22 @@ button:hover{
 
     font-size:46px;
     font-weight:900;
+
     color:#fff;
 
     text-transform:uppercase;
 }
 
-/* SALES */
+/* =========================
+   SALES
+========================= */
+
 .sales-bawah{
     position:absolute;
+
     bottom:45px;
     left:50%;
+
     transform:translateX(-50%);
 
     width:100%;
@@ -192,6 +231,7 @@ button:hover{
 
     font-size:22px;
     font-weight:700;
+
     color:#fff;
 }
 
@@ -222,12 +262,10 @@ button:hover{
 
     .nama-putih{
         font-size:22vw;
-        top:39%;
     }
 
     .nama-outline{
         font-size:20vw;
-        top:49%;
     }
 
 }
@@ -243,24 +281,28 @@ button:hover{
 
     <div class="form-box">
 
-        <h2>Editin.</h2>
+        <h2>Editin dong.</h2>
 
         <div class="form-group">
+
             <label>Nama</label>
 
             <input
             type="text"
             id="namaInput"
             placeholder="Masukkan nama">
+
         </div>
 
         <div class="form-group">
+
             <label>Jumlah Sales</label>
 
             <input
             type="text"
             id="salesInput"
             placeholder="Masukkan sales">
+
         </div>
 
         <button onclick="generatePoster()">
@@ -276,24 +318,43 @@ button:hover{
         <!-- TEMPLATE ASLI -->
         <!-- GANTI LINK SESUAI TEMPLATE -->
         <img
-        src="https://putrasetya.github.io/template_posterhero.png"
+        src="https://putrasetya.github.io/poster.png"
         class="poster-template">
 
-        <!-- TEXT OVERLAY -->
-        <div class="nama-putih" id="namaPutih">
-            NAMA
+        <!-- NAMA PUTIH -->
+        <div
+        class="nama-putih"
+        id="namaPutih">
+
+            NAMA<br>USER
+
         </div>
 
-        <div class="nama-outline" id="namaOutline">
-            NAMA
+        <!-- NAMA OUTLINE -->
+        <div
+        class="nama-outline"
+        id="namaOutline">
+
+            NAMA<br>USER
+
         </div>
 
-        <div class="nama-bawah" id="namaBawah">
-            NAMA
+        <!-- NAMA BAWAH -->
+        <div
+        class="nama-bawah"
+        id="namaBawah">
+
+            NAMA USER
+
         </div>
 
-        <div class="sales-bawah" id="salesBawah">
+        <!-- SALES -->
+        <div
+        class="sales-bawah"
+        id="salesBawah">
+
             Rp 0
+
         </div>
 
     </div>
@@ -343,6 +404,36 @@ salesInput.addEventListener("input", function(){
 });
 
 /* ======================================
+   AUTO 2 BARIS
+====================================== */
+
+function splitNama(nama){
+
+    let words =
+    nama.split(" ");
+
+    if(words.length >= 2){
+
+        let tengah =
+        Math.ceil(words.length / 2);
+
+        let baris1 =
+        words.slice(0, tengah).join(" ");
+
+        let baris2 =
+        words.slice(tengah).join(" ");
+
+        return baris1 + "<br>" + baris2;
+
+    }else{
+
+        return nama;
+
+    }
+
+}
+
+/* ======================================
    GENERATE POSTER
 ====================================== */
 
@@ -360,7 +451,7 @@ function generatePoster(){
 
     if(nama == ""){
 
-        nama = "NAMA";
+        nama = "NAMA USER";
 
     }
 
@@ -370,14 +461,19 @@ function generatePoster(){
 
     }
 
+    // AUTO 2 BARIS
+    let nama2Baris =
+    splitNama(nama.toUpperCase());
+
+    // UPDATE TEXT
     document.getElementById("namaPutih")
-    .innerText = nama;
+    .innerHTML = nama2Baris;
 
     document.getElementById("namaOutline")
-    .innerText = nama;
+    .innerHTML = nama2Baris;
 
     document.getElementById("namaBawah")
-    .innerText = nama;
+    .innerText = nama.toUpperCase();
 
     document.getElementById("salesBawah")
     .innerText = "Rp " + sales;
