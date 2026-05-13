@@ -44,12 +44,7 @@ body{
 
 /* INPUT */
 .form-group{margin-top:20px;}
-
-label{
-    display:block;
-    margin-bottom:10px;
-    font-weight:600;
-}
+label{display:block;margin-bottom:10px;font-weight:600;}
 
 .input-box input{
     width:100%;
@@ -91,19 +86,6 @@ label{
     align-items:center;
 }
 
-/* FIX ALIGNMENT HERE */
-.sales-input-wrap input{
-    flex:1;
-    height:100%;
-    border:none;
-    outline:none;
-    background:transparent;
-    color:#fff;
-    font-size:18px;
-    font-weight:700;
-    padding:0 14px;
-}
-
 /* BUTTON */
 .btn{
     width:100%;
@@ -116,7 +98,10 @@ label{
     color:#fff;
 }
 
-/* POSTER */
+/* =========================
+   POSTER
+========================= */
+
 .poster-wrapper{
     position:relative;
     width:430px;
@@ -124,9 +109,15 @@ label{
     border-radius:28px;
 }
 
-.poster-template{width:100%;display:block;}
+.poster-template{
+    width:100%;
+    display:block;
+}
 
-/* FOTO */
+/* =========================
+   FOTO (MASK CINEMATIC)
+========================= */
+
 .foto-wrap{
     position:absolute;
     left:50%;
@@ -134,6 +125,7 @@ label{
     transform:translateX(-50%);
     width:100%;
     height:70%;
+    z-index:10; /* FOTO DI DEPAN TEKS */
 }
 
 .foto-inner{
@@ -165,7 +157,10 @@ label{
     );
 }
 
-/* NAMA */
+/* =========================
+   NAMA (UPGRADE TYPOGRAPHY)
+========================= */
+
 .nama-putih{
     position:absolute;
     top:170px;
@@ -173,10 +168,17 @@ label{
     transform:translateX(-50%);
     width:92%;
     text-align:center;
+
     font-family:'Anton',sans-serif;
-    font-size:72px;
+
+    font-size:76px;        /* 🔥 LEBIH BESAR */
+    letter-spacing:3px;    /* 🔥 LEBIH LEGAAAA */
+    line-height:0.95;
+
     color:#fff;
     font-weight:900;
+
+    z-index:4; /* DI BELAKANG FOTO */
 }
 
 .nama-outline{
@@ -186,14 +188,22 @@ label{
     transform:translateX(-50%);
     width:92%;
     text-align:center;
+
     font-family:'Anton',sans-serif;
-    font-size:68px;
+
+    font-size:72px;        /* 🔥 LEBIH BESAR */
+    letter-spacing:3px;    /* 🔥 LEBIH LEGAAAA */
+
     color:transparent;
     -webkit-text-stroke:1.5px #fff;
+
+    font-weight:900;
+
+    z-index:3; /* PALING BELAKANG */
 }
 
 /* =========================
-   FIX NAMA BAWAH (HILANG FIX)
+   NAMA BAWAH
 ========================= */
 
 .nama-bawah{
@@ -212,7 +222,7 @@ label{
 }
 
 /* =========================
-   FIX SALES ALIGN
+   SALES
 ========================= */
 
 .sales-bawah{
@@ -222,21 +232,19 @@ label{
     transform:translateX(-50%);
 
     display:flex;
-    align-items:baseline; /* 🔥 FIX SEJAJAR */
+    align-items:baseline;
     justify-content:center;
     gap:8px;
 
-    color:#fff;
+    z-index:20;
 }
 
-/* LABEL */
 .sales-label{
     font-size:13px;
     font-style:italic;
     opacity:0.75;
 }
 
-/* VALUE */
 .sales-value{
     font-family:'Poppins',sans-serif;
     font-size:22px;
@@ -264,12 +272,14 @@ label{
         <label>Sales</label>
 
         <div class="sales-box">
+
             <span class="sales-prefix">sales</span>
 
             <div class="sales-input-wrap">
                 <span class="rp">Rp</span>
                 <input id="salesInput" type="text">
             </div>
+
         </div>
 
     </div>
@@ -292,7 +302,6 @@ label{
     <div class="nama-putih" id="namaPutih">NAMA</div>
     <div class="nama-outline" id="namaOutline">NAMA</div>
 
-    <!-- 🔥 FIX: NAMA BAWAH KEMBALI -->
     <div class="nama-bawah" id="namaBawah">NAMA</div>
 
     <div class="sales-bawah">
@@ -306,7 +315,7 @@ label{
 
 <script>
 
-/* FOTO */
+/* FOTO DB */
 const people=[
 {keywords:["AFIF"],photo:"12pjk_-ZJhbqbPZDzdH4sJSkE5qWwzrf7"},
 {keywords:["PUTRA"],photo:"1Pxw-wIUKTcyA_inIcqpYY833f_3AtZe2"}
@@ -339,7 +348,7 @@ document.getElementById("namaInput").addEventListener("input",e=>{
 
     document.getElementById("namaPutih").innerText=n;
     document.getElementById("namaOutline").innerText=n;
-    document.getElementById("namaBawah").innerText=n; /* FIX */
+    document.getElementById("namaBawah").innerText=n;
 });
 
 /* SALES */
@@ -356,7 +365,8 @@ document.getElementById("salesInput").addEventListener("input",e=>{
 function downloadPoster(){
     html2canvas(document.getElementById("poster"),{
         scale:3,
-        useCORS:true
+        useCORS:true,
+        backgroundColor:null
     }).then(canvas=>{
         let a=document.createElement("a");
         a.download="poster.png";
