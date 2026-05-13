@@ -153,18 +153,18 @@ body{
 }
 
 /* =========================
-   NAMA PUTIH
+   NAMA BARIS 1
 ========================= */
 
 .nama-putih{
     position:absolute;
 
-    top:168px;
+    top:165px;
     left:50%;
 
     transform:
     translateX(-50%)
-    scaleY(1.12);
+    scaleY(1.08);
 
     width:84%;
 
@@ -176,7 +176,7 @@ body{
 
     text-transform:uppercase;
 
-    line-height:.9;
+    line-height:1;
 
     letter-spacing:0;
 
@@ -188,18 +188,19 @@ body{
 }
 
 /* =========================
-   NAMA OUTLINE
+   NAMA BARIS 2
 ========================= */
 
 .nama-outline{
     position:absolute;
 
-    top:255px;
+    top:285px;
+
     left:50%;
 
     transform:
     translateX(-50%)
-    scaleY(1.12);
+    scaleY(1.08);
 
     width:84%;
 
@@ -207,14 +208,13 @@ body{
 
     font-weight:900;
 
-    /* HANYA OUTLINE */
     color:transparent;
 
     -webkit-text-stroke:3px #fff;
 
     text-transform:uppercase;
 
-    line-height:.9;
+    line-height:1;
 
     letter-spacing:0;
 
@@ -223,6 +223,8 @@ body{
     white-space:nowrap;
 
     overflow:hidden;
+
+    paint-order:stroke fill;
 
     text-shadow:none;
 }
@@ -234,8 +236,7 @@ body{
 .nama-bawah{
     position:absolute;
 
-    /* DITURUNKAN */
-    bottom:42px;
+    bottom:38px;
 
     left:50%;
 
@@ -245,7 +246,8 @@ body{
 
     text-align:center;
 
-    font-size:46px;
+    font-size:34px;
+
     font-weight:900;
 
     color:#fff;
@@ -264,7 +266,7 @@ body{
 .sales-bawah{
     position:absolute;
 
-    bottom:16px;
+    bottom:12px;
 
     left:50%;
 
@@ -278,13 +280,14 @@ body{
 }
 
 .sales-bawah i{
-    font-size:14px;
+    font-size:13px;
     font-style:italic;
     margin-right:5px;
+    font-weight:400;
 }
 
 .sales-bawah span{
-    font-size:16px;
+    font-size:15px;
     font-weight:700;
 }
 
@@ -394,7 +397,7 @@ body{
         src="https://putrasetya.github.io/template_posterhero.png"
         class="poster-template">
 
-        <!-- NAMA PUTIH -->
+        <!-- BARIS 1 -->
         <div
         class="nama-putih"
         id="namaPutih">
@@ -403,7 +406,7 @@ body{
 
         </div>
 
-        <!-- NAMA OUTLINE -->
+        <!-- BARIS 2 -->
         <div
         class="nama-outline"
         id="namaOutline">
@@ -458,7 +461,8 @@ salesInput.addEventListener("input", function(){
     split[0].substr(0, sisa);
 
     let ribuan =
-    split[0].substr(sisa)
+    split[0]
+    .substr(sisa)
     .match(/\d{3}/gi);
 
     if(ribuan){
@@ -499,11 +503,39 @@ function fitText(element, text, maxSize){
         element.style.fontSize =
         size + "px";
 
-        if(size <= 20){
+        if(size <= 18){
             break;
         }
 
     }
+
+}
+
+/* =========================
+   SPLIT NAMA 2 BARIS
+========================= */
+
+function splitName(nama){
+
+    let words =
+    nama.split(" ");
+
+    if(words.length <= 1){
+
+        return [nama, nama];
+
+    }
+
+    let tengah =
+    Math.ceil(words.length / 2);
+
+    let baris1 =
+    words.slice(0, tengah).join(" ");
+
+    let baris2 =
+    words.slice(tengah).join(" ");
+
+    return [baris1, baris2];
 
 }
 
@@ -537,6 +569,16 @@ function generatePoster(){
 
     nama = nama.toUpperCase();
 
+    // SPLIT
+    let hasil =
+    splitName(nama);
+
+    let nama1 =
+    hasil[0];
+
+    let nama2 =
+    hasil[1];
+
     // ELEMENT
     const putih =
     document.getElementById("namaPutih");
@@ -548,11 +590,11 @@ function generatePoster(){
     document.getElementById("namaBawah");
 
     // AUTO FIT
-    fitText(putih, nama, 120);
+    fitText(putih, nama1, 115);
 
-    fitText(outline, nama, 110);
+    fitText(outline, nama2, 105);
 
-    fitText(bawah, nama, 50);
+    fitText(bawah, nama, 34);
 
     // SALES
     document.getElementById("salesBawah")
@@ -560,13 +602,23 @@ function generatePoster(){
 
 }
 
-/* AUTO UPDATE */
+/* =========================
+   AUTO UPDATE
+========================= */
 
-document.getElementById("namaInput")
-.addEventListener("input", generatePoster);
+document
+.getElementById("namaInput")
+.addEventListener(
+    "input",
+    generatePoster
+);
 
-document.getElementById("salesInput")
-.addEventListener("input", generatePoster);
+document
+.getElementById("salesInput")
+.addEventListener(
+    "input",
+    generatePoster
+);
 
 </script>
 
