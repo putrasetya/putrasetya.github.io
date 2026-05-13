@@ -32,7 +32,9 @@ body{
     flex-wrap:wrap;
 }
 
-/* PANEL */
+/* =========================
+   PANEL
+========================= */
 
 .panel{
     width:320px;
@@ -65,7 +67,9 @@ body{
     margin:22px 0;
 }
 
-/* INPUT */
+/* =========================
+   INPUT
+========================= */
 
 .form-group{
     margin-top:20px;
@@ -115,7 +119,9 @@ body{
     font-size:22px;
 }
 
-/* BUTTON */
+/* =========================
+   BUTTON
+========================= */
 
 .btn{
     width:100%;
@@ -130,7 +136,9 @@ body{
     color:#fff;
 }
 
-/* POSTER */
+/* =========================
+   POSTER
+========================= */
 
 .poster-wrapper{
     position:relative;
@@ -146,30 +154,85 @@ body{
     display:block;
 }
 
-/* FOTO */
+/* =========================
+   FOTO
+========================= */
 
 .foto-orang{
+
     position:absolute;
-    left:0;
-    bottom:0;
-    width:100%;
-    height:100%;
+
+    left:50%;
+
+    bottom:58px;
+
+    transform:translateX(-50%);
+
+    width:88%;
+
+    height:78%;
+
     object-fit:contain;
-    z-index:5;
+
+    object-position:center bottom;
+
+    z-index:8;
+
     pointer-events:none;
+
+    filter:
+    drop-shadow(0 15px 25px rgba(0,0,0,.55));
+
 }
 
-/* BARIS 1 */
+/* =========================
+   GRADASI BAWAH
+========================= */
+
+.fade-bawah{
+
+    position:absolute;
+
+    left:0;
+
+    bottom:0;
+
+    width:100%;
+
+    height:180px;
+
+    z-index:9;
+
+    pointer-events:none;
+
+    background:
+    linear-gradient(
+        to top,
+        rgba(0,0,0,.92) 0%,
+        rgba(0,0,0,.72) 30%,
+        rgba(0,0,0,.35) 55%,
+        transparent 100%
+    );
+
+}
+
+/* =========================
+   BARIS 1
+========================= */
 
 .nama-putih{
     position:absolute;
+
     top:165px;
+
     left:50%;
+
     transform:
     translateX(-50%)
     scaleY(1.08);
 
     width:84%;
+
     text-align:center;
 
     font-family:'Anton',sans-serif;
@@ -182,16 +245,19 @@ body{
 
     letter-spacing:2px;
 
-    z-index:10;
+    z-index:12;
 
     white-space:nowrap;
 
     overflow:hidden;
 }
 
-/* BARIS 2 */
+/* =========================
+   BARIS 2
+========================= */
 
 .nama-outline{
+
     position:absolute;
 
     top:288px;
@@ -218,14 +284,17 @@ body{
 
     letter-spacing:2px;
 
-    z-index:9;
+    z-index:11;
 
     white-space:nowrap;
 
     overflow:hidden;
+
 }
 
-/* NAMA BAWAH */
+/* =========================
+   NAMA BAWAH
+========================= */
 
 .nama-bawah{
     position:absolute;
@@ -251,9 +320,13 @@ body{
     white-space:nowrap;
 
     overflow:hidden;
+
+    z-index:20;
 }
 
-/* SALES */
+/* =========================
+   SALES
+========================= */
 
 .sales-bawah{
     position:absolute;
@@ -284,7 +357,9 @@ body{
     font-weight:700;
 }
 
-/* MOBILE */
+/* =========================
+   MOBILE
+========================= */
 
 @media(max-width:900px){
 
@@ -383,7 +458,7 @@ body{
 
     <div class="poster-wrapper">
 
-        <!-- TEMPLATE -->
+        <!-- TEMPLATE GITHUB -->
         <img
         src="https://putrasetya.github.io/template_posterhero1.png"
         class="poster-template">
@@ -393,6 +468,9 @@ body{
         id="fotoOrang"
         class="foto-orang"
         src="">
+
+        <!-- GRADASI -->
+        <div class="fade-bawah"></div>
 
         <!-- NAMA PUTIH -->
         <div
@@ -439,11 +517,6 @@ body{
 /* ====================================
    DATABASE FOTO
 ==================================== */
-/*
-EDIT BAGIAN INI
-- keywords = nama yang bisa dicari
-- photo = ID FILE GOOGLE DRIVE
-*/
 
 const people = [
 
@@ -603,9 +676,8 @@ function updatePhoto(nama){
             ){
 
                 foto.src =
-                "https://drive.google.com/thumbnail?id="
-                + person.photo +
-                "&sz=w1000";
+                "https://drive.google.com/uc?export=view&id="
+                + person.photo;
 
                 found = true;
 
@@ -657,7 +729,7 @@ function generatePoster(){
 
     nama = nama.toUpperCase();
 
-    // FOTO OTOMATIS
+    // FOTO
     updatePhoto(nama);
 
     // SPLIT NAMA
