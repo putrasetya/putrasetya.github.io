@@ -12,6 +12,10 @@
 
 <style>
 
+/* =========================
+   GLOBAL
+========================= */
+
 *{
     margin:0;
     padding:0;
@@ -72,7 +76,7 @@ label{
     font-size:16px;
 }
 
-/* SALES */
+/* SALES CLEAN */
 .sales-input-wrap{
     display:flex;
     align-items:center;
@@ -97,10 +101,7 @@ label{
     opacity:0.7;
 }
 
-/* =========================
-   DOWNLOAD BUTTON + LOADING
-========================= */
-
+/* DOWNLOAD BUTTON */
 .download-btn{
     width:100%;
     height:52px;
@@ -121,7 +122,6 @@ label{
     gap:10px;
 }
 
-/* spinner */
 .spinner{
     width:16px;
     height:16px;
@@ -137,7 +137,10 @@ label{
     100%{transform:rotate(360deg);}
 }
 
-/* POSTER */
+/* =========================
+   POSTER
+========================= */
+
 .poster-wrapper{
     position:relative;
     width:430px;
@@ -150,7 +153,7 @@ label{
     display:block;
 }
 
-/* FOTO */
+/* FOTO (DI DEPAN NAMA) */
 .foto-wrap{
     position:absolute;
     left:50%;
@@ -174,6 +177,7 @@ label{
     width:auto;
     object-fit:cover;
 
+    /* GRADASI HANYA BAWAH OBJEK */
     -webkit-mask-image: linear-gradient(
         to top,
         rgba(0,0,0,0) 0%,
@@ -226,8 +230,10 @@ label{
     transform:translateX(-50%);
     width:90%;
     text-align:center;
+
     font-family:'Roboto Condensed',sans-serif;
     font-size:22px;
+    font-weight:700;
     z-index:8;
 }
 
@@ -253,6 +259,8 @@ label{
     font-family:'Roboto Mono',monospace;
     font-size:20px;
     font-weight:700;
+
+    white-space:nowrap;
 }
 
 </style>
@@ -293,9 +301,10 @@ label{
 
     <img class="poster-template" src="https://putrasetya.github.io/template_posterhero1.png">
 
+    <!-- IMPORTANT: crossorigin fix -->
     <div class="foto-wrap">
         <div class="foto-inner">
-            <img id="fotoOrang" class="foto-orang">
+            <img id="fotoOrang" class="foto-orang" crossorigin="anonymous">
         </div>
     </div>
 
@@ -314,13 +323,14 @@ label{
 
 <script>
 
-/* FOTO */
+/* FOTO SYSTEM */
 const people = [
     {keywords:["AFIF","AFI","APIP"],photo:"12pjk_-ZJhbqbPZDzdH4sJSkE5qWwzrf7"},
     {keywords:["PUTRA","PUT"],photo:"1Pxw-wIUKTcyA_inIcqpYY833f_3AtZe2"}
 ];
 
 function updatePhoto(nama){
+
     const img=document.getElementById("fotoOrang");
     const input=nama.toUpperCase().trim();
 
@@ -359,20 +369,33 @@ document.getElementById("salesInput").addEventListener("input",e=>{
     document.getElementById("salesBawah").innerText="Rp "+f;
 });
 
-/* DOWNLOAD WITH LOADING */
+/* DOWNLOAD SAFE RENDER */
 async function downloadPoster(){
 
     const btn=document.getElementById("downloadBtn");
     const spinner=document.getElementById("spinner");
     const text=document.getElementById("btnText");
+    const img=document.getElementById("fotoOrang");
 
     btn.disabled=true;
     spinner.style.display="inline-block";
     text.innerText="DOWNLOADING...";
 
+    /* WAIT IMAGE LOAD (FIX FOTO HILANG) */
+    await new Promise((res)=>{
+        if(!img.src) return res();
+        if(img.complete) return res();
+        img.onload=()=>res();
+        img.onerror=()=>res();
+    });
+
+    await new Promise(r=>setTimeout(r,300));
+
     const canvas=await html2canvas(document.getElementById("poster"),{
         scale:3,
-        useCORS:true
+        useCORS:true,
+        allowTaint:false,
+        backgroundColor:null
     });
 
     const nama=document.getElementById("namaInput").value.toUpperCase()||"NAMA";
