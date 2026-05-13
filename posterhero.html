@@ -37,7 +37,7 @@ body{
 }
 
 /* =========================
-   PANEL CLEAN PREMIUM
+   PANEL
 ========================= */
 
 .panel{
@@ -55,7 +55,7 @@ body{
     font-family:'Anton',sans-serif;
     font-size:34px;
     text-align:center;
-    margin-bottom:24px;
+    margin-bottom:22px;
 
     color:#ffd400;
     letter-spacing:3px;
@@ -63,7 +63,7 @@ body{
     text-shadow:0 0 12px rgba(255,210,0,0.5);
 }
 
-/* INPUT GROUP */
+/* FORM */
 .form-group{
     margin-top:18px;
 }
@@ -76,7 +76,7 @@ label{
     letter-spacing:1px;
 }
 
-/* CLEAN INPUT (NO BOX LOOK) */
+/* INPUT CLEAN */
 .input-box input{
     width:100%;
     height:52px;
@@ -101,28 +101,41 @@ label{
     background:rgba(255,255,255,0.06);
 }
 
-/* SALES INPUT CLEAN */
+/* =========================
+   SALES INPUT (FIX CLEAN)
+========================= */
+
 .sales-input-wrap{
     display:flex;
     align-items:center;
     height:52px;
 
-    background:rgba(255,255,255,0.04);
-    border-bottom:1px solid rgba(255,255,255,0.15);
+    background:transparent;   /* 🔥 no box */
+    border:none;              /* 🔥 remove border */
+    border-bottom:1px solid rgba(255,255,255,0.18);
 
-    border-radius:8px 8px 0 0;
     overflow:hidden;
+}
+
+.sales-input-wrap input{
+    width:100%;
+    height:100%;
+
+    border:none;
+    outline:none;
+
+    background:transparent; /* 🔥 important */
+    color:#fff;
+
+    font-size:16px;
+    padding:0 10px;
 }
 
 .rp{
     padding:0 12px;
     font-weight:800;
-    opacity:0.85;
-}
-
-/* hide sales label */
-.sales-prefix{
-    display:none;
+    opacity:0.7;
+    background:transparent;
 }
 
 /* BUTTON */
@@ -141,16 +154,10 @@ label{
     letter-spacing:1px;
 
     cursor:pointer;
-    transition:0.25s;
-}
-
-.download-btn:hover{
-    transform:translateY(-2px);
-    filter:brightness(1.1);
 }
 
 /* =========================
-   POSTER (TIDAK DIUBAH LOGIC)
+   POSTER
 ========================= */
 
 .poster-wrapper{
@@ -296,7 +303,7 @@ label{
         </div>
     </div>
 
-    <button class="download-btn" id="btn" onclick="downloadPoster()">
+    <button class="download-btn" onclick="downloadPoster()">
         DOWNLOAD POSTER
     </button>
 
@@ -384,7 +391,7 @@ document.getElementById("salesInput").addEventListener("input",e=>{
 /* DOWNLOAD */
 async function downloadPoster(){
 
-    const btn = document.getElementById("btn");
+    const btn = document.querySelector(".download-btn");
     btn.disabled = true;
 
     const canvas = await html2canvas(document.getElementById("poster"),{
