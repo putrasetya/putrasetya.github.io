@@ -6,7 +6,7 @@
 
 <title>Generator Poster</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Anton&family=Montserrat:wght@300;400;500;600;700;800;900&family=Oswald:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Montserrat:wght@300;400;500;600;700;800;900&family=Poppins:wght@500;600;700;800&display=swap" rel="stylesheet">
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 
@@ -34,7 +34,7 @@ body{
 }
 
 /* =========================
-   PANEL UI
+   PANEL
 ========================= */
 
 .panel{
@@ -88,7 +88,7 @@ label{
 }
 
 /* =========================
-   SALES INPUT UI
+   SALES INPUT
 ========================= */
 
 .sales-box{
@@ -173,7 +173,10 @@ label{
     display:block;
 }
 
-/* FOTO FIX ANTI STRETCH */
+/* =========================
+   FOTO + GRADASI CINEMATIC
+========================= */
+
 .foto-wrap{
     position:absolute;
     left:50%;
@@ -185,6 +188,7 @@ label{
 }
 
 .foto-inner{
+    position:relative;
     width:100%;
     height:100%;
     display:flex;
@@ -193,12 +197,34 @@ label{
     overflow:hidden;
 }
 
+/* FOTO FIX NO STRETCH */
 .foto-orang{
     height:100%;
     width:auto;
     max-width:100%;
     object-fit:cover;
     object-position:center bottom;
+}
+
+/* GRADASI CINEMATIC BAWAH FOTO */
+.foto-fade{
+    position:absolute;
+    left:0;
+    bottom:0;
+
+    width:100%;
+    height:45%;
+
+    background:linear-gradient(
+        to top,
+        rgba(0,0,0,0.85) 0%,
+        rgba(0,0,0,0.45) 40%,
+        rgba(0,0,0,0.15) 70%,
+        transparent 100%
+    );
+
+    pointer-events:none;
+    z-index:2;
 }
 
 /* =========================
@@ -263,6 +289,7 @@ label{
     transform:translateX(-50%);
     width:90%;
     text-align:center;
+
     font-size:30px;
     font-weight:900;
     color:#fff;
@@ -298,12 +325,16 @@ label{
     letter-spacing:1px;
 }
 
-/* VALUE (PREMIUM FONT) */
+/* VALUE (READABLE + PREMIUM) */
 .sales-value{
-    font-family:'Oswald',sans-serif;
+    font-family:'Poppins',sans-serif;
     font-size:22px;
-    font-weight:600;
-    letter-spacing:0.5px;
+    font-weight:700;
+    letter-spacing:0.3px;
+
+    text-shadow:0 2px 6px rgba(0,0,0,0.35);
+
+    font-variant-numeric: tabular-nums;
 }
 
 </style>
@@ -355,9 +386,11 @@ label{
 
     <img src="https://putrasetya.github.io/template_posterhero1.png" class="poster-template">
 
+    <!-- FOTO -->
     <div class="foto-wrap">
         <div class="foto-inner">
             <img id="fotoOrang" class="foto-orang" src="">
+            <div class="foto-fade"></div>
         </div>
     </div>
 
@@ -367,7 +400,7 @@ label{
 
     <div class="nama-bawah" id="namaBawah"></div>
 
-    <!-- SALES OUTPUT -->
+    <!-- SALES -->
     <div class="sales-bawah">
         <span class="sales-label">sales</span>
         <span class="sales-value" id="salesBawah">Rp 0</span>
@@ -379,7 +412,7 @@ label{
 
 <script>
 
-/* FOTO DB */
+/* DATABASE FOTO */
 const people=[
 {
     keywords:["AFIF","AFI","APIP"],
@@ -414,7 +447,7 @@ function updatePhoto(nama){
     if(!found) foto.src="";
 }
 
-/* SALES ANIMATION */
+/* SALES ANIMASI */
 function animateSales(val){
 
     const el=document.getElementById("salesBawah");
