@@ -12,6 +12,10 @@
 
 <style>
 
+/* =========================
+   GLOBAL
+========================= */
+
 *{
     margin:0;
     padding:0;
@@ -32,13 +36,18 @@ body{
     flex-wrap:wrap;
 }
 
-/* PANEL */
+/* =========================
+   PANEL CLEAN PREMIUM
+========================= */
+
 .panel{
     width:340px;
-    background:rgba(255,255,255,0.05);
+    background:rgba(255,255,255,0.03);
     border:1px solid rgba(255,255,255,0.08);
     border-radius:24px;
     padding:28px;
+
+    backdrop-filter:blur(14px);
 }
 
 /* TITLE */
@@ -46,95 +55,104 @@ body{
     font-family:'Anton',sans-serif;
     font-size:34px;
     text-align:center;
-    margin-bottom:20px;
+    margin-bottom:24px;
+
     color:#ffd400;
     letter-spacing:3px;
-    text-shadow:0 0 10px rgba(255,210,0,0.6);
+
+    text-shadow:0 0 12px rgba(255,210,0,0.5);
 }
 
-/* INPUT */
-.form-group{margin-top:18px;}
+/* INPUT GROUP */
+.form-group{
+    margin-top:18px;
+}
 
 label{
     display:block;
     margin-bottom:8px;
-    font-size:13px;
-    opacity:0.7;
+    font-size:12px;
+    opacity:0.6;
+    letter-spacing:1px;
 }
 
+/* CLEAN INPUT (NO BOX LOOK) */
 .input-box input{
     width:100%;
-    height:55px;
+    height:52px;
+
     border:none;
     outline:none;
-    background:rgba(255,255,255,0.06);
+
+    background:rgba(255,255,255,0.04);
+    border-bottom:1px solid rgba(255,255,255,0.15);
+
     color:#fff;
-    padding:0 16px;
+    padding:0 10px;
     font-size:16px;
-    border-radius:14px;
-    border:1px solid rgba(255,255,255,0.08);
+
+    border-radius:8px 8px 0 0;
+
+    transition:0.2s;
 }
 
-/* SALES */
-.sales-box{
-    display:flex;
-    flex-direction:column;
-    gap:6px;
+.input-box input:focus{
+    border-bottom:1px solid #ffd400;
+    background:rgba(255,255,255,0.06);
 }
 
-.sales-prefix{
-    font-size:11px;
-    font-style:italic;
-    opacity:0.6;
-}
-
+/* SALES INPUT CLEAN */
 .sales-input-wrap{
     display:flex;
     align-items:center;
-    height:55px;
-    border-radius:14px;
-    background:rgba(255,255,255,0.06);
-    border:1px solid rgba(255,255,255,0.08);
+    height:52px;
+
+    background:rgba(255,255,255,0.04);
+    border-bottom:1px solid rgba(255,255,255,0.15);
+
+    border-radius:8px 8px 0 0;
+    overflow:hidden;
 }
 
 .rp{
     padding:0 12px;
-    background:rgba(255,255,255,0.08);
-    font-weight:700;
+    font-weight:800;
+    opacity:0.85;
+}
+
+/* hide sales label */
+.sales-prefix{
+    display:none;
 }
 
 /* BUTTON */
 .download-btn{
     width:100%;
-    height:55px;
-    margin-top:20px;
+    height:52px;
+    margin-top:24px;
+
     border:none;
-    border-radius:14px;
-    background:linear-gradient(135deg,#ff1a1a,#8b0000);
-    color:#fff;
-    font-weight:800;
-    cursor:pointer;
-}
-
-.download-btn:disabled{
-    opacity:0.6;
-}
-
-/* LOADING */
-.loading{
-    position:fixed;
-    top:50%;
-    left:50%;
-    transform:translate(-50%,-50%);
-    background:rgba(0,0,0,0.85);
-    border:1px solid #ff1a1a;
-    padding:16px 22px;
     border-radius:12px;
-    display:none;
-    z-index:999;
+
+    background:linear-gradient(135deg,#ff1a1a,#7a0000);
+    color:#fff;
+
+    font-weight:800;
+    letter-spacing:1px;
+
+    cursor:pointer;
+    transition:0.25s;
 }
 
-/* POSTER */
+.download-btn:hover{
+    transform:translateY(-2px);
+    filter:brightness(1.1);
+}
+
+/* =========================
+   POSTER (TIDAK DIUBAH LOGIC)
+========================= */
+
 .poster-wrapper{
     position:relative;
     width:430px;
@@ -194,6 +212,7 @@ label{
     transform:translateX(-50%);
     width:92%;
     text-align:center;
+
     font-family:'Anton',sans-serif;
     font-size:76px;
     color:#fff;
@@ -206,13 +225,15 @@ label{
     transform:translateX(-50%);
     width:92%;
     text-align:center;
+
     font-family:'Anton',sans-serif;
     font-size:72px;
+
     color:transparent;
     -webkit-text-stroke:1.5px #fff;
 }
 
-/* BAWAH */
+/* NAMA BAWAH */
 .nama-bawah{
     position:absolute;
     bottom:42px;
@@ -220,12 +241,13 @@ label{
     transform:translateX(-50%);
     width:90%;
     text-align:center;
+
     font-family:'Roboto Condensed',sans-serif;
     font-size:22px;
     font-weight:700;
 }
 
-/* SALES */
+/* SALES OUTPUT */
 .sales-bawah{
     position:absolute;
     bottom:14px;
@@ -252,8 +274,6 @@ label{
 
 <body>
 
-<div class="loading" id="loading">Generating...</div>
-
 <div class="container">
 
 <!-- PANEL -->
@@ -263,17 +283,16 @@ label{
 
     <div class="form-group">
         <label>Nama</label>
-        <input class="input-box" id="namaInput" type="text">
+        <div class="input-box">
+            <input id="namaInput" type="text">
+        </div>
     </div>
 
     <div class="form-group">
         <label>Sales</label>
-        <div class="sales-box">
-            <span class="sales-prefix">sales</span>
-            <div class="sales-input-wrap">
-                <span class="rp">Rp</span>
-                <input id="salesInput" type="text">
-            </div>
+        <div class="sales-input-wrap">
+            <span class="rp">Rp</span>
+            <input id="salesInput" type="text">
         </div>
     </div>
 
@@ -309,13 +328,12 @@ label{
 
 <script>
 
-/* FOTO DATABASE */
+/* FOTO SYSTEM */
 const people = [
     {keywords:["AFIF","AFI","APIP"],photo:"12pjk_-ZJhbqbPZDzdH4sJSkE5qWwzrf7"},
     {keywords:["PUTRA","PUT"],photo:"1Pxw-wIUKTcyA_inIcqpYY833f_3AtZe2"}
 ];
 
-/* FOTO SYSTEM */
 function updatePhoto(nama){
 
     const img = document.getElementById("fotoOrang");
@@ -339,9 +357,7 @@ function updatePhoto(nama){
         if(found) break;
     }
 
-    if(!found){
-        img.src = "";
-    }
+    if(!found) img.src = "";
 }
 
 /* INPUT NAMA */
@@ -369,10 +385,7 @@ document.getElementById("salesInput").addEventListener("input",e=>{
 async function downloadPoster(){
 
     const btn = document.getElementById("btn");
-    const loading = document.getElementById("loading");
-
     btn.disabled = true;
-    loading.style.display = "block";
 
     const canvas = await html2canvas(document.getElementById("poster"),{
         scale:3,
@@ -382,14 +395,11 @@ async function downloadPoster(){
     const nama = document.getElementById("namaInput").value.toUpperCase() || "NAMA";
     const sales = document.getElementById("salesInput").value.replace(/[^0-9]/g,"") || "0";
 
-    const filename = `${nama}_${sales}.png`;
-
     const link = document.createElement("a");
-    link.download = filename;
+    link.download = `${nama}_${sales}.png`;
     link.href = canvas.toDataURL("image/png");
     link.click();
 
-    loading.style.display = "none";
     btn.disabled = false;
 }
 
