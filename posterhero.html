@@ -9,12 +9,17 @@
 <link href="https://fonts.googleapis.com/css2?family=Anton&family=Montserrat:wght@400;600;700;800;900&family=Roboto+Condensed:wght@400;700&family=Roboto+Mono:wght@400;600;700&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.2/cropper.min.css"/>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.2/cropper.min.js"></script>
 
 <style>
 
-*{margin:0;padding:0;box-sizing:border-box;}
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
 
 body{
     background:#000;
@@ -48,7 +53,9 @@ body{
 }
 
 /* INPUT */
-.form-group{margin-bottom:14px;}
+.form-group{
+    margin-bottom:14px;
+}
 
 label{
     font-size:11px;
@@ -104,6 +111,7 @@ button{
 }
 
 /* ================= POSTER ================= */
+
 .poster{
     width:430px;
     position:relative;
@@ -117,6 +125,7 @@ button{
 }
 
 /* FOTO ORANG */
+
 .foto-wrap{
     position:absolute;
     left:50%;
@@ -133,6 +142,7 @@ button{
 }
 
 /* UPLOAD FOTO */
+
 .upload-layer{
     position:absolute;
     bottom:110px;
@@ -149,6 +159,7 @@ button{
 }
 
 /* NAMA */
+
 .nama1,.nama2,.nama3{
     position:absolute;
     width:100%;
@@ -178,6 +189,7 @@ button{
 }
 
 /* SALES */
+
 .sales{
     position:absolute;
     bottom:14px;
@@ -189,7 +201,7 @@ button{
     white-space:nowrap;
 }
 
-/* ================= CROPPER (DIPULIHKAN) ================= */
+/* ================= CROPPER ================= */
 
 .modal{
     position:fixed;
@@ -215,7 +227,6 @@ button{
     display:block;
 }
 
-/* tombol crop */
 .modal-actions{
     display:flex;
     gap:10px;
@@ -240,6 +251,7 @@ button{
 }
 
 /* LOADING */
+
 .spinner{
     width:16px;
     height:16px;
@@ -251,7 +263,9 @@ button{
 }
 
 @keyframes spin{
-    100%{transform:rotate(360deg);}
+    100%{
+        transform:rotate(360deg);
+    }
 }
 
 .download-btn{
@@ -269,36 +283,40 @@ button{
 <div class="container">
 
 <!-- PANEL -->
+
 <div class="panel">
 
 <div class="panel-title">MENYALA</div>
 
 <div class="form-group">
-    <label>Nama Sales</label>
-    <input class="input" id="namaInput">
+<label>Nama Sales</label>
+<input class="input" id="namaInput">
 </div>
 
 <div class="form-group">
-    <label>Nominal</label>
-    <div class="rupiah">
-        <span class="rp">Rp</span>
-        <input id="salesInput">
-    </div>
+<label>Nominal</label>
+
+<div class="rupiah">
+<span class="rp">Rp</span>
+<input id="salesInput">
+</div>
+
 </div>
 
 <div class="form-group">
-    <label>Upload Foto Struk</label>
-    <input type="file" id="uploadInput">
+<label>Upload Foto Struk</label>
+<input type="file" id="uploadInput">
 </div>
 
 <button id="downloadBtn" onclick="downloadPoster()">
-    <div class="spinner" id="spinner"></div>
-    <span id="btnText">DOWNLOAD POSTER</span>
+<div class="spinner" id="spinner"></div>
+<span id="btnText">DOWNLOAD POSTER</span>
 </button>
 
 </div>
 
 <!-- POSTER -->
+
 <div class="poster" id="poster">
 
 <img class="bg" src="https://putrasetya.github.io/template_posterhero1.png">
@@ -321,137 +339,285 @@ button{
 
 </div>
 
-<!-- CROPPER DIPULIHKAN -->
+<!-- CROPPER -->
+
 <div class="modal" id="modal">
 
 <div class="modal-box">
-    <img id="cropImage">
 
-    <div class="modal-actions">
-        <button onclick="cropSave()">CROP</button>
-        <button onclick="closeModal()">BATAL</button>
-    </div>
+<img id="cropImage">
+
+<div class="modal-actions">
+<button onclick="cropSave()">CROP</button>
+<button onclick="closeModal()">BATAL</button>
+</div>
+
 </div>
 
 </div>
 
 <script>
 
+/* ELEMENT */
+
+const namaInput=document.getElementById("namaInput");
+const salesInput=document.getElementById("salesInput");
+const uploadInput=document.getElementById("uploadInput");
+
+const n1=document.getElementById("n1");
+const n2=document.getElementById("n2");
+const n3=document.getElementById("n3");
+
+const s=document.getElementById("s");
+
 /* FOTO SYSTEM */
+
 const people=[
-{keywords:["AFI","avi","api"],photo:"https://lh3.googleusercontent.com/d/12pjk_-ZJhbqbPZDzdH4sJSkE5qWwzrf7=w1000"},
-{keywords:["PUTRA","put"],photo:"https://lh3.googleusercontent.com/d/1Pxw-wIUKTcyA_inIcqpYY833f_3AtZe2=w1000"},
-{keywords:["GO","gh","GHO","GHOFUR"],photo:"https://lh3.googleusercontent.com/d/13OG6tf86ZIg6uUIn0yU6TwqweCSkLNfw"},
-{keywords:["hep","hap"],photo:"https://lh3.googleusercontent.com/d/16tuEFyNqC9DqdLtx7sjjEd8RsGKegskG"},
-{keywords:["imam","pak imam"],photo:"https://lh3.googleusercontent.com/d/1kMjqQ1keHMCqwRAFk9yzZJoLDexL4QU9"},
-{keywords:["ja","mus"],photo:"https://lh3.googleusercontent.com/d/11jXuXx1onUlvJ3ULT351x90BVKH_47GF"},
-{keywords:["arip","arif"],photo:"https://lh3.googleusercontent.com/d/1HYYysdMbzW89vpo_YI7_E-mwfbxXT6lW"},
-{keywords:["arc","art"],photo:"https://lh3.googleusercontent.com/d/1bFl3Jy3m1PrpD7dVoPvo_Ks3JM_4hNY7"},
-{keywords:["sho"],photo:"https://lh3.googleusercontent.com/d/1qszknso1K93EsFJdKc07dCatTg4B51Gz"},
-{keywords:["pak nav","nav"],photo:"https://lh3.googleusercontent.com/d/11XA9MyqVHh5TlnWnRRUrs6T92fwx5tIb"},
-{keywords:["rifa","pai"],photo:"https://lh3.googleusercontent.com/d/1Op2tYuOs8SNbBLnfcmztcij-_h4q1B1M"},
-{keywords:["bud"],photo:"https://lh3.googleusercontent.com/d/1s3OEJyXr-_i5p8D0hKw-aCCbcgLQwWxi"},
-{keywords:["sali"],photo:"https://lh3.googleusercontent.com/d/1O4U8DkXFf77qJjzXx4VNvnkVHQDu6gnt"},
-{keywords:["lul"],photo:"https://lh3.googleusercontent.com/d/1fGkhYA-LcBd2M086mMGgjCgnH0SyHqUH"},
-{keywords:["rah","ima"],photo:"https://lh3.googleusercontent.com/d/1tNq1Uah-5x5_kPkujr1gCR5jiLuKrGQQ"},
-{keywords:["sher"],photo:"https://lh3.googleusercontent.com/d/1ocD_L6dq5XcleWt1AIBQeA8iUJ2xKNUn"},
+
+{
+keywords:["AFI","avi","api"],
+photo:"https://lh3.googleusercontent.com/d/12pjk_-ZJhbqbPZDzdH4sJSkE5qWwzrf7=w1000"
+},
+
+{
+keywords:["PUTRA","put"],
+photo:"https://lh3.googleusercontent.com/d/1Pxw-wIUKTcyA_inIcqpYY833f_3AtZe2=w1000"
+},
+
+{
+keywords:["GO","gh","GHO","GHOFUR"],
+photo:"https://lh3.googleusercontent.com/d/13OG6tf86ZIg6uUIn0yU6TwqweCSkLNfw=w1000"
+},
+
+{
+keywords:["hep","hap"],
+photo:"https://lh3.googleusercontent.com/d/16tuEFyNqC9DqdLtx7sjjEd8RsGKegskG=w1000"
+},
+
+{
+keywords:["imam","pak imam"],
+photo:"https://lh3.googleusercontent.com/d/1kMjqQ1keHMCqwRAFk9yzZJoLDexL4QU9=w1000"
+},
+
+{
+keywords:["ja","mus"],
+photo:"https://lh3.googleusercontent.com/d/11jXuXx1onUlvJ3ULT351x90BVKH_47GF=w1000"
+},
+
+{
+keywords:["arip","arif"],
+photo:"https://lh3.googleusercontent.com/d/1HYYysdMbzW89vpo_YI7_E-mwfbxXT6lW=w1000"
+},
+
+{
+keywords:["arc","art"],
+photo:"https://lh3.googleusercontent.com/d/1bFl3Jy3m1PrpD7dVoPvo_Ks3JM_4hNY7=w1000"
+},
+
+{
+keywords:["sho"],
+photo:"https://lh3.googleusercontent.com/d/1qszknso1K93EsFJdKc07dCatTg4B51Gz=w1000"
+},
+
+{
+keywords:["pak nav","nav"],
+photo:"https://lh3.googleusercontent.com/d/11XA9MyqVHh5TlnWnRRUrs6T92fwx5tIb=w1000"
+},
+
+{
+keywords:["rifa","pai"],
+photo:"https://lh3.googleusercontent.com/d/1Op2tYuOs8SNbBLnfcmztcij-_h4q1B1M=w1000"
+},
+
+{
+keywords:["bud"],
+photo:"https://lh3.googleusercontent.com/d/1s3OEJyXr-_i5p8D0hKw-aCCbcgLQwWxi=w1000"
+},
+
+{
+keywords:["sali"],
+photo:"https://lh3.googleusercontent.com/d/1O4U8DkXFf77qJjzXx4VNvnkVHQDu6gnt=w1000"
+},
+
+{
+keywords:["lul"],
+photo:"https://lh3.googleusercontent.com/d/1fGkhYA-LcBd2M086mMGgjCgnH0SyHqUH=w1000"
+},
+
+{
+keywords:["rah","ima"],
+photo:"https://lh3.googleusercontent.com/d/1tNq1Uah-5x5_kPkujr1gCR5jiLuKrGQQ=w1000"
+},
+
+{
+keywords:["sher"],
+photo:"https://lh3.googleusercontent.com/d/1ocD_L6dq5XcleWt1AIBQeA8iUJ2xKNUn=w1000"
+}
+
 ];
 
 function updatePhoto(n){
+
 let up=n.toUpperCase();
+
 let img=document.getElementById("foto");
+
 let found=null;
 
 people.forEach(p=>{
-if(p.keywords.some(k=>up.includes(k))) found=p.photo;
+
+if(
+p.keywords.some(
+k=>up.includes(k.toUpperCase())
+)
+){
+found=p.photo;
+}
+
 });
 
 img.src=found||"";
+
 }
 
 /* INPUT */
+
 namaInput.oninput=(e)=>{
+
 let v=e.target.value||"NAMA";
+
 updatePhoto(v);
+
 n1.innerText=v;
 n2.innerText=v;
 n3.innerText=v;
+
 };
 
 salesInput.oninput=(e)=>{
+
 let v=e.target.value.replace(/[^0-9]/g,"")||"0";
+
 let f=new Intl.NumberFormat("id-ID").format(v);
+
 e.target.value=f;
+
 s.innerText="Rp "+f;
+
 };
 
-/* CROPPER (FIX ACTIVE) */
+/* CROPPER */
+
 let cropper;
 
 uploadInput.onchange=(e)=>{
+
 let file=e.target.files[0];
+
 if(!file) return;
 
 let reader=new FileReader();
+
 reader.onload=(ev)=>{
 
 document.getElementById("modal").style.display="flex";
+
 document.getElementById("cropImage").src=ev.target.result;
 
 setTimeout(()=>{
-cropper=new Cropper(document.getElementById("cropImage"),{
+
+if(cropper) cropper.destroy();
+
+cropper=new Cropper(
+document.getElementById("cropImage"),
+{
 aspectRatio:1,
 viewMode:1
-});
+}
+);
+
 },200);
 
 };
+
 reader.readAsDataURL(file);
+
 };
 
 function cropSave(){
-let canvas=cropper.getCroppedCanvas({width:300,height:300});
-document.getElementById("uploadPreview").src=canvas.toDataURL("image/png");
-cropper.destroy();
+
+let canvas=cropper.getCroppedCanvas({
+width:300,
+height:300
+});
+
+document.getElementById("uploadPreview").src=
+canvas.toDataURL("image/png");
+
+if(cropper) cropper.destroy();
+
 document.getElementById("modal").style.display="none";
+
 }
 
 function closeModal(){
-cropper.destroy();
+
+if(cropper) cropper.destroy();
+
 document.getElementById("modal").style.display="none";
+
 }
 
 /* DOWNLOAD */
+
 async function downloadPoster(){
 
 const btn=document.getElementById("downloadBtn");
+
 const spinner=document.getElementById("spinner");
+
 const text=document.getElementById("btnText");
 
 btn.disabled=true;
+
 spinner.style.display="inline-block";
+
 text.innerText="PROCESSING...";
 
 await new Promise(r=>setTimeout(r,300));
 
-const canvas=await html2canvas(document.getElementById("poster"),{
+const canvas=await html2canvas(
+document.getElementById("poster"),
+{
 scale:3,
 useCORS:true,
 backgroundColor:null
-});
+}
+);
 
-const nama=document.getElementById("namaInput").value||"NAMA";
-const sales=document.getElementById("salesInput").value.replace(/[^0-9]/g,"")||"0";
+const nama=
+document.getElementById("namaInput").value||"NAMA";
+
+const sales=
+document.getElementById("salesInput")
+.value.replace(/[^0-9]/g,"")||"0";
 
 const a=document.createElement("a");
+
 a.download=`${nama}_${sales}.png`;
+
 a.href=canvas.toDataURL("image/png");
+
 a.click();
 
 setTimeout(()=>{
+
 btn.disabled=false;
+
 spinner.style.display="none";
+
 text.innerText="DOWNLOAD POSTER";
+
 },800);
 
 }
