@@ -591,25 +591,12 @@ text.innerText="PROCESSING...";
 
 await new Promise(r=>setTimeout(r,300));
 
-const poster=document.getElementById("poster");
-
-/* FIX MOBILE & DESKTOP OUTPUT */
-
 const canvas=await html2canvas(
-poster,
+document.getElementById("poster"),
 {
-scale:4,
+scale:3,
 useCORS:true,
-backgroundColor:null,
-
-width:poster.offsetWidth,
-height:poster.offsetHeight,
-
-windowWidth:poster.scrollWidth,
-windowHeight:poster.scrollHeight,
-
-scrollX:0,
-scrollY:0
+backgroundColor:null
 }
 );
 
