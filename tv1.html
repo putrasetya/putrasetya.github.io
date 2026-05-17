@@ -292,10 +292,112 @@ CARD
     border:
         1px solid rgba(255,255,255,.08);
 
-    transform:translateZ(0);
+    transform:
+        translateZ(0);
 
     transition:
-        transform .3s ease;
+        transform .35s ease,
+        box-shadow .35s ease,
+        filter .35s ease;
+
+    animation:
+        floatingCard 5s ease-in-out infinite;
+
+    will-change:
+        transform;
+}
+
+/* =========================
+CARD SHINE
+========================= */
+
+.rank-card::before{
+
+    content:"";
+
+    position:absolute;
+
+    inset:0;
+
+    background:
+        linear-gradient(
+            120deg,
+            transparent 0%,
+            rgba(255,255,255,.22) 45%,
+            transparent 100%
+        );
+
+    transform:
+        translateX(-140%);
+
+    animation:
+        shineMove 4.5s linear infinite;
+
+    pointer-events:none;
+}
+
+/* =========================
+CARD HOVER
+========================= */
+
+.rank-card:hover{
+
+    transform:
+        translateY(-4px)
+        scale(1.01);
+
+    box-shadow:
+        0 18px 40px rgba(0,0,0,.35);
+
+    filter:
+        brightness(1.03);
+}
+
+/* =========================
+FLOATING
+========================= */
+
+@keyframes floatingCard{
+
+    0%{
+
+        transform:
+            translateY(0px)
+            translateZ(0);
+    }
+
+    50%{
+
+        transform:
+            translateY(-5px)
+            translateZ(0);
+    }
+
+    100%{
+
+        transform:
+            translateY(0px)
+            translateZ(0);
+    }
+}
+
+/* =========================
+SHINE
+========================= */
+
+@keyframes shineMove{
+
+    0%{
+
+        transform:
+            translateX(-140%);
+    }
+
+    100%{
+
+        transform:
+            translateX(140%);
+    }
 }
 
 /* =========================
@@ -313,6 +415,8 @@ CARD COLOR
             #d4a514,
             #6b5300
         );
+
+    animation-delay:0s;
 }
 
 .silver{
@@ -326,6 +430,8 @@ CARD COLOR
             #d1d5db,
             #737373
         );
+
+    animation-delay:1s;
 }
 
 .bronze{
@@ -339,6 +445,8 @@ CARD COLOR
             #c87c3d,
             #6d3f1d
         );
+
+    animation-delay:2s;
 }
 
 /* =========================
@@ -614,10 +722,6 @@ MOBILE
     TAP DIMANA SAJA UNTUK FULLSCREEN
 </div>
 
-<!-- =========================
-SLIDE 1
-========================= -->
-
 <div class="slide active">
 
     <div class="header">
@@ -635,10 +739,6 @@ SLIDE 1
     <div class="rank-list" id="salesList"></div>
 
 </div>
-
-<!-- =========================
-SLIDE 2
-========================= -->
 
 <div class="slide">
 
@@ -658,10 +758,6 @@ SLIDE 2
 
 </div>
 
-<!-- =========================
-SLIDE 3
-========================= -->
-
 <div class="slide">
 
     <div class="header">
@@ -680,10 +776,6 @@ SLIDE 3
 
 </div>
 
-<!-- =========================
-AUDIO
-========================= -->
-
 <audio
     id="bgm"
     loop
@@ -698,10 +790,6 @@ AUDIO
 </audio>
 
 <script>
-
-/* =========================
-CONFIG
-========================= */
 
 const URL =
 "https://script.google.com/macros/s/AKfycbzeehvUo6QYriMFJTR4A88lN6IIHV6Qop9UphkdOTMkRLVxhVuJ13y69momo6h1pn9dTQ/exec";
@@ -803,10 +891,6 @@ async function getData(){
     }
 }
 
-/* =========================
-RENDER
-========================= */
-
 function render(data,key,containerId,label){
 
     const styles = [
@@ -904,10 +988,6 @@ function render(data,key,containerId,label){
     .innerHTML = html;
 }
 
-/* =========================
-UPDATE
-========================= */
-
 async function update(){
 
     const data =
@@ -937,26 +1017,11 @@ async function update(){
         );
     }
 
-    render(
-        data,
-        "sales",
-        "salesList",
-        "TOTAL SALES"
-    );
+    render(data,"sales","salesList","TOTAL SALES");
 
-    render(
-        data,
-        "proteksi",
-        "proteksiList",
-        "TOTAL PROTEKSI"
-    );
+    render(data,"proteksi","proteksiList","TOTAL PROTEKSI");
 
-    render(
-        data,
-        "trx",
-        "trxList",
-        "TOTAL TRX"
-    );
+    render(data,"trx","trxList","TOTAL TRX");
 
     setUpdateTime(lastUpdateText);
 }
