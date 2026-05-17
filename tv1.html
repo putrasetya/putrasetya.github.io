@@ -295,16 +295,44 @@ CARD
     transform:
         translateZ(0);
 
-    transition:
-        transform .35s ease,
-        box-shadow .35s ease,
-        filter .35s ease;
+    opacity:0;
+
+    filter:
+        blur(10px);
 
     animation:
-        floatingCard 5s ease-in-out infinite;
+        cardEntrance 1s cubic-bezier(.2,.8,.2,1) forwards,
+        floatingCard 5s ease-in-out infinite 1.2s;
 
     will-change:
-        transform;
+        transform,
+        opacity,
+        filter;
+}
+
+/* =========================
+ENTRANCE DELAY
+========================= */
+
+.rank-card:nth-child(1){
+
+    animation-delay:
+        .1s,
+        1.4s;
+}
+
+.rank-card:nth-child(2){
+
+    animation-delay:
+        .45s,
+        1.7s;
+}
+
+.rank-card:nth-child(3){
+
+    animation-delay:
+        .8s,
+        2s;
 }
 
 /* =========================
@@ -351,6 +379,37 @@ CARD HOVER
 
     filter:
         brightness(1.03);
+}
+
+/* =========================
+CARD ENTRANCE
+========================= */
+
+@keyframes cardEntrance{
+
+    0%{
+
+        opacity:0;
+
+        transform:
+            translateY(40px)
+            scale(.92);
+
+        filter:
+            blur(10px);
+    }
+
+    100%{
+
+        opacity:1;
+
+        transform:
+            translateY(0)
+            scale(1);
+
+        filter:
+            blur(0);
+    }
 }
 
 /* =========================
@@ -415,8 +474,6 @@ CARD COLOR
             #d4a514,
             #6b5300
         );
-
-    animation-delay:0s;
 }
 
 .silver{
@@ -430,8 +487,6 @@ CARD COLOR
             #d1d5db,
             #737373
         );
-
-    animation-delay:1s;
 }
 
 .bronze{
@@ -445,8 +500,6 @@ CARD COLOR
             #c87c3d,
             #6d3f1d
         );
-
-    animation-delay:2s;
 }
 
 /* =========================
@@ -800,10 +853,6 @@ localStorage.getItem("lastDataHash") || "";
 let lastUpdateText =
 localStorage.getItem("lastUpdateText") || "-";
 
-/* =========================
-HELPER
-========================= */
-
 function clean(val){
 
     if(!val) return 0;
@@ -844,10 +893,6 @@ function setUpdateTime(text){
         }
     });
 }
-
-/* =========================
-FETCH DATA
-========================= */
 
 async function getData(){
 
@@ -903,26 +948,6 @@ function render(data,key,containerId,label){
         .filter(v => v[key] > 0)
         .sort((a,b)=>b[key]-a[key])
         .slice(0,3);
-
-    if(sorted.length === 0){
-
-        document.getElementById(containerId)
-        .innerHTML =
-
-        `
-        <div style="
-            text-align:center;
-            padding-top:10vh;
-            opacity:.7;
-            font-size:2vw;
-            font-weight:600;
-        ">
-            DATA BELUM TERSEDIA
-        </div>
-        `;
-
-        return;
-    }
 
     let html = "";
 
@@ -1026,10 +1051,6 @@ async function update(){
     setUpdateTime(lastUpdateText);
 }
 
-/* =========================
-SLIDER
-========================= */
-
 let current = 0;
 
 const slides =
@@ -1050,10 +1071,6 @@ function showNextSlide(){
 
     next.classList.add("active");
 }
-
-/* =========================
-FULLSCREEN
-========================= */
 
 async function enterFullscreen(){
 
@@ -1094,19 +1111,11 @@ document.addEventListener(
     enterFullscreen
 );
 
-/* =========================
-START
-========================= */
-
 update();
 
 setInterval(update,15000);
 
 setInterval(showNextSlide,7000);
-
-/* =========================
-AUDIO
-========================= */
 
 window.addEventListener(
     "load",
@@ -1144,10 +1153,6 @@ window.addEventListener(
             "touchstart",
             forcePlay
         );
-
-        setTimeout(forcePlay,1000);
-
-        setTimeout(forcePlay,3000);
     }
 );
 
