@@ -491,6 +491,52 @@ SCORE
 }
 
 /* =========================
+FULLSCREEN HINT
+========================= */
+
+.fullscreen-hint{
+
+    position:fixed;
+
+    bottom:18px;
+
+    right:22px;
+
+    z-index:9999;
+
+    background:rgba(0,0,0,.45);
+
+    border:1px solid rgba(255,255,255,.15);
+
+    padding:10px 18px;
+
+    border-radius:14px;
+
+    font-size:13px;
+
+    font-weight:600;
+
+    backdrop-filter:blur(10px);
+
+    animation:pulse 2s infinite;
+}
+
+@keyframes pulse{
+
+    0%{
+        opacity:.55;
+    }
+
+    50%{
+        opacity:1;
+    }
+
+    100%{
+        opacity:.55;
+    }
+}
+
+/* =========================
 MOBILE
 ========================= */
 
@@ -548,19 +594,10 @@ MOBILE
     .score-label{
         font-size:10px;
     }
-}
 
-/* =========================
-TV 4K
-========================= */
-
-@media(min-width:1920px){
-
-    .update-time{
-
-        font-size:30px;
-
-        padding:18px 42px;
+    .fullscreen-hint{
+        font-size:11px;
+        padding:8px 12px;
     }
 }
 
@@ -568,6 +605,10 @@ TV 4K
 </head>
 
 <body>
+
+<div class="fullscreen-hint">
+    TAP DIMANA SAJA UNTUK FULLSCREEN
+</div>
 
 <div class="slide active">
 
@@ -623,6 +664,19 @@ TV 4K
 
 </div>
 
+<audio
+    id="bgm"
+    loop
+    autoplay
+    playsinline
+    preload="auto">
+
+    <source
+        src="https://putrasetya.github.io/223am.mp3"
+        type="audio/mpeg">
+
+</audio>
+
 <script>
 
 const URL =
@@ -633,6 +687,10 @@ localStorage.getItem("lastDataHash") || "";
 
 let lastUpdateText =
 localStorage.getItem("lastUpdateText") || "-";
+
+/* =========================
+HELPER
+========================= */
 
 function clean(val){
 
@@ -658,37 +716,58 @@ function formatTanggalIndonesia(date){
 
 function setUpdateTime(text){
 
-    document.getElementById("updateTimeSales").innerHTML =
-    "DATA UPDATE : " + text;
+    [
+        "updateTimeSales",
+        "updateTimeProteksi",
+        "updateTimeTrx"
+    ].forEach(id=>{
 
-    document.getElementById("updateTimeProteksi").innerHTML =
-    "DATA UPDATE : " + text;
+        const el =
+        document.getElementById(id);
 
-    document.getElementById("updateTimeTrx").innerHTML =
-    "DATA UPDATE : " + text;
+        if(el){
+
+            el.innerHTML =
+            "DATA UPDATE : " + text;
+        }
+    });
 }
+
+/* =========================
+FETCH DATA
+========================= */
 
 async function getData(){
 
     try{
 
-        const res = await fetch(URL);
+        const res =
+        await fetch(
+            URL + "?t=" + Date.now()
+        );
 
-        const json = await res.json();
+        const json =
+        await res.json();
 
         return json.map(row => ({
 
-            name: row["EMPLOYEE NAME"] || "UNKNOWN",
+            name:
+                row["EMPLOYEE NAME"] || "UNKNOWN",
 
-            dept: row["DEPT"] || "-",
+            dept:
+                row["DEPT"] || "-",
 
-            sales: clean(row["SALES MTD"]),
+            sales:
+                clean(row["SALES MTD"]),
 
-            proteksi: clean(row["PROTEKSI"]),
+            proteksi:
+                clean(row["PROTEKSI"]),
 
-            trx: clean(row["TRX"]),
+            trx:
+                clean(row["TRX"]),
 
-            photo: row["PHOTO"] || ""
+            photo:
+                row["PHOTO"] || ""
 
         }));
 
@@ -699,6 +778,10 @@ async function getData(){
         return [];
     }
 }
+
+/* =========================
+RENDER
+========================= */
 
 function render(data,key,containerId,label){
 
@@ -713,9 +796,36 @@ function render(data,key,containerId,label){
         .sort((a,b)=>b[key]-a[key])
         .slice(0,3);
 
+    if(sorted.length === 0){
+
+        document.getElementById(containerId)
+        .innerHTML =
+
+        `
+        <div style="
+            text-align:center;
+            padding-top:10vh;
+            opacity:.7;
+            font-size:2vw;
+            font-weight:600;
+        ">
+            DATA BELUM TERSEDIA
+        </div>
+        `;
+
+        return;
+    }
+
     let html = "";
 
     sorted.forEach((d,i)=>{
+
+        const photoUrl =
+        d.photo
+        ?
+        `https://drive.google.com/thumbnail?id=${d.photo}&sz=w1000`
+        :
+        `https://ui-avatars.com/api/?name=${encodeURIComponent(d.name)}&background=random&color=fff&size=512`;
 
         html += `
 
@@ -728,7 +838,9 @@ function render(data,key,containerId,label){
             <div class="photo-box">
 
                 <img
-                    src="https://lh3.googleusercontent.com/d/${d.photo}"
+                    loading="lazy"
+
+                    src="${photoUrl}"
 
                     onerror="
                     this.src='https://ui-avatars.com/api/?name=${encodeURIComponent(d.name)}&background=random&color=fff&size=512'
@@ -765,19 +877,26 @@ function render(data,key,containerId,label){
         `;
     });
 
-    document.getElementById(containerId).innerHTML = html;
+    document.getElementById(containerId)
+    .innerHTML = html;
 }
+
+/* =========================
+UPDATE
+========================= */
 
 async function update(){
 
-    const data = await getData();
+    const data =
+    await getData();
 
     const currentHash =
     JSON.stringify(data);
 
     if(currentHash !== lastDataHash){
 
-        lastDataHash = currentHash;
+        lastDataHash =
+        currentHash;
 
         localStorage.setItem(
             "lastDataHash",
@@ -819,6 +938,10 @@ async function update(){
     setUpdateTime(lastUpdateText);
 }
 
+/* =========================
+SLIDER
+========================= */
+
 let current = 0;
 
 const slides =
@@ -836,48 +959,102 @@ function showNextSlide(){
         .classList.add("active");
 }
 
-setInterval(showNextSlide,7000);
-
-setInterval(update,15000);
-
-update();
-
 /* =========================
-AUDIO
+FULLSCREEN
 ========================= */
 
-const bgm =
-document.getElementById("bgm");
-
-bgm.volume = 0.4;
-
-async function forcePlay(){
+async function enterFullscreen(){
 
     try{
 
-        await bgm.play();
+        if(
+            !document.fullscreenElement
+        ){
+
+            await document.documentElement
+            .requestFullscreen();
+
+            const hint =
+            document.querySelector(
+                ".fullscreen-hint"
+            );
+
+            if(hint){
+
+                hint.style.display =
+                "none";
+            }
+        }
 
     }catch(err){
 
-        console.log(err);
+        console.log(
+            "FULLSCREEN ERROR:",
+            err
+        );
     }
 }
 
 document.addEventListener(
     "click",
-    forcePlay
+    enterFullscreen
 );
 
 document.addEventListener(
     "touchstart",
-    forcePlay
+    enterFullscreen
 );
+
+/* =========================
+START
+========================= */
+
+update();
+
+setInterval(update,15000);
+
+setInterval(showNextSlide,7000);
+
+/* =========================
+AUDIO
+========================= */
 
 window.addEventListener(
     "load",
     ()=>{
 
+        const bgm =
+        document.getElementById(
+            "bgm"
+        );
+
+        if(!bgm) return;
+
+        bgm.volume = 0.4;
+
+        async function forcePlay(){
+
+            try{
+
+                await bgm.play();
+
+            }catch(err){
+
+                console.log(err);
+            }
+        }
+
         forcePlay();
+
+        document.addEventListener(
+            "click",
+            forcePlay
+        );
+
+        document.addEventListener(
+            "touchstart",
+            forcePlay
+        );
 
         setTimeout(forcePlay,1000);
 
@@ -886,19 +1063,6 @@ window.addEventListener(
 );
 
 </script>
-
-<audio
-    id="bgm"
-    loop
-    autoplay
-    playsinline
-    preload="auto">
-
-    <source
-        src="https://putrasetya.github.io/223am.mp3"
-        type="audio/mpeg">
-
-</audio>
 
 </body>
 </html>
