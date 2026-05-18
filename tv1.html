@@ -138,12 +138,12 @@ SLIDE
     pointer-events:none;
 
     transition:
-        opacity .8s ease,
-        visibility .8s ease;
+        opacity .7s ease,
+        visibility .7s ease;
 
     will-change:opacity;
 
-    transform:translateZ(0);
+    transform:translate3d(0,0,0);
 }
 
 .slide.active{
@@ -292,54 +292,17 @@ CARD
     border:
         1px solid rgba(255,255,255,.08);
 
-    transform:
-        translateZ(0);
-
     opacity:0;
 
     filter:
         blur(10px);
 
+    transform:translate3d(0,0,0);
+
     will-change:
         transform,
         opacity,
         filter;
-}
-
-/* =========================
-CARD SHOW
-========================= */
-
-.rank-card.show{
-
-    animation:
-        cardEntrance 1s cubic-bezier(.2,.8,.2,1) forwards,
-        floatingCard 5s ease-in-out infinite 1.2s;
-}
-
-/* =========================
-ENTRANCE DELAY
-========================= */
-
-.rank-card:nth-child(1){
-
-    animation-delay:
-        .1s,
-        1.4s;
-}
-
-.rank-card:nth-child(2){
-
-    animation-delay:
-        .45s,
-        1.7s;
-}
-
-.rank-card:nth-child(3){
-
-    animation-delay:
-        .8s,
-        2s;
 }
 
 /* =========================
@@ -382,8 +345,8 @@ CARD ENTRANCE
         opacity:0;
 
         transform:
-            translateY(40px)
-            scale(.92);
+            translateY(45px)
+            scale(.94);
 
         filter:
             blur(10px);
@@ -399,34 +362,6 @@ CARD ENTRANCE
 
         filter:
             blur(0);
-    }
-}
-
-/* =========================
-FLOATING
-========================= */
-
-@keyframes floatingCard{
-
-    0%{
-
-        transform:
-            translateY(0px)
-            translateZ(0);
-    }
-
-    50%{
-
-        transform:
-            translateY(-5px)
-            translateZ(0);
-    }
-
-    100%{
-
-        transform:
-            translateY(0px)
-            translateZ(0);
     }
 }
 
@@ -555,6 +490,8 @@ PHOTO
     object-fit:contain;
 
     object-position:center bottom;
+
+    image-rendering:auto;
 
     filter:
         drop-shadow(0 10px 15px rgba(0,0,0,.28))
@@ -700,6 +637,10 @@ FULLSCREEN HINT
     TAP DIMANA SAJA UNTUK FULLSCREEN
 </div>
 
+<!-- =========================
+SLIDE SALES
+========================= -->
+
 <div class="slide active">
 
     <div class="header">
@@ -717,6 +658,10 @@ FULLSCREEN HINT
     <div class="rank-list" id="salesList"></div>
 
 </div>
+
+<!-- =========================
+SLIDE PROTEKSI
+========================= -->
 
 <div class="slide">
 
@@ -736,6 +681,10 @@ FULLSCREEN HINT
 
 </div>
 
+<!-- =========================
+SLIDE TRX
+========================= -->
+
 <div class="slide">
 
     <div class="header">
@@ -754,6 +703,10 @@ FULLSCREEN HINT
 
 </div>
 
+<!-- =========================
+AUDIO
+========================= -->
+
 <audio
     id="bgm"
     loop
@@ -769,13 +722,23 @@ FULLSCREEN HINT
 
 <script>
 
+/* =========================
+CONFIG
+========================= */
+
 const URL =
 "https://script.google.com/macros/s/AKfycbzeehvUo6QYriMFJTR4A88lN6IIHV6Qop9UphkdOTMkRLVxhVuJ13y69momo6h1pn9dTQ/exec";
 
-let current = 0;
-
 const slides =
 document.querySelectorAll(".slide");
+
+let current = 0;
+
+let isAnimating = false;
+
+/* =========================
+UTIL
+========================= */
 
 function clean(val){
 
@@ -811,13 +774,20 @@ function setUpdateTime(text){
     .innerHTML = "DATA UPDATE : " + text;
 }
 
+/* =========================
+GET DATA
+========================= */
+
 async function getData(){
 
     try{
 
         const res =
         await fetch(
-            URL + "?t=" + Date.now()
+            URL + "?t=" + Date.now(),
+            {
+                cache:"no-store"
+            }
         );
 
         const json =
@@ -852,6 +822,10 @@ async function getData(){
         return [];
     }
 }
+
+/* =========================
+RENDER
+========================= */
 
 function render(data,key,containerId,label){
 
@@ -888,7 +862,7 @@ function render(data,key,containerId,label){
             <div class="photo-box">
 
                 <img
-                    loading="lazy"
+                    draggable="false"
                     src="${photoUrl}"
 
                     onerror="
@@ -930,6 +904,10 @@ function render(data,key,containerId,label){
     .innerHTML = html;
 }
 
+/* =========================
+UPDATE
+========================= */
+
 async function update(){
 
     const data =
@@ -947,50 +925,95 @@ async function update(){
         )
     );
 
-    playCardAnimation(
+    animateCards(
         slides[current]
     );
 }
 
 /* =========================
-PLAY CARD ANIMATION
+CARD ANIMATION
 ========================= */
 
-function playCardAnimation(slide){
+function animateCards(slide){
 
     const cards =
     slide.querySelectorAll(".rank-card");
 
-    cards.forEach(card=>{
+    cards.forEach((card,index)=>{
 
-        card.classList.remove("show");
+        card.style.animation = "none";
 
-        void card.offsetWidth;
+        requestAnimationFrame(()=>{
 
-        card.classList.add("show");
+            requestAnimationFrame(()=>{
+
+                card.style.animation = `
+                    cardEntrance .9s cubic-bezier(.2,.8,.2,1) forwards
+                `;
+
+                card.style.animationDelay =
+                    `${index * 0.18}s`;
+            });
+        });
     });
 }
 
 /* =========================
-SLIDE
+SLIDE SWITCH
 ========================= */
 
 function showNextSlide(){
 
+    if(isAnimating) return;
+
+    isAnimating = true;
+
     const prev =
     slides[current];
 
-    prev.classList.remove("active");
+    let nextIndex =
+        current + 1;
 
-    current =
-        (current + 1) % slides.length;
+    if(nextIndex >= slides.length){
+
+        nextIndex = 0;
+    }
 
     const next =
-    slides[current];
+    slides[nextIndex];
+
+    next.style.zIndex = 3;
 
     next.classList.add("active");
 
-    playCardAnimation(next);
+    animateCards(next);
+
+    setTimeout(()=>{
+
+        prev.classList.remove("active");
+
+        prev.style.zIndex = 1;
+
+        current = nextIndex;
+
+        isAnimating = false;
+
+    },700);
+}
+
+/* =========================
+AUTO SLIDE
+========================= */
+
+function startSlideLoop(){
+
+    setTimeout(()=>{
+
+        showNextSlide();
+
+        startSlideLoop();
+
+    },8000);
 }
 
 /* =========================
@@ -1001,9 +1024,7 @@ async function enterFullscreen(){
 
     try{
 
-        if(
-            !document.fullscreenElement
-        ){
+        if(!document.fullscreenElement){
 
             await document.documentElement
             .requestFullscreen();
@@ -1033,13 +1054,17 @@ document.addEventListener(
 START
 ========================= */
 
-update();
+(async()=>{
 
-playCardAnimation(slides[0]);
+    await update();
 
-setInterval(update,15000);
+    animateCards(slides[0]);
 
-setInterval(showNextSlide,7000);
+    startSlideLoop();
+
+    setInterval(update,15000);
+
+})();
 
 /* =========================
 AUDIO
