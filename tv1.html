@@ -25,15 +25,11 @@ RESET
 BODY
 ========================= */
 
-html,
 body{
 
-    width:100%;
-    height:100%;
+    font-family:'Poppins',sans-serif;
 
     overflow:hidden;
-
-    font-family:'Poppins',sans-serif;
 
     color:white;
 
@@ -41,10 +37,6 @@ body{
         radial-gradient(circle at top left,#1e3a8a 0%,transparent 30%),
         radial-gradient(circle at top right,#facc15 0%,transparent 25%),
         radial-gradient(circle at bottom,#0f172a 0%,#020617 70%);
-
-    -webkit-font-smoothing:antialiased;
-
-    text-rendering:optimizeLegibility;
 }
 
 /* =========================
@@ -118,10 +110,6 @@ SLIDE
 
 .slide{
 
-    position:absolute;
-
-    inset:0;
-
     width:100vw;
     height:100vh;
 
@@ -129,44 +117,15 @@ SLIDE
         1vh
         2vw;
 
-    display:flex;
+    display:none;
 
     flex-direction:column;
 
     justify-content:flex-start;
-
-    opacity:0;
-
-    visibility:hidden;
-
-    pointer-events:none;
-
-    z-index:1;
-
-    transform:
-        translate3d(30px,0,0);
-
-    transition:
-        opacity .7s ease,
-        transform .7s ease;
-
-    will-change:
-        opacity,
-        transform;
 }
 
-.slide.active{
-
-    opacity:1;
-
-    visibility:visible;
-
-    pointer-events:auto;
-
-    z-index:2;
-
-    transform:
-        translate3d(0,0,0);
+.active{
+    display:flex;
 }
 
 /* =========================
@@ -180,23 +139,6 @@ HEADER
     margin-bottom:1vh;
 
     flex-shrink:0;
-
-    opacity:0;
-
-    transform:
-        translateY(-18px);
-
-    transition:
-        opacity .6s ease,
-        transform .6s ease;
-}
-
-.slide.active .header{
-
-    opacity:1;
-
-    transform:
-        translateY(0);
 }
 
 .header h1{
@@ -246,6 +188,8 @@ UPDATE TIME
 
     border:
         2px solid rgba(255,255,255,.20);
+
+    font-family:'Poppins',sans-serif;
 
     font-size:1.45vw;
 
@@ -309,95 +253,42 @@ CARD
     opacity:0;
 
     transform:
-        translate3d(-120px,0,0);
-
-    filter:
-        blur(10px);
-
-    will-change:
-        transform,
-        opacity,
-        filter;
-
-    backface-visibility:hidden;
-
-    contain:layout paint;
-}
-
-.rank-card.animate{
+        translateX(-100px);
 
     animation:
-        cardLeftEntrance .9s cubic-bezier(.2,.8,.2,1) forwards;
+        slideRight .8s forwards;
 }
 
-/* =========================
-CARD ANIMATION
-========================= */
+.rank-card:nth-child(1){
+    animation-delay:.2s;
+}
 
-@keyframes cardLeftEntrance{
+.rank-card:nth-child(2){
+    animation-delay:.5s;
+}
 
-    0%{
+.rank-card:nth-child(3){
+    animation-delay:.8s;
+}
+
+@keyframes slideRight{
+
+    from{
 
         opacity:0;
 
         transform:
-            translate3d(-120px,0,0)
-            scale(.94);
-
-        filter:
-            blur(10px);
+            translateX(-100px)
+            scale(.95);
     }
 
-    100%{
+    to{
 
         opacity:1;
 
         transform:
-            translate3d(0,0,0)
+            translateX(0)
             scale(1);
-
-        filter:
-            blur(0);
-    }
-}
-
-/* =========================
-SHINE
-========================= */
-
-.rank-card::before{
-
-    content:"";
-
-    position:absolute;
-
-    inset:0;
-
-    background:
-        linear-gradient(
-            120deg,
-            transparent 0%,
-            rgba(255,255,255,.22) 45%,
-            transparent 100%
-        );
-
-    transform:
-        translateX(-140%);
-
-    animation:
-        shineMove 4.5s linear infinite;
-
-    pointer-events:none;
-}
-
-@keyframes shineMove{
-
-    0%{
-        transform:translateX(-140%);
-    }
-
-    100%{
-        transform:translateX(140%);
     }
 }
 
@@ -508,13 +399,7 @@ PHOTO
 
     object-position:center bottom;
 
-    transform:translateZ(0);
-
-    backface-visibility:hidden;
-
-    user-select:none;
-
-    -webkit-user-drag:none;
+    background:transparent;
 
     filter:
         drop-shadow(0 10px 15px rgba(0,0,0,.28))
@@ -606,48 +491,76 @@ SCORE
 }
 
 /* =========================
-FULLSCREEN HINT
+MOBILE
 ========================= */
 
-.fullscreen-hint{
+@media(max-width:768px){
 
-    position:fixed;
+    body{
+        overflow:auto;
+    }
 
-    bottom:18px;
+    .slide{
+        min-height:100vh;
+        height:auto;
+        padding:12px;
+    }
 
-    right:22px;
+    .header h1{
+        font-size:30px;
+    }
 
-    z-index:9999;
+    .header p{
+        font-size:11px;
+    }
 
-    background:rgba(0,0,0,.45);
+    .update-time{
+        font-size:14px;
+        padding:10px 16px;
+    }
 
-    border:1px solid rgba(255,255,255,.15);
+    .rank-card{
+        height:118px;
+        border-radius:22px;
+    }
 
-    padding:10px 18px;
+    .rank-number{
+        font-size:95px;
+    }
 
-    border-radius:14px;
+    .photo-box{
+        width:100px;
+        min-width:100px;
+    }
 
-    font-size:13px;
+    .employee-name{
+        font-size:16px;
+    }
 
-    font-weight:600;
+    .employee-label{
+        font-size:11px;
+    }
 
-    backdrop-filter:blur(10px);
+    .score-value{
+        font-size:20px;
+    }
 
-    animation:pulse 2s infinite;
+    .score-label{
+        font-size:10px;
+    }
 }
 
-@keyframes pulse{
+/* =========================
+TV 4K
+========================= */
 
-    0%{
-        opacity:.55;
-    }
+@media(min-width:1920px){
 
-    50%{
-        opacity:1;
-    }
+    .update-time{
 
-    100%{
-        opacity:.55;
+        font-size:30px;
+
+        padding:18px 42px;
     }
 }
 
@@ -655,12 +568,6 @@ FULLSCREEN HINT
 </head>
 
 <body>
-
-<div class="fullscreen-hint">
-    TAP DIMANA SAJA UNTUK FULLSCREEN
-</div>
-
-<!-- SALES -->
 
 <div class="slide active">
 
@@ -680,8 +587,6 @@ FULLSCREEN HINT
 
 </div>
 
-<!-- PROTEKSI -->
-
 <div class="slide">
 
     <div class="header">
@@ -699,8 +604,6 @@ FULLSCREEN HINT
     <div class="rank-list" id="proteksiList"></div>
 
 </div>
-
-<!-- TRX -->
 
 <div class="slide">
 
@@ -720,38 +623,16 @@ FULLSCREEN HINT
 
 </div>
 
-<audio
-    id="bgm"
-    loop
-    autoplay
-    playsinline
-    preload="auto">
-
-    <source
-        src="https://putrasetya.github.io/223am.mp3"
-        type="audio/mpeg">
-
-</audio>
-
 <script>
-
-/* =========================
-CONFIG
-========================= */
 
 const URL =
 "https://script.google.com/macros/s/AKfycbzeehvUo6QYriMFJTR4A88lN6IIHV6Qop9UphkdOTMkRLVxhVuJ13y69momo6h1pn9dTQ/exec";
 
-const slides =
-document.querySelectorAll(".slide");
+let lastDataHash =
+localStorage.getItem("lastDataHash") || "";
 
-let current = 0;
-
-let isAnimating = false;
-
-/* =========================
-UTIL
-========================= */
+let lastUpdateText =
+localStorage.getItem("lastUpdateText") || "-";
 
 function clean(val){
 
@@ -777,54 +658,37 @@ function formatTanggalIndonesia(date){
 
 function setUpdateTime(text){
 
-    document.getElementById("updateTimeSales")
-    .innerHTML = "DATA UPDATE : " + text;
+    document.getElementById("updateTimeSales").innerHTML =
+    "DATA UPDATE : " + text;
 
-    document.getElementById("updateTimeProteksi")
-    .innerHTML = "DATA UPDATE : " + text;
+    document.getElementById("updateTimeProteksi").innerHTML =
+    "DATA UPDATE : " + text;
 
-    document.getElementById("updateTimeTrx")
-    .innerHTML = "DATA UPDATE : " + text;
+    document.getElementById("updateTimeTrx").innerHTML =
+    "DATA UPDATE : " + text;
 }
-
-/* =========================
-GET DATA
-========================= */
 
 async function getData(){
 
     try{
 
-        const res =
-        await fetch(
-            URL + "?t=" + Date.now(),
-            {
-                cache:"no-store"
-            }
-        );
+        const res = await fetch(URL);
 
-        const json =
-        await res.json();
+        const json = await res.json();
 
         return json.map(row => ({
 
-            name:
-                row["EMPLOYEE NAME"] || "UNKNOWN",
+            name: row["EMPLOYEE NAME"] || "UNKNOWN",
 
-            dept:
-                row["DEPT"] || "-",
+            dept: row["DEPT"] || "-",
 
-            sales:
-                clean(row["SALES MTD"]),
+            sales: clean(row["SALES MTD"]),
 
-            proteksi:
-                clean(row["PROTEKSI"]),
+            proteksi: clean(row["PROTEKSI"]),
 
-            trx:
-                clean(row["TRX"]),
+            trx: clean(row["TRX"]),
 
-            photo:
-                row["PHOTO"] || ""
+            photo: row["PHOTO"] || ""
 
         }));
 
@@ -836,10 +700,6 @@ async function getData(){
     }
 }
 
-/* =========================
-RENDER
-========================= */
-
 function render(data,key,containerId,label){
 
     const styles = [
@@ -848,7 +708,7 @@ function render(data,key,containerId,label){
         "bronze"
     ];
 
-    const sorted = data
+    let sorted = data
         .filter(v => v[key] > 0)
         .sort((a,b)=>b[key]-a[key])
         .slice(0,3);
@@ -856,13 +716,6 @@ function render(data,key,containerId,label){
     let html = "";
 
     sorted.forEach((d,i)=>{
-
-        const photoUrl =
-        d.photo
-        ?
-        `https://drive.google.com/thumbnail?id=${d.photo}&sz=w1000`
-        :
-        `https://ui-avatars.com/api/?name=${encodeURIComponent(d.name)}&background=random&color=fff&size=512`;
 
         html += `
 
@@ -875,8 +728,7 @@ function render(data,key,containerId,label){
             <div class="photo-box">
 
                 <img
-                    draggable="false"
-                    src="${photoUrl}"
+                    src="https://lh3.googleusercontent.com/d/${d.photo}"
 
                     onerror="
                     this.src='https://ui-avatars.com/api/?name=${encodeURIComponent(d.name)}&background=random&color=fff&size=512'
@@ -913,136 +765,97 @@ function render(data,key,containerId,label){
         `;
     });
 
-    const container =
-    document.getElementById(containerId);
-
-    container.innerHTML = html;
+    document.getElementById(containerId).innerHTML = html;
 }
-
-/* =========================
-ANIMATE CARDS
-========================= */
-
-function animateCards(slide){
-
-    const cards =
-    slide.querySelectorAll(".rank-card");
-
-    cards.forEach((card,index)=>{
-
-        card.classList.remove("animate");
-
-        card.style.opacity = "0";
-
-        card.style.animation = "none";
-
-        void card.offsetWidth;
-
-        setTimeout(()=>{
-
-            card.classList.add("animate");
-
-            card.style.animation =
-            "cardLeftEntrance .9s cubic-bezier(.2,.8,.2,1) forwards";
-
-        },index * 250);
-    });
-}
-
-/* =========================
-UPDATE
-========================= */
 
 async function update(){
 
-    const data =
-    await getData();
+    const data = await getData();
 
-    render(data,"sales","salesList","TOTAL SALES");
+    const currentHash =
+    JSON.stringify(data);
 
-    render(data,"proteksi","proteksiList","TOTAL PROTEKSI");
+    if(currentHash !== lastDataHash){
 
-    render(data,"trx","trxList","TOTAL TRX");
+        lastDataHash = currentHash;
 
-    setUpdateTime(
+        localStorage.setItem(
+            "lastDataHash",
+            currentHash
+        );
+
+        lastUpdateText =
         formatTanggalIndonesia(
             new Date()
-        )
+        );
+
+        localStorage.setItem(
+            "lastUpdateText",
+            lastUpdateText
+        );
+    }
+
+    render(
+        data,
+        "sales",
+        "salesList",
+        "TOTAL SALES"
     );
 
-    animateCards(
-        slides[current]
+    render(
+        data,
+        "proteksi",
+        "proteksiList",
+        "TOTAL PROTEKSI"
     );
+
+    render(
+        data,
+        "trx",
+        "trxList",
+        "TOTAL TRX"
+    );
+
+    setUpdateTime(lastUpdateText);
 }
 
-/* =========================
-SLIDE
-========================= */
+let current = 0;
+
+const slides =
+document.querySelectorAll(".slide");
 
 function showNextSlide(){
 
-    if(isAnimating) return;
+    slides[current]
+        .classList.remove("active");
 
-    isAnimating = true;
+    current =
+        (current + 1) % slides.length;
 
-    const prev =
-    slides[current];
-
-    current++;
-
-    if(current >= slides.length){
-
-        current = 0;
-    }
-
-    const next =
-    slides[current];
-
-    next.classList.add("active");
-
-    animateCards(next);
-
-    setTimeout(()=>{
-
-        prev.classList.remove("active");
-
-        isAnimating = false;
-
-    },700);
+    slides[current]
+        .classList.add("active");
 }
 
-/* =========================
-AUTO SLIDE
-========================= */
+setInterval(showNextSlide,7000);
 
-function startSlideLoop(){
+setInterval(update,15000);
 
-    setTimeout(()=>{
-
-        showNextSlide();
-
-        startSlideLoop();
-
-    },8000);
-}
+update();
 
 /* =========================
-FULLSCREEN
+AUDIO
 ========================= */
 
-async function enterFullscreen(){
+const bgm =
+document.getElementById("bgm");
+
+bgm.volume = 0.4;
+
+async function forcePlay(){
 
     try{
 
-        if(!document.fullscreenElement){
-
-            await document.documentElement
-            .requestFullscreen();
-
-            document.querySelector(
-                ".fullscreen-hint"
-            ).style.display = "none";
-        }
+        await bgm.play();
 
     }catch(err){
 
@@ -1052,70 +865,40 @@ async function enterFullscreen(){
 
 document.addEventListener(
     "click",
-    enterFullscreen
+    forcePlay
 );
 
 document.addEventListener(
     "touchstart",
-    enterFullscreen
+    forcePlay
 );
-
-/* =========================
-START
-========================= */
-
-(async()=>{
-
-    await update();
-
-    animateCards(slides[0]);
-
-    startSlideLoop();
-
-    setInterval(update,30000);
-
-})();
-
-/* =========================
-AUDIO
-========================= */
 
 window.addEventListener(
     "load",
     ()=>{
 
-        const bgm =
-        document.getElementById("bgm");
-
-        bgm.volume = 0.4;
-
-        async function forcePlay(){
-
-            try{
-
-                await bgm.play();
-
-            }catch(err){
-
-                console.log(err);
-            }
-        }
-
         forcePlay();
 
-        document.addEventListener(
-            "click",
-            forcePlay
-        );
+        setTimeout(forcePlay,1000);
 
-        document.addEventListener(
-            "touchstart",
-            forcePlay
-        );
+        setTimeout(forcePlay,3000);
     }
 );
 
 </script>
+
+<audio
+    id="bgm"
+    loop
+    autoplay
+    playsinline
+    preload="auto">
+
+    <source
+        src="https://putrasetya.github.io/223am.mp3"
+        type="audio/mpeg">
+
+</audio>
 
 </body>
 </html>
