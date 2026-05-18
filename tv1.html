@@ -144,12 +144,15 @@ SLIDE
     z-index:1;
 
     transform:
-        translate3d(0,0,0);
+        translate3d(40px,0,0);
 
-    will-change:opacity;
+    will-change:
+        opacity,
+        transform;
 
     transition:
-        opacity .7s ease;
+        opacity .7s ease,
+        transform .7s ease;
 }
 
 .slide.active{
@@ -161,6 +164,9 @@ SLIDE
     pointer-events:auto;
 
     z-index:2;
+
+    transform:
+        translate3d(0,0,0);
 }
 
 /* =========================
@@ -174,6 +180,23 @@ HEADER
     margin-bottom:1vh;
 
     flex-shrink:0;
+
+    opacity:0;
+
+    transform:
+        translateY(-20px);
+
+    transition:
+        opacity .6s ease,
+        transform .6s ease;
+}
+
+.slide.active .header{
+
+    opacity:1;
+
+    transform:
+        translateY(0);
 }
 
 .header h1{
@@ -301,6 +324,12 @@ CARD
         transform,
         opacity,
         filter;
+}
+
+.rank-card.animate{
+
+    animation:
+        cardLeftEntrance .9s cubic-bezier(.2,.8,.2,1) forwards;
 }
 
 /* =========================
@@ -528,8 +557,6 @@ EMPLOYEE
     overflow:hidden;
 
     text-overflow:ellipsis;
-
-    transform:translateZ(0);
 }
 
 .employee-label{
@@ -545,8 +572,6 @@ EMPLOYEE
     letter-spacing:3px;
 
     text-transform:uppercase;
-
-    transform:translateZ(0);
 }
 
 /* =========================
@@ -569,8 +594,6 @@ SCORE
     font-weight:900;
 
     color:#111827;
-
-    transform:translateZ(0);
 }
 
 .score-label{
@@ -586,8 +609,6 @@ SCORE
     opacity:.65;
 
     letter-spacing:2px;
-
-    transform:translateZ(0);
 }
 
 /* =========================
@@ -710,10 +731,6 @@ SLIDE TRX
     <div class="rank-list" id="trxList"></div>
 
 </div>
-
-<!-- =========================
-AUDIO
-========================= -->
 
 <audio
     id="bgm"
@@ -928,18 +945,17 @@ function animateCards(slide){
 
     cards.forEach((card,index)=>{
 
+        card.classList.remove("animate");
+
         card.style.animation = "none";
 
         requestAnimationFrame(()=>{
 
-            requestAnimationFrame(()=>{
+            setTimeout(()=>{
 
-                card.style.animation =
-                `cardLeftEntrance .9s cubic-bezier(.2,.8,.2,1) forwards`;
+                card.classList.add("animate");
 
-                card.style.animationDelay =
-                `${index * 0.18}s`;
-            });
+            },index * 250);
         });
     });
 }
