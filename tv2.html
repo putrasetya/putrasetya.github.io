@@ -730,6 +730,25 @@ function setUpdate(text){
     }
 }
 
+/* =========================
+FILTER CS & CASHIER
+========================= */
+
+function isExcluded(dept){
+
+    const d = (dept || "")
+        .toString()
+        .toLowerCase()
+        .trim();
+
+    return (
+        d.includes("cashier") ||
+        d.includes("kasir") ||
+        d.includes("cs") ||
+        d.includes("customer service")
+    );
+}
+
 async function getData(){
 
     try{
@@ -774,6 +793,26 @@ function render(
 
     let styles = [];
 
+    let filteredData = [...data];
+
+    /* =========================
+    EXCLUDE CASHIER & CS
+    FOR:
+    - BOTTOM SALES
+    - TOP TRX
+    ========================= */
+
+    if(
+        (containerId === "salesBottom") ||
+        (containerId === "trxTop")
+    ){
+
+        filteredData =
+        filteredData.filter(
+            item => !isExcluded(item.dept)
+        );
+    }
+
     if(mode === "top"){
 
         styles = [
@@ -782,7 +821,7 @@ function render(
             "bronze"
         ];
 
-        sorted = data
+        sorted = filteredData
             .filter(v => v[key] > 0)
             .sort((a,b)=>b[key]-a[key])
             .slice(0,3);
@@ -796,7 +835,7 @@ function render(
         ];
 
         const allSorted =
-        data
+        filteredData
             .filter(v => v[key] > 0)
             .sort((a,b)=>a[key]-b[key]);
 
