@@ -11,19 +11,11 @@
 
 <style>
 
-/* =========================
-RESET
-========================= */
-
 *{
     margin:0;
     padding:0;
     box-sizing:border-box;
 }
-
-/* =========================
-BODY
-========================= */
 
 body{
 
@@ -40,10 +32,6 @@ body{
         radial-gradient(circle at top right,#facc15 0%,transparent 25%),
         radial-gradient(circle at bottom,#0f172a 0%,#020617 70%);
 }
-
-/* =========================
-BACKGROUND FX
-========================= */
 
 body::before{
 
@@ -106,10 +94,6 @@ body::after{
     }
 }
 
-/* =========================
-SLIDE
-========================= */
-
 .slide{
 
     width:100vw;
@@ -122,25 +106,17 @@ SLIDE
     display:none;
 
     flex-direction:column;
-
-    justify-content:flex-start;
 }
 
 .active{
     display:flex;
 }
 
-/* =========================
-HEADER
-========================= */
-
 .header{
 
     text-align:center;
 
     margin-bottom:1vh;
-
-    flex-shrink:0;
 }
 
 .header h1{
@@ -168,10 +144,6 @@ HEADER
     opacity:.9;
 }
 
-/* =========================
-UPDATE TIME
-========================= */
-
 .update-time{
 
     margin:
@@ -180,43 +152,26 @@ UPDATE TIME
     width:fit-content;
 
     padding:
-        1.1vh
-        2.6vw;
+        1vh
+        2.5vw;
 
-    border-radius:18px;
+    border-radius:20px;
 
     background:
-        rgba(0,0,0,.55);
+        rgba(0,0,0,.45);
 
     border:
-        2px solid rgba(255,255,255,.20);
+        2px solid rgba(255,255,255,.15);
 
-    font-family:'Poppins',sans-serif;
-
-    font-size:1.45vw;
+    font-size:1.2vw;
 
     font-weight:700;
 
-    letter-spacing:1px;
-
-    color:#ffffff;
-
-    line-height:1.6;
-
-    text-transform:uppercase;
-
-    text-shadow:
-        0 2px 10px rgba(0,0,0,.9);
+    backdrop-filter:blur(12px);
 
     box-shadow:
-        0 0 25px rgba(0,0,0,.35);
-
-    backdrop-filter:blur(10px);
+        0 0 20px rgba(0,0,0,.25);
 }
-
-/* =========================
-LIST
-========================= */
 
 .rank-list{
 
@@ -230,10 +185,6 @@ LIST
 
     justify-content:space-evenly;
 }
-
-/* =========================
-CARD
-========================= */
 
 .rank-card{
 
@@ -255,10 +206,10 @@ CARD
     opacity:0;
 
     transform:
-        translateX(-100px);
+        translateX(-120px);
 
     animation:
-        slideRight .8s forwards;
+        slideRight .9s forwards;
 }
 
 .rank-card:nth-child(1){
@@ -280,8 +231,8 @@ CARD
         opacity:0;
 
         transform:
-            translateX(-100px)
-            scale(.95);
+            translateX(-120px)
+            scale(.92);
     }
 
     to{
@@ -295,7 +246,7 @@ CARD
 }
 
 /* =========================
-TOP CARD
+CARD COLORS
 ========================= */
 
 .gold{
@@ -336,10 +287,6 @@ TOP CARD
             #6d3f1d
         );
 }
-
-/* =========================
-BOTTOM CARD
-========================= */
 
 .red-high{
 
@@ -403,8 +350,6 @@ RANK NUMBER
     opacity:.20;
 
     letter-spacing:-10px;
-
-    line-height:1;
 }
 
 .gold .rank-number{
@@ -424,17 +369,6 @@ RANK NUMBER
 .red-low .rank-number{
 
     color:#ffffff;
-
-    opacity:.20;
-
-    font-size:16vw;
-
-    letter-spacing:-10px;
-
-    line-height:1;
-
-    text-shadow:
-        0 0 20px rgba(255,255,255,.15);
 }
 
 /* =========================
@@ -462,13 +396,10 @@ PHOTO
 
     object-position:center bottom;
 
-    background:transparent;
-
     filter:
         drop-shadow(0 10px 15px rgba(0,0,0,.28))
         contrast(1.08)
-        saturate(1.08)
-        brightness(1.03);
+        saturate(1.08);
 }
 
 /* =========================
@@ -505,15 +436,13 @@ EMPLOYEE
 
     margin-top:.5vh;
 
-    font-size:1.15vw;
-
-    font-weight:400;
-
-    color:#111827;
+    font-size:1.1vw;
 
     letter-spacing:3px;
 
     text-transform:uppercase;
+
+    color:#111827;
 }
 
 .red-high .employee-name,
@@ -528,21 +457,32 @@ EMPLOYEE
 }
 
 /* =========================
-SCORE
+SCORE SECTION
 ========================= */
 
 .score{
 
-    width:22%;
+    width:30%;
 
-    padding-right:2vw;
+    padding-right:1.8vw;
+
+    display:flex;
+
+    flex-direction:column;
+
+    align-items:flex-end;
+
+    gap:1vh;
+}
+
+.main-score{
 
     text-align:right;
 }
 
 .score-value{
 
-    font-size:2.6vw;
+    font-size:2.5vw;
 
     font-weight:900;
 
@@ -551,17 +491,17 @@ SCORE
 
 .score-label{
 
-    margin-top:.4vh;
+    margin-top:.2vh;
 
     font-size:.8vw;
 
     font-weight:700;
 
+    letter-spacing:2px;
+
     color:#111827;
 
-    opacity:.65;
-
-    letter-spacing:2px;
+    opacity:.7;
 }
 
 .red-high .score-value,
@@ -573,6 +513,86 @@ SCORE
 .red-low .score-label{
 
     color:white;
+}
+
+/* =========================
+ACH BOX
+========================= */
+
+.ach-box{
+
+    padding:
+        .8vh
+        1vw;
+
+    border-radius:18px;
+
+    background:
+        rgba(255,255,255,.18);
+
+    border:
+        1px solid rgba(255,255,255,.18);
+
+    backdrop-filter:blur(8px);
+
+    min-width:8vw;
+
+    text-align:center;
+
+    box-shadow:
+        0 0 15px rgba(0,0,0,.15);
+}
+
+.ach-title{
+
+    font-size:.7vw;
+
+    font-weight:700;
+
+    letter-spacing:2px;
+
+    opacity:.9;
+}
+
+.ach-value{
+
+    margin-top:.3vh;
+
+    font-size:1.6vw;
+
+    font-weight:900;
+
+    color:#ffffff;
+
+    text-shadow:
+        0 0 12px rgba(255,255,255,.2);
+}
+
+/* =========================
+ACH ABOVE 100%
+========================= */
+
+.ach-green{
+
+    color:#22c55e !important;
+
+    text-shadow:
+        0 0 15px rgba(34,197,94,.8),
+        0 0 25px rgba(34,197,94,.6);
+
+    animation:
+        glowGreen 1.8s infinite alternate;
+}
+
+@keyframes glowGreen{
+
+    from{
+        transform:scale(1);
+    }
+
+    to{
+        transform:scale(1.08);
+    }
 }
 
 /* =========================
@@ -600,38 +620,53 @@ MOBILE
     }
 
     .update-time{
-        font-size:14px;
-        padding:10px 16px;
+        font-size:13px;
     }
 
     .rank-card{
-        height:118px;
-        border-radius:22px;
+        height:130px;
     }
 
     .rank-number{
-        font-size:95px !important;
+        font-size:90px !important;
     }
 
     .photo-box{
-        width:100px;
-        min-width:100px;
+        width:95px;
+        min-width:95px;
     }
 
     .employee-name{
-        font-size:16px;
+        font-size:15px;
     }
 
     .employee-label{
-        font-size:11px;
+        font-size:10px;
+    }
+
+    .score{
+        width:40%;
     }
 
     .score-value{
-        font-size:20px;
+        font-size:18px;
     }
 
     .score-label{
-        font-size:10px;
+        font-size:9px;
+    }
+
+    .ach-box{
+        min-width:75px;
+        padding:6px 10px;
+    }
+
+    .ach-title{
+        font-size:8px;
+    }
+
+    .ach-value{
+        font-size:14px;
     }
 }
 
@@ -699,14 +734,13 @@ MOBILE
 const URL =
 "https://script.google.com/macros/s/AKfycbzeehvUo6QYriMFJTR4A88lN6IIHV6Qop9UphkdOTMkRLVxhVuJ13y69momo6h1pn9dTQ/exec";
 
-let lastUpdate = "-";
-
 function clean(val){
 
     if(!val) return 0;
 
-    return parseInt(
-        val.toString().replace(/[^\d]/g,'')
+    return parseFloat(
+        val.toString()
+        .replace(/[^\d.]/g,'')
     ) || 0;
 }
 
@@ -737,15 +771,12 @@ function setUpdate(text){
 function isExcluded(dept){
 
     const d = (dept || "")
-        .toString()
-        .toLowerCase()
-        .trim();
+        .toLowerCase();
 
     return (
         d.includes("cashier") ||
         d.includes("kasir") ||
-        d.includes("cs") ||
-        d.includes("customer service")
+        d.includes("cs")
     );
 }
 
@@ -769,6 +800,15 @@ async function getData(){
 
             trx: clean(row["TRX"]),
 
+            achSales:
+                clean(row["ACH MTD"]),
+
+            achProteksi:
+                clean(row["ACH PROTEKSI"]),
+
+            achTrx:
+                clean(row["ACH BULANAN"]),
+
             photo: row["PHOTO"] || ""
 
         }));
@@ -781,23 +821,30 @@ async function getData(){
     }
 }
 
+function achClass(val){
+
+    return val >= 100
+    ? "ach-value ach-green"
+    : "ach-value";
+}
+
 function render(
     data,
     key,
+    achKey,
+    achTitle,
     containerId,
     label,
     mode="top"
 ){
 
     let sorted = [];
-
     let styles = [];
-
     let filteredData = [...data];
 
     if(
-        (containerId === "salesBottom") ||
-        (containerId === "trxTop")
+        containerId === "salesBottom" ||
+        containerId === "trxTop"
     ){
 
         filteredData =
@@ -889,12 +936,28 @@ function render(
 
             <div class="score">
 
-                <div class="score-value">
-                    ${d[key].toLocaleString('id-ID')}
+                <div class="main-score">
+
+                    <div class="score-value">
+                        ${d[key].toLocaleString('id-ID')}
+                    </div>
+
+                    <div class="score-label">
+                        ${label}
+                    </div>
+
                 </div>
 
-                <div class="score-label">
-                    ${label}
+                <div class="ach-box">
+
+                    <div class="ach-title">
+                        ${achTitle}
+                    </div>
+
+                    <div class="${achClass(d[achKey])}">
+                        ${d[achKey].toFixed(1)}%
+                    </div>
+
                 </div>
 
             </div>
@@ -912,12 +975,14 @@ async function update(){
 
     const data = await getData();
 
-    lastUpdate =
+    const now =
     formatTanggal(new Date());
 
     render(
         data,
         "sales",
+        "achSales",
+        "ACH MTD",
         "salesTop",
         "TOTAL SALES",
         "top"
@@ -926,6 +991,8 @@ async function update(){
     render(
         data,
         "sales",
+        "achSales",
+        "ACH MTD",
         "salesBottom",
         "TOTAL SALES",
         "bottom"
@@ -934,6 +1001,8 @@ async function update(){
     render(
         data,
         "proteksi",
+        "achProteksi",
+        "ACH PROTEKSI",
         "proteksiTop",
         "TOTAL PROTEKSI",
         "top"
@@ -942,6 +1011,8 @@ async function update(){
     render(
         data,
         "proteksi",
+        "achProteksi",
+        "ACH PROTEKSI",
         "proteksiBottom",
         "TOTAL PROTEKSI",
         "bottom"
@@ -950,6 +1021,8 @@ async function update(){
     render(
         data,
         "trx",
+        "achTrx",
+        "ACH BULANAN",
         "trxTop",
         "TOTAL TRX",
         "top"
@@ -958,12 +1031,14 @@ async function update(){
     render(
         data,
         "trx",
+        "achTrx",
+        "ACH BULANAN",
         "trxBottom",
         "TOTAL TRX",
         "bottom"
     );
 
-    setUpdate(lastUpdate);
+    setUpdate(now);
 }
 
 /* =========================
@@ -1001,8 +1076,6 @@ update();
 
 /* =========================
 FULLSCREEN TOGGLE
-CLICK PAGE = FULLSCREEN
-CLICK AGAIN = EXIT
 ========================= */
 
 async function toggleFullscreen(){
@@ -1025,7 +1098,7 @@ async function toggleFullscreen(){
 }
 
 document.addEventListener(
-    "click",
+    "dblclick",
     toggleFullscreen
 );
 
@@ -1052,11 +1125,6 @@ async function forcePlay(){
 
 document.addEventListener(
     "click",
-    forcePlay
-);
-
-document.addEventListener(
-    "touchstart",
     forcePlay
 );
 
