@@ -293,7 +293,7 @@ CARD
 }
 
 /* =========================
-TOP CARD COLOR
+TOP CARD
 ========================= */
 
 .gold{
@@ -336,19 +336,19 @@ TOP CARD COLOR
 }
 
 /* =========================
-BOTTOM CARD COLOR
+BOTTOM CARD
 ========================= */
 
-.red-low{
+.red-high{
 
     background:
         linear-gradient(
             135deg,
-            #2b0000,
-            #4a0404,
             #7f1d1d,
-            #991b1b,
-            #b91c1c
+            #b91c1c,
+            #dc2626,
+            #ef4444,
+            #f87171
         );
 }
 
@@ -365,16 +365,16 @@ BOTTOM CARD COLOR
         );
 }
 
-.red-high{
+.red-low{
 
     background:
         linear-gradient(
             135deg,
+            #2b0000,
+            #4a0404,
             #7f1d1d,
-            #b91c1c,
-            #dc2626,
-            #ef4444,
-            #f87171
+            #991b1b,
+            #b91c1c
         );
 }
 
@@ -417,10 +417,20 @@ RANK NUMBER
     color:#fb923c;
 }
 
-.red-low .rank-number,
+.red-high .rank-number,
 .red-mid .rank-number,
-.red-high .rank-number{
+.red-low .rank-number{
+
     color:#ffffff;
+
+    opacity:.14;
+
+    font-size:12vw;
+
+    letter-spacing:-4px;
+
+    text-shadow:
+        0 0 30px rgba(255,255,255,.15);
 }
 
 /* =========================
@@ -502,13 +512,13 @@ EMPLOYEE
     text-transform:uppercase;
 }
 
-.red-low .employee-name,
-.red-mid .employee-name,
 .red-high .employee-name,
+.red-mid .employee-name,
+.red-low .employee-name,
 
-.red-low .employee-label,
+.red-high .employee-label,
 .red-mid .employee-label,
-.red-high .employee-label{
+.red-low .employee-label{
 
     color:white;
 }
@@ -550,13 +560,13 @@ SCORE
     letter-spacing:2px;
 }
 
-.red-low .score-value,
-.red-mid .score-value,
 .red-high .score-value,
+.red-mid .score-value,
+.red-low .score-value,
 
-.red-low .score-label,
+.red-high .score-label,
 .red-mid .score-label,
-.red-high .score-label{
+.red-low .score-label{
 
     color:white;
 }
@@ -596,7 +606,7 @@ MOBILE
     }
 
     .rank-number{
-        font-size:95px;
+        font-size:95px !important;
     }
 
     .photo-box{
@@ -621,155 +631,63 @@ MOBILE
     }
 }
 
-/* =========================
-TV 4K
-========================= */
-
-@media(min-width:1920px){
-
-    .update-time{
-
-        font-size:30px;
-
-        padding:18px 42px;
-    }
-}
-
 </style>
 </head>
 
 <body>
 
-<!-- =========================
-TOP SALES
-========================= -->
-
 <div class="slide active">
-
     <div class="header">
-
         <h1>TOP SALES</h1>
-
         <p>AZKO CITIMALL TUBAN</p>
-
-        <div class="update-time" id="updateTimeSalesTop">
-            DATA UPDATE : -
-        </div>
-
+        <div class="update-time" id="update1">DATA UPDATE : -</div>
     </div>
-
-    <div class="rank-list" id="salesTopList"></div>
-
+    <div class="rank-list" id="salesTop"></div>
 </div>
 
-<!-- =========================
-BOTTOM SALES
-========================= -->
-
 <div class="slide">
-
     <div class="header">
-
         <h1>BOTTOM SALES</h1>
-
         <p>AZKO CITIMALL TUBAN</p>
-
-        <div class="update-time" id="updateTimeSalesBottom">
-            DATA UPDATE : -
-        </div>
-
+        <div class="update-time" id="update2">DATA UPDATE : -</div>
     </div>
-
-    <div class="rank-list" id="salesBottomList"></div>
-
+    <div class="rank-list" id="salesBottom"></div>
 </div>
 
-<!-- =========================
-TOP PROTEKSI
-========================= -->
-
 <div class="slide">
-
     <div class="header">
-
         <h1>TOP PROTEKSI</h1>
-
         <p>AZKO CITIMALL TUBAN</p>
-
-        <div class="update-time" id="updateTimeProteksiTop">
-            DATA UPDATE : -
-        </div>
-
+        <div class="update-time" id="update3">DATA UPDATE : -</div>
     </div>
-
-    <div class="rank-list" id="proteksiTopList"></div>
-
+    <div class="rank-list" id="proteksiTop"></div>
 </div>
 
-<!-- =========================
-BOTTOM PROTEKSI
-========================= -->
-
 <div class="slide">
-
     <div class="header">
-
         <h1>BOTTOM PROTEKSI</h1>
-
         <p>AZKO CITIMALL TUBAN</p>
-
-        <div class="update-time" id="updateTimeProteksiBottom">
-            DATA UPDATE : -
-        </div>
-
+        <div class="update-time" id="update4">DATA UPDATE : -</div>
     </div>
-
-    <div class="rank-list" id="proteksiBottomList"></div>
-
+    <div class="rank-list" id="proteksiBottom"></div>
 </div>
 
-<!-- =========================
-TOP TRX
-========================= -->
-
 <div class="slide">
-
     <div class="header">
-
         <h1>TOP TRX</h1>
-
         <p>AZKO CITIMALL TUBAN</p>
-
-        <div class="update-time" id="updateTimeTrxTop">
-            DATA UPDATE : -
-        </div>
-
+        <div class="update-time" id="update5">DATA UPDATE : -</div>
     </div>
-
-    <div class="rank-list" id="trxTopList"></div>
-
+    <div class="rank-list" id="trxTop"></div>
 </div>
 
-<!-- =========================
-BOTTOM TRX
-========================= -->
-
 <div class="slide">
-
     <div class="header">
-
         <h1>BOTTOM TRX</h1>
-
         <p>AZKO CITIMALL TUBAN</p>
-
-        <div class="update-time" id="updateTimeTrxBottom">
-            DATA UPDATE : -
-        </div>
-
+        <div class="update-time" id="update6">DATA UPDATE : -</div>
     </div>
-
-    <div class="rank-list" id="trxBottomList"></div>
-
+    <div class="rank-list" id="trxBottom"></div>
 </div>
 
 <script>
@@ -777,11 +695,7 @@ BOTTOM TRX
 const URL =
 "https://script.google.com/macros/s/AKfycbzeehvUo6QYriMFJTR4A88lN6IIHV6Qop9UphkdOTMkRLVxhVuJ13y69momo6h1pn9dTQ/exec";
 
-let lastDataHash =
-localStorage.getItem("lastDataHash") || "";
-
-let lastUpdateText =
-localStorage.getItem("lastUpdateText") || "-";
+let lastUpdate = "-";
 
 function clean(val){
 
@@ -792,7 +706,7 @@ function clean(val){
     ) || 0;
 }
 
-function formatTanggalIndonesia(date){
+function formatTanggal(date){
 
     return date.toLocaleString('id-ID',{
 
@@ -805,25 +719,15 @@ function formatTanggalIndonesia(date){
     });
 }
 
-function setUpdateTime(text){
+function setUpdate(text){
 
-    const ids = [
+    for(let i=1;i<=6;i++){
 
-        "updateTimeSalesTop",
-        "updateTimeSalesBottom",
-
-        "updateTimeProteksiTop",
-        "updateTimeProteksiBottom",
-
-        "updateTimeTrxTop",
-        "updateTimeTrxBottom"
-    ];
-
-    ids.forEach(id=>{
-
-        document.getElementById(id).innerHTML =
+        document.getElementById(
+            "update"+i
+        ).innerHTML =
         "DATA UPDATE : " + text;
-    });
+    }
 }
 
 async function getData(){
@@ -863,7 +767,7 @@ function render(
     key,
     containerId,
     label,
-    mode = "top"
+    mode="top"
 ){
 
     let sorted = [];
@@ -886,27 +790,45 @@ function render(
     }else{
 
         styles = [
-            "red-low",
+            "red-high",
             "red-mid",
-            "red-high"
+            "red-low"
         ];
 
-        sorted = data
+        const allSorted =
+        data
             .filter(v => v[key] > 0)
-            .sort((a,b)=>a[key]-b[key])
-            .slice(0,3);
+            .sort((a,b)=>a[key]-b[key]);
+
+        sorted =
+        allSorted.slice(0,3);
+
+        sorted = sorted.map((item,index)=>({
+
+            ...item,
+
+            bottomRank:
+            allSorted.length - index
+        }));
+
+        sorted.reverse();
     }
 
     let html = "";
 
     sorted.forEach((d,i)=>{
 
+        let rank =
+        mode === "top"
+        ? (i+1)
+        : "#" + d.bottomRank;
+
         html += `
 
         <div class="rank-card ${styles[i]}">
 
             <div class="rank-number">
-                ${i+1}
+                ${rank}
             </div>
 
             <div class="photo-box">
@@ -949,44 +871,22 @@ function render(
         `;
     });
 
-    document.getElementById(containerId).innerHTML = html;
+    document.getElementById(
+        containerId
+    ).innerHTML = html;
 }
 
 async function update(){
 
     const data = await getData();
 
-    const currentHash =
-    JSON.stringify(data);
-
-    if(currentHash !== lastDataHash){
-
-        lastDataHash = currentHash;
-
-        localStorage.setItem(
-            "lastDataHash",
-            currentHash
-        );
-
-        lastUpdateText =
-        formatTanggalIndonesia(
-            new Date()
-        );
-
-        localStorage.setItem(
-            "lastUpdateText",
-            lastUpdateText
-        );
-    }
-
-    /* =========================
-    SALES
-    ========================= */
+    lastUpdate =
+    formatTanggal(new Date());
 
     render(
         data,
         "sales",
-        "salesTopList",
+        "salesTop",
         "TOTAL SALES",
         "top"
     );
@@ -994,19 +894,15 @@ async function update(){
     render(
         data,
         "sales",
-        "salesBottomList",
+        "salesBottom",
         "TOTAL SALES",
         "bottom"
     );
 
-    /* =========================
-    PROTEKSI
-    ========================= */
-
     render(
         data,
         "proteksi",
-        "proteksiTopList",
+        "proteksiTop",
         "TOTAL PROTEKSI",
         "top"
     );
@@ -1014,19 +910,15 @@ async function update(){
     render(
         data,
         "proteksi",
-        "proteksiBottomList",
+        "proteksiBottom",
         "TOTAL PROTEKSI",
         "bottom"
     );
 
-    /* =========================
-    TRX
-    ========================= */
-
     render(
         data,
         "trx",
-        "trxTopList",
+        "trxTop",
         "TOTAL TRX",
         "top"
     );
@@ -1034,16 +926,17 @@ async function update(){
     render(
         data,
         "trx",
-        "trxBottomList",
+        "trxBottom",
         "TOTAL TRX",
         "bottom"
     );
 
-    setUpdateTime(lastUpdateText);
+    setUpdate(lastUpdate);
 }
 
 /* =========================
-SLIDE 1-2-3-4-5-6-1
+SLIDE LOOP
+1-2-3-4-5-6-1
 ========================= */
 
 let current = 0;
@@ -1051,7 +944,7 @@ let current = 0;
 const slides =
 document.querySelectorAll(".slide");
 
-function showNextSlide(){
+function nextSlide(){
 
     slides.forEach(slide=>{
 
@@ -1069,7 +962,7 @@ function showNextSlide(){
         .classList.add("active");
 }
 
-setInterval(showNextSlide,7000);
+setInterval(nextSlide,7000);
 
 setInterval(update,15000);
 
