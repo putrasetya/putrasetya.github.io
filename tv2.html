@@ -417,20 +417,27 @@ RANK NUMBER
     color:#fb923c;
 }
 
+/* =========================
+BOTTOM NUMBER
+SAMAKAN DENGAN TOP
+========================= */
+
 .red-high .rank-number,
 .red-mid .rank-number,
 .red-low .rank-number{
 
     color:#ffffff;
 
-    opacity:.14;
+    opacity:.20;
 
-    font-size:12vw;
+    font-size:16vw;
 
-    letter-spacing:-4px;
+    letter-spacing:-10px;
+
+    line-height:1;
 
     text-shadow:
-        0 0 30px rgba(255,255,255,.15);
+        0 0 20px rgba(255,255,255,.15);
 }
 
 /* =========================
@@ -730,10 +737,6 @@ function setUpdate(text){
     }
 }
 
-/* =========================
-FILTER CS & CASHIER
-========================= */
-
 function isExcluded(dept){
 
     const d = (dept || "")
@@ -795,13 +798,6 @@ function render(
 
     let filteredData = [...data];
 
-    /* =========================
-    EXCLUDE CASHIER & CS
-    FOR:
-    - BOTTOM SALES
-    - TOP TRX
-    ========================= */
-
     if(
         (containerId === "salesBottom") ||
         (containerId === "trxTop")
@@ -860,7 +856,7 @@ function render(
         let rank =
         mode === "top"
         ? (i+1)
-        : "#" + d.bottomRank;
+        : d.bottomRank;
 
         html += `
 
@@ -973,11 +969,6 @@ async function update(){
     setUpdate(lastUpdate);
 }
 
-/* =========================
-SLIDE LOOP
-1-2-3-4-5-6-1
-========================= */
-
 let current = 0;
 
 const slides =
@@ -1006,10 +997,6 @@ setInterval(nextSlide,7000);
 setInterval(update,15000);
 
 update();
-
-/* =========================
-AUDIO
-========================= */
 
 const bgm =
 document.getElementById("bgm");
