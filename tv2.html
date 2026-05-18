@@ -33,6 +33,10 @@ body{
         radial-gradient(circle at bottom,#0f172a 0%,#020617 70%);
 }
 
+/* =========================
+BACKGROUND FX
+========================= */
+
 body::before{
 
     content:"";
@@ -94,6 +98,10 @@ body::after{
     }
 }
 
+/* =========================
+SLIDE
+========================= */
+
 .slide{
 
     width:100vw;
@@ -111,6 +119,10 @@ body::after{
 .active{
     display:flex;
 }
+
+/* =========================
+HEADER
+========================= */
 
 .header{
 
@@ -144,6 +156,10 @@ body::after{
     opacity:.9;
 }
 
+/* =========================
+UPDATE TIME
+========================= */
+
 .update-time{
 
     margin:
@@ -173,6 +189,10 @@ body::after{
         0 0 20px rgba(0,0,0,.25);
 }
 
+/* =========================
+RANK LIST
+========================= */
+
 .rank-list{
 
     display:flex;
@@ -185,6 +205,10 @@ body::after{
 
     justify-content:space-evenly;
 }
+
+/* =========================
+CARD
+========================= */
 
 .rank-card{
 
@@ -246,7 +270,7 @@ body::after{
 }
 
 /* =========================
-CARD COLORS
+TOP CARD
 ========================= */
 
 .gold{
@@ -287,6 +311,10 @@ CARD COLORS
             #6d3f1d
         );
 }
+
+/* =========================
+BOTTOM CARD
+========================= */
 
 .red-high{
 
@@ -457,12 +485,12 @@ EMPLOYEE
 }
 
 /* =========================
-SCORE SECTION
+SCORE
 ========================= */
 
 .score{
 
-    width:30%;
+    width:31%;
 
     padding-right:1.8vw;
 
@@ -521,78 +549,241 @@ ACH BOX
 
 .ach-box{
 
+    position:relative;
+
+    overflow:hidden;
+
     padding:
-        .8vh
-        1vw;
+        1vh
+        1.2vw;
 
-    border-radius:18px;
+    border-radius:22px;
 
-    background:
-        rgba(255,255,255,.18);
+    min-width:9vw;
+
+    text-align:center;
+
+    backdrop-filter:blur(12px);
 
     border:
         1px solid rgba(255,255,255,.18);
 
-    backdrop-filter:blur(8px);
-
-    min-width:8vw;
-
-    text-align:center;
+    background:
+        linear-gradient(
+            135deg,
+            rgba(255,255,255,.18),
+            rgba(255,255,255,.08)
+        );
 
     box-shadow:
-        0 0 15px rgba(0,0,0,.15);
+        0 10px 25px rgba(0,0,0,.25),
+        inset 0 1px 0 rgba(255,255,255,.12);
+
+    transition:.3s;
 }
+
+/* =========================
+SHIMMER
+========================= */
+
+.ach-box::before{
+
+    content:"";
+
+    position:absolute;
+
+    top:-120%;
+    left:-40%;
+
+    width:60%;
+    height:300%;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            rgba(255,255,255,.25),
+            transparent
+        );
+
+    transform:rotate(25deg);
+
+    animation:
+        shimmer 4s linear infinite;
+}
+
+@keyframes shimmer{
+
+    0%{
+        left:-60%;
+    }
+
+    100%{
+        left:140%;
+    }
+}
+
+/* =========================
+ACH TITLE
+========================= */
 
 .ach-title{
 
-    font-size:.7vw;
+    position:relative;
 
-    font-weight:700;
+    z-index:2;
+
+    font-size:.72vw;
+
+    font-weight:800;
 
     letter-spacing:2px;
 
-    opacity:.9;
-}
-
-.ach-value{
-
-    margin-top:.3vh;
-
-    font-size:1.6vw;
-
-    font-weight:900;
+    opacity:.92;
 
     color:#ffffff;
 
     text-shadow:
-        0 0 12px rgba(255,255,255,.2);
+        0 2px 8px rgba(0,0,0,.6);
 }
 
 /* =========================
-ACH ABOVE 100%
+ACH VALUE
+========================= */
+
+.ach-value{
+
+    position:relative;
+
+    z-index:2;
+
+    margin-top:.45vh;
+
+    font-size:1.8vw;
+
+    font-weight:900;
+
+    line-height:1;
+
+    letter-spacing:1px;
+}
+
+/* =========================
+ACH > 100%
 ========================= */
 
 .ach-green{
 
-    color:#22c55e !important;
+    color:#dcfce7 !important;
 
     text-shadow:
-        0 0 15px rgba(34,197,94,.8),
-        0 0 25px rgba(34,197,94,.6);
+        0 0 6px rgba(34,197,94,.95),
+        0 0 14px rgba(34,197,94,.9),
+        0 0 24px rgba(34,197,94,.75),
+        0 3px 10px rgba(0,0,0,.9);
 
     animation:
-        glowGreen 1.8s infinite alternate;
+        achPulseGreen 1.8s infinite alternate;
 }
 
-@keyframes glowGreen{
+.ach-green-box{
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(22,163,74,.42),
+            rgba(34,197,94,.22)
+        ) !important;
+
+    border:
+        2px solid rgba(74,222,128,.65);
+
+    box-shadow:
+        0 0 18px rgba(34,197,94,.45),
+        0 0 35px rgba(34,197,94,.28),
+        inset 0 0 18px rgba(255,255,255,.08);
+}
+
+@keyframes achPulseGreen{
 
     from{
+
         transform:scale(1);
+
+        filter:brightness(1);
     }
 
     to{
+
         transform:scale(1.08);
+
+        filter:brightness(1.2);
     }
+}
+
+/* =========================
+ACH < 80%
+========================= */
+
+.ach-red{
+
+    color:#ffe4e6 !important;
+
+    text-shadow:
+        0 0 6px rgba(239,68,68,.95),
+        0 0 14px rgba(239,68,68,.9),
+        0 0 24px rgba(239,68,68,.75),
+        0 3px 10px rgba(0,0,0,.9);
+
+    animation:
+        achPulseRed 1.6s infinite alternate;
+}
+
+.ach-red-box{
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(185,28,28,.42),
+            rgba(239,68,68,.22)
+        ) !important;
+
+    border:
+        2px solid rgba(252,165,165,.6);
+
+    box-shadow:
+        0 0 18px rgba(239,68,68,.42),
+        0 0 35px rgba(239,68,68,.25),
+        inset 0 0 18px rgba(255,255,255,.08);
+}
+
+@keyframes achPulseRed{
+
+    from{
+
+        transform:scale(1);
+
+        filter:brightness(1);
+    }
+
+    to{
+
+        transform:scale(1.08);
+
+        filter:brightness(1.18);
+    }
+}
+
+/* =========================
+ACH NORMAL
+========================= */
+
+.ach-normal{
+
+    color:#ffffff !important;
+
+    text-shadow:
+        0 2px 10px rgba(0,0,0,.9);
 }
 
 /* =========================
@@ -645,7 +836,7 @@ MOBILE
     }
 
     .score{
-        width:40%;
+        width:42%;
     }
 
     .score-value{
@@ -657,8 +848,14 @@ MOBILE
     }
 
     .ach-box{
-        min-width:75px;
-        padding:6px 10px;
+
+        min-width:78px;
+
+        padding:
+            8px
+            10px;
+
+        border-radius:16px;
     }
 
     .ach-title{
@@ -666,7 +863,7 @@ MOBILE
     }
 
     .ach-value{
-        font-size:14px;
+        font-size:15px;
     }
 }
 
@@ -734,6 +931,10 @@ MOBILE
 const URL =
 "https://script.google.com/macros/s/AKfycbzeehvUo6QYriMFJTR4A88lN6IIHV6Qop9UphkdOTMkRLVxhVuJ13y69momo6h1pn9dTQ/exec";
 
+/* =========================
+HELPERS
+========================= */
+
 function clean(val){
 
     if(!val) return 0;
@@ -770,15 +971,22 @@ function setUpdate(text){
 
 function isExcluded(dept){
 
-    const d = (dept || "")
-        .toLowerCase();
+    const d =
+    (dept || "")
+    .toLowerCase();
 
     return (
+
         d.includes("cashier") ||
         d.includes("kasir") ||
-        d.includes("cs")
+        d.includes("cs") ||
+        d.includes("customer service")
     );
 }
+
+/* =========================
+GET DATA
+========================= */
 
 async function getData(){
 
@@ -790,15 +998,20 @@ async function getData(){
 
         return json.map(row => ({
 
-            name: row["EMPLOYEE NAME"] || "UNKNOWN",
+            name:
+                row["EMPLOYEE NAME"] || "UNKNOWN",
 
-            dept: row["DEPT"] || "-",
+            dept:
+                row["DEPT"] || "-",
 
-            sales: clean(row["SALES MTD"]),
+            sales:
+                clean(row["SALES MTD"]),
 
-            proteksi: clean(row["PROTEKSI"]),
+            proteksi:
+                clean(row["PROTEKSI"]),
 
-            trx: clean(row["TRX"]),
+            trx:
+                clean(row["TRX"]),
 
             achSales:
                 clean(row["ACH MTD"]),
@@ -809,7 +1022,8 @@ async function getData(){
             achTrx:
                 clean(row["ACH BULANAN"]),
 
-            photo: row["PHOTO"] || ""
+            photo:
+                row["PHOTO"] || ""
 
         }));
 
@@ -821,12 +1035,49 @@ async function getData(){
     }
 }
 
-function achClass(val){
+/* =========================
+ACH STYLE
+========================= */
 
-    return val >= 100
-    ? "ach-value ach-green"
-    : "ach-value";
+function getAchStyle(value){
+
+    if(value >= 100){
+
+        return {
+
+            valueClass:
+                "ach-value ach-green",
+
+            boxClass:
+                "ach-box ach-green-box"
+        };
+    }
+
+    if(value < 80){
+
+        return {
+
+            valueClass:
+                "ach-value ach-red",
+
+            boxClass:
+                "ach-box ach-red-box"
+        };
+    }
+
+    return {
+
+        valueClass:
+            "ach-value ach-normal",
+
+        boxClass:
+            "ach-box"
+    };
 }
+
+/* =========================
+RENDER
+========================= */
 
 function render(
     data,
@@ -902,6 +1153,9 @@ function render(
         ? (i+1)
         : d.bottomRank;
 
+        const achStyle =
+        getAchStyle(d[achKey]);
+
         html += `
 
         <div class="rank-card ${styles[i]}">
@@ -948,13 +1202,13 @@ function render(
 
                 </div>
 
-                <div class="ach-box">
+                <div class="${achStyle.boxClass}">
 
                     <div class="ach-title">
                         ${achTitle}
                     </div>
 
-                    <div class="${achClass(d[achKey])}">
+                    <div class="${achStyle.valueClass}">
                         ${d[achKey].toFixed(1)}%
                     </div>
 
@@ -970,6 +1224,10 @@ function render(
         containerId
     ).innerHTML = html;
 }
+
+/* =========================
+UPDATE
+========================= */
 
 async function update(){
 
