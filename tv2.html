@@ -60,6 +60,8 @@ body::before{
         );
 
     pointer-events:none;
+
+    z-index:-1;
 }
 
 body::after{
@@ -87,6 +89,8 @@ body::after{
     animation:bgMove 12s linear infinite;
 
     pointer-events:none;
+
+    z-index:-1;
 }
 
 @keyframes bgMove{
@@ -110,10 +114,6 @@ SLIDE
 
 .slide{
 
-    position:absolute;
-
-    inset:0;
-
     width:100vw;
     height:100vh;
 
@@ -121,34 +121,45 @@ SLIDE
         1vh
         2vw;
 
-    display:flex;
+    display:none;
 
     flex-direction:column;
 
     justify-content:flex-start;
 
-    opacity:0;
+    position:absolute;
 
-    visibility:hidden;
-
-    pointer-events:none;
-
-    z-index:1;
-
-    transition:
-        opacity .7s ease,
-        visibility .7s ease;
+    inset:0;
 }
 
 .slide.active{
 
+    display:flex;
+}
+
+/* =========================
+CONTENT ANIMATION
+========================= */
+
+.slide .header,
+.slide .rank-list{
+
+    opacity:0;
+
+    transform:
+        translateY(20px);
+
+    transition:
+        all .7s ease;
+}
+
+.slide.active .header,
+.slide.active .rank-list{
+
     opacity:1;
 
-    visibility:visible;
-
-    pointer-events:auto;
-
-    z-index:2;
+    transform:
+        translateY(0);
 }
 
 /* =========================
@@ -862,26 +873,9 @@ async function update(){
         );
     }
 
-    render(
-        data,
-        "sales",
-        "salesList",
-        "TOTAL SALES"
-    );
-
-    render(
-        data,
-        "proteksi",
-        "proteksiList",
-        "TOTAL PROTEKSI"
-    );
-
-    render(
-        data,
-        "trx",
-        "trxList",
-        "TOTAL TRX"
-    );
+    render(data,"sales","salesList","TOTAL SALES");
+    render(data,"proteksi","proteksiList","TOTAL PROTEKSI");
+    render(data,"trx","trxList","TOTAL TRX");
 
     setUpdateTime(lastUpdateText);
 }
@@ -920,12 +914,15 @@ function showSlide(index){
         slide.classList.remove("active");
     });
 
-    slides[index]
-        .classList.add("active");
+    requestAnimationFrame(()=>{
 
-    resetCardAnimation(
         slides[index]
-    );
+            .classList.add("active");
+
+        resetCardAnimation(
+            slides[index]
+        );
+    });
 }
 
 function nextSlide(){
@@ -935,10 +932,6 @@ function nextSlide(){
     isTransitioning = true;
 
     currentSlide++;
-
-    /* =========================
-    KEMBALI KE AWAL
-    ========================= */
 
     if(currentSlide >= slides.length){
 
@@ -986,11 +979,8 @@ bgm.volume = 0.4;
 async function forcePlay(){
 
     try{
-
         await bgm.play();
-
     }catch(err){
-
         console.log(err);
     }
 }
