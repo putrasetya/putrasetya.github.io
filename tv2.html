@@ -293,7 +293,7 @@ CARD
 }
 
 /* =========================
-CARD COLOR
+TOP CARD COLOR
 ========================= */
 
 .gold{
@@ -336,6 +336,49 @@ CARD COLOR
 }
 
 /* =========================
+BOTTOM CARD COLOR
+========================= */
+
+.red-low{
+
+    background:
+        linear-gradient(
+            135deg,
+            #2b0000,
+            #4a0404,
+            #7f1d1d,
+            #991b1b,
+            #b91c1c
+        );
+}
+
+.red-mid{
+
+    background:
+        linear-gradient(
+            135deg,
+            #4a0404,
+            #7f1d1d,
+            #b91c1c,
+            #dc2626,
+            #ef4444
+        );
+}
+
+.red-high{
+
+    background:
+        linear-gradient(
+            135deg,
+            #7f1d1d,
+            #b91c1c,
+            #dc2626,
+            #ef4444,
+            #f87171
+        );
+}
+
+/* =========================
 RANK NUMBER
 ========================= */
 
@@ -372,6 +415,12 @@ RANK NUMBER
 
 .bronze .rank-number{
     color:#fb923c;
+}
+
+.red-low .rank-number,
+.red-mid .rank-number,
+.red-high .rank-number{
+    color:#ffffff;
 }
 
 /* =========================
@@ -453,6 +502,17 @@ EMPLOYEE
     text-transform:uppercase;
 }
 
+.red-low .employee-name,
+.red-mid .employee-name,
+.red-high .employee-name,
+
+.red-low .employee-label,
+.red-mid .employee-label,
+.red-high .employee-label{
+
+    color:white;
+}
+
 /* =========================
 SCORE
 ========================= */
@@ -488,6 +548,17 @@ SCORE
     opacity:.65;
 
     letter-spacing:2px;
+}
+
+.red-low .score-value,
+.red-mid .score-value,
+.red-high .score-value,
+
+.red-low .score-label,
+.red-mid .score-label,
+.red-high .score-label{
+
+    color:white;
 }
 
 /* =========================
@@ -569,6 +640,10 @@ TV 4K
 
 <body>
 
+<!-- =========================
+TOP SALES
+========================= -->
+
 <div class="slide active">
 
     <div class="header">
@@ -577,15 +652,41 @@ TV 4K
 
         <p>AZKO CITIMALL TUBAN</p>
 
-        <div class="update-time" id="updateTimeSales">
+        <div class="update-time" id="updateTimeSalesTop">
             DATA UPDATE : -
         </div>
 
     </div>
 
-    <div class="rank-list" id="salesList"></div>
+    <div class="rank-list" id="salesTopList"></div>
 
 </div>
+
+<!-- =========================
+BOTTOM SALES
+========================= -->
+
+<div class="slide">
+
+    <div class="header">
+
+        <h1>BOTTOM SALES</h1>
+
+        <p>AZKO CITIMALL TUBAN</p>
+
+        <div class="update-time" id="updateTimeSalesBottom">
+            DATA UPDATE : -
+        </div>
+
+    </div>
+
+    <div class="rank-list" id="salesBottomList"></div>
+
+</div>
+
+<!-- =========================
+TOP PROTEKSI
+========================= -->
 
 <div class="slide">
 
@@ -595,15 +696,41 @@ TV 4K
 
         <p>AZKO CITIMALL TUBAN</p>
 
-        <div class="update-time" id="updateTimeProteksi">
+        <div class="update-time" id="updateTimeProteksiTop">
             DATA UPDATE : -
         </div>
 
     </div>
 
-    <div class="rank-list" id="proteksiList"></div>
+    <div class="rank-list" id="proteksiTopList"></div>
 
 </div>
+
+<!-- =========================
+BOTTOM PROTEKSI
+========================= -->
+
+<div class="slide">
+
+    <div class="header">
+
+        <h1>BOTTOM PROTEKSI</h1>
+
+        <p>AZKO CITIMALL TUBAN</p>
+
+        <div class="update-time" id="updateTimeProteksiBottom">
+            DATA UPDATE : -
+        </div>
+
+    </div>
+
+    <div class="rank-list" id="proteksiBottomList"></div>
+
+</div>
+
+<!-- =========================
+TOP TRX
+========================= -->
 
 <div class="slide">
 
@@ -613,13 +740,35 @@ TV 4K
 
         <p>AZKO CITIMALL TUBAN</p>
 
-        <div class="update-time" id="updateTimeTrx">
+        <div class="update-time" id="updateTimeTrxTop">
             DATA UPDATE : -
         </div>
 
     </div>
 
-    <div class="rank-list" id="trxList"></div>
+    <div class="rank-list" id="trxTopList"></div>
+
+</div>
+
+<!-- =========================
+BOTTOM TRX
+========================= -->
+
+<div class="slide">
+
+    <div class="header">
+
+        <h1>BOTTOM TRX</h1>
+
+        <p>AZKO CITIMALL TUBAN</p>
+
+        <div class="update-time" id="updateTimeTrxBottom">
+            DATA UPDATE : -
+        </div>
+
+    </div>
+
+    <div class="rank-list" id="trxBottomList"></div>
 
 </div>
 
@@ -658,14 +807,23 @@ function formatTanggalIndonesia(date){
 
 function setUpdateTime(text){
 
-    document.getElementById("updateTimeSales").innerHTML =
-    "DATA UPDATE : " + text;
+    const ids = [
 
-    document.getElementById("updateTimeProteksi").innerHTML =
-    "DATA UPDATE : " + text;
+        "updateTimeSalesTop",
+        "updateTimeSalesBottom",
 
-    document.getElementById("updateTimeTrx").innerHTML =
-    "DATA UPDATE : " + text;
+        "updateTimeProteksiTop",
+        "updateTimeProteksiBottom",
+
+        "updateTimeTrxTop",
+        "updateTimeTrxBottom"
+    ];
+
+    ids.forEach(id=>{
+
+        document.getElementById(id).innerHTML =
+        "DATA UPDATE : " + text;
+    });
 }
 
 async function getData(){
@@ -700,18 +858,44 @@ async function getData(){
     }
 }
 
-function render(data,key,containerId,label){
+function render(
+    data,
+    key,
+    containerId,
+    label,
+    mode = "top"
+){
 
-    const styles = [
-        "gold",
-        "silver",
-        "bronze"
-    ];
+    let sorted = [];
 
-    let sorted = data
-        .filter(v => v[key] > 0)
-        .sort((a,b)=>b[key]-a[key])
-        .slice(0,3);
+    let styles = [];
+
+    if(mode === "top"){
+
+        styles = [
+            "gold",
+            "silver",
+            "bronze"
+        ];
+
+        sorted = data
+            .filter(v => v[key] > 0)
+            .sort((a,b)=>b[key]-a[key])
+            .slice(0,3);
+
+    }else{
+
+        styles = [
+            "red-low",
+            "red-mid",
+            "red-high"
+        ];
+
+        sorted = data
+            .filter(v => v[key] > 0)
+            .sort((a,b)=>a[key]-b[key])
+            .slice(0,3);
+    }
 
     let html = "";
 
@@ -795,32 +979,71 @@ async function update(){
         );
     }
 
+    /* =========================
+    SALES
+    ========================= */
+
     render(
         data,
         "sales",
-        "salesList",
-        "TOTAL SALES"
+        "salesTopList",
+        "TOTAL SALES",
+        "top"
+    );
+
+    render(
+        data,
+        "sales",
+        "salesBottomList",
+        "TOTAL SALES",
+        "bottom"
+    );
+
+    /* =========================
+    PROTEKSI
+    ========================= */
+
+    render(
+        data,
+        "proteksi",
+        "proteksiTopList",
+        "TOTAL PROTEKSI",
+        "top"
     );
 
     render(
         data,
         "proteksi",
-        "proteksiList",
-        "TOTAL PROTEKSI"
+        "proteksiBottomList",
+        "TOTAL PROTEKSI",
+        "bottom"
+    );
+
+    /* =========================
+    TRX
+    ========================= */
+
+    render(
+        data,
+        "trx",
+        "trxTopList",
+        "TOTAL TRX",
+        "top"
     );
 
     render(
         data,
         "trx",
-        "trxList",
-        "TOTAL TRX"
+        "trxBottomList",
+        "TOTAL TRX",
+        "bottom"
     );
 
     setUpdateTime(lastUpdateText);
 }
 
 /* =========================
-SLIDE FIX 1-2-3-1
+SLIDE 1-2-3-4-5-6-1
 ========================= */
 
 let current = 0;
