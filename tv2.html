@@ -110,6 +110,10 @@ SLIDE
 
 .slide{
 
+    position:absolute;
+
+    inset:0;
+
     width:100vw;
     height:100vh;
 
@@ -117,28 +121,32 @@ SLIDE
         1vh
         2vw;
 
-    display:none;
+    display:flex;
 
     flex-direction:column;
 
     justify-content:flex-start;
 
-    position:absolute;
-
-    top:0;
-    left:0;
-
     opacity:0;
 
+    visibility:hidden;
+
+    pointer-events:none;
+
+    z-index:1;
+
     transition:
-        opacity .6s ease;
+        opacity .7s ease,
+        visibility .7s ease;
 }
 
 .slide.active{
 
-    display:flex;
-
     opacity:1;
+
+    visibility:visible;
+
+    pointer-events:auto;
 
     z-index:2;
 }
@@ -153,27 +161,7 @@ HEADER
 
     margin-bottom:1vh;
 
-    animation:
-        fadeHeader .8s ease;
-}
-
-@keyframes fadeHeader{
-
-    from{
-
-        opacity:0;
-
-        transform:
-            translateY(-20px);
-    }
-
-    to{
-
-        opacity:1;
-
-        transform:
-            translateY(0);
-    }
+    flex-shrink:0;
 }
 
 .header h1{
@@ -219,10 +207,12 @@ UPDATE TIME
     border-radius:18px;
 
     background:
-        rgba(0,0,0,.55);
+        rgba(255,255,255,.10);
 
     border:
-        2px solid rgba(255,255,255,.20);
+        1px solid rgba(255,255,255,.18);
+
+    backdrop-filter:blur(14px);
 
     font-size:1.45vw;
 
@@ -237,12 +227,10 @@ UPDATE TIME
     text-transform:uppercase;
 
     text-shadow:
-        0 2px 10px rgba(0,0,0,.9);
+        0 2px 10px rgba(0,0,0,.8);
 
     box-shadow:
-        0 0 25px rgba(0,0,0,.35);
-
-    backdrop-filter:blur(10px);
+        0 0 25px rgba(0,0,0,.25);
 }
 
 /* =========================
@@ -287,7 +275,7 @@ CARD
 
     transform:
         translateX(-120px)
-        scale(.95);
+        scale(.96);
 }
 
 /* =========================
@@ -320,7 +308,7 @@ CARD ANIMATION
 
         transform:
             translateX(-120px)
-            scale(.95);
+            scale(.96);
     }
 
     to{
@@ -405,7 +393,7 @@ RANK NUMBER
 }
 
 .silver .rank-number{
-    color:#e2e8f0;
+    color:#ffffff;
 }
 
 .bronze .rank-number{
@@ -436,8 +424,6 @@ PHOTO
     object-fit:contain;
 
     object-position:center bottom;
-
-    background:transparent;
 
     filter:
         drop-shadow(0 10px 15px rgba(0,0,0,.28))
@@ -482,7 +468,7 @@ EMPLOYEE
 
     font-size:1.15vw;
 
-    font-weight:400;
+    font-weight:500;
 
     color:#111827;
 
@@ -523,7 +509,7 @@ SCORE
 
     color:#111827;
 
-    opacity:.65;
+    opacity:.7;
 
     letter-spacing:2px;
 }
@@ -588,24 +574,14 @@ MOBILE
     }
 }
 
-/* =========================
-TV 4K
-========================= */
-
-@media(min-width:1920px){
-
-    .update-time{
-
-        font-size:30px;
-
-        padding:18px 42px;
-    }
-}
-
 </style>
 </head>
 
 <body>
+
+<!-- =========================
+SLIDE SALES
+========================= -->
 
 <div class="slide active">
 
@@ -625,6 +601,10 @@ TV 4K
 
 </div>
 
+<!-- =========================
+SLIDE PROTEKSI
+========================= -->
+
 <div class="slide">
 
     <div class="header">
@@ -642,6 +622,10 @@ TV 4K
     <div class="rank-list" id="proteksiList"></div>
 
 </div>
+
+<!-- =========================
+SLIDE TRX
+========================= -->
 
 <div class="slide">
 
@@ -661,6 +645,10 @@ TV 4K
 
 </div>
 
+<!-- =========================
+AUDIO
+========================= -->
+
 <audio
     id="bgm"
     loop
@@ -675,6 +663,10 @@ TV 4K
 </audio>
 
 <script>
+
+/* =========================
+API URL
+========================= */
 
 const URL =
 "https://script.google.com/macros/s/AKfycbzeehvUo6QYriMFJTR4A88lN6IIHV6Qop9UphkdOTMkRLVxhVuJ13y69momo6h1pn9dTQ/exec";
@@ -786,71 +778,55 @@ function render(data,key,containerId,label){
 
     let html = "";
 
-    if(sorted.length === 0){
+    sorted.forEach((d,i)=>{
 
-        html = `
-        <div style="
-            text-align:center;
-            margin-top:10vh;
-            font-size:2vw;
-            opacity:.7;
-        ">
-            DATA BELUM TERSEDIA
-        </div>
-        `;
+        html += `
 
-    }else{
+        <div class="rank-card ${styles[i]}">
 
-        sorted.forEach((d,i)=>{
+            <div class="rank-number">
+                ${i+1}
+            </div>
 
-            html += `
+            <div class="photo-box">
 
-            <div class="rank-card ${styles[i]}">
+                <img
+                    src="https://lh3.googleusercontent.com/d/${d.photo}"
 
-                <div class="rank-number">
-                    ${i+1}
+                    onerror="
+                    this.src='https://ui-avatars.com/api/?name=${encodeURIComponent(d.name)}&background=random&color=fff&size=512'
+                    "
+                >
+
+            </div>
+
+            <div class="employee">
+
+                <div class="employee-name">
+                    ${d.name}
                 </div>
 
-                <div class="photo-box">
-
-                    <img
-                        src="https://lh3.googleusercontent.com/d/${d.photo}"
-
-                        onerror="
-                        this.src='https://ui-avatars.com/api/?name=${encodeURIComponent(d.name)}&background=random&color=fff&size=512'
-                        "
-                    >
-
-                </div>
-
-                <div class="employee">
-
-                    <div class="employee-name">
-                        ${d.name}
-                    </div>
-
-                    <div class="employee-label">
-                        ${d.dept}
-                    </div>
-
-                </div>
-
-                <div class="score">
-
-                    <div class="score-value">
-                        ${d[key].toLocaleString('id-ID')}
-                    </div>
-
-                    <div class="score-label">
-                        ${label}
-                    </div>
-
+                <div class="employee-label">
+                    ${d.dept}
                 </div>
 
             </div>
-            `;
-        });
-    }
+
+            <div class="score">
+
+                <div class="score-value">
+                    ${d[key].toLocaleString('id-ID')}
+                </div>
+
+                <div class="score-label">
+                    ${label}
+                </div>
+
+            </div>
+
+        </div>
+        `;
+    });
 
     document.getElementById(containerId).innerHTML = html;
 }
@@ -886,9 +862,26 @@ async function update(){
         );
     }
 
-    render(data,"sales","salesList","TOTAL SALES");
-    render(data,"proteksi","proteksiList","TOTAL PROTEKSI");
-    render(data,"trx","trxList","TOTAL TRX");
+    render(
+        data,
+        "sales",
+        "salesList",
+        "TOTAL SALES"
+    );
+
+    render(
+        data,
+        "proteksi",
+        "proteksiList",
+        "TOTAL PROTEKSI"
+    );
+
+    render(
+        data,
+        "trx",
+        "trxList",
+        "TOTAL TRX"
+    );
 
     setUpdateTime(lastUpdateText);
 }
@@ -942,6 +935,10 @@ function nextSlide(){
     isTransitioning = true;
 
     currentSlide++;
+
+    /* =========================
+    KEMBALI KE AWAL
+    ========================= */
 
     if(currentSlide >= slides.length){
 
