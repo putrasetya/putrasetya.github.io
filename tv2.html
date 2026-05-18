@@ -110,10 +110,6 @@ SLIDE
 
 .slide{
 
-    position:absolute;
-
-    inset:0;
-
     width:100vw;
     height:100vh;
 
@@ -121,35 +117,15 @@ SLIDE
         1vh
         2vw;
 
-    display:flex;
+    display:none;
 
     flex-direction:column;
 
     justify-content:flex-start;
-
-    opacity:0;
-
-    visibility:hidden;
-
-    pointer-events:none;
-
-    transform:scale(1.02);
-
-    transition:
-        opacity .7s ease,
-        transform .7s ease,
-        visibility .7s;
 }
 
-.slide.active{
-
-    opacity:1;
-
-    visibility:visible;
-
-    pointer-events:auto;
-
-    transform:scale(1);
+.active{
+    display:flex;
 }
 
 /* =========================
@@ -277,22 +253,22 @@ CARD
     opacity:0;
 
     transform:
-        translateX(-120px);
+        translateX(-100px);
 
     animation:
-        slideRight .9s forwards;
+        slideRight .8s forwards;
 }
 
 .rank-card:nth-child(1){
-    animation-delay:.15s;
+    animation-delay:.2s;
 }
 
 .rank-card:nth-child(2){
-    animation-delay:.45s;
+    animation-delay:.5s;
 }
 
 .rank-card:nth-child(3){
-    animation-delay:.75s;
+    animation-delay:.8s;
 }
 
 @keyframes slideRight{
@@ -302,8 +278,8 @@ CARD
         opacity:0;
 
         transform:
-            translateX(-120px)
-            scale(.94);
+            translateX(-100px)
+            scale(.95);
     }
 
     to{
@@ -593,10 +569,6 @@ TV 4K
 
 <body>
 
-<!-- =========================
-SLIDE 1
-========================= -->
-
 <div class="slide active">
 
     <div class="header">
@@ -615,10 +587,6 @@ SLIDE 1
 
 </div>
 
-<!-- =========================
-SLIDE 2
-========================= -->
-
 <div class="slide">
 
     <div class="header">
@@ -636,10 +604,6 @@ SLIDE 2
     <div class="rank-list" id="proteksiList"></div>
 
 </div>
-
-<!-- =========================
-SLIDE 3
-========================= -->
 
 <div class="slide">
 
@@ -661,26 +625,14 @@ SLIDE 3
 
 <script>
 
-/* =========================
-CONFIG
-========================= */
-
 const URL =
 "https://script.google.com/macros/s/AKfycbzeehvUo6QYriMFJTR4A88lN6IIHV6Qop9UphkdOTMkRLVxhVuJ13y69momo6h1pn9dTQ/exec";
-
-/* =========================
-CACHE
-========================= */
 
 let lastDataHash =
 localStorage.getItem("lastDataHash") || "";
 
 let lastUpdateText =
 localStorage.getItem("lastUpdateText") || "-";
-
-/* =========================
-HELPER
-========================= */
 
 function clean(val){
 
@@ -716,10 +668,6 @@ function setUpdateTime(text){
     "DATA UPDATE : " + text;
 }
 
-/* =========================
-GET DATA
-========================= */
-
 async function getData(){
 
     try{
@@ -751,10 +699,6 @@ async function getData(){
         return [];
     }
 }
-
-/* =========================
-RENDER
-========================= */
 
 function render(data,key,containerId,label){
 
@@ -824,10 +768,6 @@ function render(data,key,containerId,label){
     document.getElementById(containerId).innerHTML = html;
 }
 
-/* =========================
-UPDATE DATA
-========================= */
-
 async function update(){
 
     const data = await getData();
@@ -880,8 +820,7 @@ async function update(){
 }
 
 /* =========================
-SLIDESHOW
-1 → 2 → 3 → 1
+SLIDE FIX 1-2-3-1
 ========================= */
 
 let current = 0;
@@ -889,23 +828,12 @@ let current = 0;
 const slides =
 document.querySelectorAll(".slide");
 
-/* reset slide awal */
-slides.forEach((slide,index)=>{
-
-    if(index === 0){
-
-        slide.classList.add("active");
-
-    }else{
-
-        slide.classList.remove("active");
-    }
-});
-
 function showNextSlide(){
 
-    slides[current]
-        .classList.remove("active");
+    slides.forEach(slide=>{
+
+        slide.classList.remove("active");
+    });
 
     current++;
 
@@ -918,15 +846,11 @@ function showNextSlide(){
         .classList.add("active");
 }
 
-/* =========================
-AUTO RUN
-========================= */
-
-update();
+setInterval(showNextSlide,7000);
 
 setInterval(update,15000);
 
-setInterval(showNextSlide,7000);
+update();
 
 /* =========================
 AUDIO
