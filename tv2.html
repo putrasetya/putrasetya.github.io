@@ -60,8 +60,6 @@ body::before{
         );
 
     pointer-events:none;
-
-    z-index:-1;
 }
 
 body::after{
@@ -89,8 +87,6 @@ body::after{
     animation:bgMove 12s linear infinite;
 
     pointer-events:none;
-
-    z-index:-1;
 }
 
 @keyframes bgMove{
@@ -126,40 +122,10 @@ SLIDE
     flex-direction:column;
 
     justify-content:flex-start;
-
-    position:absolute;
-
-    inset:0;
 }
 
-.slide.active{
-
+.active{
     display:flex;
-}
-
-/* =========================
-CONTENT ANIMATION
-========================= */
-
-.slide .header,
-.slide .rank-list{
-
-    opacity:0;
-
-    transform:
-        translateY(20px);
-
-    transition:
-        all .7s ease;
-}
-
-.slide.active .header,
-.slide.active .rank-list{
-
-    opacity:1;
-
-    transform:
-        translateY(0);
 }
 
 /* =========================
@@ -218,12 +184,12 @@ UPDATE TIME
     border-radius:18px;
 
     background:
-        rgba(255,255,255,.10);
+        rgba(0,0,0,.55);
 
     border:
-        1px solid rgba(255,255,255,.18);
+        2px solid rgba(255,255,255,.20);
 
-    backdrop-filter:blur(14px);
+    font-family:'Poppins',sans-serif;
 
     font-size:1.45vw;
 
@@ -238,10 +204,12 @@ UPDATE TIME
     text-transform:uppercase;
 
     text-shadow:
-        0 2px 10px rgba(0,0,0,.8);
+        0 2px 10px rgba(0,0,0,.9);
 
     box-shadow:
-        0 0 25px rgba(0,0,0,.25);
+        0 0 25px rgba(0,0,0,.35);
+
+    backdrop-filter:blur(10px);
 }
 
 /* =========================
@@ -285,29 +253,21 @@ CARD
     opacity:0;
 
     transform:
-        translateX(-120px)
-        scale(.96);
-}
-
-/* =========================
-CARD ANIMATION
-========================= */
-
-.slide.active .rank-card{
+        translateX(-100px);
 
     animation:
-        slideRight .9s forwards;
+        slideRight .8s forwards;
 }
 
-.slide.active .rank-card:nth-child(1){
+.rank-card:nth-child(1){
     animation-delay:.2s;
 }
 
-.slide.active .rank-card:nth-child(2){
+.rank-card:nth-child(2){
     animation-delay:.5s;
 }
 
-.slide.active .rank-card:nth-child(3){
+.rank-card:nth-child(3){
     animation-delay:.8s;
 }
 
@@ -318,8 +278,8 @@ CARD ANIMATION
         opacity:0;
 
         transform:
-            translateX(-120px)
-            scale(.96);
+            translateX(-100px)
+            scale(.95);
     }
 
     to{
@@ -388,13 +348,16 @@ RANK NUMBER
     top:50%;
 
     transform:
-        translateY(-50%);
+        translateY(-50%)
+        skew(-10deg);
 
     font-size:16vw;
 
     font-weight:900;
 
     opacity:.20;
+
+    letter-spacing:-10px;
 
     line-height:1;
 }
@@ -404,7 +367,7 @@ RANK NUMBER
 }
 
 .silver .rank-number{
-    color:#ffffff;
+    color:#e2e8f0;
 }
 
 .bronze .rank-number{
@@ -435,6 +398,8 @@ PHOTO
     object-fit:contain;
 
     object-position:center bottom;
+
+    background:transparent;
 
     filter:
         drop-shadow(0 10px 15px rgba(0,0,0,.28))
@@ -479,7 +444,7 @@ EMPLOYEE
 
     font-size:1.15vw;
 
-    font-weight:500;
+    font-weight:400;
 
     color:#111827;
 
@@ -520,7 +485,7 @@ SCORE
 
     color:#111827;
 
-    opacity:.7;
+    opacity:.65;
 
     letter-spacing:2px;
 }
@@ -585,14 +550,24 @@ MOBILE
     }
 }
 
+/* =========================
+TV 4K
+========================= */
+
+@media(min-width:1920px){
+
+    .update-time{
+
+        font-size:30px;
+
+        padding:18px 42px;
+    }
+}
+
 </style>
 </head>
 
 <body>
-
-<!-- =========================
-SLIDE SALES
-========================= -->
 
 <div class="slide active">
 
@@ -612,10 +587,6 @@ SLIDE SALES
 
 </div>
 
-<!-- =========================
-SLIDE PROTEKSI
-========================= -->
-
 <div class="slide">
 
     <div class="header">
@@ -633,10 +604,6 @@ SLIDE PROTEKSI
     <div class="rank-list" id="proteksiList"></div>
 
 </div>
-
-<!-- =========================
-SLIDE TRX
-========================= -->
 
 <div class="slide">
 
@@ -656,28 +623,7 @@ SLIDE TRX
 
 </div>
 
-<!-- =========================
-AUDIO
-========================= -->
-
-<audio
-    id="bgm"
-    loop
-    autoplay
-    playsinline
-    preload="auto">
-
-    <source
-        src="https://putrasetya.github.io/223am.mp3"
-        type="audio/mpeg">
-
-</audio>
-
 <script>
-
-/* =========================
-API URL
-========================= */
 
 const URL =
 "https://script.google.com/macros/s/AKfycbzeehvUo6QYriMFJTR4A88lN6IIHV6Qop9UphkdOTMkRLVxhVuJ13y69momo6h1pn9dTQ/exec";
@@ -688,10 +634,6 @@ localStorage.getItem("lastDataHash") || "";
 let lastUpdateText =
 localStorage.getItem("lastUpdateText") || "-";
 
-/* =========================
-CLEAN NUMBER
-========================= */
-
 function clean(val){
 
     if(!val) return 0;
@@ -700,10 +642,6 @@ function clean(val){
         val.toString().replace(/[^\d]/g,'')
     ) || 0;
 }
-
-/* =========================
-FORMAT TANGGAL
-========================= */
 
 function formatTanggalIndonesia(date){
 
@@ -718,10 +656,6 @@ function formatTanggalIndonesia(date){
     });
 }
 
-/* =========================
-SET UPDATE TIME
-========================= */
-
 function setUpdateTime(text){
 
     document.getElementById("updateTimeSales").innerHTML =
@@ -733,10 +667,6 @@ function setUpdateTime(text){
     document.getElementById("updateTimeTrx").innerHTML =
     "DATA UPDATE : " + text;
 }
-
-/* =========================
-GET DATA
-========================= */
 
 async function getData(){
 
@@ -769,10 +699,6 @@ async function getData(){
         return [];
     }
 }
-
-/* =========================
-RENDER
-========================= */
 
 function render(data,key,containerId,label){
 
@@ -842,10 +768,6 @@ function render(data,key,containerId,label){
     document.getElementById(containerId).innerHTML = html;
 }
 
-/* =========================
-UPDATE DATA
-========================= */
-
 async function update(){
 
     const data = await getData();
@@ -873,95 +795,48 @@ async function update(){
         );
     }
 
-    render(data,"sales","salesList","TOTAL SALES");
-    render(data,"proteksi","proteksiList","TOTAL PROTEKSI");
-    render(data,"trx","trxList","TOTAL TRX");
+    render(
+        data,
+        "sales",
+        "salesList",
+        "TOTAL SALES"
+    );
+
+    render(
+        data,
+        "proteksi",
+        "proteksiList",
+        "TOTAL PROTEKSI"
+    );
+
+    render(
+        data,
+        "trx",
+        "trxList",
+        "TOTAL TRX"
+    );
 
     setUpdateTime(lastUpdateText);
 }
 
-/* =========================
-SLIDE SYSTEM
-ANTI REPEAT
-========================= */
+let current = 0;
 
 const slides =
 document.querySelectorAll(".slide");
 
-let currentSlide = 0;
+function showNextSlide(){
 
-let isTransitioning = false;
+    slides[current]
+        .classList.remove("active");
 
-function resetCardAnimation(slide){
+    current =
+        (current + 1) % slides.length;
 
-    const cards =
-    slide.querySelectorAll(".rank-card");
-
-    cards.forEach(card=>{
-
-        card.style.animation = "none";
-
-        card.offsetHeight;
-
-        card.style.animation = "";
-    });
+    slides[current]
+        .classList.add("active");
 }
 
-function showSlide(index){
-
-    slides.forEach(slide=>{
-
-        slide.classList.remove("active");
-    });
-
-    requestAnimationFrame(()=>{
-
-        slides[index]
-            .classList.add("active");
-
-        resetCardAnimation(
-            slides[index]
-        );
-    });
-}
-
-function nextSlide(){
-
-    if(isTransitioning) return;
-
-    isTransitioning = true;
-
-    currentSlide++;
-
-    if(currentSlide >= slides.length){
-
-        currentSlide = 0;
-    }
-
-    showSlide(currentSlide);
-
-    setTimeout(()=>{
-
-        isTransitioning = false;
-
-    },700);
-}
-
-/* =========================
-START
-========================= */
-
-showSlide(currentSlide);
-
-/* =========================
-AUTO NEXT
-========================= */
-
-setInterval(nextSlide,7000);
-
-/* =========================
-AUTO UPDATE
-========================= */
+setInterval(showNextSlide,7000);
 
 setInterval(update,15000);
 
@@ -979,8 +854,11 @@ bgm.volume = 0.4;
 async function forcePlay(){
 
     try{
+
         await bgm.play();
+
     }catch(err){
+
         console.log(err);
     }
 }
@@ -1008,6 +886,19 @@ window.addEventListener(
 );
 
 </script>
+
+<audio
+    id="bgm"
+    loop
+    autoplay
+    playsinline
+    preload="auto">
+
+    <source
+        src="https://putrasetya.github.io/223am.mp3"
+        type="audio/mpeg">
+
+</audio>
 
 </body>
 </html>
