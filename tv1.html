@@ -41,6 +41,10 @@ body{
         radial-gradient(circle at top left,#1e3a8a 0%,transparent 30%),
         radial-gradient(circle at top right,#facc15 0%,transparent 25%),
         radial-gradient(circle at bottom,#0f172a 0%,#020617 70%);
+
+    -webkit-font-smoothing:antialiased;
+
+    text-rendering:optimizeLegibility;
 }
 
 /* =========================
@@ -137,13 +141,15 @@ SLIDE
 
     pointer-events:none;
 
-    transition:
-        opacity .7s ease,
-        visibility .7s ease;
+    z-index:1;
+
+    transform:
+        translate3d(0,0,0);
 
     will-change:opacity;
 
-    transform:translate3d(0,0,0);
+    transition:
+        opacity .7s ease;
 }
 
 .slide.active{
@@ -155,21 +161,6 @@ SLIDE
     pointer-events:auto;
 
     z-index:2;
-}
-
-/* =========================
-ANTI FLICKER
-========================= */
-
-.rank-card,
-.slide,
-.photo-box img{
-
-    backface-visibility:hidden;
-
-    transform:translateZ(0);
-
-    -webkit-font-smoothing:antialiased;
 }
 
 /* =========================
@@ -294,15 +285,53 @@ CARD
 
     opacity:0;
 
-    filter:
-        blur(10px);
+    transform:
+        translate3d(-140px,0,0);
 
-    transform:translate3d(0,0,0);
+    filter:
+        blur(8px);
+
+    contain:layout paint;
+
+    isolation:isolate;
+
+    backface-visibility:hidden;
 
     will-change:
         transform,
         opacity,
         filter;
+}
+
+/* =========================
+CARD ANIMATION
+========================= */
+
+@keyframes cardLeftEntrance{
+
+    0%{
+
+        opacity:0;
+
+        transform:
+            translate3d(-140px,0,0)
+            scale(.94);
+
+        filter:
+            blur(10px);
+    }
+
+    100%{
+
+        opacity:1;
+
+        transform:
+            translate3d(0,0,0)
+            scale(1);
+
+        filter:
+            blur(0);
+    }
 }
 
 /* =========================
@@ -334,53 +363,14 @@ CARD SHINE
     pointer-events:none;
 }
 
-/* =========================
-CARD ENTRANCE
-========================= */
-
-@keyframes cardEntrance{
-
-    0%{
-
-        opacity:0;
-
-        transform:
-            translateY(45px)
-            scale(.94);
-
-        filter:
-            blur(10px);
-    }
-
-    100%{
-
-        opacity:1;
-
-        transform:
-            translateY(0)
-            scale(1);
-
-        filter:
-            blur(0);
-    }
-}
-
-/* =========================
-SHINE
-========================= */
-
 @keyframes shineMove{
 
     0%{
-
-        transform:
-            translateX(-140%);
+        transform:translateX(-140%);
     }
 
     100%{
-
-        transform:
-            translateX(140%);
+        transform:translateX(140%);
     }
 }
 
@@ -452,6 +442,8 @@ RANK NUMBER
     letter-spacing:-10px;
 
     line-height:1;
+
+    backface-visibility:hidden;
 }
 
 .gold .rank-number{
@@ -493,6 +485,14 @@ PHOTO
 
     image-rendering:auto;
 
+    transform:translateZ(0);
+
+    backface-visibility:hidden;
+
+    user-select:none;
+
+    -webkit-user-drag:none;
+
     filter:
         drop-shadow(0 10px 15px rgba(0,0,0,.28))
         contrast(1.08)
@@ -528,6 +528,8 @@ EMPLOYEE
     overflow:hidden;
 
     text-overflow:ellipsis;
+
+    transform:translateZ(0);
 }
 
 .employee-label{
@@ -543,6 +545,8 @@ EMPLOYEE
     letter-spacing:3px;
 
     text-transform:uppercase;
+
+    transform:translateZ(0);
 }
 
 /* =========================
@@ -565,6 +569,8 @@ SCORE
     font-weight:900;
 
     color:#111827;
+
+    transform:translateZ(0);
 }
 
 .score-label{
@@ -580,6 +586,8 @@ SCORE
     opacity:.65;
 
     letter-spacing:2px;
+
+    transform:translateZ(0);
 }
 
 /* =========================
@@ -900,8 +908,40 @@ function render(data,key,containerId,label){
         `;
     });
 
-    document.getElementById(containerId)
-    .innerHTML = html;
+    const container =
+    document.getElementById(containerId);
+
+    if(container.innerHTML !== html){
+
+        container.innerHTML = html;
+    }
+}
+
+/* =========================
+CARD ANIMATION
+========================= */
+
+function animateCards(slide){
+
+    const cards =
+    slide.querySelectorAll(".rank-card");
+
+    cards.forEach((card,index)=>{
+
+        card.style.animation = "none";
+
+        requestAnimationFrame(()=>{
+
+            requestAnimationFrame(()=>{
+
+                card.style.animation =
+                `cardLeftEntrance .9s cubic-bezier(.2,.8,.2,1) forwards`;
+
+                card.style.animationDelay =
+                `${index * 0.18}s`;
+            });
+        });
+    });
 }
 
 /* =========================
@@ -924,38 +964,6 @@ async function update(){
             new Date()
         )
     );
-
-    animateCards(
-        slides[current]
-    );
-}
-
-/* =========================
-CARD ANIMATION
-========================= */
-
-function animateCards(slide){
-
-    const cards =
-    slide.querySelectorAll(".rank-card");
-
-    cards.forEach((card,index)=>{
-
-        card.style.animation = "none";
-
-        requestAnimationFrame(()=>{
-
-            requestAnimationFrame(()=>{
-
-                card.style.animation = `
-                    cardEntrance .9s cubic-bezier(.2,.8,.2,1) forwards
-                `;
-
-                card.style.animationDelay =
-                    `${index * 0.18}s`;
-            });
-        });
-    });
 }
 
 /* =========================
@@ -971,18 +979,15 @@ function showNextSlide(){
     const prev =
     slides[current];
 
-    let nextIndex =
-        current + 1;
+    current++;
 
-    if(nextIndex >= slides.length){
+    if(current >= slides.length){
 
-        nextIndex = 0;
+        current = 0;
     }
 
     const next =
-    slides[nextIndex];
-
-    next.style.zIndex = 3;
+    slides[current];
 
     next.classList.add("active");
 
@@ -992,17 +997,13 @@ function showNextSlide(){
 
         prev.classList.remove("active");
 
-        prev.style.zIndex = 1;
-
-        current = nextIndex;
-
         isAnimating = false;
 
     },700);
 }
 
 /* =========================
-AUTO SLIDE
+AUTO LOOP
 ========================= */
 
 function startSlideLoop(){
@@ -1062,7 +1063,7 @@ START
 
     startSlideLoop();
 
-    setInterval(update,15000);
+    setInterval(update,30000);
 
 })();
 
