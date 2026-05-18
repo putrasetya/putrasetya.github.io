@@ -144,15 +144,15 @@ SLIDE
     z-index:1;
 
     transform:
-        translate3d(40px,0,0);
-
-    will-change:
-        opacity,
-        transform;
+        translate3d(30px,0,0);
 
     transition:
         opacity .7s ease,
         transform .7s ease;
+
+    will-change:
+        opacity,
+        transform;
 }
 
 .slide.active{
@@ -184,7 +184,7 @@ HEADER
     opacity:0;
 
     transform:
-        translateY(-20px);
+        translateY(-18px);
 
     transition:
         opacity .6s ease,
@@ -309,21 +309,19 @@ CARD
     opacity:0;
 
     transform:
-        translate3d(-140px,0,0);
+        translate3d(-120px,0,0);
 
     filter:
-        blur(8px);
-
-    contain:layout paint;
-
-    isolation:isolate;
-
-    backface-visibility:hidden;
+        blur(10px);
 
     will-change:
         transform,
         opacity,
         filter;
+
+    backface-visibility:hidden;
+
+    contain:layout paint;
 }
 
 .rank-card.animate{
@@ -343,7 +341,7 @@ CARD ANIMATION
         opacity:0;
 
         transform:
-            translate3d(-140px,0,0)
+            translate3d(-120px,0,0)
             scale(.94);
 
         filter:
@@ -364,7 +362,7 @@ CARD ANIMATION
 }
 
 /* =========================
-CARD SHINE
+SHINE
 ========================= */
 
 .rank-card::before{
@@ -471,8 +469,6 @@ RANK NUMBER
     letter-spacing:-10px;
 
     line-height:1;
-
-    backface-visibility:hidden;
 }
 
 .gold .rank-number{
@@ -511,8 +507,6 @@ PHOTO
     object-fit:contain;
 
     object-position:center bottom;
-
-    image-rendering:auto;
 
     transform:translateZ(0);
 
@@ -666,9 +660,7 @@ FULLSCREEN HINT
     TAP DIMANA SAJA UNTUK FULLSCREEN
 </div>
 
-<!-- =========================
-SLIDE SALES
-========================= -->
+<!-- SALES -->
 
 <div class="slide active">
 
@@ -688,9 +680,7 @@ SLIDE SALES
 
 </div>
 
-<!-- =========================
-SLIDE PROTEKSI
-========================= -->
+<!-- PROTEKSI -->
 
 <div class="slide">
 
@@ -710,9 +700,7 @@ SLIDE PROTEKSI
 
 </div>
 
-<!-- =========================
-SLIDE TRX
-========================= -->
+<!-- TRX -->
 
 <div class="slide">
 
@@ -860,7 +848,7 @@ function render(data,key,containerId,label){
         "bronze"
     ];
 
-    let sorted = data
+    const sorted = data
         .filter(v => v[key] > 0)
         .sort((a,b)=>b[key]-a[key])
         .slice(0,3);
@@ -928,14 +916,11 @@ function render(data,key,containerId,label){
     const container =
     document.getElementById(containerId);
 
-    if(container.innerHTML !== html){
-
-        container.innerHTML = html;
-    }
+    container.innerHTML = html;
 }
 
 /* =========================
-CARD ANIMATION
+ANIMATE CARDS
 ========================= */
 
 function animateCards(slide){
@@ -947,16 +932,20 @@ function animateCards(slide){
 
         card.classList.remove("animate");
 
+        card.style.opacity = "0";
+
         card.style.animation = "none";
 
-        requestAnimationFrame(()=>{
+        void card.offsetWidth;
 
-            setTimeout(()=>{
+        setTimeout(()=>{
 
-                card.classList.add("animate");
+            card.classList.add("animate");
 
-            },index * 250);
-        });
+            card.style.animation =
+            "cardLeftEntrance .9s cubic-bezier(.2,.8,.2,1) forwards";
+
+        },index * 250);
     });
 }
 
@@ -980,10 +969,14 @@ async function update(){
             new Date()
         )
     );
+
+    animateCards(
+        slides[current]
+    );
 }
 
 /* =========================
-SLIDE SWITCH
+SLIDE
 ========================= */
 
 function showNextSlide(){
@@ -1019,7 +1012,7 @@ function showNextSlide(){
 }
 
 /* =========================
-AUTO LOOP
+AUTO SLIDE
 ========================= */
 
 function startSlideLoop(){
