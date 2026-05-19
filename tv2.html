@@ -1,24 +1,129 @@
-<!-- =========================
-ANTI FLICKER UPDATE
-TANPA MENGUBAH SISTEM SEBELUMNYA
-========================= -->
+<!DOCTYPE html>
+<html lang="id">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>AZKO ULTRA TV DISPLAY</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 
 <style>
 
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html,
+body{
+    width:100%;
+    height:100%;
+}
+
+body{
+
+    font-family:'Poppins',sans-serif;
+
+    overflow:hidden;
+
+    color:white;
+
+    cursor:pointer;
+
+    background:
+        radial-gradient(circle at top left,#1e3a8a 0%,transparent 30%),
+        radial-gradient(circle at top right,#facc15 0%,transparent 25%),
+        radial-gradient(circle at bottom,#0f172a 0%,#020617 70%);
+}
+
 /* =========================
-SLIDE SMOOTH
+BACKGROUND FX
+========================= */
+
+body::before{
+
+    content:"";
+
+    position:fixed;
+
+    inset:0;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(255,255,255,.03),
+            transparent 35%,
+            rgba(255,255,255,.02)
+        );
+
+    pointer-events:none;
+
+    z-index:-2;
+}
+
+body::after{
+
+    content:"";
+
+    position:fixed;
+
+    width:200%;
+    height:200%;
+
+    top:-50%;
+    left:-50%;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            rgba(255,255,255,.04),
+            transparent
+        );
+
+    transform:rotate(25deg);
+
+    animation:bgMove 12s linear infinite;
+
+    pointer-events:none;
+
+    z-index:-1;
+}
+
+@keyframes bgMove{
+
+    0%{
+        transform:
+            translateX(-20%)
+            rotate(25deg);
+    }
+
+    100%{
+        transform:
+            translateX(20%)
+            rotate(25deg);
+    }
+}
+
+/* =========================
+SLIDES
 ========================= */
 
 .slide{
 
-    width:100vw;
-    height:100vh;
-
-    padding:1vh 2vw;
-
     position:absolute;
 
     inset:0;
+
+    width:100vw;
+    height:100vh;
+
+    padding:
+        1vh
+        2vw;
 
     display:flex;
 
@@ -30,12 +135,13 @@ SLIDE SMOOTH
 
     pointer-events:none;
 
-    transform:scale(1.01);
+    transform:
+        scale(1.02);
 
     transition:
-        opacity .7s ease,
-        transform .7s ease,
-        visibility .7s;
+        opacity .8s ease,
+        transform .8s ease,
+        visibility .8s;
 }
 
 .slide.active{
@@ -46,68 +152,914 @@ SLIDE SMOOTH
 
     pointer-events:auto;
 
-    transform:scale(1);
+    transform:
+        scale(1);
 }
 
 /* =========================
-ANTI FLICKER CARD
+HEADER
+========================= */
+
+.header{
+
+    text-align:center;
+
+    margin-bottom:1vh;
+}
+
+.header h1{
+
+    font-size:3vw;
+
+    font-weight:900;
+
+    letter-spacing:6px;
+
+    text-transform:uppercase;
+
+    text-shadow:
+        0 0 20px rgba(255,255,255,.25);
+}
+
+.header p{
+
+    margin-top:.2vh;
+
+    font-size:1vw;
+
+    letter-spacing:4px;
+
+    opacity:.9;
+}
+
+/* =========================
+UPDATE TIME
+========================= */
+
+.update-time{
+
+    margin:
+        1vh auto 0 auto;
+
+    width:fit-content;
+
+    padding:
+        1vh
+        2.5vw;
+
+    border-radius:20px;
+
+    background:
+        rgba(0,0,0,.45);
+
+    border:
+        2px solid rgba(255,255,255,.15);
+
+    font-size:1.2vw;
+
+    font-weight:700;
+
+    backdrop-filter:blur(12px);
+
+    box-shadow:
+        0 0 20px rgba(0,0,0,.25);
+}
+
+/* =========================
+PAUSE INDICATOR
+========================= */
+
+.pause-indicator{
+
+    position:fixed;
+
+    top:20px;
+    left:20px;
+
+    z-index:9999;
+
+    padding:14px 24px;
+
+    border-radius:18px;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(15,23,42,.92),
+            rgba(30,41,59,.92)
+        );
+
+    border:
+        1px solid rgba(255,255,255,.15);
+
+    backdrop-filter:blur(16px);
+
+    font-size:14px;
+
+    font-weight:800;
+
+    letter-spacing:2px;
+
+    box-shadow:
+        0 10px 30px rgba(0,0,0,.45),
+        0 0 20px rgba(59,130,246,.25);
+
+    opacity:0;
+
+    transform:
+        translateY(-20px)
+        scale(.95);
+
+    transition:.35s ease;
+}
+
+.pause-indicator.show{
+
+    opacity:1;
+
+    transform:
+        translateY(0)
+        scale(1);
+}
+
+/* =========================
+RANK LIST
+========================= */
+
+.rank-list{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:1.2vh;
+
+    flex:1;
+
+    justify-content:space-evenly;
+}
+
+/* =========================
+CARD
 ========================= */
 
 .rank-card{
 
-    animation-fill-mode:forwards;
+    position:relative;
+
+    display:flex;
+
+    align-items:center;
+
+    height:25vh;
+
+    border-radius:34px;
+
+    overflow:hidden;
+
+    border:
+        1px solid rgba(255,255,255,.08);
+
+    opacity:0;
+
+    transform:
+        translateX(-120px)
+        scale(.96);
 
     will-change:
         transform,
         opacity;
+}
 
-    backface-visibility:hidden;
+.rank-card.show{
 
-    transform-style:preserve-3d;
+    animation:
+        slideRight .9s forwards;
+}
+
+.rank-card:nth-child(1){
+    animation-delay:.2s;
+}
+
+.rank-card:nth-child(2){
+    animation-delay:.5s;
+}
+
+.rank-card:nth-child(3){
+    animation-delay:.8s;
+}
+
+@keyframes slideRight{
+
+    from{
+
+        opacity:0;
+
+        transform:
+            translateX(-120px)
+            scale(.92);
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:
+            translateX(0)
+            scale(1);
+    }
+}
+
+/* =========================
+TOP CARD
+========================= */
+
+.gold{
+
+    background:
+        linear-gradient(
+            135deg,
+            #6b5300,
+            #d4a514,
+            #fff0a6,
+            #d4a514,
+            #6b5300
+        );
+}
+
+.silver{
+
+    background:
+        linear-gradient(
+            135deg,
+            #737373,
+            #d1d5db,
+            #ffffff,
+            #d1d5db,
+            #737373
+        );
+}
+
+.bronze{
+
+    background:
+        linear-gradient(
+            135deg,
+            #6d3f1d,
+            #c87c3d,
+            #efc08c,
+            #c87c3d,
+            #6d3f1d
+        );
+}
+
+/* =========================
+BOTTOM CARD
+========================= */
+
+.red-high{
+
+    background:
+        linear-gradient(
+            135deg,
+            #7f1d1d,
+            #b91c1c,
+            #dc2626,
+            #ef4444,
+            #f87171
+        );
+}
+
+.red-mid{
+
+    background:
+        linear-gradient(
+            135deg,
+            #4a0404,
+            #7f1d1d,
+            #b91c1c,
+            #dc2626,
+            #ef4444
+        );
+}
+
+.red-low{
+
+    background:
+        linear-gradient(
+            135deg,
+            #2b0000,
+            #4a0404,
+            #7f1d1d,
+            #991b1b,
+            #b91c1c
+        );
+}
+
+/* =========================
+RANK NUMBER
+========================= */
+
+.rank-number{
+
+    position:absolute;
+
+    left:-.5vw;
+
+    top:50%;
+
+    transform:
+        translateY(-50%)
+        skew(-10deg);
+
+    font-size:16vw;
+
+    font-weight:900;
+
+    opacity:.20;
+
+    letter-spacing:-10px;
+}
+
+.gold .rank-number{
+    color:#facc15;
+}
+
+.silver .rank-number{
+    color:#e2e8f0;
+}
+
+.bronze .rank-number{
+    color:#fb923c;
+}
+
+.red-high .rank-number,
+.red-mid .rank-number,
+.red-low .rank-number{
+
+    color:#ffffff;
+}
+
+/* =========================
+PHOTO
+========================= */
+
+.photo-box{
+
+    width:20%;
+    height:100%;
+
+    display:flex;
+
+    align-items:flex-end;
+
+    justify-content:center;
+}
+
+.photo-box img{
+
+    width:100%;
+    height:100%;
+
+    object-fit:contain;
+
+    object-position:center bottom;
+
+    filter:
+        drop-shadow(0 10px 15px rgba(0,0,0,.28))
+        contrast(1.08)
+        saturate(1.08);
+}
+
+/* =========================
+EMPLOYEE
+========================= */
+
+.employee{
+
+    flex:1;
+
+    padding-left:1.5vw;
+
+    overflow:hidden;
+}
+
+.employee-name{
+
+    font-size:2vw;
+
+    font-weight:900;
+
+    color:#111827;
+
+    text-transform:uppercase;
+
+    white-space:nowrap;
+
+    overflow:hidden;
+
+    text-overflow:ellipsis;
+}
+
+.employee-label{
+
+    margin-top:.5vh;
+
+    font-size:1.1vw;
+
+    letter-spacing:3px;
+
+    text-transform:uppercase;
+
+    color:#111827;
+}
+
+.red-high .employee-name,
+.red-mid .employee-name,
+.red-low .employee-name,
+
+.red-high .employee-label,
+.red-mid .employee-label,
+.red-low .employee-label{
+
+    color:white;
+}
+
+/* =========================
+SCORE
+========================= */
+
+.score{
+
+    width:31%;
+
+    padding-right:1.8vw;
+
+    display:flex;
+
+    flex-direction:column;
+
+    align-items:flex-end;
+
+    gap:1vh;
+}
+
+.main-score{
+
+    text-align:right;
+}
+
+.score-value{
+
+    font-size:2.5vw;
+
+    font-weight:900;
+
+    color:#111827;
+}
+
+.score-label{
+
+    margin-top:.2vh;
+
+    font-size:.8vw;
+
+    font-weight:700;
+
+    letter-spacing:2px;
+
+    color:#111827;
+
+    opacity:.7;
+}
+
+.red-high .score-value,
+.red-mid .score-value,
+.red-low .score-value,
+
+.red-high .score-label,
+.red-mid .score-label,
+.red-low .score-label{
+
+    color:white;
+}
+
+/* =========================
+ACH BOX
+========================= */
+
+.ach-box{
+
+    position:relative;
+
+    overflow:hidden;
+
+    padding:
+        1vh
+        1.2vw;
+
+    border-radius:22px;
+
+    min-width:9vw;
+
+    text-align:center;
+
+    backdrop-filter:blur(12px);
+
+    border:
+        1px solid rgba(255,255,255,.18);
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(255,255,255,.18),
+            rgba(255,255,255,.08)
+        );
+}
+
+.ach-title{
+
+    position:relative;
+
+    z-index:2;
+
+    font-size:.72vw;
+
+    font-weight:800;
+
+    letter-spacing:2px;
+
+    color:#ffffff;
+}
+
+.ach-value{
+
+    position:relative;
+
+    z-index:2;
+
+    margin-top:.45vh;
+
+    font-size:1.8vw;
+
+    font-weight:900;
+}
+
+.ach-green{
+
+    color:#dcfce7 !important;
+
+    text-shadow:
+        0 0 6px rgba(34,197,94,.95),
+        0 0 14px rgba(34,197,94,.9),
+        0 0 24px rgba(34,197,94,.75);
+}
+
+.ach-green-box{
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(22,163,74,.42),
+            rgba(34,197,94,.22)
+        ) !important;
+
+    border:
+        2px solid rgba(74,222,128,.65);
+}
+
+.ach-red{
+
+    color:#ffe4e6 !important;
+
+    text-shadow:
+        0 0 6px rgba(239,68,68,.95),
+        0 0 14px rgba(239,68,68,.9),
+        0 0 24px rgba(239,68,68,.75);
+}
+
+.ach-red-box{
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(185,28,28,.42),
+            rgba(239,68,68,.22)
+        ) !important;
+
+    border:
+        2px solid rgba(252,165,165,.6);
+}
+
+.ach-normal{
+
+    color:#ffffff !important;
+}
+
+/* =========================
+MOBILE
+========================= */
+
+@media(max-width:768px){
+
+    body{
+        overflow:auto;
+    }
+
+    .slide{
+        min-height:100vh;
+        height:auto;
+        padding:12px;
+    }
+
+    .header h1{
+        font-size:30px;
+    }
+
+    .header p{
+        font-size:11px;
+    }
+
+    .rank-card{
+        height:130px;
+    }
+
+    .rank-number{
+        font-size:90px !important;
+    }
+
+    .photo-box{
+        width:95px;
+        min-width:95px;
+    }
+
+    .employee-name{
+        font-size:15px;
+    }
+
+    .employee-label{
+        font-size:10px;
+    }
+
+    .score{
+        width:42%;
+    }
+
+    .score-value{
+        font-size:18px;
+    }
+
+    .score-label{
+        font-size:9px;
+    }
+
+    .ach-box{
+
+        min-width:78px;
+
+        padding:
+            8px
+            10px;
+    }
+
+    .ach-title{
+        font-size:8px;
+    }
+
+    .ach-value{
+        font-size:15px;
+    }
 }
 
 </style>
+</head>
+
+<body>
+
+<div class="pause-indicator" id="pauseIndicator">
+    ▶ PLAYING
+</div>
+
+<!-- =========================
+SLIDES
+========================= -->
+
+<div class="slide active">
+    <div class="header">
+        <h1>TOP SALES</h1>
+        <p>AZKO CITIMALL TUBAN</p>
+        <div class="update-time" id="update1">DATA UPDATE : -</div>
+    </div>
+    <div class="rank-list" id="salesTop"></div>
+</div>
+
+<div class="slide">
+    <div class="header">
+        <h1>BOTTOM SALES</h1>
+        <p>AZKO CITIMALL TUBAN</p>
+        <div class="update-time" id="update2">DATA UPDATE : -</div>
+    </div>
+    <div class="rank-list" id="salesBottom"></div>
+</div>
+
+<div class="slide">
+    <div class="header">
+        <h1>TOP PROTEKSI</h1>
+        <p>AZKO CITIMALL TUBAN</p>
+        <div class="update-time" id="update3">DATA UPDATE : -</div>
+    </div>
+    <div class="rank-list" id="proteksiTop"></div>
+</div>
+
+<div class="slide">
+    <div class="header">
+        <h1>BOTTOM PROTEKSI</h1>
+        <p>AZKO CITIMALL TUBAN</p>
+        <div class="update-time" id="update4">DATA UPDATE : -</div>
+    </div>
+    <div class="rank-list" id="proteksiBottom"></div>
+</div>
+
+<div class="slide">
+    <div class="header">
+        <h1>TOP TRX</h1>
+        <p>AZKO CITIMALL TUBAN</p>
+        <div class="update-time" id="update5">DATA UPDATE : -</div>
+    </div>
+    <div class="rank-list" id="trxTop"></div>
+</div>
+
+<div class="slide">
+    <div class="header">
+        <h1>BOTTOM TRX</h1>
+        <p>AZKO CITIMALL TUBAN</p>
+        <div class="update-time" id="update6">DATA UPDATE : -</div>
+    </div>
+    <div class="rank-list" id="trxBottom"></div>
+</div>
+
+<audio
+    id="bgm"
+    loop
+    autoplay
+    playsinline
+    preload="auto">
+
+    <source
+        src="https://putrasetya.github.io/223am.mp3"
+        type="audio/mpeg">
+
+</audio>
 
 <script>
 
+const URL =
+"https://script.google.com/macros/s/AKfycbzeehvUo6QYriMFJTR4A88lN6IIHV6Qop9UphkdOTMkRLVxhVuJ13y69momo6h1pn9dTQ/exec";
+
 /* =========================
-SLIDE LOOP
+HELPERS
 ========================= */
 
-const slides =
-document.querySelectorAll(".slide");
+function clean(val){
 
-let current = 0;
+    if(!val) return 0;
 
-function nextSlide(){
+    return parseFloat(
+        val.toString().replace(/[^\d.]/g,'')
+    ) || 0;
+}
 
-    slides[current]
-        .classList.remove("active");
+function formatTanggal(date){
 
-    current =
-    (current + 1) % slides.length;
+    return date.toLocaleString('id-ID',{
 
-    slides[current]
-        .classList.add("active");
+        day:'2-digit',
+        month:'long',
+        year:'numeric',
+        hour:'2-digit',
+        minute:'2-digit',
+        second:'2-digit'
+    });
+}
+
+function setUpdate(text){
+
+    for(let i=1;i<=6;i++){
+
+        const el =
+        document.getElementById("update"+i);
+
+        if(el){
+
+            el.innerHTML =
+            "DATA UPDATE : " + text;
+        }
+    }
+}
+
+function isExcluded(dept){
+
+    const d =
+    (dept || "").toLowerCase();
+
+    return (
+
+        d.includes("cashier") ||
+        d.includes("kasir") ||
+        d.includes("cs") ||
+        d.includes("customer service")
+    );
 }
 
 /* =========================
-ANTI RE-RENDER
+GET DATA
 ========================= */
 
-function safeRender(
-    container,
-    html
-){
+async function getData(){
 
-    if(
-        container.innerHTML.trim()
-        !==
-        html.trim()
-    ){
+    try{
 
-        container.innerHTML = html;
+        const res = await fetch(URL);
+
+        const json = await res.json();
+
+        return json.map(row => ({
+
+            name:
+                row["EMPLOYEE NAME"] || "UNKNOWN",
+
+            dept:
+                row["DEPT"] || "-",
+
+            sales:
+                clean(row["SALES MTD"]),
+
+            proteksi:
+                clean(row["PROTEKSI"]),
+
+            trx:
+                clean(row["TRX"]),
+
+            achSales:
+                clean(row["ACH MTD"]),
+
+            achProteksi:
+                clean(row["ACH PROTEKSI"]),
+
+            achTrx:
+                clean(row["ACH BULANAN"]),
+
+            photo:
+                row["PHOTO"] || ""
+
+        }));
+
+    }catch(err){
+
+        console.log("GET DATA ERROR:",err);
+
+        return [];
     }
+}
+
+/* =========================
+ACH STYLE
+========================= */
+
+function getAchStyle(value){
+
+    if(value >= 100){
+
+        return {
+
+            valueClass:
+                "ach-value ach-green",
+
+            boxClass:
+                "ach-box ach-green-box"
+        };
+    }
+
+    if(value < 80){
+
+        return {
+
+            valueClass:
+                "ach-value ach-red",
+
+            boxClass:
+                "ach-box ach-red-box"
+        };
+    }
+
+    return {
+
+        valueClass:
+            "ach-value ach-normal",
+
+        boxClass:
+            "ach-box"
+    };
 }
 
 /* =========================
@@ -264,19 +1216,333 @@ function render(
         `;
     });
 
-    safeRender(container,html);
+    container.innerHTML = html;
 }
 
 /* =========================
-AUTO LOOP
+SLIDES
+========================= */
+
+const slides =
+document.querySelectorAll(".slide");
+
+let current = 0;
+
+function animateCards(slide){
+
+    const cards =
+    slide.querySelectorAll(".rank-card");
+
+    cards.forEach(card=>{
+
+        card.classList.remove("show");
+
+        void card.offsetWidth;
+
+        card.classList.add("show");
+    });
+}
+
+function nextSlide(){
+
+    slides[current]
+        .classList.remove("active");
+
+    current++;
+
+    if(current >= slides.length){
+
+        current = 0;
+    }
+
+    const next =
+    slides[current];
+
+    next.classList.add("active");
+
+    animateCards(next);
+}
+
+/* =========================
+UPDATE
+========================= */
+
+async function update(){
+
+    const data = await getData();
+
+    const now =
+    formatTanggal(new Date());
+
+    render(
+        data,
+        "sales",
+        "achSales",
+        "ACH MTD",
+        "salesTop",
+        "TOTAL SALES",
+        "top"
+    );
+
+    render(
+        data,
+        "sales",
+        "achSales",
+        "ACH MTD",
+        "salesBottom",
+        "TOTAL SALES",
+        "bottom"
+    );
+
+    render(
+        data,
+        "proteksi",
+        "achProteksi",
+        "ACH PROTEKSI",
+        "proteksiTop",
+        "TOTAL PROTEKSI",
+        "top"
+    );
+
+    render(
+        data,
+        "proteksi",
+        "achProteksi",
+        "ACH PROTEKSI",
+        "proteksiBottom",
+        "TOTAL PROTEKSI",
+        "bottom"
+    );
+
+    render(
+        data,
+        "trx",
+        "achTrx",
+        "ACH BULANAN",
+        "trxTop",
+        "TOTAL TRX",
+        "top"
+    );
+
+    render(
+        data,
+        "trx",
+        "achTrx",
+        "ACH BULANAN",
+        "trxBottom",
+        "TOTAL TRX",
+        "bottom"
+    );
+
+    animateCards(
+        slides[current]
+    );
+
+    setUpdate(now);
+}
+
+/* =========================
+INDICATOR
+========================= */
+
+const pauseIndicator =
+document.getElementById(
+    "pauseIndicator"
+);
+
+function showIndicator(text){
+
+    if(!pauseIndicator) return;
+
+    pauseIndicator.innerHTML = text;
+
+    pauseIndicator.classList.add("show");
+
+    clearTimeout(window.indicatorTimeout);
+
+    window.indicatorTimeout =
+    setTimeout(()=>{
+
+        pauseIndicator.classList.remove("show");
+
+    },1500);
+}
+
+/* =========================
+AUDIO
+========================= */
+
+const bgm =
+document.getElementById("bgm");
+
+if(bgm){
+
+    bgm.volume = 0.4;
+}
+
+async function playMusic(){
+
+    if(!bgm) return;
+
+    try{
+
+        await bgm.play();
+
+    }catch(err){
+
+        console.log(err);
+    }
+}
+
+/* =========================
+LOOP
 ========================= */
 
 let isPaused = false;
 
-let slideInterval =
-setInterval(nextSlide,7000);
+let slideInterval;
+let updateInterval;
 
-let updateInterval =
-setInterval(update,15000);
+function stopLoop(){
+
+    clearInterval(slideInterval);
+    clearInterval(updateInterval);
+}
+
+function startLoop(){
+
+    stopLoop();
+
+    slideInterval =
+    setInterval(()=>{
+
+        if(!document.hidden){
+
+            nextSlide();
+        }
+
+    },7000);
+
+    updateInterval =
+    setInterval(()=>{
+
+        if(!document.hidden){
+
+            update();
+        }
+
+    },15000);
+}
+
+function togglePause(){
+
+    isPaused = !isPaused;
+
+    if(isPaused){
+
+        stopLoop();
+
+        if(bgm) bgm.pause();
+
+        showIndicator("⏸ PAUSED");
+
+    }else{
+
+        startLoop();
+
+        playMusic();
+
+        showIndicator("▶ PLAYING");
+    }
+}
+
+/* =========================
+FULLSCREEN
+========================= */
+
+async function toggleFullscreen(){
+
+    try{
+
+        if(!document.fullscreenElement){
+
+            await document.documentElement.requestFullscreen();
+
+            showIndicator("🖥 FULLSCREEN");
+
+        }else{
+
+            await document.exitFullscreen();
+
+            showIndicator("❎ EXIT FULLSCREEN");
+        }
+
+    }catch(err){
+
+        console.log(err);
+    }
+}
+
+/* =========================
+CLICK
+========================= */
+
+let clickTimer = null;
+
+document.addEventListener(
+    "click",
+    ()=>{
+
+        if(clickTimer){
+
+            clearTimeout(clickTimer);
+        }
+
+        clickTimer = setTimeout(()=>{
+
+            togglePause();
+
+        },250);
+    }
+);
+
+document.addEventListener(
+    "dblclick",
+    ()=>{
+
+        clearTimeout(clickTimer);
+
+        toggleFullscreen();
+    }
+);
+
+/* =========================
+START
+========================= */
+
+window.addEventListener(
+    "load",
+    async ()=>{
+
+        await update();
+
+        animateCards(
+            slides[current]
+        );
+
+        startLoop();
+
+        playMusic();
+
+        setTimeout(playMusic,1000);
+
+        setTimeout(playMusic,3000);
+
+        showIndicator("▶ PLAYING");
+    }
+);
 
 </script>
+
+</body>
+</html>
