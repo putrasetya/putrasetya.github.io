@@ -278,7 +278,7 @@ CARD
 }
 
 /* =========================
-TOP CARD
+CARD COLORS
 ========================= */
 
 .gold{
@@ -292,10 +292,6 @@ TOP CARD
 .bronze{
     background:linear-gradient(135deg,#6d3f1d,#c87c3d,#efc08c,#c87c3d,#6d3f1d);
 }
-
-/* =========================
-BOTTOM CARD
-========================= */
 
 .red-high{
     background:linear-gradient(135deg,#7f1d1d,#b91c1c,#dc2626,#ef4444,#f87171);
@@ -433,13 +429,21 @@ PAUSE INDICATOR
     top:20px;
     left:20px;
 
-    z-index:999999;
+    z-index:999999999;
 
     opacity:0;
 
     visibility:hidden;
 
-    transition:.3s;
+    pointer-events:none;
+
+    transition:
+        opacity .3s ease,
+        transform .3s ease;
+
+    transform:
+        translateY(-10px)
+        scale(.95);
 }
 
 .pause-indicator.show{
@@ -447,6 +451,10 @@ PAUSE INDICATOR
     opacity:1;
 
     visibility:visible;
+
+    transform:
+        translateY(0)
+        scale(1);
 }
 
 .pause-card{
@@ -885,33 +893,23 @@ async function toggleFullscreen(){
 }
 
 /* =========================
-CLICK & DOUBLE CLICK
+CLICK = PAUSE
+DOUBLE CLICK = FULLSCREEN
 ========================= */
-
-let clickTimer = null;
 
 document.addEventListener(
     "click",
     ()=>{
 
-        if(clickTimer){
-
-            clearTimeout(clickTimer);
-        }
-
-        clickTimer = setTimeout(()=>{
-
-            togglePause();
-
-        },250);
+        togglePause();
     }
 );
 
 document.addEventListener(
     "dblclick",
-    ()=>{
+    (e)=>{
 
-        clearTimeout(clickTimer);
+        e.preventDefault();
 
         toggleFullscreen();
     }
