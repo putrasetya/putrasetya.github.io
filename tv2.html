@@ -11,36 +11,18 @@
 
 <style>
 
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-}
-
-html,body{
-    width:100%;
-    height:100%;
-    overflow:hidden;
-}
-
-body{
-    font-family:'Poppins',sans-serif;
-    background:#000;
-    color:#fff;
-}
+/* RESET */
+*{margin:0;padding:0;box-sizing:border-box;}
+html,body{width:100%;height:100%;overflow:hidden;}
+body{font-family:'Poppins',sans-serif;background:#000;color:#fff;}
 
 /* SLIDE */
 .slide{
     position:absolute;
     inset:0;
-    width:100vw;
-    height:100vh;
-
     opacity:0;
     visibility:hidden;
-
-    transition:opacity .8s ease;
-
+    transition:.8s;
     transform:translate3d(0,0,0);
 }
 
@@ -53,22 +35,35 @@ body{
 .top-slide{
     background:
         radial-gradient(circle at top,#0d4cff 0%,transparent 30%),
-        linear-gradient(180deg,#020617 0%,#000);
+        linear-gradient(180deg,#020617,#000);
+}
+
+.bottom-slide{
+    background:
+        radial-gradient(circle at top,#ff0000 0%,transparent 30%),
+        linear-gradient(180deg,#180000,#000);
 }
 
 /* HEADER */
 .header{
     height:16vh;
     display:flex;
-    justify-content:space-between;
     align-items:center;
+    justify-content:space-between;
     padding:1vh 1.5vw;
+    position:relative;
 }
 
 .logo{
     font-size:3vw;
     font-weight:900;
     color:#ff3131;
+}
+
+.logo span{
+    display:block;
+    font-size:1vw;
+    color:#fff;
 }
 
 .title{
@@ -83,6 +78,11 @@ body{
     font-weight:900;
 }
 
+.title p{
+    font-size:1vw;
+    opacity:.8;
+}
+
 /* MAIN */
 .main{
     height:72vh;
@@ -94,14 +94,30 @@ body{
 
 /* CATEGORY */
 .category{
-    background:rgba(255,255,255,.03);
     border-radius:26px;
     padding:1vh .8vw;
+    background:rgba(255,255,255,.03);
+    backdrop-filter:blur(8px);
+    overflow:hidden;
 }
 
-/* =========================
-TOP PODIUM FIX (AMAN + NAIK)
-========================= */
+/* TITLE */
+.category-title{
+    text-align:center;
+    margin-bottom:1vh;
+}
+
+.category-title h2{
+    font-size:2vw;
+    font-weight:900;
+}
+
+.category-title p{
+    font-size:.8vw;
+    opacity:.8;
+}
+
+/* ================= TOP PODIUM FIX ================= */
 
 .top-podium{
     height:100%;
@@ -126,53 +142,40 @@ TOP PODIUM FIX (AMAN + NAIK)
     padding:1vh .5vw 2vh;
 
     background:linear-gradient(180deg,rgba(255,255,255,.08),rgba(0,0,0,.4));
+
     border:2px solid rgba(255,255,255,.15);
 
     opacity:0;
     transform:translateX(-40px);
 
-    animation:slideIn .7s forwards, floatY 3s ease-in-out infinite .7s;
+    animation:slideIn .7s forwards,floatY 3s ease-in-out infinite .7s;
 }
 
-@keyframes slideIn{
-    to{opacity:1; transform:translateX(0);}
-}
+@keyframes slideIn{to{opacity:1;transform:translateX(0);}}
 
 @keyframes floatY{
     0%,100%{transform:translateY(0);}
     50%{transform:translateY(-6px);}
 }
 
-/* SIZE FIX */
-.rank1{
-    width:34%;
-    height:86%;
-    border:2px solid gold;
-}
-
-.rank2,.rank3{
-    width:28%;
-    height:72%;
-}
+/* SIZE */
+.rank1{width:34%;height:86%;border:2px solid gold;}
+.rank2,.rank3{width:28%;height:72%;}
 
 /* RANK */
 .rank-number{
     position:absolute;
-    top:10px;
-    left:10px;
-    width:2.5vw;
-    height:2.5vw;
+    top:10px;left:10px;
+    width:2.5vw;height:2.5vw;
     border-radius:50%;
-    display:flex;
-    align-items:center;
-    justify-content:center;
+    display:flex;align-items:center;justify-content:center;
     font-weight:900;
     background:rgba(0,0,0,.5);
 }
 
 .rank1 .rank-number{background:#ffd700;color:#000;}
 .rank2 .rank-number{background:#dbe4f0;color:#000;}
-.rank3 .rank-number{background:#cd7f32;}
+.rank3 .rank-number{background:#cd7f32;color:#000;}
 
 /* PHOTO */
 .photo{
@@ -187,30 +190,21 @@ TOP PODIUM FIX (AMAN + NAIK)
 }
 
 /* TEXT */
-.employee-name{
-    font-size:.9vw;
-    font-weight:900;
-}
+.employee-name{font-size:.9vw;font-weight:900;}
+.employee-dept{font-size:.7vw;opacity:.8;}
+.score{font-size:1.6vw;font-weight:900;margin-top:1vh;}
 
-.employee-dept{
-    font-size:.7vw;
-    opacity:.8;
-}
-
-.score{
-    font-size:1.6vw;
-    font-weight:900;
-    margin-top:1vh;
-}
-
+/* ACH */
 .ach-circle{
-    width:4vw;
-    height:4vw;
+    width:4vw;height:4vw;
     border-radius:50%;
     margin-top:1vh;
+
     display:flex;
     align-items:center;
     justify-content:center;
+
+    font-size:.85vw;
     font-weight:900;
 
     background:
@@ -218,92 +212,210 @@ TOP PODIUM FIX (AMAN + NAIK)
         conic-gradient(#32ff6a calc(var(--val)*1%),rgba(255,255,255,.1) 0);
 }
 
-/* STATUS */
-.status{
-    position:fixed;
-    top:10px;
-    left:10px;
-    background:rgba(0,0,0,.6);
-    padding:10px 15px;
-    border-radius:10px;
-    font-size:12px;
+/* ================= BOTTOM TABLE ================= */
+
+.bottom-table{
+    display:flex;
+    flex-direction:column;
+    gap:.8vh;
 }
+
+.table-header,
+.table-row{
+    display:grid;
+    grid-template-columns:.6fr .8fr 1.5fr 1.3fr 1.4fr 1fr;
+    align-items:center;
+    padding:.7vh .6vw;
+}
+
+.table-header{
+    font-size:.7vw;
+    font-weight:700;
+    border-bottom:1px solid rgba(255,255,255,.1);
+}
+
+.table-row{
+    background:rgba(255,0,0,.08);
+    border-radius:16px;
+}
+
+/* PHOTO SMALL */
+.table-photo{
+    width:50px;height:50px;
+    border-radius:12px;
+    overflow:hidden;
+}
+
+.table-photo img{
+    width:100%;height:100%;object-fit:cover;
+}
+
+/* AVG */
+.avg-box{
+    margin-top:1vh;
+    height:6vh;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:0 1vw;
+    background:rgba(255,0,0,.08);
+    border-radius:16px;
+}
+
+.avg-value{
+    font-size:1.8vw;
+    font-weight:900;
+    color:#ff4d4d;
+}
+
+/* BOTTOM BAR */
+.bottom-bar{
+    height:8vh;
+    margin:.5vh 1vw 0;
+    border-radius:20px;
+
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+
+    padding:0 1.5vw;
+
+    background:rgba(255,255,255,.05);
+    border:1px solid rgba(255,255,255,.1);
+}
+
+.bottom-left{font-weight:800;}
+.bottom-right{display:flex;gap:2vw;font-size:.9vw;}
 
 </style>
 </head>
 
 <body>
 
-<div class="status" id="status">LOADING...</div>
+<!-- STATUS -->
+<div style="position:fixed;top:10px;left:10px;background:#0008;padding:10px;border-radius:10px;font-size:12px" id="status">LOADING...</div>
 
+<!-- TOP -->
 <section class="slide top-slide active">
 
-    <div class="header">
-        <div class="logo">az•ko</div>
-        <div class="title"><h1>TOP PERFORMANCE</h1></div>
+<div class="header">
+    <div class="logo">az•ko <span>CITIMALL TUBAN</span></div>
+    <div class="title"><h1>TOP PERFORMANCE</h1><p>AZKO CITIMALL TUBAN</p></div>
+</div>
+
+<div class="main">
+
+    <div class="category">
+        <div class="category-title"><h2>SALES</h2><p>TOP SALES</p></div>
+        <div class="top-podium" id="topSales"></div>
     </div>
 
-    <div class="main">
-
-        <div class="category">
-            <div class="top-podium" id="topSales"></div>
-        </div>
-
-        <div class="category">
-            <div class="top-podium" id="topProteksi"></div>
-        </div>
-
-        <div class="category">
-            <div class="top-podium" id="topTrx"></div>
-        </div>
-
+    <div class="category">
+        <div class="category-title"><h2>PROTEKSI</h2><p>TOP PROTEKSI</p></div>
+        <div class="top-podium" id="topProteksi"></div>
     </div>
+
+    <div class="category">
+        <div class="category-title"><h2>TRX</h2><p>TOP TRANSAKSI</p></div>
+        <div class="top-podium" id="topTrx"></div>
+    </div>
+
+</div>
+
+<div class="bottom-bar">
+    <div>🏆 TOP PERFORMER HARI INI</div>
+    <div class="bottom-right">
+        <div id="bestSales">-</div>
+        <div id="bestProteksi">-</div>
+        <div id="bestTrx">-</div>
+    </div>
+</div>
+
+</section>
+
+<!-- BOTTOM -->
+<section class="slide bottom-slide">
+
+<div class="header">
+    <div class="logo">az•ko <span>CITIMALL TUBAN</span></div>
+    <div class="title"><h1>BOTTOM PERFORMANCE</h1><p>AZKO CITIMALL TUBAN</p></div>
+</div>
+
+<div class="main">
+
+    <div class="category">
+        <div class="category-title"><h2>SALES</h2></div>
+
+        <div class="bottom-table">
+            <div class="table-header">
+                <div>RANK</div><div></div><div>NAME</div><div>DEPT</div><div>SALES</div><div>ACH</div>
+            </div>
+
+            <div id="bottomSales"></div>
+
+            <div class="avg-box">
+                <div>AVG ACH</div>
+                <div class="avg-value" id="avgSales">0%</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="category">
+        <div class="category-title"><h2>PROTEKSI</h2></div>
+        <div id="bottomProteksi"></div>
+    </div>
+
+    <div class="category">
+        <div class="category-title"><h2>TRX</h2></div>
+        <div id="bottomTrx"></div>
+    </div>
+
+</div>
+
+<div class="bottom-bar">
+    <div>📢 KEEP PUSHING PERFORMANCE</div>
+    <div class="bottom-right">
+        <div>FOCUS</div><div>HARD WORK</div><div>WIN</div>
+    </div>
+</div>
 
 </section>
 
 <script>
 
-/* ================= API ================= */
 const URL = "https://script.google.com/macros/s/AKfycbzeehvUo6QYriMFJTR4A88lN6IIHV6Qop9UphkdOTMkRLVxhVuJ13y69momo6h1pn9dTQ/exec";
 
-/* ================= CLEAN ================= */
 function clean(v){
     return parseFloat((v||"0").toString().replace(/[^\d.]/g,''))||0;
 }
 
-/* ================= FETCH ================= */
+/* FETCH */
 async function getData(){
-    try{
-        const res = await fetch(URL+"?t="+Date.now(),{cache:"no-store"});
-        const json = await res.json();
+    const res = await fetch(URL+"?t="+Date.now());
+    const json = await res.json();
 
-        return json.map(r=>({
-            name:r["EMPLOYEE NAME"]||"-",
-            dept:r["DEPT"]||"-",
-            sales:clean(r["SALES MTD"]),
-            proteksi:clean(r["PROTEKSI"]),
-            trx:clean(r["TRX"]),
-            achSales:clean(r["ACH MTD"]),
-            achProteksi:clean(r["ACH PROTEKSI"]),
-            achTrx:clean(r["ACH BULANAN"]),
-            photo:r["PHOTO"]||""
-        }));
-
-    }catch(e){
-        console.log(e);
-        return [];
-    }
+    return json.map(r=>({
+        name:r["EMPLOYEE NAME"],
+        dept:r["DEPT"],
+        sales:clean(r["SALES MTD"]),
+        proteksi:clean(r["PROTEKSI"]),
+        trx:clean(r["TRX"]),
+        achSales:clean(r["ACH MTD"]),
+        achProteksi:clean(r["ACH PROTEKSI"]),
+        achTrx:clean(r["ACH BULANAN"]),
+        photo:r["PHOTO"]
+    }));
 }
 
-/* ================= PODIUM ================= */
-function card(d,rank,val,ach,label){
+/* TOP CARD */
+function card(d,rank,val,ach){
 return `
 <div class="podium-card rank${rank}">
     <div class="rank-number">${rank}</div>
 
     <div class="photo">
         <img src="https://drive.google.com/thumbnail?id=${d.photo}&sz=w1000"
-        onerror="this.src='https://ui-avatars.com/api/?name=${encodeURIComponent(d.name)}&background=random'">
+        onerror="this.src='https://ui-avatars.com/api/?name=${encodeURIComponent(d.name)}'">
     </div>
 
     <div class="employee-name">${d.name}</div>
@@ -317,40 +429,63 @@ return `
 </div>`;
 }
 
-/* ================= RENDER ================= */
-function render(data,key,achKey,id){
+/* RENDER TOP */
+function renderTop(data,key,achKey,id){
+const sorted=[...data].sort((a,b)=>b[key]-a[key]).slice(0,3);
 
-    const sorted = [...data].sort((a,b)=>b[key]-a[key]).slice(0,3);
+const order=[
+sorted[1]||sorted[0],
+sorted[0],
+sorted[2]||sorted[1]
+].filter(Boolean);
 
-    const order = [
-        sorted[1]||sorted[0],
-        sorted[0],
-        sorted[2]||sorted[1]
-    ].filter(Boolean);
+document.getElementById(id).innerHTML=
+order.map((d,i)=>card(d,[2,1,3][i],d[key],d[achKey])).join("");
 
-    document.getElementById(id).innerHTML =
-        order.map((d,i)=>card(d,[2,1,3][i],d[key],d[achKey])).join("");
+return sorted[0]?.name||"-";
 }
 
-/* ================= UPDATE ================= */
+/* RENDER BOTTOM */
+function renderBottom(data,key,achKey,id,avgId){
+
+const sorted=[...data].sort((a,b)=>a[key]-b[key]).slice(0,3);
+
+document.getElementById(id).innerHTML=
+sorted.map((d,i)=>`
+<div style="display:grid;grid-template-columns:.6fr .8fr 1.5fr 1.3fr 1.4fr 1fr;padding:.6vh .6vw;background:rgba(255,0,0,.08);margin:.5vh 0;border-radius:12px;">
+<div>${i+1}</div>
+<div></div>
+<div>${d.name}</div>
+<div>${d.dept}</div>
+<div>${d[key]}</div>
+<div>${d[achKey]}%</div>
+</div>
+`).join("");
+
+const avg = sorted.reduce((a,b)=>a+b[achKey],0)/sorted.length || 0;
+document.getElementById(avgId).innerText=avg.toFixed(1)+"%";
+}
+
+/* UPDATE */
 async function update(){
 
-    const raw = await getData();
+const data = (await getData()).filter(d=>!d.dept.toLowerCase().includes("cashier"));
 
-    const data = raw.filter(d=>!d.dept.toLowerCase().includes("cashier"));
+document.getElementById("bestSales").innerText="TOP SALES : "+renderTop(data,"sales","achSales","topSales");
+document.getElementById("bestProteksi").innerText="TOP PROTEKSI : "+renderTop(data,"proteksi","achProteksi","topProteksi");
+document.getElementById("bestTrx").innerText="TOP TRX : "+renderTop(data,"trx","achTrx","topTrx");
 
-    render(data,"sales","achSales","topSales");
-    render(data,"proteksi","achProteksi","topProteksi");
-    render(data,"trx","achTrx","topTrx");
+renderBottom(data,"sales","achSales","bottomSales","avgSales");
+renderBottom(data,"proteksi","achProteksi","bottomProteksi","avgProteksi");
+renderBottom(data,"trx","achTrx","bottomTrx","avgTrx");
 
-    document.getElementById("status").innerText =
-        "DATA LOADED " + new Date().toLocaleTimeString();
+document.getElementById("status").innerText="UPDATED "+new Date().toLocaleTimeString();
+
 }
 
-/* ================= START ================= */
-window.onload = ()=>{
-    update();
-    setInterval(update,15000);
+window.onload=()=>{
+update();
+setInterval(update,15000);
 };
 
 </script>
