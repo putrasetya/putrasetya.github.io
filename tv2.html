@@ -29,10 +29,7 @@ body{
     color:#fff;
 }
 
-/* =========================
-SLIDE
-========================= */
-
+/* SLIDE */
 .slide{
     position:absolute;
     inset:0;
@@ -44,58 +41,34 @@ SLIDE
 
     transition:opacity .8s ease;
 
-    will-change:opacity;
-    backface-visibility:hidden;
     transform:translate3d(0,0,0);
-
-    contain:layout paint;
 }
 
 .slide.active{
     opacity:1;
     visibility:visible;
-    z-index:2;
 }
 
-/* =========================
-BACKGROUND
-========================= */
-
+/* BACKGROUND */
 .top-slide{
     background:
         radial-gradient(circle at top,#0d4cff 0%,transparent 30%),
         linear-gradient(180deg,#020617 0%,#000);
 }
 
-.bottom-slide{
-    background:
-        radial-gradient(circle at top,#ff0000 0%,transparent 30%),
-        linear-gradient(180deg,#180000 0%,#000);
-}
-
-/* =========================
-HEADER
-========================= */
-
+/* HEADER */
 .header{
     height:16vh;
     display:flex;
-    align-items:center;
     justify-content:space-between;
+    align-items:center;
     padding:1vh 1.5vw;
-    position:relative;
 }
 
 .logo{
     font-size:3vw;
     font-weight:900;
     color:#ff3131;
-}
-
-.logo span{
-    display:block;
-    font-size:1vw;
-    color:#fff;
 }
 
 .title{
@@ -108,18 +81,9 @@ HEADER
 .title h1{
     font-size:4vw;
     font-weight:900;
-    letter-spacing:3px;
 }
 
-.title p{
-    font-size:1vw;
-    opacity:.8;
-}
-
-/* =========================
-MAIN
-========================= */
-
+/* MAIN */
 .main{
     height:72vh;
     display:grid;
@@ -128,20 +92,15 @@ MAIN
     padding:0 1vw;
 }
 
-/* =========================
-CATEGORY
-========================= */
-
+/* CATEGORY */
 .category{
+    background:rgba(255,255,255,.03);
     border-radius:26px;
     padding:1vh .8vw;
-    background:rgba(255,255,255,.03);
-    backdrop-filter:blur(8px);
-    overflow:hidden;
 }
 
 /* =========================
-TOP PODIUM FIXED
+TOP PODIUM FIX (AMAN + NAIK)
 ========================= */
 
 .top-podium{
@@ -150,7 +109,7 @@ TOP PODIUM FIXED
     align-items:flex-end;
     justify-content:center;
     gap:.8vw;
-    padding-bottom:3.5vh;
+    padding-bottom:4vh;
 }
 
 .podium-card{
@@ -166,11 +125,8 @@ TOP PODIUM FIXED
 
     padding:1vh .5vw 2vh;
 
-    border:2px solid rgba(255,255,255,.15);
-
     background:linear-gradient(180deg,rgba(255,255,255,.08),rgba(0,0,0,.4));
-
-    backdrop-filter:blur(8px);
+    border:2px solid rgba(255,255,255,.15);
 
     opacity:0;
     transform:translateX(-40px);
@@ -179,19 +135,15 @@ TOP PODIUM FIXED
 }
 
 @keyframes slideIn{
-    to{
-        opacity:1;
-        transform:translateX(0);
-    }
+    to{opacity:1; transform:translateX(0);}
 }
 
 @keyframes floatY{
-    0%,100%{ transform:translateY(0); }
-    50%{ transform:translateY(-6px); }
+    0%,100%{transform:translateY(0);}
+    50%{transform:translateY(-6px);}
 }
 
-/* PROPORSI FIX */
-
+/* SIZE FIX */
 .rank1{
     width:34%;
     height:86%;
@@ -203,15 +155,7 @@ TOP PODIUM FIXED
     height:72%;
 }
 
-.rank1::before{
-    content:"👑";
-    position:absolute;
-    top:-14px;
-    font-size:2vw;
-}
-
-/* RANK NUMBER */
-
+/* RANK */
 .rank-number{
     position:absolute;
     top:10px;
@@ -226,18 +170,14 @@ TOP PODIUM FIXED
     background:rgba(0,0,0,.5);
 }
 
-.rank1 .rank-number{ background:#ffd700; color:#000; }
-.rank2 .rank-number{ background:#dbe4f0; color:#000; }
-.rank3 .rank-number{ background:#cd7f32; }
+.rank1 .rank-number{background:#ffd700;color:#000;}
+.rank2 .rank-number{background:#dbe4f0;color:#000;}
+.rank3 .rank-number{background:#cd7f32;}
 
 /* PHOTO */
-
 .photo{
     width:100%;
     height:45%;
-    display:flex;
-    align-items:flex-end;
-    justify-content:center;
 }
 
 .photo img{
@@ -247,7 +187,6 @@ TOP PODIUM FIXED
 }
 
 /* TEXT */
-
 .employee-name{
     font-size:.9vw;
     font-weight:900;
@@ -269,12 +208,9 @@ TOP PODIUM FIXED
     height:4vw;
     border-radius:50%;
     margin-top:1vh;
-
     display:flex;
     align-items:center;
     justify-content:center;
-
-    font-size:.85vw;
     font-weight:900;
 
     background:
@@ -282,25 +218,29 @@ TOP PODIUM FIXED
         conic-gradient(#32ff6a calc(var(--val)*1%),rgba(255,255,255,.1) 0);
 }
 
+/* STATUS */
+.status{
+    position:fixed;
+    top:10px;
+    left:10px;
+    background:rgba(0,0,0,.6);
+    padding:10px 15px;
+    border-radius:10px;
+    font-size:12px;
+}
+
 </style>
 </head>
 
 <body>
 
+<div class="status" id="status">LOADING...</div>
+
 <section class="slide top-slide active">
 
     <div class="header">
-
-        <div class="logo">
-            az•ko
-            <span>CITIMALL TUBAN</span>
-        </div>
-
-        <div class="title">
-            <h1>TOP PERFORMANCE</h1>
-            <p>AZKO CITIMALL TUBAN</p>
-        </div>
-
+        <div class="logo">az•ko</div>
+        <div class="title"><h1>TOP PERFORMANCE</h1></div>
     </div>
 
     <div class="main">
@@ -320,6 +260,100 @@ TOP PODIUM FIXED
     </div>
 
 </section>
+
+<script>
+
+/* ================= API ================= */
+const URL = "https://script.google.com/macros/s/AKfycbzeehvUo6QYriMFJTR4A88lN6IIHV6Qop9UphkdOTMkRLVxhVuJ13y69momo6h1pn9dTQ/exec";
+
+/* ================= CLEAN ================= */
+function clean(v){
+    return parseFloat((v||"0").toString().replace(/[^\d.]/g,''))||0;
+}
+
+/* ================= FETCH ================= */
+async function getData(){
+    try{
+        const res = await fetch(URL+"?t="+Date.now(),{cache:"no-store"});
+        const json = await res.json();
+
+        return json.map(r=>({
+            name:r["EMPLOYEE NAME"]||"-",
+            dept:r["DEPT"]||"-",
+            sales:clean(r["SALES MTD"]),
+            proteksi:clean(r["PROTEKSI"]),
+            trx:clean(r["TRX"]),
+            achSales:clean(r["ACH MTD"]),
+            achProteksi:clean(r["ACH PROTEKSI"]),
+            achTrx:clean(r["ACH BULANAN"]),
+            photo:r["PHOTO"]||""
+        }));
+
+    }catch(e){
+        console.log(e);
+        return [];
+    }
+}
+
+/* ================= PODIUM ================= */
+function card(d,rank,val,ach,label){
+return `
+<div class="podium-card rank${rank}">
+    <div class="rank-number">${rank}</div>
+
+    <div class="photo">
+        <img src="https://drive.google.com/thumbnail?id=${d.photo}&sz=w1000"
+        onerror="this.src='https://ui-avatars.com/api/?name=${encodeURIComponent(d.name)}&background=random'">
+    </div>
+
+    <div class="employee-name">${d.name}</div>
+    <div class="employee-dept">${d.dept}</div>
+
+    <div class="score">${val.toLocaleString('id-ID')}</div>
+
+    <div class="ach-circle" style="--val:${Math.min(ach,100)}">
+        ${ach.toFixed(1)}%
+    </div>
+</div>`;
+}
+
+/* ================= RENDER ================= */
+function render(data,key,achKey,id){
+
+    const sorted = [...data].sort((a,b)=>b[key]-a[key]).slice(0,3);
+
+    const order = [
+        sorted[1]||sorted[0],
+        sorted[0],
+        sorted[2]||sorted[1]
+    ].filter(Boolean);
+
+    document.getElementById(id).innerHTML =
+        order.map((d,i)=>card(d,[2,1,3][i],d[key],d[achKey])).join("");
+}
+
+/* ================= UPDATE ================= */
+async function update(){
+
+    const raw = await getData();
+
+    const data = raw.filter(d=>!d.dept.toLowerCase().includes("cashier"));
+
+    render(data,"sales","achSales","topSales");
+    render(data,"proteksi","achProteksi","topProteksi");
+    render(data,"trx","achTrx","topTrx");
+
+    document.getElementById("status").innerText =
+        "DATA LOADED " + new Date().toLocaleTimeString();
+}
+
+/* ================= START ================= */
+window.onload = ()=>{
+    update();
+    setInterval(update,15000);
+};
+
+</script>
 
 </body>
 </html>
