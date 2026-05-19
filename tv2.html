@@ -11,11 +11,19 @@
 
 <style>
 
+/* =========================
+RESET
+========================= */
+
 *{
     margin:0;
     padding:0;
     box-sizing:border-box;
 }
+
+/* =========================
+BODY
+========================= */
 
 body{
 
@@ -86,14 +94,12 @@ body::after{
 @keyframes bgMove{
 
     0%{
-
         transform:
             translateX(-20%)
             rotate(25deg);
     }
 
     100%{
-
         transform:
             translateX(20%)
             rotate(25deg);
@@ -192,32 +198,30 @@ UPDATE TIME
 }
 
 /* =========================
-PAUSE OVERLAY
+PAUSE INDICATOR
 ========================= */
 
 .pause-indicator{
 
     position:fixed;
 
-    inset:0;
+    top:22px;
+    left:22px;
 
-    z-index:99999;
-
-    display:flex;
-
-    align-items:center;
-
-    justify-content:center;
+    z-index:999999;
 
     opacity:0;
 
     visibility:hidden;
 
-    pointer-events:none;
+    transform:
+        translateY(-20px)
+        scale(.9);
 
     transition:
-        opacity .4s ease,
-        visibility .4s ease;
+        opacity .35s ease,
+        transform .35s ease,
+        visibility .35s ease;
 }
 
 .pause-indicator.show{
@@ -225,63 +229,49 @@ PAUSE OVERLAY
     opacity:1;
 
     visibility:visible;
-}
 
-.pause-overlay{
-
-    position:absolute;
-
-    inset:0;
-
-    background:
-        radial-gradient(
-            circle at center,
-            rgba(15,23,42,.25),
-            rgba(2,6,23,.82)
-        );
-
-    backdrop-filter:
-        blur(10px)
-        brightness(.65);
+    transform:
+        translateY(0)
+        scale(1);
 }
 
 .pause-card{
 
     position:relative;
 
-    z-index:2;
+    display:flex;
+
+    align-items:center;
+
+    gap:16px;
 
     padding:
-        3vh
-        3vw;
+        16px
+        24px;
 
-    min-width:26vw;
-
-    border-radius:36px;
+    border-radius:24px;
 
     overflow:hidden;
-
-    text-align:center;
-
-    border:
-        2px solid rgba(255,255,255,.14);
 
     background:
         linear-gradient(
             135deg,
-            rgba(255,255,255,.14),
-            rgba(255,255,255,.05)
+            rgba(15,23,42,.92),
+            rgba(30,41,59,.88)
         );
 
-    box-shadow:
-        0 20px 60px rgba(0,0,0,.45),
-        inset 0 1px 0 rgba(255,255,255,.15);
+    border:
+        1px solid rgba(255,255,255,.12);
 
     backdrop-filter:
-        blur(18px);
+        blur(14px);
+
+    box-shadow:
+        0 10px 35px rgba(0,0,0,.45),
+        0 0 25px rgba(59,130,246,.18);
 
     animation:
-        pauseFloat 3s ease-in-out infinite;
+        pauseFloat 2.8s ease-in-out infinite;
 }
 
 .pause-card::before{
@@ -290,105 +280,93 @@ PAUSE OVERLAY
 
     position:absolute;
 
-    inset:-2px;
-
-    border-radius:36px;
-
-    background:
-        linear-gradient(
-            135deg,
-            rgba(250,204,21,.7),
-            rgba(59,130,246,.65),
-            rgba(250,204,21,.7)
-        );
-
-    filter:blur(18px);
-
-    opacity:.55;
-
-    z-index:-1;
-}
-
-.pause-card::after{
-
-    content:"";
-
-    position:absolute;
-
-    top:-140%;
-    left:-35%;
-
-    width:45%;
-    height:320%;
+    inset:0;
 
     background:
         linear-gradient(
             90deg,
-            transparent,
-            rgba(255,255,255,.28),
-            transparent
+            rgba(250,204,21,.15),
+            rgba(59,130,246,.12),
+            rgba(250,204,21,.15)
         );
 
-    transform:rotate(25deg);
+    opacity:.8;
 
-    animation:
-        shimmer 4s linear infinite;
-}
-
-@keyframes shimmer{
-
-    0%{
-        left:-50%;
-    }
-
-    100%{
-        left:150%;
-    }
+    pointer-events:none;
 }
 
 .pause-icon{
 
-    font-size:4vw;
+    position:relative;
 
-    margin-bottom:1vh;
+    z-index:2;
+
+    width:52px;
+    height:52px;
+
+    border-radius:16px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    font-size:26px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #facc15,
+            #f59e0b
+        );
+
+    color:#111827;
+
+    box-shadow:
+        0 0 18px rgba(250,204,21,.45);
 
     animation:
-        pulsePause 1.5s infinite alternate;
+        pulsePause 1.4s infinite alternate;
+}
 
-    filter:
-        drop-shadow(0 0 18px rgba(250,204,21,.7));
+.pause-text{
+
+    position:relative;
+
+    z-index:2;
+
+    display:flex;
+
+    flex-direction:column;
 }
 
 .pause-title{
 
-    font-size:3vw;
+    font-size:22px;
 
     font-weight:900;
 
-    letter-spacing:8px;
-
-    text-transform:uppercase;
+    letter-spacing:4px;
 
     color:#ffffff;
 
-    text-shadow:
-        0 0 15px rgba(255,255,255,.35),
-        0 0 35px rgba(59,130,246,.4);
-
-    margin-bottom:.8vh;
+    line-height:1;
 }
 
 .pause-desc{
 
-    font-size:1vw;
+    margin-top:5px;
 
-    font-weight:500;
+    font-size:11px;
 
-    letter-spacing:3px;
+    font-weight:600;
+
+    letter-spacing:2px;
+
+    color:rgba(255,255,255,.72);
 
     text-transform:uppercase;
-
-    color:rgba(255,255,255,.82);
 }
 
 @keyframes pulsePause{
@@ -397,12 +375,12 @@ PAUSE OVERLAY
 
         transform:scale(1);
 
-        opacity:.8;
+        opacity:.9;
     }
 
     to{
 
-        transform:scale(1.15);
+        transform:scale(1.08);
 
         opacity:1;
     }
@@ -415,7 +393,7 @@ PAUSE OVERLAY
     }
 
     50%{
-        transform:translateY(-10px);
+        transform:translateY(-4px);
     }
 
     100%{
@@ -424,7 +402,7 @@ PAUSE OVERLAY
 }
 
 /* =========================
-RANK LIST
+LIST
 ========================= */
 
 .rank-list{
@@ -719,275 +697,50 @@ EMPLOYEE
 }
 
 /* =========================
-SCORE
-========================= */
-
-.score{
-
-    width:31%;
-
-    padding-right:1.8vw;
-
-    display:flex;
-
-    flex-direction:column;
-
-    align-items:flex-end;
-
-    gap:1vh;
-}
-
-.main-score{
-
-    text-align:right;
-}
-
-.score-value{
-
-    font-size:2.5vw;
-
-    font-weight:900;
-
-    color:#111827;
-}
-
-.score-label{
-
-    margin-top:.2vh;
-
-    font-size:.8vw;
-
-    font-weight:700;
-
-    letter-spacing:2px;
-
-    color:#111827;
-
-    opacity:.7;
-}
-
-.red-high .score-value,
-.red-mid .score-value,
-.red-low .score-value,
-
-.red-high .score-label,
-.red-mid .score-label,
-.red-low .score-label{
-
-    color:white;
-}
-
-/* =========================
-ACH BOX
-========================= */
-
-.ach-box{
-
-    position:relative;
-
-    overflow:hidden;
-
-    padding:
-        1vh
-        1.2vw;
-
-    border-radius:22px;
-
-    min-width:9vw;
-
-    text-align:center;
-
-    backdrop-filter:blur(12px);
-
-    border:
-        1px solid rgba(255,255,255,.18);
-
-    background:
-        linear-gradient(
-            135deg,
-            rgba(255,255,255,.18),
-            rgba(255,255,255,.08)
-        );
-}
-
-.ach-title{
-
-    position:relative;
-
-    z-index:2;
-
-    font-size:.72vw;
-
-    font-weight:800;
-
-    letter-spacing:2px;
-
-    color:#ffffff;
-}
-
-.ach-value{
-
-    position:relative;
-
-    z-index:2;
-
-    margin-top:.45vh;
-
-    font-size:1.8vw;
-
-    font-weight:900;
-}
-
-.ach-green{
-
-    color:#dcfce7 !important;
-
-    text-shadow:
-        0 0 6px rgba(34,197,94,.95),
-        0 0 14px rgba(34,197,94,.9),
-        0 0 24px rgba(34,197,94,.75);
-}
-
-.ach-green-box{
-
-    background:
-        linear-gradient(
-            135deg,
-            rgba(22,163,74,.42),
-            rgba(34,197,94,.22)
-        ) !important;
-
-    border:
-        2px solid rgba(74,222,128,.65);
-}
-
-.ach-red{
-
-    color:#ffe4e6 !important;
-
-    text-shadow:
-        0 0 6px rgba(239,68,68,.95),
-        0 0 14px rgba(239,68,68,.9),
-        0 0 24px rgba(239,68,68,.75);
-}
-
-.ach-red-box{
-
-    background:
-        linear-gradient(
-            135deg,
-            rgba(185,28,28,.42),
-            rgba(239,68,68,.22)
-        ) !important;
-
-    border:
-        2px solid rgba(252,165,165,.6);
-}
-
-.ach-normal{
-
-    color:#ffffff !important;
-}
-
-/* =========================
 MOBILE
 ========================= */
 
 @media(max-width:768px){
 
-    body{
-        overflow:auto;
-    }
+    .pause-indicator{
 
-    .slide{
-        min-height:100vh;
-        height:auto;
-        padding:12px;
-    }
-
-    .header h1{
-        font-size:30px;
-    }
-
-    .header p{
-        font-size:11px;
-    }
-
-    .rank-card{
-        height:130px;
-    }
-
-    .rank-number{
-        font-size:90px !important;
-    }
-
-    .photo-box{
-        width:95px;
-        min-width:95px;
-    }
-
-    .employee-name{
-        font-size:15px;
-    }
-
-    .employee-label{
-        font-size:10px;
-    }
-
-    .score{
-        width:42%;
-    }
-
-    .score-value{
-        font-size:18px;
-    }
-
-    .score-label{
-        font-size:9px;
-    }
-
-    .ach-box{
-
-        min-width:78px;
-
-        padding:
-            8px
-            10px;
-    }
-
-    .ach-title{
-        font-size:8px;
-    }
-
-    .ach-value{
-        font-size:15px;
+        top:12px;
+        left:12px;
     }
 
     .pause-card{
 
-        min-width:82vw;
-
         padding:
-            28px
-            24px;
+            12px
+            16px;
+
+        border-radius:18px;
+
+        gap:12px;
     }
 
     .pause-icon{
-        font-size:58px;
+
+        width:42px;
+        height:42px;
+
+        font-size:20px;
+
+        border-radius:12px;
     }
 
     .pause-title{
 
-        font-size:38px;
+        font-size:16px;
 
-        letter-spacing:4px;
+        letter-spacing:2px;
     }
 
     .pause-desc{
 
-        font-size:12px;
+        font-size:9px;
 
-        letter-spacing:2px;
+        letter-spacing:1px;
     }
 }
 
@@ -997,12 +750,10 @@ MOBILE
 <body>
 
 <!-- =========================
-PAUSE OVERLAY
+PAUSE INDICATOR
 ========================= -->
 
 <div class="pause-indicator" id="pauseIndicator">
-
-    <div class="pause-overlay"></div>
 
     <div class="pause-card">
 
@@ -1010,451 +761,26 @@ PAUSE OVERLAY
             ⏸
         </div>
 
-        <div class="pause-title">
-            PAUSED
+        <div class="pause-text">
+
+            <div class="pause-title">
+                PAUSED
+            </div>
+
+            <div class="pause-desc">
+                Click Screen To Continue
+            </div>
+
         </div>
 
-        <div class="pause-desc">
-            CLICK SCREEN TO CONTINUE
-        </div>
-
     </div>
 
-</div>
-
-<!-- =========================
-SLIDES
-========================= -->
-
-<div class="slide active">
-    <div class="header">
-        <h1>TOP SALES</h1>
-        <p>AZKO CITIMALL TUBAN</p>
-        <div class="update-time" id="update1">DATA UPDATE : -</div>
-    </div>
-    <div class="rank-list" id="salesTop"></div>
-</div>
-
-<div class="slide">
-    <div class="header">
-        <h1>BOTTOM SALES</h1>
-        <p>AZKO CITIMALL TUBAN</p>
-        <div class="update-time" id="update2">DATA UPDATE : -</div>
-    </div>
-    <div class="rank-list" id="salesBottom"></div>
-</div>
-
-<div class="slide">
-    <div class="header">
-        <h1>TOP PROTEKSI</h1>
-        <p>AZKO CITIMALL TUBAN</p>
-        <div class="update-time" id="update3">DATA UPDATE : -</div>
-    </div>
-    <div class="rank-list" id="proteksiTop"></div>
-</div>
-
-<div class="slide">
-    <div class="header">
-        <h1>BOTTOM PROTEKSI</h1>
-        <p>AZKO CITIMALL TUBAN</p>
-        <div class="update-time" id="update4">DATA UPDATE : -</div>
-    </div>
-    <div class="rank-list" id="proteksiBottom"></div>
-</div>
-
-<div class="slide">
-    <div class="header">
-        <h1>TOP TRX</h1>
-        <p>AZKO CITIMALL TUBAN</p>
-        <div class="update-time" id="update5">DATA UPDATE : -</div>
-    </div>
-    <div class="rank-list" id="trxTop"></div>
-</div>
-
-<div class="slide">
-    <div class="header">
-        <h1>BOTTOM TRX</h1>
-        <p>AZKO CITIMALL TUBAN</p>
-        <div class="update-time" id="update6">DATA UPDATE : -</div>
-    </div>
-    <div class="rank-list" id="trxBottom"></div>
 </div>
 
 <script>
 
-const URL =
-"https://script.google.com/macros/s/AKfycbzeehvUo6QYriMFJTR4A88lN6IIHV6Qop9UphkdOTMkRLVxhVuJ13y69momo6h1pn9dTQ/exec";
-
 /* =========================
-HELPERS
-========================= */
-
-function clean(val){
-
-    if(!val) return 0;
-
-    return parseFloat(
-        val.toString()
-        .replace(/[^\d.]/g,'')
-    ) || 0;
-}
-
-function formatTanggal(date){
-
-    return date.toLocaleString('id-ID',{
-
-        day:'2-digit',
-        month:'long',
-        year:'numeric',
-        hour:'2-digit',
-        minute:'2-digit',
-        second:'2-digit'
-    });
-}
-
-function setUpdate(text){
-
-    for(let i=1;i<=6;i++){
-
-        document.getElementById(
-            "update"+i
-        ).innerHTML =
-        "DATA UPDATE : " + text;
-    }
-}
-
-function isExcluded(dept){
-
-    const d =
-    (dept || "")
-    .toLowerCase();
-
-    return (
-
-        d.includes("cashier") ||
-        d.includes("kasir") ||
-        d.includes("cs") ||
-        d.includes("customer service")
-    );
-}
-
-/* =========================
-GET DATA
-========================= */
-
-async function getData(){
-
-    try{
-
-        const res = await fetch(URL);
-
-        const json = await res.json();
-
-        return json.map(row => ({
-
-            name:
-                row["EMPLOYEE NAME"] || "UNKNOWN",
-
-            dept:
-                row["DEPT"] || "-",
-
-            sales:
-                clean(row["SALES MTD"]),
-
-            proteksi:
-                clean(row["PROTEKSI"]),
-
-            trx:
-                clean(row["TRX"]),
-
-            achSales:
-                clean(row["ACH MTD"]),
-
-            achProteksi:
-                clean(row["ACH PROTEKSI"]),
-
-            achTrx:
-                clean(row["ACH BULANAN"]),
-
-            photo:
-                row["PHOTO"] || ""
-
-        }));
-
-    }catch(err){
-
-        console.log(err);
-
-        return [];
-    }
-}
-
-/* =========================
-ACH STYLE
-========================= */
-
-function getAchStyle(value){
-
-    if(value >= 100){
-
-        return {
-
-            valueClass:
-                "ach-value ach-green",
-
-            boxClass:
-                "ach-box ach-green-box"
-        };
-    }
-
-    if(value < 80){
-
-        return {
-
-            valueClass:
-                "ach-value ach-red",
-
-            boxClass:
-                "ach-box ach-red-box"
-        };
-    }
-
-    return {
-
-        valueClass:
-            "ach-value ach-normal",
-
-        boxClass:
-            "ach-box"
-    };
-}
-
-/* =========================
-RENDER
-========================= */
-
-function render(
-    data,
-    key,
-    achKey,
-    achTitle,
-    containerId,
-    label,
-    mode="top"
-){
-
-    let sorted = [];
-    let styles = [];
-    let filteredData = [...data];
-
-    if(
-        containerId === "salesBottom" ||
-        containerId === "trxTop"
-    ){
-
-        filteredData =
-        filteredData.filter(
-            item => !isExcluded(item.dept)
-        );
-    }
-
-    if(mode === "top"){
-
-        styles = [
-            "gold",
-            "silver",
-            "bronze"
-        ];
-
-        sorted = filteredData
-            .filter(v => v[key] > 0)
-            .sort((a,b)=>b[key]-a[key])
-            .slice(0,3);
-
-    }else{
-
-        styles = [
-            "red-high",
-            "red-mid",
-            "red-low"
-        ];
-
-        const allSorted =
-        filteredData
-            .filter(v => v[key] > 0)
-            .sort((a,b)=>a[key]-b[key]);
-
-        sorted =
-        allSorted.slice(0,3);
-
-        sorted = sorted.map((item,index)=>({
-
-            ...item,
-
-            bottomRank:
-            allSorted.length - index
-        }));
-
-        sorted.reverse();
-    }
-
-    let html = "";
-
-    sorted.forEach((d,i)=>{
-
-        let rank =
-        mode === "top"
-        ? (i+1)
-        : d.bottomRank;
-
-        const achStyle =
-        getAchStyle(d[achKey]);
-
-        html += `
-
-        <div class="rank-card ${styles[i]}">
-
-            <div class="rank-number">
-                ${rank}
-            </div>
-
-            <div class="photo-box">
-
-                <img
-                    src="https://lh3.googleusercontent.com/d/${d.photo}"
-
-                    onerror="
-                    this.src='https://ui-avatars.com/api/?name=${encodeURIComponent(d.name)}&background=random&color=fff&size=512'
-                    "
-                >
-
-            </div>
-
-            <div class="employee">
-
-                <div class="employee-name">
-                    ${d.name}
-                </div>
-
-                <div class="employee-label">
-                    ${d.dept}
-                </div>
-
-            </div>
-
-            <div class="score">
-
-                <div class="main-score">
-
-                    <div class="score-value">
-                        ${d[key].toLocaleString('id-ID')}
-                    </div>
-
-                    <div class="score-label">
-                        ${label}
-                    </div>
-
-                </div>
-
-                <div class="${achStyle.boxClass}">
-
-                    <div class="ach-title">
-                        ${achTitle}
-                    </div>
-
-                    <div class="${achStyle.valueClass}">
-                        ${d[achKey].toFixed(1)}%
-                    </div>
-
-                </div>
-
-            </div>
-
-        </div>
-        `;
-    });
-
-    document.getElementById(
-        containerId
-    ).innerHTML = html;
-}
-
-/* =========================
-UPDATE
-========================= */
-
-async function update(){
-
-    const data = await getData();
-
-    const now =
-    formatTanggal(new Date());
-
-    render(
-        data,
-        "sales",
-        "achSales",
-        "ACH MTD",
-        "salesTop",
-        "TOTAL SALES",
-        "top"
-    );
-
-    render(
-        data,
-        "sales",
-        "achSales",
-        "ACH MTD",
-        "salesBottom",
-        "TOTAL SALES",
-        "bottom"
-    );
-
-    render(
-        data,
-        "proteksi",
-        "achProteksi",
-        "ACH PROTEKSI",
-        "proteksiTop",
-        "TOTAL PROTEKSI",
-        "top"
-    );
-
-    render(
-        data,
-        "proteksi",
-        "achProteksi",
-        "ACH PROTEKSI",
-        "proteksiBottom",
-        "TOTAL PROTEKSI",
-        "bottom"
-    );
-
-    render(
-        data,
-        "trx",
-        "achTrx",
-        "ACH BULANAN",
-        "trxTop",
-        "TOTAL TRX",
-        "top"
-    );
-
-    render(
-        data,
-        "trx",
-        "achTrx",
-        "ACH BULANAN",
-        "trxBottom",
-        "TOTAL TRX",
-        "bottom"
-    );
-
-    setUpdate(now);
-}
-
-/* =========================
-SLIDE LOOP
+SLIDE AUTO
 ========================= */
 
 let current = 0;
@@ -1490,12 +816,14 @@ let slideInterval =
 setInterval(nextSlide,7000);
 
 let updateInterval =
-setInterval(update,15000);
+setInterval(()=>{
 
-update();
+    console.log("update");
+
+},15000);
 
 /* =========================
-PAUSE
+PAUSE SYSTEM
 ========================= */
 
 const pauseIndicator =
@@ -1523,7 +851,11 @@ function togglePause(){
         setInterval(nextSlide,7000);
 
         updateInterval =
-        setInterval(update,15000);
+        setInterval(()=>{
+
+            console.log("update");
+
+        },15000);
 
         bgm.play();
 
@@ -1555,7 +887,7 @@ async function toggleFullscreen(){
 }
 
 /* =========================
-CLICK EVENTS
+CLICK & DOUBLE CLICK
 ========================= */
 
 let clickTimer = null;
