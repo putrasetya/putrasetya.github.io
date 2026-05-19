@@ -5,7 +5,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>AZKO ULTRA TV DISPLAY V3 CINEMATIC</title>
+<title>AZKO ULTRA TV DISPLAY V3 CINEMATIC FIXED</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 
@@ -24,7 +24,7 @@ body{
     color:#fff;
 }
 
-/* CINEMATIC BACKGROUND */
+/* BACKGROUND */
 body::before{
     content:"";
     position:fixed;
@@ -33,30 +33,26 @@ body::before{
         radial-gradient(circle at 20% 20%,rgba(59,130,246,.25),transparent 40%),
         radial-gradient(circle at 80% 30%,rgba(234,179,8,.15),transparent 35%),
         radial-gradient(circle at 50% 100%,rgba(239,68,68,.12),transparent 50%);
-    filter:blur(20px);
+    filter:blur(18px);
     animation:move 10s ease-in-out infinite alternate;
 }
 
 @keyframes move{
     from{transform:scale(1) translateY(0)}
-    to{transform:scale(1.1) translateY(-10px)}
+    to{transform:scale(1.08) translateY(-10px)}
 }
 
-/* =========================
-SLIDE CINEMATIC
-========================= */
-
+/* SLIDE */
 .slide{
     position:absolute;
     inset:0;
     opacity:0;
     visibility:hidden;
-    transform:scale(1.08);
-    transition:opacity 1s ease, transform 1s ease;
+    transform:scale(1.06);
+    transition:1s ease;
     padding:2vh 2vw;
     display:flex;
     flex-direction:column;
-    backdrop-filter:blur(0px);
 }
 
 .slide.active{
@@ -65,77 +61,48 @@ SLIDE CINEMATIC
     transform:scale(1);
 }
 
-/* HEADER GLASS */
-.header{
-    text-align:center;
-    margin-bottom:1vh;
-    padding:1vh 0;
-}
-
-.header h1{
-    font-size:3.2vw;
-    font-weight:900;
-    letter-spacing:6px;
-    text-shadow:0 0 25px rgba(255,255,255,.2);
-}
-
-.header p{
-    opacity:.7;
-    letter-spacing:3px;
-}
+/* HEADER */
+.header{text-align:center;margin-bottom:1vh}
+.header h1{font-size:3vw;font-weight:900;letter-spacing:5px}
+.header p{opacity:.7}
 
 .update{
     margin:1vh auto;
     padding:1vh 2vw;
+    background:rgba(255,255,255,.05);
+    border-radius:14px;
     width:fit-content;
-    border-radius:16px;
-    background:rgba(255,255,255,.06);
-    border:1px solid rgba(255,255,255,.12);
 }
 
-/* =========================
-LIST
-========================= */
-
+/* LIST */
 .rank-list{
     flex:1;
     display:flex;
     flex-direction:column;
     justify-content:space-evenly;
-    gap:1vh;
 }
 
-/* =========================
-CARD CINEMATIC
-========================= */
-
+/* CARD */
 .rank-card{
-    position:relative;
     display:flex;
     align-items:center;
     height:22vh;
-    border-radius:28px;
+    border-radius:26px;
     overflow:hidden;
-
     opacity:0;
-    transform:translateX(-120px) scale(.98);
-    filter:blur(8px);
+    transform:translateX(-80px);
 }
 
 .rank-card.show{
-    animation:enter 1s forwards;
+    animation:in .7s forwards;
 }
 
-@keyframes enter{
-    to{
-        opacity:1;
-        transform:translateX(0) scale(1);
-        filter:blur(0);
-    }
+@keyframes in{
+    to{opacity:1;transform:translateX(0)}
 }
 
-/* COLOR GRADIENTS */
-.gold{background:linear-gradient(135deg,#6b5300,#facc15,#fff3a0)}
+/* COLORS */
+.gold{background:linear-gradient(135deg,#6b5300,#facc15)}
 .silver{background:linear-gradient(135deg,#6b7280,#e5e7eb)}
 .bronze{background:linear-gradient(135deg,#7c3f1d,#c87c3d)}
 
@@ -143,85 +110,34 @@ CARD CINEMATIC
 .red-mid{background:linear-gradient(135deg,#4a0404,#b91c1c)}
 .red-low{background:linear-gradient(135deg,#1f0000,#7f1d1d)}
 
-/* RANK BIG CINEMATIC */
+/* RANK */
 .rank-number{
     position:absolute;
     left:1vw;
-    font-size:12vw;
-    opacity:.10;
-    font-weight:900;
-    animation:glow 3s infinite alternate;
-}
-
-@keyframes glow{
-    from{text-shadow:0 0 10px rgba(255,255,255,.2)}
-    to{text-shadow:0 0 30px rgba(255,255,255,.4)}
+    font-size:11vw;
+    opacity:.12;
 }
 
 /* PHOTO */
-.photo{
-    width:18%;
-    height:100%;
-    display:flex;
-    align-items:center;
-}
-
-.photo img{
-    width:100%;
-    height:90%;
-    object-fit:contain;
-    filter:drop-shadow(0 15px 20px rgba(0,0,0,.5));
-}
+.photo{width:18%;height:100%}
+.photo img{width:100%;height:100%;object-fit:contain}
 
 /* EMP */
-.emp{
-    flex:1;
-    padding-left:1vw;
-}
-
-.name{
-    font-size:1.9vw;
-    font-weight:900;
-    text-transform:uppercase;
-}
-
-.dept{
-    opacity:.7;
-    letter-spacing:2px;
-}
+.emp{flex:1;padding-left:1vw}
+.name{font-size:1.8vw;font-weight:900}
+.dept{opacity:.7}
 
 /* SCORE */
-.score{
-    width:30%;
-    text-align:right;
-    padding-right:2vw;
-}
-
-.value{
-    font-size:2.4vw;
-    font-weight:900;
-    transition:all 1s ease;
-}
-
-/* FLASH EFFECT (rank change highlight) */
-.flash{
-    animation:flash 1s ease;
-}
-
-@keyframes flash{
-    0%{box-shadow:0 0 0 rgba(255,255,255,0)}
-    50%{box-shadow:0 0 40px rgba(255,255,255,.3)}
-    100%{box-shadow:0 0 0 rgba(255,255,255,0)}
-}
+.score{width:30%;text-align:right;padding-right:2vw}
+.value{font-size:2.3vw;font-weight:900}
 
 /* PAUSE */
 .pause{
     position:fixed;
     top:15px;
     left:15px;
-    padding:10px 16px;
+    padding:10px 14px;
     background:rgba(0,0,0,.5);
-    border:1px solid rgba(255,255,255,.2);
     border-radius:10px;
     opacity:0;
     transition:.3s;
@@ -248,7 +164,6 @@ CARD CINEMATIC
 <div class="slide">
     <div class="header">
         <h1>BOTTOM SALES</h1>
-        <p>AZKO CITIMALL TUBAN</p>
         <div class="update" id="u2">UPDATE -</div>
     </div>
     <div class="rank-list" id="salesBottom"></div>
@@ -296,36 +211,45 @@ const URL="https://script.google.com/macros/s/AKfycbzeehvUo6QYriMFJTR4A88lN6IIHV
 
 let cache=[];
 
-/* FETCH SAFE */
-async function getData(retry=2){
+/* =========================
+SAFE FETCH (FIX UTAMA)
+========================= */
+async function getData(retry=3){
     try{
-        const r=await fetch(URL);
-        const t=await r.text();
-        const j=JSON.parse(t);
-        cache=j;
-        return j;
-    }catch(e){
-        if(retry>0) return getData(retry-1);
+        const res=await fetch(URL,{cache:"no-store"});
+        const text=await res.text();
+
+        let json;
+
+        try{
+            json=JSON.parse(text);
+        }catch(e){
+            console.log("JSON ERROR");
+            return cache;
+        }
+
+        if(!Array.isArray(json)){
+            console.log("NOT ARRAY");
+            return cache;
+        }
+
+        cache=json;
+        return json;
+
+    }catch(err){
+        console.log("FETCH ERROR",err);
+
+        if(retry>0){
+            return getData(retry-1);
+        }
+
         return cache;
     }
 }
 
-/* COUNT ANIMATION */
-function count(el,target){
-    let start=0;
-    const step=Math.ceil(target/30);
-
-    const i=setInterval(()=>{
-        start+=step;
-        if(start>=target){
-            start=target;
-            clearInterval(i);
-        }
-        el.textContent=start.toLocaleString('id-ID');
-    },20);
-}
-
-/* RENDER CINEMATIC */
+/* =========================
+RENDER
+========================= */
 function render(data,key,container,mode){
 
     const el=document.getElementById(container);
@@ -342,9 +266,12 @@ function render(data,key,container,mode){
     list.forEach((d,i)=>{
 
         const div=document.createElement("div");
-        div.className=`rank-card ${mode==="top"
-            ? ["gold","silver","bronze"][i]
-            : "red-high"} show`;
+
+        div.className=`rank-card ${
+            mode==="top"
+            ?["gold","silver","bronze"][i]
+            :"red-high"
+        } show`;
 
         div.innerHTML=`
             <div class="rank-number">${d.rank}</div>
@@ -359,22 +286,17 @@ function render(data,key,container,mode){
             </div>
 
             <div class="score">
-                <div class="value" data-val="${d[key]}">0</div>
+                <div class="value">${d[key].toLocaleString('id-ID')}</div>
             </div>
         `;
 
         el.appendChild(div);
-
-        const val=div.querySelector(".value");
-        count(val,d[key]);
-
-        setTimeout(()=>{
-            div.classList.add("flash");
-        },300);
     });
 }
 
-/* SLIDE */
+/* =========================
+SLIDE
+========================= */
 const slides=document.querySelectorAll(".slide");
 let cur=0;
 
@@ -384,8 +306,11 @@ function next(){
     slides[cur].classList.add("active");
 }
 
-/* UPDATE */
+/* =========================
+UPDATE LOOP
+========================= */
 async function update(){
+
     const data=await getData();
 
     render(data,"sales","salesTop","top");
@@ -405,7 +330,7 @@ async function update(){
 setInterval(()=>{if(!document.hidden)next()},7000);
 setInterval(()=>{if(!document.hidden)update()},15000);
 
-/* AUDIO */
+/* AUDIO START FIX */
 document.addEventListener("click",()=>{
     document.getElementById("bgm").play().catch(()=>{});
 },{once:true});
