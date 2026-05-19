@@ -17,6 +17,12 @@
     box-sizing:border-box;
 }
 
+html,
+body{
+    width:100%;
+    height:100%;
+}
+
 body{
 
     font-family:'Poppins',sans-serif;
@@ -54,6 +60,8 @@ body::before{
         );
 
     pointer-events:none;
+
+    z-index:-2;
 }
 
 body::after{
@@ -81,6 +89,8 @@ body::after{
     animation:bgMove 12s linear infinite;
 
     pointer-events:none;
+
+    z-index:-1;
 }
 
 @keyframes bgMove{
@@ -99,10 +109,14 @@ body::after{
 }
 
 /* =========================
-SLIDE
+SLIDES
 ========================= */
 
 .slide{
+
+    position:absolute;
+
+    inset:0;
 
     width:100vw;
     height:100vh;
@@ -111,13 +125,35 @@ SLIDE
         1vh
         2vw;
 
-    display:none;
+    display:flex;
 
     flex-direction:column;
+
+    opacity:0;
+
+    visibility:hidden;
+
+    pointer-events:none;
+
+    transform:
+        scale(1.02);
+
+    transition:
+        opacity .8s ease,
+        transform .8s ease,
+        visibility .8s;
 }
 
 .slide.active{
-    display:flex;
+
+    opacity:1;
+
+    visibility:visible;
+
+    pointer-events:auto;
+
+    transform:
+        scale(1);
 }
 
 /* =========================
@@ -287,7 +323,15 @@ CARD
     opacity:0;
 
     transform:
-        translateX(-120px);
+        translateX(-120px)
+        scale(.96);
+
+    will-change:
+        transform,
+        opacity;
+}
+
+.rank-card.show{
 
     animation:
         slideRight .9s forwards;
@@ -796,6 +840,10 @@ MOBILE
     ▶ PLAYING
 </div>
 
+<!-- =========================
+SLIDES
+========================= -->
+
 <div class="slide active">
     <div class="header">
         <h1>TOP SALES</h1>
@@ -1172,6 +1220,50 @@ function render(
 }
 
 /* =========================
+SLIDES
+========================= */
+
+const slides =
+document.querySelectorAll(".slide");
+
+let current = 0;
+
+function animateCards(slide){
+
+    const cards =
+    slide.querySelectorAll(".rank-card");
+
+    cards.forEach(card=>{
+
+        card.classList.remove("show");
+
+        void card.offsetWidth;
+
+        card.classList.add("show");
+    });
+}
+
+function nextSlide(){
+
+    slides[current]
+        .classList.remove("active");
+
+    current++;
+
+    if(current >= slides.length){
+
+        current = 0;
+    }
+
+    const next =
+    slides[current];
+
+    next.classList.add("active");
+
+    animateCards(next);
+}
+
+/* =========================
 UPDATE
 ========================= */
 
@@ -1242,32 +1334,11 @@ async function update(){
         "bottom"
     );
 
+    animateCards(
+        slides[current]
+    );
+
     setUpdate(now);
-}
-
-/* =========================
-SLIDES
-========================= */
-
-const slides =
-document.querySelectorAll(".slide");
-
-let current = 0;
-
-function nextSlide(){
-
-    slides[current]
-        .classList.remove("active");
-
-    current++;
-
-    if(current >= slides.length){
-
-        current = 0;
-    }
-
-    slides[current]
-        .classList.add("active");
 }
 
 /* =========================
@@ -1332,19 +1403,35 @@ let isPaused = false;
 let slideInterval;
 let updateInterval;
 
-function startLoop(){
-
-    slideInterval =
-    setInterval(nextSlide,7000);
-
-    updateInterval =
-    setInterval(update,15000);
-}
-
 function stopLoop(){
 
     clearInterval(slideInterval);
     clearInterval(updateInterval);
+}
+
+function startLoop(){
+
+    stopLoop();
+
+    slideInterval =
+    setInterval(()=>{
+
+        if(!document.hidden){
+
+            nextSlide();
+        }
+
+    },7000);
+
+    updateInterval =
+    setInterval(()=>{
+
+        if(!document.hidden){
+
+            update();
+        }
+
+    },15000);
 }
 
 function togglePause(){
@@ -1438,6 +1525,10 @@ window.addEventListener(
     async ()=>{
 
         await update();
+
+        animateCards(
+            slides[current]
+        );
 
         startLoop();
 
