@@ -11,18 +11,13 @@
 
 <style>
 
-/* =========================
-RESET
-========================= */
-
 *{
     margin:0;
     padding:0;
     box-sizing:border-box;
 }
 
-html,
-body{
+html,body{
     width:100%;
     height:100%;
     overflow:hidden;
@@ -31,7 +26,7 @@ body{
 body{
     font-family:'Poppins',sans-serif;
     background:#000;
-    color:white;
+    color:#fff;
 }
 
 /* =========================
@@ -41,7 +36,6 @@ SLIDE
 .slide{
     position:absolute;
     inset:0;
-
     width:100vw;
     height:100vh;
 
@@ -51,7 +45,10 @@ SLIDE
     transition:opacity .8s ease;
 
     will-change:opacity;
-    transform:translateZ(0);
+    backface-visibility:hidden;
+    transform:translate3d(0,0,0);
+
+    contain:layout paint;
 }
 
 .slide.active{
@@ -67,59 +64,13 @@ BACKGROUND
 .top-slide{
     background:
         radial-gradient(circle at top,#0d4cff 0%,transparent 30%),
-        linear-gradient(180deg,#020617 0%,#000000 100%);
+        linear-gradient(180deg,#020617 0%,#000);
 }
 
 .bottom-slide{
     background:
         radial-gradient(circle at top,#ff0000 0%,transparent 30%),
-        linear-gradient(180deg,#180000 0%,#000000 100%);
-}
-
-.slide::before{
-    content:"";
-    position:absolute;
-    inset:0;
-
-    background:
-        repeating-linear-gradient(
-            90deg,
-            rgba(255,255,255,.02) 0px,
-            rgba(255,255,255,.02) 1px,
-            transparent 1px,
-            transparent 90px
-        );
-
-    pointer-events:none;
-}
-
-.slide::after{
-    content:"";
-    position:absolute;
-    inset:0;
-
-    background:
-        linear-gradient(
-            120deg,
-            transparent,
-            rgba(255,255,255,.03),
-            transparent
-        );
-
-    animation:bgMove 10s linear infinite;
-
-    pointer-events:none;
-}
-
-@keyframes bgMove{
-
-    from{
-        transform:translateX(-20%);
-    }
-
-    to{
-        transform:translateX(20%);
-    }
+        linear-gradient(180deg,#180000 0%,#000);
 }
 
 /* =========================
@@ -127,118 +78,42 @@ HEADER
 ========================= */
 
 .header{
-
     height:16vh;
-
     display:flex;
     align-items:center;
     justify-content:space-between;
-
-    padding:
-        1vh
-        1.5vw;
-
+    padding:1vh 1.5vw;
     position:relative;
 }
 
 .logo{
-
     font-size:3vw;
     font-weight:900;
     color:#ff3131;
-    line-height:1;
 }
 
 .logo span{
-
     display:block;
-
     font-size:1vw;
-    color:white;
-
-    margin-top:.3vh;
+    color:#fff;
 }
 
 .title{
-
     position:absolute;
-
     left:50%;
-
     transform:translateX(-50%);
-
     text-align:center;
 }
 
 .title h1{
-
     font-size:4vw;
-
     font-weight:900;
-
-    letter-spacing:4px;
-
-    text-transform:uppercase;
-
-    text-shadow:
-        0 0 30px rgba(255,255,255,.4);
+    letter-spacing:3px;
 }
 
 .title p{
-
-    margin-top:.5vh;
-
     font-size:1vw;
-
-    letter-spacing:3px;
-
-    opacity:.9;
-}
-
-.update-box{
-
-    width:13vw;
-
-    padding:
-        1vh
-        1vw;
-
-    border-radius:18px;
-
-    border:
-        2px solid rgba(255,255,255,.15);
-
-    backdrop-filter:blur(10px);
-
-    text-align:center;
-
-    background:
-        rgba(255,255,255,.05);
-
-    box-shadow:
-        0 0 20px rgba(0,0,0,.4);
-}
-
-.update-label{
-
-    font-size:.7vw;
-
-    letter-spacing:2px;
-
-    font-weight:700;
-
     opacity:.8;
-}
-
-.update-time{
-
-    margin-top:.4vh;
-
-    font-size:1vw;
-
-    font-weight:800;
-
-    line-height:1.4;
 }
 
 /* =========================
@@ -246,18 +121,11 @@ MAIN
 ========================= */
 
 .main{
-
     height:72vh;
-
     display:grid;
-
-    grid-template-columns:
-        repeat(3,1fr);
-
+    grid-template-columns:repeat(3,1fr);
     gap:1vw;
-
-    padding:
-        0 1vw;
+    padding:0 1vw;
 }
 
 /* =========================
@@ -265,557 +133,159 @@ CATEGORY
 ========================= */
 
 .category{
-
-    border:
-        1px solid rgba(255,255,255,.08);
-
     border-radius:26px;
-
-    padding:
-        1vh
-        .8vw;
-
-    background:
-        rgba(255,255,255,.03);
-
+    padding:1vh .8vw;
+    background:rgba(255,255,255,.03);
     backdrop-filter:blur(8px);
-
-    position:relative;
-
     overflow:hidden;
-}
-
-.top-slide .category{
-
-    box-shadow:
-        0 0 25px rgba(0,100,255,.15);
-}
-
-.bottom-slide .category{
-
-    box-shadow:
-        0 0 25px rgba(255,0,0,.15);
-}
-
-.category-title{
-
-    text-align:center;
-
-    margin-bottom:1vh;
-}
-
-.category-title h2{
-
-    font-size:2vw;
-
-    font-weight:900;
-
-    text-transform:uppercase;
-}
-
-.category-title p{
-
-    margin-top:.3vh;
-
-    font-size:.8vw;
-
-    letter-spacing:2px;
-
-    opacity:.85;
-}
-
-.sales h2{
-    color:#42d4ff;
-}
-
-.proteksi h2{
-    color:#2dff84;
-}
-
-.trx h2{
-    color:#ffd633;
 }
 
 /* =========================
-TOP PODIUM
+TOP PODIUM FIXED
 ========================= */
 
 .top-podium{
-
     height:100%;
-
     display:flex;
-
     align-items:flex-end;
-
     justify-content:center;
-
     gap:.8vw;
-
-    padding-bottom:4vh;
+    padding-bottom:3.5vh;
 }
 
 .podium-card{
-
     position:relative;
-
     border-radius:24px;
 
-    overflow:hidden;
-
     display:flex;
-
     flex-direction:column;
-
     align-items:center;
-
     justify-content:flex-end;
 
     text-align:center;
 
-    padding:
-        1vh
-        .5vw;
+    padding:1vh .5vw 2vh;
 
-    border:
-        2px solid rgba(255,255,255,.15);
+    border:2px solid rgba(255,255,255,.15);
 
-    background:
-        linear-gradient(
-            180deg,
-            rgba(255,255,255,.08),
-            rgba(0,0,0,.4)
-        );
+    background:linear-gradient(180deg,rgba(255,255,255,.08),rgba(0,0,0,.4));
 
     backdrop-filter:blur(8px);
 
-    box-shadow:
-        0 0 25px rgba(0,0,0,.45);
-
     opacity:0;
+    transform:translateX(-40px);
 
-    transform:
-        translateX(-40px)
-        translateY(-20px);
-
-    animation:
-        slideIn .7s forwards,
-        float 3s ease-in-out infinite;
-}
-
-.podium-card:nth-child(1){
-    animation-delay:.1s;
-}
-
-.podium-card:nth-child(2){
-    animation-delay:.25s;
-}
-
-.podium-card:nth-child(3){
-    animation-delay:.4s;
+    animation:slideIn .7s forwards, floatY 3s ease-in-out infinite .7s;
 }
 
 @keyframes slideIn{
-
     to{
-
         opacity:1;
-
-        transform:
-            translateX(0)
-            translateY(-20px);
+        transform:translateX(0);
     }
 }
 
-@keyframes float{
-
-    0%,100%{
-        transform:translateY(-20px);
-    }
-
-    50%{
-        transform:translateY(-28px);
-    }
+@keyframes floatY{
+    0%,100%{ transform:translateY(0); }
+    50%{ transform:translateY(-6px); }
 }
 
-.rank2,
-.rank3{
+/* PROPORSI FIX */
 
+.rank1{
+    width:34%;
+    height:86%;
+    border:2px solid gold;
+}
+
+.rank2,.rank3{
     width:28%;
     height:72%;
 }
 
-.rank1{
-
-    width:34%;
-    height:86%;
-
-    border:
-        2px solid #ffd700;
-
-    box-shadow:
-        0 0 40px rgba(255,215,0,.5);
-}
-
 .rank1::before{
-
     content:"👑";
-
     position:absolute;
-
-    top:-15px;
-
-    font-size:2.2vw;
+    top:-14px;
+    font-size:2vw;
 }
+
+/* RANK NUMBER */
 
 .rank-number{
-
     position:absolute;
-
     top:10px;
     left:10px;
-
     width:2.5vw;
     height:2.5vw;
-
     border-radius:50%;
-
     display:flex;
-
     align-items:center;
-
     justify-content:center;
-
-    font-size:1.2vw;
-
     font-weight:900;
-
-    background:
-        rgba(0,0,0,.5);
-
-    border:
-        2px solid rgba(255,255,255,.2);
+    background:rgba(0,0,0,.5);
 }
 
-.rank1 .rank-number{
-    background:#ffd700;
-    color:black;
-}
+.rank1 .rank-number{ background:#ffd700; color:#000; }
+.rank2 .rank-number{ background:#dbe4f0; color:#000; }
+.rank3 .rank-number{ background:#cd7f32; }
 
-.rank2 .rank-number{
-    background:#dbe4f0;
-    color:black;
-}
-
-.rank3 .rank-number{
-    background:#cd7f32;
-}
+/* PHOTO */
 
 .photo{
-
     width:100%;
     height:45%;
-
     display:flex;
-
     align-items:flex-end;
-
     justify-content:center;
 }
 
 .photo img{
-
     width:100%;
     height:100%;
-
     object-fit:contain;
-
-    filter:
-        drop-shadow(0 10px 15px rgba(0,0,0,.45));
 }
 
-.employee{
-    margin-top:1vh;
-}
+/* TEXT */
 
 .employee-name{
-
-    font-size:.95vw;
-
+    font-size:.9vw;
     font-weight:900;
-
-    text-transform:uppercase;
-
-    line-height:1.2;
 }
 
 .employee-dept{
-
-    margin-top:.4vh;
-
     font-size:.7vw;
-
     opacity:.8;
 }
 
 .score{
-
-    margin-top:1vh;
-
-    font-size:1.7vw;
-
+    font-size:1.6vw;
     font-weight:900;
-}
-
-.score-label{
-
-    margin-top:.2vh;
-
-    font-size:.65vw;
-
-    opacity:.75;
+    margin-top:1vh;
 }
 
 .ach-circle{
-
-    width:4.5vw;
-    height:4.5vw;
-
-    min-width:70px;
-    min-height:70px;
-
+    width:4vw;
+    height:4vw;
     border-radius:50%;
-
     margin-top:1vh;
 
     display:flex;
-
     align-items:center;
-
     justify-content:center;
 
-    font-size:.9vw;
-
+    font-size:.85vw;
     font-weight:900;
 
     background:
         radial-gradient(circle,#111 58%,transparent 59%),
-        conic-gradient(
-            #32ff6a calc(var(--val) * 1%),
-            rgba(255,255,255,.1) 0
-        );
-
-    box-shadow:
-        0 0 18px rgba(50,255,106,.35);
-}
-
-/* =========================
-BOTTOM TABLE
-========================= */
-
-.bottom-table{
-
-    display:flex;
-
-    flex-direction:column;
-
-    gap:.8vh;
-}
-
-.table-header{
-
-    display:grid;
-
-    grid-template-columns:
-        .6fr
-        .8fr
-        1.5fr
-        1.3fr
-        1.4fr
-        1fr;
-
-    padding:
-        1vh
-        .6vw;
-
-    font-size:.7vw;
-
-    font-weight:700;
-
-    border-bottom:
-        1px solid rgba(255,255,255,.1);
-
-    opacity:.9;
-}
-
-.table-row{
-
-    display:grid;
-
-    grid-template-columns:
-        .6fr
-        .8fr
-        1.5fr
-        1.3fr
-        1.4fr
-        1fr;
-
-    align-items:center;
-
-    padding:
-        .8vh
-        .6vw;
-
-    border-radius:18px;
-
-    background:
-        rgba(255,0,0,.08);
-
-    border:
-        1px solid rgba(255,0,0,.25);
-}
-
-.rank-cell{
-
-    font-size:1.8vw;
-
-    font-weight:900;
-
-    color:#ff4d4d;
-
-    text-align:center;
-}
-
-.table-photo{
-
-    width:55px;
-    height:55px;
-
-    border-radius:14px;
-
-    overflow:hidden;
-
-    background:#111;
-}
-
-.table-photo img{
-
-    width:100%;
-    height:100%;
-
-    object-fit:cover;
-}
-
-.emp-name{
-
-    font-size:.9vw;
-
-    font-weight:800;
-
-    line-height:1.2;
-}
-
-.emp-dept{
-
-    margin-top:.3vh;
-
-    font-size:.65vw;
-
-    opacity:.7;
-}
-
-.metric{
-
-    font-size:1vw;
-
-    font-weight:800;
-
-    text-align:center;
-}
-
-.bad-ach{
-
-    width:4vw;
-    height:4vw;
-
-    min-width:60px;
-    min-height:60px;
-
-    border-radius:50%;
-
-    margin:auto;
-
-    display:flex;
-
-    align-items:center;
-
-    justify-content:center;
-
-    font-size:.8vw;
-
-    font-weight:900;
-
-    background:
-        radial-gradient(circle,#111 58%,transparent 59%),
-        conic-gradient(
-            #ff2d2d calc(var(--val) * 1%),
-            rgba(255,255,255,.1) 0
-        );
-
-    box-shadow:
-        0 0 18px rgba(255,0,0,.35);
-}
-
-/* =========================
-STATUS
-========================= */
-
-.status{
-
-    position:fixed;
-
-    top:20px;
-    left:20px;
-
-    z-index:9999;
-
-    padding:
-        12px
-        20px;
-
-    border-radius:16px;
-
-    background:
-        rgba(0,0,0,.7);
-
-    border:
-        1px solid rgba(255,255,255,.15);
-
-    backdrop-filter:blur(12px);
-
-    font-size:12px;
-
-    font-weight:800;
-
-    letter-spacing:2px;
-
-    opacity:0;
-
-    transition:.3s;
-}
-
-.status.show{
-    opacity:1;
+        conic-gradient(#32ff6a calc(var(--val)*1%),rgba(255,255,255,.1) 0);
 }
 
 </style>
 </head>
 
 <body>
-
-<div class="status" id="status">
-    ▶ PLAYING
-</div>
 
 <section class="slide top-slide active">
 
@@ -827,231 +297,29 @@ STATUS
         </div>
 
         <div class="title">
-
             <h1>TOP PERFORMANCE</h1>
-
             <p>AZKO CITIMALL TUBAN</p>
-
-        </div>
-
-        <div class="update-box">
-
-            <div class="update-label">
-                DATA UPDATE
-            </div>
-
-            <div class="update-time" id="topTime">
-                -
-            </div>
-
         </div>
 
     </div>
 
     <div class="main">
 
-        <div class="category sales">
-
-            <div class="category-title">
-                <h2>SALES</h2>
-                <p>TOTAL SALES (MTD)</p>
-            </div>
-
+        <div class="category">
             <div class="top-podium" id="topSales"></div>
-
         </div>
 
-        <div class="category proteksi">
-
-            <div class="category-title">
-                <h2>PROTEKSI</h2>
-                <p>TOTAL PROTEKSI (MTD)</p>
-            </div>
-
+        <div class="category">
             <div class="top-podium" id="topProteksi"></div>
-
         </div>
 
-        <div class="category trx">
-
-            <div class="category-title">
-                <h2>TRX</h2>
-                <p>TOTAL TRANSAKSI (MTD)</p>
-            </div>
-
+        <div class="category">
             <div class="top-podium" id="topTrx"></div>
-
         </div>
 
     </div>
 
 </section>
-
-<script>
-
-const URL =
-"https://script.google.com/macros/s/AKfycbzeehvUo6QYriMFJTR4A88lN6IIHV6Qop9UphkdOTMkRLVxhVuJ13y69momo6h1pn9dTQ/exec";
-
-function clean(v){
-
-    return parseFloat(
-        (v || "0")
-        .toString()
-        .replace(/[^\d.]/g,'')
-    ) || 0;
-}
-
-function formatJT(value){
-
-    return (
-        value / 1000000
-    ).toLocaleString(
-        'id-ID',
-        {
-            minimumFractionDigits:1,
-            maximumFractionDigits:1
-        }
-    ) + " JT";
-}
-
-async function getData(){
-
-    const res =
-    await fetch(URL);
-
-    const json =
-    await res.json();
-
-    return json.map(r=>({
-
-        name:
-            r["EMPLOYEE NAME"] || "UNKNOWN",
-
-        dept:
-            r["DEPT"] || "-",
-
-        sales:
-            clean(r["SALES MTD"]),
-
-        achSales:
-            clean(r["ACH MTD"]),
-
-        photo:
-            r["PHOTO"] || ""
-
-    }));
-}
-
-function podiumCard(
-    d,
-    rank
-){
-
-    return `
-
-    <div class="podium-card rank${rank}">
-
-        <div class="rank-number">
-            ${rank}
-        </div>
-
-        <div class="photo">
-
-            <img
-
-                src="https://lh3.googleusercontent.com/d/${d.photo}"
-
-                onerror="
-                this.src='https://ui-avatars.com/api/?name=${encodeURIComponent(d.name)}&background=random&color=fff&size=512'
-                "
-            >
-
-        </div>
-
-        <div class="employee">
-
-            <div class="employee-name">
-                ${d.name}
-            </div>
-
-            <div class="employee-dept">
-                ${d.dept}
-            </div>
-
-        </div>
-
-        <div class="score">
-            ${formatJT(d.sales)}
-        </div>
-
-        <div class="score-label">
-            SALES MTD
-        </div>
-
-        <div
-            class="ach-circle"
-            style="--val:${Math.min(d.achSales,100)}">
-
-            ${d.achSales.toFixed(1)}%
-
-        </div>
-
-    </div>
-    `;
-}
-
-async function render(){
-
-    const data =
-    await getData();
-
-    const sorted =
-    [...data]
-    .sort((a,b)=>b.sales-a.sales)
-    .slice(0,3);
-
-    const order = [
-        sorted[1],
-        sorted[0],
-        sorted[2]
-    ];
-
-    const ranks = [2,1,3];
-
-    let html = "";
-
-    order.forEach((d,i)=>{
-
-        html += podiumCard(
-            d,
-            ranks[i]
-        );
-    });
-
-    document
-    .getElementById("topSales")
-    .innerHTML = html;
-
-    const now =
-    new Date().toLocaleString(
-        "id-ID",
-        {
-            day:"2-digit",
-            month:"long",
-            year:"numeric",
-            hour:"2-digit",
-            minute:"2-digit"
-        }
-    );
-
-    document
-    .getElementById("topTime")
-    .innerHTML = now;
-}
-
-window.onload = render;
-
-</script>
 
 </body>
 </html>
