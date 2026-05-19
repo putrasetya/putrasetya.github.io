@@ -2,10 +2,10 @@
 <html lang="id">
 <head>
 
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
-<title>AZKO ULTRA PERFORMANCE DISPLAY</title>
+<title>AZKO ULTRA PERFORMANCE</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 
@@ -25,26 +25,25 @@ html,
 body{
     width:100%;
     height:100%;
+    overflow:hidden;
 }
 
 body{
 
-    overflow:hidden;
-
     font-family:'Poppins',sans-serif;
 
-    color:white;
-
     background:
-        radial-gradient(circle at top left,#2563eb 0%,transparent 30%),
-        radial-gradient(circle at top right,#facc15 0%,transparent 20%),
-        radial-gradient(circle at bottom,#020617 0%,#000000 80%);
+        radial-gradient(circle at top left,#0f3cff 0%,transparent 30%),
+        radial-gradient(circle at top right,#ffd700 0%,transparent 20%),
+        linear-gradient(180deg,#020617 0%,#000000 100%);
+
+    color:white;
 
     position:relative;
 }
 
 /* =========================
-BACKGROUND FX
+BG FX
 ========================= */
 
 body::before{
@@ -56,11 +55,12 @@ body::before{
     inset:0;
 
     background:
-        linear-gradient(
-            135deg,
-            rgba(255,255,255,.03),
-            transparent 30%,
-            rgba(255,255,255,.02)
+        repeating-linear-gradient(
+            90deg,
+            rgba(255,255,255,.015) 0px,
+            rgba(255,255,255,.015) 1px,
+            transparent 1px,
+            transparent 80px
         );
 
     pointer-events:none;
@@ -72,11 +72,11 @@ body::after{
 
     position:fixed;
 
-    width:220%;
-    height:220%;
+    width:200%;
+    height:200%;
 
-    top:-60%;
-    left:-60%;
+    top:-50%;
+    left:-50%;
 
     background:
         linear-gradient(
@@ -86,9 +86,9 @@ body::after{
             transparent
         );
 
-    animation:bgMove 15s linear infinite;
-
     transform:rotate(25deg);
+
+    animation:bgMove 10s linear infinite;
 
     pointer-events:none;
 }
@@ -97,19 +97,19 @@ body::after{
 
     from{
         transform:
-            translateX(-20%)
+            translateX(-10%)
             rotate(25deg);
     }
 
     to{
         transform:
-            translateX(20%)
+            translateX(10%)
             rotate(25deg);
     }
 }
 
 /* =========================
-SLIDE
+SLIDES
 ========================= */
 
 .slide{
@@ -119,8 +119,8 @@ SLIDE
     inset:0;
 
     padding:
-        1.5vh
-        1.5vw;
+        1vh
+        1vw;
 
     opacity:0;
 
@@ -128,7 +128,7 @@ SLIDE
 
     transition:
         opacity .8s ease,
-        visibility .8s ease;
+        visibility .8s;
 }
 
 .slide.active{
@@ -142,112 +142,118 @@ SLIDE
 HEADER
 ========================= */
 
-.header{
+.top-header{
+
+    height:12vh;
 
     display:flex;
 
-    justify-content:space-between;
-
     align-items:center;
 
-    margin-bottom:1.2vh;
+    justify-content:space-between;
+
+    position:relative;
 }
 
-.header-left h1{
+.logo{
 
     font-size:3vw;
 
     font-weight:900;
 
+    color:#ff3131;
+
+    text-transform:uppercase;
+}
+
+.logo span{
+
+    color:white;
+
+    font-size:1vw;
+
+    display:block;
+
+    letter-spacing:2px;
+}
+
+.main-title{
+
+    text-align:center;
+
+    position:absolute;
+
+    left:50%;
+
+    transform:translateX(-50%);
+}
+
+.main-title h1{
+
+    font-size:4vw;
+
+    font-weight:900;
+
     letter-spacing:6px;
+
+    line-height:1;
 
     text-transform:uppercase;
 
-    line-height:1;
+    background:
+        linear-gradient(
+            180deg,
+            #ffffff,
+            #d6d6d6
+        );
+
+    -webkit-background-clip:text;
+
+    -webkit-text-fill-color:transparent;
+
+    text-shadow:
+        0 0 25px rgba(255,255,255,.25);
 }
 
-.header-left p{
+.main-title p{
 
     margin-top:.4vh;
 
-    font-size:.85vw;
+    font-size:.8vw;
 
     letter-spacing:4px;
 
     opacity:.8;
 }
 
-.badge{
-
-    display:inline-flex;
-
-    align-items:center;
-
-    justify-content:center;
-
-    padding:
-        .8vh
-        1vw;
-
-    border-radius:999px;
-
-    margin-bottom:1vh;
-
-    font-size:.7vw;
-
-    font-weight:800;
-
-    letter-spacing:2px;
-}
-
-.top-badge{
-
-    background:
-        linear-gradient(
-            135deg,
-            #facc15,
-            #f59e0b
-        );
-
-    color:#111827;
-}
-
-.bottom-badge{
-
-    background:
-        linear-gradient(
-            135deg,
-            #dc2626,
-            #7f1d1d
-        );
-}
-
 .update-box{
 
     padding:
         1vh
-        1.4vw;
+        1vw;
 
     border-radius:18px;
 
-    background:
-        rgba(255,255,255,.08);
-
     border:
-        1px solid rgba(255,255,255,.08);
+        1px solid rgba(255,255,255,.12);
+
+    background:
+        rgba(255,255,255,.05);
 
     backdrop-filter:blur(12px);
 
-    font-size:.85vw;
+    font-size:.8vw;
 
     font-weight:700;
 }
 
 /* =========================
-MAIN GRID
+GRID
 ========================= */
 
 .main-grid{
+
+    height:74vh;
 
     display:grid;
 
@@ -255,15 +261,13 @@ MAIN GRID
         repeat(3,1fr);
 
     gap:1vw;
-
-    height:84vh;
 }
 
 /* =========================
-CATEGORY COLUMN
+CATEGORY
 ========================= */
 
-.category-column{
+.category{
 
     display:flex;
 
@@ -276,7 +280,7 @@ CATEGORY COLUMN
 
     height:6vh;
 
-    border-radius:20px;
+    border-radius:22px;
 
     display:flex;
 
@@ -284,7 +288,7 @@ CATEGORY COLUMN
 
     justify-content:center;
 
-    font-size:1vw;
+    font-size:1.1vw;
 
     font-weight:900;
 
@@ -303,8 +307,8 @@ CATEGORY COLUMN
     background:
         linear-gradient(
             135deg,
-            rgba(59,130,246,.35),
-            rgba(37,99,235,.15)
+            rgba(0,140,255,.35),
+            rgba(0,70,255,.1)
         );
 }
 
@@ -313,8 +317,8 @@ CATEGORY COLUMN
     background:
         linear-gradient(
             135deg,
-            rgba(168,85,247,.35),
-            rgba(126,34,206,.15)
+            rgba(0,255,160,.28),
+            rgba(0,100,80,.08)
         );
 }
 
@@ -323,8 +327,8 @@ CATEGORY COLUMN
     background:
         linear-gradient(
             135deg,
-            rgba(16,185,129,.35),
-            rgba(5,150,105,.15)
+            rgba(255,180,0,.35),
+            rgba(255,120,0,.08)
         );
 }
 
@@ -334,41 +338,41 @@ CARD LIST
 
 .card-list{
 
+    flex:1;
+
     display:flex;
 
     flex-direction:column;
 
     gap:1vh;
-
-    flex:1;
 }
 
 /* =========================
-CARD
+TOP CARD
 ========================= */
 
 .rank-card{
 
     position:relative;
 
-    flex:1;
-
     overflow:hidden;
 
-    border-radius:28px;
+    border-radius:30px;
 
-    border:
-        1px solid rgba(255,255,255,.08);
+    flex:1;
 
-    backdrop-filter:blur(16px);
+    padding:
+        1vh
+        .8vw;
 
     display:flex;
 
     align-items:center;
 
-    padding:
-        1vh
-        .8vw;
+    border:
+        1px solid rgba(255,255,255,.1);
+
+    backdrop-filter:blur(18px);
 
     opacity:0;
 
@@ -380,10 +384,10 @@ CARD
 .rank-card.show{
 
     animation:
-        cardIn .7s forwards;
+        showCard .8s forwards;
 }
 
-@keyframes cardIn{
+@keyframes showCard{
 
     to{
 
@@ -395,18 +399,17 @@ CARD
     }
 }
 
-/* =========================
-TOP CARD
-========================= */
-
 .gold{
 
     background:
         linear-gradient(
             135deg,
-            rgba(250,204,21,.45),
-            rgba(245,158,11,.18)
+            rgba(255,215,0,.40),
+            rgba(255,180,0,.08)
         );
+
+    box-shadow:
+        0 0 30px rgba(255,215,0,.18);
 }
 
 .silver{
@@ -414,8 +417,8 @@ TOP CARD
     background:
         linear-gradient(
             135deg,
-            rgba(226,232,240,.35),
-            rgba(148,163,184,.12)
+            rgba(226,232,240,.22),
+            rgba(120,120,120,.06)
         );
 }
 
@@ -424,8 +427,8 @@ TOP CARD
     background:
         linear-gradient(
             135deg,
-            rgba(194,120,59,.42),
-            rgba(120,53,15,.15)
+            rgba(194,120,59,.35),
+            rgba(120,53,15,.08)
         );
 }
 
@@ -438,8 +441,8 @@ BOTTOM CARD
     background:
         linear-gradient(
             135deg,
-            rgba(239,68,68,.35),
-            rgba(127,29,29,.2)
+            rgba(255,40,40,.28),
+            rgba(120,0,0,.08)
         );
 }
 
@@ -448,8 +451,8 @@ BOTTOM CARD
     background:
         linear-gradient(
             135deg,
-            rgba(185,28,28,.45),
-            rgba(91,15,15,.25)
+            rgba(180,20,20,.35),
+            rgba(80,0,0,.08)
         );
 }
 
@@ -458,21 +461,21 @@ BOTTOM CARD
     background:
         linear-gradient(
             135deg,
-            rgba(127,29,29,.6),
-            rgba(50,0,0,.35)
+            rgba(120,0,0,.45),
+            rgba(30,0,0,.12)
         );
 }
 
 /* =========================
-RANK NUMBER
+RANK
 ========================= */
 
-.rank-number{
+.rank-no{
 
     position:absolute;
 
-    left:-5px;
     top:50%;
+    left:-8px;
 
     transform:translateY(-50%);
 
@@ -489,7 +492,7 @@ PHOTO
 
 .photo{
 
-    width:26%;
+    width:28%;
     height:100%;
 
     display:flex;
@@ -507,7 +510,7 @@ PHOTO
     object-fit:contain;
 
     filter:
-        drop-shadow(0 8px 12px rgba(0,0,0,.35));
+        drop-shadow(0 10px 14px rgba(0,0,0,.35));
 }
 
 /* =========================
@@ -553,7 +556,7 @@ INFO
 
     margin-top:1vh;
 
-    font-size:1.5vw;
+    font-size:1.7vw;
 
     font-weight:900;
 }
@@ -571,7 +574,7 @@ INFO
 ACH
 ========================= */
 
-.ach-side{
+.ach{
 
     width:28%;
 
@@ -580,73 +583,94 @@ ACH
     flex-direction:column;
 
     align-items:flex-end;
-
-    gap:.5vh;
 }
 
-.ach-box{
+.circle{
 
-    width:100%;
-}
+    width:80px;
+    height:80px;
 
-.ach-bar{
+    border-radius:50%;
 
-    width:100%;
+    display:flex;
 
-    height:10px;
+    align-items:center;
 
-    border-radius:999px;
+    justify-content:center;
 
-    overflow:hidden;
+    position:relative;
+
+    font-size:.9vw;
+
+    font-weight:900;
 
     background:
-        rgba(255,255,255,.08);
-}
-
-.ach-fill{
-
-    height:100%;
-}
-
-.green{
-
-    background:
-        linear-gradient(
-            90deg,
-            #22c55e,
-            #4ade80
+        radial-gradient(circle,#111827 58%,transparent 59%),
+        conic-gradient(
+            var(--clr) calc(var(--val) * 1%),
+            rgba(255,255,255,.08) 0
         );
+
+    box-shadow:
+        0 0 18px rgba(255,255,255,.08);
 }
 
-.yellow{
+.circle.green{
+    --clr:#22c55e;
+}
+
+.circle.yellow{
+    --clr:#facc15;
+}
+
+.circle.red{
+    --clr:#ef4444;
+}
+
+.ach-label{
+
+    margin-top:.6vh;
+
+    font-size:.6vw;
+
+    letter-spacing:2px;
+
+    opacity:.7;
+}
+
+/* =========================
+BOTTOM BAR
+========================= */
+
+.bottom-bar{
+
+    height:8vh;
+
+    margin-top:1vh;
+
+    border-radius:20px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    gap:2vw;
 
     background:
-        linear-gradient(
-            90deg,
-            #f59e0b,
-            #facc15
-        );
-}
+        rgba(255,255,255,.05);
 
-.red{
+    border:
+        1px solid rgba(255,255,255,.08);
 
-    background:
-        linear-gradient(
-            90deg,
-            #dc2626,
-            #ef4444
-        );
-}
+    backdrop-filter:blur(12px);
 
-.ach-text{
+    font-weight:700;
 
-    margin-top:.4vh;
+    letter-spacing:2px;
 
-    font-size:.7vw;
-
-    font-weight:800;
-
-    text-align:right;
+    font-size:.85vw;
 }
 
 /* =========================
@@ -669,12 +693,12 @@ STATUS
     border-radius:18px;
 
     background:
-        rgba(15,23,42,.88);
+        rgba(15,23,42,.92);
 
     border:
-        1px solid rgba(255,255,255,.08);
+        1px solid rgba(255,255,255,.12);
 
-    backdrop-filter:blur(12px);
+    backdrop-filter:blur(14px);
 
     font-size:12px;
 
@@ -688,79 +712,7 @@ STATUS
 }
 
 .status.show{
-
     opacity:1;
-}
-
-/* =========================
-MOBILE
-========================= */
-
-@media(max-width:768px){
-
-    body{
-        overflow:auto;
-    }
-
-    .slide{
-        position:relative;
-        height:auto;
-    }
-
-    .main-grid{
-        grid-template-columns:1fr;
-        height:auto;
-    }
-
-    .header{
-        flex-direction:column;
-        align-items:flex-start;
-        gap:12px;
-    }
-
-    .header-left h1{
-        font-size:34px;
-    }
-
-    .header-left p{
-        font-size:11px;
-    }
-
-    .badge{
-        font-size:10px;
-    }
-
-    .update-box{
-        font-size:11px;
-    }
-
-    .category-title{
-        font-size:13px;
-    }
-
-    .rank-number{
-        font-size:70px;
-    }
-
-    .name{
-        font-size:16px;
-    }
-
-    .dept{
-        font-size:10px;
-    }
-
-    .score{
-        font-size:24px;
-    }
-
-    .score-label{
-        font-size:10px;
-    }
-
-    .ach-text{
-        font-size:10px;
-    }
 }
 
 </style>
@@ -776,20 +728,21 @@ MOBILE
 TOP SLIDE
 ========================= -->
 
-<section class="slide active">
+<section class="slide active" id="slideTop">
 
-    <div class="header">
+    <div class="top-header">
 
-        <div class="header-left">
+        <div class="logo">
+            az•ko
+            <span>CITIMALL TUBAN</span>
+        </div>
 
-            <div class="badge top-badge">
-                AZKO CITIMALL TUBAN
-            </div>
+        <div class="main-title">
 
             <h1>TOP PERFORMANCE</h1>
 
             <p>
-                TOP 3 SALES • PROTEKSI • TRX
+                SALES • PROTEKSI • TRX
             </p>
 
         </div>
@@ -802,7 +755,7 @@ TOP SLIDE
 
     <div class="main-grid">
 
-        <div class="category-column">
+        <div class="category">
 
             <div class="category-title sales-title">
                 SALES
@@ -812,7 +765,7 @@ TOP SLIDE
 
         </div>
 
-        <div class="category-column">
+        <div class="category">
 
             <div class="category-title proteksi-title">
                 PROTEKSI
@@ -822,7 +775,7 @@ TOP SLIDE
 
         </div>
 
-        <div class="category-column">
+        <div class="category">
 
             <div class="category-title trx-title">
                 TRX
@@ -834,26 +787,33 @@ TOP SLIDE
 
     </div>
 
+    <div class="bottom-bar">
+        🏆 TOP SALES • 🔥 TOP PROTEKSI • ⚡ TOP TRX
+    </div>
+
 </section>
 
 <!-- =========================
 BOTTOM SLIDE
 ========================= -->
 
-<section class="slide">
+<section class="slide" id="slideBottom">
 
-    <div class="header">
+    <div class="top-header">
 
-        <div class="header-left">
+        <div class="logo">
+            az•ko
+            <span>CITIMALL TUBAN</span>
+        </div>
 
-            <div class="badge bottom-badge">
-                AZKO CITIMALL TUBAN
-            </div>
+        <div class="main-title">
 
-            <h1>BOTTOM PERFORMANCE</h1>
+            <h1 style="color:#ff4040">
+                BOTTOM PERFORMANCE
+            </h1>
 
             <p>
-                BOTTOM 3 SALES • PROTEKSI • TRX
+                SALES • PROTEKSI • TRX
             </p>
 
         </div>
@@ -866,7 +826,7 @@ BOTTOM SLIDE
 
     <div class="main-grid">
 
-        <div class="category-column">
+        <div class="category">
 
             <div class="category-title sales-title">
                 SALES
@@ -876,7 +836,7 @@ BOTTOM SLIDE
 
         </div>
 
-        <div class="category-column">
+        <div class="category">
 
             <div class="category-title proteksi-title">
                 PROTEKSI
@@ -886,7 +846,7 @@ BOTTOM SLIDE
 
         </div>
 
-        <div class="category-column">
+        <div class="category">
 
             <div class="category-title trx-title">
                 TRX
@@ -898,19 +858,11 @@ BOTTOM SLIDE
 
     </div>
 
+    <div class="bottom-bar">
+        🎯 KEEP IMPROVING • 🚀 STAY MOTIVATED • ❤️ WORK WITH HEART
+    </div>
+
 </section>
-
-<audio
-    id="bgm"
-    autoplay
-    loop
-    playsinline>
-
-    <source
-        src="https://putrasetya.github.io/223am.mp3"
-        type="audio/mpeg">
-
-</audio>
 
 <script>
 
@@ -934,6 +886,15 @@ function clean(v){
     ) || 0;
 }
 
+function achClass(v){
+
+    if(v >= 100) return "green";
+
+    if(v >= 80) return "yellow";
+
+    return "red";
+}
+
 function excluded(dept){
 
     const d =
@@ -945,42 +906,6 @@ function excluded(dept){
         d.includes("kasir") ||
         d.includes("cs")
     );
-}
-
-function achColor(v){
-
-    if(v >= 100) return "green";
-
-    if(v >= 80) return "yellow";
-
-    return "red";
-}
-
-function updateClock(){
-
-    const now =
-    new Date().toLocaleString(
-        "id-ID",
-        {
-
-            day:"2-digit",
-            month:"long",
-            year:"numeric",
-            hour:"2-digit",
-            minute:"2-digit",
-            second:"2-digit"
-        }
-    );
-
-    document.getElementById(
-        "updateTop"
-    ).innerHTML =
-    "UPDATE : " + now;
-
-    document.getElementById(
-        "updateBottom"
-    ).innerHTML =
-    "UPDATE : " + now;
 }
 
 /* =========================
@@ -1040,20 +965,20 @@ async function getData(){
 CARD
 ========================= */
 
-function createCard(
+function card(
     item,
     rank,
     style,
     score,
-    label,
-    ach
+    ach,
+    label
 ){
 
     return `
 
     <div class="rank-card ${style}">
 
-        <div class="rank-number">
+        <div class="rank-no">
             ${rank}
         </div>
 
@@ -1062,8 +987,6 @@ function createCard(
             <img
 
                 src="https://lh3.googleusercontent.com/d/${item.photo}"
-
-                loading="lazy"
 
                 onerror="
                 this.src='https://ui-avatars.com/api/?name=${encodeURIComponent(item.name)}&background=random&color=fff&size=512'
@@ -1092,27 +1015,18 @@ function createCard(
 
         </div>
 
-        <div class="ach-side">
+        <div class="ach">
 
-            <div class="ach-box">
+            <div
+                class="circle ${achClass(ach)}"
+                style="--val:${Math.min(ach,100)}">
 
-                <div class="ach-bar">
+                ${ach.toFixed(1)}%
 
-                    <div
+            </div>
 
-                        class="ach-fill ${achColor(ach)}"
-
-                        style="
-                            width:${Math.min(ach,100)}%;
-                        ">
-                    </div>
-
-                </div>
-
-                <div class="ach-text">
-                    ACH ${ach.toFixed(1)}%
-                </div>
-
+            <div class="ach-label">
+                ACHIEVEMENT
             </div>
 
         </div>
@@ -1122,23 +1036,23 @@ function createCard(
 }
 
 /* =========================
-RENDER CATEGORY
+RENDER
 ========================= */
 
-function renderCategory(
+function renderList(
     data,
     key,
     achKey,
     containerId,
-    type
+    mode
 ){
 
-    const container =
+    const el =
     document.getElementById(containerId);
 
     let sorted = [];
 
-    if(type === "top"){
+    if(mode === "top"){
 
         sorted =
         [...data]
@@ -1154,31 +1068,129 @@ function renderCategory(
     }
 
     const styles =
-    type === "top"
+    mode === "top"
     ? ["gold","silver","bronze"]
     : ["red1","red2","red3"];
 
     let html = "";
 
-    sorted.forEach((item,index)=>{
+    sorted.forEach((d,i)=>{
 
-        html += createCard(
+        html += card(
 
-            item,
+            d,
 
-            index + 1,
+            i + 1,
 
-            styles[index],
+            styles[i],
 
-            item[key],
+            d[key],
 
-            key.toUpperCase(),
+            d[achKey],
 
-            item[achKey]
+            key.toUpperCase()
         );
     });
 
-    container.innerHTML = html;
+    el.innerHTML = html;
+}
+
+/* =========================
+UPDATE
+========================= */
+
+async function render(){
+
+    const raw =
+    await getData();
+
+    const data =
+    raw.filter(
+        d => !excluded(d.dept)
+    );
+
+    renderList(
+        data,
+        "sales",
+        "achSales",
+        "topSales",
+        "top"
+    );
+
+    renderList(
+        data,
+        "proteksi",
+        "achProteksi",
+        "topProteksi",
+        "top"
+    );
+
+    renderList(
+        data,
+        "trx",
+        "achTrx",
+        "topTrx",
+        "top"
+    );
+
+    renderList(
+        data,
+        "sales",
+        "achSales",
+        "bottomSales",
+        "bottom"
+    );
+
+    renderList(
+        data,
+        "proteksi",
+        "achProteksi",
+        "bottomProteksi",
+        "bottom"
+    );
+
+    renderList(
+        data,
+        "trx",
+        "achTrx",
+        "bottomTrx",
+        "bottom"
+    );
+
+    animateCards();
+
+    updateTime();
+}
+
+/* =========================
+TIME
+========================= */
+
+function updateTime(){
+
+    const now =
+    new Date().toLocaleString(
+        "id-ID",
+        {
+
+            day:"2-digit",
+            month:"long",
+            year:"numeric",
+            hour:"2-digit",
+            minute:"2-digit",
+            second:"2-digit"
+        }
+    );
+
+    document
+    .getElementById("updateTop")
+    .innerHTML =
+    "UPDATE : " + now;
+
+    document
+    .getElementById("updateBottom")
+    .innerHTML =
+    "UPDATE : " + now;
 }
 
 /* =========================
@@ -1204,78 +1216,7 @@ function animateCards(){
 }
 
 /* =========================
-RENDER
-========================= */
-
-async function render(){
-
-    const data =
-    await getData();
-
-    updateClock();
-
-    const filtered =
-    data.filter(
-        d => !excluded(d.dept)
-    );
-
-    /* TOP */
-
-    renderCategory(
-        filtered,
-        "sales",
-        "achSales",
-        "topSales",
-        "top"
-    );
-
-    renderCategory(
-        filtered,
-        "proteksi",
-        "achProteksi",
-        "topProteksi",
-        "top"
-    );
-
-    renderCategory(
-        filtered,
-        "trx",
-        "achTrx",
-        "topTrx",
-        "top"
-    );
-
-    /* BOTTOM */
-
-    renderCategory(
-        filtered,
-        "sales",
-        "achSales",
-        "bottomSales",
-        "bottom"
-    );
-
-    renderCategory(
-        filtered,
-        "proteksi",
-        "achProteksi",
-        "bottomProteksi",
-        "bottom"
-    );
-
-    renderCategory(
-        filtered,
-        "trx",
-        "achTrx",
-        "bottomTrx",
-        "bottom"
-    );
-
-    animateCards();
-}
-
-/* =========================
-SLIDES
+SLIDE
 ========================= */
 
 const slides =
@@ -1308,7 +1249,7 @@ STATUS
 const statusEl =
 document.getElementById("status");
 
-function showStatus(text){
+function status(text){
 
     statusEl.innerHTML = text;
 
@@ -1325,97 +1266,10 @@ function showStatus(text){
 }
 
 /* =========================
-AUDIO
-========================= */
-
-const bgm =
-document.getElementById("bgm");
-
-if(bgm){
-
-    bgm.volume = 0.4;
-}
-
-async function playMusic(){
-
-    try{
-
-        await bgm.play();
-
-    }catch(err){
-
-        console.log(err);
-    }
-}
-
-/* =========================
-LOOP
-========================= */
-
-let isPaused = false;
-
-let slideInterval;
-let updateInterval;
-
-function stopLoop(){
-
-    clearInterval(slideInterval);
-
-    clearInterval(updateInterval);
-}
-
-function startLoop(){
-
-    stopLoop();
-
-    slideInterval =
-    setInterval(()=>{
-
-        if(!document.hidden){
-
-            nextSlide();
-        }
-
-    },8000);
-
-    updateInterval =
-    setInterval(()=>{
-
-        if(!document.hidden){
-
-            render();
-        }
-
-    },15000);
-}
-
-function togglePause(){
-
-    isPaused = !isPaused;
-
-    if(isPaused){
-
-        stopLoop();
-
-        bgm.pause();
-
-        showStatus("⏸ PAUSED");
-
-    }else{
-
-        startLoop();
-
-        playMusic();
-
-        showStatus("▶ PLAYING");
-    }
-}
-
-/* =========================
 FULLSCREEN
 ========================= */
 
-async function toggleFullscreen(){
+async function fullscreen(){
 
     try{
 
@@ -1423,13 +1277,13 @@ async function toggleFullscreen(){
 
             await document.documentElement.requestFullscreen();
 
-            showStatus("🖥 FULLSCREEN");
+            status("🖥 FULLSCREEN");
 
         }else{
 
             await document.exitFullscreen();
 
-            showStatus("❎ EXIT FULLSCREEN");
+            status("❎ EXIT FULLSCREEN");
         }
 
     }catch(err){
@@ -1442,33 +1296,9 @@ async function toggleFullscreen(){
 CLICK
 ========================= */
 
-let clickTimer = null;
-
-document.addEventListener(
-    "click",
-    ()=>{
-
-        if(clickTimer){
-
-            clearTimeout(clickTimer);
-        }
-
-        clickTimer = setTimeout(()=>{
-
-            togglePause();
-
-        },250);
-    }
-);
-
 document.addEventListener(
     "dblclick",
-    ()=>{
-
-        clearTimeout(clickTimer);
-
-        toggleFullscreen();
-    }
+    fullscreen
 );
 
 /* =========================
@@ -1481,17 +1311,17 @@ window.addEventListener(
 
         await render();
 
-        animateCards();
+        setInterval(
+            nextSlide,
+            9000
+        );
 
-        startLoop();
+        setInterval(
+            render,
+            15000
+        );
 
-        playMusic();
-
-        setTimeout(playMusic,1000);
-
-        setTimeout(playMusic,3000);
-
-        showStatus("▶ PLAYING");
+        status("▶ PLAYING");
     }
 );
 
