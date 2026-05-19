@@ -11,19 +11,11 @@
 
 <style>
 
-/* =========================
-RESET
-========================= */
-
 *{
     margin:0;
     padding:0;
     box-sizing:border-box;
 }
-
-/* =========================
-BODY
-========================= */
 
 body{
 
@@ -198,7 +190,53 @@ UPDATE TIME
 }
 
 /* =========================
-LIST
+STATUS
+========================= */
+
+.pause-indicator{
+
+    position:fixed;
+
+    top:20px;
+    right:20px;
+
+    z-index:9999;
+
+    padding:
+        10px 18px;
+
+    border-radius:18px;
+
+    background:
+        rgba(0,0,0,.55);
+
+    backdrop-filter:blur(10px);
+
+    border:
+        1px solid rgba(255,255,255,.15);
+
+    font-size:14px;
+
+    font-weight:700;
+
+    letter-spacing:1px;
+
+    opacity:0;
+
+    transform:translateY(-20px);
+
+    transition:.35s;
+}
+
+.pause-indicator.show{
+
+    opacity:1;
+
+    transform:translateY(0);
+}
+
+/* =========================
+RANK LIST
 ========================= */
 
 .rank-list{
@@ -278,31 +316,89 @@ CARD
 }
 
 /* =========================
-CARD COLORS
+TOP CARD
 ========================= */
 
 .gold{
-    background:linear-gradient(135deg,#6b5300,#d4a514,#fff0a6,#d4a514,#6b5300);
+
+    background:
+        linear-gradient(
+            135deg,
+            #6b5300,
+            #d4a514,
+            #fff0a6,
+            #d4a514,
+            #6b5300
+        );
 }
 
 .silver{
-    background:linear-gradient(135deg,#737373,#d1d5db,#ffffff,#d1d5db,#737373);
+
+    background:
+        linear-gradient(
+            135deg,
+            #737373,
+            #d1d5db,
+            #ffffff,
+            #d1d5db,
+            #737373
+        );
 }
 
 .bronze{
-    background:linear-gradient(135deg,#6d3f1d,#c87c3d,#efc08c,#c87c3d,#6d3f1d);
+
+    background:
+        linear-gradient(
+            135deg,
+            #6d3f1d,
+            #c87c3d,
+            #efc08c,
+            #c87c3d,
+            #6d3f1d
+        );
 }
 
+/* =========================
+BOTTOM CARD
+========================= */
+
 .red-high{
-    background:linear-gradient(135deg,#7f1d1d,#b91c1c,#dc2626,#ef4444,#f87171);
+
+    background:
+        linear-gradient(
+            135deg,
+            #7f1d1d,
+            #b91c1c,
+            #dc2626,
+            #ef4444,
+            #f87171
+        );
 }
 
 .red-mid{
-    background:linear-gradient(135deg,#4a0404,#7f1d1d,#b91c1c,#dc2626,#ef4444);
+
+    background:
+        linear-gradient(
+            135deg,
+            #4a0404,
+            #7f1d1d,
+            #b91c1c,
+            #dc2626,
+            #ef4444
+        );
 }
 
 .red-low{
-    background:linear-gradient(135deg,#2b0000,#4a0404,#7f1d1d,#991b1b,#b91c1c);
+
+    background:
+        linear-gradient(
+            135deg,
+            #2b0000,
+            #4a0404,
+            #7f1d1d,
+            #991b1b,
+            #b91c1c
+        );
 }
 
 /* =========================
@@ -325,9 +421,28 @@ RANK NUMBER
 
     font-weight:900;
 
-    opacity:.18;
+    opacity:.20;
 
     letter-spacing:-10px;
+}
+
+.gold .rank-number{
+    color:#facc15;
+}
+
+.silver .rank-number{
+    color:#e2e8f0;
+}
+
+.bronze .rank-number{
+    color:#fb923c;
+}
+
+.red-high .rank-number,
+.red-mid .rank-number,
+.red-low .rank-number{
+
+    color:#ffffff;
 }
 
 /* =========================
@@ -356,7 +471,9 @@ PHOTO
     object-position:center bottom;
 
     filter:
-        drop-shadow(0 10px 15px rgba(0,0,0,.28));
+        drop-shadow(0 10px 15px rgba(0,0,0,.28))
+        contrast(1.08)
+        saturate(1.08);
 }
 
 /* =========================
@@ -378,6 +495,8 @@ EMPLOYEE
 
     font-weight:900;
 
+    color:#111827;
+
     text-transform:uppercase;
 
     white-space:nowrap;
@@ -396,6 +515,19 @@ EMPLOYEE
     letter-spacing:3px;
 
     text-transform:uppercase;
+
+    color:#111827;
+}
+
+.red-high .employee-name,
+.red-mid .employee-name,
+.red-low .employee-name,
+
+.red-high .employee-label,
+.red-mid .employee-label,
+.red-low .employee-label{
+
+    color:white;
 }
 
 /* =========================
@@ -404,128 +536,244 @@ SCORE
 
 .score{
 
-    width:20%;
+    width:31%;
+
+    padding-right:1.8vw;
+
+    display:flex;
+
+    flex-direction:column;
+
+    align-items:flex-end;
+
+    gap:1vh;
+}
+
+.main-score{
 
     text-align:right;
-
-    padding-right:2vw;
 }
 
 .score-value{
 
-    font-size:2.4vw;
+    font-size:2.5vw;
 
     font-weight:900;
-}
-
-/* =========================
-PAUSE INDICATOR
-========================= */
-
-.pause-indicator{
-
-    position:fixed;
-
-    top:20px;
-    left:20px;
-
-    z-index:999999999;
-
-    opacity:0;
-
-    visibility:hidden;
-
-    pointer-events:none;
-
-    transition:
-        opacity .3s ease,
-        transform .3s ease;
-
-    transform:
-        translateY(-10px)
-        scale(.95);
-}
-
-.pause-indicator.show{
-
-    opacity:1;
-
-    visibility:visible;
-
-    transform:
-        translateY(0)
-        scale(1);
-}
-
-.pause-card{
-
-    display:flex;
-
-    align-items:center;
-
-    gap:14px;
-
-    padding:14px 22px;
-
-    border-radius:22px;
-
-    background:rgba(15,23,42,.92);
-
-    border:1px solid rgba(255,255,255,.12);
-
-    backdrop-filter:blur(14px);
-
-    box-shadow:
-        0 10px 30px rgba(0,0,0,.45);
-}
-
-.pause-icon{
-
-    width:48px;
-    height:48px;
-
-    border-radius:14px;
-
-    display:flex;
-
-    align-items:center;
-
-    justify-content:center;
-
-    font-size:22px;
-
-    background:
-        linear-gradient(
-            135deg,
-            #facc15,
-            #f59e0b
-        );
 
     color:#111827;
 }
 
-.pause-title{
+.score-label{
 
-    font-size:20px;
+    margin-top:.2vh;
 
-    font-weight:900;
+    font-size:.8vw;
 
-    letter-spacing:3px;
-
-    color:#fff;
-}
-
-.pause-desc{
-
-    margin-top:4px;
-
-    font-size:10px;
+    font-weight:700;
 
     letter-spacing:2px;
 
-    color:rgba(255,255,255,.7);
+    color:#111827;
 
-    text-transform:uppercase;
+    opacity:.7;
+}
+
+.red-high .score-value,
+.red-mid .score-value,
+.red-low .score-value,
+
+.red-high .score-label,
+.red-mid .score-label,
+.red-low .score-label{
+
+    color:white;
+}
+
+/* =========================
+ACH BOX
+========================= */
+
+.ach-box{
+
+    position:relative;
+
+    overflow:hidden;
+
+    padding:
+        1vh
+        1.2vw;
+
+    border-radius:22px;
+
+    min-width:9vw;
+
+    text-align:center;
+
+    backdrop-filter:blur(12px);
+
+    border:
+        1px solid rgba(255,255,255,.18);
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(255,255,255,.18),
+            rgba(255,255,255,.08)
+        );
+}
+
+.ach-title{
+
+    position:relative;
+
+    z-index:2;
+
+    font-size:.72vw;
+
+    font-weight:800;
+
+    letter-spacing:2px;
+
+    color:#ffffff;
+}
+
+.ach-value{
+
+    position:relative;
+
+    z-index:2;
+
+    margin-top:.45vh;
+
+    font-size:1.8vw;
+
+    font-weight:900;
+}
+
+.ach-green{
+
+    color:#dcfce7 !important;
+
+    text-shadow:
+        0 0 6px rgba(34,197,94,.95),
+        0 0 14px rgba(34,197,94,.9),
+        0 0 24px rgba(34,197,94,.75);
+}
+
+.ach-green-box{
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(22,163,74,.42),
+            rgba(34,197,94,.22)
+        ) !important;
+
+    border:
+        2px solid rgba(74,222,128,.65);
+}
+
+.ach-red{
+
+    color:#ffe4e6 !important;
+
+    text-shadow:
+        0 0 6px rgba(239,68,68,.95),
+        0 0 14px rgba(239,68,68,.9),
+        0 0 24px rgba(239,68,68,.75);
+}
+
+.ach-red-box{
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(185,28,28,.42),
+            rgba(239,68,68,.22)
+        ) !important;
+
+    border:
+        2px solid rgba(252,165,165,.6);
+}
+
+.ach-normal{
+
+    color:#ffffff !important;
+}
+
+/* =========================
+MOBILE
+========================= */
+
+@media(max-width:768px){
+
+    body{
+        overflow:auto;
+    }
+
+    .slide{
+        min-height:100vh;
+        height:auto;
+        padding:12px;
+    }
+
+    .header h1{
+        font-size:30px;
+    }
+
+    .header p{
+        font-size:11px;
+    }
+
+    .rank-card{
+        height:130px;
+    }
+
+    .rank-number{
+        font-size:90px !important;
+    }
+
+    .photo-box{
+        width:95px;
+        min-width:95px;
+    }
+
+    .employee-name{
+        font-size:15px;
+    }
+
+    .employee-label{
+        font-size:10px;
+    }
+
+    .score{
+        width:42%;
+    }
+
+    .score-value{
+        font-size:18px;
+    }
+
+    .score-label{
+        font-size:9px;
+    }
+
+    .ach-box{
+
+        min-width:78px;
+
+        padding:
+            8px
+            10px;
+    }
+
+    .ach-title{
+        font-size:8px;
+    }
+
+    .ach-value{
+        font-size:15px;
+    }
 }
 
 </style>
@@ -533,37 +781,9 @@ PAUSE INDICATOR
 
 <body>
 
-<!-- =========================
-PAUSE INDICATOR
-========================= -->
-
 <div class="pause-indicator" id="pauseIndicator">
-
-    <div class="pause-card">
-
-        <div class="pause-icon">
-            ⏸
-        </div>
-
-        <div>
-
-            <div class="pause-title">
-                PAUSED
-            </div>
-
-            <div class="pause-desc">
-                Click Screen To Continue
-            </div>
-
-        </div>
-
-    </div>
-
+    ⏸ PAUSED
 </div>
-
-<!-- =========================
-SLIDES
-========================= -->
 
 <div class="slide active">
     <div class="header">
@@ -624,12 +844,17 @@ SLIDES
 const URL =
 "https://script.google.com/macros/s/AKfycbzeehvUo6QYriMFJTR4A88lN6IIHV6Qop9UphkdOTMkRLVxhVuJ13y69momo6h1pn9dTQ/exec";
 
+/* =========================
+HELPERS
+========================= */
+
 function clean(val){
 
     if(!val) return 0;
 
-    return parseInt(
-        val.toString().replace(/[^\d]/g,'')
+    return parseFloat(
+        val.toString()
+        .replace(/[^\d.]/g,'')
     ) || 0;
 }
 
@@ -657,6 +882,25 @@ function setUpdate(text){
     }
 }
 
+function isExcluded(dept){
+
+    const d =
+    (dept || "")
+    .toLowerCase();
+
+    return (
+
+        d.includes("cashier") ||
+        d.includes("kasir") ||
+        d.includes("cs") ||
+        d.includes("customer service")
+    );
+}
+
+/* =========================
+GET DATA
+========================= */
+
 async function getData(){
 
     try{
@@ -667,17 +911,32 @@ async function getData(){
 
         return json.map(row => ({
 
-            name: row["EMPLOYEE NAME"] || "UNKNOWN",
+            name:
+                row["EMPLOYEE NAME"] || "UNKNOWN",
 
-            dept: row["DEPT"] || "-",
+            dept:
+                row["DEPT"] || "-",
 
-            sales: clean(row["SALES MTD"]),
+            sales:
+                clean(row["SALES MTD"]),
 
-            proteksi: clean(row["PROTEKSI"]),
+            proteksi:
+                clean(row["PROTEKSI"]),
 
-            trx: clean(row["TRX"]),
+            trx:
+                clean(row["TRX"]),
 
-            photo: row["PHOTO"] || ""
+            achSales:
+                clean(row["ACH MTD"]),
+
+            achProteksi:
+                clean(row["ACH PROTEKSI"]),
+
+            achTrx:
+                clean(row["ACH BULANAN"]),
+
+            photo:
+                row["PHOTO"] || ""
 
         }));
 
@@ -689,16 +948,74 @@ async function getData(){
     }
 }
 
+/* =========================
+ACH STYLE
+========================= */
+
+function getAchStyle(value){
+
+    if(value >= 100){
+
+        return {
+
+            valueClass:
+                "ach-value ach-green",
+
+            boxClass:
+                "ach-box ach-green-box"
+        };
+    }
+
+    if(value < 80){
+
+        return {
+
+            valueClass:
+                "ach-value ach-red",
+
+            boxClass:
+                "ach-box ach-red-box"
+        };
+    }
+
+    return {
+
+        valueClass:
+            "ach-value ach-normal",
+
+        boxClass:
+            "ach-box"
+    };
+}
+
+/* =========================
+RENDER
+========================= */
+
 function render(
     data,
     key,
+    achKey,
+    achTitle,
     containerId,
+    label,
     mode="top"
 ){
 
     let sorted = [];
-
     let styles = [];
+    let filteredData = [...data];
+
+    if(
+        containerId === "salesBottom" ||
+        containerId === "trxTop"
+    ){
+
+        filteredData =
+        filteredData.filter(
+            item => !isExcluded(item.dept)
+        );
+    }
 
     if(mode === "top"){
 
@@ -708,7 +1025,7 @@ function render(
             "bronze"
         ];
 
-        sorted = data
+        sorted = filteredData
             .filter(v => v[key] > 0)
             .sort((a,b)=>b[key]-a[key])
             .slice(0,3);
@@ -721,22 +1038,43 @@ function render(
             "red-low"
         ];
 
-        sorted = data
+        const allSorted =
+        filteredData
             .filter(v => v[key] > 0)
-            .sort((a,b)=>a[key]-b[key])
-            .slice(0,3);
+            .sort((a,b)=>a[key]-b[key]);
+
+        sorted =
+        allSorted.slice(0,3);
+
+        sorted = sorted.map((item,index)=>({
+
+            ...item,
+
+            bottomRank:
+            allSorted.length - index
+        }));
+
+        sorted.reverse();
     }
 
     let html = "";
 
     sorted.forEach((d,i)=>{
 
+        let rank =
+        mode === "top"
+        ? (i+1)
+        : d.bottomRank;
+
+        const achStyle =
+        getAchStyle(d[achKey]);
+
         html += `
 
         <div class="rank-card ${styles[i]}">
 
             <div class="rank-number">
-                ${i+1}
+                ${rank}
             </div>
 
             <div class="photo-box">
@@ -765,8 +1103,28 @@ function render(
 
             <div class="score">
 
-                <div class="score-value">
-                    ${d[key].toLocaleString('id-ID')}
+                <div class="main-score">
+
+                    <div class="score-value">
+                        ${d[key].toLocaleString('id-ID')}
+                    </div>
+
+                    <div class="score-label">
+                        ${label}
+                    </div>
+
+                </div>
+
+                <div class="${achStyle.boxClass}">
+
+                    <div class="ach-title">
+                        ${achTitle}
+                    </div>
+
+                    <div class="${achStyle.valueClass}">
+                        ${d[achKey].toFixed(1)}%
+                    </div>
+
                 </div>
 
             </div>
@@ -780,26 +1138,83 @@ function render(
     ).innerHTML = html;
 }
 
+/* =========================
+UPDATE
+========================= */
+
 async function update(){
 
     const data = await getData();
 
-    const lastUpdate =
+    const now =
     formatTanggal(new Date());
 
-    render(data,"sales","salesTop","top");
-    render(data,"sales","salesBottom","bottom");
+    render(
+        data,
+        "sales",
+        "achSales",
+        "ACH MTD",
+        "salesTop",
+        "TOTAL SALES",
+        "top"
+    );
 
-    render(data,"proteksi","proteksiTop","top");
-    render(data,"proteksi","proteksiBottom","bottom");
+    render(
+        data,
+        "sales",
+        "achSales",
+        "ACH MTD",
+        "salesBottom",
+        "TOTAL SALES",
+        "bottom"
+    );
 
-    render(data,"trx","trxTop","top");
-    render(data,"trx","trxBottom","bottom");
+    render(
+        data,
+        "proteksi",
+        "achProteksi",
+        "ACH PROTEKSI",
+        "proteksiTop",
+        "TOTAL PROTEKSI",
+        "top"
+    );
 
-    setUpdate(lastUpdate);
+    render(
+        data,
+        "proteksi",
+        "achProteksi",
+        "ACH PROTEKSI",
+        "proteksiBottom",
+        "TOTAL PROTEKSI",
+        "bottom"
+    );
+
+    render(
+        data,
+        "trx",
+        "achTrx",
+        "ACH BULANAN",
+        "trxTop",
+        "TOTAL TRX",
+        "top"
+    );
+
+    render(
+        data,
+        "trx",
+        "achTrx",
+        "ACH BULANAN",
+        "trxBottom",
+        "TOTAL TRX",
+        "bottom"
+    );
+
+    setUpdate(now);
 }
 
-update();
+/* =========================
+SLIDE LOOP
+========================= */
 
 let current = 0;
 
@@ -824,22 +1239,41 @@ function nextSlide(){
         .classList.add("active");
 }
 
+/* =========================
+AUTO LOOP
+========================= */
+
+let isPaused = false;
+
 let slideInterval =
 setInterval(nextSlide,7000);
 
 let updateInterval =
 setInterval(update,15000);
 
-/* =========================
-PAUSE SYSTEM
-========================= */
+update();
 
-let isPaused = false;
+/* =========================
+PAUSE / PLAY
+========================= */
 
 const pauseIndicator =
 document.getElementById(
     "pauseIndicator"
 );
+
+function showIndicator(text){
+
+    pauseIndicator.innerHTML = text;
+
+    pauseIndicator.classList.add("show");
+
+    setTimeout(()=>{
+
+        pauseIndicator.classList.remove("show");
+
+    },1500);
+}
 
 function togglePause(){
 
@@ -848,12 +1282,11 @@ function togglePause(){
     if(isPaused){
 
         clearInterval(slideInterval);
-
         clearInterval(updateInterval);
 
         bgm.pause();
 
-        pauseIndicator.classList.add("show");
+        showIndicator("⏸ PAUSED");
 
     }else{
 
@@ -865,7 +1298,7 @@ function togglePause(){
 
         bgm.play();
 
-        pauseIndicator.classList.remove("show");
+        showIndicator("▶ PLAYING");
     }
 }
 
@@ -881,9 +1314,13 @@ async function toggleFullscreen(){
 
             await document.documentElement.requestFullscreen();
 
+            showIndicator("🖥 FULLSCREEN");
+
         }else{
 
             await document.exitFullscreen();
+
+            showIndicator("❎ EXIT FULLSCREEN");
         }
 
     }catch(err){
@@ -893,23 +1330,33 @@ async function toggleFullscreen(){
 }
 
 /* =========================
-CLICK = PAUSE
-DOUBLE CLICK = FULLSCREEN
+CLICK EVENTS
 ========================= */
+
+let clickTimer = null;
 
 document.addEventListener(
     "click",
     ()=>{
 
-        togglePause();
+        if(clickTimer){
+
+            clearTimeout(clickTimer);
+        }
+
+        clickTimer = setTimeout(()=>{
+
+            togglePause();
+
+        },250);
     }
 );
 
 document.addEventListener(
     "dblclick",
-    (e)=>{
+    ()=>{
 
-        e.preventDefault();
+        clearTimeout(clickTimer);
 
         toggleFullscreen();
     }
