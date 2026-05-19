@@ -198,204 +198,6 @@ UPDATE TIME
 }
 
 /* =========================
-PAUSE INDICATOR
-========================= */
-
-.pause-indicator{
-
-    position:fixed;
-
-    top:22px;
-    left:22px;
-
-    z-index:999999;
-
-    opacity:0;
-
-    visibility:hidden;
-
-    transform:
-        translateY(-20px)
-        scale(.9);
-
-    transition:
-        opacity .35s ease,
-        transform .35s ease,
-        visibility .35s ease;
-}
-
-.pause-indicator.show{
-
-    opacity:1;
-
-    visibility:visible;
-
-    transform:
-        translateY(0)
-        scale(1);
-}
-
-.pause-card{
-
-    position:relative;
-
-    display:flex;
-
-    align-items:center;
-
-    gap:16px;
-
-    padding:
-        16px
-        24px;
-
-    border-radius:24px;
-
-    overflow:hidden;
-
-    background:
-        linear-gradient(
-            135deg,
-            rgba(15,23,42,.92),
-            rgba(30,41,59,.88)
-        );
-
-    border:
-        1px solid rgba(255,255,255,.12);
-
-    backdrop-filter:
-        blur(14px);
-
-    box-shadow:
-        0 10px 35px rgba(0,0,0,.45),
-        0 0 25px rgba(59,130,246,.18);
-
-    animation:
-        pauseFloat 2.8s ease-in-out infinite;
-}
-
-.pause-card::before{
-
-    content:"";
-
-    position:absolute;
-
-    inset:0;
-
-    background:
-        linear-gradient(
-            90deg,
-            rgba(250,204,21,.15),
-            rgba(59,130,246,.12),
-            rgba(250,204,21,.15)
-        );
-
-    opacity:.8;
-
-    pointer-events:none;
-}
-
-.pause-icon{
-
-    position:relative;
-
-    z-index:2;
-
-    width:52px;
-    height:52px;
-
-    border-radius:16px;
-
-    display:flex;
-
-    align-items:center;
-
-    justify-content:center;
-
-    font-size:26px;
-
-    background:
-        linear-gradient(
-            135deg,
-            #facc15,
-            #f59e0b
-        );
-
-    color:#111827;
-
-    box-shadow:
-        0 0 18px rgba(250,204,21,.45);
-
-    animation:
-        pulsePause 1.4s infinite alternate;
-}
-
-.pause-text{
-
-    position:relative;
-
-    z-index:2;
-
-    display:flex;
-
-    flex-direction:column;
-}
-
-.pause-title{
-
-    font-size:22px;
-
-    font-weight:900;
-
-    letter-spacing:4px;
-
-    color:#ffffff;
-
-    line-height:1;
-}
-
-.pause-desc{
-
-    margin-top:5px;
-
-    font-size:11px;
-
-    font-weight:600;
-
-    letter-spacing:2px;
-
-    color:rgba(255,255,255,.72);
-
-    text-transform:uppercase;
-}
-
-@keyframes pulsePause{
-
-    from{
-        transform:scale(1);
-    }
-
-    to{
-        transform:scale(1.08);
-    }
-}
-
-@keyframes pauseFloat{
-
-    0%{
-        transform:translateY(0);
-    }
-
-    50%{
-        transform:translateY(-4px);
-    }
-
-    100%{
-        transform:translateY(0);
-    }
-}
-
-/* =========================
 LIST
 ========================= */
 
@@ -476,7 +278,7 @@ CARD
 }
 
 /* =========================
-CARD COLORS
+TOP CARD
 ========================= */
 
 .gold{
@@ -490,6 +292,10 @@ CARD COLORS
 .bronze{
     background:linear-gradient(135deg,#6d3f1d,#c87c3d,#efc08c,#c87c3d,#6d3f1d);
 }
+
+/* =========================
+BOTTOM CARD
+========================= */
 
 .red-high{
     background:linear-gradient(135deg,#7f1d1d,#b91c1c,#dc2626,#ef4444,#f87171);
@@ -596,6 +402,139 @@ EMPLOYEE
     text-transform:uppercase;
 }
 
+/* =========================
+PAUSE INDICATOR
+========================= */
+
+.pause-indicator{
+
+    position:fixed;
+
+    top:20px;
+    left:20px;
+
+    z-index:999999;
+
+    opacity:0;
+
+    visibility:hidden;
+
+    transition:
+        opacity .35s ease,
+        visibility .35s ease;
+}
+
+.pause-indicator.show{
+
+    opacity:1;
+
+    visibility:visible;
+}
+
+.pause-card{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:14px;
+
+    padding:
+        14px
+        22px;
+
+    border-radius:22px;
+
+    background:
+        rgba(15,23,42,.92);
+
+    border:
+        1px solid rgba(255,255,255,.12);
+
+    backdrop-filter:
+        blur(14px);
+
+    box-shadow:
+        0 10px 30px rgba(0,0,0,.45),
+        0 0 20px rgba(59,130,246,.18);
+
+    animation:
+        pauseFloat 2.5s ease-in-out infinite;
+}
+
+.pause-icon{
+
+    width:48px;
+    height:48px;
+
+    border-radius:14px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    font-size:22px;
+
+    font-weight:900;
+
+    background:
+        linear-gradient(
+            135deg,
+            #facc15,
+            #f59e0b
+        );
+
+    color:#111827;
+
+    box-shadow:
+        0 0 15px rgba(250,204,21,.4);
+}
+
+.pause-title{
+
+    font-size:20px;
+
+    font-weight:900;
+
+    letter-spacing:3px;
+
+    color:#ffffff;
+
+    line-height:1;
+}
+
+.pause-desc{
+
+    margin-top:4px;
+
+    font-size:10px;
+
+    font-weight:600;
+
+    letter-spacing:2px;
+
+    color:rgba(255,255,255,.7);
+
+    text-transform:uppercase;
+}
+
+@keyframes pauseFloat{
+
+    0%{
+        transform:translateY(0);
+    }
+
+    50%{
+        transform:translateY(-3px);
+    }
+
+    100%{
+        transform:translateY(0);
+    }
+}
+
 </style>
 </head>
 
@@ -613,7 +552,7 @@ PAUSE INDICATOR
             ⏸
         </div>
 
-        <div class="pause-text">
+        <div>
 
             <div class="pause-title">
                 PAUSED
@@ -637,57 +576,147 @@ SLIDES
     <div class="header">
         <h1>TOP SALES</h1>
         <p>AZKO CITIMALL TUBAN</p>
-        <div class="update-time">DATA UPDATE : LIVE</div>
+        <div class="update-time" id="update1">DATA UPDATE : LIVE</div>
     </div>
-    <div class="rank-list"></div>
+    <div class="rank-list" id="salesTop"></div>
 </div>
 
 <div class="slide">
     <div class="header">
         <h1>BOTTOM SALES</h1>
         <p>AZKO CITIMALL TUBAN</p>
-        <div class="update-time">DATA UPDATE : LIVE</div>
+        <div class="update-time" id="update2">DATA UPDATE : LIVE</div>
     </div>
-    <div class="rank-list"></div>
+    <div class="rank-list" id="salesBottom"></div>
 </div>
 
 <div class="slide">
     <div class="header">
         <h1>TOP PROTEKSI</h1>
         <p>AZKO CITIMALL TUBAN</p>
-        <div class="update-time">DATA UPDATE : LIVE</div>
+        <div class="update-time" id="update3">DATA UPDATE : LIVE</div>
     </div>
-    <div class="rank-list"></div>
+    <div class="rank-list" id="proteksiTop"></div>
 </div>
 
 <div class="slide">
     <div class="header">
         <h1>BOTTOM PROTEKSI</h1>
         <p>AZKO CITIMALL TUBAN</p>
-        <div class="update-time">DATA UPDATE : LIVE</div>
+        <div class="update-time" id="update4">DATA UPDATE : LIVE</div>
     </div>
-    <div class="rank-list"></div>
+    <div class="rank-list" id="proteksiBottom"></div>
 </div>
 
 <div class="slide">
     <div class="header">
         <h1>TOP TRX</h1>
         <p>AZKO CITIMALL TUBAN</p>
-        <div class="update-time">DATA UPDATE : LIVE</div>
+        <div class="update-time" id="update5">DATA UPDATE : LIVE</div>
     </div>
-    <div class="rank-list"></div>
+    <div class="rank-list" id="trxTop"></div>
 </div>
 
 <div class="slide">
     <div class="header">
         <h1>BOTTOM TRX</h1>
         <p>AZKO CITIMALL TUBAN</p>
-        <div class="update-time">DATA UPDATE : LIVE</div>
+        <div class="update-time" id="update6">DATA UPDATE : LIVE</div>
     </div>
-    <div class="rank-list"></div>
+    <div class="rank-list" id="trxBottom"></div>
 </div>
 
 <script>
+
+/* =========================
+DUMMY DATA
+========================= */
+
+const dummy = [
+
+    {
+        name:"PUTRA",
+        dept:"SALES",
+        photo:"https://i.pravatar.cc/300?img=1"
+    },
+
+    {
+        name:"ANDI",
+        dept:"ELEKTRONIK",
+        photo:"https://i.pravatar.cc/300?img=2"
+    },
+
+    {
+        name:"BUDI",
+        dept:"FURNITURE",
+        photo:"https://i.pravatar.cc/300?img=3"
+    }
+
+];
+
+/* =========================
+RENDER
+========================= */
+
+function render(){
+
+    const ids = [
+        "salesTop",
+        "salesBottom",
+        "proteksiTop",
+        "proteksiBottom",
+        "trxTop",
+        "trxBottom"
+    ];
+
+    ids.forEach(id=>{
+
+        let html = "";
+
+        dummy.forEach((d,i)=>{
+
+            const styles = [
+                "gold",
+                "silver",
+                "bronze"
+            ];
+
+            html += `
+
+            <div class="rank-card ${styles[i]}">
+
+                <div class="rank-number">
+                    ${i+1}
+                </div>
+
+                <div class="photo-box">
+
+                    <img src="${d.photo}">
+
+                </div>
+
+                <div class="employee">
+
+                    <div class="employee-name">
+                        ${d.name}
+                    </div>
+
+                    <div class="employee-label">
+                        ${d.dept}
+                    </div>
+
+                </div>
+
+            </div>
+            `;
+        });
+
+        document.getElementById(id)
+        .innerHTML = html;
+    });
+}
+
+render();
 
 /* =========================
 SLIDE LOOP
@@ -715,10 +744,6 @@ function nextSlide(){
     slides[current]
         .classList.add("active");
 }
-
-/* =========================
-INTERVAL
-========================= */
 
 let slideInterval =
 setInterval(nextSlide,7000);
