@@ -1,199 +1,57 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>AZKO PERFORMANCE DISPLAY</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 
 <style>
 
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-}
+*{margin:0;padding:0;box-sizing:border-box;}
 
-html,
-body{
+html,body{
     width:100%;
     height:100%;
     overflow:hidden;
-}
-
-body{
     font-family:'Poppins',sans-serif;
     background:#000;
-    color:white;
+    color:#fff;
 }
 
-/* =========================
-SLIDE
-========================= */
+/* ================= SLIDE ================= */
 
 .slide{
     position:absolute;
     inset:0;
-    width:100vw;
-    height:100vh;
-
     opacity:0;
     visibility:hidden;
-
-    transition:opacity .8s ease;
-
-    will-change:opacity;
+    transition:opacity .6s ease;
 }
 
 .slide.active{
     opacity:1;
     visibility:visible;
-    z-index:2;
 }
 
-/* =========================
-CATEGORY FIX (IMPORTANT)
-========================= */
+/* ================= BACKGROUND ================= */
 
-.category{
-    border:1px solid rgba(255,255,255,.08);
-    border-radius:26px;
-    padding:1vh .8vw 2vh .8vw; /* ✅ extra bottom space */
-    background:rgba(255,255,255,.03);
-    backdrop-filter:blur(8px);
-    position:relative;
-
-    overflow:visible; /* ✅ FIX CLIPPING */
+.top-slide{
+    background:radial-gradient(circle at top,#0d4cff 0%,transparent 30%),linear-gradient(180deg,#020617,#000);
 }
 
-/* =========================
-TOP PODIUM FIX
-========================= */
-
-.top-podium{
-    height:100%;
-    display:flex;
-    align-items:flex-end;
-    justify-content:center;
-    gap:.8vw;
-
-    padding-bottom:1vh; /* ✅ space bawah */
+.bottom-slide{
+    background:radial-gradient(circle at top,#ff2d2d 0%,transparent 30%),linear-gradient(180deg,#180000,#000);
 }
 
-.podium-card{
-    position:relative;
-
-    border-radius:24px;
-
-    overflow:visible; /* ✅ IMPORTANT FIX */
-
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    justify-content:flex-end;
-
-    text-align:center;
-
-    padding:1vh .5vw 2vh .5vw; /* ✅ bottom space tambahan */
-
-    border:2px solid rgba(255,255,255,.15);
-
-    background:
-        linear-gradient(180deg,
-        rgba(255,255,255,.08),
-        rgba(0,0,0,.4));
-
-    backdrop-filter:blur(8px);
-
-    box-shadow:0 0 25px rgba(0,0,0,.45);
-
-    opacity:0;
-    transform:translateY(20px); /* ✅ lebih stabil dari X */
-
-    animation:slideIn .7s forwards, float 3s ease-in-out infinite;
-}
-
-/* =========================
-RANK SIZE FIX (NAIK SEDIKIT)
-========================= */
-
-.rank2,
-.rank3{
-    width:28%;
-    height:80%; /* naik sedikit */
-}
-
-.rank1{
-    width:34%;
-    height:94%; /* naik sedikit */
-
-    border:2px solid #ffd700;
-    box-shadow:0 0 40px rgba(255,215,0,.5);
-}
-
-/* =========================
-ACH FIX (IMPORTANT)
-========================= */
-
-.ach-circle{
-    width:4.5vw;
-    height:4.5vw;
-
-    min-width:70px;
-    min-height:70px;
-
-    border-radius:50%;
-
-    margin-top:1.2vh;
-    margin-bottom:1vh; /* ✅ ruang bawah */
-
-    display:flex;
-    align-items:center;
-    justify-content:center;
-
-    font-size:.9vw;
-    font-weight:900;
-
-    background:
-        radial-gradient(circle,#111 58%,transparent 59%),
-        conic-gradient(
-            #32ff6a calc(var(--val) * 1%),
-            rgba(255,255,255,.1) 0
-        );
-
-    box-shadow:0 0 18px rgba(50,255,106,.35);
-
-    z-index:2;
-}
-
-/* =========================
-ANIMATION FIX
-========================= */
-
-@keyframes slideIn{
-    to{
-        opacity:1;
-        transform:translateY(0);
-    }
-}
-
-@keyframes float{
-    0%,100%{ transform:translateY(0); }
-    50%{ transform:translateY(-4px); }
-}
-
-/* =========================
-REST (TETAP)
-========================= */
+/* ================= HEADER ================= */
 
 .header{
     height:16vh;
     display:flex;
-    align-items:center;
     justify-content:space-between;
+    align-items:center;
     padding:1vh 1.5vw;
     position:relative;
 }
@@ -201,13 +59,11 @@ REST (TETAP)
 .logo{
     font-size:3vw;
     font-weight:900;
-    color:#ff3131;
 }
 
 .logo span{
     display:block;
     font-size:1vw;
-    color:white;
 }
 
 .title{
@@ -218,9 +74,11 @@ REST (TETAP)
 }
 
 .title h1{
-    font-size:4.2vw;
+    font-size:4vw;
     font-weight:900;
 }
+
+/* ================= MAIN ================= */
 
 .main{
     height:72vh;
@@ -230,103 +88,145 @@ REST (TETAP)
     padding:0 1vw;
 }
 
-.bottom-bar{
-    height:8vh;
-    margin:.5vh 1vw 0;
-    border-radius:20px;
+/* ================= CATEGORY FIX ================= */
+
+.category{
+    border-radius:26px;
+    padding:1vh .8vw 2vh;
+    background:rgba(255,255,255,.03);
+    border:1px solid rgba(255,255,255,.08);
+    overflow:visible;
+}
+
+/* ================= PODIUM ================= */
+
+.top-podium{
+    height:100%;
+    display:flex;
+    align-items:flex-end;
+    justify-content:center;
+    gap:.8vw;
+    padding-bottom:1vh;
+}
+
+.podium-card{
+    width:32%;
+    border-radius:22px;
+    padding:1vh .5vw 2vh;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:flex-end;
+    text-align:center;
+
+    background:linear-gradient(180deg,rgba(255,255,255,.08),rgba(0,0,0,.4));
+    border:2px solid rgba(255,255,255,.15);
+
+    overflow:visible;
+}
+
+/* rank size FIX */
+.rank1{height:95%;border-color:#ffd700;}
+.rank2{height:82%;}
+.rank3{height:82%;}
+
+/* ACH FIX */
+.ach-circle{
+    width:70px;
+    height:70px;
+    border-radius:50%;
+    margin-top:1vh;
+
     display:flex;
     align-items:center;
-    justify-content:space-between;
-    padding:0 1.5vw;
-    background:rgba(255,255,255,.05);
+    justify-content:center;
+
+    font-size:.85rem;
+    font-weight:900;
+
+    background:
+        radial-gradient(circle,#111 58%,transparent 59%),
+        conic-gradient(#32ff6a calc(var(--val)*1%),rgba(255,255,255,.1) 0);
+
+    box-shadow:0 0 18px rgba(50,255,106,.35);
 }
+
+/* ================= TABLE ================= */
+
+.table-row{
+    display:grid;
+    grid-template-columns:.6fr .8fr 1.5fr 1.3fr 1.4fr 1fr;
+    padding:.8vh .6vw;
+    background:rgba(255,0,0,.08);
+    border-radius:14px;
+    margin-bottom:.5vh;
+}
+
+/* ================= STATUS ================= */
+
+.status{
+    position:fixed;
+    top:15px;
+    left:15px;
+    padding:10px 16px;
+    font-size:12px;
+    background:rgba(0,0,0,.6);
+    border:1px solid rgba(255,255,255,.2);
+    border-radius:12px;
+    opacity:0;
+    transition:.3s;
+}
+
+.status.show{opacity:1;}
 
 </style>
 </head>
 
 <body>
 
-<!-- STATUS -->
-<div class="status" id="status">▶ PLAYING</div>
+<div class="status" id="status">▶ START</div>
 
-<!-- SLIDE 1 -->
+<!-- ================= TOP SLIDE ================= -->
 <section class="slide top-slide active">
 
     <div class="header">
-        <div class="logo">az•ko <span>CITIMALL TUBAN</span></div>
-
-        <div class="title">
-            <h1>TOP PERFORMANCE</h1>
-            <p>AZKO CITIMALL TUBAN</p>
-        </div>
-
-        <div class="update-box">
-            <div class="update-label">DATA UPDATE</div>
-            <div class="update-time" id="topTime">-</div>
-        </div>
+        <div class="logo">AZ•KO <span>CITIMALL TUBAN</span></div>
+        <div class="title"><h1>TOP PERFORMANCE</h1></div>
+        <div id="topTime">-</div>
     </div>
 
     <div class="main">
 
-        <div class="category sales">
-            <div class="category-title">
-                <h2>SALES</h2>
-            </div>
-            <div class="top-podium" id="topSales"></div>
+        <div class="category">
+            <div id="topSales" class="top-podium"></div>
         </div>
 
-        <div class="category proteksi">
-            <div class="top-podium" id="topProteksi"></div>
+        <div class="category">
+            <div id="topProteksi" class="top-podium"></div>
         </div>
 
-        <div class="category trx">
-            <div class="top-podium" id="topTrx"></div>
+        <div class="category">
+            <div id="topTrx" class="top-podium"></div>
         </div>
 
-    </div>
-
-    <div class="bottom-bar">
-        <div>🏆 TOP PERFORMER HARI INI</div>
     </div>
 
 </section>
 
-<!-- SLIDE 2 -->
+<!-- ================= BOTTOM SLIDE ================= -->
 <section class="slide bottom-slide">
 
     <div class="header">
-        <div class="logo">az•ko <span>CITIMALL TUBAN</span></div>
-
-        <div class="title">
-            <h1>BOTTOM PERFORMANCE</h1>
-            <p>AZKO CITIMALL TUBAN</p>
-        </div>
-
-        <div class="update-box">
-            <div class="update-label">DATA UPDATE</div>
-            <div class="update-time" id="bottomTime">-</div>
-        </div>
+        <div class="logo">AZ•KO <span>CITIMALL TUBAN</span></div>
+        <div class="title"><h1>BOTTOM PERFORMANCE</h1></div>
+        <div id="bottomTime">-</div>
     </div>
 
     <div class="main">
 
-        <div class="category sales">
-            <div class="bottom-table">
-                <div id="bottomSales"></div>
-            </div>
-        </div>
-
-        <div class="category proteksi">
-            <div class="bottom-table">
-                <div id="bottomProteksi"></div>
-            </div>
-        </div>
-
-        <div class="category trx">
-            <div class="bottom-table">
-                <div id="bottomTrx"></div>
-            </div>
-        </div>
+        <div id="bottomSales"></div>
+        <div id="bottomProteksi"></div>
+        <div id="bottomTrx"></div>
 
     </div>
 
@@ -334,34 +234,147 @@ REST (TETAP)
 
 <script>
 
-/* URL tetap */
 const URL = "https://script.google.com/macros/s/AKfycbzeehvUo6QYriMFJTR4A88lN6IIHV6Qop9UphkdOTMkRLVxhVuJ13y69momo6h1pn9dTQ/exec";
 
+let retryCount = 0;
+
+/* ================= SAFE FETCH ================= */
+
 async function getData(){
-    const res = await fetch(URL);
-    return await res.json();
+    try{
+        const res = await fetch(URL);
+        const json = await res.json();
+
+        if(!Array.isArray(json)) throw "invalid data";
+
+        retryCount = 0;
+
+        return json.map(r=>({
+            name:r["EMPLOYEE NAME"] || "-",
+            dept:r["DEPT"] || "-",
+            sales:Number(r["SALES MTD"])||0,
+            proteksi:Number(r["PROTEKSI"])||0,
+            trx:Number(r["TRX"])||0,
+            achSales:Number(r["ACH MTD"])||0,
+            achProteksi:Number(r["ACH PROTEKSI"])||0,
+            achTrx:Number(r["ACH BULANAN"])||0,
+            photo:r["PHOTO"] || ""
+        }));
+
+    }catch(e){
+
+        console.log("FETCH ERROR",e);
+
+        retryCount++;
+
+        if(retryCount < 3){
+            setTimeout(update,3000);
+        }
+
+        return [];
+    }
 }
 
-/* render sederhana */
-function renderTop(data){
-    document.getElementById("topSales").innerHTML = "<div>DATA OK</div>";
-    document.getElementById("topProteksi").innerHTML = "<div>DATA OK</div>";
-    document.getElementById("topTrx").innerHTML = "<div>DATA OK</div>";
+/* ================= PODIUM ================= */
+
+function card(d,rank,val,ach){
+
+return `
+<div class="podium-card rank${rank}">
+    <div><b>${rank}</b></div>
+    <div>${d.name}</div>
+    <div>${val.toLocaleString('id-ID')}</div>
+
+    <div class="ach-circle" style="--val:${Math.min(ach,100)}">
+        ${ach.toFixed(1)}%
+    </div>
+</div>`;
 }
 
-function renderBottom(data){
-    document.getElementById("bottomSales").innerHTML = "<div>DATA OK</div>";
-    document.getElementById("bottomProteksi").innerHTML = "<div>DATA OK</div>";
-    document.getElementById("bottomTrx").innerHTML = "<div>DATA OK</div>";
+/* ================= TABLE ================= */
+
+function row(d,rank,val,ach){
+
+return `
+<div class="table-row">
+<div>${rank}</div>
+<div>${d.name}</div>
+<div>${val.toLocaleString('id-ID')}</div>
+<div>${ach.toFixed(1)}%</div>
+</div>`;
 }
+
+/* ================= RENDER ================= */
+
+function renderTop(data,key,achKey,id){
+
+    const sorted = [...data].sort((a,b)=>b[key]-a[key]).slice(0,3);
+
+    document.getElementById(id).innerHTML =
+    sorted.map((d,i)=>card(d,i+1,d[key],d[achKey])).join("");
+}
+
+function renderBottom(data,key,achKey,id){
+
+    const sorted = [...data].sort((a,b)=>a[key]-b[key]).slice(0,3);
+
+    document.getElementById(id).innerHTML =
+    sorted.map((d,i)=>row(d,i+1,d[key],d[achKey])).join("");
+}
+
+/* ================= UPDATE ================= */
 
 async function update(){
+
     const data = await getData();
-    renderTop(data);
-    renderBottom(data);
+
+    if(data.length === 0){
+        show("NO DATA");
+        return;
+    }
+
+    renderTop(data,"sales","achSales","topSales");
+    renderTop(data,"proteksi","achProteksi","topProteksi");
+    renderTop(data,"trx","achTrx","topTrx");
+
+    renderBottom(data,"sales","achSales","bottomSales");
+    renderBottom(data,"proteksi","achProteksi","bottomProteksi");
+    renderBottom(data,"trx","achTrx","bottomTrx");
+
+    const now = new Date().toLocaleString("id-ID");
+    document.getElementById("topTime").innerText = now;
+    document.getElementById("bottomTime").innerText = now;
 }
 
-window.onload = update;
+/* ================= SLIDE ================= */
+
+let slide=0;
+const slides=document.querySelectorAll(".slide");
+
+setInterval(()=>{
+
+    slides[slide].classList.remove("active");
+    slide = (slide+1)%slides.length;
+    slides[slide].classList.add("active");
+
+},10000);
+
+/* ================= STATUS ================= */
+
+function show(t){
+    const el=document.getElementById("status");
+    el.innerText=t;
+    el.classList.add("show");
+    setTimeout(()=>el.classList.remove("show"),1500);
+}
+
+/* ================= START ================= */
+
+window.onload=()=>{
+    update();
+    setInterval(update,15000);
+    show("PLAYING");
+};
 
 </script>
 
