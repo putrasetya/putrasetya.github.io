@@ -86,12 +86,14 @@ body::after{
 @keyframes bgMove{
 
     0%{
+
         transform:
             translateX(-20%)
             rotate(25deg);
     }
 
     100%{
+
         transform:
             translateX(20%)
             rotate(25deg);
@@ -190,49 +192,235 @@ UPDATE TIME
 }
 
 /* =========================
-STATUS
+PAUSE OVERLAY
 ========================= */
 
 .pause-indicator{
 
     position:fixed;
 
-    top:20px;
-    right:20px;
+    inset:0;
 
-    z-index:9999;
+    z-index:99999;
 
-    padding:
-        10px 18px;
+    display:flex;
 
-    border-radius:18px;
+    align-items:center;
 
-    background:
-        rgba(0,0,0,.55);
-
-    backdrop-filter:blur(10px);
-
-    border:
-        1px solid rgba(255,255,255,.15);
-
-    font-size:14px;
-
-    font-weight:700;
-
-    letter-spacing:1px;
+    justify-content:center;
 
     opacity:0;
 
-    transform:translateY(-20px);
+    visibility:hidden;
 
-    transition:.35s;
+    pointer-events:none;
+
+    transition:
+        opacity .4s ease,
+        visibility .4s ease;
 }
 
 .pause-indicator.show{
 
     opacity:1;
 
-    transform:translateY(0);
+    visibility:visible;
+}
+
+.pause-overlay{
+
+    position:absolute;
+
+    inset:0;
+
+    background:
+        radial-gradient(
+            circle at center,
+            rgba(15,23,42,.25),
+            rgba(2,6,23,.82)
+        );
+
+    backdrop-filter:
+        blur(10px)
+        brightness(.65);
+}
+
+.pause-card{
+
+    position:relative;
+
+    z-index:2;
+
+    padding:
+        3vh
+        3vw;
+
+    min-width:26vw;
+
+    border-radius:36px;
+
+    overflow:hidden;
+
+    text-align:center;
+
+    border:
+        2px solid rgba(255,255,255,.14);
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(255,255,255,.14),
+            rgba(255,255,255,.05)
+        );
+
+    box-shadow:
+        0 20px 60px rgba(0,0,0,.45),
+        inset 0 1px 0 rgba(255,255,255,.15);
+
+    backdrop-filter:
+        blur(18px);
+
+    animation:
+        pauseFloat 3s ease-in-out infinite;
+}
+
+.pause-card::before{
+
+    content:"";
+
+    position:absolute;
+
+    inset:-2px;
+
+    border-radius:36px;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(250,204,21,.7),
+            rgba(59,130,246,.65),
+            rgba(250,204,21,.7)
+        );
+
+    filter:blur(18px);
+
+    opacity:.55;
+
+    z-index:-1;
+}
+
+.pause-card::after{
+
+    content:"";
+
+    position:absolute;
+
+    top:-140%;
+    left:-35%;
+
+    width:45%;
+    height:320%;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            rgba(255,255,255,.28),
+            transparent
+        );
+
+    transform:rotate(25deg);
+
+    animation:
+        shimmer 4s linear infinite;
+}
+
+@keyframes shimmer{
+
+    0%{
+        left:-50%;
+    }
+
+    100%{
+        left:150%;
+    }
+}
+
+.pause-icon{
+
+    font-size:4vw;
+
+    margin-bottom:1vh;
+
+    animation:
+        pulsePause 1.5s infinite alternate;
+
+    filter:
+        drop-shadow(0 0 18px rgba(250,204,21,.7));
+}
+
+.pause-title{
+
+    font-size:3vw;
+
+    font-weight:900;
+
+    letter-spacing:8px;
+
+    text-transform:uppercase;
+
+    color:#ffffff;
+
+    text-shadow:
+        0 0 15px rgba(255,255,255,.35),
+        0 0 35px rgba(59,130,246,.4);
+
+    margin-bottom:.8vh;
+}
+
+.pause-desc{
+
+    font-size:1vw;
+
+    font-weight:500;
+
+    letter-spacing:3px;
+
+    text-transform:uppercase;
+
+    color:rgba(255,255,255,.82);
+}
+
+@keyframes pulsePause{
+
+    from{
+
+        transform:scale(1);
+
+        opacity:.8;
+    }
+
+    to{
+
+        transform:scale(1.15);
+
+        opacity:1;
+    }
+}
+
+@keyframes pauseFloat{
+
+    0%{
+        transform:translateY(0);
+    }
+
+    50%{
+        transform:translateY(-10px);
+    }
+
+    100%{
+        transform:translateY(0);
+    }
 }
 
 /* =========================
@@ -774,6 +962,33 @@ MOBILE
     .ach-value{
         font-size:15px;
     }
+
+    .pause-card{
+
+        min-width:82vw;
+
+        padding:
+            28px
+            24px;
+    }
+
+    .pause-icon{
+        font-size:58px;
+    }
+
+    .pause-title{
+
+        font-size:38px;
+
+        letter-spacing:4px;
+    }
+
+    .pause-desc{
+
+        font-size:12px;
+
+        letter-spacing:2px;
+    }
 }
 
 </style>
@@ -781,9 +996,35 @@ MOBILE
 
 <body>
 
+<!-- =========================
+PAUSE OVERLAY
+========================= -->
+
 <div class="pause-indicator" id="pauseIndicator">
-    ⏸ PAUSED
+
+    <div class="pause-overlay"></div>
+
+    <div class="pause-card">
+
+        <div class="pause-icon">
+            ⏸
+        </div>
+
+        <div class="pause-title">
+            PAUSED
+        </div>
+
+        <div class="pause-desc">
+            CLICK SCREEN TO CONTINUE
+        </div>
+
+    </div>
+
 </div>
+
+<!-- =========================
+SLIDES
+========================= -->
 
 <div class="slide active">
     <div class="header">
@@ -1254,26 +1495,13 @@ setInterval(update,15000);
 update();
 
 /* =========================
-PAUSE / PLAY
+PAUSE
 ========================= */
 
 const pauseIndicator =
 document.getElementById(
     "pauseIndicator"
 );
-
-function showIndicator(text){
-
-    pauseIndicator.innerHTML = text;
-
-    pauseIndicator.classList.add("show");
-
-    setTimeout(()=>{
-
-        pauseIndicator.classList.remove("show");
-
-    },1500);
-}
 
 function togglePause(){
 
@@ -1282,11 +1510,12 @@ function togglePause(){
     if(isPaused){
 
         clearInterval(slideInterval);
+
         clearInterval(updateInterval);
 
         bgm.pause();
 
-        showIndicator("⏸ PAUSED");
+        pauseIndicator.classList.add("show");
 
     }else{
 
@@ -1298,7 +1527,7 @@ function togglePause(){
 
         bgm.play();
 
-        showIndicator("▶ PLAYING");
+        pauseIndicator.classList.remove("show");
     }
 }
 
@@ -1314,13 +1543,9 @@ async function toggleFullscreen(){
 
             await document.documentElement.requestFullscreen();
 
-            showIndicator("🖥 FULLSCREEN");
-
         }else{
 
             await document.exitFullscreen();
-
-            showIndicator("❎ EXIT FULLSCREEN");
         }
 
     }catch(err){
