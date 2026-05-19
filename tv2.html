@@ -11,6 +11,10 @@
 
 <style>
 
+/* =========================
+RESET
+========================= */
+
 *{
     margin:0;
     padding:0;
@@ -25,22 +29,22 @@ body{
 
 body{
 
-    font-family:'Poppins',sans-serif;
-
     overflow:hidden;
+
+    font-family:'Poppins',sans-serif;
 
     color:white;
 
-    cursor:pointer;
-
     background:
-        radial-gradient(circle at top left,#1e3a8a 0%,transparent 30%),
-        radial-gradient(circle at top right,#facc15 0%,transparent 25%),
-        radial-gradient(circle at bottom,#0f172a 0%,#020617 70%);
+        radial-gradient(circle at top left,#1e3a8a 0%,transparent 35%),
+        radial-gradient(circle at top right,#facc15 0%,transparent 20%),
+        radial-gradient(circle at bottom,#0f172a 0%,#020617 75%);
+
+    position:relative;
 }
 
 /* =========================
-BACKGROUND FX
+ANIMATED BG
 ========================= */
 
 body::before{
@@ -53,15 +57,13 @@ body::before{
 
     background:
         linear-gradient(
-            135deg,
+            130deg,
             rgba(255,255,255,.03),
-            transparent 35%,
+            transparent 30%,
             rgba(255,255,255,.02)
         );
 
     pointer-events:none;
-
-    z-index:-2;
 }
 
 body::after{
@@ -70,46 +72,46 @@ body::after{
 
     position:fixed;
 
-    width:200%;
-    height:200%;
+    width:220%;
+    height:220%;
 
-    top:-50%;
-    left:-50%;
+    top:-60%;
+    left:-60%;
 
     background:
         linear-gradient(
             90deg,
             transparent,
-            rgba(255,255,255,.04),
+            rgba(255,255,255,.03),
             transparent
         );
 
     transform:rotate(25deg);
 
-    animation:bgMove 12s linear infinite;
+    animation:bgMove 14s linear infinite;
 
     pointer-events:none;
-
-    z-index:-1;
 }
 
 @keyframes bgMove{
 
-    0%{
+    from{
+
         transform:
-            translateX(-20%)
+            translateX(-15%)
             rotate(25deg);
     }
 
-    100%{
+    to{
+
         transform:
-            translateX(20%)
+            translateX(15%)
             rotate(25deg);
     }
 }
 
 /* =========================
-SLIDES
+SLIDE
 ========================= */
 
 .slide{
@@ -118,11 +120,8 @@ SLIDES
 
     inset:0;
 
-    width:100vw;
-    height:100vh;
-
     padding:
-        1vh
+        2vh
         2vw;
 
     display:flex;
@@ -133,15 +132,9 @@ SLIDES
 
     visibility:hidden;
 
-    pointer-events:none;
-
-    transform:
-        scale(1.02);
-
     transition:
         opacity .8s ease,
-        transform .8s ease,
-        visibility .8s;
+        visibility .8s ease;
 }
 
 .slide.active{
@@ -149,87 +142,376 @@ SLIDES
     opacity:1;
 
     visibility:visible;
-
-    pointer-events:auto;
-
-    transform:
-        scale(1);
 }
 
 /* =========================
 HEADER
 ========================= */
 
-.header{
+.hero{
 
-    text-align:center;
+    display:flex;
 
-    margin-bottom:1vh;
+    justify-content:space-between;
+
+    align-items:center;
+
+    margin-bottom:2vh;
 }
 
-.header h1{
+.hero-left h1{
 
-    font-size:3vw;
+    font-size:4vw;
+
+    line-height:1;
 
     font-weight:900;
 
-    letter-spacing:6px;
+    letter-spacing:5px;
 
     text-transform:uppercase;
 
     text-shadow:
-        0 0 20px rgba(255,255,255,.25);
+        0 0 25px rgba(255,255,255,.15);
 }
 
-.header p{
+.hero-left p{
 
-    margin-top:.2vh;
+    margin-top:1vh;
 
     font-size:1vw;
 
     letter-spacing:4px;
 
-    opacity:.9;
+    opacity:.8;
 }
 
-/* =========================
-UPDATE TIME
-========================= */
+.hero-badge{
 
-.update-time{
+    display:inline-flex;
 
-    margin:
-        1vh auto 0 auto;
+    align-items:center;
 
-    width:fit-content;
+    justify-content:center;
 
     padding:
-        1vh
-        2.5vw;
+        .8vh
+        1vw;
 
-    border-radius:20px;
+    border-radius:999px;
+
+    margin-bottom:1.5vh;
+
+    font-size:.8vw;
+
+    font-weight:800;
+
+    letter-spacing:2px;
+}
+
+.top-badge{
 
     background:
-        rgba(0,0,0,.45);
+        linear-gradient(
+            135deg,
+            #facc15,
+            #f59e0b
+        );
+
+    color:#111827;
+}
+
+.bottom-badge{
+
+    background:
+        linear-gradient(
+            135deg,
+            #dc2626,
+            #7f1d1d
+        );
+}
+
+.clock-box{
+
+    padding:
+        1.2vh
+        1.8vw;
+
+    border-radius:24px;
+
+    background:
+        rgba(255,255,255,.08);
+
+    backdrop-filter:blur(14px);
 
     border:
-        2px solid rgba(255,255,255,.15);
+        1px solid rgba(255,255,255,.08);
 
-    font-size:1.2vw;
+    font-size:1vw;
 
     font-weight:700;
-
-    backdrop-filter:blur(12px);
 
     box-shadow:
         0 0 20px rgba(0,0,0,.25);
 }
 
 /* =========================
-PAUSE INDICATOR
+GRID
 ========================= */
 
-.pause-indicator{
+.performance-grid{
+
+    flex:1;
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(3,1fr);
+
+    gap:1.5vw;
+}
+
+/* =========================
+CARD
+========================= */
+
+.performance-card{
+
+    position:relative;
+
+    overflow:hidden;
+
+    border-radius:34px;
+
+    padding:
+        2vh
+        1.5vw;
+
+    border:
+        1px solid rgba(255,255,255,.08);
+
+    backdrop-filter:blur(14px);
+
+    transform:
+        translateY(40px);
+
+    opacity:0;
+}
+
+.performance-card.show{
+
+    animation:
+        cardIn .9s forwards;
+}
+
+@keyframes cardIn{
+
+    to{
+
+        opacity:1;
+
+        transform:
+            translateY(0);
+    }
+}
+
+/* =========================
+TOP THEME
+========================= */
+
+.top-theme{
+
+    background:
+        linear-gradient(
+            160deg,
+            rgba(250,204,21,.28),
+            rgba(255,255,255,.06),
+            rgba(245,158,11,.18)
+        );
+}
+
+/* =========================
+BOTTOM THEME
+========================= */
+
+.bottom-theme{
+
+    background:
+        linear-gradient(
+            160deg,
+            rgba(127,29,29,.65),
+            rgba(30,41,59,.35),
+            rgba(220,38,38,.3)
+        );
+}
+
+/* =========================
+CARD CATEGORY
+========================= */
+
+.card-category{
+
+    position:absolute;
+
+    top:20px;
+    right:20px;
+
+    font-size:.75vw;
+
+    font-weight:800;
+
+    letter-spacing:3px;
+
+    opacity:.7;
+}
+
+/* =========================
+PHOTO
+========================= */
+
+.card-photo{
+
+    width:100%;
+
+    height:30vh;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:flex-end;
+}
+
+.card-photo img{
+
+    width:100%;
+
+    height:100%;
+
+    object-fit:contain;
+
+    filter:
+        drop-shadow(0 12px 18px rgba(0,0,0,.35));
+}
+
+/* =========================
+INFO
+========================= */
+
+.card-name{
+
+    margin-top:1vh;
+
+    font-size:1.8vw;
+
+    font-weight:900;
+
+    text-transform:uppercase;
+}
+
+.card-dept{
+
+    margin-top:.4vh;
+
+    font-size:.9vw;
+
+    letter-spacing:2px;
+
+    opacity:.8;
+}
+
+.card-score{
+
+    margin-top:2vh;
+
+    font-size:3vw;
+
+    font-weight:900;
+}
+
+.card-label{
+
+    font-size:.8vw;
+
+    letter-spacing:3px;
+
+    opacity:.7;
+}
+
+/* =========================
+ACH
+========================= */
+
+.ach-wrap{
+
+    margin-top:2vh;
+}
+
+.ach-bar{
+
+    width:100%;
+
+    height:14px;
+
+    border-radius:999px;
+
+    overflow:hidden;
+
+    background:
+        rgba(255,255,255,.08);
+}
+
+.ach-fill{
+
+    height:100%;
+
+    border-radius:999px;
+}
+
+.green{
+
+    background:
+        linear-gradient(
+            90deg,
+            #22c55e,
+            #4ade80
+        );
+}
+
+.yellow{
+
+    background:
+        linear-gradient(
+            90deg,
+            #f59e0b,
+            #facc15
+        );
+}
+
+.red{
+
+    background:
+        linear-gradient(
+            90deg,
+            #dc2626,
+            #ef4444
+        );
+}
+
+.ach-text{
+
+    margin-top:.8vh;
+
+    font-size:.95vw;
+
+    font-weight:800;
+}
+
+/* =========================
+STATUS
+========================= */
+
+.overlay-status{
 
     position:fixed;
 
@@ -238,522 +520,34 @@ PAUSE INDICATOR
 
     z-index:9999;
 
-    padding:14px 24px;
+    padding:
+        12px
+        22px;
 
-    border-radius:18px;
+    border-radius:20px;
 
     background:
-        linear-gradient(
-            135deg,
-            rgba(15,23,42,.92),
-            rgba(30,41,59,.92)
-        );
-
-    border:
-        1px solid rgba(255,255,255,.15);
-
-    backdrop-filter:blur(16px);
-
-    font-size:14px;
-
-    font-weight:800;
-
-    letter-spacing:2px;
-
-    box-shadow:
-        0 10px 30px rgba(0,0,0,.45),
-        0 0 20px rgba(59,130,246,.25);
-
-    opacity:0;
-
-    transform:
-        translateY(-20px)
-        scale(.95);
-
-    transition:.35s ease;
-}
-
-.pause-indicator.show{
-
-    opacity:1;
-
-    transform:
-        translateY(0)
-        scale(1);
-}
-
-/* =========================
-RANK LIST
-========================= */
-
-.rank-list{
-
-    display:flex;
-
-    flex-direction:column;
-
-    gap:1.2vh;
-
-    flex:1;
-
-    justify-content:space-evenly;
-}
-
-/* =========================
-CARD
-========================= */
-
-.rank-card{
-
-    position:relative;
-
-    display:flex;
-
-    align-items:center;
-
-    height:25vh;
-
-    border-radius:34px;
-
-    overflow:hidden;
+        rgba(15,23,42,.85);
 
     border:
         1px solid rgba(255,255,255,.08);
 
-    opacity:0;
+    backdrop-filter:blur(14px);
 
-    transform:
-        translateX(-120px)
-        scale(.96);
-
-    will-change:
-        transform,
-        opacity;
-}
-
-.rank-card.show{
-
-    animation:
-        slideRight .9s forwards;
-}
-
-.rank-card:nth-child(1){
-    animation-delay:.2s;
-}
-
-.rank-card:nth-child(2){
-    animation-delay:.5s;
-}
-
-.rank-card:nth-child(3){
-    animation-delay:.8s;
-}
-
-@keyframes slideRight{
-
-    from{
-
-        opacity:0;
-
-        transform:
-            translateX(-120px)
-            scale(.92);
-    }
-
-    to{
-
-        opacity:1;
-
-        transform:
-            translateX(0)
-            scale(1);
-    }
-}
-
-/* =========================
-TOP CARD
-========================= */
-
-.gold{
-
-    background:
-        linear-gradient(
-            135deg,
-            #6b5300,
-            #d4a514,
-            #fff0a6,
-            #d4a514,
-            #6b5300
-        );
-}
-
-.silver{
-
-    background:
-        linear-gradient(
-            135deg,
-            #737373,
-            #d1d5db,
-            #ffffff,
-            #d1d5db,
-            #737373
-        );
-}
-
-.bronze{
-
-    background:
-        linear-gradient(
-            135deg,
-            #6d3f1d,
-            #c87c3d,
-            #efc08c,
-            #c87c3d,
-            #6d3f1d
-        );
-}
-
-/* =========================
-BOTTOM CARD
-========================= */
-
-.red-high{
-
-    background:
-        linear-gradient(
-            135deg,
-            #7f1d1d,
-            #b91c1c,
-            #dc2626,
-            #ef4444,
-            #f87171
-        );
-}
-
-.red-mid{
-
-    background:
-        linear-gradient(
-            135deg,
-            #4a0404,
-            #7f1d1d,
-            #b91c1c,
-            #dc2626,
-            #ef4444
-        );
-}
-
-.red-low{
-
-    background:
-        linear-gradient(
-            135deg,
-            #2b0000,
-            #4a0404,
-            #7f1d1d,
-            #991b1b,
-            #b91c1c
-        );
-}
-
-/* =========================
-RANK NUMBER
-========================= */
-
-.rank-number{
-
-    position:absolute;
-
-    left:-.5vw;
-
-    top:50%;
-
-    transform:
-        translateY(-50%)
-        skew(-10deg);
-
-    font-size:16vw;
-
-    font-weight:900;
-
-    opacity:.20;
-
-    letter-spacing:-10px;
-}
-
-.gold .rank-number{
-    color:#facc15;
-}
-
-.silver .rank-number{
-    color:#e2e8f0;
-}
-
-.bronze .rank-number{
-    color:#fb923c;
-}
-
-.red-high .rank-number,
-.red-mid .rank-number,
-.red-low .rank-number{
-
-    color:#ffffff;
-}
-
-/* =========================
-PHOTO
-========================= */
-
-.photo-box{
-
-    width:20%;
-    height:100%;
-
-    display:flex;
-
-    align-items:flex-end;
-
-    justify-content:center;
-}
-
-.photo-box img{
-
-    width:100%;
-    height:100%;
-
-    object-fit:contain;
-
-    object-position:center bottom;
-
-    filter:
-        drop-shadow(0 10px 15px rgba(0,0,0,.28))
-        contrast(1.08)
-        saturate(1.08);
-}
-
-/* =========================
-EMPLOYEE
-========================= */
-
-.employee{
-
-    flex:1;
-
-    padding-left:1.5vw;
-
-    overflow:hidden;
-}
-
-.employee-name{
-
-    font-size:2vw;
-
-    font-weight:900;
-
-    color:#111827;
-
-    text-transform:uppercase;
-
-    white-space:nowrap;
-
-    overflow:hidden;
-
-    text-overflow:ellipsis;
-}
-
-.employee-label{
-
-    margin-top:.5vh;
-
-    font-size:1.1vw;
-
-    letter-spacing:3px;
-
-    text-transform:uppercase;
-
-    color:#111827;
-}
-
-.red-high .employee-name,
-.red-mid .employee-name,
-.red-low .employee-name,
-
-.red-high .employee-label,
-.red-mid .employee-label,
-.red-low .employee-label{
-
-    color:white;
-}
-
-/* =========================
-SCORE
-========================= */
-
-.score{
-
-    width:31%;
-
-    padding-right:1.8vw;
-
-    display:flex;
-
-    flex-direction:column;
-
-    align-items:flex-end;
-
-    gap:1vh;
-}
-
-.main-score{
-
-    text-align:right;
-}
-
-.score-value{
-
-    font-size:2.5vw;
-
-    font-weight:900;
-
-    color:#111827;
-}
-
-.score-label{
-
-    margin-top:.2vh;
-
-    font-size:.8vw;
-
-    font-weight:700;
-
-    letter-spacing:2px;
-
-    color:#111827;
-
-    opacity:.7;
-}
-
-.red-high .score-value,
-.red-mid .score-value,
-.red-low .score-value,
-
-.red-high .score-label,
-.red-mid .score-label,
-.red-low .score-label{
-
-    color:white;
-}
-
-/* =========================
-ACH BOX
-========================= */
-
-.ach-box{
-
-    position:relative;
-
-    overflow:hidden;
-
-    padding:
-        1vh
-        1.2vw;
-
-    border-radius:22px;
-
-    min-width:9vw;
-
-    text-align:center;
-
-    backdrop-filter:blur(12px);
-
-    border:
-        1px solid rgba(255,255,255,.18);
-
-    background:
-        linear-gradient(
-            135deg,
-            rgba(255,255,255,.18),
-            rgba(255,255,255,.08)
-        );
-}
-
-.ach-title{
-
-    position:relative;
-
-    z-index:2;
-
-    font-size:.72vw;
+    font-size:13px;
 
     font-weight:800;
 
     letter-spacing:2px;
 
-    color:#ffffff;
+    opacity:0;
+
+    transition:.3s ease;
 }
 
-.ach-value{
+.overlay-status.show{
 
-    position:relative;
-
-    z-index:2;
-
-    margin-top:.45vh;
-
-    font-size:1.8vw;
-
-    font-weight:900;
-}
-
-.ach-green{
-
-    color:#dcfce7 !important;
-
-    text-shadow:
-        0 0 6px rgba(34,197,94,.95),
-        0 0 14px rgba(34,197,94,.9),
-        0 0 24px rgba(34,197,94,.75);
-}
-
-.ach-green-box{
-
-    background:
-        linear-gradient(
-            135deg,
-            rgba(22,163,74,.42),
-            rgba(34,197,94,.22)
-        ) !important;
-
-    border:
-        2px solid rgba(74,222,128,.65);
-}
-
-.ach-red{
-
-    color:#ffe4e6 !important;
-
-    text-shadow:
-        0 0 6px rgba(239,68,68,.95),
-        0 0 14px rgba(239,68,68,.9),
-        0 0 24px rgba(239,68,68,.75);
-}
-
-.ach-red-box{
-
-    background:
-        linear-gradient(
-            135deg,
-            rgba(185,28,28,.42),
-            rgba(239,68,68,.22)
-        ) !important;
-
-    border:
-        2px solid rgba(252,165,165,.6);
-}
-
-.ach-normal{
-
-    color:#ffffff !important;
+    opacity:1;
 }
 
 /* =========================
@@ -767,67 +561,61 @@ MOBILE
     }
 
     .slide{
+        position:relative;
         min-height:100vh;
-        height:auto;
-        padding:12px;
     }
 
-    .header h1{
-        font-size:30px;
+    .performance-grid{
+
+        grid-template-columns:1fr;
     }
 
-    .header p{
-        font-size:11px;
+    .hero{
+
+        flex-direction:column;
+        align-items:flex-start;
+        gap:15px;
     }
 
-    .rank-card{
-        height:130px;
+    .hero-left h1{
+        font-size:36px;
     }
 
-    .rank-number{
-        font-size:90px !important;
+    .hero-left p{
+        font-size:12px;
     }
 
-    .photo-box{
-        width:95px;
-        min-width:95px;
+    .hero-badge{
+        font-size:10px;
+        padding:8px 14px;
     }
 
-    .employee-name{
-        font-size:15px;
+    .clock-box{
+        font-size:12px;
     }
 
-    .employee-label{
+    .card-category{
         font-size:10px;
     }
 
-    .score{
-        width:42%;
+    .card-name{
+        font-size:22px;
     }
 
-    .score-value{
-        font-size:18px;
+    .card-dept{
+        font-size:11px;
     }
 
-    .score-label{
-        font-size:9px;
+    .card-score{
+        font-size:38px;
     }
 
-    .ach-box{
-
-        min-width:78px;
-
-        padding:
-            8px
-            10px;
+    .card-label{
+        font-size:10px;
     }
 
-    .ach-title{
-        font-size:8px;
-    }
-
-    .ach-value{
-        font-size:15px;
+    .ach-text{
+        font-size:12px;
     }
 }
 
@@ -836,74 +624,83 @@ MOBILE
 
 <body>
 
-<div class="pause-indicator" id="pauseIndicator">
+<div class="overlay-status" id="overlayStatus">
     ▶ PLAYING
 </div>
 
 <!-- =========================
-SLIDES
+TOP PERFORMANCE
 ========================= -->
 
-<div class="slide active">
-    <div class="header">
-        <h1>TOP SALES</h1>
-        <p>AZKO CITIMALL TUBAN</p>
-        <div class="update-time" id="update1">DATA UPDATE : -</div>
-    </div>
-    <div class="rank-list" id="salesTop"></div>
-</div>
+<section class="slide active">
 
-<div class="slide">
-    <div class="header">
-        <h1>BOTTOM SALES</h1>
-        <p>AZKO CITIMALL TUBAN</p>
-        <div class="update-time" id="update2">DATA UPDATE : -</div>
-    </div>
-    <div class="rank-list" id="salesBottom"></div>
-</div>
+    <div class="hero">
 
-<div class="slide">
-    <div class="header">
-        <h1>TOP PROTEKSI</h1>
-        <p>AZKO CITIMALL TUBAN</p>
-        <div class="update-time" id="update3">DATA UPDATE : -</div>
-    </div>
-    <div class="rank-list" id="proteksiTop"></div>
-</div>
+        <div class="hero-left">
 
-<div class="slide">
-    <div class="header">
-        <h1>BOTTOM PROTEKSI</h1>
-        <p>AZKO CITIMALL TUBAN</p>
-        <div class="update-time" id="update4">DATA UPDATE : -</div>
-    </div>
-    <div class="rank-list" id="proteksiBottom"></div>
-</div>
+            <div class="hero-badge top-badge">
+                AZKO CITIMALL TUBAN
+            </div>
 
-<div class="slide">
-    <div class="header">
-        <h1>TOP TRX</h1>
-        <p>AZKO CITIMALL TUBAN</p>
-        <div class="update-time" id="update5">DATA UPDATE : -</div>
-    </div>
-    <div class="rank-list" id="trxTop"></div>
-</div>
+            <h1>
+                TOP PERFORMANCE
+            </h1>
 
-<div class="slide">
-    <div class="header">
-        <h1>BOTTOM TRX</h1>
-        <p>AZKO CITIMALL TUBAN</p>
-        <div class="update-time" id="update6">DATA UPDATE : -</div>
+            <p>
+                BEST SALES • PROTEKSI • TRX
+            </p>
+
+        </div>
+
+        <div class="clock-box" id="clockTop">
+            UPDATE : -
+        </div>
+
     </div>
-    <div class="rank-list" id="trxBottom"></div>
-</div>
+
+    <div class="performance-grid" id="topContainer"></div>
+
+</section>
+
+<!-- =========================
+BOTTOM PERFORMANCE
+========================= -->
+
+<section class="slide">
+
+    <div class="hero">
+
+        <div class="hero-left">
+
+            <div class="hero-badge bottom-badge">
+                AZKO CITIMALL TUBAN
+            </div>
+
+            <h1>
+                BOTTOM PERFORMANCE
+            </h1>
+
+            <p>
+                NEED IMPROVEMENT
+            </p>
+
+        </div>
+
+        <div class="clock-box" id="clockBottom">
+            UPDATE : -
+        </div>
+
+    </div>
+
+    <div class="performance-grid" id="bottomContainer"></div>
+
+</section>
 
 <audio
     id="bgm"
-    loop
     autoplay
-    playsinline
-    preload="auto">
+    loop
+    playsinline>
 
     <source
         src="https://putrasetya.github.io/223am.mp3"
@@ -913,6 +710,10 @@ SLIDES
 
 <script>
 
+/* =========================
+CONFIG
+========================= */
+
 const URL =
 "https://script.google.com/macros/s/AKfycbzeehvUo6QYriMFJTR4A88lN6IIHV6Qop9UphkdOTMkRLVxhVuJ13y69momo6h1pn9dTQ/exec";
 
@@ -920,55 +721,64 @@ const URL =
 HELPERS
 ========================= */
 
-function clean(val){
-
-    if(!val) return 0;
+function clean(v){
 
     return parseFloat(
-        val.toString().replace(/[^\d.]/g,'')
+        (v || "0")
+        .toString()
+        .replace(/[^\d.]/g,'')
     ) || 0;
 }
 
-function formatTanggal(date){
-
-    return date.toLocaleString('id-ID',{
-
-        day:'2-digit',
-        month:'long',
-        year:'numeric',
-        hour:'2-digit',
-        minute:'2-digit',
-        second:'2-digit'
-    });
-}
-
-function setUpdate(text){
-
-    for(let i=1;i<=6;i++){
-
-        const el =
-        document.getElementById("update"+i);
-
-        if(el){
-
-            el.innerHTML =
-            "DATA UPDATE : " + text;
-        }
-    }
-}
-
-function isExcluded(dept){
+function excluded(dept){
 
     const d =
-    (dept || "").toLowerCase();
+    (dept || "")
+    .toLowerCase();
 
     return (
-
         d.includes("cashier") ||
         d.includes("kasir") ||
-        d.includes("cs") ||
-        d.includes("customer service")
+        d.includes("cs")
     );
+}
+
+function achColor(v){
+
+    if(v >= 100)
+        return "green";
+
+    if(v >= 80)
+        return "yellow";
+
+    return "red";
+}
+
+function updateClock(){
+
+    const now =
+    new Date().toLocaleString(
+        "id-ID",
+        {
+
+            day:"2-digit",
+            month:"long",
+            year:"numeric",
+            hour:"2-digit",
+            minute:"2-digit",
+            second:"2-digit"
+        }
+    );
+
+    document.getElementById(
+        "clockTop"
+    ).innerHTML =
+    "UPDATE : " + now;
+
+    document.getElementById(
+        "clockBottom"
+    ).innerHTML =
+    "UPDATE : " + now;
 }
 
 /* =========================
@@ -979,244 +789,258 @@ async function getData(){
 
     try{
 
-        const res = await fetch(URL);
+        const res =
+        await fetch(URL);
 
-        const json = await res.json();
+        const json =
+        await res.json();
 
-        return json.map(row => ({
+        return json.map(r=>({
 
             name:
-                row["EMPLOYEE NAME"] || "UNKNOWN",
+                r["EMPLOYEE NAME"] || "UNKNOWN",
 
             dept:
-                row["DEPT"] || "-",
+                r["DEPT"] || "-",
 
             sales:
-                clean(row["SALES MTD"]),
+                clean(r["SALES MTD"]),
 
             proteksi:
-                clean(row["PROTEKSI"]),
+                clean(r["PROTEKSI"]),
 
             trx:
-                clean(row["TRX"]),
+                clean(r["TRX"]),
 
-            achSales:
-                clean(row["ACH MTD"]),
-
-            achProteksi:
-                clean(row["ACH PROTEKSI"]),
-
-            achTrx:
-                clean(row["ACH BULANAN"]),
+            ach:
+                clean(r["ACH MTD"]),
 
             photo:
-                row["PHOTO"] || ""
+                r["PHOTO"] || ""
 
         }));
 
     }catch(err){
 
-        console.log("GET DATA ERROR:",err);
+        console.log(err);
 
         return [];
     }
 }
 
 /* =========================
-ACH STYLE
+CARD
 ========================= */
 
-function getAchStyle(value){
+function createCard(
+    item,
+    category,
+    score,
+    label,
+    type
+){
 
-    if(value >= 100){
+    return `
 
-        return {
+    <div class="performance-card ${type}-theme">
 
-            valueClass:
-                "ach-value ach-green",
+        <div class="card-category">
+            ${category}
+        </div>
 
-            boxClass:
-                "ach-box ach-green-box"
-        };
-    }
+        <div class="card-photo">
 
-    if(value < 80){
+            <img
 
-        return {
+                src="https://lh3.googleusercontent.com/d/${item.photo}"
 
-            valueClass:
-                "ach-value ach-red",
+                loading="lazy"
 
-            boxClass:
-                "ach-box ach-red-box"
-        };
-    }
+                onerror="
+                this.src='https://ui-avatars.com/api/?name=${encodeURIComponent(item.name)}&background=random&color=fff&size=512'
+                "
+            >
 
-    return {
+        </div>
 
-        valueClass:
-            "ach-value ach-normal",
+        <div class="card-name">
+            ${item.name}
+        </div>
 
-        boxClass:
-            "ach-box"
-    };
+        <div class="card-dept">
+            ${item.dept}
+        </div>
+
+        <div class="card-score">
+            ${score.toLocaleString('id-ID')}
+        </div>
+
+        <div class="card-label">
+            ${label}
+        </div>
+
+        <div class="ach-wrap">
+
+            <div class="ach-bar">
+
+                <div
+
+                    class="ach-fill ${achColor(item.ach)}"
+
+                    style="
+                        width:${Math.min(item.ach,100)}%;
+                    ">
+                </div>
+
+            </div>
+
+            <div class="ach-text">
+                ACH ${item.ach.toFixed(1)}%
+            </div>
+
+        </div>
+
+    </div>
+    `;
+}
+
+/* =========================
+ANIMATE
+========================= */
+
+function animateCards(){
+
+    document
+    .querySelectorAll(
+        ".slide.active .performance-card"
+    )
+    .forEach((card,index)=>{
+
+        card.classList.remove("show");
+
+        void card.offsetWidth;
+
+        setTimeout(()=>{
+
+            card.classList.add("show");
+
+        },index * 180);
+    });
 }
 
 /* =========================
 RENDER
 ========================= */
 
-function render(
-    data,
-    key,
-    achKey,
-    achTitle,
-    containerId,
-    label,
-    mode="top"
-){
+async function render(){
 
-    const container =
-    document.getElementById(containerId);
+    const data =
+    await getData();
 
-    if(!container) return;
+    updateClock();
 
-    let filteredData = [...data];
+    const filtered =
+    data.filter(
+        d => !excluded(d.dept)
+    );
 
-    if(
-        containerId === "salesBottom" ||
-        containerId === "trxTop"
-    ){
+    /* TOP */
 
-        filteredData =
-        filteredData.filter(
-            item => !isExcluded(item.dept)
+    const topSales =
+    [...filtered]
+    .sort((a,b)=>b.sales-a.sales)[0];
+
+    const topProteksi =
+    [...filtered]
+    .sort((a,b)=>b.proteksi-a.proteksi)[0];
+
+    const topTrx =
+    [...filtered]
+    .sort((a,b)=>b.trx-a.trx)[0];
+
+    /* BOTTOM */
+
+    const bottomSales =
+    [...filtered]
+    .sort((a,b)=>a.sales-b.sales)[0];
+
+    const bottomProteksi =
+    [...filtered]
+    .sort((a,b)=>a.proteksi-b.proteksi)[0];
+
+    const bottomTrx =
+    [...filtered]
+    .sort((a,b)=>a.trx-b.trx)[0];
+
+    /* RENDER TOP */
+
+    document.getElementById(
+        "topContainer"
+    ).innerHTML =
+
+        createCard(
+            topSales,
+            "SALES",
+            topSales.sales,
+            "TOTAL SALES",
+            "top"
+        )
+
+        +
+
+        createCard(
+            topProteksi,
+            "PROTEKSI",
+            topProteksi.proteksi,
+            "TOTAL PROTEKSI",
+            "top"
+        )
+
+        +
+
+        createCard(
+            topTrx,
+            "TRX",
+            topTrx.trx,
+            "TOTAL TRX",
+            "top"
         );
-    }
 
-    let sorted = [];
-    let styles = [];
+    /* RENDER BOTTOM */
 
-    if(mode === "top"){
+    document.getElementById(
+        "bottomContainer"
+    ).innerHTML =
 
-        styles = [
-            "gold",
-            "silver",
-            "bronze"
-        ];
+        createCard(
+            bottomSales,
+            "SALES",
+            bottomSales.sales,
+            "TOTAL SALES",
+            "bottom"
+        )
 
-        sorted =
-        filteredData
-            .filter(v => v[key] > 0)
-            .sort((a,b)=>b[key]-a[key])
-            .slice(0,3);
+        +
 
-    }else{
+        createCard(
+            bottomProteksi,
+            "PROTEKSI",
+            bottomProteksi.proteksi,
+            "TOTAL PROTEKSI",
+            "bottom"
+        )
 
-        styles = [
-            "red-high",
-            "red-mid",
-            "red-low"
-        ];
+        +
 
-        const allSorted =
-        filteredData
-            .filter(v => v[key] > 0)
-            .sort((a,b)=>a[key]-b[key]);
+        createCard(
+            bottomTrx,
+            "TRX",
+            bottomTrx.trx,
+            "TOTAL TRX",
+            "bottom"
+        );
 
-        sorted =
-        allSorted.slice(0,3);
-
-        sorted = sorted.map((item,index)=>({
-
-            ...item,
-
-            bottomRank:
-            allSorted.length - index
-        }));
-
-        sorted.reverse();
-    }
-
-    let html = "";
-
-    sorted.forEach((d,i)=>{
-
-        const rank =
-        mode === "top"
-        ? i + 1
-        : d.bottomRank;
-
-        const achStyle =
-        getAchStyle(d[achKey]);
-
-        html += `
-
-        <div class="rank-card ${styles[i]}">
-
-            <div class="rank-number">
-                ${rank}
-            </div>
-
-            <div class="photo-box">
-
-                <img
-                    src="https://lh3.googleusercontent.com/d/${d.photo}"
-
-                    loading="lazy"
-
-                    onerror="
-                    this.src='https://ui-avatars.com/api/?name=${encodeURIComponent(d.name)}&background=random&color=fff&size=512'
-                    "
-                >
-
-            </div>
-
-            <div class="employee">
-
-                <div class="employee-name">
-                    ${d.name}
-                </div>
-
-                <div class="employee-label">
-                    ${d.dept}
-                </div>
-
-            </div>
-
-            <div class="score">
-
-                <div class="main-score">
-
-                    <div class="score-value">
-                        ${d[key].toLocaleString('id-ID')}
-                    </div>
-
-                    <div class="score-label">
-                        ${label}
-                    </div>
-
-                </div>
-
-                <div class="${achStyle.boxClass}">
-
-                    <div class="ach-title">
-                        ${achTitle}
-                    </div>
-
-                    <div class="${achStyle.valueClass}">
-                        ${d[achKey].toFixed(1)}%
-                    </div>
-
-                </div>
-
-            </div>
-
-        </div>
-        `;
-    });
-
-    container.innerHTML = html;
+    animateCards();
 }
 
 /* =========================
@@ -1228,25 +1052,10 @@ document.querySelectorAll(".slide");
 
 let current = 0;
 
-function animateCards(slide){
-
-    const cards =
-    slide.querySelectorAll(".rank-card");
-
-    cards.forEach(card=>{
-
-        card.classList.remove("show");
-
-        void card.offsetWidth;
-
-        card.classList.add("show");
-    });
-}
-
 function nextSlide(){
 
     slides[current]
-        .classList.remove("active");
+    .classList.remove("active");
 
     current++;
 
@@ -1255,115 +1064,33 @@ function nextSlide(){
         current = 0;
     }
 
-    const next =
-    slides[current];
+    slides[current]
+    .classList.add("active");
 
-    next.classList.add("active");
-
-    animateCards(next);
+    animateCards();
 }
 
 /* =========================
-UPDATE
+STATUS
 ========================= */
 
-async function update(){
-
-    const data = await getData();
-
-    const now =
-    formatTanggal(new Date());
-
-    render(
-        data,
-        "sales",
-        "achSales",
-        "ACH MTD",
-        "salesTop",
-        "TOTAL SALES",
-        "top"
-    );
-
-    render(
-        data,
-        "sales",
-        "achSales",
-        "ACH MTD",
-        "salesBottom",
-        "TOTAL SALES",
-        "bottom"
-    );
-
-    render(
-        data,
-        "proteksi",
-        "achProteksi",
-        "ACH PROTEKSI",
-        "proteksiTop",
-        "TOTAL PROTEKSI",
-        "top"
-    );
-
-    render(
-        data,
-        "proteksi",
-        "achProteksi",
-        "ACH PROTEKSI",
-        "proteksiBottom",
-        "TOTAL PROTEKSI",
-        "bottom"
-    );
-
-    render(
-        data,
-        "trx",
-        "achTrx",
-        "ACH BULANAN",
-        "trxTop",
-        "TOTAL TRX",
-        "top"
-    );
-
-    render(
-        data,
-        "trx",
-        "achTrx",
-        "ACH BULANAN",
-        "trxBottom",
-        "TOTAL TRX",
-        "bottom"
-    );
-
-    animateCards(
-        slides[current]
-    );
-
-    setUpdate(now);
-}
-
-/* =========================
-INDICATOR
-========================= */
-
-const pauseIndicator =
+const overlay =
 document.getElementById(
-    "pauseIndicator"
+    "overlayStatus"
 );
 
-function showIndicator(text){
+function showStatus(text){
 
-    if(!pauseIndicator) return;
+    overlay.innerHTML = text;
 
-    pauseIndicator.innerHTML = text;
+    overlay.classList.add("show");
 
-    pauseIndicator.classList.add("show");
+    clearTimeout(window.statusTimeout);
 
-    clearTimeout(window.indicatorTimeout);
-
-    window.indicatorTimeout =
+    window.statusTimeout =
     setTimeout(()=>{
 
-        pauseIndicator.classList.remove("show");
+        overlay.classList.remove("show");
 
     },1500);
 }
@@ -1382,8 +1109,6 @@ if(bgm){
 
 async function playMusic(){
 
-    if(!bgm) return;
-
     try{
 
         await bgm.play();
@@ -1395,7 +1120,7 @@ async function playMusic(){
 }
 
 /* =========================
-LOOP
+PAUSE
 ========================= */
 
 let isPaused = false;
@@ -1406,6 +1131,7 @@ let updateInterval;
 function stopLoop(){
 
     clearInterval(slideInterval);
+
     clearInterval(updateInterval);
 }
 
@@ -1421,14 +1147,14 @@ function startLoop(){
             nextSlide();
         }
 
-    },7000);
+    },8000);
 
     updateInterval =
     setInterval(()=>{
 
         if(!document.hidden){
 
-            update();
+            render();
         }
 
     },15000);
@@ -1442,9 +1168,9 @@ function togglePause(){
 
         stopLoop();
 
-        if(bgm) bgm.pause();
+        bgm.pause();
 
-        showIndicator("⏸ PAUSED");
+        showStatus("⏸ PAUSED");
 
     }else{
 
@@ -1452,7 +1178,7 @@ function togglePause(){
 
         playMusic();
 
-        showIndicator("▶ PLAYING");
+        showStatus("▶ PLAYING");
     }
 }
 
@@ -1468,13 +1194,13 @@ async function toggleFullscreen(){
 
             await document.documentElement.requestFullscreen();
 
-            showIndicator("🖥 FULLSCREEN");
+            showStatus("🖥 FULLSCREEN");
 
         }else{
 
             await document.exitFullscreen();
 
-            showIndicator("❎ EXIT FULLSCREEN");
+            showStatus("❎ EXIT FULLSCREEN");
         }
 
     }catch(err){
@@ -1524,11 +1250,9 @@ window.addEventListener(
     "load",
     async ()=>{
 
-        await update();
+        await render();
 
-        animateCards(
-            slides[current]
-        );
+        animateCards();
 
         startLoop();
 
@@ -1538,7 +1262,7 @@ window.addEventListener(
 
         setTimeout(playMusic,3000);
 
-        showIndicator("▶ PLAYING");
+        showStatus("▶ PLAYING");
     }
 );
 
