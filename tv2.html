@@ -730,81 +730,6 @@ ACH BOX
     color:#ffffff !important;
 }
 
-/* =========================
-MOBILE
-========================= */
-
-@media(max-width:768px){
-
-    body{
-        overflow:auto;
-    }
-
-    .slide{
-        min-height:100vh;
-        height:auto;
-        padding:12px;
-    }
-
-    .header h1{
-        font-size:30px;
-    }
-
-    .header p{
-        font-size:11px;
-    }
-
-    .rank-card{
-        height:130px;
-    }
-
-    .rank-number{
-        font-size:90px !important;
-    }
-
-    .photo-box{
-        width:95px;
-        min-width:95px;
-    }
-
-    .employee-name{
-        font-size:15px;
-    }
-
-    .employee-label{
-        font-size:10px;
-    }
-
-    .score{
-        width:42%;
-    }
-
-    .score-value{
-        font-size:18px;
-    }
-
-    .score-label{
-        font-size:9px;
-    }
-
-    .ach-box{
-
-        min-width:78px;
-
-        padding:
-            8px
-            10px;
-    }
-
-    .ach-title{
-        font-size:8px;
-    }
-
-    .ach-value{
-        font-size:15px;
-    }
-}
-
 </style>
 </head>
 
@@ -814,8 +739,71 @@ MOBILE
     ▶ PLAYING
 </div>
 
-<!-- SLIDES -->
-<!-- tetap sama seperti script sebelumnya -->
+<!-- TOP SALES -->
+<div class="slide active">
+    <div class="header">
+        <h1>TOP SALES</h1>
+        <p>AZKO CITIMALL TUBAN</p>
+        <div class="update-time" id="update1">DATA UPDATE : -</div>
+    </div>
+
+    <div class="rank-list" id="salesTop"></div>
+</div>
+
+<!-- BOTTOM SALES -->
+<div class="slide">
+    <div class="header">
+        <h1>BOTTOM SALES</h1>
+        <p>AZKO CITIMALL TUBAN</p>
+        <div class="update-time" id="update2">DATA UPDATE : -</div>
+    </div>
+
+    <div class="rank-list" id="salesBottom"></div>
+</div>
+
+<!-- TOP PROTEKSI -->
+<div class="slide">
+    <div class="header">
+        <h1>TOP PROTEKSI</h1>
+        <p>AZKO CITIMALL TUBAN</p>
+        <div class="update-time" id="update3">DATA UPDATE : -</div>
+    </div>
+
+    <div class="rank-list" id="proteksiTop"></div>
+</div>
+
+<!-- BOTTOM PROTEKSI -->
+<div class="slide">
+    <div class="header">
+        <h1>BOTTOM PROTEKSI</h1>
+        <p>AZKO CITIMALL TUBAN</p>
+        <div class="update-time" id="update4">DATA UPDATE : -</div>
+    </div>
+
+    <div class="rank-list" id="proteksiBottom"></div>
+</div>
+
+<!-- TOP TRX -->
+<div class="slide">
+    <div class="header">
+        <h1>TOP TRX</h1>
+        <p>AZKO CITIMALL TUBAN</p>
+        <div class="update-time" id="update5">DATA UPDATE : -</div>
+    </div>
+
+    <div class="rank-list" id="trxTop"></div>
+</div>
+
+<!-- BOTTOM TRX -->
+<div class="slide">
+    <div class="header">
+        <h1>BOTTOM TRX</h1>
+        <p>AZKO CITIMALL TUBAN</p>
+        <div class="update-time" id="update6">DATA UPDATE : -</div>
+    </div>
+
+    <div class="rank-list" id="trxBottom"></div>
+</div>
 
 <audio
     id="bgm"
@@ -1082,8 +1070,6 @@ function render(
                 <img
                     src="https://lh3.googleusercontent.com/d/${d.photo}"
 
-                    loading="lazy"
-
                     onerror="
                     this.src='https://ui-avatars.com/api/?name=${encodeURIComponent(d.name)}&background=random&color=fff&size=512'
                     "
@@ -1162,7 +1148,7 @@ async function update(){
 }
 
 /* =========================
-SLIDE
+SLIDES
 ========================= */
 
 const slides =
@@ -1193,14 +1179,9 @@ AUDIO
 const bgm =
 document.getElementById("bgm");
 
-if(bgm){
-
-    bgm.volume = 0.4;
-}
+bgm.volume = 0.4;
 
 async function playMusic(){
-
-    if(!bgm) return;
 
     try{
 
@@ -1253,7 +1234,7 @@ function togglePause(){
 
         stopLoop();
 
-        if(bgm) bgm.pause();
+        bgm.pause();
 
         pauseIndicator.innerHTML =
         "⏸ PAUSED";
