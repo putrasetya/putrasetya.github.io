@@ -5,7 +5,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>AZKO ULTRA TV DISPLAY</title>
+<title>AZKO ULTRA PERFORMANCE DISPLAY</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 
@@ -36,7 +36,7 @@ body{
     color:white;
 
     background:
-        radial-gradient(circle at top left,#1d4ed8 0%,transparent 30%),
+        radial-gradient(circle at top left,#2563eb 0%,transparent 30%),
         radial-gradient(circle at top right,#facc15 0%,transparent 20%),
         radial-gradient(circle at bottom,#020617 0%,#000000 80%);
 
@@ -44,7 +44,7 @@ body{
 }
 
 /* =========================
-BG FX
+BACKGROUND FX
 ========================= */
 
 body::before{
@@ -82,11 +82,11 @@ body::after{
         linear-gradient(
             90deg,
             transparent,
-            rgba(255,255,255,.03),
+            rgba(255,255,255,.04),
             transparent
         );
 
-    animation:bgMove 14s linear infinite;
+    animation:bgMove 15s linear infinite;
 
     transform:rotate(25deg);
 
@@ -97,19 +97,19 @@ body::after{
 
     from{
         transform:
-            translateX(-15%)
+            translateX(-20%)
             rotate(25deg);
     }
 
     to{
         transform:
-            translateX(15%)
+            translateX(20%)
             rotate(25deg);
     }
 }
 
 /* =========================
-SLIDES
+SLIDE
 ========================= */
 
 .slide{
@@ -142,7 +142,7 @@ SLIDES
 HEADER
 ========================= */
 
-.hero{
+.header{
 
     display:flex;
 
@@ -150,10 +150,10 @@ HEADER
 
     align-items:center;
 
-    margin-bottom:1.5vh;
+    margin-bottom:1.2vh;
 }
 
-.hero h1{
+.header-left h1{
 
     font-size:3vw;
 
@@ -166,18 +166,18 @@ HEADER
     line-height:1;
 }
 
-.hero p{
+.header-left p{
 
-    margin-top:.5vh;
+    margin-top:.4vh;
 
-    font-size:.9vw;
+    font-size:.85vw;
 
     letter-spacing:4px;
 
-    opacity:.75;
+    opacity:.8;
 }
 
-.hero-badge{
+.badge{
 
     display:inline-flex;
 
@@ -193,7 +193,7 @@ HEADER
 
     margin-bottom:1vh;
 
-    font-size:.75vw;
+    font-size:.7vw;
 
     font-weight:800;
 
@@ -222,29 +222,29 @@ HEADER
         );
 }
 
-.clock{
+.update-box{
 
     padding:
         1vh
-        1.5vw;
+        1.4vw;
 
-    border-radius:20px;
+    border-radius:18px;
 
     background:
         rgba(255,255,255,.08);
 
-    backdrop-filter:blur(14px);
-
     border:
         1px solid rgba(255,255,255,.08);
 
-    font-size:.9vw;
+    backdrop-filter:blur(12px);
+
+    font-size:.85vw;
 
     font-weight:700;
 }
 
 /* =========================
-GRID
+MAIN GRID
 ========================= */
 
 .main-grid{
@@ -256,14 +256,14 @@ GRID
 
     gap:1vw;
 
-    height:85vh;
+    height:84vh;
 }
 
 /* =========================
-CATEGORY
+CATEGORY COLUMN
 ========================= */
 
-.category-box{
+.category-column{
 
     display:flex;
 
@@ -274,15 +274,15 @@ CATEGORY
 
 .category-title{
 
+    height:6vh;
+
+    border-radius:20px;
+
     display:flex;
 
     align-items:center;
 
     justify-content:center;
-
-    height:6vh;
-
-    border-radius:20px;
 
     font-size:1vw;
 
@@ -292,10 +292,10 @@ CATEGORY
 
     text-transform:uppercase;
 
-    backdrop-filter:blur(10px);
-
     border:
         1px solid rgba(255,255,255,.08);
+
+    backdrop-filter:blur(12px);
 }
 
 .sales-title{
@@ -303,8 +303,8 @@ CATEGORY
     background:
         linear-gradient(
             135deg,
-            rgba(59,130,246,.4),
-            rgba(37,99,235,.2)
+            rgba(59,130,246,.35),
+            rgba(37,99,235,.15)
         );
 }
 
@@ -313,8 +313,8 @@ CATEGORY
     background:
         linear-gradient(
             135deg,
-            rgba(168,85,247,.4),
-            rgba(126,34,206,.2)
+            rgba(168,85,247,.35),
+            rgba(126,34,206,.15)
         );
 }
 
@@ -323,9 +323,24 @@ CATEGORY
     background:
         linear-gradient(
             135deg,
-            rgba(16,185,129,.4),
-            rgba(5,150,105,.2)
+            rgba(16,185,129,.35),
+            rgba(5,150,105,.15)
         );
+}
+
+/* =========================
+CARD LIST
+========================= */
+
+.card-list{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:1vh;
+
+    flex:1;
 }
 
 /* =========================
@@ -338,30 +353,34 @@ CARD
 
     flex:1;
 
-    border-radius:28px;
-
     overflow:hidden;
 
-    padding:
-        1vh
-        1vw;
-
-    backdrop-filter:blur(14px);
+    border-radius:28px;
 
     border:
         1px solid rgba(255,255,255,.08);
 
+    backdrop-filter:blur(16px);
+
+    display:flex;
+
+    align-items:center;
+
+    padding:
+        1vh
+        .8vw;
+
     opacity:0;
 
     transform:
-        translateY(40px)
-        scale(.95);
+        translateY(30px)
+        scale(.96);
 }
 
 .rank-card.show{
 
     animation:
-        cardIn .8s forwards;
+        cardIn .7s forwards;
 }
 
 @keyframes cardIn{
@@ -377,16 +396,16 @@ CARD
 }
 
 /* =========================
-TOP THEME
+TOP CARD
 ========================= */
 
 .gold{
 
     background:
         linear-gradient(
-            160deg,
-            rgba(250,204,21,.42),
-            rgba(245,158,11,.12)
+            135deg,
+            rgba(250,204,21,.45),
+            rgba(245,158,11,.18)
         );
 }
 
@@ -394,8 +413,8 @@ TOP THEME
 
     background:
         linear-gradient(
-            160deg,
-            rgba(203,213,225,.32),
+            135deg,
+            rgba(226,232,240,.35),
             rgba(148,163,184,.12)
         );
 }
@@ -404,23 +423,23 @@ TOP THEME
 
     background:
         linear-gradient(
-            160deg,
+            135deg,
             rgba(194,120,59,.42),
             rgba(120,53,15,.15)
         );
 }
 
 /* =========================
-BOTTOM THEME
+BOTTOM CARD
 ========================= */
 
 .red1{
 
     background:
         linear-gradient(
-            160deg,
-            rgba(220,38,38,.4),
-            rgba(127,29,29,.25)
+            135deg,
+            rgba(239,68,68,.35),
+            rgba(127,29,29,.2)
         );
 }
 
@@ -428,8 +447,8 @@ BOTTOM THEME
 
     background:
         linear-gradient(
-            160deg,
-            rgba(185,28,28,.55),
+            135deg,
+            rgba(185,28,28,.45),
             rgba(91,15,15,.25)
         );
 }
@@ -438,24 +457,26 @@ BOTTOM THEME
 
     background:
         linear-gradient(
-            160deg,
-            rgba(127,29,29,.7),
-            rgba(50,0,0,.4)
+            135deg,
+            rgba(127,29,29,.6),
+            rgba(50,0,0,.35)
         );
 }
 
 /* =========================
-RANK
+RANK NUMBER
 ========================= */
 
 .rank-number{
 
     position:absolute;
 
-    top:-10px;
-    left:12px;
+    left:-5px;
+    top:50%;
 
-    font-size:4vw;
+    transform:translateY(-50%);
+
+    font-size:5vw;
 
     font-weight:900;
 
@@ -468,15 +489,14 @@ PHOTO
 
 .photo{
 
-    width:100%;
-
-    height:18vh;
+    width:26%;
+    height:100%;
 
     display:flex;
 
-    justify-content:center;
-
     align-items:flex-end;
+
+    justify-content:center;
 }
 
 .photo img{
@@ -487,18 +507,25 @@ PHOTO
     object-fit:contain;
 
     filter:
-        drop-shadow(0 10px 15px rgba(0,0,0,.35));
+        drop-shadow(0 8px 12px rgba(0,0,0,.35));
 }
 
 /* =========================
 INFO
 ========================= */
 
+.info{
+
+    flex:1;
+
+    padding-left:.8vw;
+
+    overflow:hidden;
+}
+
 .name{
 
-    margin-top:.5vh;
-
-    font-size:1.1vw;
+    font-size:1vw;
 
     font-weight:900;
 
@@ -513,23 +540,25 @@ INFO
 
 .dept{
 
-    font-size:.7vw;
+    margin-top:.3vh;
+
+    font-size:.65vw;
 
     letter-spacing:2px;
 
-    opacity:.75;
+    opacity:.8;
 }
 
 .score{
 
     margin-top:1vh;
 
-    font-size:1.8vw;
+    font-size:1.5vw;
 
     font-weight:900;
 }
 
-.label{
+.score-label{
 
     font-size:.65vw;
 
@@ -542,9 +571,22 @@ INFO
 ACH
 ========================= */
 
-.ach-wrap{
+.ach-side{
 
-    margin-top:1vh;
+    width:28%;
+
+    display:flex;
+
+    flex-direction:column;
+
+    align-items:flex-end;
+
+    gap:.5vh;
+}
+
+.ach-box{
+
+    width:100%;
 }
 
 .ach-bar{
@@ -603,6 +645,8 @@ ACH
     font-size:.7vw;
 
     font-weight:800;
+
+    text-align:right;
 }
 
 /* =========================
@@ -622,10 +666,10 @@ STATUS
         12px
         20px;
 
-    border-radius:20px;
+    border-radius:18px;
 
     background:
-        rgba(15,23,42,.85);
+        rgba(15,23,42,.88);
 
     border:
         1px solid rgba(255,255,255,.08);
@@ -668,26 +712,26 @@ MOBILE
         height:auto;
     }
 
-    .hero{
+    .header{
         flex-direction:column;
         align-items:flex-start;
         gap:12px;
     }
 
-    .hero h1{
-        font-size:32px;
+    .header-left h1{
+        font-size:34px;
     }
 
-    .hero p{
+    .header-left p{
         font-size:11px;
     }
 
-    .hero-badge{
+    .badge{
         font-size:10px;
     }
 
-    .clock{
-        font-size:12px;
+    .update-box{
+        font-size:11px;
     }
 
     .category-title{
@@ -695,11 +739,11 @@ MOBILE
     }
 
     .rank-number{
-        font-size:60px;
+        font-size:70px;
     }
 
     .name{
-        font-size:18px;
+        font-size:16px;
     }
 
     .dept{
@@ -707,15 +751,15 @@ MOBILE
     }
 
     .score{
-        font-size:28px;
+        font-size:24px;
     }
 
-    .label{
+    .score-label{
         font-size:10px;
     }
 
     .ach-text{
-        font-size:11px;
+        font-size:10px;
     }
 }
 
@@ -734,11 +778,11 @@ TOP SLIDE
 
 <section class="slide active">
 
-    <div class="hero">
+    <div class="header">
 
-        <div>
+        <div class="header-left">
 
-            <div class="hero-badge top-badge">
+            <div class="badge top-badge">
                 AZKO CITIMALL TUBAN
             </div>
 
@@ -750,7 +794,7 @@ TOP SLIDE
 
         </div>
 
-        <div class="clock" id="clockTop">
+        <div class="update-box" id="updateTop">
             UPDATE : -
         </div>
 
@@ -758,33 +802,33 @@ TOP SLIDE
 
     <div class="main-grid">
 
-        <div class="category-box">
+        <div class="category-column">
 
             <div class="category-title sales-title">
                 SALES
             </div>
 
-            <div id="topSales"></div>
+            <div class="card-list" id="topSales"></div>
 
         </div>
 
-        <div class="category-box">
+        <div class="category-column">
 
             <div class="category-title proteksi-title">
                 PROTEKSI
             </div>
 
-            <div id="topProteksi"></div>
+            <div class="card-list" id="topProteksi"></div>
 
         </div>
 
-        <div class="category-box">
+        <div class="category-column">
 
             <div class="category-title trx-title">
                 TRX
             </div>
 
-            <div id="topTrx"></div>
+            <div class="card-list" id="topTrx"></div>
 
         </div>
 
@@ -798,11 +842,11 @@ BOTTOM SLIDE
 
 <section class="slide">
 
-    <div class="hero">
+    <div class="header">
 
-        <div>
+        <div class="header-left">
 
-            <div class="hero-badge bottom-badge">
+            <div class="badge bottom-badge">
                 AZKO CITIMALL TUBAN
             </div>
 
@@ -814,7 +858,7 @@ BOTTOM SLIDE
 
         </div>
 
-        <div class="clock" id="clockBottom">
+        <div class="update-box" id="updateBottom">
             UPDATE : -
         </div>
 
@@ -822,33 +866,33 @@ BOTTOM SLIDE
 
     <div class="main-grid">
 
-        <div class="category-box">
+        <div class="category-column">
 
             <div class="category-title sales-title">
                 SALES
             </div>
 
-            <div id="bottomSales"></div>
+            <div class="card-list" id="bottomSales"></div>
 
         </div>
 
-        <div class="category-box">
+        <div class="category-column">
 
             <div class="category-title proteksi-title">
                 PROTEKSI
             </div>
 
-            <div id="bottomProteksi"></div>
+            <div class="card-list" id="bottomProteksi"></div>
 
         </div>
 
-        <div class="category-box">
+        <div class="category-column">
 
             <div class="category-title trx-title">
                 TRX
             </div>
 
-            <div id="bottomTrx"></div>
+            <div class="card-list" id="bottomTrx"></div>
 
         </div>
 
@@ -929,12 +973,12 @@ function updateClock(){
     );
 
     document.getElementById(
-        "clockTop"
+        "updateTop"
     ).innerHTML =
     "UPDATE : " + now;
 
     document.getElementById(
-        "clockBottom"
+        "updateBottom"
     ).innerHTML =
     "UPDATE : " + now;
 }
@@ -996,11 +1040,11 @@ async function getData(){
 CARD
 ========================= */
 
-function card(
+function createCard(
     item,
     rank,
     style,
-    value,
+    score,
     label,
     ach
 ){
@@ -1028,39 +1072,47 @@ function card(
 
         </div>
 
-        <div class="name">
-            ${item.name}
-        </div>
+        <div class="info">
 
-        <div class="dept">
-            ${item.dept}
-        </div>
-
-        <div class="score">
-            ${value.toLocaleString('id-ID')}
-        </div>
-
-        <div class="label">
-            ${label}
-        </div>
-
-        <div class="ach-wrap">
-
-            <div class="ach-bar">
-
-                <div
-
-                    class="ach-fill ${achColor(ach)}"
-
-                    style="
-                        width:${Math.min(ach,100)}%;
-                    ">
-                </div>
-
+            <div class="name">
+                ${item.name}
             </div>
 
-            <div class="ach-text">
-                ACH ${ach.toFixed(1)}%
+            <div class="dept">
+                ${item.dept}
+            </div>
+
+            <div class="score">
+                ${score.toLocaleString('id-ID')}
+            </div>
+
+            <div class="score-label">
+                ${label}
+            </div>
+
+        </div>
+
+        <div class="ach-side">
+
+            <div class="ach-box">
+
+                <div class="ach-bar">
+
+                    <div
+
+                        class="ach-fill ${achColor(ach)}"
+
+                        style="
+                            width:${Math.min(ach,100)}%;
+                        ">
+                    </div>
+
+                </div>
+
+                <div class="ach-text">
+                    ACH ${ach.toFixed(1)}%
+                </div>
+
             </div>
 
         </div>
@@ -1110,7 +1162,7 @@ function renderCategory(
 
     sorted.forEach((item,index)=>{
 
-        html += card(
+        html += createCard(
 
             item,
 
@@ -1147,7 +1199,7 @@ function animateCards(){
 
             card.classList.add("show");
 
-        },index * 80);
+        },index * 70);
     });
 }
 
