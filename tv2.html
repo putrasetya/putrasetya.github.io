@@ -2,10 +2,10 @@
 <html lang="id">
 <head>
 
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>AZKO ULTRA PERFORMANCE</title>
+<title>AZKO PERFORMANCE DISPLAY</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 
@@ -32,84 +32,13 @@ body{
 
     font-family:'Poppins',sans-serif;
 
-    background:
-        radial-gradient(circle at top left,#0f3cff 0%,transparent 30%),
-        radial-gradient(circle at top right,#ffd700 0%,transparent 20%),
-        linear-gradient(180deg,#020617 0%,#000000 100%);
+    background:#000;
 
     color:white;
-
-    position:relative;
 }
 
 /* =========================
-BG FX
-========================= */
-
-body::before{
-
-    content:"";
-
-    position:fixed;
-
-    inset:0;
-
-    background:
-        repeating-linear-gradient(
-            90deg,
-            rgba(255,255,255,.015) 0px,
-            rgba(255,255,255,.015) 1px,
-            transparent 1px,
-            transparent 80px
-        );
-
-    pointer-events:none;
-}
-
-body::after{
-
-    content:"";
-
-    position:fixed;
-
-    width:200%;
-    height:200%;
-
-    top:-50%;
-    left:-50%;
-
-    background:
-        linear-gradient(
-            90deg,
-            transparent,
-            rgba(255,255,255,.04),
-            transparent
-        );
-
-    transform:rotate(25deg);
-
-    animation:bgMove 10s linear infinite;
-
-    pointer-events:none;
-}
-
-@keyframes bgMove{
-
-    from{
-        transform:
-            translateX(-10%)
-            rotate(25deg);
-    }
-
-    to{
-        transform:
-            translateX(10%)
-            rotate(25deg);
-    }
-}
-
-/* =========================
-SLIDES
+SLIDE
 ========================= */
 
 .slide{
@@ -118,17 +47,15 @@ SLIDES
 
     inset:0;
 
-    padding:
-        1vh
-        1vw;
+    width:100vw;
+    height:100vh;
 
     opacity:0;
 
     visibility:hidden;
 
     transition:
-        opacity .8s ease,
-        visibility .8s;
+        opacity .8s ease;
 }
 
 .slide.active{
@@ -139,18 +66,100 @@ SLIDES
 }
 
 /* =========================
+TOP PERFORMANCE
+========================= */
+
+.top-slide{
+
+    background:
+        radial-gradient(circle at top,#0d4cff 0%,transparent 30%),
+        linear-gradient(180deg,#020617 0%,#000000 100%);
+}
+
+/* =========================
+BOTTOM PERFORMANCE
+========================= */
+
+.bottom-slide{
+
+    background:
+        radial-gradient(circle at top,#ff0000 0%,transparent 30%),
+        linear-gradient(180deg,#180000 0%,#000000 100%);
+}
+
+/* =========================
+FX
+========================= */
+
+.slide::before{
+
+    content:"";
+
+    position:absolute;
+
+    inset:0;
+
+    background:
+        repeating-linear-gradient(
+            90deg,
+            rgba(255,255,255,.02) 0px,
+            rgba(255,255,255,.02) 1px,
+            transparent 1px,
+            transparent 90px
+        );
+
+    pointer-events:none;
+}
+
+.slide::after{
+
+    content:"";
+
+    position:absolute;
+
+    inset:0;
+
+    background:
+        linear-gradient(
+            120deg,
+            transparent,
+            rgba(255,255,255,.03),
+            transparent
+        );
+
+    animation:bgMove 10s linear infinite;
+
+    pointer-events:none;
+}
+
+@keyframes bgMove{
+
+    from{
+        transform:translateX(-20%);
+    }
+
+    to{
+        transform:translateX(20%);
+    }
+}
+
+/* =========================
 HEADER
 ========================= */
 
-.top-header{
+.header{
 
-    height:12vh;
+    height:16vh;
 
     display:flex;
 
     align-items:center;
 
     justify-content:space-between;
+
+    padding:
+        1vh
+        1.5vw;
 
     position:relative;
 }
@@ -163,70 +172,69 @@ HEADER
 
     color:#ff3131;
 
-    text-transform:uppercase;
+    line-height:1;
 }
 
 .logo span{
 
-    color:white;
+    display:block;
 
     font-size:1vw;
 
-    display:block;
+    color:white;
 
-    letter-spacing:2px;
+    margin-top:.3vh;
 }
 
-.main-title{
-
-    text-align:center;
+.title{
 
     position:absolute;
 
     left:50%;
 
     transform:translateX(-50%);
+
+    text-align:center;
 }
 
-.main-title h1{
+.title h1{
 
-    font-size:4vw;
+    font-size:4.5vw;
 
     font-weight:900;
 
-    letter-spacing:6px;
-
-    line-height:1;
+    letter-spacing:4px;
 
     text-transform:uppercase;
 
-    background:
-        linear-gradient(
-            180deg,
-            #ffffff,
-            #d6d6d6
-        );
-
-    -webkit-background-clip:text;
-
-    -webkit-text-fill-color:transparent;
-
     text-shadow:
-        0 0 25px rgba(255,255,255,.25);
+        0 0 30px rgba(255,255,255,.4);
 }
 
-.main-title p{
+.top-slide .title h1{
 
-    margin-top:.4vh;
+    color:white;
+}
 
-    font-size:.8vw;
+.bottom-slide .title h1{
 
-    letter-spacing:4px;
+    color:#f8f8f8;
+}
 
-    opacity:.8;
+.title p{
+
+    margin-top:.5vh;
+
+    font-size:1vw;
+
+    letter-spacing:3px;
+
+    opacity:.9;
 }
 
 .update-box{
+
+    width:13vw;
 
     padding:
         1vh
@@ -235,25 +243,48 @@ HEADER
     border-radius:18px;
 
     border:
-        1px solid rgba(255,255,255,.12);
+        2px solid rgba(255,255,255,.15);
+
+    backdrop-filter:blur(10px);
+
+    text-align:center;
 
     background:
         rgba(255,255,255,.05);
 
-    backdrop-filter:blur(12px);
+    box-shadow:
+        0 0 20px rgba(0,0,0,.4);
+}
 
-    font-size:.8vw;
+.update-label{
+
+    font-size:.7vw;
+
+    letter-spacing:2px;
 
     font-weight:700;
+
+    opacity:.8;
+}
+
+.update-time{
+
+    margin-top:.4vh;
+
+    font-size:1.1vw;
+
+    font-weight:800;
+
+    line-height:1.5;
 }
 
 /* =========================
-GRID
+MAIN
 ========================= */
 
-.main-grid{
+.main{
 
-    height:74vh;
+    height:72vh;
 
     display:grid;
 
@@ -261,6 +292,9 @@ GRID
         repeat(3,1fr);
 
     gap:1vw;
+
+    padding:
+        0 1vw;
 }
 
 /* =========================
@@ -269,18 +303,186 @@ CATEGORY
 
 .category{
 
-    display:flex;
+    border:
+        1px solid rgba(255,255,255,.08);
 
-    flex-direction:column;
+    border-radius:26px;
 
-    gap:1vh;
+    padding:
+        1vh
+        .8vw;
+
+    background:
+        rgba(255,255,255,.03);
+
+    backdrop-filter:blur(8px);
+
+    position:relative;
+
+    overflow:hidden;
+}
+
+.top-slide .category{
+
+    box-shadow:
+        0 0 25px rgba(0,100,255,.15);
+}
+
+.bottom-slide .category{
+
+    box-shadow:
+        0 0 25px rgba(255,0,0,.15);
 }
 
 .category-title{
 
-    height:6vh;
+    text-align:center;
 
-    border-radius:22px;
+    margin-bottom:1vh;
+}
+
+.category-title h2{
+
+    font-size:2vw;
+
+    font-weight:900;
+
+    text-transform:uppercase;
+}
+
+.category-title p{
+
+    margin-top:.3vh;
+
+    font-size:.8vw;
+
+    letter-spacing:2px;
+
+    opacity:.85;
+}
+
+.sales h2{
+    color:#42d4ff;
+}
+
+.proteksi h2{
+    color:#2dff84;
+}
+
+.trx h2{
+    color:#ffd633;
+}
+
+/* =========================
+TOP PODIUM
+========================= */
+
+.top-podium{
+
+    height:100%;
+
+    display:flex;
+
+    align-items:flex-end;
+
+    justify-content:center;
+
+    gap:.8vw;
+}
+
+.podium-card{
+
+    position:relative;
+
+    border-radius:24px;
+
+    overflow:hidden;
+
+    display:flex;
+
+    flex-direction:column;
+
+    align-items:center;
+
+    justify-content:flex-end;
+
+    text-align:center;
+
+    padding:
+        1vh
+        .5vw;
+
+    border:
+        2px solid rgba(255,255,255,.15);
+
+    background:
+        linear-gradient(
+            180deg,
+            rgba(255,255,255,.08),
+            rgba(0,0,0,.4)
+        );
+
+    backdrop-filter:blur(8px);
+
+    box-shadow:
+        0 0 25px rgba(0,0,0,.45);
+
+    animation:
+        float 3s ease-in-out infinite;
+}
+
+@keyframes float{
+
+    0%,100%{
+        transform:translateY(0);
+    }
+
+    50%{
+        transform:translateY(-5px);
+    }
+}
+
+.rank2,
+.rank3{
+
+    width:28%;
+    height:78%;
+}
+
+.rank1{
+
+    width:34%;
+    height:92%;
+
+    border:
+        2px solid #ffd700;
+
+    box-shadow:
+        0 0 40px rgba(255,215,0,.5);
+}
+
+.rank1::before{
+
+    content:"👑";
+
+    position:absolute;
+
+    top:-15px;
+
+    font-size:2.4vw;
+}
+
+.rank-number{
+
+    position:absolute;
+
+    top:10px;
+    left:10px;
+
+    width:2.5vw;
+    height:2.5vw;
+
+    border-radius:50%;
 
     display:flex;
 
@@ -288,212 +490,38 @@ CATEGORY
 
     justify-content:center;
 
-    font-size:1.1vw;
+    font-size:1.2vw;
 
     font-weight:900;
 
-    letter-spacing:3px;
-
-    text-transform:uppercase;
+    background:
+        rgba(0,0,0,.5);
 
     border:
-        1px solid rgba(255,255,255,.08);
-
-    backdrop-filter:blur(12px);
+        2px solid rgba(255,255,255,.2);
 }
 
-.sales-title{
+.rank1 .rank-number{
 
-    background:
-        linear-gradient(
-            135deg,
-            rgba(0,140,255,.35),
-            rgba(0,70,255,.1)
-        );
+    background:#ffd700;
+    color:black;
 }
 
-.proteksi-title{
+.rank2 .rank-number{
 
-    background:
-        linear-gradient(
-            135deg,
-            rgba(0,255,160,.28),
-            rgba(0,100,80,.08)
-        );
+    background:#dbe4f0;
+    color:black;
 }
 
-.trx-title{
+.rank3 .rank-number{
 
-    background:
-        linear-gradient(
-            135deg,
-            rgba(255,180,0,.35),
-            rgba(255,120,0,.08)
-        );
+    background:#cd7f32;
 }
-
-/* =========================
-CARD LIST
-========================= */
-
-.card-list{
-
-    flex:1;
-
-    display:flex;
-
-    flex-direction:column;
-
-    gap:1vh;
-}
-
-/* =========================
-TOP CARD
-========================= */
-
-.rank-card{
-
-    position:relative;
-
-    overflow:hidden;
-
-    border-radius:30px;
-
-    flex:1;
-
-    padding:
-        1vh
-        .8vw;
-
-    display:flex;
-
-    align-items:center;
-
-    border:
-        1px solid rgba(255,255,255,.1);
-
-    backdrop-filter:blur(18px);
-
-    opacity:0;
-
-    transform:
-        translateY(30px)
-        scale(.96);
-}
-
-.rank-card.show{
-
-    animation:
-        showCard .8s forwards;
-}
-
-@keyframes showCard{
-
-    to{
-
-        opacity:1;
-
-        transform:
-            translateY(0)
-            scale(1);
-    }
-}
-
-.gold{
-
-    background:
-        linear-gradient(
-            135deg,
-            rgba(255,215,0,.40),
-            rgba(255,180,0,.08)
-        );
-
-    box-shadow:
-        0 0 30px rgba(255,215,0,.18);
-}
-
-.silver{
-
-    background:
-        linear-gradient(
-            135deg,
-            rgba(226,232,240,.22),
-            rgba(120,120,120,.06)
-        );
-}
-
-.bronze{
-
-    background:
-        linear-gradient(
-            135deg,
-            rgba(194,120,59,.35),
-            rgba(120,53,15,.08)
-        );
-}
-
-/* =========================
-BOTTOM CARD
-========================= */
-
-.red1{
-
-    background:
-        linear-gradient(
-            135deg,
-            rgba(255,40,40,.28),
-            rgba(120,0,0,.08)
-        );
-}
-
-.red2{
-
-    background:
-        linear-gradient(
-            135deg,
-            rgba(180,20,20,.35),
-            rgba(80,0,0,.08)
-        );
-}
-
-.red3{
-
-    background:
-        linear-gradient(
-            135deg,
-            rgba(120,0,0,.45),
-            rgba(30,0,0,.12)
-        );
-}
-
-/* =========================
-RANK
-========================= */
-
-.rank-no{
-
-    position:absolute;
-
-    top:50%;
-    left:-8px;
-
-    transform:translateY(-50%);
-
-    font-size:5vw;
-
-    font-weight:900;
-
-    opacity:.12;
-}
-
-/* =========================
-PHOTO
-========================= */
 
 .photo{
 
-    width:28%;
-    height:100%;
+    width:100%;
+    height:45%;
 
     display:flex;
 
@@ -510,23 +538,15 @@ PHOTO
     object-fit:contain;
 
     filter:
-        drop-shadow(0 10px 14px rgba(0,0,0,.35));
+        drop-shadow(0 10px 15px rgba(0,0,0,.45));
 }
 
-/* =========================
-INFO
-========================= */
+.employee{
 
-.info{
-
-    flex:1;
-
-    padding-left:.8vw;
-
-    overflow:hidden;
+    margin-top:1vh;
 }
 
-.name{
+.employee-name{
 
     font-size:1vw;
 
@@ -534,20 +554,14 @@ INFO
 
     text-transform:uppercase;
 
-    white-space:nowrap;
-
-    overflow:hidden;
-
-    text-overflow:ellipsis;
+    line-height:1.2;
 }
 
-.dept{
+.employee-dept{
 
-    margin-top:.3vh;
+    margin-top:.4vh;
 
-    font-size:.65vw;
-
-    letter-spacing:2px;
+    font-size:.7vw;
 
     opacity:.8;
 }
@@ -556,41 +570,28 @@ INFO
 
     margin-top:1vh;
 
-    font-size:1.7vw;
+    font-size:2vw;
 
     font-weight:900;
 }
 
 .score-label{
 
+    margin-top:.2vh;
+
     font-size:.65vw;
 
-    letter-spacing:2px;
-
-    opacity:.7;
+    opacity:.75;
 }
 
-/* =========================
-ACH
-========================= */
+.ach-circle{
 
-.ach{
-
-    width:28%;
-
-    display:flex;
-
-    flex-direction:column;
-
-    align-items:flex-end;
-}
-
-.circle{
-
-    width:80px;
-    height:80px;
+    width:85px;
+    height:85px;
 
     border-radius:50%;
+
+    margin-top:1vh;
 
     display:flex;
 
@@ -598,44 +599,215 @@ ACH
 
     justify-content:center;
 
-    position:relative;
-
-    font-size:.9vw;
+    font-size:1vw;
 
     font-weight:900;
 
     background:
-        radial-gradient(circle,#111827 58%,transparent 59%),
+        radial-gradient(circle,#111 58%,transparent 59%),
         conic-gradient(
-            var(--clr) calc(var(--val) * 1%),
-            rgba(255,255,255,.08) 0
+            #32ff6a calc(var(--val) * 1%),
+            rgba(255,255,255,.1) 0
         );
 
     box-shadow:
-        0 0 18px rgba(255,255,255,.08);
+        0 0 18px rgba(50,255,106,.35);
 }
 
-.circle.green{
-    --clr:#22c55e;
+/* =========================
+BOTTOM TABLE
+========================= */
+
+.bottom-table{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:.8vh;
 }
 
-.circle.yellow{
-    --clr:#facc15;
+.table-header{
+
+    display:grid;
+
+    grid-template-columns:
+        .6fr
+        .8fr
+        1.5fr
+        1.3fr
+        1.4fr
+        1fr;
+
+    padding:
+        1vh
+        .6vw;
+
+    font-size:.7vw;
+
+    font-weight:700;
+
+    border-bottom:
+        1px solid rgba(255,255,255,.1);
+
+    opacity:.9;
 }
 
-.circle.red{
-    --clr:#ef4444;
+.table-row{
+
+    display:grid;
+
+    grid-template-columns:
+        .6fr
+        .8fr
+        1.5fr
+        1.3fr
+        1.4fr
+        1fr;
+
+    align-items:center;
+
+    padding:
+        .8vh
+        .6vw;
+
+    border-radius:18px;
+
+    background:
+        rgba(255,0,0,.08);
+
+    border:
+        1px solid rgba(255,0,0,.25);
 }
 
-.ach-label{
+.rank-cell{
 
-    margin-top:.6vh;
+    font-size:2vw;
 
-    font-size:.6vw;
+    font-weight:900;
 
-    letter-spacing:2px;
+    color:#ff4d4d;
+
+    text-align:center;
+}
+
+.table-photo{
+
+    width:55px;
+    height:55px;
+
+    border-radius:14px;
+
+    overflow:hidden;
+
+    background:#111;
+}
+
+.table-photo img{
+
+    width:100%;
+    height:100%;
+
+    object-fit:cover;
+}
+
+.emp-name{
+
+    font-size:.95vw;
+
+    font-weight:800;
+
+    line-height:1.2;
+}
+
+.emp-dept{
+
+    margin-top:.3vh;
+
+    font-size:.65vw;
 
     opacity:.7;
+}
+
+.metric{
+
+    font-size:1vw;
+
+    font-weight:800;
+
+    text-align:center;
+}
+
+.bad-ach{
+
+    width:72px;
+    height:72px;
+
+    border-radius:50%;
+
+    margin:auto;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    font-size:.85vw;
+
+    font-weight:900;
+
+    background:
+        radial-gradient(circle,#111 58%,transparent 59%),
+        conic-gradient(
+            #ff2d2d calc(var(--val) * 1%),
+            rgba(255,255,255,.1) 0
+        );
+
+    box-shadow:
+        0 0 18px rgba(255,0,0,.35);
+}
+
+.avg-box{
+
+    margin-top:1vh;
+
+    height:6vh;
+
+    border-radius:18px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    padding:
+        0 1vw;
+
+    background:
+        rgba(255,0,0,.08);
+
+    border:
+        1px solid rgba(255,0,0,.25);
+}
+
+.avg-label{
+
+    font-size:1vw;
+
+    font-weight:700;
+
+    letter-spacing:2px;
+}
+
+.avg-value{
+
+    font-size:2vw;
+
+    font-weight:900;
+
+    color:#ff5252;
 }
 
 /* =========================
@@ -646,7 +818,8 @@ BOTTOM BAR
 
     height:8vh;
 
-    margin-top:1vh;
+    margin:
+        .5vh 1vw 0 1vw;
 
     border-radius:20px;
 
@@ -654,9 +827,10 @@ BOTTOM BAR
 
     align-items:center;
 
-    justify-content:center;
+    justify-content:space-between;
 
-    gap:2vw;
+    padding:
+        0 1.5vw;
 
     background:
         rgba(255,255,255,.05);
@@ -664,13 +838,27 @@ BOTTOM BAR
     border:
         1px solid rgba(255,255,255,.08);
 
-    backdrop-filter:blur(12px);
+    backdrop-filter:blur(10px);
+}
+
+.bottom-left{
+
+    font-size:1.2vw;
+
+    font-weight:800;
+
+    letter-spacing:1px;
+}
+
+.bottom-right{
+
+    display:flex;
+
+    gap:2vw;
+
+    font-size:1vw;
 
     font-weight:700;
-
-    letter-spacing:2px;
-
-    font-size:.85vw;
 }
 
 /* =========================
@@ -690,15 +878,15 @@ STATUS
         12px
         20px;
 
-    border-radius:18px;
+    border-radius:16px;
 
     background:
-        rgba(15,23,42,.92);
+        rgba(0,0,0,.7);
 
     border:
-        1px solid rgba(255,255,255,.12);
+        1px solid rgba(255,255,255,.15);
 
-    backdrop-filter:blur(14px);
+    backdrop-filter:blur(12px);
 
     font-size:12px;
 
@@ -725,141 +913,290 @@ STATUS
 </div>
 
 <!-- =========================
-TOP SLIDE
+TOP PERFORMANCE
 ========================= -->
 
-<section class="slide active" id="slideTop">
+<section class="slide top-slide active">
 
-    <div class="top-header">
+    <div class="header">
 
         <div class="logo">
             az•ko
             <span>CITIMALL TUBAN</span>
         </div>
 
-        <div class="main-title">
+        <div class="title">
 
             <h1>TOP PERFORMANCE</h1>
 
-            <p>
-                SALES • PROTEKSI • TRX
-            </p>
+            <p>AZKO CITIMALL TUBAN</p>
 
         </div>
 
-        <div class="update-box" id="updateTop">
-            UPDATE : -
+        <div class="update-box">
+
+            <div class="update-label">
+                DATA UPDATE
+            </div>
+
+            <div class="update-time" id="topTime">
+                -
+            </div>
+
         </div>
 
     </div>
 
-    <div class="main-grid">
+    <div class="main">
 
-        <div class="category">
+        <div class="category sales">
 
-            <div class="category-title sales-title">
-                SALES
+            <div class="category-title">
+
+                <h2>SALES</h2>
+
+                <p>TOTAL SALES (MTD)</p>
+
             </div>
 
-            <div class="card-list" id="topSales"></div>
+            <div class="top-podium" id="topSales"></div>
 
         </div>
 
-        <div class="category">
+        <div class="category proteksi">
 
-            <div class="category-title proteksi-title">
-                PROTEKSI
+            <div class="category-title">
+
+                <h2>PROTEKSI</h2>
+
+                <p>TOTAL PROTEKSI (MTD)</p>
+
             </div>
 
-            <div class="card-list" id="topProteksi"></div>
+            <div class="top-podium" id="topProteksi"></div>
 
         </div>
 
-        <div class="category">
+        <div class="category trx">
 
-            <div class="category-title trx-title">
-                TRX
+            <div class="category-title">
+
+                <h2>TRX</h2>
+
+                <p>TOTAL TRANSAKSI (MTD)</p>
+
             </div>
 
-            <div class="card-list" id="topTrx"></div>
+            <div class="top-podium" id="topTrx"></div>
 
         </div>
 
     </div>
 
     <div class="bottom-bar">
-        🏆 TOP SALES • 🔥 TOP PROTEKSI • ⚡ TOP TRX
+
+        <div class="bottom-left">
+            🏆 TOP PERFORMER HARI INI
+        </div>
+
+        <div class="bottom-right">
+
+            <div id="bestSales">
+                TOP SALES : -
+            </div>
+
+            <div id="bestProteksi">
+                TOP PROTEKSI : -
+            </div>
+
+            <div id="bestTrx">
+                TOP TRX : -
+            </div>
+
+        </div>
+
     </div>
 
 </section>
 
 <!-- =========================
-BOTTOM SLIDE
+BOTTOM PERFORMANCE
 ========================= -->
 
-<section class="slide" id="slideBottom">
+<section class="slide bottom-slide">
 
-    <div class="top-header">
+    <div class="header">
 
         <div class="logo">
             az•ko
             <span>CITIMALL TUBAN</span>
         </div>
 
-        <div class="main-title">
+        <div class="title">
 
-            <h1 style="color:#ff4040">
-                BOTTOM PERFORMANCE
-            </h1>
+            <h1>BOTTOM PERFORMANCE</h1>
 
-            <p>
-                SALES • PROTEKSI • TRX
-            </p>
+            <p>AZKO CITIMALL TUBAN</p>
 
         </div>
 
-        <div class="update-box" id="updateBottom">
-            UPDATE : -
+        <div class="update-box">
+
+            <div class="update-label">
+                DATA UPDATE
+            </div>
+
+            <div class="update-time" id="bottomTime">
+                -
+            </div>
+
         </div>
 
     </div>
 
-    <div class="main-grid">
+    <div class="main">
 
-        <div class="category">
+        <div class="category sales">
 
-            <div class="category-title sales-title">
-                SALES
+            <div class="category-title">
+
+                <h2>SALES</h2>
+
+                <p>TOTAL SALES (MTD)</p>
+
             </div>
 
-            <div class="card-list" id="bottomSales"></div>
+            <div class="bottom-table">
+
+                <div class="table-header">
+
+                    <div>RANK</div>
+                    <div></div>
+                    <div>EMPLOYEE</div>
+                    <div>DEPT</div>
+                    <div>TOTAL SALES</div>
+                    <div>ACH MTD</div>
+
+                </div>
+
+                <div id="bottomSales"></div>
+
+                <div class="avg-box">
+
+                    <div class="avg-label">
+                        RATA-RATA ACH
+                    </div>
+
+                    <div class="avg-value" id="avgSales">
+                        0%
+                    </div>
+
+                </div>
+
+            </div>
 
         </div>
 
-        <div class="category">
+        <div class="category proteksi">
 
-            <div class="category-title proteksi-title">
-                PROTEKSI
+            <div class="category-title">
+
+                <h2>PROTEKSI</h2>
+
+                <p>TOTAL PROTEKSI (MTD)</p>
+
             </div>
 
-            <div class="card-list" id="bottomProteksi"></div>
+            <div class="bottom-table">
+
+                <div class="table-header">
+
+                    <div>RANK</div>
+                    <div></div>
+                    <div>EMPLOYEE</div>
+                    <div>DEPT</div>
+                    <div>TOTAL PROTEKSI</div>
+                    <div>ACH PROTEKSI</div>
+
+                </div>
+
+                <div id="bottomProteksi"></div>
+
+                <div class="avg-box">
+
+                    <div class="avg-label">
+                        RATA-RATA ACH
+                    </div>
+
+                    <div class="avg-value" id="avgProteksi">
+                        0%
+                    </div>
+
+                </div>
+
+            </div>
 
         </div>
 
-        <div class="category">
+        <div class="category trx">
 
-            <div class="category-title trx-title">
-                TRX
+            <div class="category-title">
+
+                <h2>TRX</h2>
+
+                <p>TOTAL TRANSAKSI (MTD)</p>
+
             </div>
 
-            <div class="card-list" id="bottomTrx"></div>
+            <div class="bottom-table">
+
+                <div class="table-header">
+
+                    <div>RANK</div>
+                    <div></div>
+                    <div>EMPLOYEE</div>
+                    <div>DEPT</div>
+                    <div>TOTAL TRX</div>
+                    <div>ACH BULANAN</div>
+
+                </div>
+
+                <div id="bottomTrx"></div>
+
+                <div class="avg-box">
+
+                    <div class="avg-label">
+                        RATA-RATA ACH
+                    </div>
+
+                    <div class="avg-value" id="avgTrx">
+                        0%
+                    </div>
+
+                </div>
+
+            </div>
 
         </div>
 
     </div>
 
     <div class="bottom-bar">
-        🎯 KEEP IMPROVING • 🚀 STAY MOTIVATED • ❤️ WORK WITH HEART
+
+        <div class="bottom-left">
+            📢 SEMANGAT & TERUS TINGKATKAN PERFORMA TERBAIK!
+        </div>
+
+        <div class="bottom-right">
+
+            <div>🎯 FOCUS ON TARGET</div>
+
+            <div>❤️ WORK WITH HEART</div>
+
+            <div>🏆 WIN TOGETHER</div>
+
+        </div>
+
     </div>
 
 </section>
@@ -886,15 +1223,6 @@ function clean(v){
     ) || 0;
 }
 
-function achClass(v){
-
-    if(v >= 100) return "green";
-
-    if(v >= 80) return "yellow";
-
-    return "red";
-}
-
 function excluded(dept){
 
     const d =
@@ -902,6 +1230,7 @@ function excluded(dept){
     .toLowerCase();
 
     return (
+
         d.includes("cashier") ||
         d.includes("kasir") ||
         d.includes("cs")
@@ -962,13 +1291,12 @@ async function getData(){
 }
 
 /* =========================
-CARD
+TOP CARD
 ========================= */
 
-function card(
-    item,
+function podiumCard(
+    d,
     rank,
-    style,
     score,
     ach,
     label
@@ -976,9 +1304,9 @@ function card(
 
     return `
 
-    <div class="rank-card ${style}">
+    <div class="podium-card rank${rank}">
 
-        <div class="rank-no">
+        <div class="rank-number">
             ${rank}
         </div>
 
@@ -986,47 +1314,107 @@ function card(
 
             <img
 
-                src="https://lh3.googleusercontent.com/d/${item.photo}"
+                src="https://lh3.googleusercontent.com/d/${d.photo}"
 
                 onerror="
-                this.src='https://ui-avatars.com/api/?name=${encodeURIComponent(item.name)}&background=random&color=fff&size=512'
+                this.src='https://ui-avatars.com/api/?name=${encodeURIComponent(d.name)}&background=random&color=fff&size=512'
                 "
             >
 
         </div>
 
-        <div class="info">
+        <div class="employee">
 
-            <div class="name">
-                ${item.name}
+            <div class="employee-name">
+                ${d.name}
             </div>
 
-            <div class="dept">
-                ${item.dept}
-            </div>
-
-            <div class="score">
-                ${score.toLocaleString('id-ID')}
-            </div>
-
-            <div class="score-label">
-                ${label}
+            <div class="employee-dept">
+                ${d.dept}
             </div>
 
         </div>
 
-        <div class="ach">
+        <div class="score">
+            ${score.toLocaleString('id-ID')}
+        </div>
+
+        <div class="score-label">
+            ${label}
+        </div>
+
+        <div
+            class="ach-circle"
+            style="--val:${Math.min(ach,100)}">
+
+            ${ach.toFixed(1)}%
+
+        </div>
+
+    </div>
+    `;
+}
+
+/* =========================
+BOTTOM ROW
+========================= */
+
+function tableRow(
+    d,
+    rank,
+    value,
+    ach
+){
+
+    return `
+
+    <div class="table-row">
+
+        <div class="rank-cell">
+            ${rank}
+        </div>
+
+        <div class="table-photo">
+
+            <img
+
+                src="https://lh3.googleusercontent.com/d/${d.photo}"
+
+                onerror="
+                this.src='https://ui-avatars.com/api/?name=${encodeURIComponent(d.name)}&background=random&color=fff&size=512'
+                "
+            >
+
+        </div>
+
+        <div>
+
+            <div class="emp-name">
+                ${d.name}
+            </div>
+
+            <div class="emp-dept">
+                ${d.dept}
+            </div>
+
+        </div>
+
+        <div class="metric">
+            ${d.dept}
+        </div>
+
+        <div class="metric">
+            ${value.toLocaleString('id-ID')}
+        </div>
+
+        <div>
 
             <div
-                class="circle ${achClass(ach)}"
+                class="bad-ach"
                 style="--val:${Math.min(ach,100)}">
 
                 ${ach.toFixed(1)}%
 
-            </div>
-
-            <div class="ach-label">
-                ACHIEVEMENT
             </div>
 
         </div>
@@ -1039,67 +1427,102 @@ function card(
 RENDER
 ========================= */
 
-function renderList(
+function renderTop(
     data,
     key,
     achKey,
     containerId,
-    mode
+    label
 ){
 
-    const el =
-    document.getElementById(containerId);
+    const sorted =
+    [...data]
+    .sort((a,b)=>b[key]-a[key])
+    .slice(0,3);
 
-    let sorted = [];
+    const order = [
+        sorted[1],
+        sorted[0],
+        sorted[2]
+    ];
 
-    if(mode === "top"){
-
-        sorted =
-        [...data]
-        .sort((a,b)=>b[key]-a[key])
-        .slice(0,3);
-
-    }else{
-
-        sorted =
-        [...data]
-        .sort((a,b)=>a[key]-b[key])
-        .slice(0,3);
-    }
-
-    const styles =
-    mode === "top"
-    ? ["gold","silver","bronze"]
-    : ["red1","red2","red3"];
+    const ranks = [2,1,3];
 
     let html = "";
 
-    sorted.forEach((d,i)=>{
+    order.forEach((d,i)=>{
 
-        html += card(
+        html += podiumCard(
 
             d,
 
-            i + 1,
-
-            styles[i],
+            ranks[i],
 
             d[key],
 
             d[achKey],
 
-            key.toUpperCase()
+            label
         );
     });
 
-    el.innerHTML = html;
+    document
+    .getElementById(containerId)
+    .innerHTML = html;
+
+    return sorted[0]?.name || "-";
+}
+
+function renderBottom(
+    data,
+    key,
+    achKey,
+    containerId,
+    avgId
+){
+
+    const sorted =
+    [...data]
+    .sort((a,b)=>a[key]-b[key])
+    .slice(0,3);
+
+    let html = "";
+
+    sorted.forEach((d,i)=>{
+
+        html += tableRow(
+
+            d,
+
+            i + 1,
+
+            d[key],
+
+            d[achKey]
+        );
+    });
+
+    document
+    .getElementById(containerId)
+    .innerHTML = html;
+
+    const avg =
+    sorted.reduce(
+        (a,b)=>a + b[achKey],
+        0
+    ) / sorted.length;
+
+    document
+    .getElementById(avgId)
+    .innerHTML =
+    avg.toFixed(1) + "%";
 }
 
 /* =========================
 UPDATE
 ========================= */
 
-async function render(){
+async function update(){
 
     const raw =
     await getData();
@@ -1109,55 +1532,71 @@ async function render(){
         d => !excluded(d.dept)
     );
 
-    renderList(
+    const bestSales =
+    renderTop(
         data,
         "sales",
         "achSales",
         "topSales",
-        "top"
+        "SALES MTD"
     );
 
-    renderList(
+    const bestProteksi =
+    renderTop(
         data,
         "proteksi",
         "achProteksi",
         "topProteksi",
-        "top"
+        "PROTEKSI MTD"
     );
 
-    renderList(
+    const bestTrx =
+    renderTop(
         data,
         "trx",
         "achTrx",
         "topTrx",
-        "top"
+        "TRX MTD"
     );
 
-    renderList(
+    renderBottom(
         data,
         "sales",
         "achSales",
         "bottomSales",
-        "bottom"
+        "avgSales"
     );
 
-    renderList(
+    renderBottom(
         data,
         "proteksi",
         "achProteksi",
         "bottomProteksi",
-        "bottom"
+        "avgProteksi"
     );
 
-    renderList(
+    renderBottom(
         data,
         "trx",
         "achTrx",
         "bottomTrx",
-        "bottom"
+        "avgTrx"
     );
 
-    animateCards();
+    document
+    .getElementById("bestSales")
+    .innerHTML =
+    "TOP SALES : " + bestSales;
+
+    document
+    .getElementById("bestProteksi")
+    .innerHTML =
+    "TOP PROTEKSI : " + bestProteksi;
+
+    document
+    .getElementById("bestTrx")
+    .innerHTML =
+    "TOP TRX : " + bestTrx;
 
     updateTime();
 }
@@ -1183,36 +1622,12 @@ function updateTime(){
     );
 
     document
-    .getElementById("updateTop")
-    .innerHTML =
-    "UPDATE : " + now;
+    .getElementById("topTime")
+    .innerHTML = now;
 
     document
-    .getElementById("updateBottom")
-    .innerHTML =
-    "UPDATE : " + now;
-}
-
-/* =========================
-ANIMATION
-========================= */
-
-function animateCards(){
-
-    document
-    .querySelectorAll(".slide.active .rank-card")
-    .forEach((card,index)=>{
-
-        card.classList.remove("show");
-
-        void card.offsetWidth;
-
-        setTimeout(()=>{
-
-            card.classList.add("show");
-
-        },index * 70);
-    });
+    .getElementById("bottomTime")
+    .innerHTML = now;
 }
 
 /* =========================
@@ -1238,8 +1653,6 @@ function nextSlide(){
 
     slides[current]
     .classList.add("active");
-
-    animateCards();
 }
 
 /* =========================
@@ -1249,7 +1662,7 @@ STATUS
 const statusEl =
 document.getElementById("status");
 
-function status(text){
+function showStatus(text){
 
     statusEl.innerHTML = text;
 
@@ -1269,36 +1682,30 @@ function status(text){
 FULLSCREEN
 ========================= */
 
-async function fullscreen(){
-
-    try{
-
-        if(!document.fullscreenElement){
-
-            await document.documentElement.requestFullscreen();
-
-            status("🖥 FULLSCREEN");
-
-        }else{
-
-            await document.exitFullscreen();
-
-            status("❎ EXIT FULLSCREEN");
-        }
-
-    }catch(err){
-
-        console.log(err);
-    }
-}
-
-/* =========================
-CLICK
-========================= */
-
 document.addEventListener(
     "dblclick",
-    fullscreen
+    async ()=>{
+
+        try{
+
+            if(!document.fullscreenElement){
+
+                await document.documentElement.requestFullscreen();
+
+                showStatus("🖥 FULLSCREEN");
+
+            }else{
+
+                await document.exitFullscreen();
+
+                showStatus("❎ EXIT FULLSCREEN");
+            }
+
+        }catch(err){
+
+            console.log(err);
+        }
+    }
 );
 
 /* =========================
@@ -1309,19 +1716,19 @@ window.addEventListener(
     "load",
     async ()=>{
 
-        await render();
+        await update();
 
         setInterval(
             nextSlide,
-            9000
+            10000
         );
 
         setInterval(
-            render,
+            update,
             15000
         );
 
-        status("▶ PLAYING");
+        showStatus("▶ PLAYING");
     }
 );
 
