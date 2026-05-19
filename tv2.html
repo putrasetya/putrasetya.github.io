@@ -372,17 +372,11 @@ PAUSE INDICATOR
 @keyframes pulsePause{
 
     from{
-
         transform:scale(1);
-
-        opacity:.9;
     }
 
     to{
-
         transform:scale(1.08);
-
-        opacity:1;
     }
 }
 
@@ -482,89 +476,31 @@ CARD
 }
 
 /* =========================
-TOP CARD
+CARD COLORS
 ========================= */
 
 .gold{
-
-    background:
-        linear-gradient(
-            135deg,
-            #6b5300,
-            #d4a514,
-            #fff0a6,
-            #d4a514,
-            #6b5300
-        );
+    background:linear-gradient(135deg,#6b5300,#d4a514,#fff0a6,#d4a514,#6b5300);
 }
 
 .silver{
-
-    background:
-        linear-gradient(
-            135deg,
-            #737373,
-            #d1d5db,
-            #ffffff,
-            #d1d5db,
-            #737373
-        );
+    background:linear-gradient(135deg,#737373,#d1d5db,#ffffff,#d1d5db,#737373);
 }
 
 .bronze{
-
-    background:
-        linear-gradient(
-            135deg,
-            #6d3f1d,
-            #c87c3d,
-            #efc08c,
-            #c87c3d,
-            #6d3f1d
-        );
+    background:linear-gradient(135deg,#6d3f1d,#c87c3d,#efc08c,#c87c3d,#6d3f1d);
 }
 
-/* =========================
-BOTTOM CARD
-========================= */
-
 .red-high{
-
-    background:
-        linear-gradient(
-            135deg,
-            #7f1d1d,
-            #b91c1c,
-            #dc2626,
-            #ef4444,
-            #f87171
-        );
+    background:linear-gradient(135deg,#7f1d1d,#b91c1c,#dc2626,#ef4444,#f87171);
 }
 
 .red-mid{
-
-    background:
-        linear-gradient(
-            135deg,
-            #4a0404,
-            #7f1d1d,
-            #b91c1c,
-            #dc2626,
-            #ef4444
-        );
+    background:linear-gradient(135deg,#4a0404,#7f1d1d,#b91c1c,#dc2626,#ef4444);
 }
 
 .red-low{
-
-    background:
-        linear-gradient(
-            135deg,
-            #2b0000,
-            #4a0404,
-            #7f1d1d,
-            #991b1b,
-            #b91c1c
-        );
+    background:linear-gradient(135deg,#2b0000,#4a0404,#7f1d1d,#991b1b,#b91c1c);
 }
 
 /* =========================
@@ -587,28 +523,9 @@ RANK NUMBER
 
     font-weight:900;
 
-    opacity:.20;
+    opacity:.18;
 
     letter-spacing:-10px;
-}
-
-.gold .rank-number{
-    color:#facc15;
-}
-
-.silver .rank-number{
-    color:#e2e8f0;
-}
-
-.bronze .rank-number{
-    color:#fb923c;
-}
-
-.red-high .rank-number,
-.red-mid .rank-number,
-.red-low .rank-number{
-
-    color:#ffffff;
 }
 
 /* =========================
@@ -637,9 +554,7 @@ PHOTO
     object-position:center bottom;
 
     filter:
-        drop-shadow(0 10px 15px rgba(0,0,0,.28))
-        contrast(1.08)
-        saturate(1.08);
+        drop-shadow(0 10px 15px rgba(0,0,0,.28));
 }
 
 /* =========================
@@ -661,8 +576,6 @@ EMPLOYEE
 
     font-weight:900;
 
-    color:#111827;
-
     text-transform:uppercase;
 
     white-space:nowrap;
@@ -681,67 +594,6 @@ EMPLOYEE
     letter-spacing:3px;
 
     text-transform:uppercase;
-
-    color:#111827;
-}
-
-.red-high .employee-name,
-.red-mid .employee-name,
-.red-low .employee-name,
-
-.red-high .employee-label,
-.red-mid .employee-label,
-.red-low .employee-label{
-
-    color:white;
-}
-
-/* =========================
-MOBILE
-========================= */
-
-@media(max-width:768px){
-
-    .pause-indicator{
-
-        top:12px;
-        left:12px;
-    }
-
-    .pause-card{
-
-        padding:
-            12px
-            16px;
-
-        border-radius:18px;
-
-        gap:12px;
-    }
-
-    .pause-icon{
-
-        width:42px;
-        height:42px;
-
-        font-size:20px;
-
-        border-radius:12px;
-    }
-
-    .pause-title{
-
-        font-size:16px;
-
-        letter-spacing:2px;
-    }
-
-    .pause-desc{
-
-        font-size:9px;
-
-        letter-spacing:1px;
-    }
 }
 
 </style>
@@ -777,10 +629,68 @@ PAUSE INDICATOR
 
 </div>
 
+<!-- =========================
+SLIDES
+========================= -->
+
+<div class="slide active">
+    <div class="header">
+        <h1>TOP SALES</h1>
+        <p>AZKO CITIMALL TUBAN</p>
+        <div class="update-time">DATA UPDATE : LIVE</div>
+    </div>
+    <div class="rank-list"></div>
+</div>
+
+<div class="slide">
+    <div class="header">
+        <h1>BOTTOM SALES</h1>
+        <p>AZKO CITIMALL TUBAN</p>
+        <div class="update-time">DATA UPDATE : LIVE</div>
+    </div>
+    <div class="rank-list"></div>
+</div>
+
+<div class="slide">
+    <div class="header">
+        <h1>TOP PROTEKSI</h1>
+        <p>AZKO CITIMALL TUBAN</p>
+        <div class="update-time">DATA UPDATE : LIVE</div>
+    </div>
+    <div class="rank-list"></div>
+</div>
+
+<div class="slide">
+    <div class="header">
+        <h1>BOTTOM PROTEKSI</h1>
+        <p>AZKO CITIMALL TUBAN</p>
+        <div class="update-time">DATA UPDATE : LIVE</div>
+    </div>
+    <div class="rank-list"></div>
+</div>
+
+<div class="slide">
+    <div class="header">
+        <h1>TOP TRX</h1>
+        <p>AZKO CITIMALL TUBAN</p>
+        <div class="update-time">DATA UPDATE : LIVE</div>
+    </div>
+    <div class="rank-list"></div>
+</div>
+
+<div class="slide">
+    <div class="header">
+        <h1>BOTTOM TRX</h1>
+        <p>AZKO CITIMALL TUBAN</p>
+        <div class="update-time">DATA UPDATE : LIVE</div>
+    </div>
+    <div class="rank-list"></div>
+</div>
+
 <script>
 
 /* =========================
-SLIDE AUTO
+SLIDE LOOP
 ========================= */
 
 let current = 0;
@@ -807,24 +717,17 @@ function nextSlide(){
 }
 
 /* =========================
-AUTO LOOP
+INTERVAL
 ========================= */
-
-let isPaused = false;
 
 let slideInterval =
 setInterval(nextSlide,7000);
 
-let updateInterval =
-setInterval(()=>{
-
-    console.log("update");
-
-},15000);
-
 /* =========================
 PAUSE SYSTEM
 ========================= */
+
+let isPaused = false;
 
 const pauseIndicator =
 document.getElementById(
@@ -839,8 +742,6 @@ function togglePause(){
 
         clearInterval(slideInterval);
 
-        clearInterval(updateInterval);
-
         bgm.pause();
 
         pauseIndicator.classList.add("show");
@@ -849,13 +750,6 @@ function togglePause(){
 
         slideInterval =
         setInterval(nextSlide,7000);
-
-        updateInterval =
-        setInterval(()=>{
-
-            console.log("update");
-
-        },15000);
 
         bgm.play();
 
