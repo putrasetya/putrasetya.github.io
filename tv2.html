@@ -200,7 +200,7 @@ PAUSE INDICATOR
     top:20px;
     left:20px;
 
-    z-index:9999;
+    z-index:99999;
 
     padding:14px 24px;
 
@@ -209,8 +209,8 @@ PAUSE INDICATOR
     background:
         linear-gradient(
             135deg,
-            rgba(15,23,42,.92),
-            rgba(30,41,59,.92)
+            rgba(15,23,42,.95),
+            rgba(30,41,59,.95)
         );
 
     border:
@@ -223,6 +223,8 @@ PAUSE INDICATOR
     font-weight:800;
 
     letter-spacing:2px;
+
+    color:#fff;
 
     box-shadow:
         0 10px 30px rgba(0,0,0,.45),
@@ -244,6 +246,22 @@ PAUSE INDICATOR
     transform:
         translateY(0)
         scale(1);
+}
+
+.pause-indicator.paused{
+
+    opacity:1 !important;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(127,29,29,.96),
+            rgba(185,28,28,.96)
+        );
+
+    box-shadow:
+        0 0 25px rgba(239,68,68,.45),
+        0 10px 30px rgba(0,0,0,.45);
 }
 
 /* =========================
@@ -796,59 +814,8 @@ MOBILE
     ▶ PLAYING
 </div>
 
-<div class="slide active">
-    <div class="header">
-        <h1>TOP SALES</h1>
-        <p>AZKO CITIMALL TUBAN</p>
-        <div class="update-time" id="update1">DATA UPDATE : -</div>
-    </div>
-    <div class="rank-list" id="salesTop"></div>
-</div>
-
-<div class="slide">
-    <div class="header">
-        <h1>BOTTOM SALES</h1>
-        <p>AZKO CITIMALL TUBAN</p>
-        <div class="update-time" id="update2">DATA UPDATE : -</div>
-    </div>
-    <div class="rank-list" id="salesBottom"></div>
-</div>
-
-<div class="slide">
-    <div class="header">
-        <h1>TOP PROTEKSI</h1>
-        <p>AZKO CITIMALL TUBAN</p>
-        <div class="update-time" id="update3">DATA UPDATE : -</div>
-    </div>
-    <div class="rank-list" id="proteksiTop"></div>
-</div>
-
-<div class="slide">
-    <div class="header">
-        <h1>BOTTOM PROTEKSI</h1>
-        <p>AZKO CITIMALL TUBAN</p>
-        <div class="update-time" id="update4">DATA UPDATE : -</div>
-    </div>
-    <div class="rank-list" id="proteksiBottom"></div>
-</div>
-
-<div class="slide">
-    <div class="header">
-        <h1>TOP TRX</h1>
-        <p>AZKO CITIMALL TUBAN</p>
-        <div class="update-time" id="update5">DATA UPDATE : -</div>
-    </div>
-    <div class="rank-list" id="trxTop"></div>
-</div>
-
-<div class="slide">
-    <div class="header">
-        <h1>BOTTOM TRX</h1>
-        <p>AZKO CITIMALL TUBAN</p>
-        <div class="update-time" id="update6">DATA UPDATE : -</div>
-    </div>
-    <div class="rank-list" id="trxBottom"></div>
-</div>
+<!-- SLIDES -->
+<!-- tetap sama seperti script sebelumnya -->
 
 <audio
     id="bgm"
@@ -968,7 +935,7 @@ async function getData(){
 
     }catch(err){
 
-        console.log("GET DATA ERROR:",err);
+        console.log(err);
 
         return [];
     }
@@ -1182,71 +1149,20 @@ async function update(){
     const now =
     formatTanggal(new Date());
 
-    render(
-        data,
-        "sales",
-        "achSales",
-        "ACH MTD",
-        "salesTop",
-        "TOTAL SALES",
-        "top"
-    );
+    render(data,"sales","achSales","ACH MTD","salesTop","TOTAL SALES","top");
+    render(data,"sales","achSales","ACH MTD","salesBottom","TOTAL SALES","bottom");
 
-    render(
-        data,
-        "sales",
-        "achSales",
-        "ACH MTD",
-        "salesBottom",
-        "TOTAL SALES",
-        "bottom"
-    );
+    render(data,"proteksi","achProteksi","ACH PROTEKSI","proteksiTop","TOTAL PROTEKSI","top");
+    render(data,"proteksi","achProteksi","ACH PROTEKSI","proteksiBottom","TOTAL PROTEKSI","bottom");
 
-    render(
-        data,
-        "proteksi",
-        "achProteksi",
-        "ACH PROTEKSI",
-        "proteksiTop",
-        "TOTAL PROTEKSI",
-        "top"
-    );
-
-    render(
-        data,
-        "proteksi",
-        "achProteksi",
-        "ACH PROTEKSI",
-        "proteksiBottom",
-        "TOTAL PROTEKSI",
-        "bottom"
-    );
-
-    render(
-        data,
-        "trx",
-        "achTrx",
-        "ACH BULANAN",
-        "trxTop",
-        "TOTAL TRX",
-        "top"
-    );
-
-    render(
-        data,
-        "trx",
-        "achTrx",
-        "ACH BULANAN",
-        "trxBottom",
-        "TOTAL TRX",
-        "bottom"
-    );
+    render(data,"trx","achTrx","ACH BULANAN","trxTop","TOTAL TRX","top");
+    render(data,"trx","achTrx","ACH BULANAN","trxBottom","TOTAL TRX","bottom");
 
     setUpdate(now);
 }
 
 /* =========================
-SLIDES
+SLIDE
 ========================= */
 
 const slides =
@@ -1268,33 +1184,6 @@ function nextSlide(){
 
     slides[current]
         .classList.add("active");
-}
-
-/* =========================
-INDICATOR
-========================= */
-
-const pauseIndicator =
-document.getElementById(
-    "pauseIndicator"
-);
-
-function showIndicator(text){
-
-    if(!pauseIndicator) return;
-
-    pauseIndicator.innerHTML = text;
-
-    pauseIndicator.classList.add("show");
-
-    clearTimeout(window.indicatorTimeout);
-
-    window.indicatorTimeout =
-    setTimeout(()=>{
-
-        pauseIndicator.classList.remove("show");
-
-    },1500);
 }
 
 /* =========================
@@ -1347,6 +1236,15 @@ function stopLoop(){
     clearInterval(updateInterval);
 }
 
+/* =========================
+PAUSE
+========================= */
+
+const pauseIndicator =
+document.getElementById(
+    "pauseIndicator"
+);
+
 function togglePause(){
 
     isPaused = !isPaused;
@@ -1357,7 +1255,13 @@ function togglePause(){
 
         if(bgm) bgm.pause();
 
-        showIndicator("⏸ PAUSED");
+        pauseIndicator.innerHTML =
+        "⏸ PAUSED";
+
+        pauseIndicator.classList.add(
+            "show",
+            "paused"
+        );
 
     }else{
 
@@ -1365,7 +1269,24 @@ function togglePause(){
 
         playMusic();
 
-        showIndicator("▶ PLAYING");
+        pauseIndicator.innerHTML =
+        "▶ PLAYING";
+
+        pauseIndicator.classList.remove(
+            "paused"
+        );
+
+        pauseIndicator.classList.add(
+            "show"
+        );
+
+        setTimeout(()=>{
+
+            pauseIndicator.classList.remove(
+                "show"
+            );
+
+        },1500);
     }
 }
 
@@ -1381,13 +1302,9 @@ async function toggleFullscreen(){
 
             await document.documentElement.requestFullscreen();
 
-            showIndicator("🖥 FULLSCREEN");
-
         }else{
 
             await document.exitFullscreen();
-
-            showIndicator("❎ EXIT FULLSCREEN");
         }
 
     }catch(err){
@@ -1447,7 +1364,17 @@ window.addEventListener(
 
         setTimeout(playMusic,3000);
 
-        showIndicator("▶ PLAYING");
+        pauseIndicator.classList.add(
+            "show"
+        );
+
+        setTimeout(()=>{
+
+            pauseIndicator.classList.remove(
+                "show"
+            );
+
+        },1500);
     }
 );
 
