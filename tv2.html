@@ -403,6 +403,26 @@ EMPLOYEE
 }
 
 /* =========================
+SCORE
+========================= */
+
+.score{
+
+    width:20%;
+
+    text-align:right;
+
+    padding-right:2vw;
+}
+
+.score-value{
+
+    font-size:2.4vw;
+
+    font-weight:900;
+}
+
+/* =========================
 PAUSE INDICATOR
 ========================= */
 
@@ -419,9 +439,7 @@ PAUSE INDICATOR
 
     visibility:hidden;
 
-    transition:
-        opacity .35s ease,
-        visibility .35s ease;
+    transition:.3s;
 }
 
 .pause-indicator.show{
@@ -439,27 +457,18 @@ PAUSE INDICATOR
 
     gap:14px;
 
-    padding:
-        14px
-        22px;
+    padding:14px 22px;
 
     border-radius:22px;
 
-    background:
-        rgba(15,23,42,.92);
+    background:rgba(15,23,42,.92);
 
-    border:
-        1px solid rgba(255,255,255,.12);
+    border:1px solid rgba(255,255,255,.12);
 
-    backdrop-filter:
-        blur(14px);
+    backdrop-filter:blur(14px);
 
     box-shadow:
-        0 10px 30px rgba(0,0,0,.45),
-        0 0 20px rgba(59,130,246,.18);
-
-    animation:
-        pauseFloat 2.5s ease-in-out infinite;
+        0 10px 30px rgba(0,0,0,.45);
 }
 
 .pause-icon{
@@ -477,8 +486,6 @@ PAUSE INDICATOR
 
     font-size:22px;
 
-    font-weight:900;
-
     background:
         linear-gradient(
             135deg,
@@ -487,9 +494,6 @@ PAUSE INDICATOR
         );
 
     color:#111827;
-
-    box-shadow:
-        0 0 15px rgba(250,204,21,.4);
 }
 
 .pause-title{
@@ -500,9 +504,7 @@ PAUSE INDICATOR
 
     letter-spacing:3px;
 
-    color:#ffffff;
-
-    line-height:1;
+    color:#fff;
 }
 
 .pause-desc{
@@ -511,28 +513,11 @@ PAUSE INDICATOR
 
     font-size:10px;
 
-    font-weight:600;
-
     letter-spacing:2px;
 
     color:rgba(255,255,255,.7);
 
     text-transform:uppercase;
-}
-
-@keyframes pauseFloat{
-
-    0%{
-        transform:translateY(0);
-    }
-
-    50%{
-        transform:translateY(-3px);
-    }
-
-    100%{
-        transform:translateY(0);
-    }
 }
 
 </style>
@@ -576,7 +561,7 @@ SLIDES
     <div class="header">
         <h1>TOP SALES</h1>
         <p>AZKO CITIMALL TUBAN</p>
-        <div class="update-time" id="update1">DATA UPDATE : LIVE</div>
+        <div class="update-time" id="update1">DATA UPDATE : -</div>
     </div>
     <div class="rank-list" id="salesTop"></div>
 </div>
@@ -585,7 +570,7 @@ SLIDES
     <div class="header">
         <h1>BOTTOM SALES</h1>
         <p>AZKO CITIMALL TUBAN</p>
-        <div class="update-time" id="update2">DATA UPDATE : LIVE</div>
+        <div class="update-time" id="update2">DATA UPDATE : -</div>
     </div>
     <div class="rank-list" id="salesBottom"></div>
 </div>
@@ -594,7 +579,7 @@ SLIDES
     <div class="header">
         <h1>TOP PROTEKSI</h1>
         <p>AZKO CITIMALL TUBAN</p>
-        <div class="update-time" id="update3">DATA UPDATE : LIVE</div>
+        <div class="update-time" id="update3">DATA UPDATE : -</div>
     </div>
     <div class="rank-list" id="proteksiTop"></div>
 </div>
@@ -603,7 +588,7 @@ SLIDES
     <div class="header">
         <h1>BOTTOM PROTEKSI</h1>
         <p>AZKO CITIMALL TUBAN</p>
-        <div class="update-time" id="update4">DATA UPDATE : LIVE</div>
+        <div class="update-time" id="update4">DATA UPDATE : -</div>
     </div>
     <div class="rank-list" id="proteksiBottom"></div>
 </div>
@@ -612,7 +597,7 @@ SLIDES
     <div class="header">
         <h1>TOP TRX</h1>
         <p>AZKO CITIMALL TUBAN</p>
-        <div class="update-time" id="update5">DATA UPDATE : LIVE</div>
+        <div class="update-time" id="update5">DATA UPDATE : -</div>
     </div>
     <div class="rank-list" id="trxTop"></div>
 </div>
@@ -621,106 +606,192 @@ SLIDES
     <div class="header">
         <h1>BOTTOM TRX</h1>
         <p>AZKO CITIMALL TUBAN</p>
-        <div class="update-time" id="update6">DATA UPDATE : LIVE</div>
+        <div class="update-time" id="update6">DATA UPDATE : -</div>
     </div>
     <div class="rank-list" id="trxBottom"></div>
 </div>
 
 <script>
 
-/* =========================
-DUMMY DATA
-========================= */
+const URL =
+"https://script.google.com/macros/s/AKfycbzeehvUo6QYriMFJTR4A88lN6IIHV6Qop9UphkdOTMkRLVxhVuJ13y69momo6h1pn9dTQ/exec";
 
-const dummy = [
+function clean(val){
 
-    {
-        name:"PUTRA",
-        dept:"SALES",
-        photo:"https://i.pravatar.cc/300?img=1"
-    },
+    if(!val) return 0;
 
-    {
-        name:"ANDI",
-        dept:"ELEKTRONIK",
-        photo:"https://i.pravatar.cc/300?img=2"
-    },
+    return parseInt(
+        val.toString().replace(/[^\d]/g,'')
+    ) || 0;
+}
 
-    {
-        name:"BUDI",
-        dept:"FURNITURE",
-        photo:"https://i.pravatar.cc/300?img=3"
-    }
+function formatTanggal(date){
 
-];
+    return date.toLocaleString('id-ID',{
 
-/* =========================
-RENDER
-========================= */
-
-function render(){
-
-    const ids = [
-        "salesTop",
-        "salesBottom",
-        "proteksiTop",
-        "proteksiBottom",
-        "trxTop",
-        "trxBottom"
-    ];
-
-    ids.forEach(id=>{
-
-        let html = "";
-
-        dummy.forEach((d,i)=>{
-
-            const styles = [
-                "gold",
-                "silver",
-                "bronze"
-            ];
-
-            html += `
-
-            <div class="rank-card ${styles[i]}">
-
-                <div class="rank-number">
-                    ${i+1}
-                </div>
-
-                <div class="photo-box">
-
-                    <img src="${d.photo}">
-
-                </div>
-
-                <div class="employee">
-
-                    <div class="employee-name">
-                        ${d.name}
-                    </div>
-
-                    <div class="employee-label">
-                        ${d.dept}
-                    </div>
-
-                </div>
-
-            </div>
-            `;
-        });
-
-        document.getElementById(id)
-        .innerHTML = html;
+        day:'2-digit',
+        month:'long',
+        year:'numeric',
+        hour:'2-digit',
+        minute:'2-digit',
+        second:'2-digit'
     });
 }
 
-render();
+function setUpdate(text){
 
-/* =========================
-SLIDE LOOP
-========================= */
+    for(let i=1;i<=6;i++){
+
+        document.getElementById(
+            "update"+i
+        ).innerHTML =
+        "DATA UPDATE : " + text;
+    }
+}
+
+async function getData(){
+
+    try{
+
+        const res = await fetch(URL);
+
+        const json = await res.json();
+
+        return json.map(row => ({
+
+            name: row["EMPLOYEE NAME"] || "UNKNOWN",
+
+            dept: row["DEPT"] || "-",
+
+            sales: clean(row["SALES MTD"]),
+
+            proteksi: clean(row["PROTEKSI"]),
+
+            trx: clean(row["TRX"]),
+
+            photo: row["PHOTO"] || ""
+
+        }));
+
+    }catch(err){
+
+        console.log(err);
+
+        return [];
+    }
+}
+
+function render(
+    data,
+    key,
+    containerId,
+    mode="top"
+){
+
+    let sorted = [];
+
+    let styles = [];
+
+    if(mode === "top"){
+
+        styles = [
+            "gold",
+            "silver",
+            "bronze"
+        ];
+
+        sorted = data
+            .filter(v => v[key] > 0)
+            .sort((a,b)=>b[key]-a[key])
+            .slice(0,3);
+
+    }else{
+
+        styles = [
+            "red-high",
+            "red-mid",
+            "red-low"
+        ];
+
+        sorted = data
+            .filter(v => v[key] > 0)
+            .sort((a,b)=>a[key]-b[key])
+            .slice(0,3);
+    }
+
+    let html = "";
+
+    sorted.forEach((d,i)=>{
+
+        html += `
+
+        <div class="rank-card ${styles[i]}">
+
+            <div class="rank-number">
+                ${i+1}
+            </div>
+
+            <div class="photo-box">
+
+                <img
+                    src="https://lh3.googleusercontent.com/d/${d.photo}"
+
+                    onerror="
+                    this.src='https://ui-avatars.com/api/?name=${encodeURIComponent(d.name)}&background=random&color=fff&size=512'
+                    "
+                >
+
+            </div>
+
+            <div class="employee">
+
+                <div class="employee-name">
+                    ${d.name}
+                </div>
+
+                <div class="employee-label">
+                    ${d.dept}
+                </div>
+
+            </div>
+
+            <div class="score">
+
+                <div class="score-value">
+                    ${d[key].toLocaleString('id-ID')}
+                </div>
+
+            </div>
+
+        </div>
+        `;
+    });
+
+    document.getElementById(
+        containerId
+    ).innerHTML = html;
+}
+
+async function update(){
+
+    const data = await getData();
+
+    const lastUpdate =
+    formatTanggal(new Date());
+
+    render(data,"sales","salesTop","top");
+    render(data,"sales","salesBottom","bottom");
+
+    render(data,"proteksi","proteksiTop","top");
+    render(data,"proteksi","proteksiBottom","bottom");
+
+    render(data,"trx","trxTop","top");
+    render(data,"trx","trxBottom","bottom");
+
+    setUpdate(lastUpdate);
+}
+
+update();
 
 let current = 0;
 
@@ -748,6 +819,9 @@ function nextSlide(){
 let slideInterval =
 setInterval(nextSlide,7000);
 
+let updateInterval =
+setInterval(update,15000);
+
 /* =========================
 PAUSE SYSTEM
 ========================= */
@@ -767,6 +841,8 @@ function togglePause(){
 
         clearInterval(slideInterval);
 
+        clearInterval(updateInterval);
+
         bgm.pause();
 
         pauseIndicator.classList.add("show");
@@ -775,6 +851,9 @@ function togglePause(){
 
         slideInterval =
         setInterval(nextSlide,7000);
+
+        updateInterval =
+        setInterval(update,15000);
 
         bgm.play();
 
