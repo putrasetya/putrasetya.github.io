@@ -11,19 +11,11 @@
 
 <style>
 
-/* =========================
-RESET
-========================= */
-
 *{
     margin:0;
     padding:0;
     box-sizing:border-box;
 }
-
-/* =========================
-BODY
-========================= */
 
 body{
 
@@ -32,6 +24,8 @@ body{
     overflow:hidden;
 
     color:white;
+
+    cursor:pointer;
 
     background:
         radial-gradient(circle at top left,#1e3a8a 0%,transparent 30%),
@@ -120,11 +114,9 @@ SLIDE
     display:none;
 
     flex-direction:column;
-
-    justify-content:flex-start;
 }
 
-.active{
+.slide.active{
     display:flex;
 }
 
@@ -137,8 +129,6 @@ HEADER
     text-align:center;
 
     margin-bottom:1vh;
-
-    flex-shrink:0;
 }
 
 .header h1{
@@ -178,42 +168,86 @@ UPDATE TIME
     width:fit-content;
 
     padding:
-        1.1vh
-        2.6vw;
+        1vh
+        2.5vw;
+
+    border-radius:20px;
+
+    background:
+        rgba(0,0,0,.45);
+
+    border:
+        2px solid rgba(255,255,255,.15);
+
+    font-size:1.2vw;
+
+    font-weight:700;
+
+    backdrop-filter:blur(12px);
+
+    box-shadow:
+        0 0 20px rgba(0,0,0,.25);
+}
+
+/* =========================
+PAUSE INDICATOR
+========================= */
+
+.pause-indicator{
+
+    position:fixed;
+
+    top:20px;
+    left:20px;
+
+    z-index:9999;
+
+    padding:14px 24px;
 
     border-radius:18px;
 
     background:
-        rgba(0,0,0,.55);
+        linear-gradient(
+            135deg,
+            rgba(15,23,42,.92),
+            rgba(30,41,59,.92)
+        );
 
     border:
-        2px solid rgba(255,255,255,.20);
+        1px solid rgba(255,255,255,.15);
 
-    font-family:'Poppins',sans-serif;
+    backdrop-filter:blur(16px);
 
-    font-size:1.45vw;
+    font-size:14px;
 
-    font-weight:700;
+    font-weight:800;
 
-    letter-spacing:1px;
-
-    color:#ffffff;
-
-    line-height:1.6;
-
-    text-transform:uppercase;
-
-    text-shadow:
-        0 2px 10px rgba(0,0,0,.9);
+    letter-spacing:2px;
 
     box-shadow:
-        0 0 25px rgba(0,0,0,.35);
+        0 10px 30px rgba(0,0,0,.45),
+        0 0 20px rgba(59,130,246,.25);
 
-    backdrop-filter:blur(10px);
+    opacity:0;
+
+    transform:
+        translateY(-20px)
+        scale(.95);
+
+    transition:.35s ease;
+}
+
+.pause-indicator.show{
+
+    opacity:1;
+
+    transform:
+        translateY(0)
+        scale(1);
 }
 
 /* =========================
-LIST
+RANK LIST
 ========================= */
 
 .rank-list{
@@ -253,10 +287,10 @@ CARD
     opacity:0;
 
     transform:
-        translateX(-100px);
+        translateX(-120px);
 
     animation:
-        slideRight .8s forwards;
+        slideRight .9s forwards;
 }
 
 .rank-card:nth-child(1){
@@ -278,8 +312,8 @@ CARD
         opacity:0;
 
         transform:
-            translateX(-100px)
-            scale(.95);
+            translateX(-120px)
+            scale(.92);
     }
 
     to{
@@ -293,7 +327,7 @@ CARD
 }
 
 /* =========================
-CARD COLOR
+TOP CARD
 ========================= */
 
 .gold{
@@ -336,6 +370,49 @@ CARD COLOR
 }
 
 /* =========================
+BOTTOM CARD
+========================= */
+
+.red-high{
+
+    background:
+        linear-gradient(
+            135deg,
+            #7f1d1d,
+            #b91c1c,
+            #dc2626,
+            #ef4444,
+            #f87171
+        );
+}
+
+.red-mid{
+
+    background:
+        linear-gradient(
+            135deg,
+            #4a0404,
+            #7f1d1d,
+            #b91c1c,
+            #dc2626,
+            #ef4444
+        );
+}
+
+.red-low{
+
+    background:
+        linear-gradient(
+            135deg,
+            #2b0000,
+            #4a0404,
+            #7f1d1d,
+            #991b1b,
+            #b91c1c
+        );
+}
+
+/* =========================
 RANK NUMBER
 ========================= */
 
@@ -358,8 +435,6 @@ RANK NUMBER
     opacity:.20;
 
     letter-spacing:-10px;
-
-    line-height:1;
 }
 
 .gold .rank-number{
@@ -372,6 +447,13 @@ RANK NUMBER
 
 .bronze .rank-number{
     color:#fb923c;
+}
+
+.red-high .rank-number,
+.red-mid .rank-number,
+.red-low .rank-number{
+
+    color:#ffffff;
 }
 
 /* =========================
@@ -399,13 +481,10 @@ PHOTO
 
     object-position:center bottom;
 
-    background:transparent;
-
     filter:
         drop-shadow(0 10px 15px rgba(0,0,0,.28))
         contrast(1.08)
-        saturate(1.08)
-        brightness(1.03);
+        saturate(1.08);
 }
 
 /* =========================
@@ -442,15 +521,24 @@ EMPLOYEE
 
     margin-top:.5vh;
 
-    font-size:1.15vw;
-
-    font-weight:400;
-
-    color:#111827;
+    font-size:1.1vw;
 
     letter-spacing:3px;
 
     text-transform:uppercase;
+
+    color:#111827;
+}
+
+.red-high .employee-name,
+.red-mid .employee-name,
+.red-low .employee-name,
+
+.red-high .employee-label,
+.red-mid .employee-label,
+.red-low .employee-label{
+
+    color:white;
 }
 
 /* =========================
@@ -459,16 +547,27 @@ SCORE
 
 .score{
 
-    width:22%;
+    width:31%;
 
-    padding-right:2vw;
+    padding-right:1.8vw;
+
+    display:flex;
+
+    flex-direction:column;
+
+    align-items:flex-end;
+
+    gap:1vh;
+}
+
+.main-score{
 
     text-align:right;
 }
 
 .score-value{
 
-    font-size:2.6vw;
+    font-size:2.5vw;
 
     font-weight:900;
 
@@ -477,17 +576,140 @@ SCORE
 
 .score-label{
 
-    margin-top:.4vh;
+    margin-top:.2vh;
 
     font-size:.8vw;
 
     font-weight:700;
 
+    letter-spacing:2px;
+
     color:#111827;
 
-    opacity:.65;
+    opacity:.7;
+}
+
+.red-high .score-value,
+.red-mid .score-value,
+.red-low .score-value,
+
+.red-high .score-label,
+.red-mid .score-label,
+.red-low .score-label{
+
+    color:white;
+}
+
+/* =========================
+ACH BOX
+========================= */
+
+.ach-box{
+
+    position:relative;
+
+    overflow:hidden;
+
+    padding:
+        1vh
+        1.2vw;
+
+    border-radius:22px;
+
+    min-width:9vw;
+
+    text-align:center;
+
+    backdrop-filter:blur(12px);
+
+    border:
+        1px solid rgba(255,255,255,.18);
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(255,255,255,.18),
+            rgba(255,255,255,.08)
+        );
+}
+
+.ach-title{
+
+    position:relative;
+
+    z-index:2;
+
+    font-size:.72vw;
+
+    font-weight:800;
 
     letter-spacing:2px;
+
+    color:#ffffff;
+}
+
+.ach-value{
+
+    position:relative;
+
+    z-index:2;
+
+    margin-top:.45vh;
+
+    font-size:1.8vw;
+
+    font-weight:900;
+}
+
+.ach-green{
+
+    color:#dcfce7 !important;
+
+    text-shadow:
+        0 0 6px rgba(34,197,94,.95),
+        0 0 14px rgba(34,197,94,.9),
+        0 0 24px rgba(34,197,94,.75);
+}
+
+.ach-green-box{
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(22,163,74,.42),
+            rgba(34,197,94,.22)
+        ) !important;
+
+    border:
+        2px solid rgba(74,222,128,.65);
+}
+
+.ach-red{
+
+    color:#ffe4e6 !important;
+
+    text-shadow:
+        0 0 6px rgba(239,68,68,.95),
+        0 0 14px rgba(239,68,68,.9),
+        0 0 24px rgba(239,68,68,.75);
+}
+
+.ach-red-box{
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(185,28,28,.42),
+            rgba(239,68,68,.22)
+        ) !important;
+
+    border:
+        2px solid rgba(252,165,165,.6);
+}
+
+.ach-normal{
+
+    color:#ffffff !important;
 }
 
 /* =========================
@@ -514,53 +736,54 @@ MOBILE
         font-size:11px;
     }
 
-    .update-time{
-        font-size:14px;
-        padding:10px 16px;
-    }
-
     .rank-card{
-        height:118px;
-        border-radius:22px;
+        height:130px;
     }
 
     .rank-number{
-        font-size:95px;
+        font-size:90px !important;
     }
 
     .photo-box{
-        width:100px;
-        min-width:100px;
+        width:95px;
+        min-width:95px;
     }
 
     .employee-name{
-        font-size:16px;
+        font-size:15px;
     }
 
     .employee-label{
-        font-size:11px;
+        font-size:10px;
+    }
+
+    .score{
+        width:42%;
     }
 
     .score-value{
-        font-size:20px;
+        font-size:18px;
     }
 
     .score-label{
-        font-size:10px;
+        font-size:9px;
     }
-}
 
-/* =========================
-TV 4K
-========================= */
+    .ach-box{
 
-@media(min-width:1920px){
+        min-width:78px;
 
-    .update-time{
+        padding:
+            8px
+            10px;
+    }
 
-        font-size:30px;
+    .ach-title{
+        font-size:8px;
+    }
 
-        padding:18px 42px;
+    .ach-value{
+        font-size:15px;
     }
 }
 
@@ -569,81 +792,96 @@ TV 4K
 
 <body>
 
+<div class="pause-indicator" id="pauseIndicator">
+    ▶ PLAYING
+</div>
+
 <div class="slide active">
-
     <div class="header">
-
         <h1>TOP SALES</h1>
-
         <p>AZKO CITIMALL TUBAN</p>
-
-        <div class="update-time" id="updateTimeSales">
-            DATA UPDATE : -
-        </div>
-
+        <div class="update-time" id="update1">DATA UPDATE : -</div>
     </div>
-
-    <div class="rank-list" id="salesList"></div>
-
+    <div class="rank-list" id="salesTop"></div>
 </div>
 
 <div class="slide">
-
     <div class="header">
+        <h1>BOTTOM SALES</h1>
+        <p>AZKO CITIMALL TUBAN</p>
+        <div class="update-time" id="update2">DATA UPDATE : -</div>
+    </div>
+    <div class="rank-list" id="salesBottom"></div>
+</div>
 
+<div class="slide">
+    <div class="header">
         <h1>TOP PROTEKSI</h1>
-
         <p>AZKO CITIMALL TUBAN</p>
-
-        <div class="update-time" id="updateTimeProteksi">
-            DATA UPDATE : -
-        </div>
-
+        <div class="update-time" id="update3">DATA UPDATE : -</div>
     </div>
-
-    <div class="rank-list" id="proteksiList"></div>
-
+    <div class="rank-list" id="proteksiTop"></div>
 </div>
 
 <div class="slide">
-
     <div class="header">
-
-        <h1>TOP TRX</h1>
-
+        <h1>BOTTOM PROTEKSI</h1>
         <p>AZKO CITIMALL TUBAN</p>
-
-        <div class="update-time" id="updateTimeTrx">
-            DATA UPDATE : -
-        </div>
-
+        <div class="update-time" id="update4">DATA UPDATE : -</div>
     </div>
-
-    <div class="rank-list" id="trxList"></div>
-
+    <div class="rank-list" id="proteksiBottom"></div>
 </div>
+
+<div class="slide">
+    <div class="header">
+        <h1>TOP TRX</h1>
+        <p>AZKO CITIMALL TUBAN</p>
+        <div class="update-time" id="update5">DATA UPDATE : -</div>
+    </div>
+    <div class="rank-list" id="trxTop"></div>
+</div>
+
+<div class="slide">
+    <div class="header">
+        <h1>BOTTOM TRX</h1>
+        <p>AZKO CITIMALL TUBAN</p>
+        <div class="update-time" id="update6">DATA UPDATE : -</div>
+    </div>
+    <div class="rank-list" id="trxBottom"></div>
+</div>
+
+<audio
+    id="bgm"
+    loop
+    autoplay
+    playsinline
+    preload="auto">
+
+    <source
+        src="https://putrasetya.github.io/223am.mp3"
+        type="audio/mpeg">
+
+</audio>
 
 <script>
 
 const URL =
 "https://script.google.com/macros/s/AKfycbzeehvUo6QYriMFJTR4A88lN6IIHV6Qop9UphkdOTMkRLVxhVuJ13y69momo6h1pn9dTQ/exec";
 
-let lastDataHash =
-localStorage.getItem("lastDataHash") || "";
-
-let lastUpdateText =
-localStorage.getItem("lastUpdateText") || "-";
+/* =========================
+HELPERS
+========================= */
 
 function clean(val){
 
     if(!val) return 0;
 
-    return parseInt(
-        val.toString().replace(/[^\d]/g,'')
+    return parseFloat(
+        val.toString().replace(/[^\d.]/g,'')
     ) || 0;
 }
 
-function formatTanggalIndonesia(date){
+function formatTanggal(date){
 
     return date.toLocaleString('id-ID',{
 
@@ -656,17 +894,38 @@ function formatTanggalIndonesia(date){
     });
 }
 
-function setUpdateTime(text){
+function setUpdate(text){
 
-    document.getElementById("updateTimeSales").innerHTML =
-    "DATA UPDATE : " + text;
+    for(let i=1;i<=6;i++){
 
-    document.getElementById("updateTimeProteksi").innerHTML =
-    "DATA UPDATE : " + text;
+        const el =
+        document.getElementById("update"+i);
 
-    document.getElementById("updateTimeTrx").innerHTML =
-    "DATA UPDATE : " + text;
+        if(el){
+
+            el.innerHTML =
+            "DATA UPDATE : " + text;
+        }
+    }
 }
+
+function isExcluded(dept){
+
+    const d =
+    (dept || "").toLowerCase();
+
+    return (
+
+        d.includes("cashier") ||
+        d.includes("kasir") ||
+        d.includes("cs") ||
+        d.includes("customer service")
+    );
+}
+
+/* =========================
+GET DATA
+========================= */
 
 async function getData(){
 
@@ -678,57 +937,185 @@ async function getData(){
 
         return json.map(row => ({
 
-            name: row["EMPLOYEE NAME"] || "UNKNOWN",
+            name:
+                row["EMPLOYEE NAME"] || "UNKNOWN",
 
-            dept: row["DEPT"] || "-",
+            dept:
+                row["DEPT"] || "-",
 
-            sales: clean(row["SALES MTD"]),
+            sales:
+                clean(row["SALES MTD"]),
 
-            proteksi: clean(row["PROTEKSI"]),
+            proteksi:
+                clean(row["PROTEKSI"]),
 
-            trx: clean(row["TRX"]),
+            trx:
+                clean(row["TRX"]),
 
-            photo: row["PHOTO"] || ""
+            achSales:
+                clean(row["ACH MTD"]),
+
+            achProteksi:
+                clean(row["ACH PROTEKSI"]),
+
+            achTrx:
+                clean(row["ACH BULANAN"]),
+
+            photo:
+                row["PHOTO"] || ""
 
         }));
 
     }catch(err){
 
-        console.log(err);
+        console.log("GET DATA ERROR:",err);
 
         return [];
     }
 }
 
-function render(data,key,containerId,label){
+/* =========================
+ACH STYLE
+========================= */
 
-    const styles = [
-        "gold",
-        "silver",
-        "bronze"
-    ];
+function getAchStyle(value){
 
-    let sorted = data
-        .filter(v => v[key] > 0)
-        .sort((a,b)=>b[key]-a[key])
-        .slice(0,3);
+    if(value >= 100){
+
+        return {
+
+            valueClass:
+                "ach-value ach-green",
+
+            boxClass:
+                "ach-box ach-green-box"
+        };
+    }
+
+    if(value < 80){
+
+        return {
+
+            valueClass:
+                "ach-value ach-red",
+
+            boxClass:
+                "ach-box ach-red-box"
+        };
+    }
+
+    return {
+
+        valueClass:
+            "ach-value ach-normal",
+
+        boxClass:
+            "ach-box"
+    };
+}
+
+/* =========================
+RENDER
+========================= */
+
+function render(
+    data,
+    key,
+    achKey,
+    achTitle,
+    containerId,
+    label,
+    mode="top"
+){
+
+    const container =
+    document.getElementById(containerId);
+
+    if(!container) return;
+
+    let filteredData = [...data];
+
+    if(
+        containerId === "salesBottom" ||
+        containerId === "trxTop"
+    ){
+
+        filteredData =
+        filteredData.filter(
+            item => !isExcluded(item.dept)
+        );
+    }
+
+    let sorted = [];
+    let styles = [];
+
+    if(mode === "top"){
+
+        styles = [
+            "gold",
+            "silver",
+            "bronze"
+        ];
+
+        sorted =
+        filteredData
+            .filter(v => v[key] > 0)
+            .sort((a,b)=>b[key]-a[key])
+            .slice(0,3);
+
+    }else{
+
+        styles = [
+            "red-high",
+            "red-mid",
+            "red-low"
+        ];
+
+        const allSorted =
+        filteredData
+            .filter(v => v[key] > 0)
+            .sort((a,b)=>a[key]-b[key]);
+
+        sorted =
+        allSorted.slice(0,3);
+
+        sorted = sorted.map((item,index)=>({
+
+            ...item,
+
+            bottomRank:
+            allSorted.length - index
+        }));
+
+        sorted.reverse();
+    }
 
     let html = "";
 
     sorted.forEach((d,i)=>{
+
+        const rank =
+        mode === "top"
+        ? i + 1
+        : d.bottomRank;
+
+        const achStyle =
+        getAchStyle(d[achKey]);
 
         html += `
 
         <div class="rank-card ${styles[i]}">
 
             <div class="rank-number">
-                ${i+1}
+                ${rank}
             </div>
 
             <div class="photo-box">
 
                 <img
                     src="https://lh3.googleusercontent.com/d/${d.photo}"
+
+                    loading="lazy"
 
                     onerror="
                     this.src='https://ui-avatars.com/api/?name=${encodeURIComponent(d.name)}&background=random&color=fff&size=512'
@@ -751,12 +1138,28 @@ function render(data,key,containerId,label){
 
             <div class="score">
 
-                <div class="score-value">
-                    ${d[key].toLocaleString('id-ID')}
+                <div class="main-score">
+
+                    <div class="score-value">
+                        ${d[key].toLocaleString('id-ID')}
+                    </div>
+
+                    <div class="score-label">
+                        ${label}
+                    </div>
+
                 </div>
 
-                <div class="score-label">
-                    ${label}
+                <div class="${achStyle.boxClass}">
+
+                    <div class="ach-title">
+                        ${achTitle}
+                    </div>
+
+                    <div class="${achStyle.valueClass}">
+                        ${d[achKey].toFixed(1)}%
+                    </div>
+
                 </div>
 
             </div>
@@ -765,82 +1168,134 @@ function render(data,key,containerId,label){
         `;
     });
 
-    document.getElementById(containerId).innerHTML = html;
+    container.innerHTML = html;
 }
+
+/* =========================
+UPDATE
+========================= */
 
 async function update(){
 
     const data = await getData();
 
-    const currentHash =
-    JSON.stringify(data);
-
-    if(currentHash !== lastDataHash){
-
-        lastDataHash = currentHash;
-
-        localStorage.setItem(
-            "lastDataHash",
-            currentHash
-        );
-
-        lastUpdateText =
-        formatTanggalIndonesia(
-            new Date()
-        );
-
-        localStorage.setItem(
-            "lastUpdateText",
-            lastUpdateText
-        );
-    }
+    const now =
+    formatTanggal(new Date());
 
     render(
         data,
         "sales",
-        "salesList",
-        "TOTAL SALES"
+        "achSales",
+        "ACH MTD",
+        "salesTop",
+        "TOTAL SALES",
+        "top"
+    );
+
+    render(
+        data,
+        "sales",
+        "achSales",
+        "ACH MTD",
+        "salesBottom",
+        "TOTAL SALES",
+        "bottom"
     );
 
     render(
         data,
         "proteksi",
-        "proteksiList",
-        "TOTAL PROTEKSI"
+        "achProteksi",
+        "ACH PROTEKSI",
+        "proteksiTop",
+        "TOTAL PROTEKSI",
+        "top"
+    );
+
+    render(
+        data,
+        "proteksi",
+        "achProteksi",
+        "ACH PROTEKSI",
+        "proteksiBottom",
+        "TOTAL PROTEKSI",
+        "bottom"
     );
 
     render(
         data,
         "trx",
-        "trxList",
-        "TOTAL TRX"
+        "achTrx",
+        "ACH BULANAN",
+        "trxTop",
+        "TOTAL TRX",
+        "top"
     );
 
-    setUpdateTime(lastUpdateText);
+    render(
+        data,
+        "trx",
+        "achTrx",
+        "ACH BULANAN",
+        "trxBottom",
+        "TOTAL TRX",
+        "bottom"
+    );
+
+    setUpdate(now);
 }
 
-let current = 0;
+/* =========================
+SLIDES
+========================= */
 
 const slides =
 document.querySelectorAll(".slide");
 
-function showNextSlide(){
+let current = 0;
+
+function nextSlide(){
 
     slides[current]
         .classList.remove("active");
 
-    current =
-        (current + 1) % slides.length;
+    current++;
+
+    if(current >= slides.length){
+
+        current = 0;
+    }
 
     slides[current]
         .classList.add("active");
 }
 
-setInterval(showNextSlide,7000);
+/* =========================
+INDICATOR
+========================= */
 
-setInterval(update,15000);
+const pauseIndicator =
+document.getElementById(
+    "pauseIndicator"
+);
 
-update();
+function showIndicator(text){
+
+    if(!pauseIndicator) return;
+
+    pauseIndicator.innerHTML = text;
+
+    pauseIndicator.classList.add("show");
+
+    clearTimeout(window.indicatorTimeout);
+
+    window.indicatorTimeout =
+    setTimeout(()=>{
+
+        pauseIndicator.classList.remove("show");
+
+    },1500);
+}
 
 /* =========================
 AUDIO
@@ -849,9 +1304,14 @@ AUDIO
 const bgm =
 document.getElementById("bgm");
 
-bgm.volume = 0.4;
+if(bgm){
 
-async function forcePlay(){
+    bgm.volume = 0.4;
+}
+
+async function playMusic(){
+
+    if(!bgm) return;
 
     try{
 
@@ -863,42 +1323,135 @@ async function forcePlay(){
     }
 }
 
+/* =========================
+LOOP
+========================= */
+
+let isPaused = false;
+
+let slideInterval;
+let updateInterval;
+
+function startLoop(){
+
+    slideInterval =
+    setInterval(nextSlide,7000);
+
+    updateInterval =
+    setInterval(update,15000);
+}
+
+function stopLoop(){
+
+    clearInterval(slideInterval);
+    clearInterval(updateInterval);
+}
+
+function togglePause(){
+
+    isPaused = !isPaused;
+
+    if(isPaused){
+
+        stopLoop();
+
+        if(bgm) bgm.pause();
+
+        showIndicator("⏸ PAUSED");
+
+    }else{
+
+        startLoop();
+
+        playMusic();
+
+        showIndicator("▶ PLAYING");
+    }
+}
+
+/* =========================
+FULLSCREEN
+========================= */
+
+async function toggleFullscreen(){
+
+    try{
+
+        if(!document.fullscreenElement){
+
+            await document.documentElement.requestFullscreen();
+
+            showIndicator("🖥 FULLSCREEN");
+
+        }else{
+
+            await document.exitFullscreen();
+
+            showIndicator("❎ EXIT FULLSCREEN");
+        }
+
+    }catch(err){
+
+        console.log(err);
+    }
+}
+
+/* =========================
+CLICK
+========================= */
+
+let clickTimer = null;
+
 document.addEventListener(
     "click",
-    forcePlay
+    ()=>{
+
+        if(clickTimer){
+
+            clearTimeout(clickTimer);
+        }
+
+        clickTimer = setTimeout(()=>{
+
+            togglePause();
+
+        },250);
+    }
 );
 
 document.addEventListener(
-    "touchstart",
-    forcePlay
+    "dblclick",
+    ()=>{
+
+        clearTimeout(clickTimer);
+
+        toggleFullscreen();
+    }
 );
+
+/* =========================
+START
+========================= */
 
 window.addEventListener(
     "load",
-    ()=>{
+    async ()=>{
 
-        forcePlay();
+        await update();
 
-        setTimeout(forcePlay,1000);
+        startLoop();
 
-        setTimeout(forcePlay,3000);
+        playMusic();
+
+        setTimeout(playMusic,1000);
+
+        setTimeout(playMusic,3000);
+
+        showIndicator("▶ PLAYING");
     }
 );
 
 </script>
-
-<audio
-    id="bgm"
-    loop
-    autoplay
-    playsinline
-    preload="auto">
-
-    <source
-        src="https://putrasetya.github.io/223am.mp3"
-        type="audio/mpeg">
-
-</audio>
 
 </body>
 </html>
