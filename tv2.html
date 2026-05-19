@@ -116,7 +116,7 @@ SLIDE
     flex-direction:column;
 }
 
-.active{
+.slide.active{
     display:flex;
 }
 
@@ -190,7 +190,7 @@ UPDATE TIME
 }
 
 /* =========================
-STATUS
+PAUSE INDICATOR
 ========================= */
 
 .pause-indicator{
@@ -198,41 +198,52 @@ STATUS
     position:fixed;
 
     top:20px;
-    right:20px;
+    left:20px;
 
     z-index:9999;
 
-    padding:
-        10px 18px;
+    padding:14px 24px;
 
     border-radius:18px;
 
     background:
-        rgba(0,0,0,.55);
-
-    backdrop-filter:blur(10px);
+        linear-gradient(
+            135deg,
+            rgba(15,23,42,.92),
+            rgba(30,41,59,.92)
+        );
 
     border:
         1px solid rgba(255,255,255,.15);
 
+    backdrop-filter:blur(16px);
+
     font-size:14px;
 
-    font-weight:700;
+    font-weight:800;
 
-    letter-spacing:1px;
+    letter-spacing:2px;
+
+    box-shadow:
+        0 10px 30px rgba(0,0,0,.45),
+        0 0 20px rgba(59,130,246,.25);
 
     opacity:0;
 
-    transform:translateY(-20px);
+    transform:
+        translateY(-20px)
+        scale(.95);
 
-    transition:.35s;
+    transition:.35s ease;
 }
 
 .pause-indicator.show{
 
     opacity:1;
 
-    transform:translateY(0);
+    transform:
+        translateY(0)
+        scale(1);
 }
 
 /* =========================
@@ -782,7 +793,7 @@ MOBILE
 <body>
 
 <div class="pause-indicator" id="pauseIndicator">
-    ⏸ PAUSED
+    ▶ PLAYING
 </div>
 
 <div class="slide active">
@@ -839,6 +850,19 @@ MOBILE
     <div class="rank-list" id="trxBottom"></div>
 </div>
 
+<audio
+    id="bgm"
+    loop
+    autoplay
+    playsinline
+    preload="auto">
+
+    <source
+        src="https://putrasetya.github.io/223am.mp3"
+        type="audio/mpeg">
+
+</audio>
+
 <script>
 
 const URL =
@@ -853,8 +877,7 @@ function clean(val){
     if(!val) return 0;
 
     return parseFloat(
-        val.toString()
-        .replace(/[^\d.]/g,'')
+        val.toString().replace(/[^\d.]/g,'')
     ) || 0;
 }
 
@@ -875,18 +898,21 @@ function setUpdate(text){
 
     for(let i=1;i<=6;i++){
 
-        document.getElementById(
-            "update"+i
-        ).innerHTML =
-        "DATA UPDATE : " + text;
+        const el =
+        document.getElementById("update"+i);
+
+        if(el){
+
+            el.innerHTML =
+            "DATA UPDATE : " + text;
+        }
     }
 }
 
 function isExcluded(dept){
 
     const d =
-    (dept || "")
-    .toLowerCase();
+    (dept || "").toLowerCase();
 
     return (
 
@@ -942,7 +968,7 @@ async function getData(){
 
     }catch(err){
 
-        console.log(err);
+        console.log("GET DATA ERROR:",err);
 
         return [];
     }
@@ -1002,8 +1028,11 @@ function render(
     mode="top"
 ){
 
-    let sorted = [];
-    let styles = [];
+    const container =
+    document.getElementById(containerId);
+
+    if(!container) return;
+
     let filteredData = [...data];
 
     if(
@@ -1017,6 +1046,9 @@ function render(
         );
     }
 
+    let sorted = [];
+    let styles = [];
+
     if(mode === "top"){
 
         styles = [
@@ -1025,7 +1057,8 @@ function render(
             "bronze"
         ];
 
-        sorted = filteredData
+        sorted =
+        filteredData
             .filter(v => v[key] > 0)
             .sort((a,b)=>b[key]-a[key])
             .slice(0,3);
@@ -1061,9 +1094,9 @@ function render(
 
     sorted.forEach((d,i)=>{
 
-        let rank =
+        const rank =
         mode === "top"
-        ? (i+1)
+        ? i + 1
         : d.bottomRank;
 
         const achStyle =
@@ -1081,6 +1114,8 @@ function render(
 
                 <img
                     src="https://lh3.googleusercontent.com/d/${d.photo}"
+
+                    loading="lazy"
 
                     onerror="
                     this.src='https://ui-avatars.com/api/?name=${encodeURIComponent(d.name)}&background=random&color=fff&size=512'
@@ -1133,9 +1168,7 @@ function render(
         `;
     });
 
-    document.getElementById(
-        containerId
-    ).innerHTML = html;
+    container.innerHTML = html;
 }
 
 /* =========================
@@ -1213,20 +1246,18 @@ async function update(){
 }
 
 /* =========================
-SLIDE LOOP
+SLIDES
 ========================= */
-
-let current = 0;
 
 const slides =
 document.querySelectorAll(".slide");
 
+let current = 0;
+
 function nextSlide(){
 
-    slides.forEach(slide=>{
-
-        slide.classList.remove("active");
-    });
+    slides[current]
+        .classList.remove("active");
 
     current++;
 
@@ -1240,21 +1271,7 @@ function nextSlide(){
 }
 
 /* =========================
-AUTO LOOP
-========================= */
-
-let isPaused = false;
-
-let slideInterval =
-setInterval(nextSlide,7000);
-
-let updateInterval =
-setInterval(update,15000);
-
-update();
-
-/* =========================
-PAUSE / PLAY
+INDICATOR
 ========================= */
 
 const pauseIndicator =
@@ -1264,15 +1281,70 @@ document.getElementById(
 
 function showIndicator(text){
 
+    if(!pauseIndicator) return;
+
     pauseIndicator.innerHTML = text;
 
     pauseIndicator.classList.add("show");
 
+    clearTimeout(window.indicatorTimeout);
+
+    window.indicatorTimeout =
     setTimeout(()=>{
 
         pauseIndicator.classList.remove("show");
 
     },1500);
+}
+
+/* =========================
+AUDIO
+========================= */
+
+const bgm =
+document.getElementById("bgm");
+
+if(bgm){
+
+    bgm.volume = 0.4;
+}
+
+async function playMusic(){
+
+    if(!bgm) return;
+
+    try{
+
+        await bgm.play();
+
+    }catch(err){
+
+        console.log(err);
+    }
+}
+
+/* =========================
+LOOP
+========================= */
+
+let isPaused = false;
+
+let slideInterval;
+let updateInterval;
+
+function startLoop(){
+
+    slideInterval =
+    setInterval(nextSlide,7000);
+
+    updateInterval =
+    setInterval(update,15000);
+}
+
+function stopLoop(){
+
+    clearInterval(slideInterval);
+    clearInterval(updateInterval);
 }
 
 function togglePause(){
@@ -1281,22 +1353,17 @@ function togglePause(){
 
     if(isPaused){
 
-        clearInterval(slideInterval);
-        clearInterval(updateInterval);
+        stopLoop();
 
-        bgm.pause();
+        if(bgm) bgm.pause();
 
         showIndicator("⏸ PAUSED");
 
     }else{
 
-        slideInterval =
-        setInterval(nextSlide,7000);
+        startLoop();
 
-        updateInterval =
-        setInterval(update,15000);
-
-        bgm.play();
+        playMusic();
 
         showIndicator("▶ PLAYING");
     }
@@ -1330,7 +1397,7 @@ async function toggleFullscreen(){
 }
 
 /* =========================
-CLICK EVENTS
+CLICK
 ========================= */
 
 let clickTimer = null;
@@ -1363,52 +1430,28 @@ document.addEventListener(
 );
 
 /* =========================
-AUDIO
+START
 ========================= */
-
-const bgm =
-document.getElementById("bgm");
-
-bgm.volume = 0.4;
-
-async function forcePlay(){
-
-    try{
-
-        await bgm.play();
-
-    }catch(err){
-
-        console.log(err);
-    }
-}
 
 window.addEventListener(
     "load",
-    ()=>{
+    async ()=>{
 
-        forcePlay();
+        await update();
 
-        setTimeout(forcePlay,1000);
+        startLoop();
 
-        setTimeout(forcePlay,3000);
+        playMusic();
+
+        setTimeout(playMusic,1000);
+
+        setTimeout(playMusic,3000);
+
+        showIndicator("▶ PLAYING");
     }
 );
 
 </script>
-
-<audio
-    id="bgm"
-    loop
-    autoplay
-    playsinline
-    preload="auto">
-
-    <source
-        src="https://putrasetya.github.io/223am.mp3"
-        type="audio/mpeg">
-
-</audio>
 
 </body>
 </html>
