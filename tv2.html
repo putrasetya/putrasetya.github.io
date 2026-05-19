@@ -5,199 +5,412 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>AZKO PERFORMANCE DISPLAY</title>
+<title>AZKO ULTRA TV DISPLAY V3 CINEMATIC</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 
 <style>
 
-/* ===== (SEMUA CSS TETAP SAMA) ===== */
+/* =========================
+BASE CINEMATIC
+========================= */
 
-*{margin:0;padding:0;box-sizing:border-box;}
-html,body{width:100%;height:100%;overflow:hidden;}
-body{font-family:'Poppins',sans-serif;background:#000;color:white;}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:100%;height:100%;overflow:hidden}
 
-.slide{position:absolute;inset:0;width:100vw;height:100vh;opacity:0;visibility:hidden;transition:opacity .8s ease;}
-.slide.active{opacity:1;visibility:visible;z-index:2;}
-
-.top-slide{
-    background:radial-gradient(circle at top,#0d4cff 0%,transparent 30%),linear-gradient(180deg,#020617 0%,#000000 100%);
+body{
+    font-family:Poppins,sans-serif;
+    background:radial-gradient(circle at top,#0f172a,#020617);
+    color:#fff;
 }
 
-.bottom-slide{
-    background:radial-gradient(circle at top,#ff0000 0%,transparent 30%),linear-gradient(180deg,#180000 0%,#000000 100%);
+/* CINEMATIC BACKGROUND */
+body::before{
+    content:"";
+    position:fixed;
+    inset:0;
+    background:
+        radial-gradient(circle at 20% 20%,rgba(59,130,246,.25),transparent 40%),
+        radial-gradient(circle at 80% 30%,rgba(234,179,8,.15),transparent 35%),
+        radial-gradient(circle at 50% 100%,rgba(239,68,68,.12),transparent 50%);
+    filter:blur(20px);
+    animation:move 10s ease-in-out infinite alternate;
 }
 
-/* (CSS lain tidak diubah, tetap sama seperti punyamu) */
+@keyframes move{
+    from{transform:scale(1) translateY(0)}
+    to{transform:scale(1.1) translateY(-10px)}
+}
+
+/* =========================
+SLIDE CINEMATIC
+========================= */
+
+.slide{
+    position:absolute;
+    inset:0;
+    opacity:0;
+    visibility:hidden;
+    transform:scale(1.08);
+    transition:opacity 1s ease, transform 1s ease;
+    padding:2vh 2vw;
+    display:flex;
+    flex-direction:column;
+    backdrop-filter:blur(0px);
+}
+
+.slide.active{
+    opacity:1;
+    visibility:visible;
+    transform:scale(1);
+}
+
+/* HEADER GLASS */
+.header{
+    text-align:center;
+    margin-bottom:1vh;
+    padding:1vh 0;
+}
+
+.header h1{
+    font-size:3.2vw;
+    font-weight:900;
+    letter-spacing:6px;
+    text-shadow:0 0 25px rgba(255,255,255,.2);
+}
+
+.header p{
+    opacity:.7;
+    letter-spacing:3px;
+}
+
+.update{
+    margin:1vh auto;
+    padding:1vh 2vw;
+    width:fit-content;
+    border-radius:16px;
+    background:rgba(255,255,255,.06);
+    border:1px solid rgba(255,255,255,.12);
+}
+
+/* =========================
+LIST
+========================= */
+
+.rank-list{
+    flex:1;
+    display:flex;
+    flex-direction:column;
+    justify-content:space-evenly;
+    gap:1vh;
+}
+
+/* =========================
+CARD CINEMATIC
+========================= */
+
+.rank-card{
+    position:relative;
+    display:flex;
+    align-items:center;
+    height:22vh;
+    border-radius:28px;
+    overflow:hidden;
+
+    opacity:0;
+    transform:translateX(-120px) scale(.98);
+    filter:blur(8px);
+}
+
+.rank-card.show{
+    animation:enter 1s forwards;
+}
+
+@keyframes enter{
+    to{
+        opacity:1;
+        transform:translateX(0) scale(1);
+        filter:blur(0);
+    }
+}
+
+/* COLOR GRADIENTS */
+.gold{background:linear-gradient(135deg,#6b5300,#facc15,#fff3a0)}
+.silver{background:linear-gradient(135deg,#6b7280,#e5e7eb)}
+.bronze{background:linear-gradient(135deg,#7c3f1d,#c87c3d)}
+
+.red-high{background:linear-gradient(135deg,#7f1d1d,#dc2626)}
+.red-mid{background:linear-gradient(135deg,#4a0404,#b91c1c)}
+.red-low{background:linear-gradient(135deg,#1f0000,#7f1d1d)}
+
+/* RANK BIG CINEMATIC */
+.rank-number{
+    position:absolute;
+    left:1vw;
+    font-size:12vw;
+    opacity:.10;
+    font-weight:900;
+    animation:glow 3s infinite alternate;
+}
+
+@keyframes glow{
+    from{text-shadow:0 0 10px rgba(255,255,255,.2)}
+    to{text-shadow:0 0 30px rgba(255,255,255,.4)}
+}
+
+/* PHOTO */
+.photo{
+    width:18%;
+    height:100%;
+    display:flex;
+    align-items:center;
+}
+
+.photo img{
+    width:100%;
+    height:90%;
+    object-fit:contain;
+    filter:drop-shadow(0 15px 20px rgba(0,0,0,.5));
+}
+
+/* EMP */
+.emp{
+    flex:1;
+    padding-left:1vw;
+}
+
+.name{
+    font-size:1.9vw;
+    font-weight:900;
+    text-transform:uppercase;
+}
+
+.dept{
+    opacity:.7;
+    letter-spacing:2px;
+}
+
+/* SCORE */
+.score{
+    width:30%;
+    text-align:right;
+    padding-right:2vw;
+}
+
+.value{
+    font-size:2.4vw;
+    font-weight:900;
+    transition:all 1s ease;
+}
+
+/* FLASH EFFECT (rank change highlight) */
+.flash{
+    animation:flash 1s ease;
+}
+
+@keyframes flash{
+    0%{box-shadow:0 0 0 rgba(255,255,255,0)}
+    50%{box-shadow:0 0 40px rgba(255,255,255,.3)}
+    100%{box-shadow:0 0 0 rgba(255,255,255,0)}
+}
+
+/* PAUSE */
+.pause{
+    position:fixed;
+    top:15px;
+    left:15px;
+    padding:10px 16px;
+    background:rgba(0,0,0,.5);
+    border:1px solid rgba(255,255,255,.2);
+    border-radius:10px;
+    opacity:0;
+    transition:.3s;
+}
+.pause.show{opacity:1}
 
 </style>
 </head>
 
 <body>
 
-<div class="status" id="status">▶ PLAYING</div>
+<div class="pause" id="pause">PLAYING</div>
 
-<!-- ================= TOP SLIDE ================= -->
-<section class="slide top-slide active">
-
+<!-- SLIDES -->
+<div class="slide active">
     <div class="header">
-
-        <div class="logo">
-            az•ko
-            <span>CITIMALL TUBAN</span>
-        </div>
-
-        <div class="title">
-            <h1>TOP PERFORMANCE</h1>
-            <p>AZKO CITIMALL TUBAN</p>
-        </div>
-
-        <div class="update-box">
-            <div class="update-label">DATA UPDATE</div>
-            <div class="update-time" id="topTime">-</div>
-        </div>
-
+        <h1>TOP SALES</h1>
+        <p>AZKO CITIMALL TUBAN</p>
+        <div class="update" id="u1">UPDATE -</div>
     </div>
+    <div class="rank-list" id="salesTop"></div>
+</div>
 
-    <div class="main">
-
-        <div class="category sales">
-            <div class="category-title"><h2>SALES</h2></div>
-            <div class="top-podium" id="topSales"></div>
-        </div>
-
-        <div class="category proteksi">
-            <div class="category-title"><h2>PROTEKSI</h2></div>
-            <div class="top-podium" id="topProteksi"></div>
-        </div>
-
-        <div class="category trx">
-            <div class="category-title"><h2>TRX</h2></div>
-            <div class="top-podium" id="topTrx"></div>
-        </div>
-
-    </div>
-
-</section>
-
-<!-- ================= BOTTOM SLIDE ================= -->
-<section class="slide bottom-slide">
-
+<div class="slide">
     <div class="header">
-
-        <div class="logo">
-            az•ko
-            <span>CITIMALL TUBAN</span>
-        </div>
-
-        <div class="title">
-            <h1>BOTTOM PERFORMANCE</h1>
-            <p>AZKO CITIMALL TUBAN</p>
-        </div>
-
-        <div class="update-box">
-            <div class="update-label">DATA UPDATE</div>
-            <div class="update-time" id="bottomTime">-</div>
-        </div>
-
+        <h1>BOTTOM SALES</h1>
+        <p>AZKO CITIMALL TUBAN</p>
+        <div class="update" id="u2">UPDATE -</div>
     </div>
+    <div class="rank-list" id="salesBottom"></div>
+</div>
 
-    <div class="main">
-
-        <div class="category sales">
-            <div class="category-title"><h2>SALES</h2></div>
-            <div class="bottom-table" id="bottomSales"></div>
-        </div>
-
-        <div class="category proteksi">
-            <div class="category-title"><h2>PROTEKSI</h2></div>
-            <div class="bottom-table" id="bottomProteksi"></div>
-        </div>
-
-        <div class="category trx">
-            <div class="category-title"><h2>TRX</h2></div>
-            <div class="bottom-table" id="bottomTrx"></div>
-        </div>
-
+<div class="slide">
+    <div class="header">
+        <h1>TOP PROTEKSI</h1>
+        <div class="update" id="u3">UPDATE -</div>
     </div>
+    <div class="rank-list" id="proteksiTop"></div>
+</div>
 
-</section>
+<div class="slide">
+    <div class="header">
+        <h1>BOTTOM PROTEKSI</h1>
+        <div class="update" id="u4">UPDATE -</div>
+    </div>
+    <div class="rank-list" id="proteksiBottom"></div>
+</div>
+
+<div class="slide">
+    <div class="header">
+        <h1>TOP TRX</h1>
+        <div class="update" id="u5">UPDATE -</div>
+    </div>
+    <div class="rank-list" id="trxTop"></div>
+</div>
+
+<div class="slide">
+    <div class="header">
+        <h1>BOTTOM TRX</h1>
+        <div class="update" id="u6">UPDATE -</div>
+    </div>
+    <div class="rank-list" id="trxBottom"></div>
+</div>
+
+<audio id="bgm" loop>
+<source src="https://putrasetya.github.io/223am.mp3">
+</audio>
 
 <script>
 
-/* ================= CONFIG ================= */
+const URL="https://script.google.com/macros/s/AKfycbzeehvUo6QYriMFJTR4A88lN6IIHV6Qop9UphkdOTMkRLVxhVuJ13y69momo6h1pn9dTQ/exec";
 
-const URL = "https://script.google.com/macros/s/AKfycbzeehvUo6QYriMFJTR4A88lN6IIHV6Qop9UphkdOTMkRLVxhVuJ13y69momo6h1pn9dTQ/exec";
+let cache=[];
 
-/* ================= HELPERS ================= */
-
-function clean(v){
-    return parseFloat((v||"0").toString().replace(/[^\d.]/g,''))||0;
-}
-
-/* ================= CHANGE ONLY HERE ================= */
-/* 👉 NICKNAME PRIORITY */
-
-async function getData(){
-
+/* FETCH SAFE */
+async function getData(retry=2){
     try{
-
-        const res = await fetch(URL);
-        const json = await res.json();
-
-        return json.map(r=>({
-
-            name:
-                r["NICKNAME"] ||
-                r["EMPLOYEE NAME"] ||
-                "UNKNOWN",
-
-            dept: r["DEPT"] || "-",
-            sales: clean(r["SALES MTD"]),
-            proteksi: clean(r["PROTEKSI"]),
-            trx: clean(r["TRX"]),
-            achSales: clean(r["ACH MTD"]),
-            achProteksi: clean(r["ACH PROTEKSI"]),
-            achTrx: clean(r["ACH BULANAN"]),
-            photo: r["PHOTO"] || ""
-
-        }));
-
-    }catch(err){
-        console.log(err);
-        return [];
+        const r=await fetch(URL);
+        const t=await r.text();
+        const j=JSON.parse(t);
+        cache=j;
+        return j;
+    }catch(e){
+        if(retry>0) return getData(retry-1);
+        return cache;
     }
 }
 
-/* ================= RENDER SYSTEM (TETAP) ================= */
+/* COUNT ANIMATION */
+function count(el,target){
+    let start=0;
+    const step=Math.ceil(target/30);
 
-function format(v){
-    return v.toLocaleString('id-ID');
+    const i=setInterval(()=>{
+        start+=step;
+        if(start>=target){
+            start=target;
+            clearInterval(i);
+        }
+        el.textContent=start.toLocaleString('id-ID');
+    },20);
 }
 
-function card(d){
-    return `
-    <div class="card">
-        <div>${d.name}</div>
-        <div>${d.dept}</div>
-    </div>`;
+/* RENDER CINEMATIC */
+function render(data,key,container,mode){
+
+    const el=document.getElementById(container);
+    if(!el) return;
+
+    let list=[...data]
+        .filter(v=>v[key]>0)
+        .sort((a,b)=>mode==="top"?b[key]-a[key]:a[key]-b[key])
+        .slice(0,3)
+        .map((d,i)=>({...d,rank:i+1}));
+
+    el.innerHTML="";
+
+    list.forEach((d,i)=>{
+
+        const div=document.createElement("div");
+        div.className=`rank-card ${mode==="top"
+            ? ["gold","silver","bronze"][i]
+            : "red-high"} show`;
+
+        div.innerHTML=`
+            <div class="rank-number">${d.rank}</div>
+
+            <div class="photo">
+                <img src="https://drive.google.com/uc?export=view&id=${d.photo}">
+            </div>
+
+            <div class="emp">
+                <div class="name">${d.name}</div>
+                <div class="dept">${d.dept}</div>
+            </div>
+
+            <div class="score">
+                <div class="value" data-val="${d[key]}">0</div>
+            </div>
+        `;
+
+        el.appendChild(div);
+
+        const val=div.querySelector(".value");
+        count(val,d[key]);
+
+        setTimeout(()=>{
+            div.classList.add("flash");
+        },300);
+    });
 }
 
-/* ================= UPDATE ================= */
+/* SLIDE */
+const slides=document.querySelectorAll(".slide");
+let cur=0;
 
+function next(){
+    slides[cur].classList.remove("active");
+    cur=(cur+1)%slides.length;
+    slides[cur].classList.add("active");
+}
+
+/* UPDATE */
 async function update(){
+    const data=await getData();
 
-    const data = await getData();
+    render(data,"sales","salesTop","top");
+    render(data,"sales","salesBottom","bottom");
 
-    console.log("DATA:", data);
+    render(data,"proteksi","proteksiTop","top");
+    render(data,"proteksi","proteksiBottom","bottom");
 
+    render(data,"trx","trxTop","top");
+    render(data,"trx","trxBottom","bottom");
+
+    document.getElementById("u1").innerText=
+        "UPDATE " + new Date().toLocaleString("id-ID");
 }
 
-/* ================= START ================= */
+/* LOOP */
+setInterval(()=>{if(!document.hidden)next()},7000);
+setInterval(()=>{if(!document.hidden)update()},15000);
 
-window.onload = () => {
-    update();
-};
+/* AUDIO */
+document.addEventListener("click",()=>{
+    document.getElementById("bgm").play().catch(()=>{});
+},{once:true});
+
+window.onload=update;
 
 </script>
 
