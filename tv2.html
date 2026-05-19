@@ -65,8 +65,12 @@ SLIDE
     z-index:2;
 }
 
+.slide:not(.active){
+    pointer-events:none;
+}
+
 /* =========================
-TOP PERFORMANCE
+BACKGROUND
 ========================= */
 
 .top-slide{
@@ -75,10 +79,6 @@ TOP PERFORMANCE
         radial-gradient(circle at top,#0d4cff 0%,transparent 30%),
         linear-gradient(180deg,#020617 0%,#000000 100%);
 }
-
-/* =========================
-BOTTOM PERFORMANCE
-========================= */
 
 .bottom-slide{
 
@@ -421,12 +421,22 @@ TOP PODIUM
 
     opacity:0;
 
-    transform:
-        translateX(-40px);
+    animation:
+        slideIn .7s forwards;
+}
+
+.podium-card::after{
+
+    content:"";
+
+    position:absolute;
+
+    inset:0;
 
     animation:
-        slideIn .7s forwards,
         float 3s ease-in-out infinite;
+
+    pointer-events:none;
 }
 
 .podium-card:nth-child(1){
@@ -442,6 +452,14 @@ TOP PODIUM
 }
 
 @keyframes slideIn{
+
+    from{
+
+        opacity:0;
+
+        transform:
+            translateX(-40px);
+    }
 
     to{
 
@@ -491,6 +509,8 @@ TOP PODIUM
     top:-15px;
 
     font-size:2.2vw;
+
+    z-index:5;
 }
 
 .rank-number{
@@ -520,6 +540,8 @@ TOP PODIUM
 
     border:
         2px solid rgba(255,255,255,.2);
+
+    z-index:5;
 }
 
 .rank1 .rank-number{
@@ -549,6 +571,8 @@ TOP PODIUM
     align-items:flex-end;
 
     justify-content:center;
+
+    z-index:2;
 }
 
 .photo img{
@@ -565,6 +589,8 @@ TOP PODIUM
 .employee{
 
     margin-top:1vh;
+
+    z-index:2;
 }
 
 .employee-name{
@@ -594,6 +620,8 @@ TOP PODIUM
     font-size:1.8vw;
 
     font-weight:900;
+
+    z-index:2;
 }
 
 .score-label{
@@ -603,6 +631,8 @@ TOP PODIUM
     font-size:.65vw;
 
     opacity:.75;
+
+    z-index:2;
 }
 
 .ach-circle{
@@ -636,6 +666,8 @@ TOP PODIUM
 
     box-shadow:
         0 0 18px rgba(50,255,106,.35);
+
+    z-index:2;
 }
 
 /* =========================
@@ -706,9 +738,6 @@ BOTTOM TABLE
         1px solid rgba(255,0,0,.25);
 
     opacity:0;
-
-    transform:
-        translateX(-40px);
 
     animation:
         slideIn .7s forwards;
@@ -961,10 +990,6 @@ STATUS
     ▶ PLAYING
 </div>
 
-<!-- =========================
-TOP PERFORMANCE
-========================= -->
-
 <section class="slide top-slide active">
 
     <div class="header">
@@ -1058,10 +1083,6 @@ TOP PERFORMANCE
     </div>
 
 </section>
-
-<!-- =========================
-BOTTOM PERFORMANCE
-========================= -->
 
 <section class="slide bottom-slide">
 
@@ -1266,6 +1287,17 @@ function excluded(dept){
         d.includes("kasir") ||
         d.includes("cs")
     );
+}
+
+function safeRender(id, html){
+
+    const el =
+    document.getElementById(id);
+
+    if(el.innerHTML !== html){
+
+        el.innerHTML = html;
+    }
 }
 
 /* =========================
@@ -1497,9 +1529,7 @@ function renderTop(
         );
     });
 
-    document
-    .getElementById(containerId)
-    .innerHTML = html;
+    safeRender(containerId, html);
 
     return sorted[0]?.name || "-";
 }
@@ -1547,9 +1577,7 @@ function renderBottom(
         );
     });
 
-    document
-    .getElementById(containerId)
-    .innerHTML = html;
+    safeRender(containerId, html);
 
     const avg =
     selected.reduce(
