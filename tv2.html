@@ -219,63 +219,6 @@ UPDATE TIME
 }
 
 /* =========================
-PAUSE INDICATOR
-========================= */
-
-.pause-indicator{
-
-    position:fixed;
-
-    top:20px;
-    left:20px;
-
-    z-index:9999;
-
-    padding:14px 24px;
-
-    border-radius:18px;
-
-    background:
-        linear-gradient(
-            135deg,
-            rgba(15,23,42,.92),
-            rgba(30,41,59,.92)
-        );
-
-    border:
-        1px solid rgba(255,255,255,.15);
-
-    backdrop-filter:blur(16px);
-
-    font-size:14px;
-
-    font-weight:800;
-
-    letter-spacing:2px;
-
-    box-shadow:
-        0 10px 30px rgba(0,0,0,.45),
-        0 0 20px rgba(59,130,246,.25);
-
-    opacity:0;
-
-    transform:
-        translateY(-20px)
-        scale(.95);
-
-    transition:.35s ease;
-}
-
-.pause-indicator.show{
-
-    opacity:1;
-
-    transform:
-        translateY(0)
-        scale(1);
-}
-
-/* =========================
 RANK LIST
 ========================= */
 
@@ -328,18 +271,6 @@ CARD
 
     animation:
         slideRight .9s forwards;
-}
-
-.rank-card:nth-child(1){
-    animation-delay:.2s;
-}
-
-.rank-card:nth-child(2){
-    animation-delay:.5s;
-}
-
-.rank-card:nth-child(3){
-    animation-delay:.8s;
 }
 
 @keyframes slideRight{
@@ -738,19 +669,10 @@ ACH BOX
         2px solid rgba(252,165,165,.6);
 }
 
-.ach-normal{
-
-    color:#ffffff !important;
-}
-
 </style>
 </head>
 
 <body>
-
-<div class="pause-indicator" id="pauseIndicator">
-    ▶ PLAYING
-</div>
 
 <div class="slide active">
     <div class="header">
@@ -879,6 +801,22 @@ function isExcluded(dept){
     );
 }
 
+function formatJT(num){
+
+    if(!num || isNaN(num)) return "0 JT";
+
+    return (
+        (num / 1000000)
+        .toFixed(1)
+        .replace(".0","")
+    ) + " JT";
+}
+
+function formatPercent(num){
+
+    return (num || 0).toFixed(1) + "%";
+}
+
 /* =========================
 GET DATA
 ========================= */
@@ -902,18 +840,14 @@ async function getData(){
 
         let rows = [];
 
-        /* =========================
-        OLD API
-        ========================= */
-
         if(Array.isArray(json)){
 
             rows = json;
-        }
 
-        /* =========================
-        NEW API
-        ========================= */
+            setUpdate(
+                formatTanggal(new Date())
+            );
+        }
 
         else if(json.data){
 
@@ -971,6 +905,344 @@ async function getData(){
         return [];
     }
 }
+
+/* =========================
+CARD
+========================= */
+
+function createCard(item,index,type,isBottom=false){
+
+    let bg = "";
+
+    if(isBottom){
+
+        if(index===0) bg="red-high";
+        else if(index===1) bg="red-mid";
+        else bg="red-low";
+
+    }else{
+
+        if(index===0) bg="gold";
+        else if(index===1) bg="silver";
+        else bg="bronze";
+    }
+
+    let score = "";
+    let ach = "";
+
+    if(type==="sales"){
+
+        score = formatJT(item.sales);
+        ach = formatPercent(item.achSales);
+
+    }else if(type==="proteksi"){
+
+        score = item.proteksi.toFixed(1);
+        ach = formatPercent(item.achProteksi);
+
+    }else{
+
+        score = item.trx.toFixed(0);
+        ach = formatPercent(item.achTrx);
+    }
+
+    return `
+
+    <div class="rank-card ${bg}">
+
+        <div class="rank-number">
+            ${index+1}
+        </div>
+
+        <div class="photo-box">
+
+            <img
+                src="${item.photo}"
+                onerror="this.src='https://i.ibb.co/4pDNDk1/avatar.png'">
+
+        </div>
+
+        <div class="employee">
+
+            <div class="employee-name">
+                ${item.name}
+            </div>
+
+            <div class="employee-label">
+                ${item.dept}
+            </div>
+
+        </div>
+
+        <div class="score">
+
+            <div class="main-score">
+
+                <div class="score-value">
+                    ${score}
+                </div>
+
+                <div class="score-label">
+                    ${type.toUpperCase()}
+                </div>
+
+            </div>
+
+            <div class="ach-box ${
+                isBottom
+                ? "ach-red-box"
+                : "ach-green-box"
+            }">
+
+                <div class="ach-title">
+                    ACH
+                </div>
+
+                <div class="ach-value ${
+                    isBottom
+                    ? "ach-red"
+                    : "ach-green"
+                }">
+
+                    ${ach}
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+    `;
+}
+
+/* =========================
+RENDER
+========================= */
+
+function renderSection(
+    id,
+    arr,
+    type,
+    isBottom
+){
+
+    const el =
+    document.getElementById(id);
+
+    if(!el) return;
+
+    el.innerHTML = "";
+
+    arr.forEach((item,index)=>{
+
+        el.innerHTML +=
+        createCard(
+            item,
+            index,
+            type,
+            isBottom
+        );
+    });
+
+    requestAnimationFrame(()=>{
+
+        const cards =
+        el.querySelectorAll(".rank-card");
+
+        cards.forEach((card,i)=>{
+
+            setTimeout(()=>{
+
+                card.classList.add("show");
+
+            },i*200);
+
+        });
+
+    });
+}
+
+async function renderAll(){
+
+    const raw =
+    await getData();
+
+    const data =
+    raw.filter(x => !isExcluded(x.dept));
+
+    /* SALES */
+
+    const salesSorted =
+    [...data]
+    .sort((a,b)=>b.sales-a.sales);
+
+    renderSection(
+        "salesTop",
+        salesSorted.slice(0,3),
+        "sales",
+        false
+    );
+
+    renderSection(
+        "salesBottom",
+        [...salesSorted]
+        .reverse()
+        .slice(0,3),
+        "sales",
+        true
+    );
+
+    /* PROTEKSI */
+
+    const protSorted =
+    [...data]
+    .sort((a,b)=>b.proteksi-a.proteksi);
+
+    renderSection(
+        "proteksiTop",
+        protSorted.slice(0,3),
+        "proteksi",
+        false
+    );
+
+    renderSection(
+        "proteksiBottom",
+        [...protSorted]
+        .reverse()
+        .slice(0,3),
+        "proteksi",
+        true
+    );
+
+    /* TRX */
+
+    const trxSorted =
+    [...data]
+    .sort((a,b)=>b.trx-a.trx);
+
+    renderSection(
+        "trxTop",
+        trxSorted.slice(0,3),
+        "trx",
+        false
+    );
+
+    renderSection(
+        "trxBottom",
+        [...trxSorted]
+        .reverse()
+        .slice(0,3),
+        "trx",
+        true
+    );
+}
+
+/* =========================
+SLIDE SYSTEM
+========================= */
+
+const slides =
+[...document.querySelectorAll(".slide")];
+
+let currentSlide = 0;
+
+let autoSlide;
+
+let isTransitioning = false;
+
+const SLIDE_DURATION = 10000;
+
+function showSlide(index){
+
+    if(isTransitioning) return;
+
+    isTransitioning = true;
+
+    slides.forEach(slide=>{
+
+        slide.classList.remove("active");
+
+    });
+
+    slides[index].classList.add("active");
+
+    currentSlide = index;
+
+    setTimeout(()=>{
+
+        isTransitioning = false;
+
+    },600);
+}
+
+function nextSlide(){
+
+    let next =
+    currentSlide + 1;
+
+    if(next >= slides.length){
+
+        next = 0;
+    }
+
+    showSlide(next);
+}
+
+function startSlide(){
+
+    clearInterval(autoSlide);
+
+    autoSlide = setInterval(()=>{
+
+        nextSlide();
+
+    },SLIDE_DURATION);
+}
+
+/* =========================
+AUDIO
+========================= */
+
+const bgm =
+document.getElementById("bgm");
+
+async function startAudio(){
+
+    try{
+
+        await bgm.play();
+
+    }catch(e){
+
+        console.log("Autoplay blocked");
+    }
+}
+
+document.body.addEventListener(
+    "click",
+    startAudio,
+    { once:true }
+);
+
+/* =========================
+INIT
+========================= */
+
+async function init(){
+
+    await renderAll();
+
+    startSlide();
+
+    setInterval(()=>{
+
+        renderAll();
+
+    },30000);
+}
+
+init();
 
 </script>
 
