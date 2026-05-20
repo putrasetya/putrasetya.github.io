@@ -24,9 +24,13 @@ body{
 }
 
 body{
+
     font-family:'Poppins',sans-serif;
+
     overflow:hidden;
+
     color:white;
+
     cursor:pointer;
 
     background:
@@ -35,9 +39,16 @@ body{
         radial-gradient(circle at bottom,#0f172a 0%,#020617 70%);
 }
 
+/* =========================
+BACKGROUND FX
+========================= */
+
 body::before{
+
     content:"";
+
     position:fixed;
+
     inset:0;
 
     background:
@@ -49,6 +60,7 @@ body::before{
         );
 
     pointer-events:none;
+
     z-index:-2;
 }
 
@@ -96,6 +108,10 @@ body::after{
     }
 }
 
+/* =========================
+SLIDES FIX
+========================= */
+
 .slide{
 
     position:absolute;
@@ -115,30 +131,28 @@ body::after{
 
     opacity:0;
 
-    visibility:hidden;
-
     pointer-events:none;
 
-    transform:
-        scale(1.02);
+    z-index:0;
+
+    transform:scale(1);
 
     transition:
-        opacity .8s ease,
-        transform .8s ease,
-        visibility .8s;
+        opacity .7s ease;
 }
 
 .slide.active{
 
     opacity:1;
 
-    visibility:visible;
-
     pointer-events:auto;
 
-    transform:
-        scale(1);
+    z-index:2;
 }
+
+/* =========================
+HEADER
+========================= */
 
 .header{
 
@@ -172,6 +186,10 @@ body::after{
     opacity:.9;
 }
 
+/* =========================
+UPDATE TIME
+========================= */
+
 .update-time{
 
     margin:
@@ -201,6 +219,67 @@ body::after{
         0 0 20px rgba(0,0,0,.25);
 }
 
+/* =========================
+PAUSE INDICATOR
+========================= */
+
+.pause-indicator{
+
+    position:fixed;
+
+    top:20px;
+    left:20px;
+
+    z-index:9999;
+
+    padding:14px 24px;
+
+    border-radius:18px;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(15,23,42,.92),
+            rgba(30,41,59,.92)
+        );
+
+    border:
+        1px solid rgba(255,255,255,.15);
+
+    backdrop-filter:blur(16px);
+
+    font-size:14px;
+
+    font-weight:800;
+
+    letter-spacing:2px;
+
+    box-shadow:
+        0 10px 30px rgba(0,0,0,.45),
+        0 0 20px rgba(59,130,246,.25);
+
+    opacity:0;
+
+    transform:
+        translateY(-20px)
+        scale(.95);
+
+    transition:.35s ease;
+}
+
+.pause-indicator.show{
+
+    opacity:1;
+
+    transform:
+        translateY(0)
+        scale(1);
+}
+
+/* =========================
+RANK LIST
+========================= */
+
 .rank-list{
 
     display:flex;
@@ -213,6 +292,10 @@ body::after{
 
     justify-content:space-evenly;
 }
+
+/* =========================
+CARD
+========================= */
 
 .rank-card{
 
@@ -236,6 +319,10 @@ body::after{
     transform:
         translateX(-120px)
         scale(.96);
+
+    will-change:
+        transform,
+        opacity;
 }
 
 .rank-card.show{
@@ -277,7 +364,12 @@ body::after{
     }
 }
 
+/* =========================
+TOP CARD
+========================= */
+
 .gold{
+
     background:
         linear-gradient(
             135deg,
@@ -290,6 +382,7 @@ body::after{
 }
 
 .silver{
+
     background:
         linear-gradient(
             135deg,
@@ -302,6 +395,7 @@ body::after{
 }
 
 .bronze{
+
     background:
         linear-gradient(
             135deg,
@@ -313,7 +407,12 @@ body::after{
         );
 }
 
+/* =========================
+BOTTOM CARD
+========================= */
+
 .red-high{
+
     background:
         linear-gradient(
             135deg,
@@ -326,6 +425,7 @@ body::after{
 }
 
 .red-mid{
+
     background:
         linear-gradient(
             135deg,
@@ -338,6 +438,7 @@ body::after{
 }
 
 .red-low{
+
     background:
         linear-gradient(
             135deg,
@@ -348,6 +449,10 @@ body::after{
             #b91c1c
         );
 }
+
+/* =========================
+RANK NUMBER
+========================= */
 
 .rank-number{
 
@@ -370,6 +475,29 @@ body::after{
     letter-spacing:-10px;
 }
 
+.gold .rank-number{
+    color:#facc15;
+}
+
+.silver .rank-number{
+    color:#e2e8f0;
+}
+
+.bronze .rank-number{
+    color:#fb923c;
+}
+
+.red-high .rank-number,
+.red-mid .rank-number,
+.red-low .rank-number{
+
+    color:#ffffff;
+}
+
+/* =========================
+PHOTO
+========================= */
+
 .photo-box{
 
     width:20%;
@@ -390,13 +518,24 @@ body::after{
     object-fit:contain;
 
     object-position:center bottom;
+
+    filter:
+        drop-shadow(0 10px 15px rgba(0,0,0,.28))
+        contrast(1.08)
+        saturate(1.08);
 }
+
+/* =========================
+EMPLOYEE
+========================= */
 
 .employee{
 
     flex:1;
 
     padding-left:1.5vw;
+
+    overflow:hidden;
 }
 
 .employee-name{
@@ -408,6 +547,12 @@ body::after{
     color:#111827;
 
     text-transform:uppercase;
+
+    white-space:nowrap;
+
+    overflow:hidden;
+
+    text-overflow:ellipsis;
 }
 
 .employee-label{
@@ -423,6 +568,21 @@ body::after{
     color:#111827;
 }
 
+.red-high .employee-name,
+.red-mid .employee-name,
+.red-low .employee-name,
+
+.red-high .employee-label,
+.red-mid .employee-label,
+.red-low .employee-label{
+
+    color:white;
+}
+
+/* =========================
+SCORE
+========================= */
+
 .score{
 
     width:31%;
@@ -436,6 +596,11 @@ body::after{
     align-items:flex-end;
 
     gap:1vh;
+}
+
+.main-score{
+
+    text-align:right;
 }
 
 .score-value{
@@ -458,9 +623,30 @@ body::after{
     letter-spacing:2px;
 
     color:#111827;
+
+    opacity:.7;
 }
 
+.red-high .score-value,
+.red-mid .score-value,
+.red-low .score-value,
+
+.red-high .score-label,
+.red-mid .score-label,
+.red-low .score-label{
+
+    color:white;
+}
+
+/* =========================
+ACH BOX
+========================= */
+
 .ach-box{
+
+    position:relative;
+
+    overflow:hidden;
 
     padding:
         1vh
@@ -487,6 +673,10 @@ body::after{
 
 .ach-title{
 
+    position:relative;
+
+    z-index:2;
+
     font-size:.72vw;
 
     font-weight:800;
@@ -498,6 +688,10 @@ body::after{
 
 .ach-value{
 
+    position:relative;
+
+    z-index:2;
+
     margin-top:.45vh;
 
     font-size:1.8vw;
@@ -506,51 +700,129 @@ body::after{
 }
 
 .ach-green{
+
     color:#dcfce7 !important;
+
+    text-shadow:
+        0 0 6px rgba(34,197,94,.95),
+        0 0 14px rgba(34,197,94,.9),
+        0 0 24px rgba(34,197,94,.75);
+}
+
+.ach-green-box{
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(22,163,74,.42),
+            rgba(34,197,94,.22)
+        ) !important;
+
+    border:
+        2px solid rgba(74,222,128,.65);
 }
 
 .ach-red{
+
     color:#ffe4e6 !important;
+
+    text-shadow:
+        0 0 6px rgba(239,68,68,.95),
+        0 0 14px rgba(239,68,68,.9),
+        0 0 24px rgba(239,68,68,.75);
+}
+
+.ach-red-box{
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(185,28,28,.42),
+            rgba(239,68,68,.22)
+        ) !important;
+
+    border:
+        2px solid rgba(252,165,165,.6);
 }
 
 .ach-normal{
+
     color:#ffffff !important;
 }
 
-.pause-indicator{
+/* =========================
+MOBILE
+========================= */
 
-    position:fixed;
+@media(max-width:768px){
 
-    top:20px;
-    left:20px;
+    body{
+        overflow:auto;
+    }
 
-    z-index:9999;
+    .slide{
+        min-height:100vh;
+        height:auto;
+        padding:12px;
+    }
 
-    padding:14px 24px;
+    .header h1{
+        font-size:30px;
+    }
 
-    border-radius:18px;
+    .header p{
+        font-size:11px;
+    }
 
-    background:
-        rgba(15,23,42,.92);
+    .rank-card{
+        height:130px;
+    }
 
-    font-size:14px;
+    .rank-number{
+        font-size:90px !important;
+    }
 
-    font-weight:800;
+    .photo-box{
+        width:95px;
+        min-width:95px;
+    }
 
-    opacity:0;
+    .employee-name{
+        font-size:15px;
+    }
 
-    transform:
-        translateY(-20px);
+    .employee-label{
+        font-size:10px;
+    }
 
-    transition:.35s ease;
-}
+    .score{
+        width:42%;
+    }
 
-.pause-indicator.show{
+    .score-value{
+        font-size:18px;
+    }
 
-    opacity:1;
+    .score-label{
+        font-size:9px;
+    }
 
-    transform:
-        translateY(0);
+    .ach-box{
+
+        min-width:78px;
+
+        padding:
+            8px
+            10px;
+    }
+
+    .ach-title{
+        font-size:8px;
+    }
+
+    .ach-value{
+        font-size:15px;
+    }
 }
 
 </style>
@@ -616,10 +888,27 @@ body::after{
     <div class="rank-list" id="trxBottom"></div>
 </div>
 
+<audio
+    id="bgm"
+    loop
+    autoplay
+    playsinline
+    preload="auto">
+
+    <source
+        src="https://putrasetya.github.io/223am.mp3"
+        type="audio/mpeg">
+
+</audio>
+
 <script>
 
 const URL =
 "https://script.google.com/macros/s/AKfycbzeehvUo6QYriMFJTR4A88lN6IIHV6Qop9UphkdOTMkRLVxhVuJ13y69momo6h1pn9dTQ/exec";
+
+/* =========================
+HELPERS
+========================= */
 
 function clean(val){
 
@@ -657,6 +946,24 @@ function setUpdate(text){
         }
     }
 }
+
+function isExcluded(dept){
+
+    const d =
+    (dept || "").toLowerCase();
+
+    return (
+
+        d.includes("cashier") ||
+        d.includes("kasir") ||
+        d.includes("cs") ||
+        d.includes("customer service")
+    );
+}
+
+/* =========================
+GET DATA
+========================= */
 
 async function getData(){
 
@@ -699,11 +1006,15 @@ async function getData(){
 
     }catch(err){
 
-        console.log(err);
+        console.log("GET DATA ERROR:",err);
 
         return [];
     }
 }
+
+/* =========================
+ACH STYLE
+========================= */
 
 function getAchStyle(value){
 
@@ -712,7 +1023,10 @@ function getAchStyle(value){
         return {
 
             valueClass:
-                "ach-value ach-green"
+                "ach-value ach-green",
+
+            boxClass:
+                "ach-box ach-green-box"
         };
     }
 
@@ -721,16 +1035,26 @@ function getAchStyle(value){
         return {
 
             valueClass:
-                "ach-value ach-red"
+                "ach-value ach-red",
+
+            boxClass:
+                "ach-box ach-red-box"
         };
     }
 
     return {
 
         valueClass:
-            "ach-value ach-normal"
+            "ach-value ach-normal",
+
+        boxClass:
+            "ach-box"
     };
 }
+
+/* =========================
+RENDER
+========================= */
 
 function render(
     data,
@@ -747,9 +1071,21 @@ function render(
 
     if(!container) return;
 
-    let styles = [];
+    let filteredData = [...data];
+
+    if(
+        containerId === "salesBottom" ||
+        containerId === "trxTop"
+    ){
+
+        filteredData =
+        filteredData.filter(
+            item => !isExcluded(item.dept)
+        );
+    }
 
     let sorted = [];
+    let styles = [];
 
     if(mode === "top"){
 
@@ -760,7 +1096,7 @@ function render(
         ];
 
         sorted =
-        data
+        filteredData
             .filter(v => v[key] > 0)
             .sort((a,b)=>b[key]-a[key])
             .slice(0,3);
@@ -773,16 +1109,33 @@ function render(
             "red-low"
         ];
 
-        sorted =
-        data
+        const allSorted =
+        filteredData
             .filter(v => v[key] > 0)
-            .sort((a,b)=>a[key]-b[key])
-            .slice(0,3);
+            .sort((a,b)=>a[key]-b[key]);
+
+        sorted =
+        allSorted.slice(0,3);
+
+        sorted = sorted.map((item,index)=>({
+
+            ...item,
+
+            bottomRank:
+            allSorted.length - index
+        }));
+
+        sorted.reverse();
     }
 
     let html = "";
 
     sorted.forEach((d,i)=>{
+
+        const rank =
+        mode === "top"
+        ? i + 1
+        : d.bottomRank;
 
         const achStyle =
         getAchStyle(d[achKey]);
@@ -792,7 +1145,7 @@ function render(
         <div class="rank-card ${styles[i]}">
 
             <div class="rank-number">
-                ${i+1}
+                ${rank}
             </div>
 
             <div class="photo-box">
@@ -803,7 +1156,7 @@ function render(
                     loading="lazy"
 
                     onerror="
-                    this.src='https://ui-avatars.com/api/?name=${encodeURIComponent(d.name)}'
+                    this.src='https://ui-avatars.com/api/?name=${encodeURIComponent(d.name)}&background=random&color=fff&size=512'
                     "
                 >
 
@@ -823,7 +1176,7 @@ function render(
 
             <div class="score">
 
-                <div>
+                <div class="main-score">
 
                     <div class="score-value">
                         ${d[key].toLocaleString('id-ID')}
@@ -835,7 +1188,7 @@ function render(
 
                 </div>
 
-                <div class="ach-box">
+                <div class="${achStyle.boxClass}">
 
                     <div class="ach-title">
                         ${achTitle}
@@ -857,7 +1210,7 @@ function render(
 }
 
 /* =========================
-SLIDE SYSTEM FIX
+SLIDES FIX
 ========================= */
 
 const slides =
@@ -865,7 +1218,11 @@ document.querySelectorAll(".slide");
 
 let current = 0;
 
+let isTransitioning = false;
+
 function animateCards(slide){
+
+    if(!slide) return;
 
     const cards =
     slide.querySelectorAll(".rank-card");
@@ -880,30 +1237,51 @@ function animateCards(slide){
     });
 }
 
+function showSlide(index){
+
+    slides.forEach((slide,i)=>{
+
+        if(i === index){
+
+            slide.classList.add("active");
+
+        }else{
+
+            slide.classList.remove("active");
+        }
+    });
+
+    animateCards(slides[index]);
+}
+
 function nextSlide(){
 
-    slides[current]
-        .classList.remove("active");
+    if(isTransitioning) return;
 
-    current++;
+    isTransitioning = true;
 
-    if(current >= slides.length){
+    current =
+    (current + 1) % slides.length;
 
-        current = 0;
-    }
+    showSlide(current);
 
-    const next =
-    slides[current];
+    setTimeout(()=>{
 
-    next.classList.add("active");
+        isTransitioning = false;
 
-    /* ANIMASI HANYA SAAT PINDAH SLIDE */
-    animateCards(next);
+    },900);
 }
+
+/* =========================
+UPDATE
+========================= */
 
 async function update(){
 
     const data = await getData();
+
+    const now =
+    formatTanggal(new Date());
 
     render(
         data,
@@ -965,21 +1343,194 @@ async function update(){
         "bottom"
     );
 
-    setUpdate(
-        formatTanggal(new Date())
-    );
+    if(
+        slides[current]
+        .classList.contains("active")
+    ){
+        animateCards(slides[current]);
+    }
 
-    /*
-    FIX UTAMA:
-    animateCards(slides[current]);
-    DIHAPUS
-    AGAR SLIDE TIDAK MENGULANG
-    */
+    setUpdate(now);
 }
 
-setInterval(nextSlide,7000);
+/* =========================
+INDICATOR
+========================= */
 
-setInterval(update,15000);
+const pauseIndicator =
+document.getElementById(
+    "pauseIndicator"
+);
+
+function showIndicator(text){
+
+    if(!pauseIndicator) return;
+
+    pauseIndicator.innerHTML = text;
+
+    pauseIndicator.classList.add("show");
+
+    clearTimeout(window.indicatorTimeout);
+
+    window.indicatorTimeout =
+    setTimeout(()=>{
+
+        pauseIndicator.classList.remove("show");
+
+    },1500);
+}
+
+/* =========================
+AUDIO
+========================= */
+
+const bgm =
+document.getElementById("bgm");
+
+if(bgm){
+
+    bgm.volume = 0.4;
+}
+
+async function playMusic(){
+
+    if(!bgm) return;
+
+    try{
+
+        await bgm.play();
+
+    }catch(err){
+
+        console.log(err);
+    }
+}
+
+/* =========================
+LOOP
+========================= */
+
+let isPaused = false;
+
+let slideInterval;
+let updateInterval;
+
+function stopLoop(){
+
+    clearInterval(slideInterval);
+    clearInterval(updateInterval);
+}
+
+function startLoop(){
+
+    stopLoop();
+
+    slideInterval =
+    setInterval(()=>{
+
+        if(!document.hidden){
+
+            nextSlide();
+        }
+
+    },7000);
+
+    updateInterval =
+    setInterval(()=>{
+
+        if(!document.hidden){
+
+            update();
+        }
+
+    },15000);
+}
+
+function togglePause(){
+
+    isPaused = !isPaused;
+
+    if(isPaused){
+
+        stopLoop();
+
+        if(bgm) bgm.pause();
+
+        showIndicator("⏸ PAUSED");
+
+    }else{
+
+        startLoop();
+
+        playMusic();
+
+        showIndicator("▶ PLAYING");
+    }
+}
+
+/* =========================
+FULLSCREEN
+========================= */
+
+async function toggleFullscreen(){
+
+    try{
+
+        if(!document.fullscreenElement){
+
+            await document.documentElement.requestFullscreen();
+
+            showIndicator("🖥 FULLSCREEN");
+
+        }else{
+
+            await document.exitFullscreen();
+
+            showIndicator("❎ EXIT FULLSCREEN");
+        }
+
+    }catch(err){
+
+        console.log(err);
+    }
+}
+
+/* =========================
+CLICK
+========================= */
+
+let clickTimer = null;
+
+document.addEventListener(
+    "click",
+    ()=>{
+
+        if(clickTimer){
+
+            clearTimeout(clickTimer);
+        }
+
+        clickTimer = setTimeout(()=>{
+
+            togglePause();
+
+        },250);
+    }
+);
+
+document.addEventListener(
+    "dblclick",
+    ()=>{
+
+        clearTimeout(clickTimer);
+
+        toggleFullscreen();
+    }
+);
+
+/* =========================
+START
+========================= */
 
 window.addEventListener(
     "load",
@@ -987,9 +1538,17 @@ window.addEventListener(
 
         await update();
 
-        animateCards(
-            slides[current]
-        );
+        showSlide(0);
+
+        startLoop();
+
+        playMusic();
+
+        setTimeout(playMusic,1000);
+
+        setTimeout(playMusic,3000);
+
+        showIndicator("▶ PLAYING");
     }
 );
 
