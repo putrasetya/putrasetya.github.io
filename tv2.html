@@ -121,7 +121,9 @@ SLIDES
     width:100vw;
     height:100vh;
 
-    padding:1vh 2vw;
+    padding:
+        1vh
+        2vw;
 
     display:flex;
 
@@ -133,9 +135,13 @@ SLIDES
 
     pointer-events:none;
 
-    transition:opacity .5s ease;
+    transform:
+        scale(1.02);
 
-    z-index:0;
+    transition:
+        opacity .8s ease,
+        transform .8s ease,
+        visibility .8s;
 }
 
 .slide.active{
@@ -146,7 +152,8 @@ SLIDES
 
     pointer-events:auto;
 
-    z-index:2;
+    transform:
+        scale(1);
 }
 
 /* =========================
@@ -219,6 +226,63 @@ UPDATE TIME
 }
 
 /* =========================
+PAUSE INDICATOR
+========================= */
+
+.pause-indicator{
+
+    position:fixed;
+
+    top:20px;
+    left:20px;
+
+    z-index:9999;
+
+    padding:14px 24px;
+
+    border-radius:18px;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(15,23,42,.92),
+            rgba(30,41,59,.92)
+        );
+
+    border:
+        1px solid rgba(255,255,255,.15);
+
+    backdrop-filter:blur(16px);
+
+    font-size:14px;
+
+    font-weight:800;
+
+    letter-spacing:2px;
+
+    box-shadow:
+        0 10px 30px rgba(0,0,0,.45),
+        0 0 20px rgba(59,130,246,.25);
+
+    opacity:0;
+
+    transform:
+        translateY(-20px)
+        scale(.95);
+
+    transition:.35s ease;
+}
+
+.pause-indicator.show{
+
+    opacity:1;
+
+    transform:
+        translateY(0)
+        scale(1);
+}
+
+/* =========================
 RANK LIST
 ========================= */
 
@@ -273,6 +337,18 @@ CARD
         slideRight .9s forwards;
 }
 
+.rank-card:nth-child(1){
+    animation-delay:.2s;
+}
+
+.rank-card:nth-child(2){
+    animation-delay:.5s;
+}
+
+.rank-card:nth-child(3){
+    animation-delay:.8s;
+}
+
 @keyframes slideRight{
 
     from{
@@ -299,6 +375,7 @@ TOP CARD
 ========================= */
 
 .gold{
+
     background:
         linear-gradient(
             135deg,
@@ -311,6 +388,7 @@ TOP CARD
 }
 
 .silver{
+
     background:
         linear-gradient(
             135deg,
@@ -323,6 +401,7 @@ TOP CARD
 }
 
 .bronze{
+
     background:
         linear-gradient(
             135deg,
@@ -334,11 +413,8 @@ TOP CARD
         );
 }
 
-/* =========================
-BOTTOM CARD
-========================= */
-
 .red-high{
+
     background:
         linear-gradient(
             135deg,
@@ -351,6 +427,7 @@ BOTTOM CARD
 }
 
 .red-mid{
+
     background:
         linear-gradient(
             135deg,
@@ -363,6 +440,7 @@ BOTTOM CARD
 }
 
 .red-low{
+
     background:
         linear-gradient(
             135deg,
@@ -373,10 +451,6 @@ BOTTOM CARD
             #b91c1c
         );
 }
-
-/* =========================
-RANK NUMBER
-========================= */
 
 .rank-number{
 
@@ -414,13 +488,8 @@ RANK NUMBER
 .red-high .rank-number,
 .red-mid .rank-number,
 .red-low .rank-number{
-
     color:#ffffff;
 }
-
-/* =========================
-PHOTO
-========================= */
 
 .photo-box{
 
@@ -448,10 +517,6 @@ PHOTO
         contrast(1.08)
         saturate(1.08);
 }
-
-/* =========================
-EMPLOYEE
-========================= */
 
 .employee{
 
@@ -499,13 +564,8 @@ EMPLOYEE
 .red-high .employee-label,
 .red-mid .employee-label,
 .red-low .employee-label{
-
     color:white;
 }
-
-/* =========================
-SCORE
-========================= */
 
 .score{
 
@@ -523,7 +583,6 @@ SCORE
 }
 
 .main-score{
-
     text-align:right;
 }
 
@@ -558,13 +617,8 @@ SCORE
 .red-high .score-label,
 .red-mid .score-label,
 .red-low .score-label{
-
     color:white;
 }
-
-/* =========================
-ACH BOX
-========================= */
 
 .ach-box{
 
@@ -669,16 +723,24 @@ ACH BOX
         2px solid rgba(252,165,165,.6);
 }
 
+.ach-normal{
+    color:#ffffff !important;
+}
+
 </style>
 </head>
 
 <body>
 
+<div class="pause-indicator" id="pauseIndicator">
+    ▶ PLAYING
+</div>
+
 <div class="slide active">
     <div class="header">
         <h1>TOP SALES</h1>
         <p>AZKO CITIMALL TUBAN</p>
-        <div class="update-time" id="update1">LAST UPDATE : -</div>
+        <div class="update-time" id="update1">DATA UPDATE : -</div>
     </div>
     <div class="rank-list" id="salesTop"></div>
 </div>
@@ -687,7 +749,7 @@ ACH BOX
     <div class="header">
         <h1>BOTTOM SALES</h1>
         <p>AZKO CITIMALL TUBAN</p>
-        <div class="update-time" id="update2">LAST UPDATE : -</div>
+        <div class="update-time" id="update2">DATA UPDATE : -</div>
     </div>
     <div class="rank-list" id="salesBottom"></div>
 </div>
@@ -696,7 +758,7 @@ ACH BOX
     <div class="header">
         <h1>TOP PROTEKSI</h1>
         <p>AZKO CITIMALL TUBAN</p>
-        <div class="update-time" id="update3">LAST UPDATE : -</div>
+        <div class="update-time" id="update3">DATA UPDATE : -</div>
     </div>
     <div class="rank-list" id="proteksiTop"></div>
 </div>
@@ -705,7 +767,7 @@ ACH BOX
     <div class="header">
         <h1>BOTTOM PROTEKSI</h1>
         <p>AZKO CITIMALL TUBAN</p>
-        <div class="update-time" id="update4">LAST UPDATE : -</div>
+        <div class="update-time" id="update4">DATA UPDATE : -</div>
     </div>
     <div class="rank-list" id="proteksiBottom"></div>
 </div>
@@ -714,7 +776,7 @@ ACH BOX
     <div class="header">
         <h1>TOP TRX</h1>
         <p>AZKO CITIMALL TUBAN</p>
-        <div class="update-time" id="update5">LAST UPDATE : -</div>
+        <div class="update-time" id="update5">DATA UPDATE : -</div>
     </div>
     <div class="rank-list" id="trxTop"></div>
 </div>
@@ -723,23 +785,10 @@ ACH BOX
     <div class="header">
         <h1>BOTTOM TRX</h1>
         <p>AZKO CITIMALL TUBAN</p>
-        <div class="update-time" id="update6">LAST UPDATE : -</div>
+        <div class="update-time" id="update6">DATA UPDATE : -</div>
     </div>
     <div class="rank-list" id="trxBottom"></div>
 </div>
-
-<audio
-    id="bgm"
-    loop
-    autoplay
-    playsinline
-    preload="auto">
-
-    <source
-        src="https://putrasetya.github.io/223am.mp3"
-        type="audio/mpeg">
-
-</audio>
 
 <script>
 
@@ -759,19 +808,6 @@ function clean(val){
     ) || 0;
 }
 
-function formatTanggal(date){
-
-    return date.toLocaleString('id-ID',{
-
-        day:'2-digit',
-        month:'long',
-        year:'numeric',
-        hour:'2-digit',
-        minute:'2-digit',
-        second:'2-digit'
-    });
-}
-
 function setUpdate(text){
 
     for(let i=1;i<=6;i++){
@@ -782,7 +818,7 @@ function setUpdate(text){
         if(el){
 
             el.innerHTML =
-            "LAST UPDATE : " + text;
+            "DATA UPDATE : " + text;
         }
     }
 }
@@ -801,22 +837,6 @@ function isExcluded(dept){
     );
 }
 
-function formatJT(num){
-
-    if(!num || isNaN(num)) return "0 JT";
-
-    return (
-        (num / 1000000)
-        .toFixed(1)
-        .replace(".0","")
-    ) + " JT";
-}
-
-function formatPercent(num){
-
-    return (num || 0).toFixed(1) + "%";
-}
-
 /* =========================
 GET DATA
 ========================= */
@@ -825,424 +845,435 @@ async function getData(){
 
     try{
 
-        const res = await fetch(
+        const res = await fetch(URL);
 
-            URL + "?t=" + Date.now(),
+        const json = await res.json();
 
-            {
-                method:"GET",
-                cache:"no-store"
-            }
-        );
+        const rows =
+            json.data ||
+            json.rows ||
+            json;
 
-        const json =
-        await res.json();
+        const lastUpdate =
+            json.lastUpdate ||
+            json.updated ||
+            json.timestamp ||
+            "-";
 
-        let rows = [];
+        return {
 
-        if(Array.isArray(json)){
+            data: rows.map(row => ({
 
-            rows = json;
+                name:
+                    row["EMPLOYEE NAME"] || "UNKNOWN",
 
-            setUpdate(
-                formatTanggal(new Date())
-            );
-        }
+                dept:
+                    row["DEPT"] || "-",
 
-        else if(json.data){
+                sales:
+                    clean(row["SALES MTD"]),
 
-            rows = json.data;
+                proteksi:
+                    clean(row["PROTEKSI"]),
 
-            if(json.lastUpdate){
+                trx:
+                    clean(row["TRX"]),
 
-                const updateTime =
-                formatTanggal(
-                    new Date(json.lastUpdate)
-                );
+                achSales:
+                    clean(row["ACH MTD"]),
 
-                setUpdate(updateTime);
-            }
-        }
+                achProteksi:
+                    clean(row["ACH PROTEKSI"]),
 
-        return rows.map(row => ({
+                achTrx:
+                    clean(row["ACH BULANAN"]),
 
-            name:
-                row["EMPLOYEE NAME"] || "UNKNOWN",
+                photo:
+                    row["PHOTO"] || ""
 
-            dept:
-                row["DEPT"] || "-",
+            })),
 
-            sales:
-                clean(row["SALES MTD"]),
-
-            proteksi:
-                clean(row["PROTEKSI"]),
-
-            trx:
-                clean(row["TRX"]),
-
-            achSales:
-                clean(row["ACH MTD"]),
-
-            achProteksi:
-                clean(row["ACH PROTEKSI"]),
-
-            achTrx:
-                clean(row["ACH BULANAN"]),
-
-            photo:
-                row["PHOTO"] || ""
-
-        }));
+            lastUpdate
+        };
 
     }catch(err){
 
-        console.log(
-            "GET DATA ERROR:",
-            err
-        );
+        console.log("GET DATA ERROR:",err);
 
-        return [];
+        return {
+            data: [],
+            lastUpdate: "-"
+        };
     }
 }
 
 /* =========================
-CARD
+ACH STYLE
 ========================= */
 
-function createCard(item,index,type,isBottom=false){
+function getAchStyle(value){
 
-    let bg = "";
+    if(value >= 100){
 
-    if(isBottom){
+        return {
 
-        if(index===0) bg="red-high";
-        else if(index===1) bg="red-mid";
-        else bg="red-low";
+            valueClass:
+                "ach-value ach-green",
 
-    }else{
-
-        if(index===0) bg="gold";
-        else if(index===1) bg="silver";
-        else bg="bronze";
+            boxClass:
+                "ach-box ach-green-box"
+        };
     }
 
-    let score = "";
-    let ach = "";
+    if(value < 80){
 
-    if(type==="sales"){
+        return {
 
-        score = formatJT(item.sales);
-        ach = formatPercent(item.achSales);
+            valueClass:
+                "ach-value ach-red",
 
-    }else if(type==="proteksi"){
-
-        score = item.proteksi.toFixed(1);
-        ach = formatPercent(item.achProteksi);
-
-    }else{
-
-        score = item.trx.toFixed(0);
-        ach = formatPercent(item.achTrx);
+            boxClass:
+                "ach-box ach-red-box"
+        };
     }
 
-    return `
+    return {
 
-    <div class="rank-card ${bg}">
+        valueClass:
+            "ach-value ach-normal",
 
-        <div class="rank-number">
-            ${index+1}
-        </div>
-
-        <div class="photo-box">
-
-            <img
-                src="${item.photo}"
-                onerror="this.src='https://i.ibb.co/4pDNDk1/avatar.png'">
-
-        </div>
-
-        <div class="employee">
-
-            <div class="employee-name">
-                ${item.name}
-            </div>
-
-            <div class="employee-label">
-                ${item.dept}
-            </div>
-
-        </div>
-
-        <div class="score">
-
-            <div class="main-score">
-
-                <div class="score-value">
-                    ${score}
-                </div>
-
-                <div class="score-label">
-                    ${type.toUpperCase()}
-                </div>
-
-            </div>
-
-            <div class="ach-box ${
-                isBottom
-                ? "ach-red-box"
-                : "ach-green-box"
-            }">
-
-                <div class="ach-title">
-                    ACH
-                </div>
-
-                <div class="ach-value ${
-                    isBottom
-                    ? "ach-red"
-                    : "ach-green"
-                }">
-
-                    ${ach}
-
-                </div>
-
-            </div>
-
-        </div>
-
-    </div>
-    `;
+        boxClass:
+            "ach-box"
+    };
 }
 
 /* =========================
 RENDER
 ========================= */
 
-function renderSection(
-    id,
-    arr,
-    type,
-    isBottom
+function render(
+    data,
+    key,
+    achKey,
+    achTitle,
+    containerId,
+    label,
+    mode="top"
 ){
 
-    const el =
-    document.getElementById(id);
+    const container =
+    document.getElementById(containerId);
 
-    if(!el) return;
+    if(!container) return;
 
-    el.innerHTML = "";
+    let filteredData = [...data];
 
-    arr.forEach((item,index)=>{
+    if(
+        containerId === "salesBottom" ||
+        containerId === "trxTop"
+    ){
 
-        el.innerHTML +=
-        createCard(
-            item,
-            index,
-            type,
-            isBottom
+        filteredData =
+        filteredData.filter(
+            item => !isExcluded(item.dept)
         );
+    }
+
+    let sorted = [];
+    let styles = [];
+
+    if(mode === "top"){
+
+        styles = [
+            "gold",
+            "silver",
+            "bronze"
+        ];
+
+        sorted =
+        filteredData
+            .filter(v => v[key] > 0)
+            .sort((a,b)=>b[key]-a[key])
+            .slice(0,3);
+
+    }else{
+
+        styles = [
+            "red-high",
+            "red-mid",
+            "red-low"
+        ];
+
+        const allSorted =
+        filteredData
+            .filter(v => v[key] > 0)
+            .sort((a,b)=>a[key]-b[key]);
+
+        sorted =
+        allSorted.slice(0,3);
+
+        sorted = sorted.map((item,index)=>({
+
+            ...item,
+
+            bottomRank:
+            allSorted.length - index
+        }));
+
+        sorted.reverse();
+    }
+
+    let html = "";
+
+    sorted.forEach((d,i)=>{
+
+        const rank =
+        mode === "top"
+        ? i + 1
+        : d.bottomRank;
+
+        const achStyle =
+        getAchStyle(d[achKey]);
+
+        html += `
+
+        <div class="rank-card ${styles[i]}">
+
+            <div class="rank-number">
+                ${rank}
+            </div>
+
+            <div class="photo-box">
+
+                <img
+                    src="https://lh3.googleusercontent.com/d/${d.photo}"
+
+                    loading="lazy"
+
+                    onerror="
+                    this.src='https://ui-avatars.com/api/?name=${encodeURIComponent(d.name)}&background=random&color=fff&size=512'
+                    "
+                >
+
+            </div>
+
+            <div class="employee">
+
+                <div class="employee-name">
+                    ${d.name}
+                </div>
+
+                <div class="employee-label">
+                    ${d.dept}
+                </div>
+
+            </div>
+
+            <div class="score">
+
+                <div class="main-score">
+
+                    <div class="score-value">
+                        ${d[key].toLocaleString('id-ID')}
+                    </div>
+
+                    <div class="score-label">
+                        ${label}
+                    </div>
+
+                </div>
+
+                <div class="${achStyle.boxClass}">
+
+                    <div class="ach-title">
+                        ${achTitle}
+                    </div>
+
+                    <div class="${achStyle.valueClass}">
+                        ${d[achKey].toFixed(1)}%
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+        `;
     });
 
-    requestAnimationFrame(()=>{
-
-        const cards =
-        el.querySelectorAll(".rank-card");
-
-        cards.forEach((card,i)=>{
-
-            setTimeout(()=>{
-
-                card.classList.add("show");
-
-            },i*200);
-
-        });
-
-    });
-}
-
-async function renderAll(){
-
-    const raw =
-    await getData();
-
-    const data =
-    raw.filter(x => !isExcluded(x.dept));
-
-    /* SALES */
-
-    const salesSorted =
-    [...data]
-    .sort((a,b)=>b.sales-a.sales);
-
-    renderSection(
-        "salesTop",
-        salesSorted.slice(0,3),
-        "sales",
-        false
-    );
-
-    renderSection(
-        "salesBottom",
-        [...salesSorted]
-        .reverse()
-        .slice(0,3),
-        "sales",
-        true
-    );
-
-    /* PROTEKSI */
-
-    const protSorted =
-    [...data]
-    .sort((a,b)=>b.proteksi-a.proteksi);
-
-    renderSection(
-        "proteksiTop",
-        protSorted.slice(0,3),
-        "proteksi",
-        false
-    );
-
-    renderSection(
-        "proteksiBottom",
-        [...protSorted]
-        .reverse()
-        .slice(0,3),
-        "proteksi",
-        true
-    );
-
-    /* TRX */
-
-    const trxSorted =
-    [...data]
-    .sort((a,b)=>b.trx-a.trx);
-
-    renderSection(
-        "trxTop",
-        trxSorted.slice(0,3),
-        "trx",
-        false
-    );
-
-    renderSection(
-        "trxBottom",
-        [...trxSorted]
-        .reverse()
-        .slice(0,3),
-        "trx",
-        true
-    );
+    container.innerHTML = html;
 }
 
 /* =========================
-SLIDE SYSTEM
+SLIDES
 ========================= */
 
 const slides =
-[...document.querySelectorAll(".slide")];
+document.querySelectorAll(".slide");
 
-let currentSlide = 0;
+let current = 0;
 
-let autoSlide;
+function animateCards(slide){
 
-let isTransitioning = false;
+    const cards =
+    slide.querySelectorAll(".rank-card");
 
-const SLIDE_DURATION = 10000;
+    cards.forEach(card=>{
 
-function showSlide(index){
+        card.classList.remove("show");
 
-    if(isTransitioning) return;
+        void card.offsetWidth;
 
-    isTransitioning = true;
-
-    slides.forEach(slide=>{
-
-        slide.classList.remove("active");
-
+        card.classList.add("show");
     });
-
-    slides[index].classList.add("active");
-
-    currentSlide = index;
-
-    setTimeout(()=>{
-
-        isTransitioning = false;
-
-    },600);
 }
 
 function nextSlide(){
 
-    let next =
-    currentSlide + 1;
+    slides[current]
+        .classList.remove("active");
 
-    if(next >= slides.length){
+    current++;
 
-        next = 0;
+    if(current >= slides.length){
+
+        current = 0;
     }
 
-    showSlide(next);
+    const next =
+    slides[current];
+
+    next.classList.add("active");
+
+    animateCards(next);
 }
 
-function startSlide(){
+/* =========================
+UPDATE
+========================= */
 
-    clearInterval(autoSlide);
+async function update(){
 
-    autoSlide = setInterval(()=>{
+    const result =
+    await getData();
+
+    const data =
+    result.data || [];
+
+    const now =
+    result.lastUpdate || "-";
+
+    render(
+        data,
+        "sales",
+        "achSales",
+        "ACH MTD",
+        "salesTop",
+        "TOTAL SALES",
+        "top"
+    );
+
+    render(
+        data,
+        "sales",
+        "achSales",
+        "ACH MTD",
+        "salesBottom",
+        "TOTAL SALES",
+        "bottom"
+    );
+
+    render(
+        data,
+        "proteksi",
+        "achProteksi",
+        "ACH PROTEKSI",
+        "proteksiTop",
+        "TOTAL PROTEKSI",
+        "top"
+    );
+
+    render(
+        data,
+        "proteksi",
+        "achProteksi",
+        "ACH PROTEKSI",
+        "proteksiBottom",
+        "TOTAL PROTEKSI",
+        "bottom"
+    );
+
+    render(
+        data,
+        "trx",
+        "achTrx",
+        "ACH BULANAN",
+        "trxTop",
+        "TOTAL TRX",
+        "top"
+    );
+
+    render(
+        data,
+        "trx",
+        "achTrx",
+        "ACH BULANAN",
+        "trxBottom",
+        "TOTAL TRX",
+        "bottom"
+    );
+
+    animateCards(
+        slides[current]
+    );
+
+    setUpdate(now);
+}
+
+/* =========================
+AUTO SLIDE
+========================= */
+
+let slideInterval;
+let updateInterval;
+
+function startLoop(){
+
+    clearInterval(slideInterval);
+    clearInterval(updateInterval);
+
+    slideInterval =
+    setInterval(()=>{
 
         nextSlide();
 
-    },SLIDE_DURATION);
-}
+    },7000);
 
-/* =========================
-AUDIO
-========================= */
-
-const bgm =
-document.getElementById("bgm");
-
-async function startAudio(){
-
-    try{
-
-        await bgm.play();
-
-    }catch(e){
-
-        console.log("Autoplay blocked");
-    }
-}
-
-document.body.addEventListener(
-    "click",
-    startAudio,
-    { once:true }
-);
-
-/* =========================
-INIT
-========================= */
-
-async function init(){
-
-    await renderAll();
-
-    startSlide();
-
+    updateInterval =
     setInterval(()=>{
 
-        renderAll();
+        update();
 
-    },30000);
+    },15000);
 }
 
-init();
+/* =========================
+START
+========================= */
+
+window.addEventListener(
+    "load",
+    async ()=>{
+
+        await update();
+
+        animateCards(
+            slides[current]
+        );
+
+        startLoop();
+    }
+);
 
 </script>
 
