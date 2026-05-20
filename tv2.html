@@ -5,158 +5,825 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>AZKO ULTRA TV DISPLAY V3 CINEMATIC FIXED</title>
+<title>AZKO ULTRA TV DISPLAY</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 
 <style>
 
-/* =========================
-BASE CINEMATIC
-========================= */
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
 
-*{margin:0;padding:0;box-sizing:border-box}
-html,body{width:100%;height:100%;overflow:hidden}
+html,
+body{
+    width:100%;
+    height:100%;
+}
 
 body{
-    font-family:Poppins,sans-serif;
-    background:radial-gradient(circle at top,#0f172a,#020617);
-    color:#fff;
-}
 
-/* BACKGROUND */
-body::before{
-    content:"";
-    position:fixed;
-    inset:0;
+    font-family:'Poppins',sans-serif;
+
+    overflow:hidden;
+
+    color:white;
+
+    cursor:pointer;
+
     background:
-        radial-gradient(circle at 20% 20%,rgba(59,130,246,.25),transparent 40%),
-        radial-gradient(circle at 80% 30%,rgba(234,179,8,.15),transparent 35%),
-        radial-gradient(circle at 50% 100%,rgba(239,68,68,.12),transparent 50%);
-    filter:blur(18px);
-    animation:move 10s ease-in-out infinite alternate;
+        radial-gradient(circle at top left,#1e3a8a 0%,transparent 30%),
+        radial-gradient(circle at top right,#facc15 0%,transparent 25%),
+        radial-gradient(circle at bottom,#0f172a 0%,#020617 70%);
 }
 
-@keyframes move{
-    from{transform:scale(1) translateY(0)}
-    to{transform:scale(1.08) translateY(-10px)}
-}
+/* =========================
+BACKGROUND FX
+========================= */
 
-/* SLIDE */
-.slide{
-    position:absolute;
+body::before{
+
+    content:"";
+
+    position:fixed;
+
     inset:0;
-    opacity:0;
-    visibility:hidden;
-    transform:scale(1.06);
-    transition:1s ease;
-    padding:2vh 2vw;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(255,255,255,.03),
+            transparent 35%,
+            rgba(255,255,255,.02)
+        );
+
+    pointer-events:none;
+
+    z-index:-2;
+}
+
+body::after{
+
+    content:"";
+
+    position:fixed;
+
+    width:200%;
+    height:200%;
+
+    top:-50%;
+    left:-50%;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            rgba(255,255,255,.04),
+            transparent
+        );
+
+    transform:rotate(25deg);
+
+    animation:bgMove 12s linear infinite;
+
+    pointer-events:none;
+
+    z-index:-1;
+}
+
+@keyframes bgMove{
+
+    0%{
+        transform:
+            translateX(-20%)
+            rotate(25deg);
+    }
+
+    100%{
+        transform:
+            translateX(20%)
+            rotate(25deg);
+    }
+}
+
+/* =========================
+SLIDES
+========================= */
+
+.slide{
+
+    position:absolute;
+
+    inset:0;
+
+    width:100vw;
+    height:100vh;
+
+    padding:
+        1vh
+        2vw;
+
     display:flex;
+
     flex-direction:column;
+
+    opacity:0;
+
+    visibility:hidden;
+
+    pointer-events:none;
+
+    transform:
+        scale(1.02);
+
+    transition:
+        opacity .8s ease,
+        transform .8s ease,
+        visibility .8s;
 }
 
 .slide.active{
+
     opacity:1;
+
     visibility:visible;
-    transform:scale(1);
+
+    pointer-events:auto;
+
+    transform:
+        scale(1);
 }
 
-/* HEADER */
-.header{text-align:center;margin-bottom:1vh}
-.header h1{font-size:3vw;font-weight:900;letter-spacing:5px}
-.header p{opacity:.7}
+/* =========================
+HEADER
+========================= */
 
-.update{
-    margin:1vh auto;
-    padding:1vh 2vw;
-    background:rgba(255,255,255,.05);
-    border-radius:14px;
+.header{
+
+    text-align:center;
+
+    margin-bottom:1vh;
+}
+
+.header h1{
+
+    font-size:3vw;
+
+    font-weight:900;
+
+    letter-spacing:6px;
+
+    text-transform:uppercase;
+
+    text-shadow:
+        0 0 20px rgba(255,255,255,.25);
+}
+
+.header p{
+
+    margin-top:.2vh;
+
+    font-size:1vw;
+
+    letter-spacing:4px;
+
+    opacity:.9;
+}
+
+/* =========================
+UPDATE TIME
+========================= */
+
+.update-time{
+
+    margin:
+        1vh auto 0 auto;
+
     width:fit-content;
+
+    padding:
+        1vh
+        2.5vw;
+
+    border-radius:20px;
+
+    background:
+        rgba(0,0,0,.45);
+
+    border:
+        2px solid rgba(255,255,255,.15);
+
+    font-size:1.2vw;
+
+    font-weight:700;
+
+    backdrop-filter:blur(12px);
+
+    box-shadow:
+        0 0 20px rgba(0,0,0,.25);
 }
 
-/* LIST */
+/* =========================
+PAUSE INDICATOR
+========================= */
+
+.pause-indicator{
+
+    position:fixed;
+
+    top:20px;
+    left:20px;
+
+    z-index:9999;
+
+    padding:14px 24px;
+
+    border-radius:18px;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(15,23,42,.92),
+            rgba(30,41,59,.92)
+        );
+
+    border:
+        1px solid rgba(255,255,255,.15);
+
+    backdrop-filter:blur(16px);
+
+    font-size:14px;
+
+    font-weight:800;
+
+    letter-spacing:2px;
+
+    box-shadow:
+        0 10px 30px rgba(0,0,0,.45),
+        0 0 20px rgba(59,130,246,.25);
+
+    opacity:0;
+
+    transform:
+        translateY(-20px)
+        scale(.95);
+
+    transition:.35s ease;
+}
+
+.pause-indicator.show{
+
+    opacity:1;
+
+    transform:
+        translateY(0)
+        scale(1);
+}
+
+/* =========================
+RANK LIST
+========================= */
+
 .rank-list{
-    flex:1;
+
     display:flex;
+
     flex-direction:column;
+
+    gap:1.2vh;
+
+    flex:1;
+
     justify-content:space-evenly;
 }
 
-/* CARD */
+/* =========================
+CARD
+========================= */
+
 .rank-card{
+
+    position:relative;
+
     display:flex;
+
     align-items:center;
-    height:22vh;
-    border-radius:26px;
+
+    height:25vh;
+
+    border-radius:34px;
+
     overflow:hidden;
+
+    border:
+        1px solid rgba(255,255,255,.08);
+
     opacity:0;
-    transform:translateX(-80px);
+
+    transform:
+        translateX(-120px)
+        scale(.96);
 }
 
 .rank-card.show{
-    animation:in .7s forwards;
+
+    animation:
+        slideRight .9s forwards;
 }
 
-@keyframes in{
-    to{opacity:1;transform:translateX(0)}
+.rank-card:nth-child(1){
+    animation-delay:.2s;
 }
 
-/* COLORS */
-.gold{background:linear-gradient(135deg,#6b5300,#facc15)}
-.silver{background:linear-gradient(135deg,#6b7280,#e5e7eb)}
-.bronze{background:linear-gradient(135deg,#7c3f1d,#c87c3d)}
+.rank-card:nth-child(2){
+    animation-delay:.5s;
+}
 
-.red-high{background:linear-gradient(135deg,#7f1d1d,#dc2626)}
-.red-mid{background:linear-gradient(135deg,#4a0404,#b91c1c)}
-.red-low{background:linear-gradient(135deg,#1f0000,#7f1d1d)}
+.rank-card:nth-child(3){
+    animation-delay:.8s;
+}
 
-/* RANK */
+@keyframes slideRight{
+
+    from{
+
+        opacity:0;
+
+        transform:
+            translateX(-120px)
+            scale(.92);
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:
+            translateX(0)
+            scale(1);
+    }
+}
+
+/* =========================
+TOP CARD
+========================= */
+
+.gold{
+
+    background:
+        linear-gradient(
+            135deg,
+            #6b5300,
+            #d4a514,
+            #fff0a6,
+            #d4a514,
+            #6b5300
+        );
+}
+
+.silver{
+
+    background:
+        linear-gradient(
+            135deg,
+            #737373,
+            #d1d5db,
+            #ffffff,
+            #d1d5db,
+            #737373
+        );
+}
+
+.bronze{
+
+    background:
+        linear-gradient(
+            135deg,
+            #6d3f1d,
+            #c87c3d,
+            #efc08c,
+            #c87c3d,
+            #6d3f1d
+        );
+}
+
+/* =========================
+BOTTOM CARD
+========================= */
+
+.red-high{
+
+    background:
+        linear-gradient(
+            135deg,
+            #7f1d1d,
+            #b91c1c,
+            #dc2626,
+            #ef4444,
+            #f87171
+        );
+}
+
+.red-mid{
+
+    background:
+        linear-gradient(
+            135deg,
+            #4a0404,
+            #7f1d1d,
+            #b91c1c,
+            #dc2626,
+            #ef4444
+        );
+}
+
+.red-low{
+
+    background:
+        linear-gradient(
+            135deg,
+            #2b0000,
+            #4a0404,
+            #7f1d1d,
+            #991b1b,
+            #b91c1c
+        );
+}
+
+/* =========================
+RANK NUMBER
+========================= */
+
 .rank-number{
+
     position:absolute;
-    left:1vw;
-    font-size:11vw;
-    opacity:.12;
+
+    left:-.5vw;
+
+    top:50%;
+
+    transform:
+        translateY(-50%)
+        skew(-10deg);
+
+    font-size:16vw;
+
+    font-weight:900;
+
+    opacity:.20;
+
+    letter-spacing:-10px;
 }
 
-/* PHOTO */
-.photo{width:18%;height:100%}
-.photo img{width:100%;height:100%;object-fit:contain}
-
-/* EMP */
-.emp{flex:1;padding-left:1vw}
-.name{font-size:1.8vw;font-weight:900}
-.dept{opacity:.7}
-
-/* SCORE */
-.score{width:30%;text-align:right;padding-right:2vw}
-.value{font-size:2.3vw;font-weight:900}
-
-/* PAUSE */
-.pause{
-    position:fixed;
-    top:15px;
-    left:15px;
-    padding:10px 14px;
-    background:rgba(0,0,0,.5);
-    border-radius:10px;
-    opacity:0;
-    transition:.3s;
+.gold .rank-number{
+    color:#facc15;
 }
-.pause.show{opacity:1}
+
+.silver .rank-number{
+    color:#e2e8f0;
+}
+
+.bronze .rank-number{
+    color:#fb923c;
+}
+
+.red-high .rank-number,
+.red-mid .rank-number,
+.red-low .rank-number{
+
+    color:#ffffff;
+}
+
+/* =========================
+PHOTO
+========================= */
+
+.photo-box{
+
+    width:20%;
+    height:100%;
+
+    display:flex;
+
+    align-items:flex-end;
+
+    justify-content:center;
+}
+
+.photo-box img{
+
+    width:100%;
+    height:100%;
+
+    object-fit:contain;
+
+    object-position:center bottom;
+}
+
+/* =========================
+EMPLOYEE
+========================= */
+
+.employee{
+
+    flex:1;
+
+    padding-left:1.5vw;
+
+    overflow:hidden;
+}
+
+.employee-name{
+
+    font-size:2vw;
+
+    font-weight:900;
+
+    color:#111827;
+
+    text-transform:uppercase;
+
+    white-space:nowrap;
+
+    overflow:hidden;
+
+    text-overflow:ellipsis;
+}
+
+.employee-label{
+
+    margin-top:.5vh;
+
+    font-size:1.1vw;
+
+    letter-spacing:3px;
+
+    text-transform:uppercase;
+
+    color:#111827;
+}
+
+.red-high .employee-name,
+.red-mid .employee-name,
+.red-low .employee-name,
+
+.red-high .employee-label,
+.red-mid .employee-label,
+.red-low .employee-label{
+
+    color:white;
+}
+
+/* =========================
+SCORE
+========================= */
+
+.score{
+
+    width:31%;
+
+    padding-right:1.8vw;
+
+    display:flex;
+
+    flex-direction:column;
+
+    align-items:flex-end;
+
+    gap:1vh;
+}
+
+.main-score{
+
+    text-align:right;
+}
+
+.score-value{
+
+    font-size:2.5vw;
+
+    font-weight:900;
+
+    color:#111827;
+}
+
+.score-label{
+
+    margin-top:.2vh;
+
+    font-size:.8vw;
+
+    font-weight:700;
+
+    letter-spacing:2px;
+
+    color:#111827;
+
+    opacity:.7;
+}
+
+.red-high .score-value,
+.red-mid .score-value,
+.red-low .score-value,
+
+.red-high .score-label,
+.red-mid .score-label,
+.red-low .score-label{
+
+    color:white;
+}
+
+/* =========================
+ACH BOX
+========================= */
+
+.ach-box{
+
+    position:relative;
+
+    overflow:hidden;
+
+    padding:
+        1vh
+        1.2vw;
+
+    border-radius:22px;
+
+    min-width:9vw;
+
+    text-align:center;
+
+    backdrop-filter:blur(12px);
+
+    border:
+        1px solid rgba(255,255,255,.18);
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(255,255,255,.18),
+            rgba(255,255,255,.08)
+        );
+}
+
+.ach-title{
+
+    position:relative;
+
+    z-index:2;
+
+    font-size:.72vw;
+
+    font-weight:800;
+
+    letter-spacing:2px;
+
+    color:#ffffff;
+}
+
+.ach-value{
+
+    position:relative;
+
+    z-index:2;
+
+    margin-top:.45vh;
+
+    font-size:1.8vw;
+
+    font-weight:900;
+}
+
+.ach-green{
+
+    color:#dcfce7 !important;
+}
+
+.ach-green-box{
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(22,163,74,.42),
+            rgba(34,197,94,.22)
+        ) !important;
+
+    border:
+        2px solid rgba(74,222,128,.65);
+}
+
+.ach-red{
+
+    color:#ffe4e6 !important;
+}
+
+.ach-red-box{
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(185,28,28,.42),
+            rgba(239,68,68,.22)
+        ) !important;
+
+    border:
+        2px solid rgba(252,165,165,.6);
+}
+
+.ach-normal{
+
+    color:#ffffff !important;
+}
+
+@media(max-width:768px){
+
+    body{
+        overflow:auto;
+    }
+
+    .slide{
+        min-height:100vh;
+        height:auto;
+        padding:12px;
+    }
+
+    .header h1{
+        font-size:30px;
+    }
+
+    .header p{
+        font-size:11px;
+    }
+
+    .rank-card{
+        height:130px;
+    }
+
+    .rank-number{
+        font-size:90px !important;
+    }
+
+    .photo-box{
+        width:95px;
+        min-width:95px;
+    }
+
+    .employee-name{
+        font-size:15px;
+    }
+
+    .employee-label{
+        font-size:10px;
+    }
+
+    .score{
+        width:42%;
+    }
+
+    .score-value{
+        font-size:18px;
+    }
+
+    .score-label{
+        font-size:9px;
+    }
+
+    .ach-box{
+
+        min-width:78px;
+
+        padding:
+            8px
+            10px;
+    }
+
+    .ach-title{
+        font-size:8px;
+    }
+
+    .ach-value{
+        font-size:15px;
+    }
+}
 
 </style>
 </head>
 
 <body>
 
-<div class="pause" id="pause">PLAYING</div>
+<div class="pause-indicator" id="pauseIndicator">
+    ▶ PLAYING
+</div>
 
 <!-- SLIDES -->
+
 <div class="slide active">
     <div class="header">
         <h1>TOP SALES</h1>
         <p>AZKO CITIMALL TUBAN</p>
-        <div class="update" id="u1">UPDATE -</div>
+        <div class="update-time" id="update1">DATA UPDATE : -</div>
     </div>
     <div class="rank-list" id="salesTop"></div>
 </div>
@@ -164,7 +831,8 @@ body::before{
 <div class="slide">
     <div class="header">
         <h1>BOTTOM SALES</h1>
-        <div class="update" id="u2">UPDATE -</div>
+        <p>AZKO CITIMALL TUBAN</p>
+        <div class="update-time" id="update2">DATA UPDATE : -</div>
     </div>
     <div class="rank-list" id="salesBottom"></div>
 </div>
@@ -172,7 +840,8 @@ body::before{
 <div class="slide">
     <div class="header">
         <h1>TOP PROTEKSI</h1>
-        <div class="update" id="u3">UPDATE -</div>
+        <p>AZKO CITIMALL TUBAN</p>
+        <div class="update-time" id="update3">DATA UPDATE : -</div>
     </div>
     <div class="rank-list" id="proteksiTop"></div>
 </div>
@@ -180,7 +849,8 @@ body::before{
 <div class="slide">
     <div class="header">
         <h1>BOTTOM PROTEKSI</h1>
-        <div class="update" id="u4">UPDATE -</div>
+        <p>AZKO CITIMALL TUBAN</p>
+        <div class="update-time" id="update4">DATA UPDATE : -</div>
     </div>
     <div class="rank-list" id="proteksiBottom"></div>
 </div>
@@ -188,7 +858,8 @@ body::before{
 <div class="slide">
     <div class="header">
         <h1>TOP TRX</h1>
-        <div class="update" id="u5">UPDATE -</div>
+        <p>AZKO CITIMALL TUBAN</p>
+        <div class="update-time" id="update5">DATA UPDATE : -</div>
     </div>
     <div class="rank-list" id="trxTop"></div>
 </div>
@@ -196,146 +867,661 @@ body::before{
 <div class="slide">
     <div class="header">
         <h1>BOTTOM TRX</h1>
-        <div class="update" id="u6">UPDATE -</div>
+        <p>AZKO CITIMALL TUBAN</p>
+        <div class="update-time" id="update6">DATA UPDATE : -</div>
     </div>
     <div class="rank-list" id="trxBottom"></div>
 </div>
 
-<audio id="bgm" loop>
-<source src="https://putrasetya.github.io/223am.mp3">
+<audio
+    id="bgm"
+    loop
+    autoplay
+    playsinline
+    preload="auto">
+
+    <source
+        src="https://putrasetya.github.io/223am.mp3"
+        type="audio/mpeg">
+
 </audio>
 
 <script>
 
-const URL="https://script.google.com/macros/s/AKfycbzeehvUo6QYriMFJTR4A88lN6IIHV6Qop9UphkdOTMkRLVxhVuJ13y69momo6h1pn9dTQ/exec";
-
-let cache=[];
+const URL =
+"https://script.google.com/macros/s/AKfycbzeehvUo6QYriMFJTR4A88lN6IIHV6Qop9UphkdOTMkRLVxhVuJ13y69momo6h1pn9dTQ/exec";
 
 /* =========================
-SAFE FETCH (FIX UTAMA)
+HELPERS
 ========================= */
-async function getData(retry=3){
+
+function clean(val){
+
+    if(!val) return 0;
+
+    return parseFloat(
+        val.toString().replace(/[^\d.]/g,'')
+    ) || 0;
+}
+
+function formatTanggal(date){
+
+    return date.toLocaleString('id-ID',{
+
+        day:'2-digit',
+        month:'long',
+        year:'numeric',
+        hour:'2-digit',
+        minute:'2-digit',
+        second:'2-digit'
+    });
+}
+
+function setUpdate(text){
+
+    for(let i=1;i<=6;i++){
+
+        const el =
+        document.getElementById("update"+i);
+
+        if(el){
+
+            el.innerHTML =
+            "DATA UPDATE : " + text;
+        }
+    }
+}
+
+function isExcluded(dept){
+
+    const d =
+    (dept || "").toLowerCase();
+
+    return (
+
+        d.includes("cashier") ||
+        d.includes("kasir") ||
+        d.includes("cs") ||
+        d.includes("customer service")
+    );
+}
+
+/* =========================
+GET DATA
+========================= */
+
+async function getData(){
+
     try{
-        const res=await fetch(URL,{cache:"no-store"});
-        const text=await res.text();
 
-        let json;
+        const res = await fetch(URL);
 
-        try{
-            json=JSON.parse(text);
-        }catch(e){
-            console.log("JSON ERROR");
-            return cache;
-        }
+        const json = await res.json();
 
-        if(!Array.isArray(json)){
-            console.log("NOT ARRAY");
-            return cache;
-        }
+        return json.map(row => ({
 
-        cache=json;
-        return json;
+            name:
+                row["EMPLOYEE NAME"] || "UNKNOWN",
+
+            dept:
+                row["DEPT"] || "-",
+
+            sales:
+                clean(row["SALES MTD"]),
+
+            proteksi:
+                clean(row["PROTEKSI"]),
+
+            trx:
+                clean(row["TRX"]),
+
+            achSales:
+                clean(row["ACH MTD"]),
+
+            achProteksi:
+                clean(row["ACH PROTEKSI"]),
+
+            achTrx:
+                clean(row["ACH BULANAN"]),
+
+            photo:
+                row["PHOTO"] || ""
+
+        }));
 
     }catch(err){
-        console.log("FETCH ERROR",err);
 
-        if(retry>0){
-            return getData(retry-1);
-        }
+        console.log(err);
 
-        return cache;
+        return [];
     }
+}
+
+/* =========================
+ACH STYLE
+========================= */
+
+function getAchStyle(value){
+
+    if(value >= 100){
+
+        return {
+
+            valueClass:
+                "ach-value ach-green",
+
+            boxClass:
+                "ach-box ach-green-box"
+        };
+    }
+
+    if(value < 80){
+
+        return {
+
+            valueClass:
+                "ach-value ach-red",
+
+            boxClass:
+                "ach-box ach-red-box"
+        };
+    }
+
+    return {
+
+        valueClass:
+            "ach-value ach-normal",
+
+        boxClass:
+            "ach-box"
+    };
 }
 
 /* =========================
 RENDER
 ========================= */
-function render(data,key,container,mode){
 
-    const el=document.getElementById(container);
-    if(!el) return;
+function render(
+    data,
+    key,
+    achKey,
+    achTitle,
+    containerId,
+    label,
+    mode="top"
+){
 
-    let list=[...data]
-        .filter(v=>v[key]>0)
-        .sort((a,b)=>mode==="top"?b[key]-a[key]:a[key]-b[key])
-        .slice(0,3)
-        .map((d,i)=>({...d,rank:i+1}));
+    const container =
+    document.getElementById(containerId);
 
-    el.innerHTML="";
+    if(!container) return;
 
-    list.forEach((d,i)=>{
+    let filteredData = [...data];
 
-        const div=document.createElement("div");
+    if(
+        containerId === "salesBottom" ||
+        containerId === "trxTop"
+    ){
 
-        div.className=`rank-card ${
-            mode==="top"
-            ?["gold","silver","bronze"][i]
-            :"red-high"
-        } show`;
+        filteredData =
+        filteredData.filter(
+            item => !isExcluded(item.dept)
+        );
+    }
 
-        div.innerHTML=`
-            <div class="rank-number">${d.rank}</div>
+    let sorted = [];
+    let styles = [];
 
-            <div class="photo">
-                <img src="https://drive.google.com/uc?export=view&id=${d.photo}">
+    if(mode === "top"){
+
+        styles = [
+            "gold",
+            "silver",
+            "bronze"
+        ];
+
+        sorted =
+        filteredData
+            .filter(v => v[key] > 0)
+            .sort((a,b)=>b[key]-a[key])
+            .slice(0,3);
+
+    }else{
+
+        styles = [
+            "red-high",
+            "red-mid",
+            "red-low"
+        ];
+
+        sorted =
+        filteredData
+            .filter(v => v[key] > 0)
+            .sort((a,b)=>a[key]-b[key])
+            .slice(0,3);
+    }
+
+    let html = "";
+
+    sorted.forEach((d,i)=>{
+
+        const achStyle =
+        getAchStyle(d[achKey]);
+
+        html += `
+
+        <div class="rank-card ${styles[i]}">
+
+            <div class="rank-number">
+                ${i+1}
             </div>
 
-            <div class="emp">
-                <div class="name">${d.name}</div>
-                <div class="dept">${d.dept}</div>
+            <div class="photo-box">
+
+                <img
+                    src="https://lh3.googleusercontent.com/d/${d.photo}"
+
+                    loading="lazy"
+
+                    onerror="
+                    this.src='https://ui-avatars.com/api/?name=${encodeURIComponent(d.name)}&background=random&color=fff&size=512'
+                    "
+                >
+
+            </div>
+
+            <div class="employee">
+
+                <div class="employee-name">
+                    ${d.name}
+                </div>
+
+                <div class="employee-label">
+                    ${d.dept}
+                </div>
+
             </div>
 
             <div class="score">
-                <div class="value">${d[key].toLocaleString('id-ID')}</div>
-            </div>
-        `;
 
-        el.appendChild(div);
+                <div class="main-score">
+
+                    <div class="score-value">
+                        ${d[key].toLocaleString('id-ID')}
+                    </div>
+
+                    <div class="score-label">
+                        ${label}
+                    </div>
+
+                </div>
+
+                <div class="${achStyle.boxClass}">
+
+                    <div class="ach-title">
+                        ${achTitle}
+                    </div>
+
+                    <div class="${achStyle.valueClass}">
+                        ${d[achKey].toFixed(1)}%
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+        `;
+    });
+
+    container.innerHTML = html;
+}
+
+/* =========================
+SLIDES FIX NO REPEAT
+========================= */
+
+const slides =
+document.querySelectorAll(".slide");
+
+const TOTAL_SLIDES =
+slides.length;
+
+let current = 0;
+
+let isTransitioning = false;
+
+function animateCards(slide){
+
+    const cards =
+    slide.querySelectorAll(".rank-card");
+
+    cards.forEach(card=>{
+
+        card.classList.remove("show");
+
+        void card.offsetWidth;
+
+        card.classList.add("show");
     });
 }
 
-/* =========================
-SLIDE
-========================= */
-const slides=document.querySelectorAll(".slide");
-let cur=0;
+function showSlide(index){
 
-function next(){
-    slides[cur].classList.remove("active");
-    cur=(cur+1)%slides.length;
-    slides[cur].classList.add("active");
+    slides.forEach(slide=>{
+
+        slide.classList.remove("active");
+    });
+
+    const activeSlide =
+    slides[index];
+
+    activeSlide.classList.add("active");
+
+    animateCards(activeSlide);
+}
+
+function nextSlide(){
+
+    if(isTransitioning) return;
+
+    isTransitioning = true;
+
+    current++;
+
+    if(current >= TOTAL_SLIDES){
+
+        current = 0;
+    }
+
+    showSlide(current);
+
+    setTimeout(()=>{
+
+        isTransitioning = false;
+
+    },900);
 }
 
 /* =========================
-UPDATE LOOP
+UPDATE
 ========================= */
+
 async function update(){
 
-    const data=await getData();
+    const data = await getData();
 
-    render(data,"sales","salesTop","top");
-    render(data,"sales","salesBottom","bottom");
+    const now =
+    formatTanggal(new Date());
 
-    render(data,"proteksi","proteksiTop","top");
-    render(data,"proteksi","proteksiBottom","bottom");
+    render(
+        data,
+        "sales",
+        "achSales",
+        "ACH MTD",
+        "salesTop",
+        "TOTAL SALES",
+        "top"
+    );
 
-    render(data,"trx","trxTop","top");
-    render(data,"trx","trxBottom","bottom");
+    render(
+        data,
+        "sales",
+        "achSales",
+        "ACH MTD",
+        "salesBottom",
+        "TOTAL SALES",
+        "bottom"
+    );
 
-    document.getElementById("u1").innerText=
-        "UPDATE " + new Date().toLocaleString("id-ID");
+    render(
+        data,
+        "proteksi",
+        "achProteksi",
+        "ACH PROTEKSI",
+        "proteksiTop",
+        "TOTAL PROTEKSI",
+        "top"
+    );
+
+    render(
+        data,
+        "proteksi",
+        "achProteksi",
+        "ACH PROTEKSI",
+        "proteksiBottom",
+        "TOTAL PROTEKSI",
+        "bottom"
+    );
+
+    render(
+        data,
+        "trx",
+        "achTrx",
+        "ACH BULANAN",
+        "trxTop",
+        "TOTAL TRX",
+        "top"
+    );
+
+    render(
+        data,
+        "trx",
+        "achTrx",
+        "ACH BULANAN",
+        "trxBottom",
+        "TOTAL TRX",
+        "bottom"
+    );
+
+    setUpdate(now);
+
+    animateCards(
+        slides[current]
+    );
 }
 
-/* LOOP */
-setInterval(()=>{if(!document.hidden)next()},7000);
-setInterval(()=>{if(!document.hidden)update()},15000);
+/* =========================
+INDICATOR
+========================= */
 
-/* AUDIO START FIX */
-document.addEventListener("click",()=>{
-    document.getElementById("bgm").play().catch(()=>{});
-},{once:true});
+const pauseIndicator =
+document.getElementById(
+    "pauseIndicator"
+);
 
-window.onload=update;
+function showIndicator(text){
+
+    if(!pauseIndicator) return;
+
+    pauseIndicator.innerHTML = text;
+
+    pauseIndicator.classList.add("show");
+
+    clearTimeout(window.indicatorTimeout);
+
+    window.indicatorTimeout =
+    setTimeout(()=>{
+
+        pauseIndicator.classList.remove("show");
+
+    },1500);
+}
+
+/* =========================
+AUDIO
+========================= */
+
+const bgm =
+document.getElementById("bgm");
+
+if(bgm){
+
+    bgm.volume = 0.4;
+}
+
+async function playMusic(){
+
+    if(!bgm) return;
+
+    try{
+
+        await bgm.play();
+
+    }catch(err){
+
+        console.log(err);
+    }
+}
+
+/* =========================
+LOOP
+========================= */
+
+let isPaused = false;
+
+let slideInterval;
+let updateInterval;
+
+function stopLoop(){
+
+    clearInterval(slideInterval);
+    clearInterval(updateInterval);
+}
+
+function startLoop(){
+
+    stopLoop();
+
+    slideInterval =
+    setInterval(()=>{
+
+        if(
+            !document.hidden &&
+            !isPaused
+        ){
+
+            nextSlide();
+        }
+
+    },7000);
+
+    updateInterval =
+    setInterval(()=>{
+
+        if(!document.hidden){
+
+            update();
+        }
+
+    },15000);
+}
+
+function togglePause(){
+
+    isPaused = !isPaused;
+
+    if(isPaused){
+
+        stopLoop();
+
+        if(bgm) bgm.pause();
+
+        showIndicator("⏸ PAUSED");
+
+    }else{
+
+        startLoop();
+
+        playMusic();
+
+        showIndicator("▶ PLAYING");
+    }
+}
+
+/* =========================
+FULLSCREEN
+========================= */
+
+async function toggleFullscreen(){
+
+    try{
+
+        if(!document.fullscreenElement){
+
+            await document.documentElement.requestFullscreen();
+
+            showIndicator("🖥 FULLSCREEN");
+
+        }else{
+
+            await document.exitFullscreen();
+
+            showIndicator("❎ EXIT FULLSCREEN");
+        }
+
+    }catch(err){
+
+        console.log(err);
+    }
+}
+
+/* =========================
+CLICK
+========================= */
+
+let clickTimer = null;
+
+document.addEventListener(
+    "click",
+    ()=>{
+
+        if(clickTimer){
+
+            clearTimeout(clickTimer);
+        }
+
+        clickTimer = setTimeout(()=>{
+
+            togglePause();
+
+        },250);
+    }
+);
+
+document.addEventListener(
+    "dblclick",
+    ()=>{
+
+        clearTimeout(clickTimer);
+
+        toggleFullscreen();
+    }
+);
+
+/* =========================
+START
+========================= */
+
+window.addEventListener(
+    "load",
+    async ()=>{
+
+        await update();
+
+        showSlide(0);
+
+        startLoop();
+
+        playMusic();
+
+        setTimeout(playMusic,1000);
+
+        setTimeout(playMusic,3000);
+
+        showIndicator("▶ PLAYING");
+    }
+);
 
 </script>
 
