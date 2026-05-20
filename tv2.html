@@ -24,15 +24,9 @@ body{
 }
 
 body{
-
-    background-color:#020617;
-
     font-family:'Poppins',sans-serif;
-
     overflow:hidden;
-
     color:white;
-
     cursor:pointer;
 
     background:
@@ -41,16 +35,9 @@ body{
         radial-gradient(circle at bottom,#0f172a 0%,#020617 70%);
 }
 
-/* =========================
-BACKGROUND
-========================= */
-
 body::before{
-
     content:"";
-
     position:fixed;
-
     inset:0;
 
     background:
@@ -62,7 +49,6 @@ body::before{
         );
 
     pointer-events:none;
-
     z-index:-2;
 }
 
@@ -110,10 +96,6 @@ body::after{
     }
 }
 
-/* =========================
-SLIDE
-========================= */
-
 .slide{
 
     position:absolute;
@@ -137,7 +119,8 @@ SLIDE
 
     pointer-events:none;
 
-    transform:scale(1.01);
+    transform:
+        scale(1.02);
 
     transition:
         opacity .8s ease,
@@ -153,14 +136,9 @@ SLIDE
 
     pointer-events:auto;
 
-    transform:scale(1);
-
-    z-index:2;
+    transform:
+        scale(1);
 }
-
-/* =========================
-HEADER
-========================= */
 
 .header{
 
@@ -176,6 +154,11 @@ HEADER
     font-weight:900;
 
     letter-spacing:6px;
+
+    text-transform:uppercase;
+
+    text-shadow:
+        0 0 20px rgba(255,255,255,.25);
 }
 
 .header p{
@@ -188,10 +171,6 @@ HEADER
 
     opacity:.9;
 }
-
-/* =========================
-UPDATE
-========================= */
 
 .update-time{
 
@@ -215,58 +194,12 @@ UPDATE
     font-size:1.2vw;
 
     font-weight:700;
+
+    backdrop-filter:blur(12px);
+
+    box-shadow:
+        0 0 20px rgba(0,0,0,.25);
 }
-
-/* =========================
-INDICATOR
-========================= */
-
-.pause-indicator{
-
-    position:fixed;
-
-    top:20px;
-    left:20px;
-
-    z-index:9999;
-
-    padding:14px 24px;
-
-    border-radius:18px;
-
-    background:
-        rgba(15,23,42,.92);
-
-    border:
-        1px solid rgba(255,255,255,.15);
-
-    font-size:14px;
-
-    font-weight:800;
-
-    letter-spacing:2px;
-
-    opacity:0;
-
-    transform:
-        translateY(-20px)
-        scale(.95);
-
-    transition:.35s ease;
-}
-
-.pause-indicator.show{
-
-    opacity:1;
-
-    transform:
-        translateY(0)
-        scale(1);
-}
-
-/* =========================
-RANK LIST
-========================= */
 
 .rank-list{
 
@@ -280,10 +213,6 @@ RANK LIST
 
     justify-content:space-evenly;
 }
-
-/* =========================
-CARD
-========================= */
 
 .rank-card{
 
@@ -348,37 +277,77 @@ CARD
     }
 }
 
-/* =========================
-CARD COLORS
-========================= */
-
 .gold{
-    background:linear-gradient(135deg,#6b5300,#d4a514,#fff0a6,#d4a514,#6b5300);
+    background:
+        linear-gradient(
+            135deg,
+            #6b5300,
+            #d4a514,
+            #fff0a6,
+            #d4a514,
+            #6b5300
+        );
 }
 
 .silver{
-    background:linear-gradient(135deg,#737373,#d1d5db,#ffffff,#d1d5db,#737373);
+    background:
+        linear-gradient(
+            135deg,
+            #737373,
+            #d1d5db,
+            #ffffff,
+            #d1d5db,
+            #737373
+        );
 }
 
 .bronze{
-    background:linear-gradient(135deg,#6d3f1d,#c87c3d,#efc08c,#c87c3d,#6d3f1d);
+    background:
+        linear-gradient(
+            135deg,
+            #6d3f1d,
+            #c87c3d,
+            #efc08c,
+            #c87c3d,
+            #6d3f1d
+        );
 }
 
 .red-high{
-    background:linear-gradient(135deg,#7f1d1d,#b91c1c,#dc2626,#ef4444,#f87171);
+    background:
+        linear-gradient(
+            135deg,
+            #7f1d1d,
+            #b91c1c,
+            #dc2626,
+            #ef4444,
+            #f87171
+        );
 }
 
 .red-mid{
-    background:linear-gradient(135deg,#4a0404,#7f1d1d,#b91c1c,#dc2626,#ef4444);
+    background:
+        linear-gradient(
+            135deg,
+            #4a0404,
+            #7f1d1d,
+            #b91c1c,
+            #dc2626,
+            #ef4444
+        );
 }
 
 .red-low{
-    background:linear-gradient(135deg,#2b0000,#4a0404,#7f1d1d,#991b1b,#b91c1c);
+    background:
+        linear-gradient(
+            135deg,
+            #2b0000,
+            #4a0404,
+            #7f1d1d,
+            #991b1b,
+            #b91c1c
+        );
 }
-
-/* =========================
-RANK NUMBER
-========================= */
 
 .rank-number{
 
@@ -397,11 +366,9 @@ RANK NUMBER
     font-weight:900;
 
     opacity:.20;
-}
 
-/* =========================
-PHOTO
-========================= */
+    letter-spacing:-10px;
+}
 
 .photo-box{
 
@@ -425,17 +392,11 @@ PHOTO
     object-position:center bottom;
 }
 
-/* =========================
-EMPLOYEE
-========================= */
-
 .employee{
 
     flex:1;
 
     padding-left:1.5vw;
-
-    overflow:hidden;
 }
 
 .employee-name{
@@ -447,12 +408,6 @@ EMPLOYEE
     color:#111827;
 
     text-transform:uppercase;
-
-    white-space:nowrap;
-
-    overflow:hidden;
-
-    text-overflow:ellipsis;
 }
 
 .employee-label{
@@ -467,21 +422,6 @@ EMPLOYEE
 
     color:#111827;
 }
-
-.red-high .employee-name,
-.red-mid .employee-name,
-.red-low .employee-name,
-
-.red-high .employee-label,
-.red-mid .employee-label,
-.red-low .employee-label{
-
-    color:white;
-}
-
-/* =========================
-SCORE
-========================= */
 
 .score{
 
@@ -507,23 +447,18 @@ SCORE
     color:#111827;
 }
 
-.red-high .score-value,
-.red-mid .score-value,
-.red-low .score-value{
-
-    color:white;
-}
-
 .score-label{
+
+    margin-top:.2vh;
 
     font-size:.8vw;
 
-    letter-spacing:2px;
-}
+    font-weight:700;
 
-/* =========================
-ACH
-========================= */
+    letter-spacing:2px;
+
+    color:#111827;
+}
 
 .ach-box{
 
@@ -537,11 +472,17 @@ ACH
 
     text-align:center;
 
+    backdrop-filter:blur(12px);
+
     border:
         1px solid rgba(255,255,255,.18);
 
     background:
-        rgba(255,255,255,.12);
+        linear-gradient(
+            135deg,
+            rgba(255,255,255,.18),
+            rgba(255,255,255,.08)
+        );
 }
 
 .ach-title{
@@ -551,6 +492,8 @@ ACH
     font-weight:800;
 
     letter-spacing:2px;
+
+    color:#ffffff;
 }
 
 .ach-value{
@@ -563,71 +506,51 @@ ACH
 }
 
 .ach-green{
-    color:#86efac;
+    color:#dcfce7 !important;
 }
 
 .ach-red{
-    color:#fca5a5;
+    color:#ffe4e6 !important;
 }
 
 .ach-normal{
-    color:white;
+    color:#ffffff !important;
 }
 
-/* =========================
-MOBILE
-========================= */
+.pause-indicator{
 
-@media(max-width:768px){
+    position:fixed;
 
-    .header h1{
-        font-size:30px;
-    }
+    top:20px;
+    left:20px;
 
-    .header p{
-        font-size:11px;
-    }
+    z-index:9999;
 
-    .rank-card{
-        height:130px;
-    }
+    padding:14px 24px;
 
-    .rank-number{
-        font-size:90px;
-    }
+    border-radius:18px;
 
-    .photo-box{
-        width:95px;
-        min-width:95px;
-    }
+    background:
+        rgba(15,23,42,.92);
 
-    .employee-name{
-        font-size:15px;
-    }
+    font-size:14px;
 
-    .employee-label{
-        font-size:10px;
-    }
+    font-weight:800;
 
-    .score{
-        width:42%;
-    }
+    opacity:0;
 
-    .score-value{
-        font-size:18px;
-    }
+    transform:
+        translateY(-20px);
 
-    .score-label{
-        font-size:9px;
-    }
+    transition:.35s ease;
+}
 
-    .ach-title{
-        font-size:8px;
-    }
+.pause-indicator.show{
 
-    .ach-value{
-        font-size:15px;
-    }
+    opacity:1;
+
+    transform:
+        translateY(0);
 }
 
 </style>
@@ -638,8 +561,6 @@ MOBILE
 <div class="pause-indicator" id="pauseIndicator">
     ▶ PLAYING
 </div>
-
-<!-- SLIDES -->
 
 <div class="slide active">
     <div class="header">
@@ -695,29 +616,10 @@ MOBILE
     <div class="rank-list" id="trxBottom"></div>
 </div>
 
-<audio
-    id="bgm"
-    loop
-    autoplay
-    playsinline
-    preload="auto">
-
-    <source
-        src="https://putrasetya.github.io/223am.mp3"
-        type="audio/mpeg">
-
-</audio>
-
 <script>
 
 const URL =
 "https://script.google.com/macros/s/AKfycbzeehvUo6QYriMFJTR4A88lN6IIHV6Qop9UphkdOTMkRLVxhVuJ13y69momo6h1pn9dTQ/exec";
-
-let cachedData = [];
-
-/* =========================
-HELPERS
-========================= */
 
 function clean(val){
 
@@ -756,50 +658,15 @@ function setUpdate(text){
     }
 }
 
-function isExcluded(dept){
-
-    const d =
-    (dept || "").toLowerCase();
-
-    return (
-
-        d.includes("cashier") ||
-        d.includes("kasir") ||
-        d.includes("cs") ||
-        d.includes("customer service")
-    );
-}
-
-/* =========================
-GET DATA
-========================= */
-
 async function getData(){
 
     try{
 
-        const controller =
-        new AbortController();
-
-        const timeout =
-        setTimeout(()=>{
-
-            controller.abort();
-
-        },8000);
-
-        const res = await fetch(URL,{
-
-            signal:controller.signal
-
-        });
-
-        clearTimeout(timeout);
+        const res = await fetch(URL);
 
         const json = await res.json();
 
-        const parsed =
-        json.map(row => ({
+        return json.map(row => ({
 
             name:
                 row["EMPLOYEE NAME"] || "UNKNOWN",
@@ -830,37 +697,40 @@ async function getData(){
 
         }));
 
-        cachedData = parsed;
-
-        return parsed;
-
     }catch(err){
 
-        console.log(
-            "FETCH ERROR:",
-            err
-        );
+        console.log(err);
 
-        return cachedData;
+        return [];
     }
 }
 
 function getAchStyle(value){
 
     if(value >= 100){
-        return "ach-green";
+
+        return {
+
+            valueClass:
+                "ach-value ach-green"
+        };
     }
 
     if(value < 80){
-        return "ach-red";
+
+        return {
+
+            valueClass:
+                "ach-value ach-red"
+        };
     }
 
-    return "ach-normal";
-}
+    return {
 
-/* =========================
-RENDER
-========================= */
+        valueClass:
+            "ach-value ach-normal"
+    };
+}
 
 function render(
     data,
@@ -877,21 +747,9 @@ function render(
 
     if(!container) return;
 
-    let filteredData = [...data];
-
-    if(
-        containerId === "salesBottom" ||
-        containerId === "trxTop"
-    ){
-
-        filteredData =
-        filteredData.filter(
-            item => !isExcluded(item.dept)
-        );
-    }
+    let styles = [];
 
     let sorted = [];
-    let styles = [];
 
     if(mode === "top"){
 
@@ -902,7 +760,7 @@ function render(
         ];
 
         sorted =
-        filteredData
+        data
             .filter(v => v[key] > 0)
             .sort((a,b)=>b[key]-a[key])
             .slice(0,3);
@@ -916,7 +774,7 @@ function render(
         ];
 
         sorted =
-        filteredData
+        data
             .filter(v => v[key] > 0)
             .sort((a,b)=>a[key]-b[key])
             .slice(0,3);
@@ -926,9 +784,12 @@ function render(
 
     sorted.forEach((d,i)=>{
 
+        const achStyle =
+        getAchStyle(d[achKey]);
+
         html += `
 
-        <div class="rank-card ${styles[i]} show">
+        <div class="rank-card ${styles[i]}">
 
             <div class="rank-number">
                 ${i+1}
@@ -942,7 +803,7 @@ function render(
                     loading="lazy"
 
                     onerror="
-                    this.src='https://ui-avatars.com/api/?name=${encodeURIComponent(d.name)}&background=random&color=fff&size=512'
+                    this.src='https://ui-avatars.com/api/?name=${encodeURIComponent(d.name)}'
                     "
                 >
 
@@ -980,7 +841,7 @@ function render(
                         ${achTitle}
                     </div>
 
-                    <div class="ach-value ${getAchStyle(d[achKey])}">
+                    <div class="${achStyle.valueClass}">
                         ${d[achKey].toFixed(1)}%
                     </div>
 
@@ -992,82 +853,57 @@ function render(
         `;
     });
 
-    if(html.trim() !== ""){
-
-        container.innerHTML = html;
-    }
+    container.innerHTML = html;
 }
 
 /* =========================
-SLIDES
+SLIDE SYSTEM FIX
 ========================= */
 
 const slides =
 document.querySelectorAll(".slide");
 
-const TOTAL_SLIDES =
-slides.length;
-
 let current = 0;
 
-let isTransitioning = false;
+function animateCards(slide){
 
-function showSlide(index){
+    const cards =
+    slide.querySelectorAll(".rank-card");
 
-    const currentSlide =
-    document.querySelector(
-        ".slide.active"
-    );
+    cards.forEach(card=>{
 
-    const nextSlide =
-    slides[index];
+        card.classList.remove("show");
 
-    if(currentSlide){
+        void card.offsetWidth;
 
-        currentSlide.classList.remove(
-            "active"
-        );
-    }
-
-    nextSlide.classList.add(
-        "active"
-    );
+        card.classList.add("show");
+    });
 }
 
 function nextSlide(){
 
-    if(isTransitioning) return;
-
-    isTransitioning = true;
+    slides[current]
+        .classList.remove("active");
 
     current++;
 
-    if(current >= TOTAL_SLIDES){
+    if(current >= slides.length){
 
         current = 0;
     }
 
-    showSlide(current);
+    const next =
+    slides[current];
 
-    setTimeout(()=>{
+    next.classList.add("active");
 
-        isTransitioning = false;
-
-    },900);
+    /* ANIMASI HANYA SAAT PINDAH SLIDE */
+    animateCards(next);
 }
-
-/* =========================
-UPDATE
-========================= */
 
 async function update(){
 
     const data = await getData();
-
-    if(!data.length) return;
-
-    const now =
-    formatTanggal(new Date());
 
     render(
         data,
@@ -1129,186 +965,21 @@ async function update(){
         "bottom"
     );
 
-    setUpdate(now);
+    setUpdate(
+        formatTanggal(new Date())
+    );
+
+    /*
+    FIX UTAMA:
+    animateCards(slides[current]);
+    DIHAPUS
+    AGAR SLIDE TIDAK MENGULANG
+    */
 }
 
-/* =========================
-INDICATOR
-========================= */
+setInterval(nextSlide,7000);
 
-const pauseIndicator =
-document.getElementById(
-    "pauseIndicator"
-);
-
-function showIndicator(text){
-
-    pauseIndicator.innerHTML = text;
-
-    pauseIndicator.classList.add("show");
-
-    clearTimeout(window.indicatorTimeout);
-
-    window.indicatorTimeout =
-    setTimeout(()=>{
-
-        pauseIndicator.classList.remove("show");
-
-    },1500);
-}
-
-/* =========================
-AUDIO
-========================= */
-
-const bgm =
-document.getElementById("bgm");
-
-if(bgm){
-
-    bgm.volume = 0.4;
-}
-
-async function playMusic(){
-
-    try{
-
-        await bgm.play();
-
-    }catch(err){
-
-        console.log(err);
-    }
-}
-
-/* =========================
-LOOP
-========================= */
-
-let isPaused = false;
-
-let slideInterval;
-let updateInterval;
-
-function stopLoop(){
-
-    clearInterval(slideInterval);
-    clearInterval(updateInterval);
-}
-
-function startLoop(){
-
-    stopLoop();
-
-    slideInterval =
-    setInterval(()=>{
-
-        if(
-            document.hidden ||
-            isPaused ||
-            isTransitioning
-        ) return;
-
-        nextSlide();
-
-    },7000);
-
-    updateInterval =
-    setInterval(()=>{
-
-        if(!document.hidden){
-
-            update();
-        }
-
-    },15000);
-}
-
-function togglePause(){
-
-    isPaused = !isPaused;
-
-    if(isPaused){
-
-        stopLoop();
-
-        bgm.pause();
-
-        showIndicator("⏸ PAUSED");
-
-    }else{
-
-        startLoop();
-
-        playMusic();
-
-        showIndicator("▶ PLAYING");
-    }
-}
-
-/* =========================
-FULLSCREEN
-========================= */
-
-async function toggleFullscreen(){
-
-    try{
-
-        if(!document.fullscreenElement){
-
-            await document.documentElement.requestFullscreen();
-
-            showIndicator("🖥 FULLSCREEN");
-
-        }else{
-
-            await document.exitFullscreen();
-
-            showIndicator("❎ EXIT FULLSCREEN");
-        }
-
-    }catch(err){
-
-        console.log(err);
-    }
-}
-
-/* =========================
-CLICK
-========================= */
-
-let clickTimer = null;
-
-document.addEventListener(
-    "click",
-    ()=>{
-
-        if(clickTimer){
-
-            clearTimeout(clickTimer);
-        }
-
-        clickTimer = setTimeout(()=>{
-
-            togglePause();
-
-        },250);
-    }
-);
-
-document.addEventListener(
-    "dblclick",
-    ()=>{
-
-        clearTimeout(clickTimer);
-
-        toggleFullscreen();
-    }
-);
-
-/* =========================
-START
-========================= */
+setInterval(update,15000);
 
 window.addEventListener(
     "load",
@@ -1316,17 +987,9 @@ window.addEventListener(
 
         await update();
 
-        showSlide(0);
-
-        startLoop();
-
-        playMusic();
-
-        setTimeout(playMusic,1000);
-
-        setTimeout(playMusic,3000);
-
-        showIndicator("▶ PLAYING");
+        animateCards(
+            slides[current]
+        );
     }
 );
 
