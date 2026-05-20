@@ -109,7 +109,7 @@ body::after{
 }
 
 /* =========================
-SLIDES FIX
+SLIDES
 ========================= */
 
 .slide{
@@ -121,9 +121,7 @@ SLIDES FIX
     width:100vw;
     height:100vh;
 
-    padding:
-        1vh
-        2vw;
+    padding:1vh 2vw;
 
     display:flex;
 
@@ -131,19 +129,20 @@ SLIDES FIX
 
     opacity:0;
 
+    visibility:hidden;
+
     pointer-events:none;
 
+    transition:opacity .5s ease;
+
     z-index:0;
-
-    transform:scale(1);
-
-    transition:
-        opacity .7s ease;
 }
 
 .slide.active{
 
     opacity:1;
+
+    visibility:visible;
 
     pointer-events:auto;
 
@@ -369,7 +368,6 @@ TOP CARD
 ========================= */
 
 .gold{
-
     background:
         linear-gradient(
             135deg,
@@ -382,7 +380,6 @@ TOP CARD
 }
 
 .silver{
-
     background:
         linear-gradient(
             135deg,
@@ -395,7 +392,6 @@ TOP CARD
 }
 
 .bronze{
-
     background:
         linear-gradient(
             135deg,
@@ -412,7 +408,6 @@ BOTTOM CARD
 ========================= */
 
 .red-high{
-
     background:
         linear-gradient(
             135deg,
@@ -425,7 +420,6 @@ BOTTOM CARD
 }
 
 .red-mid{
-
     background:
         linear-gradient(
             135deg,
@@ -438,7 +432,6 @@ BOTTOM CARD
 }
 
 .red-low{
-
     background:
         linear-gradient(
             135deg,
@@ -750,81 +743,6 @@ ACH BOX
     color:#ffffff !important;
 }
 
-/* =========================
-MOBILE
-========================= */
-
-@media(max-width:768px){
-
-    body{
-        overflow:auto;
-    }
-
-    .slide{
-        min-height:100vh;
-        height:auto;
-        padding:12px;
-    }
-
-    .header h1{
-        font-size:30px;
-    }
-
-    .header p{
-        font-size:11px;
-    }
-
-    .rank-card{
-        height:130px;
-    }
-
-    .rank-number{
-        font-size:90px !important;
-    }
-
-    .photo-box{
-        width:95px;
-        min-width:95px;
-    }
-
-    .employee-name{
-        font-size:15px;
-    }
-
-    .employee-label{
-        font-size:10px;
-    }
-
-    .score{
-        width:42%;
-    }
-
-    .score-value{
-        font-size:18px;
-    }
-
-    .score-label{
-        font-size:9px;
-    }
-
-    .ach-box{
-
-        min-width:78px;
-
-        padding:
-            8px
-            10px;
-    }
-
-    .ach-title{
-        font-size:8px;
-    }
-
-    .ach-value{
-        font-size:15px;
-    }
-}
-
 </style>
 </head>
 
@@ -838,7 +756,7 @@ MOBILE
     <div class="header">
         <h1>TOP SALES</h1>
         <p>AZKO CITIMALL TUBAN</p>
-        <div class="update-time" id="update1">DATA UPDATE : -</div>
+        <div class="update-time" id="update1">LAST UPDATE : -</div>
     </div>
     <div class="rank-list" id="salesTop"></div>
 </div>
@@ -847,7 +765,7 @@ MOBILE
     <div class="header">
         <h1>BOTTOM SALES</h1>
         <p>AZKO CITIMALL TUBAN</p>
-        <div class="update-time" id="update2">DATA UPDATE : -</div>
+        <div class="update-time" id="update2">LAST UPDATE : -</div>
     </div>
     <div class="rank-list" id="salesBottom"></div>
 </div>
@@ -856,7 +774,7 @@ MOBILE
     <div class="header">
         <h1>TOP PROTEKSI</h1>
         <p>AZKO CITIMALL TUBAN</p>
-        <div class="update-time" id="update3">DATA UPDATE : -</div>
+        <div class="update-time" id="update3">LAST UPDATE : -</div>
     </div>
     <div class="rank-list" id="proteksiTop"></div>
 </div>
@@ -865,7 +783,7 @@ MOBILE
     <div class="header">
         <h1>BOTTOM PROTEKSI</h1>
         <p>AZKO CITIMALL TUBAN</p>
-        <div class="update-time" id="update4">DATA UPDATE : -</div>
+        <div class="update-time" id="update4">LAST UPDATE : -</div>
     </div>
     <div class="rank-list" id="proteksiBottom"></div>
 </div>
@@ -874,7 +792,7 @@ MOBILE
     <div class="header">
         <h1>TOP TRX</h1>
         <p>AZKO CITIMALL TUBAN</p>
-        <div class="update-time" id="update5">DATA UPDATE : -</div>
+        <div class="update-time" id="update5">LAST UPDATE : -</div>
     </div>
     <div class="rank-list" id="trxTop"></div>
 </div>
@@ -883,7 +801,7 @@ MOBILE
     <div class="header">
         <h1>BOTTOM TRX</h1>
         <p>AZKO CITIMALL TUBAN</p>
-        <div class="update-time" id="update6">DATA UPDATE : -</div>
+        <div class="update-time" id="update6">LAST UPDATE : -</div>
     </div>
     <div class="rank-list" id="trxBottom"></div>
 </div>
@@ -942,7 +860,7 @@ function setUpdate(text){
         if(el){
 
             el.innerHTML =
-            "DATA UPDATE : " + text;
+            "LAST UPDATE : " + text;
         }
     }
 }
@@ -969,11 +887,36 @@ async function getData(){
 
     try{
 
-        const res = await fetch(URL);
+        const res = await fetch(
 
-        const json = await res.json();
+            URL + "?t=" + Date.now(),
 
-        return json.map(row => ({
+            {
+                cache:"no-store"
+            }
+        );
+
+        const json =
+        await res.json();
+
+        /* =========================
+        LAST UPDATE FROM SPREADSHEET
+        ========================= */
+
+        if(json.lastUpdate){
+
+            const updateTime =
+            formatTanggal(
+                new Date(json.lastUpdate)
+            );
+
+            setUpdate(updateTime);
+        }
+
+        const rows =
+        json.data || json;
+
+        return rows.map(row => ({
 
             name:
                 row["EMPLOYEE NAME"] || "UNKNOWN",
@@ -1011,546 +954,6 @@ async function getData(){
         return [];
     }
 }
-
-/* =========================
-ACH STYLE
-========================= */
-
-function getAchStyle(value){
-
-    if(value >= 100){
-
-        return {
-
-            valueClass:
-                "ach-value ach-green",
-
-            boxClass:
-                "ach-box ach-green-box"
-        };
-    }
-
-    if(value < 80){
-
-        return {
-
-            valueClass:
-                "ach-value ach-red",
-
-            boxClass:
-                "ach-box ach-red-box"
-        };
-    }
-
-    return {
-
-        valueClass:
-            "ach-value ach-normal",
-
-        boxClass:
-            "ach-box"
-    };
-}
-
-/* =========================
-RENDER
-========================= */
-
-function render(
-    data,
-    key,
-    achKey,
-    achTitle,
-    containerId,
-    label,
-    mode="top"
-){
-
-    const container =
-    document.getElementById(containerId);
-
-    if(!container) return;
-
-    let filteredData = [...data];
-
-    if(
-        containerId === "salesBottom" ||
-        containerId === "trxTop"
-    ){
-
-        filteredData =
-        filteredData.filter(
-            item => !isExcluded(item.dept)
-        );
-    }
-
-    let sorted = [];
-    let styles = [];
-
-    if(mode === "top"){
-
-        styles = [
-            "gold",
-            "silver",
-            "bronze"
-        ];
-
-        sorted =
-        filteredData
-            .filter(v => v[key] > 0)
-            .sort((a,b)=>b[key]-a[key])
-            .slice(0,3);
-
-    }else{
-
-        styles = [
-            "red-high",
-            "red-mid",
-            "red-low"
-        ];
-
-        const allSorted =
-        filteredData
-            .filter(v => v[key] > 0)
-            .sort((a,b)=>a[key]-b[key]);
-
-        sorted =
-        allSorted.slice(0,3);
-
-        sorted = sorted.map((item,index)=>({
-
-            ...item,
-
-            bottomRank:
-            allSorted.length - index
-        }));
-
-        sorted.reverse();
-    }
-
-    let html = "";
-
-    sorted.forEach((d,i)=>{
-
-        const rank =
-        mode === "top"
-        ? i + 1
-        : d.bottomRank;
-
-        const achStyle =
-        getAchStyle(d[achKey]);
-
-        html += `
-
-        <div class="rank-card ${styles[i]}">
-
-            <div class="rank-number">
-                ${rank}
-            </div>
-
-            <div class="photo-box">
-
-                <img
-                    src="https://lh3.googleusercontent.com/d/${d.photo}"
-
-                    loading="lazy"
-
-                    onerror="
-                    this.src='https://ui-avatars.com/api/?name=${encodeURIComponent(d.name)}&background=random&color=fff&size=512'
-                    "
-                >
-
-            </div>
-
-            <div class="employee">
-
-                <div class="employee-name">
-                    ${d.name}
-                </div>
-
-                <div class="employee-label">
-                    ${d.dept}
-                </div>
-
-            </div>
-
-            <div class="score">
-
-                <div class="main-score">
-
-                    <div class="score-value">
-                        ${d[key].toLocaleString('id-ID')}
-                    </div>
-
-                    <div class="score-label">
-                        ${label}
-                    </div>
-
-                </div>
-
-                <div class="${achStyle.boxClass}">
-
-                    <div class="ach-title">
-                        ${achTitle}
-                    </div>
-
-                    <div class="${achStyle.valueClass}">
-                        ${d[achKey].toFixed(1)}%
-                    </div>
-
-                </div>
-
-            </div>
-
-        </div>
-        `;
-    });
-
-    container.innerHTML = html;
-}
-
-/* =========================
-SLIDES FIX
-========================= */
-
-const slides =
-document.querySelectorAll(".slide");
-
-let current = 0;
-
-let isTransitioning = false;
-
-function animateCards(slide){
-
-    if(!slide) return;
-
-    const cards =
-    slide.querySelectorAll(".rank-card");
-
-    cards.forEach(card=>{
-
-        card.classList.remove("show");
-
-        void card.offsetWidth;
-
-        card.classList.add("show");
-    });
-}
-
-function showSlide(index){
-
-    slides.forEach((slide,i)=>{
-
-        if(i === index){
-
-            slide.classList.add("active");
-
-        }else{
-
-            slide.classList.remove("active");
-        }
-    });
-
-    animateCards(slides[index]);
-}
-
-function nextSlide(){
-
-    if(isTransitioning) return;
-
-    isTransitioning = true;
-
-    current =
-    (current + 1) % slides.length;
-
-    showSlide(current);
-
-    setTimeout(()=>{
-
-        isTransitioning = false;
-
-    },900);
-}
-
-/* =========================
-UPDATE
-========================= */
-
-async function update(){
-
-    const data = await getData();
-
-    const now =
-    formatTanggal(new Date());
-
-    render(
-        data,
-        "sales",
-        "achSales",
-        "ACH MTD",
-        "salesTop",
-        "TOTAL SALES",
-        "top"
-    );
-
-    render(
-        data,
-        "sales",
-        "achSales",
-        "ACH MTD",
-        "salesBottom",
-        "TOTAL SALES",
-        "bottom"
-    );
-
-    render(
-        data,
-        "proteksi",
-        "achProteksi",
-        "ACH PROTEKSI",
-        "proteksiTop",
-        "TOTAL PROTEKSI",
-        "top"
-    );
-
-    render(
-        data,
-        "proteksi",
-        "achProteksi",
-        "ACH PROTEKSI",
-        "proteksiBottom",
-        "TOTAL PROTEKSI",
-        "bottom"
-    );
-
-    render(
-        data,
-        "trx",
-        "achTrx",
-        "ACH BULANAN",
-        "trxTop",
-        "TOTAL TRX",
-        "top"
-    );
-
-    render(
-        data,
-        "trx",
-        "achTrx",
-        "ACH BULANAN",
-        "trxBottom",
-        "TOTAL TRX",
-        "bottom"
-    );
-
-    if(
-        slides[current]
-        .classList.contains("active")
-    ){
-        animateCards(slides[current]);
-    }
-
-    setUpdate(now);
-}
-
-/* =========================
-INDICATOR
-========================= */
-
-const pauseIndicator =
-document.getElementById(
-    "pauseIndicator"
-);
-
-function showIndicator(text){
-
-    if(!pauseIndicator) return;
-
-    pauseIndicator.innerHTML = text;
-
-    pauseIndicator.classList.add("show");
-
-    clearTimeout(window.indicatorTimeout);
-
-    window.indicatorTimeout =
-    setTimeout(()=>{
-
-        pauseIndicator.classList.remove("show");
-
-    },1500);
-}
-
-/* =========================
-AUDIO
-========================= */
-
-const bgm =
-document.getElementById("bgm");
-
-if(bgm){
-
-    bgm.volume = 0.4;
-}
-
-async function playMusic(){
-
-    if(!bgm) return;
-
-    try{
-
-        await bgm.play();
-
-    }catch(err){
-
-        console.log(err);
-    }
-}
-
-/* =========================
-LOOP
-========================= */
-
-let isPaused = false;
-
-let slideInterval;
-let updateInterval;
-
-function stopLoop(){
-
-    clearInterval(slideInterval);
-    clearInterval(updateInterval);
-}
-
-function startLoop(){
-
-    stopLoop();
-
-    slideInterval =
-    setInterval(()=>{
-
-        if(!document.hidden){
-
-            nextSlide();
-        }
-
-    },7000);
-
-    updateInterval =
-    setInterval(()=>{
-
-        if(!document.hidden){
-
-            update();
-        }
-
-    },15000);
-}
-
-function togglePause(){
-
-    isPaused = !isPaused;
-
-    if(isPaused){
-
-        stopLoop();
-
-        if(bgm) bgm.pause();
-
-        showIndicator("⏸ PAUSED");
-
-    }else{
-
-        startLoop();
-
-        playMusic();
-
-        showIndicator("▶ PLAYING");
-    }
-}
-
-/* =========================
-FULLSCREEN
-========================= */
-
-async function toggleFullscreen(){
-
-    try{
-
-        if(!document.fullscreenElement){
-
-            await document.documentElement.requestFullscreen();
-
-            showIndicator("🖥 FULLSCREEN");
-
-        }else{
-
-            await document.exitFullscreen();
-
-            showIndicator("❎ EXIT FULLSCREEN");
-        }
-
-    }catch(err){
-
-        console.log(err);
-    }
-}
-
-/* =========================
-CLICK
-========================= */
-
-let clickTimer = null;
-
-document.addEventListener(
-    "click",
-    ()=>{
-
-        if(clickTimer){
-
-            clearTimeout(clickTimer);
-        }
-
-        clickTimer = setTimeout(()=>{
-
-            togglePause();
-
-        },250);
-    }
-);
-
-document.addEventListener(
-    "dblclick",
-    ()=>{
-
-        clearTimeout(clickTimer);
-
-        toggleFullscreen();
-    }
-);
-
-/* =========================
-START
-========================= */
-
-window.addEventListener(
-    "load",
-    async ()=>{
-
-        await update();
-
-        showSlide(0);
-
-        startLoop();
-
-        playMusic();
-
-        setTimeout(playMusic,1000);
-
-        setTimeout(playMusic,3000);
-
-        showIndicator("▶ PLAYING");
-    }
-);
 
 </script>
 
