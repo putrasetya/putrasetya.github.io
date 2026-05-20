@@ -86,26 +86,11 @@ body::after{
 
     transform:rotate(25deg);
 
-    animation:bgMove 12s linear infinite;
+    animation:none;
 
     pointer-events:none;
 
     z-index:-1;
-}
-
-@keyframes bgMove{
-
-    0%{
-        transform:
-            translateX(-20%)
-            rotate(25deg);
-    }
-
-    100%{
-        transform:
-            translateX(20%)
-            rotate(25deg);
-    }
 }
 
 /* =========================
@@ -135,13 +120,8 @@ SLIDES
 
     pointer-events:none;
 
-    transform:
-        scale(1.02);
-
     transition:
-        opacity .8s ease,
-        transform .8s ease,
-        visibility .8s;
+        opacity .5s linear;
 }
 
 .slide.active{
@@ -151,9 +131,6 @@ SLIDES
     visibility:visible;
 
     pointer-events:auto;
-
-    transform:
-        scale(1);
 }
 
 /* =========================
@@ -219,8 +196,6 @@ UPDATE TIME
 
     font-weight:700;
 
-    backdrop-filter:blur(12px);
-
     box-shadow:
         0 0 20px rgba(0,0,0,.25);
 }
@@ -252,8 +227,6 @@ PAUSE INDICATOR
     border:
         1px solid rgba(255,255,255,.15);
 
-    backdrop-filter:blur(16px);
-
     font-size:14px;
 
     font-weight:800;
@@ -261,14 +234,12 @@ PAUSE INDICATOR
     letter-spacing:2px;
 
     box-shadow:
-        0 10px 30px rgba(0,0,0,.45),
-        0 0 20px rgba(59,130,246,.25);
+        0 10px 30px rgba(0,0,0,.45);
 
     opacity:0;
 
     transform:
-        translateY(-20px)
-        scale(.95);
+        translateY(-20px);
 
     transition:.35s ease;
 }
@@ -278,8 +249,7 @@ PAUSE INDICATOR
     opacity:1;
 
     transform:
-        translateY(0)
-        scale(1);
+        translateY(0);
 }
 
 /* =========================
@@ -323,30 +293,27 @@ CARD
     opacity:0;
 
     transform:
-        translateX(-120px)
-        scale(.96);
+        translateX(-40px);
 
-    will-change:
-        transform,
-        opacity;
+    will-change:auto;
 }
 
 .rank-card.show{
 
     animation:
-        slideRight .9s forwards;
+        slideRight .5s forwards;
 }
 
 .rank-card:nth-child(1){
-    animation-delay:.2s;
+    animation-delay:.1s;
 }
 
 .rank-card:nth-child(2){
-    animation-delay:.5s;
+    animation-delay:.2s;
 }
 
 .rank-card:nth-child(3){
-    animation-delay:.8s;
+    animation-delay:.3s;
 }
 
 @keyframes slideRight{
@@ -356,8 +323,7 @@ CARD
         opacity:0;
 
         transform:
-            translateX(-120px)
-            scale(.92);
+            translateX(-40px);
     }
 
     to{
@@ -365,8 +331,7 @@ CARD
         opacity:1;
 
         transform:
-            translateX(0)
-            scale(1);
+            translateX(0);
     }
 }
 
@@ -526,9 +491,7 @@ PHOTO
     object-position:center bottom;
 
     filter:
-        drop-shadow(0 10px 15px rgba(0,0,0,.28))
-        contrast(1.08)
-        saturate(1.08);
+        drop-shadow(0 6px 10px rgba(0,0,0,.25));
 }
 
 /* =========================
@@ -650,10 +613,6 @@ ACH BOX
 
 .ach-box{
 
-    position:relative;
-
-    overflow:hidden;
-
     padding:
         1vh
         1.2vw;
@@ -664,24 +623,14 @@ ACH BOX
 
     text-align:center;
 
-    backdrop-filter:blur(12px);
-
     border:
         1px solid rgba(255,255,255,.18);
 
     background:
-        linear-gradient(
-            135deg,
-            rgba(255,255,255,.18),
-            rgba(255,255,255,.08)
-        );
+        rgba(255,255,255,.12);
 }
 
 .ach-title{
-
-    position:relative;
-
-    z-index:2;
 
     font-size:.72vw;
 
@@ -694,10 +643,6 @@ ACH BOX
 
 .ach-value{
 
-    position:relative;
-
-    z-index:2;
-
     margin-top:.45vh;
 
     font-size:1.8vw;
@@ -706,53 +651,32 @@ ACH BOX
 }
 
 .ach-green{
-
     color:#dcfce7 !important;
-
-    text-shadow:
-        0 0 6px rgba(34,197,94,.95),
-        0 0 14px rgba(34,197,94,.9),
-        0 0 24px rgba(34,197,94,.75);
 }
 
 .ach-green-box{
 
     background:
-        linear-gradient(
-            135deg,
-            rgba(22,163,74,.42),
-            rgba(34,197,94,.22)
-        ) !important;
+        rgba(22,163,74,.35) !important;
 
     border:
         2px solid rgba(74,222,128,.65);
 }
 
 .ach-red{
-
     color:#ffe4e6 !important;
-
-    text-shadow:
-        0 0 6px rgba(239,68,68,.95),
-        0 0 14px rgba(239,68,68,.9),
-        0 0 24px rgba(239,68,68,.75);
 }
 
 .ach-red-box{
 
     background:
-        linear-gradient(
-            135deg,
-            rgba(185,28,28,.42),
-            rgba(239,68,68,.22)
-        ) !important;
+        rgba(185,28,28,.35) !important;
 
     border:
         2px solid rgba(252,165,165,.6);
 }
 
 .ach-normal{
-
     color:#ffffff !important;
 }
 
@@ -840,10 +764,6 @@ MOBILE
     ▶ PLAYING
 </div>
 
-<!-- =========================
-SLIDES
-========================= -->
-
 <div class="slide active">
     <div class="header">
         <h1>TOP SALES</h1>
@@ -916,6 +836,9 @@ SLIDES
 const URL =
 "https://script.google.com/macros/s/AKfycbzeehvUo6QYriMFJTR4A88lN6IIHV6Qop9UphkdOTMkRLVxhVuJ13y69momo6h1pn9dTQ/exec";
 
+let lastData = [];
+let lastRenderHash = "";
+
 /* =========================
 HELPERS
 ========================= */
@@ -937,8 +860,7 @@ function formatTanggal(date){
         month:'long',
         year:'numeric',
         hour:'2-digit',
-        minute:'2-digit',
-        second:'2-digit'
+        minute:'2-digit'
     });
 }
 
@@ -979,11 +901,18 @@ async function getData(){
 
     try{
 
-        const res = await fetch(URL);
+        const res =
+        await fetch(URL + "?t=" + Date.now());
 
-        const json = await res.json();
+        const json =
+        await res.json();
 
-        return json.map(row => ({
+        if(!Array.isArray(json) || json.length === 0){
+
+            return lastData;
+        }
+
+        const mapped = json.map(row => ({
 
             name:
                 row["EMPLOYEE NAME"] || "UNKNOWN",
@@ -1014,17 +943,17 @@ async function getData(){
 
         }));
 
+        lastData = mapped;
+
+        return mapped;
+
     }catch(err){
 
         console.log("GET DATA ERROR:",err);
 
-        return [];
+        return lastData;
     }
 }
-
-/* =========================
-ACH STYLE
-========================= */
 
 function getAchStyle(value){
 
@@ -1152,7 +1081,7 @@ function render(
 
         html += `
 
-        <div class="rank-card ${styles[i]}">
+        <div class="rank-card show ${styles[i]}">
 
             <div class="rank-number">
                 ${rank}
@@ -1163,7 +1092,8 @@ function render(
                 <img
                     src="https://lh3.googleusercontent.com/d/${d.photo}"
 
-                    loading="lazy"
+                    loading="eager"
+                    decoding="async"
 
                     onerror="
                     this.src='https://ui-avatars.com/api/?name=${encodeURIComponent(d.name)}&background=random&color=fff&size=512'
@@ -1227,23 +1157,13 @@ const slides =
 document.querySelectorAll(".slide");
 
 let current = 0;
-
-function animateCards(slide){
-
-    const cards =
-    slide.querySelectorAll(".rank-card");
-
-    cards.forEach(card=>{
-
-        card.classList.remove("show");
-
-        void card.offsetWidth;
-
-        card.classList.add("show");
-    });
-}
+let isSliding = false;
 
 function nextSlide(){
+
+    if(isSliding) return;
+
+    isSliding = true;
 
     slides[current]
         .classList.remove("active");
@@ -1255,12 +1175,14 @@ function nextSlide(){
         current = 0;
     }
 
-    const next =
-    slides[current];
+    setTimeout(()=>{
 
-    next.classList.add("active");
+        slides[current]
+            .classList.add("active");
 
-    animateCards(next);
+        isSliding = false;
+
+    },120);
 }
 
 /* =========================
@@ -1269,10 +1191,24 @@ UPDATE
 
 async function update(){
 
-    const data = await getData();
+    const data =
+    await getData();
 
-    const now =
-    formatTanggal(new Date());
+    if(!data || data.length === 0){
+
+        return;
+    }
+
+    const newHash =
+    JSON.stringify(data);
+
+    if(newHash === lastRenderHash){
+
+        return;
+    }
+
+    lastRenderHash =
+    newHash;
 
     render(
         data,
@@ -1334,11 +1270,9 @@ async function update(){
         "bottom"
     );
 
-    animateCards(
-        slides[current]
+    setUpdate(
+        formatTanggal(new Date())
     );
-
-    setUpdate(now);
 }
 
 /* =========================
@@ -1377,7 +1311,7 @@ document.getElementById("bgm");
 
 if(bgm){
 
-    bgm.volume = 0.4;
+    bgm.volume = 0.35;
 }
 
 async function playMusic(){
@@ -1421,7 +1355,7 @@ function startLoop(){
             nextSlide();
         }
 
-    },7000);
+    },8000);
 
     updateInterval =
     setInterval(()=>{
@@ -1431,7 +1365,7 @@ function startLoop(){
             update();
         }
 
-    },15000);
+    },30000);
 }
 
 function togglePause(){
@@ -1517,6 +1451,29 @@ document.addEventListener(
 );
 
 /* =========================
+AUTO CLEAN MEMORY
+========================= */
+
+setInterval(()=>{
+
+    if(window.gc){
+
+        window.gc();
+    }
+
+},300000);
+
+/* =========================
+AUTO REFRESH 6 JAM
+========================= */
+
+setTimeout(()=>{
+
+    location.reload();
+
+},21600000);
+
+/* =========================
 START
 ========================= */
 
@@ -1525,10 +1482,6 @@ window.addEventListener(
     async ()=>{
 
         await update();
-
-        animateCards(
-            slides[current]
-        );
 
         startLoop();
 
