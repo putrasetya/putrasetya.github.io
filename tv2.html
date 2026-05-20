@@ -892,6 +892,7 @@ async function getData(){
             URL + "?t=" + Date.now(),
 
             {
+                method:"GET",
                 cache:"no-store"
             }
         );
@@ -899,22 +900,35 @@ async function getData(){
         const json =
         await res.json();
 
+        let rows = [];
+
         /* =========================
-        LAST UPDATE FROM SPREADSHEET
+        OLD API
         ========================= */
 
-        if(json.lastUpdate){
+        if(Array.isArray(json)){
 
-            const updateTime =
-            formatTanggal(
-                new Date(json.lastUpdate)
-            );
-
-            setUpdate(updateTime);
+            rows = json;
         }
 
-        const rows =
-        json.data || json;
+        /* =========================
+        NEW API
+        ========================= */
+
+        else if(json.data){
+
+            rows = json.data;
+
+            if(json.lastUpdate){
+
+                const updateTime =
+                formatTanggal(
+                    new Date(json.lastUpdate)
+                );
+
+                setUpdate(updateTime);
+            }
+        }
 
         return rows.map(row => ({
 
@@ -949,7 +963,10 @@ async function getData(){
 
     }catch(err){
 
-        console.log("GET DATA ERROR:",err);
+        console.log(
+            "GET DATA ERROR:",
+            err
+        );
 
         return [];
     }
