@@ -245,6 +245,10 @@ RANK NUMBER
     opacity:.18;
 }
 
+/* =========================
+PHOTO
+========================= */
+
 .photo-box{
 
     width:20%;
@@ -266,6 +270,10 @@ RANK NUMBER
 
     object-position:center bottom;
 }
+
+/* =========================
+EMPLOYEE
+========================= */
 
 .employee{
 
@@ -299,6 +307,10 @@ RANK NUMBER
 
     letter-spacing:2px;
 }
+
+/* =========================
+SCORE
+========================= */
 
 .score{
 
@@ -386,7 +398,7 @@ ACH BOX
 }
 
 /* =========================
-NEWS BAR
+FOOTER
 ========================= */
 
 .news-bar{
@@ -406,18 +418,14 @@ NEWS BAR
 
     z-index:999;
 
-    background:#b91c1c;
+    background:#ffffff;
 
     overflow:hidden;
 
-    border-top:1px solid rgba(255,255,255,.12);
+    border-top:2px solid #d1d5db;
 }
 
 .news-clock{
-
-    position:relative;
-
-    z-index:2;
 
     height:100%;
 
@@ -459,7 +467,7 @@ NEWS BAR
 
     letter-spacing:2px;
 
-    color:white;
+    color:#b91c1c;
 
     padding-left:100%;
 
@@ -510,6 +518,84 @@ PAUSE INDICATOR
     opacity:1;
 }
 
+/* =========================
+MOBILE
+========================= */
+
+@media(max-width:768px){
+
+    .slide{
+        padding:12px 12px 50px 12px;
+    }
+
+    .header h1{
+        font-size:30px;
+    }
+
+    .header p{
+        font-size:11px;
+    }
+
+    .rank-card{
+        height:130px;
+    }
+
+    .rank-number{
+        font-size:90px !important;
+    }
+
+    .photo-box{
+        width:95px;
+        min-width:95px;
+    }
+
+    .employee-name{
+        font-size:15px;
+    }
+
+    .employee-label{
+        font-size:10px;
+    }
+
+    .score{
+        width:42%;
+    }
+
+    .score-value{
+        font-size:18px;
+    }
+
+    .score-label{
+        font-size:9px;
+    }
+
+    .ach-box{
+        min-width:78px;
+        padding:8px 10px;
+    }
+
+    .ach-title{
+        font-size:8px;
+    }
+
+    .ach-value{
+        font-size:15px;
+    }
+
+    .news-bar{
+        height:42px;
+    }
+
+    .news-clock{
+        font-size:10px;
+        padding:0 12px;
+    }
+
+    .news-marquee-track{
+        font-size:11px;
+    }
+}
+
 </style>
 </head>
 
@@ -518,6 +604,8 @@ PAUSE INDICATOR
 <div class="pause-indicator" id="pauseIndicator">
     ▶ PLAYING
 </div>
+
+<!-- 6 SLIDES -->
 
 <div class="slide active">
     <div class="header">
@@ -567,6 +655,8 @@ PAUSE INDICATOR
     <div class="rank-list" id="trxBottom"></div>
 </div>
 
+<!-- FOOTER -->
+
 <div class="news-bar">
 
     <div class="news-clock" id="newsClock">
@@ -576,14 +666,18 @@ PAUSE INDICATOR
     <div class="news-marquee">
 
         <div class="news-marquee-track">
+
             WORK TOGETHER WIN TOGETHER MAKE IT HAPPEN •
             WORK TOGETHER WIN TOGETHER MAKE IT HAPPEN •
             WORK TOGETHER WIN TOGETHER MAKE IT HAPPEN •
+
         </div>
 
     </div>
 
 </div>
+
+<!-- AUDIO -->
 
 <audio
     id="bgm"
@@ -642,15 +736,9 @@ function formatSales(value){
 
 function achClass(v){
 
-    if(v >= 100){
+    if(v >= 100) return "ach-green";
 
-        return "ach-green";
-    }
-
-    if(v < 80){
-
-        return "ach-red";
-    }
+    if(v < 80) return "ach-red";
 
     return "";
 }
@@ -784,7 +872,7 @@ function render(
         <div class="rank-card ${styles[i]}">
 
             <div class="rank-number">
-                ${mode === "top" ? i+1 : i+1}
+                ${i+1}
             </div>
 
             <div class="photo-box">
@@ -858,65 +946,17 @@ async function update(){
     const data =
     await getData();
 
-    render(
-        data,
-        "sales",
-        "achSales",
-        "ACH MTD",
-        "salesTop",
-        "TOTAL SALES",
-        "top"
-    );
+    render(data,"sales","achSales","ACH MTD","salesTop","TOTAL SALES","top");
 
-    render(
-        data,
-        "sales",
-        "achSales",
-        "ACH MTD",
-        "salesBottom",
-        "TOTAL SALES",
-        "bottom"
-    );
+    render(data,"sales","achSales","ACH MTD","salesBottom","TOTAL SALES","bottom");
 
-    render(
-        data,
-        "proteksi",
-        "achProteksi",
-        "ACH PROTEKSI",
-        "proteksiTop",
-        "TOTAL PROTEKSI",
-        "top"
-    );
+    render(data,"proteksi","achProteksi","ACH PROTEKSI","proteksiTop","TOTAL PROTEKSI","top");
 
-    render(
-        data,
-        "proteksi",
-        "achProteksi",
-        "ACH PROTEKSI",
-        "proteksiBottom",
-        "TOTAL PROTEKSI",
-        "bottom"
-    );
+    render(data,"proteksi","achProteksi","ACH PROTEKSI","proteksiBottom","TOTAL PROTEKSI","bottom");
 
-    render(
-        data,
-        "trx",
-        "achTrx",
-        "ACH BULANAN",
-        "trxTop",
-        "TOTAL TRX",
-        "top"
-    );
+    render(data,"trx","achTrx","ACH BULANAN","trxTop","TOTAL TRX","top");
 
-    render(
-        data,
-        "trx",
-        "achTrx",
-        "ACH BULANAN",
-        "trxBottom",
-        "TOTAL TRX",
-        "bottom"
-    );
+    render(data,"trx","achTrx","ACH BULANAN","trxBottom","TOTAL TRX","bottom");
 }
 
 /* =========================
@@ -940,7 +980,7 @@ function nextSlide(){
 }
 
 /* =========================
-NEWS CLOCK
+CLOCK
 ========================= */
 
 function updateNewsClock(){
@@ -1079,7 +1119,7 @@ async function toggleFullscreen(){
 }
 
 /* =========================
-CLICK EVENT
+CLICK
 ========================= */
 
 let clickTimer = null;
