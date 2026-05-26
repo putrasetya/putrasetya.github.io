@@ -1,12 +1,13 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>AZKO ULTRA TV DISPLAY</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 
 <style>
 
@@ -16,445 +17,1603 @@
     box-sizing:border-box;
 }
 
+html,
 body{
-    font-family:'Poppins',sans-serif;
-    background:#0f172a;
-    color:white;
-    overflow:hidden;
-    width:100vw;
-    height:100vh;
+    width:100%;
+    height:100%;
 }
 
-/* BACKGROUND */
-.bg-animation{
-    position:fixed;
-    inset:0;
+body{
+
+    font-family:'Poppins',sans-serif;
+
+    overflow:hidden;
+
+    color:white;
+
+    cursor:pointer;
+
     background:
         radial-gradient(circle at top left,#1e3a8a 0%,transparent 30%),
-        radial-gradient(circle at bottom right,#dc2626 0%,transparent 30%),
-        linear-gradient(135deg,#020617,#111827,#1e293b);
+        radial-gradient(circle at top right,#facc15 0%,transparent 25%),
+        radial-gradient(circle at bottom,#0f172a 0%,#020617 70%);
+}
+
+body::before{
+
+    content:"";
+
+    position:fixed;
+
+    inset:0;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(255,255,255,.03),
+            transparent 35%,
+            rgba(255,255,255,.02)
+        );
+
+    pointer-events:none;
+
     z-index:-2;
 }
 
-.overlay{
+body::after{
+
+    content:"";
+
     position:fixed;
-    inset:0;
-    background:rgba(0,0,0,0.25);
+
+    width:120%;
+    height:120%;
+
+    top:-10%;
+    left:-10%;
+
+    opacity:.35;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            rgba(255,255,255,.04),
+            transparent
+        );
+
+    transform:rotate(25deg);
+
+    pointer-events:none;
+
     z-index:-1;
 }
 
-/* MAIN */
-.container{
+/* =========================
+SLIDES
+========================= */
+
+.slide{
+
+    position:absolute;
+
+    inset:0;
+
+    width:100vw;
+    height:100vh;
+
+    padding:
+        1vh
+        2vw
+        7vh
+        2vw;
+
+    display:flex;
+
+    flex-direction:column;
+
+    opacity:0;
+
+    visibility:hidden;
+
+    pointer-events:none;
+
+    transition:
+        opacity .5s linear;
+}
+
+.slide.active{
+
+    opacity:1;
+
+    visibility:visible;
+
+    pointer-events:auto;
+}
+
+/* =========================
+HEADER
+========================= */
+
+.header{
+
+    text-align:center;
+
+    margin-bottom:1vh;
+}
+
+.header h1{
+
+    font-size:3vw;
+
+    font-weight:900;
+
+    letter-spacing:6px;
+
+    text-transform:uppercase;
+
+    text-shadow:
+        0 0 20px rgba(255,255,255,.25);
+}
+
+.header p{
+
+    margin-top:.2vh;
+
+    font-size:1vw;
+
+    letter-spacing:4px;
+
+    opacity:.9;
+}
+
+/* =========================
+PAUSE INDICATOR
+========================= */
+
+.pause-indicator{
+
+    position:fixed;
+
+    top:20px;
+    left:20px;
+
+    z-index:9999;
+
+    padding:14px 24px;
+
+    border-radius:18px;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(15,23,42,.92),
+            rgba(30,41,59,.92)
+        );
+
+    border:
+        1px solid rgba(255,255,255,.15);
+
+    font-size:14px;
+
+    font-weight:800;
+
+    letter-spacing:2px;
+
+    box-shadow:
+        0 10px 30px rgba(0,0,0,.45);
+
+    opacity:0;
+
+    transform:
+        translateY(-20px);
+
+    transition:.35s ease;
+}
+
+.pause-indicator.show{
+
+    opacity:1;
+
+    transform:
+        translateY(0);
+}
+
+/* =========================
+RANK LIST
+========================= */
+
+.rank-list{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:1.2vh;
+
+    flex:1;
+
+    justify-content:space-evenly;
+}
+
+/* =========================
+CARD
+========================= */
+
+.rank-card{
+
+    position:relative;
+
+    display:flex;
+
+    align-items:center;
+
+    height:24vh;
+
+    border-radius:34px;
+
+    overflow:hidden;
+
+    border:
+        1px solid rgba(255,255,255,.08);
+
+    opacity:0;
+
+    transform:
+        translateX(-40px) translateZ(0);
+
+    backface-visibility:hidden;
+
+    will-change:transform,opacity;
+
+    contain:layout style paint;
+}
+
+.rank-card.show{
+
+    animation:
+        slideRight .5s forwards;
+}
+
+.rank-card:nth-child(1){
+    animation-delay:.1s;
+}
+
+.rank-card:nth-child(2){
+    animation-delay:.2s;
+}
+
+.rank-card:nth-child(3){
+    animation-delay:.3s;
+}
+
+@keyframes slideRight{
+
+    from{
+
+        opacity:0;
+
+        transform:
+            translateX(-40px);
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:
+            translateX(0);
+    }
+}
+
+/* =========================
+CARD COLORS
+========================= */
+
+.gold{
+    background:linear-gradient(135deg,#6b5300,#d4a514,#fff0a6,#d4a514,#6b5300);
+}
+
+.silver{
+    background:linear-gradient(135deg,#737373,#d1d5db,#ffffff,#d1d5db,#737373);
+}
+
+.bronze{
+    background:linear-gradient(135deg,#6d3f1d,#c87c3d,#efc08c,#c87c3d,#6d3f1d);
+}
+
+.red-high{
+    background:linear-gradient(135deg,#7f1d1d,#b91c1c,#dc2626,#ef4444,#f87171);
+}
+
+.red-mid{
+    background:linear-gradient(135deg,#4a0404,#7f1d1d,#b91c1c,#dc2626,#ef4444);
+}
+
+.red-low{
+    background:linear-gradient(135deg,#2b0000,#4a0404,#7f1d1d,#991b1b,#b91c1c);
+}
+
+/* =========================
+RANK NUMBER
+========================= */
+
+.rank-number{
+
+    position:absolute;
+
+    left:-.5vw;
+
+    top:50%;
+
+    transform:
+        translateY(-50%)
+        skew(-10deg);
+
+    font-size:16vw;
+
+    font-weight:900;
+
+    opacity:.20;
+
+    letter-spacing:-10px;
+}
+
+.gold .rank-number{
+    color:#facc15;
+}
+
+.silver .rank-number{
+    color:#e2e8f0;
+}
+
+.bronze .rank-number{
+    color:#fb923c;
+}
+
+.red-high .rank-number,
+.red-mid .rank-number,
+.red-low .rank-number{
+    color:#ffffff;
+}
+
+/* =========================
+PHOTO
+========================= */
+
+.photo-box{
+
+    width:20%;
+    height:100%;
+
+    display:flex;
+
+    align-items:flex-end;
+
+    justify-content:center;
+}
+
+.photo-box img{
+
     width:100%;
     height:100%;
-    display:flex;
-    flex-direction:column;
-    padding:30px;
+
+    object-fit:contain;
+
+    object-position:center bottom;
+
+    filter:
+        drop-shadow(0 2px 4px rgba(0,0,0,.18));
+
+    image-rendering:auto;
+
+    contain:paint;
 }
 
-/* HEADER */
-.top-header{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    margin-bottom:25px;
-}
+/* =========================
+EMPLOYEE
+========================= */
 
-.logo{
-    font-size:40px;
-    font-weight:800;
-    letter-spacing:2px;
-    color:#fff;
-}
+.employee{
 
-.sub-logo{
-    font-size:18px;
-    font-weight:500;
-    opacity:0.9;
-}
-
-.status-box{
-    background:rgba(255,255,255,0.1);
-    border:1px solid rgba(255,255,255,0.15);
-    backdrop-filter:blur(10px);
-    padding:15px 25px;
-    border-radius:18px;
-    text-align:right;
-}
-
-.status-title{
-    font-size:14px;
-    opacity:0.7;
-}
-
-.status-value{
-    font-size:24px;
-    font-weight:700;
-    margin-top:5px;
-}
-
-/* CONTENT */
-.content{
     flex:1;
-    display:grid;
-    grid-template-columns:repeat(3,1fr);
-    gap:25px;
+
+    padding-left:1.5vw;
+
     overflow:hidden;
 }
 
-/* CARD */
-.card{
-    background:rgba(255,255,255,0.08);
-    border:1px solid rgba(255,255,255,0.12);
-    border-radius:24px;
-    padding:25px;
-    backdrop-filter:blur(14px);
-    position:relative;
-    overflow:hidden;
-}
+.employee-name{
 
-.card::before{
-    content:'';
-    position:absolute;
-    inset:0;
-    background:linear-gradient(
-        135deg,
-        rgba(255,255,255,0.08),
-        transparent
-    );
-    pointer-events:none;
-}
+    font-size:2vw;
 
-.card-title{
-    font-size:20px;
-    font-weight:700;
-    margin-bottom:20px;
-}
+    font-weight:900;
 
-.data-list{
-    display:flex;
-    flex-direction:column;
-    gap:14px;
-}
-
-.data-item{
-    background:rgba(255,255,255,0.06);
-    padding:16px;
-    border-radius:16px;
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    transition:0.3s;
-}
-
-.data-item:hover{
-    transform:translateX(5px);
-    background:rgba(255,255,255,0.1);
-}
-
-.item-name{
-    font-size:16px;
-    font-weight:500;
-}
-
-.item-value{
-    font-size:18px;
-    font-weight:700;
-    color:#38bdf8;
-}
-
-/* BOTTOM BAR */
-.bottom-bar{
-    position:absolute;
-    left:0;
-    right:0;
-    bottom:0;
-    height:65px;
-    display:flex;
-    overflow:hidden;
-    z-index:999;
-}
-
-/* CLOCK */
-.clock-box{
-    min-width:420px;
-    background:white;
     color:#111827;
-    display:flex;
-    align-items:center;
-    padding:0 25px;
-    gap:20px;
-    font-weight:700;
-    border-top-right-radius:20px;
-}
 
-.date-section{
-    display:flex;
-    flex-direction:column;
-    line-height:1.2;
-}
+    text-transform:uppercase;
 
-.day-name{
-    font-size:20px;
-    font-weight:800;
-}
-
-.full-date{
-    font-size:14px;
-    font-weight:600;
-}
-
-.time{
-    font-size:34px;
-    font-weight:800;
-    letter-spacing:2px;
-}
-
-/* MARQUEE */
-.marquee-container{
-    flex:1;
-    background:#dc2626;
-    display:flex;
-    align-items:center;
-    overflow:hidden;
-    position:relative;
-}
-
-.marquee{
     white-space:nowrap;
-    display:inline-block;
-    padding-left:100%;
-    animation:marqueeMove 18s linear infinite;
-    font-size:28px;
-    font-weight:800;
-    letter-spacing:2px;
+
+    overflow:hidden;
+
+    text-overflow:ellipsis;
+}
+
+.employee-label{
+
+    margin-top:.5vh;
+
+    font-size:1.1vw;
+
+    letter-spacing:3px;
+
+    text-transform:uppercase;
+
+    color:#111827;
+}
+
+.red-high .employee-name,
+.red-mid .employee-name,
+.red-low .employee-name,
+
+.red-high .employee-label,
+.red-mid .employee-label,
+.red-low .employee-label{
     color:white;
 }
 
+/* =========================
+SCORE
+========================= */
+
+.score{
+
+    width:31%;
+
+    padding-right:1.8vw;
+
+    display:flex;
+
+    flex-direction:column;
+
+    align-items:flex-end;
+
+    gap:1vh;
+}
+
+.main-score{
+    text-align:right;
+}
+
+.score-value{
+
+    font-size:2.5vw;
+
+    font-weight:900;
+
+    color:#111827;
+}
+
+.score-label{
+
+    margin-top:.2vh;
+
+    font-size:.8vw;
+
+    font-weight:700;
+
+    letter-spacing:2px;
+
+    color:#111827;
+
+    opacity:.7;
+}
+
+.red-high .score-value,
+.red-mid .score-value,
+.red-low .score-value,
+
+.red-high .score-label,
+.red-mid .score-label,
+.red-low .score-label{
+    color:white;
+}
+
+/* =========================
+ACH BOX
+========================= */
+
+.ach-box{
+
+    padding:
+        1vh
+        1.2vw;
+
+    border-radius:22px;
+
+    min-width:9vw;
+
+    text-align:center;
+
+    border:
+        1px solid rgba(255,255,255,.18);
+
+    background:
+        rgba(255,255,255,.12);
+}
+
+.ach-title{
+
+    font-size:.72vw;
+
+    font-weight:800;
+
+    letter-spacing:2px;
+
+    color:#ffffff;
+}
+
+.ach-value{
+
+    margin-top:.45vh;
+
+    font-size:1.8vw;
+
+    font-weight:900;
+}
+
+.ach-green{
+    color:#dcfce7 !important;
+}
+
+.ach-green-box{
+
+    background:
+        rgba(22,163,74,.35) !important;
+
+    border:
+        2px solid rgba(74,222,128,.65);
+}
+
+.ach-red{
+    color:#ffe4e6 !important;
+}
+
+.ach-red-box{
+
+    background:
+        rgba(185,28,28,.35) !important;
+
+    border:
+        2px solid rgba(252,165,165,.6);
+}
+
+.ach-normal{
+    color:#ffffff !important;
+}
+
+/* =========================
+NEWS BAR
+========================= */
+
+.news-bar{
+
+    position:fixed;
+
+    left:0;
+    bottom:0;
+
+    width:100%;
+
+    height:5.5vh;
+
+    display:flex;
+
+    align-items:center;
+
+    z-index:999;
+
+    background:
+        linear-gradient(
+            90deg,
+            #7f1d1d,
+            #b91c1c,
+            #dc2626
+        );
+
+    border-top:
+        2px solid rgba(255,255,255,.15);
+
+    overflow:hidden;
+
+    box-shadow:
+        0 -6px 20px rgba(0,0,0,.35);
+}
+
+.news-clock{
+
+    height:100%;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    padding:
+        0 1.6vw;
+
+    background:
+        linear-gradient(
+            135deg,
+            #ffffff,
+            #f1f5f9
+        );
+
+    color:#991b1b;
+
+    font-size:1.1vw;
+
+    font-weight:900;
+
+    letter-spacing:1px;
+
+    white-space:nowrap;
+
+    border-right:
+        3px solid rgba(0,0,0,.08);
+}
+
+.news-marquee{
+
+    flex:1;
+
+    height:100%;
+
+    display:flex;
+
+    align-items:center;
+
+    overflow:hidden;
+}
+
+.news-marquee-track{
+
+    white-space:nowrap;
+
+    font-size:1.2vw;
+
+    font-weight:800;
+
+    letter-spacing:2px;
+
+    color:white;
+
+    padding-left:100%;
+
+    animation:
+        marqueeMove 24s linear infinite;
+}
+
 @keyframes marqueeMove{
-    0%{
+
+    from{
         transform:translateX(0);
     }
-    100%{
+
+    to{
         transform:translateX(-100%);
     }
 }
 
-/* LAST UPDATE */
-.last-update{
-    position:absolute;
-    top:20px;
-    right:20px;
-    background:rgba(255,255,255,0.08);
-    padding:10px 18px;
-    border-radius:14px;
-    font-size:14px;
-    backdrop-filter:blur(10px);
-}
+/* =========================
+MOBILE
+========================= */
 
-/* RESPONSIVE */
-@media(max-width:1200px){
+@media(max-width:768px){
 
-    .content{
-        grid-template-columns:1fr;
+    body{
+        overflow:auto;
     }
 
-    .clock-box{
-        min-width:320px;
+    .slide{
+        min-height:100vh;
+        height:auto;
+        padding:12px 12px 50px 12px;
     }
 
-    .time{
-        font-size:26px;
+    .header h1{
+        font-size:30px;
     }
 
-    .marquee{
-        font-size:20px;
+    .header p{
+        font-size:11px;
+    }
+
+    .rank-card{
+        height:130px;
+    }
+
+    .rank-number{
+        font-size:90px !important;
+    }
+
+    .photo-box{
+        width:95px;
+        min-width:95px;
+    }
+
+    .employee-name{
+        font-size:15px;
+    }
+
+    .employee-label{
+        font-size:10px;
+    }
+
+    .score{
+        width:42%;
+    }
+
+    .score-value{
+        font-size:18px;
+    }
+
+    .score-label{
+        font-size:9px;
+    }
+
+    .ach-box{
+        min-width:78px;
+        padding:8px 10px;
+    }
+
+    .ach-title{
+        font-size:8px;
+    }
+
+    .ach-value{
+        font-size:15px;
+    }
+
+    .news-bar{
+        height:42px;
+    }
+
+    .news-clock{
+        font-size:10px;
+        padding:0 12px;
+    }
+
+    .news-marquee-track{
+        font-size:11px;
     }
 }
 
 </style>
 </head>
+
 <body>
 
-<div class="bg-animation"></div>
-<div class="overlay"></div>
+<div class="pause-indicator" id="pauseIndicator">
+    ▶ PLAYING
+</div>
 
-<div class="container">
+<div class="slide active">
+    <div class="header">
+        <h1>TOP SALES</h1>
+        <p>AZKO CITIMALL TUBAN</p>
+    </div>
+    <div class="rank-list" id="salesTop"></div>
+</div>
 
-    <div class="top-header">
+<div class="slide">
+    <div class="header">
+        <h1>BOTTOM SALES</h1>
+        <p>AZKO CITIMALL TUBAN</p>
+    </div>
+    <div class="rank-list" id="salesBottom"></div>
+</div>
 
-        <div>
-            <div class="logo">AZ•KO</div>
-            <div class="sub-logo">Ciputra World Surabaya</div>
-        </div>
+<div class="slide">
+    <div class="header">
+        <h1>TOP PROTEKSI</h1>
+        <p>AZKO CITIMALL TUBAN</p>
+    </div>
+    <div class="rank-list" id="proteksiTop"></div>
+</div>
 
-        <div class="status-box">
-            <div class="status-title">SYSTEM STATUS</div>
-            <div class="status-value">ONLINE</div>
-        </div>
+<div class="slide">
+    <div class="header">
+        <h1>BOTTOM PROTEKSI</h1>
+        <p>AZKO CITIMALL TUBAN</p>
+    </div>
+    <div class="rank-list" id="proteksiBottom"></div>
+</div>
 
+<div class="slide">
+    <div class="header">
+        <h1>TOP TRX</h1>
+        <p>AZKO CITIMALL TUBAN</p>
+    </div>
+    <div class="rank-list" id="trxTop"></div>
+</div>
+
+<div class="slide">
+    <div class="header">
+        <h1>BOTTOM TRX</h1>
+        <p>AZKO CITIMALL TUBAN</p>
+    </div>
+    <div class="rank-list" id="trxBottom"></div>
+</div>
+
+<div class="news-bar">
+
+    <div class="news-clock" id="newsClock">
+        LOADING...
     </div>
 
-    <div class="content">
+    <div class="news-marquee">
 
-        <!-- CARD 1 -->
-        <div class="card">
-            <div class="card-title">Performance</div>
-
-            <div class="data-list">
-
-                <div class="data-item">
-                    <div class="item-name">Sales Today</div>
-                    <div class="item-value">92%</div>
-                </div>
-
-                <div class="data-item">
-                    <div class="item-name">Customer Traffic</div>
-                    <div class="item-value">1,240</div>
-                </div>
-
-                <div class="data-item">
-                    <div class="item-name">Conversion</div>
-                    <div class="item-value">74%</div>
-                </div>
-
-            </div>
-        </div>
-
-        <!-- CARD 2 -->
-        <div class="card">
-            <div class="card-title">Operational</div>
-
-            <div class="data-list">
-
-                <div class="data-item">
-                    <div class="item-name">Staff Active</div>
-                    <div class="item-value">18</div>
-                </div>
-
-                <div class="data-item">
-                    <div class="item-name">Queue Status</div>
-                    <div class="item-value">Normal</div>
-                </div>
-
-                <div class="data-item">
-                    <div class="item-name">Stock Ready</div>
-                    <div class="item-value">98%</div>
-                </div>
-
-            </div>
-        </div>
-
-        <!-- CARD 3 -->
-        <div class="card">
-            <div class="card-title">Monitoring</div>
-
-            <div class="data-list">
-
-                <div class="data-item">
-                    <div class="item-name">Display Screen</div>
-                    <div class="item-value">Active</div>
-                </div>
-
-                <div class="data-item">
-                    <div class="item-name">Network</div>
-                    <div class="item-value">Stable</div>
-                </div>
-
-                <div class="data-item">
-                    <div class="item-name">Server Sync</div>
-                    <div class="item-value">Realtime</div>
-                </div>
-
-            </div>
+        <div class="news-marquee-track">
+            WORK TOGETHER WIN TOGETHER MAKE IT HAPPEN •
+            WORK TOGETHER WIN TOGETHER MAKE IT HAPPEN •
+            WORK TOGETHER WIN TOGETHER MAKE IT HAPPEN •
         </div>
 
     </div>
 
 </div>
 
-<!-- BOTTOM BAR -->
-<div class="bottom-bar">
+<audio
+    id="bgm"
+    loop
+    autoplay
+    playsinline
+    preload="auto">
 
-    <!-- CLOCK -->
-    <div class="clock-box">
+    <source
+        src="https://putrasetya.github.io/223am.mp3"
+        type="audio/mpeg">
 
-        <div class="date-section">
-            <div class="day-name" id="dayName">Senin</div>
-            <div class="full-date" id="fullDate">01 Januari 2026</div>
-        </div>
-
-        <div class="time" id="clock">00:00:00</div>
-
-    </div>
-
-    <!-- MARQUEE -->
-    <div class="marquee-container">
-        <div class="marquee">
-            WORK TOGETHER WIN TOGETHER MAKE IT HAPPEN •
-            WORK TOGETHER WIN TOGETHER MAKE IT HAPPEN •
-            WORK TOGETHER WIN TOGETHER MAKE IT HAPPEN •
-        </div>
-    </div>
-
-</div>
+</audio>
 
 <script>
 
-/* HARI & BULAN INDONESIA */
-const hari = [
-    "Minggu",
-    "Senin",
-    "Selasa",
-    "Rabu",
-    "Kamis",
-    "Jumat",
-    "Sabtu"
-];
+const URL =
+"https://script.google.com/macros/s/AKfycbzeehvUo6QYriMFJTR4A88lN6IIHV6Qop9UphkdOTMkRLVxhVuJ13y69momo6h1pn9dTQ/exec";
 
-const bulan = [
-    "Januari",
-    "Februari",
-    "Maret",
-    "April",
-    "Mei",
-    "Juni",
-    "Juli",
-    "Agustus",
-    "September",
-    "Oktober",
-    "November",
-    "Desember"
-];
+let lastData = [];
+let lastRenderHash = "";
 
-/* UPDATE CLOCK */
-function updateClock(){
+/* =========================
+HELPERS
+========================= */
+
+function clean(val){
+
+    if(!val) return 0;
+
+    return parseFloat(
+        val.toString().replace(/[^\d.]/g,'')
+    ) || 0;
+}
+
+function formatSales(value){
+
+    if(!value) return "0";
+
+    if(value >= 1000000){
+
+        let juta = value / 1000000;
+
+        let formatted = juta.toFixed(1);
+
+        if(formatted.endsWith(".0")){
+
+            formatted = formatted.slice(0,-2);
+        }
+
+        return formatted.replace(".",",") + " Jt";
+    }
+
+    return value.toLocaleString("id-ID");
+}
+
+function isExcluded(dept){
+
+    const d =
+    (dept || "").toLowerCase();
+
+    return (
+
+        d.includes("cashier") ||
+        d.includes("kasir") ||
+        d.includes("cs") ||
+        d.includes("customer service")
+    );
+}
+
+/* =========================
+GET DATA
+========================= */
+
+async function getData(){
+
+    try{
+
+        const controller =
+        new AbortController();
+
+        const timeout =
+        setTimeout(()=>{
+
+            controller.abort();
+
+        },10000);
+
+        const res =
+        await fetch(
+            URL + "?t=" + Date.now(),
+            {
+                signal:controller.signal
+            }
+        );
+
+        clearTimeout(timeout);
+
+        const json =
+        await res.json();
+
+        if(!Array.isArray(json) || json.length === 0){
+
+            return lastData;
+        }
+
+        const mapped = json.map(row => ({
+
+            name:
+                row["EMPLOYEE NAME"] || "UNKNOWN",
+
+            dept:
+                row["DEPT"] || "-",
+
+            sales:
+                clean(row["SALES MTD"]),
+
+            proteksi:
+                clean(row["PROTEKSI"]),
+
+            trx:
+                clean(row["TRX"]),
+
+            achSales:
+                clean(row["ACH MTD"]),
+
+            achProteksi:
+                clean(row["ACH PROTEKSI"]),
+
+            achTrx:
+                clean(row["ACH BULANAN"]),
+
+            photo:
+                row["PHOTO"] || ""
+
+        }));
+
+        lastData = mapped;
+
+        return mapped;
+
+    }catch(err){
+
+        console.log("GET DATA ERROR:",err);
+
+        return lastData;
+    }
+}
+
+/* =========================
+ACH STYLE
+========================= */
+
+function getAchStyle(value){
+
+    if(value >= 100){
+
+        return {
+
+            valueClass:
+                "ach-value ach-green",
+
+            boxClass:
+                "ach-box ach-green-box"
+        };
+    }
+
+    if(value < 80){
+
+        return {
+
+            valueClass:
+                "ach-value ach-red",
+
+            boxClass:
+                "ach-box ach-red-box"
+        };
+    }
+
+    return {
+
+        valueClass:
+            "ach-value ach-normal",
+
+        boxClass:
+            "ach-box"
+    };
+}
+
+/* =========================
+RENDER
+========================= */
+
+function render(
+    data,
+    key,
+    achKey,
+    achTitle,
+    containerId,
+    label,
+    mode="top"
+){
+
+    const container =
+    document.getElementById(containerId);
+
+    if(!container) return;
+
+    let filteredData = [...data];
+
+    if(
+        containerId === "salesBottom" ||
+        containerId === "trxTop"
+    ){
+
+        filteredData =
+        filteredData.filter(
+            item => !isExcluded(item.dept)
+        );
+    }
+
+    let sorted = [];
+    let styles = [];
+
+    if(mode === "top"){
+
+        styles = [
+            "gold",
+            "silver",
+            "bronze"
+        ];
+
+        sorted =
+        filteredData
+            .filter(v => v[key] > 0)
+            .sort((a,b)=>b[key]-a[key])
+            .slice(0,3);
+
+    }else{
+
+        styles = [
+            "red-high",
+            "red-mid",
+            "red-low"
+        ];
+
+        const allSorted =
+        filteredData
+            .filter(v => v[key] > 0)
+            .sort((a,b)=>a[key]-b[key]);
+
+        sorted =
+        allSorted.slice(0,3);
+
+        sorted = sorted.map((item,index)=>({
+
+            ...item,
+
+            bottomRank:
+            allSorted.length - index
+        }));
+
+        sorted.reverse();
+    }
+
+    let html = "";
+
+    sorted.forEach((d,i)=>{
+
+        const rank =
+        mode === "top"
+        ? i + 1
+        : d.bottomRank;
+
+        const achStyle =
+        getAchStyle(d[achKey]);
+
+        html += `
+
+        <div class="rank-card show ${styles[i]}">
+
+            <div class="rank-number">
+                ${rank}
+            </div>
+
+            <div class="photo-box">
+
+                <img
+                    src="https://drive.google.com/thumbnail?id=${d.photo}&sz=w400"
+
+                    loading="eager"
+                    decoding="async"
+
+                    onerror="
+                    this.src='https://ui-avatars.com/api/?name=${encodeURIComponent(d.name)}&background=random&color=fff&size=512'
+                    "
+                >
+
+            </div>
+
+            <div class="employee">
+
+                <div class="employee-name">
+                    ${d.name}
+                </div>
+
+                <div class="employee-label">
+                    ${d.dept}
+                </div>
+
+            </div>
+
+            <div class="score">
+
+                <div class="main-score">
+
+                    <div class="score-value">
+                        ${key === "sales"
+                            ? formatSales(d[key])
+                            : d[key].toLocaleString('id-ID')}
+                    </div>
+
+                    <div class="score-label">
+                        ${label}
+                    </div>
+
+                </div>
+
+                <div class="${achStyle.boxClass}">
+
+                    <div class="ach-title">
+                        ${achTitle}
+                    </div>
+
+                    <div class="${achStyle.valueClass}">
+                        ${d[achKey].toFixed(1)}%
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+        `;
+    });
+
+    container.innerHTML = html;
+}
+
+/* =========================
+SLIDES
+========================= */
+
+const slides =
+document.querySelectorAll(".slide");
+
+let current = 0;
+let isSliding = false;
+
+function nextSlide(){
+
+    if(isSliding) return;
+
+    isSliding = true;
+
+    slides[current]
+        .classList.remove("active");
+
+    current++;
+
+    if(current >= slides.length){
+
+        current = 0;
+    }
+
+    setTimeout(()=>{
+
+        slides[current]
+            .classList.add("active");
+
+        isSliding = false;
+
+    },120);
+}
+
+/* =========================
+UPDATE
+========================= */
+
+async function update(){
+
+    const data =
+    await getData();
+
+    if(!data || data.length === 0){
+
+        return;
+    }
+
+    const newHash =
+    data.map(v =>
+        v.name +
+        v.sales +
+        v.proteksi +
+        v.trx
+    ).join("|");
+
+    if(newHash === lastRenderHash){
+
+        return;
+    }
+
+    lastRenderHash =
+    newHash;
+
+    render(
+        data,
+        "sales",
+        "achSales",
+        "ACH MTD",
+        "salesTop",
+        "TOTAL SALES",
+        "top"
+    );
+
+    render(
+        data,
+        "sales",
+        "achSales",
+        "ACH MTD",
+        "salesBottom",
+        "TOTAL SALES",
+        "bottom"
+    );
+
+    render(
+        data,
+        "proteksi",
+        "achProteksi",
+        "ACH PROTEKSI",
+        "proteksiTop",
+        "TOTAL PROTEKSI",
+        "top"
+    );
+
+    render(
+        data,
+        "proteksi",
+        "achProteksi",
+        "ACH PROTEKSI",
+        "proteksiBottom",
+        "TOTAL PROTEKSI",
+        "bottom"
+    );
+
+    render(
+        data,
+        "trx",
+        "achTrx",
+        "ACH BULANAN",
+        "trxTop",
+        "TOTAL TRX",
+        "top"
+    );
+
+    render(
+        data,
+        "trx",
+        "achTrx",
+        "ACH BULANAN",
+        "trxBottom",
+        "TOTAL TRX",
+        "bottom"
+    );
+}
+
+/* =========================
+NEWS CLOCK
+========================= */
+
+function updateNewsClock(){
+
+    const el =
+    document.getElementById("newsClock");
+
+    if(!el) return;
 
     const now = new Date();
 
-    const day = hari[now.getDay()];
-    const date = now.getDate();
-    const month = bulan[now.getMonth()];
-    const year = now.getFullYear();
+    const hari = [
+        "MINGGU",
+        "SENIN",
+        "SELASA",
+        "RABU",
+        "KAMIS",
+        "JUMAT",
+        "SABTU"
+    ];
 
-    const hours = String(now.getHours()).padStart(2,'0');
-    const minutes = String(now.getMinutes()).padStart(2,'0');
-    const seconds = String(now.getSeconds()).padStart(2,'0');
+    const bulan = [
+        "JANUARI",
+        "FEBRUARI",
+        "MARET",
+        "APRIL",
+        "MEI",
+        "JUNI",
+        "JULI",
+        "AGUSTUS",
+        "SEPTEMBER",
+        "OKTOBER",
+        "NOVEMBER",
+        "DESEMBER"
+    ];
 
-    document.getElementById("dayName").textContent = day;
+    const h =
+    hari[now.getDay()];
 
-    document.getElementById("fullDate").textContent =
-        `${date} ${month} ${year}`;
+    const tgl =
+    String(now.getDate()).padStart(2,"0");
 
-    document.getElementById("clock").textContent =
-        `${hours}:${minutes}:${seconds}`;
+    const bln =
+    bulan[now.getMonth()];
+
+    const thn =
+    now.getFullYear();
+
+    const jam =
+    String(now.getHours()).padStart(2,"0");
+
+    const menit =
+    String(now.getMinutes()).padStart(2,"0");
+
+    const detik =
+    String(now.getSeconds()).padStart(2,"0");
+
+    el.innerHTML =
+    `${h}, ${tgl} ${bln} ${thn} | ${jam}:${menit}:${detik}`;
 }
 
-/* JALANKAN */
-updateClock();
+setInterval(updateNewsClock,1000);
 
-/* UPDATE TIAP 1 DETIK */
-setInterval(updateClock,1000);
+/* =========================
+INDICATOR
+========================= */
+
+const pauseIndicator =
+document.getElementById(
+    "pauseIndicator"
+);
+
+function showIndicator(text){
+
+    if(!pauseIndicator) return;
+
+    pauseIndicator.innerHTML = text;
+
+    pauseIndicator.classList.add("show");
+
+    clearTimeout(window.indicatorTimeout);
+
+    window.indicatorTimeout =
+    setTimeout(()=>{
+
+        pauseIndicator.classList.remove("show");
+
+    },1500);
+}
+
+/* =========================
+AUDIO
+========================= */
+
+const bgm =
+document.getElementById("bgm");
+
+if(bgm){
+
+    bgm.volume = 0.35;
+}
+
+async function playMusic(){
+
+    if(!bgm) return;
+
+    try{
+
+        await bgm.play();
+
+    }catch(err){
+
+        console.log(err);
+    }
+}
+
+/* =========================
+LOOP
+========================= */
+
+let isPaused = false;
+
+let slideInterval;
+let updateInterval;
+
+function stopLoop(){
+
+    clearInterval(slideInterval);
+    clearInterval(updateInterval);
+}
+
+function startLoop(){
+
+    stopLoop();
+
+    slideInterval =
+    setInterval(()=>{
+
+        if(!document.hidden){
+
+            nextSlide();
+        }
+
+    },8000);
+
+    updateInterval =
+    setInterval(()=>{
+
+        if(!document.hidden){
+
+            update();
+        }
+
+    },30000);
+}
+
+function togglePause(){
+
+    isPaused = !isPaused;
+
+    if(isPaused){
+
+        stopLoop();
+
+        if(bgm) bgm.pause();
+
+        showIndicator("⏸ PAUSED");
+
+    }else{
+
+        startLoop();
+
+        playMusic();
+
+        showIndicator("▶ PLAYING");
+    }
+}
+
+/* =========================
+FULLSCREEN
+========================= */
+
+async function toggleFullscreen(){
+
+    try{
+
+        if(!document.fullscreenElement){
+
+            await document.documentElement.requestFullscreen();
+
+            showIndicator("🖥 FULLSCREEN");
+
+        }else{
+
+            await document.exitFullscreen();
+
+            showIndicator("❎ EXIT FULLSCREEN");
+        }
+
+    }catch(err){
+
+        console.log(err);
+    }
+}
+
+/* =========================
+CLICK
+========================= */
+
+let clickTimer = null;
+
+document.addEventListener(
+    "click",
+    ()=>{
+
+        if(clickTimer){
+
+            clearTimeout(clickTimer);
+        }
+
+        clickTimer = setTimeout(()=>{
+
+            togglePause();
+
+        },250);
+    }
+);
+
+document.addEventListener(
+    "dblclick",
+    ()=>{
+
+        clearTimeout(clickTimer);
+
+        toggleFullscreen();
+    }
+);
+
+/* =========================
+AUTO REFRESH
+========================= */
+
+setTimeout(()=>{
+
+    location.reload();
+
+},21600000);
+
+/* =========================
+START
+========================= */
+
+window.addEventListener(
+    "load",
+    async ()=>{
+
+        updateNewsClock();
+
+        await update();
+
+        startLoop();
+
+        playMusic();
+
+        setTimeout(playMusic,1000);
+
+        setTimeout(playMusic,3000);
+
+        showIndicator("▶ PLAYING");
+    }
+);
 
 </script>
 
