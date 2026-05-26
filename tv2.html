@@ -168,6 +168,58 @@ HEADER
 }
 
 /* =========================
+PAUSE INDICATOR
+========================= */
+
+.pause-indicator{
+
+    position:fixed;
+
+    top:20px;
+    left:20px;
+
+    z-index:9999;
+
+    padding:14px 24px;
+
+    border-radius:18px;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(15,23,42,.92),
+            rgba(30,41,59,.92)
+        );
+
+    border:
+        1px solid rgba(255,255,255,.15);
+
+    font-size:14px;
+
+    font-weight:800;
+
+    letter-spacing:2px;
+
+    box-shadow:
+        0 10px 30px rgba(0,0,0,.45);
+
+    opacity:0;
+
+    transform:
+        translateY(-20px);
+
+    transition:.35s ease;
+}
+
+.pause-indicator.show{
+
+    opacity:1;
+
+    transform:
+        translateY(0);
+}
+
+/* =========================
 RANK LIST
 ========================= */
 
@@ -669,6 +721,10 @@ ACH BOX
 
 <body>
 
+<div class="pause-indicator" id="pauseIndicator">
+    ▶ PLAYING
+</div>
+
 <div class="slide active">
     <div class="header">
         <h1>TOP SALES</h1>
@@ -1078,78 +1134,142 @@ async function update(){
     lastRenderHash =
     newHash;
 
-    render(
-        data,
-        "sales",
-        "achSales",
-        "ACH MTD",
-        "salesTop",
-        "TOTAL SALES",
-        "top"
-    );
+    render(data,"sales","achSales","ACH MTD","salesTop","TOTAL SALES","top");
+    render(data,"sales","achSales","ACH MTD","salesBottom","TOTAL SALES","bottom");
 
-    render(
-        data,
-        "sales",
-        "achSales",
-        "ACH MTD",
-        "salesBottom",
-        "TOTAL SALES",
-        "bottom"
-    );
+    render(data,"proteksi","achProteksi","ACH PROTEKSI","proteksiTop","TOTAL PROTEKSI","top");
+    render(data,"proteksi","achProteksi","ACH PROTEKSI","proteksiBottom","TOTAL PROTEKSI","bottom");
 
-    render(
-        data,
-        "proteksi",
-        "achProteksi",
-        "ACH PROTEKSI",
-        "proteksiTop",
-        "TOTAL PROTEKSI",
-        "top"
-    );
-
-    render(
-        data,
-        "proteksi",
-        "achProteksi",
-        "ACH PROTEKSI",
-        "proteksiBottom",
-        "TOTAL PROTEKSI",
-        "bottom"
-    );
-
-    render(
-        data,
-        "trx",
-        "achTrx",
-        "ACH BULANAN",
-        "trxTop",
-        "TOTAL TRX",
-        "top"
-    );
-
-    render(
-        data,
-        "trx",
-        "achTrx",
-        "ACH BULANAN",
-        "trxBottom",
-        "TOTAL TRX",
-        "bottom"
-    );
+    render(data,"trx","achTrx","ACH BULANAN","trxTop","TOTAL TRX","top");
+    render(data,"trx","achTrx","ACH BULANAN","trxBottom","TOTAL TRX","bottom");
 }
+
+const pauseIndicator =
+document.getElementById("pauseIndicator");
+
+function showIndicator(text){
+
+    if(!pauseIndicator) return;
+
+    pauseIndicator.innerHTML = text;
+
+    pauseIndicator.classList.add("show");
+
+    clearTimeout(window.indicatorTimeout);
+
+    window.indicatorTimeout =
+    setTimeout(()=>{
+
+        pauseIndicator.classList.remove("show");
+
+    },1500);
+}
+
+let isPaused = false;
 
 let slideInterval;
 let updateInterval;
 
+function stopLoop(){
+
+    clearInterval(slideInterval);
+    clearInterval(updateInterval);
+}
+
 function startLoop(){
 
+    stopLoop();
+
     slideInterval =
-    setInterval(nextSlide,8000);
+    setInterval(()=>{
+
+        if(!document.hidden){
+
+            nextSlide();
+        }
+
+    },8000);
 
     updateInterval =
-    setInterval(update,30000);
+    setInterval(()=>{
+
+        if(!document.hidden){
+
+            update();
+        }
+
+    },30000);
 }
+
+function togglePause(){
+
+    isPaused = !isPaused;
+
+    if(isPaused){
+
+        stopLoop();
+
+        showIndicator("⏸ PAUSED");
+
+    }else{
+
+        startLoop();
+
+        showIndicator("▶ PLAYING");
+    }
+}
+
+async function toggleFullscreen(){
+
+    try{
+
+        if(!document.fullscreenElement){
+
+            await document.documentElement.requestFullscreen();
+
+            showIndicator("🖥 FULLSCREEN");
+
+        }else{
+
+            await document.exitFullscreen();
+
+            showIndicator("❎ EXIT FULLSCREEN");
+        }
+
+    }catch(err){
+
+        console.log(err);
+    }
+}
+
+let clickTimer = null;
+
+document.addEventListener(
+    "click",
+    ()=>{
+
+        if(clickTimer){
+
+            clearTimeout(clickTimer);
+        }
+
+        clickTimer = setTimeout(()=>{
+
+            togglePause();
+
+        },250);
+    }
+);
+
+document.addEventListener(
+    "dblclick",
+    ()=>{
+
+        clearTimeout(clickTimer);
+
+        toggleFullscreen();
+    }
+);
 
 window.addEventListener(
     "load",
@@ -1158,6 +1278,8 @@ window.addEventListener(
         await update();
 
         startLoop();
+
+        showIndicator("▶ PLAYING");
     }
 );
 
