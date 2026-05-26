@@ -86,8 +86,6 @@ body::after{
 
     transform:rotate(25deg);
 
-    animation:none;
-
     pointer-events:none;
 
     z-index:-1;
@@ -170,58 +168,6 @@ HEADER
 }
 
 /* =========================
-PAUSE INDICATOR
-========================= */
-
-.pause-indicator{
-
-    position:fixed;
-
-    top:20px;
-    left:20px;
-
-    z-index:9999;
-
-    padding:14px 24px;
-
-    border-radius:18px;
-
-    background:
-        linear-gradient(
-            135deg,
-            rgba(15,23,42,.92),
-            rgba(30,41,59,.92)
-        );
-
-    border:
-        1px solid rgba(255,255,255,.15);
-
-    font-size:14px;
-
-    font-weight:800;
-
-    letter-spacing:2px;
-
-    box-shadow:
-        0 10px 30px rgba(0,0,0,.45);
-
-    opacity:0;
-
-    transform:
-        translateY(-20px);
-
-    transition:.35s ease;
-}
-
-.pause-indicator.show{
-
-    opacity:1;
-
-    transform:
-        translateY(0);
-}
-
-/* =========================
 RANK LIST
 ========================= */
 
@@ -263,8 +209,6 @@ CARD
 
     transform:
         translateX(-40px);
-
-    will-change:auto;
 }
 
 .rank-card.show{
@@ -649,10 +593,6 @@ ACH BOX
     color:#ffffff !important;
 }
 
-/* =========================
-MOBILE
-========================= */
-
 @media(max-width:768px){
 
     body{
@@ -728,10 +668,6 @@ MOBILE
 </head>
 
 <body>
-
-<div class="pause-indicator" id="pauseIndicator">
-    ▶ PLAYING
-</div>
 
 <div class="slide active">
     <div class="header">
@@ -816,12 +752,18 @@ function formatSalesJT(value){
 
     const jt = value / 1000000;
 
+    const rounded =
+    Math.round(jt * 10) / 10;
+
+    const isWhole =
+    rounded % 1 === 0;
+
     return (
-        Number.isInteger(jt)
+        isWhole
 
-        ? jt.toLocaleString('id-ID')
+        ? rounded.toLocaleString('id-ID')
 
-        : jt.toLocaleString('id-ID',{
+        : rounded.toLocaleString('id-ID',{
 
             minimumFractionDigits:1,
             maximumFractionDigits:1
@@ -922,8 +864,8 @@ function getAchStyle(value){
 
         boxClass:
             "ach-box"
-        };
-    }
+    };
+}
 
 function render(
     data,
