@@ -1,13 +1,12 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
 <title>AZKO ULTRA TV DISPLAY</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
 <style>
 
@@ -17,153 +16,447 @@
     box-sizing:border-box;
 }
 
-html,
 body{
-    width:100%;
-    height:100%;
+    font-family:'Poppins',sans-serif;
+    background:#0f172a;
+    color:white;
+    overflow:hidden;
+    width:100vw;
+    height:100vh;
 }
 
-body{
-
-    font-family:'Poppins',sans-serif;
-
-    overflow:hidden;
-
-    color:white;
-
-    cursor:pointer;
-
+/* BACKGROUND */
+.bg-animation{
+    position:fixed;
+    inset:0;
     background:
         radial-gradient(circle at top left,#1e3a8a 0%,transparent 30%),
-        radial-gradient(circle at top right,#facc15 0%,transparent 25%),
-        radial-gradient(circle at bottom,#0f172a 0%,#020617 70%);
-}
-
-/* =========================
-BACKGROUND FX
-========================= */
-
-body::before{
-
-    content:"";
-
-    position:fixed;
-
-    inset:0;
-
-    background:
-        linear-gradient(
-            135deg,
-            rgba(255,255,255,.03),
-            transparent 35%,
-            rgba(255,255,255,.02)
-        );
-
-    pointer-events:none;
-
+        radial-gradient(circle at bottom right,#dc2626 0%,transparent 30%),
+        linear-gradient(135deg,#020617,#111827,#1e293b);
     z-index:-2;
 }
 
-body::after{
-
-    content:"";
-
+.overlay{
     position:fixed;
-
-    width:200%;
-    height:200%;
-
-    top:-50%;
-    left:-50%;
-
-    background:
-        linear-gradient(
-            90deg,
-            transparent,
-            rgba(255,255,255,.04),
-            transparent
-        );
-
-    transform:rotate(25deg);
-
-    pointer-events:none;
-
+    inset:0;
+    background:rgba(0,0,0,0.25);
     z-index:-1;
 }
 
-/* =========================
-SLIDES
-========================= */
-
-.slide{
-
-    position:absolute;
-
-    inset:0;
-
-    width:100vw;
-    height:100vh;
-
-    padding:
-        1vh
-        2vw
-        7vh
-        2vw;
-
+/* MAIN */
+.container{
+    width:100%;
+    height:100%;
     display:flex;
-
     flex-direction:column;
+    padding:30px;
+}
 
-    opacity:0;
+/* HEADER */
+.top-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:25px;
+}
 
-    visibility:hidden;
+.logo{
+    font-size:40px;
+    font-weight:800;
+    letter-spacing:2px;
+    color:#fff;
+}
 
+.sub-logo{
+    font-size:18px;
+    font-weight:500;
+    opacity:0.9;
+}
+
+.status-box{
+    background:rgba(255,255,255,0.1);
+    border:1px solid rgba(255,255,255,0.15);
+    backdrop-filter:blur(10px);
+    padding:15px 25px;
+    border-radius:18px;
+    text-align:right;
+}
+
+.status-title{
+    font-size:14px;
+    opacity:0.7;
+}
+
+.status-value{
+    font-size:24px;
+    font-weight:700;
+    margin-top:5px;
+}
+
+/* CONTENT */
+.content{
+    flex:1;
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:25px;
+    overflow:hidden;
+}
+
+/* CARD */
+.card{
+    background:rgba(255,255,255,0.08);
+    border:1px solid rgba(255,255,255,0.12);
+    border-radius:24px;
+    padding:25px;
+    backdrop-filter:blur(14px);
+    position:relative;
+    overflow:hidden;
+}
+
+.card::before{
+    content:'';
+    position:absolute;
+    inset:0;
+    background:linear-gradient(
+        135deg,
+        rgba(255,255,255,0.08),
+        transparent
+    );
     pointer-events:none;
-
-    transition:
-        opacity .5s linear;
 }
 
-.slide.active{
-
-    opacity:1;
-
-    visibility:visible;
-
-    pointer-events:auto;
+.card-title{
+    font-size:20px;
+    font-weight:700;
+    margin-bottom:20px;
 }
 
-/* =========================
-HEADER
-========================= */
-
-.header{
-
-    text-align:center;
-
-    margin-bottom:1vh;
+.data-list{
+    display:flex;
+    flex-direction:column;
+    gap:14px;
 }
 
-.header h1{
-
-    font-size:3vw;
-
-    font-weight:900;
-
-    letter-spacing:6px;
-
-    text-transform:uppercase;
-
-    text-shadow:
-        0 0 20px rgba(255,255,255,.25);
+.data-item{
+    background:rgba(255,255,255,0.06);
+    padding:16px;
+    border-radius:16px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    transition:0.3s;
 }
 
-.header p{
+.data-item:hover{
+    transform:translateX(5px);
+    background:rgba(255,255,255,0.1);
+}
 
-    margin-top:.2vh;
+.item-name{
+    font-size:16px;
+    font-weight:500;
+}
 
-    font-size:1vw;
+.item-value{
+    font-size:18px;
+    font-weight:700;
+    color:#38bdf8;
+}
 
-    letter-spacing:4px;
+/* BOTTOM BAR */
+.bottom-bar{
+    position:absolute;
+    left:0;
+    right:0;
+    bottom:0;
+    height:65px;
+    display:flex;
+    overflow:hidden;
+    z-index:999;
+}
 
-    opacity:.9;
+/* CLOCK */
+.clock-box{
+    min-width:420px;
+    background:white;
+    color:#111827;
+    display:flex;
+    align-items:center;
+    padding:0 25px;
+    gap:20px;
+    font-weight:700;
+    border-top-right-radius:20px;
+}
+
+.date-section{
+    display:flex;
+    flex-direction:column;
+    line-height:1.2;
+}
+
+.day-name{
+    font-size:20px;
+    font-weight:800;
+}
+
+.full-date{
+    font-size:14px;
+    font-weight:600;
+}
+
+.time{
+    font-size:34px;
+    font-weight:800;
+    letter-spacing:2px;
+}
+
+/* MARQUEE */
+.marquee-container{
+    flex:1;
+    background:#dc2626;
+    display:flex;
+    align-items:center;
+    overflow:hidden;
+    position:relative;
+}
+
+.marquee{
+    white-space:nowrap;
+    display:inline-block;
+    padding-left:100%;
+    animation:marqueeMove 18s linear infinite;
+    font-size:28px;
+    font-weight:800;
+    letter-spacing:2px;
+    color:white;
+}
+
+@keyframes marqueeMove{
+    0%{
+        transform:translateX(0);
+    }
+    100%{
+        transform:translateX(-100%);
+    }
+}
+
+/* LAST UPDATE */
+.last-update{
+    position:absolute;
+    top:20px;
+    right:20px;
+    background:rgba(255,255,255,0.08);
+    padding:10px 18px;
+    border-radius:14px;
+    font-size:14px;
+    backdrop-filter:blur(10px);
+}
+
+/* RESPONSIVE */
+@media(max-width:1200px){
+
+    .content{
+        grid-template-columns:1fr;
+    }
+
+    .clock-box{
+        min-width:320px;
+    }
+
+    .time{
+        font-size:26px;
+    }
+
+    .marquee{
+        font-size:20px;
+    }
+}
+
+</style>
+</head>
+<body>
+
+<div class="bg-animation"></div>
+<div class="overlay"></div>
+
+<div class="container">
+
+    <div class="top-header">
+
+        <div>
+            <div class="logo">AZ•KO</div>
+            <div class="sub-logo">Ciputra World Surabaya</div>
+        </div>
+
+        <div class="status-box">
+            <div class="status-title">SYSTEM STATUS</div>
+            <div class="status-value">ONLINE</div>
+        </div>
+
+    </div>
+
+    <div class="content">
+
+        <!-- CARD 1 -->
+        <div class="card">
+            <div class="card-title">Performance</div>
+
+            <div class="data-list">
+
+                <div class="data-item">
+                    <div class="item-name">Sales Today</div>
+                    <div class="item-value">92%</div>
+                </div>
+
+                <div class="data-item">
+                    <div class="item-name">Customer Traffic</div>
+                    <div class="item-value">1,240</div>
+                </div>
+
+                <div class="data-item">
+                    <div class="item-name">Conversion</div>
+                    <div class="item-value">74%</div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- CARD 2 -->
+        <div class="card">
+            <div class="card-title">Operational</div>
+
+            <div class="data-list">
+
+                <div class="data-item">
+                    <div class="item-name">Staff Active</div>
+                    <div class="item-value">18</div>
+                </div>
+
+                <div class="data-item">
+                    <div class="item-name">Queue Status</div>
+                    <div class="item-value">Normal</div>
+                </div>
+
+                <div class="data-item">
+                    <div class="item-name">Stock Ready</div>
+                    <div class="item-value">98%</div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- CARD 3 -->
+        <div class="card">
+            <div class="card-title">Monitoring</div>
+
+            <div class="data-list">
+
+                <div class="data-item">
+                    <div class="item-name">Display Screen</div>
+                    <div class="item-value">Active</div>
+                </div>
+
+                <div class="data-item">
+                    <div class="item-name">Network</div>
+                    <div class="item-value">Stable</div>
+                </div>
+
+                <div class="data-item">
+                    <div class="item-name">Server Sync</div>
+                    <div class="item-value">Realtime</div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+<!-- BOTTOM BAR -->
+<div class="bottom-bar">
+
+    <!-- CLOCK -->
+    <div class="clock-box">
+
+        <div class="date-section">
+            <div class="day-name" id="dayName">Senin</div>
+            <div class="full-date" id="fullDate">01 Januari 2026</div>
+        </div>
+
+        <div class="time" id="clock">00:00:00</div>
+
+    </div>
+
+    <!-- MARQUEE -->
+    <div class="marquee-container">
+        <div class="marquee">
+            WORK TOGETHER WIN TOGETHER MAKE IT HAPPEN •
+            WORK TOGETHER WIN TOGETHER MAKE IT HAPPEN •
+            WORK TOGETHER WIN TOGETHER MAKE IT HAPPEN •
+        </div>
+    </div>
+
+</div>
+
+<script>
+
+/* HARI & BULAN INDONESIA */
+const hari = [
+    "Minggu",
+    "Senin",
+    "Selasa",
+    "Rabu",
+    "Kamis",
+    "Jumat",
+    "Sabtu"
+];
+
+const bulan = [
+    "Januari",
+    "Februari",
+    "Maret",
+    "April",
+    "Mei",
+    "Juni",
+    "Juli",
+    "Agustus",
+    "September",
+    "Oktober",
+    "November",
+    "Desember"
+];
+
+/* UPDATE CLOCK */
+function updateClock(){
+
+    const now = new Date();
+
+    const day = hari[now.getDay()];
+    const date = now.getDate();
+    const month = bulan[now.getMonth()];
+    const year = now.getFullYear();
+
+    const hours = String(now.getHours()).padStart(2,'0');
+    const minutes = String(now.getMinutes()).padStart(2,'0');
+    const seconds = String(now.getSeconds()).padStart(2,'0');
+
+    document.getElementById("dayName").textContent = day;
+
+    document.getElementById("fullDate").textContent =
+        `${date} ${month} ${year}`;
+
+    document.getElementById("clock").textContent =
+        `${hours}:${minutes}:${seconds}`;
+}
+
+/* JALANKAN */
+updateClock();
+
+/* UPDATE TIAP 1 DETIK */
+setInterval(updateClock,1000);
+
+</script>
+
+</body>
+</html>
