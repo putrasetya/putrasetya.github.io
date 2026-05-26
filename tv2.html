@@ -749,51 +749,6 @@ MOBILE
     <div class="rank-list" id="salesBottom"></div>
 </div>
 
-<div class="slide">
-    <div class="header">
-        <h1>TOP PROTEKSI</h1>
-        <p>AZKO CITIMALL TUBAN</p>
-    </div>
-    <div class="rank-list" id="proteksiTop"></div>
-</div>
-
-<div class="slide">
-    <div class="header">
-        <h1>BOTTOM PROTEKSI</h1>
-        <p>AZKO CITIMALL TUBAN</p>
-    </div>
-    <div class="rank-list" id="proteksiBottom"></div>
-</div>
-
-<div class="slide">
-    <div class="header">
-        <h1>TOP TRX</h1>
-        <p>AZKO CITIMALL TUBAN</p>
-    </div>
-    <div class="rank-list" id="trxTop"></div>
-</div>
-
-<div class="slide">
-    <div class="header">
-        <h1>BOTTOM TRX</h1>
-        <p>AZKO CITIMALL TUBAN</p>
-    </div>
-    <div class="rank-list" id="trxBottom"></div>
-</div>
-
-<audio
-    id="bgm"
-    loop
-    autoplay
-    playsinline
-    preload="auto">
-
-    <source
-        src="https://putrasetya.github.io/223am.mp3"
-        type="audio/mpeg">
-
-</audio>
-
 <script>
 
 const URL =
@@ -801,10 +756,6 @@ const URL =
 
 let lastData = [];
 let lastRenderHash = "";
-
-/* =========================
-HELPERS
-========================= */
 
 function clean(val){
 
@@ -828,10 +779,6 @@ function isExcluded(dept){
         d.includes("customer service")
     );
 }
-
-/* =========================
-GET DATA
-========================= */
 
 async function getData(){
 
@@ -859,20 +806,8 @@ async function getData(){
             sales:
                 clean(row["SALES MTD"]),
 
-            proteksi:
-                clean(row["PROTEKSI"]),
-
-            trx:
-                clean(row["TRX"]),
-
             achSales:
                 clean(row["ACH MTD"]),
-
-            achProteksi:
-                clean(row["ACH PROTEKSI"]),
-
-            achTrx:
-                clean(row["ACH BULANAN"]),
 
             photo:
                 row["PHOTO"] || ""
@@ -927,9 +862,17 @@ function getAchStyle(value){
     };
 }
 
-/* =========================
-RENDER
-========================= */
+function formatJT(value){
+
+    return (
+        value / 1000000
+    ).toLocaleString('id-ID',{
+
+        minimumFractionDigits:1,
+        maximumFractionDigits:1
+
+    }) + " JT";
+}
 
 function render(
     data,
@@ -948,10 +891,7 @@ function render(
 
     let filteredData = [...data];
 
-    if(
-        containerId === "salesBottom" ||
-        containerId === "trxTop"
-    ){
+    if(containerId === "salesBottom"){
 
         filteredData =
         filteredData.filter(
@@ -1055,7 +995,7 @@ function render(
                 <div class="main-score">
 
                     <div class="score-value">
-                        ${d[key].toLocaleString('id-ID')}
+                        ${formatJT(d[key])}
                     </div>
 
                     <div class="score-label">
@@ -1084,10 +1024,6 @@ function render(
 
     container.innerHTML = html;
 }
-
-/* =========================
-SLIDES
-========================= */
 
 const slides =
 document.querySelectorAll(".slide");
@@ -1120,10 +1056,6 @@ function nextSlide(){
 
     },120);
 }
-
-/* =========================
-UPDATE
-========================= */
 
 async function update(){
 
@@ -1165,51 +1097,7 @@ async function update(){
         "TOTAL SALES",
         "bottom"
     );
-
-    render(
-        data,
-        "proteksi",
-        "achProteksi",
-        "ACH PROTEKSI",
-        "proteksiTop",
-        "TOTAL PROTEKSI",
-        "top"
-    );
-
-    render(
-        data,
-        "proteksi",
-        "achProteksi",
-        "ACH PROTEKSI",
-        "proteksiBottom",
-        "TOTAL PROTEKSI",
-        "bottom"
-    );
-
-    render(
-        data,
-        "trx",
-        "achTrx",
-        "ACH BULANAN",
-        "trxTop",
-        "TOTAL TRX",
-        "top"
-    );
-
-    render(
-        data,
-        "trx",
-        "achTrx",
-        "ACH BULANAN",
-        "trxBottom",
-        "TOTAL TRX",
-        "bottom"
-    );
 }
-
-/* =========================
-INDICATOR
-========================= */
 
 const pauseIndicator =
 document.getElementById(
@@ -1233,36 +1121,6 @@ function showIndicator(text){
 
     },1500);
 }
-
-/* =========================
-AUDIO
-========================= */
-
-const bgm =
-document.getElementById("bgm");
-
-if(bgm){
-
-    bgm.volume = 0.35;
-}
-
-async function playMusic(){
-
-    if(!bgm) return;
-
-    try{
-
-        await bgm.play();
-
-    }catch(err){
-
-        console.log(err);
-    }
-}
-
-/* =========================
-LOOP
-========================= */
 
 let isPaused = false;
 
@@ -1308,23 +1166,15 @@ function togglePause(){
 
         stopLoop();
 
-        if(bgm) bgm.pause();
-
         showIndicator("⏸ PAUSED");
 
     }else{
 
         startLoop();
 
-        playMusic();
-
         showIndicator("▶ PLAYING");
     }
 }
-
-/* =========================
-FULLSCREEN
-========================= */
 
 async function toggleFullscreen(){
 
@@ -1348,10 +1198,6 @@ async function toggleFullscreen(){
         console.log(err);
     }
 }
-
-/* =========================
-CLICK
-========================= */
 
 let clickTimer = null;
 
@@ -1382,32 +1228,11 @@ document.addEventListener(
     }
 );
 
-/* =========================
-AUTO CLEAN MEMORY
-========================= */
-
-setInterval(()=>{
-
-    if(window.gc){
-
-        window.gc();
-    }
-
-},300000);
-
-/* =========================
-AUTO REFRESH 6 JAM
-========================= */
-
 setTimeout(()=>{
 
     location.reload();
 
 },21600000);
-
-/* =========================
-START
-========================= */
 
 window.addEventListener(
     "load",
@@ -1416,12 +1241,6 @@ window.addEventListener(
         await update();
 
         startLoop();
-
-        playMusic();
-
-        setTimeout(playMusic,1000);
-
-        setTimeout(playMusic,3000);
 
         showIndicator("▶ PLAYING");
     }
