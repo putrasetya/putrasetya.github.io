@@ -749,6 +749,38 @@ MOBILE
     <div class="rank-list" id="salesBottom"></div>
 </div>
 
+<div class="slide">
+    <div class="header">
+        <h1>TOP PROTEKSI</h1>
+        <p>AZKO CITIMALL TUBAN</p>
+    </div>
+    <div class="rank-list" id="proteksiTop"></div>
+</div>
+
+<div class="slide">
+    <div class="header">
+        <h1>BOTTOM PROTEKSI</h1>
+        <p>AZKO CITIMALL TUBAN</p>
+    </div>
+    <div class="rank-list" id="proteksiBottom"></div>
+</div>
+
+<div class="slide">
+    <div class="header">
+        <h1>TOP TRX</h1>
+        <p>AZKO CITIMALL TUBAN</p>
+    </div>
+    <div class="rank-list" id="trxTop"></div>
+</div>
+
+<div class="slide">
+    <div class="header">
+        <h1>BOTTOM TRX</h1>
+        <p>AZKO CITIMALL TUBAN</p>
+    </div>
+    <div class="rank-list" id="trxBottom"></div>
+</div>
+
 <script>
 
 const URL =
@@ -780,6 +812,25 @@ function isExcluded(dept){
     );
 }
 
+function formatSalesJT(value){
+
+    const jt = value / 1000000;
+
+    return (
+        Number.isInteger(jt)
+
+        ? jt.toLocaleString('id-ID')
+
+        : jt.toLocaleString('id-ID',{
+
+            minimumFractionDigits:1,
+            maximumFractionDigits:1
+
+        })
+
+    ) + " Jt";
+}
+
 async function getData(){
 
     try{
@@ -806,8 +857,20 @@ async function getData(){
             sales:
                 clean(row["SALES MTD"]),
 
+            proteksi:
+                clean(row["PROTEKSI"]),
+
+            trx:
+                clean(row["TRX"]),
+
             achSales:
                 clean(row["ACH MTD"]),
+
+            achProteksi:
+                clean(row["ACH PROTEKSI"]),
+
+            achTrx:
+                clean(row["ACH BULANAN"]),
 
             photo:
                 row["PHOTO"] || ""
@@ -859,20 +922,8 @@ function getAchStyle(value){
 
         boxClass:
             "ach-box"
-    };
-}
-
-function formatJT(value){
-
-    return (
-        value / 1000000
-    ).toLocaleString('id-ID',{
-
-        minimumFractionDigits:1,
-        maximumFractionDigits:1
-
-    }) + " JT";
-}
+        };
+    }
 
 function render(
     data,
@@ -891,7 +942,10 @@ function render(
 
     let filteredData = [...data];
 
-    if(containerId === "salesBottom"){
+    if(
+        containerId === "salesBottom" ||
+        containerId === "trxTop"
+    ){
 
         filteredData =
         filteredData.filter(
@@ -995,7 +1049,11 @@ function render(
                 <div class="main-score">
 
                     <div class="score-value">
-                        ${formatJT(d[key])}
+                        ${
+                            key === "sales"
+                            ? formatSalesJT(d[key])
+                            : d[key].toLocaleString('id-ID')
+                        }
                     </div>
 
                     <div class="score-label">
@@ -1097,142 +1155,59 @@ async function update(){
         "TOTAL SALES",
         "bottom"
     );
+
+    render(
+        data,
+        "proteksi",
+        "achProteksi",
+        "ACH PROTEKSI",
+        "proteksiTop",
+        "TOTAL PROTEKSI",
+        "top"
+    );
+
+    render(
+        data,
+        "proteksi",
+        "achProteksi",
+        "ACH PROTEKSI",
+        "proteksiBottom",
+        "TOTAL PROTEKSI",
+        "bottom"
+    );
+
+    render(
+        data,
+        "trx",
+        "achTrx",
+        "ACH BULANAN",
+        "trxTop",
+        "TOTAL TRX",
+        "top"
+    );
+
+    render(
+        data,
+        "trx",
+        "achTrx",
+        "ACH BULANAN",
+        "trxBottom",
+        "TOTAL TRX",
+        "bottom"
+    );
 }
-
-const pauseIndicator =
-document.getElementById(
-    "pauseIndicator"
-);
-
-function showIndicator(text){
-
-    if(!pauseIndicator) return;
-
-    pauseIndicator.innerHTML = text;
-
-    pauseIndicator.classList.add("show");
-
-    clearTimeout(window.indicatorTimeout);
-
-    window.indicatorTimeout =
-    setTimeout(()=>{
-
-        pauseIndicator.classList.remove("show");
-
-    },1500);
-}
-
-let isPaused = false;
 
 let slideInterval;
 let updateInterval;
 
-function stopLoop(){
-
-    clearInterval(slideInterval);
-    clearInterval(updateInterval);
-}
-
 function startLoop(){
 
-    stopLoop();
-
     slideInterval =
-    setInterval(()=>{
-
-        if(!document.hidden){
-
-            nextSlide();
-        }
-
-    },8000);
+    setInterval(nextSlide,8000);
 
     updateInterval =
-    setInterval(()=>{
-
-        if(!document.hidden){
-
-            update();
-        }
-
-    },30000);
+    setInterval(update,30000);
 }
-
-function togglePause(){
-
-    isPaused = !isPaused;
-
-    if(isPaused){
-
-        stopLoop();
-
-        showIndicator("⏸ PAUSED");
-
-    }else{
-
-        startLoop();
-
-        showIndicator("▶ PLAYING");
-    }
-}
-
-async function toggleFullscreen(){
-
-    try{
-
-        if(!document.fullscreenElement){
-
-            await document.documentElement.requestFullscreen();
-
-            showIndicator("🖥 FULLSCREEN");
-
-        }else{
-
-            await document.exitFullscreen();
-
-            showIndicator("❎ EXIT FULLSCREEN");
-        }
-
-    }catch(err){
-
-        console.log(err);
-    }
-}
-
-let clickTimer = null;
-
-document.addEventListener(
-    "click",
-    ()=>{
-
-        if(clickTimer){
-
-            clearTimeout(clickTimer);
-        }
-
-        clickTimer = setTimeout(()=>{
-
-            togglePause();
-
-        },250);
-    }
-);
-
-document.addEventListener(
-    "dblclick",
-    ()=>{
-
-        clearTimeout(clickTimer);
-
-        toggleFullscreen();
-    }
-);
-
-setTimeout(()=>{
-
-    location.reload();
-
-},21600000);
 
 window.addEventListener(
     "load",
@@ -1241,8 +1216,6 @@ window.addEventListener(
         await update();
 
         startLoop();
-
-        showIndicator("▶ PLAYING");
     }
 );
 
