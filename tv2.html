@@ -33,60 +33,12 @@ body{
 
     cursor:pointer;
 
+    background-color:#020617;
+
     background:
         radial-gradient(circle at top left,#1e3a8a 0%,transparent 30%),
         radial-gradient(circle at top right,#facc15 0%,transparent 25%),
         radial-gradient(circle at bottom,#0f172a 0%,#020617 70%);
-}
-
-body::before{
-
-    content:"";
-
-    position:fixed;
-
-    inset:0;
-
-    background:
-        linear-gradient(
-            135deg,
-            rgba(255,255,255,.03),
-            transparent 35%,
-            rgba(255,255,255,.02)
-        );
-
-    pointer-events:none;
-
-    z-index:-2;
-}
-
-body::after{
-
-    content:"";
-
-    position:fixed;
-
-    width:120%;
-    height:120%;
-
-    top:-10%;
-    left:-10%;
-
-    opacity:.35;
-
-    background:
-        linear-gradient(
-            90deg,
-            transparent,
-            rgba(255,255,255,.04),
-            transparent
-        );
-
-    transform:rotate(25deg);
-
-    pointer-events:none;
-
-    z-index:-1;
 }
 
 /* =========================
@@ -151,9 +103,6 @@ HEADER
     letter-spacing:6px;
 
     text-transform:uppercase;
-
-    text-shadow:
-        0 0 20px rgba(255,255,255,.25);
 }
 
 .header p{
@@ -165,58 +114,6 @@ HEADER
     letter-spacing:4px;
 
     opacity:.9;
-}
-
-/* =========================
-PAUSE INDICATOR
-========================= */
-
-.pause-indicator{
-
-    position:fixed;
-
-    top:20px;
-    left:20px;
-
-    z-index:9999;
-
-    padding:14px 24px;
-
-    border-radius:18px;
-
-    background:
-        linear-gradient(
-            135deg,
-            rgba(15,23,42,.92),
-            rgba(30,41,59,.92)
-        );
-
-    border:
-        1px solid rgba(255,255,255,.15);
-
-    font-size:14px;
-
-    font-weight:800;
-
-    letter-spacing:2px;
-
-    box-shadow:
-        0 10px 30px rgba(0,0,0,.45);
-
-    opacity:0;
-
-    transform:
-        translateY(-20px);
-
-    transition:.35s ease;
-}
-
-.pause-indicator.show{
-
-    opacity:1;
-
-    transform:
-        translateY(0);
 }
 
 /* =========================
@@ -260,16 +157,7 @@ CARD
     opacity:0;
 
     transform:
-        translateX(-40px) translateZ(0);
-
-    backface-visibility:hidden;
-
-    will-change:transform,opacity;
-
-    contain:layout style paint;
-}
-
-.rank-card.show{
+        translateX(-40px);
 
     animation:
         slideRight .5s forwards;
@@ -354,32 +242,8 @@ RANK NUMBER
 
     font-weight:900;
 
-    opacity:.20;
-
-    letter-spacing:-10px;
+    opacity:.18;
 }
-
-.gold .rank-number{
-    color:#facc15;
-}
-
-.silver .rank-number{
-    color:#e2e8f0;
-}
-
-.bronze .rank-number{
-    color:#fb923c;
-}
-
-.red-high .rank-number,
-.red-mid .rank-number,
-.red-low .rank-number{
-    color:#ffffff;
-}
-
-/* =========================
-PHOTO
-========================= */
 
 .photo-box{
 
@@ -401,18 +265,7 @@ PHOTO
     object-fit:contain;
 
     object-position:center bottom;
-
-    filter:
-        drop-shadow(0 2px 4px rgba(0,0,0,.18));
-
-    image-rendering:auto;
-
-    contain:paint;
 }
-
-/* =========================
-EMPLOYEE
-========================= */
 
 .employee{
 
@@ -429,8 +282,6 @@ EMPLOYEE
 
     font-weight:900;
 
-    color:#111827;
-
     text-transform:uppercase;
 
     white-space:nowrap;
@@ -444,28 +295,10 @@ EMPLOYEE
 
     margin-top:.5vh;
 
-    font-size:1.1vw;
+    font-size:1vw;
 
-    letter-spacing:3px;
-
-    text-transform:uppercase;
-
-    color:#111827;
+    letter-spacing:2px;
 }
-
-.red-high .employee-name,
-.red-mid .employee-name,
-.red-low .employee-name,
-
-.red-high .employee-label,
-.red-mid .employee-label,
-.red-low .employee-label{
-    color:white;
-}
-
-/* =========================
-SCORE
-========================= */
 
 .score{
 
@@ -482,41 +315,24 @@ SCORE
     gap:1vh;
 }
 
-.main-score{
-    text-align:right;
-}
-
 .score-value{
 
-    font-size:2.5vw;
+    font-size:2.4vw;
 
     font-weight:900;
-
-    color:#111827;
 }
 
 .score-label{
 
-    margin-top:.2vh;
-
     font-size:.8vw;
 
-    font-weight:700;
-
     letter-spacing:2px;
-
-    color:#111827;
-
-    opacity:.7;
 }
 
-.red-high .score-value,
-.red-mid .score-value,
-.red-low .score-value,
+.red-high,
+.red-mid,
+.red-low{
 
-.red-high .score-label,
-.red-mid .score-label,
-.red-low .score-label{
     color:white;
 }
 
@@ -530,7 +346,7 @@ ACH BOX
         1vh
         1.2vw;
 
-    border-radius:22px;
+    border-radius:20px;
 
     min-width:9vw;
 
@@ -545,52 +361,28 @@ ACH BOX
 
 .ach-title{
 
-    font-size:.72vw;
+    font-size:.7vw;
 
-    font-weight:800;
+    font-weight:700;
 
     letter-spacing:2px;
-
-    color:#ffffff;
 }
 
 .ach-value{
 
-    margin-top:.45vh;
+    margin-top:.3vh;
 
-    font-size:1.8vw;
+    font-size:1.7vw;
 
     font-weight:900;
 }
 
 .ach-green{
-    color:#dcfce7 !important;
-}
-
-.ach-green-box{
-
-    background:
-        rgba(22,163,74,.35) !important;
-
-    border:
-        2px solid rgba(74,222,128,.65);
+    color:#dcfce7;
 }
 
 .ach-red{
-    color:#ffe4e6 !important;
-}
-
-.ach-red-box{
-
-    background:
-        rgba(185,28,28,.35) !important;
-
-    border:
-        2px solid rgba(252,165,165,.6);
-}
-
-.ach-normal{
-    color:#ffffff !important;
+    color:#ffe4e6;
 }
 
 /* =========================
@@ -614,24 +406,18 @@ NEWS BAR
 
     z-index:999;
 
-    background:
-        linear-gradient(
-            90deg,
-            #7f1d1d,
-            #b91c1c,
-            #dc2626
-        );
-
-    border-top:
-        2px solid rgba(255,255,255,.15);
+    background:#b91c1c;
 
     overflow:hidden;
 
-    box-shadow:
-        0 -6px 20px rgba(0,0,0,.35);
+    border-top:1px solid rgba(255,255,255,.12);
 }
 
 .news-clock{
+
+    position:relative;
+
+    z-index:2;
 
     height:100%;
 
@@ -641,15 +427,9 @@ NEWS BAR
 
     justify-content:center;
 
-    padding:
-        0 1.6vw;
+    padding:0 1.6vw;
 
-    background:
-        linear-gradient(
-            135deg,
-            #ffffff,
-            #f1f5f9
-        );
+    background:#ffffff;
 
     color:#991b1b;
 
@@ -657,23 +437,14 @@ NEWS BAR
 
     font-weight:900;
 
-    letter-spacing:1px;
-
     white-space:nowrap;
 
-    border-right:
-        3px solid rgba(0,0,0,.08);
+    border-right:2px solid #d1d5db;
 }
 
 .news-marquee{
 
     flex:1;
-
-    height:100%;
-
-    display:flex;
-
-    align-items:center;
 
     overflow:hidden;
 }
@@ -708,87 +479,35 @@ NEWS BAR
 }
 
 /* =========================
-MOBILE
+PAUSE INDICATOR
 ========================= */
 
-@media(max-width:768px){
+.pause-indicator{
 
-    body{
-        overflow:auto;
-    }
+    position:fixed;
 
-    .slide{
-        min-height:100vh;
-        height:auto;
-        padding:12px 12px 50px 12px;
-    }
+    top:20px;
+    left:20px;
 
-    .header h1{
-        font-size:30px;
-    }
+    z-index:9999;
 
-    .header p{
-        font-size:11px;
-    }
+    padding:12px 22px;
 
-    .rank-card{
-        height:130px;
-    }
+    border-radius:18px;
 
-    .rank-number{
-        font-size:90px !important;
-    }
+    background:#111827;
 
-    .photo-box{
-        width:95px;
-        min-width:95px;
-    }
+    font-size:14px;
 
-    .employee-name{
-        font-size:15px;
-    }
+    font-weight:800;
 
-    .employee-label{
-        font-size:10px;
-    }
+    opacity:0;
 
-    .score{
-        width:42%;
-    }
+    transition:.3s;
+}
 
-    .score-value{
-        font-size:18px;
-    }
-
-    .score-label{
-        font-size:9px;
-    }
-
-    .ach-box{
-        min-width:78px;
-        padding:8px 10px;
-    }
-
-    .ach-title{
-        font-size:8px;
-    }
-
-    .ach-value{
-        font-size:15px;
-    }
-
-    .news-bar{
-        height:42px;
-    }
-
-    .news-clock{
-        font-size:10px;
-        padding:0 12px;
-    }
-
-    .news-marquee-track{
-        font-size:11px;
-    }
+.pause-indicator.show{
+    opacity:1;
 }
 
 </style>
@@ -870,8 +589,7 @@ MOBILE
     id="bgm"
     loop
     autoplay
-    playsinline
-    preload="auto">
+    playsinline>
 
     <source
         src="https://putrasetya.github.io/223am.mp3"
@@ -885,7 +603,10 @@ const URL =
 "https://script.google.com/macros/s/AKfycbzeehvUo6QYriMFJTR4A88lN6IIHV6Qop9UphkdOTMkRLVxhVuJ13y69momo6h1pn9dTQ/exec";
 
 let lastData = [];
-let lastRenderHash = "";
+let current = 0;
+
+const slides =
+document.querySelectorAll(".slide");
 
 /* =========================
 HELPERS
@@ -902,23 +623,36 @@ function clean(val){
 
 function formatSales(value){
 
-    if(!value) return "0";
-
     if(value >= 1000000){
 
-        let juta = value / 1000000;
+        let juta =
+        (value / 1000000).toFixed(1);
 
-        let formatted = juta.toFixed(1);
+        if(juta.endsWith(".0")){
 
-        if(formatted.endsWith(".0")){
-
-            formatted = formatted.slice(0,-2);
+            juta =
+            juta.replace(".0","");
         }
 
-        return formatted.replace(".",",") + " Jt";
+        return juta.replace(".",",") + " Jt";
     }
 
     return value.toLocaleString("id-ID");
+}
+
+function achClass(v){
+
+    if(v >= 100){
+
+        return "ach-green";
+    }
+
+    if(v < 80){
+
+        return "ach-red";
+    }
+
+    return "";
 }
 
 function isExcluded(dept){
@@ -927,11 +661,10 @@ function isExcluded(dept){
     (dept || "").toLowerCase();
 
     return (
-
         d.includes("cashier") ||
         d.includes("kasir") ||
-        d.includes("cs") ||
-        d.includes("customer service")
+        d.includes("customer service") ||
+        d.includes("cs")
     );
 }
 
@@ -943,35 +676,14 @@ async function getData(){
 
     try{
 
-        const controller =
-        new AbortController();
-
-        const timeout =
-        setTimeout(()=>{
-
-            controller.abort();
-
-        },10000);
-
         const res =
-        await fetch(
-            URL + "?t=" + Date.now(),
-            {
-                signal:controller.signal
-            }
-        );
-
-        clearTimeout(timeout);
+        await fetch(URL + "?t=" + Date.now());
 
         const json =
         await res.json();
 
-        if(!Array.isArray(json) || json.length === 0){
-
-            return lastData;
-        }
-
-        const mapped = json.map(row => ({
+        lastData =
+        json.map(row => ({
 
             name:
                 row["EMPLOYEE NAME"] || "UNKNOWN",
@@ -1002,56 +714,14 @@ async function getData(){
 
         }));
 
-        lastData = mapped;
-
-        return mapped;
+        return lastData;
 
     }catch(err){
 
-        console.log("GET DATA ERROR:",err);
+        console.log(err);
 
         return lastData;
     }
-}
-
-/* =========================
-ACH STYLE
-========================= */
-
-function getAchStyle(value){
-
-    if(value >= 100){
-
-        return {
-
-            valueClass:
-                "ach-value ach-green",
-
-            boxClass:
-                "ach-box ach-green-box"
-        };
-    }
-
-    if(value < 80){
-
-        return {
-
-            valueClass:
-                "ach-value ach-red",
-
-            boxClass:
-                "ach-box ach-red-box"
-        };
-    }
-
-    return {
-
-        valueClass:
-            "ach-value ach-normal",
-
-        boxClass:
-            "ach-box"
-    };
 }
 
 /* =========================
@@ -1073,81 +743,48 @@ function render(
 
     if(!container) return;
 
-    let filteredData = [...data];
+    let filtered = [...data];
 
     if(
         containerId === "salesBottom" ||
         containerId === "trxTop"
     ){
 
-        filteredData =
-        filteredData.filter(
+        filtered =
+        filtered.filter(
             item => !isExcluded(item.dept)
         );
     }
 
     let sorted = [];
-    let styles = [];
 
     if(mode === "top"){
 
-        styles = [
-            "gold",
-            "silver",
-            "bronze"
-        ];
-
         sorted =
-        filteredData
-            .filter(v => v[key] > 0)
+        filtered
             .sort((a,b)=>b[key]-a[key])
             .slice(0,3);
 
     }else{
 
-        styles = [
-            "red-high",
-            "red-mid",
-            "red-low"
-        ];
-
-        const allSorted =
-        filteredData
-            .filter(v => v[key] > 0)
-            .sort((a,b)=>a[key]-b[key]);
-
         sorted =
-        allSorted.slice(0,3);
-
-        sorted = sorted.map((item,index)=>({
-
-            ...item,
-
-            bottomRank:
-            allSorted.length - index
-        }));
-
-        sorted.reverse();
+        filtered
+            .sort((a,b)=>a[key]-b[key])
+            .slice(0,3);
     }
 
-    let html = "";
+    const styles =
+    mode === "top"
+    ? ["gold","silver","bronze"]
+    : ["red-high","red-mid","red-low"];
 
-    sorted.forEach((d,i)=>{
+    container.innerHTML =
+    sorted.map((d,i)=>`
 
-        const rank =
-        mode === "top"
-        ? i + 1
-        : d.bottomRank;
-
-        const achStyle =
-        getAchStyle(d[achKey]);
-
-        html += `
-
-        <div class="rank-card show ${styles[i]}">
+        <div class="rank-card ${styles[i]}">
 
             <div class="rank-number">
-                ${rank}
+                ${mode === "top" ? i+1 : i+1}
             </div>
 
             <div class="photo-box">
@@ -1155,11 +792,8 @@ function render(
                 <img
                     src="https://drive.google.com/thumbnail?id=${d.photo}&sz=w400"
 
-                    loading="eager"
-                    decoding="async"
-
                     onerror="
-                    this.src='https://ui-avatars.com/api/?name=${encodeURIComponent(d.name)}&background=random&color=fff&size=512'
+                    this.src='https://ui-avatars.com/api/?name=${encodeURIComponent(d.name)}&background=random&color=fff'
                     "
                 >
 
@@ -1179,12 +813,15 @@ function render(
 
             <div class="score">
 
-                <div class="main-score">
+                <div>
 
                     <div class="score-value">
+
                         ${key === "sales"
                             ? formatSales(d[key])
-                            : d[key].toLocaleString('id-ID')}
+                            : d[key].toLocaleString("id-ID")
+                        }
+
                     </div>
 
                     <div class="score-label">
@@ -1193,13 +830,13 @@ function render(
 
                 </div>
 
-                <div class="${achStyle.boxClass}">
+                <div class="ach-box">
 
                     <div class="ach-title">
                         ${achTitle}
                     </div>
 
-                    <div class="${achStyle.valueClass}">
+                    <div class="ach-value ${achClass(d[achKey])}">
                         ${d[achKey].toFixed(1)}%
                     </div>
 
@@ -1208,46 +845,8 @@ function render(
             </div>
 
         </div>
-        `;
-    });
 
-    container.innerHTML = html;
-}
-
-/* =========================
-SLIDES
-========================= */
-
-const slides =
-document.querySelectorAll(".slide");
-
-let current = 0;
-let isSliding = false;
-
-function nextSlide(){
-
-    if(isSliding) return;
-
-    isSliding = true;
-
-    slides[current]
-        .classList.remove("active");
-
-    current++;
-
-    if(current >= slides.length){
-
-        current = 0;
-    }
-
-    setTimeout(()=>{
-
-        slides[current]
-            .classList.add("active");
-
-        isSliding = false;
-
-    },120);
+    `).join("");
 }
 
 /* =========================
@@ -1258,27 +857,6 @@ async function update(){
 
     const data =
     await getData();
-
-    if(!data || data.length === 0){
-
-        return;
-    }
-
-    const newHash =
-    data.map(v =>
-        v.name +
-        v.sales +
-        v.proteksi +
-        v.trx
-    ).join("|");
-
-    if(newHash === lastRenderHash){
-
-        return;
-    }
-
-    lastRenderHash =
-    newHash;
 
     render(
         data,
@@ -1342,6 +920,26 @@ async function update(){
 }
 
 /* =========================
+SLIDES
+========================= */
+
+function nextSlide(){
+
+    slides[current]
+        .classList.remove("active");
+
+    current++;
+
+    if(current >= slides.length){
+
+        current = 0;
+    }
+
+    slides[current]
+        .classList.add("active");
+}
+
+/* =========================
 NEWS CLOCK
 ========================= */
 
@@ -1350,9 +948,8 @@ function updateNewsClock(){
     const el =
     document.getElementById("newsClock");
 
-    if(!el) return;
-
-    const now = new Date();
+    const now =
+    new Date();
 
     const hari = [
         "MINGGU",
@@ -1379,59 +976,11 @@ function updateNewsClock(){
         "DESEMBER"
     ];
 
-    const h =
-    hari[now.getDay()];
-
-    const tgl =
-    String(now.getDate()).padStart(2,"0");
-
-    const bln =
-    bulan[now.getMonth()];
-
-    const thn =
-    now.getFullYear();
-
-    const jam =
-    String(now.getHours()).padStart(2,"0");
-
-    const menit =
-    String(now.getMinutes()).padStart(2,"0");
-
-    const detik =
-    String(now.getSeconds()).padStart(2,"0");
-
     el.innerHTML =
-    `${h}, ${tgl} ${bln} ${thn} | ${jam}:${menit}:${detik}`;
+    `${hari[now.getDay()]}, ${String(now.getDate()).padStart(2,"0")} ${bulan[now.getMonth()]} ${now.getFullYear()} | ${String(now.getHours()).padStart(2,"0")}:${String(now.getMinutes()).padStart(2,"0")}:${String(now.getSeconds()).padStart(2,"0")}`;
 }
 
 setInterval(updateNewsClock,1000);
-
-/* =========================
-INDICATOR
-========================= */
-
-const pauseIndicator =
-document.getElementById(
-    "pauseIndicator"
-);
-
-function showIndicator(text){
-
-    if(!pauseIndicator) return;
-
-    pauseIndicator.innerHTML = text;
-
-    pauseIndicator.classList.add("show");
-
-    clearTimeout(window.indicatorTimeout);
-
-    window.indicatorTimeout =
-    setTimeout(()=>{
-
-        pauseIndicator.classList.remove("show");
-
-    },1500);
-}
 
 /* =========================
 AUDIO
@@ -1445,58 +994,50 @@ if(bgm){
     bgm.volume = 0.35;
 }
 
-async function playMusic(){
+function playMusic(){
 
-    if(!bgm) return;
-
-    try{
-
-        await bgm.play();
-
-    }catch(err){
-
-        console.log(err);
-    }
+    bgm.play().catch(()=>{});
 }
 
 /* =========================
-LOOP
+PAUSE
 ========================= */
+
+const pauseIndicator =
+document.getElementById("pauseIndicator");
 
 let isPaused = false;
 
-let slideInterval;
-let updateInterval;
+let slideLoop;
+let updateLoop;
 
-function stopLoop(){
+function showIndicator(text){
 
-    clearInterval(slideInterval);
-    clearInterval(updateInterval);
+    pauseIndicator.innerHTML = text;
+
+    pauseIndicator.classList.add("show");
+
+    setTimeout(()=>{
+
+        pauseIndicator.classList.remove("show");
+
+    },1200);
 }
 
 function startLoop(){
 
-    stopLoop();
+    slideLoop =
+    setInterval(nextSlide,8000);
 
-    slideInterval =
-    setInterval(()=>{
+    updateLoop =
+    setInterval(update,30000);
+}
 
-        if(!document.hidden){
+function stopLoop(){
 
-            nextSlide();
-        }
+    clearInterval(slideLoop);
 
-    },8000);
-
-    updateInterval =
-    setInterval(()=>{
-
-        if(!document.hidden){
-
-            update();
-        }
-
-    },30000);
+    clearInterval(updateLoop);
 }
 
 function togglePause(){
@@ -1507,7 +1048,7 @@ function togglePause(){
 
         stopLoop();
 
-        if(bgm) bgm.pause();
+        bgm.pause();
 
         showIndicator("⏸ PAUSED");
 
@@ -1527,29 +1068,18 @@ FULLSCREEN
 
 async function toggleFullscreen(){
 
-    try{
+    if(!document.fullscreenElement){
 
-        if(!document.fullscreenElement){
+        await document.documentElement.requestFullscreen();
 
-            await document.documentElement.requestFullscreen();
+    }else{
 
-            showIndicator("🖥 FULLSCREEN");
-
-        }else{
-
-            await document.exitFullscreen();
-
-            showIndicator("❎ EXIT FULLSCREEN");
-        }
-
-    }catch(err){
-
-        console.log(err);
+        await document.exitFullscreen();
     }
 }
 
 /* =========================
-CLICK
+CLICK EVENT
 ========================= */
 
 let clickTimer = null;
@@ -1563,7 +1093,8 @@ document.addEventListener(
             clearTimeout(clickTimer);
         }
 
-        clickTimer = setTimeout(()=>{
+        clickTimer =
+        setTimeout(()=>{
 
             togglePause();
 
