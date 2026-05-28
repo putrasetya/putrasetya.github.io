@@ -7,8 +7,8 @@
 
 <title>AZKO Sertifikat Generator</title>
 
-<!-- GOOGLE FONT -->
-<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Great+Vibes&display=swap" rel="stylesheet">
+<!-- FONT -->
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&display=swap" rel="stylesheet">
 
 <!-- JSPDF -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
@@ -22,30 +22,30 @@
 }
 
 body{
-    background:#f2f2f2;
+    background:#f3f3f3;
     font-family:Arial, Helvetica, sans-serif;
     padding:40px;
 }
 
 .container{
-    max-width:900px;
+    max-width:950px;
     margin:auto;
     background:#fff;
     padding:35px;
-    border-radius:25px;
-    box-shadow:0 15px 40px rgba(0,0,0,0.12);
+    border-radius:28px;
+    box-shadow:0 15px 45px rgba(0,0,0,0.12);
 }
 
 h1{
     font-family:'Cinzel', serif;
-    font-size:38px;
+    font-size:40px;
     color:#222;
     margin-bottom:10px;
 }
 
 .subtitle{
     color:#666;
-    line-height:1.7;
+    line-height:1.8;
     margin-bottom:30px;
 }
 
@@ -58,29 +58,37 @@ label{
 
 textarea{
     width:100%;
-    height:280px;
+    height:300px;
     border:1px solid #ddd;
-    border-radius:18px;
-    padding:20px;
+    border-radius:20px;
+    padding:22px;
     resize:none;
     font-size:16px;
-    line-height:1.8;
+    line-height:1.9;
     outline:none;
     transition:0.3s;
 }
 
 textarea:focus{
-    border-color:#c79c5d;
-    box-shadow:0 0 0 4px rgba(199,156,93,0.1);
+    border-color:#c79b59;
+    box-shadow:0 0 0 5px rgba(199,155,89,0.12);
+}
+
+/* =========================
+BUTTON GROUP
+========================= */
+
+.button-group{
+    display:flex;
+    gap:15px;
+    margin-top:25px;
 }
 
 button{
-    width:100%;
-    margin-top:25px;
-    padding:18px;
+    flex:1;
+    padding:20px;
     border:none;
-    border-radius:18px;
-    background:linear-gradient(135deg,#b78642,#d7b67a);
+    border-radius:20px;
     color:white;
     font-size:18px;
     font-weight:bold;
@@ -88,10 +96,57 @@ button{
     transition:0.3s;
 }
 
+.generate-btn{
+    background:linear-gradient(135deg,#b78744,#d9b87c);
+}
+
+.preview-btn{
+    background:linear-gradient(135deg,#4c4c4c,#777);
+}
+
 button:hover{
     transform:translateY(-2px);
-    box-shadow:0 10px 25px rgba(0,0,0,0.15);
+    box-shadow:0 12px 30px rgba(0,0,0,0.18);
 }
+
+/* =========================
+LOADING
+========================= */
+
+.loading{
+    display:none;
+    margin-top:25px;
+    text-align:center;
+}
+
+.spinner{
+    width:60px;
+    height:60px;
+    border:6px solid #eee;
+    border-top:6px solid #c89b57;
+    border-radius:50%;
+    margin:auto;
+    animation:spin 1s linear infinite;
+}
+
+.loading-text{
+    margin-top:15px;
+    font-size:18px;
+    color:#555;
+    font-weight:bold;
+}
+
+@keyframes spin{
+
+    100%{
+        transform:rotate(360deg);
+    }
+
+}
+
+/* =========================
+INFO
+========================= */
 
 .info{
     margin-top:30px;
@@ -118,7 +173,7 @@ button:hover{
 
 <div class="container">
 
-    <h1>AZKO Citimall Tuban Sertifikat Generator</h1>
+    <h1>AZKO Sertifikat Generator</h1>
 
     <div class="subtitle">
         Generate otomatis banyak sertifikat ukuran F4 landscape HD siap print.
@@ -127,9 +182,7 @@ button:hover{
     <label>
         Input Nama Peserta
         <br>
-        <small>
-            (1 nama per baris)
-        </small>
+        <small>(1 nama per baris)</small>
     </label>
 
     <textarea id="names">
@@ -138,9 +191,29 @@ siti rahma
 ahmad fauzi
     </textarea>
 
-    <button onclick="generatePDF()">
-        GENERATE PDF SERTIFIKAT
-    </button>
+    <!-- BUTTON -->
+    <div class="button-group">
+
+        <button class="preview-btn" onclick="previewCertificate()">
+            PREVIEW
+        </button>
+
+        <button class="generate-btn" onclick="generatePDF()" id="generateBtn">
+            GENERATE PDF
+        </button>
+
+    </div>
+
+    <!-- LOADING -->
+    <div class="loading" id="loading">
+
+        <div class="spinner"></div>
+
+        <div class="loading-text">
+            Sedang membuat sertifikat PDF...
+        </div>
+
+    </div>
 
     <div class="info">
 
@@ -157,11 +230,11 @@ ahmad fauzi
 
         <br>
 
-        3. Klik tombol Generate PDF
+        3. Klik Preview untuk melihat hasil
 
         <br>
 
-        4. PDF otomatis ukuran F4 landscape dan siap print
+        4. Klik Generate PDF untuk download otomatis
 
     </div>
 
@@ -171,7 +244,6 @@ ahmad fauzi
 
 // =========================
 // FORMAT NAMA
-// HURUF AWAL OTOMATIS KAPITAL
 // =========================
 
 function capitalizeName(name){
@@ -191,24 +263,130 @@ function capitalizeName(name){
 }
 
 // =========================
+// PREVIEW
+// =========================
+
+function previewCertificate(){
+
+    const firstName = document
+        .getElementById('names')
+        .value
+        .split('\n')[0];
+
+    const name = capitalizeName(firstName);
+
+    // WINDOW PREVIEW
+    const previewWindow = window.open('', '_blank');
+
+    previewWindow.document.write(`
+
+        <html>
+
+        <head>
+
+            <title>Preview Sertifikat</title>
+
+            <style>
+
+                body{
+
+                    margin:0;
+                    display:flex;
+                    justify-content:center;
+                    align-items:center;
+                    background:#111;
+                    overflow:auto;
+
+                }
+
+                .wrapper{
+
+                    position:relative;
+                    width:1400px;
+                    margin:20px;
+
+                }
+
+                img{
+
+                    width:100%;
+                    display:block;
+
+                }
+
+                .name{
+
+                    position:absolute;
+
+                    top:40%;
+                    left:50%;
+
+                    transform:translateX(-50%);
+
+                    font-size:55px;
+
+                    font-family:"Times New Roman", serif;
+
+                    font-style:italic;
+
+                    color:rgb(176,137,72);
+
+                    width:100%;
+
+                    text-align:center;
+
+                }
+
+            </style>
+
+        </head>
+
+        <body>
+
+            <div class="wrapper">
+
+                <img src="sertifikat.png">
+
+                <div class="name">
+
+                    ${name}
+
+                </div>
+
+            </div>
+
+        </body>
+
+        </html>
+
+    `);
+
+}
+
+// =========================
 // GENERATE PDF
 // =========================
 
 async function generatePDF(){
 
+    const loading = document.getElementById('loading');
+    const button = document.getElementById('generateBtn');
+
+    loading.style.display = 'block';
+
+    button.disabled = true;
+    button.innerHTML = 'MEMPROSES...';
+
     const { jsPDF } = window.jspdf;
 
-    // UKURAN F4 LANDSCAPE
     const pdf = new jsPDF({
-        orientation: 'landscape',
-        unit: 'mm',
-        format: [210,330]
+        orientation:'landscape',
+        unit:'mm',
+        format:[210,330]
     });
 
-    // TEMPLATE
     const templateImage = "sertifikat.png";
 
-    // AMBIL DATA NAMA
     const names = document
         .getElementById('names')
         .value
@@ -216,7 +394,6 @@ async function generatePDF(){
         .map(name => capitalizeName(name.trim()))
         .filter(name => name !== '');
 
-    // LOAD IMAGE
     const img = new Image();
 
     img.src = templateImage;
@@ -225,12 +402,11 @@ async function generatePDF(){
 
         for(let i = 0; i < names.length; i++){
 
-            // HALAMAN BARU
             if(i > 0){
-                pdf.addPage([210,330], 'landscape');
+                pdf.addPage([210,330],'landscape');
             }
 
-            // TEMPLATE FULL F4
+            // TEMPLATE
             pdf.addImage(
                 img,
                 'PNG',
@@ -240,41 +416,32 @@ async function generatePDF(){
                 210
             );
 
-            // =========================
             // STYLE NAMA
-            // =========================
-
             pdf.setFont('times','italic');
 
-            // WARNA EMAS
             pdf.setTextColor(176,137,72);
 
-            // AUTO FONT SIZE
-            let fontSize = 34;
+            let fontSize = 36;
 
             if(names[i].length > 18){
-                fontSize = 30;
+                fontSize = 32;
             }
 
             if(names[i].length > 28){
-                fontSize = 26;
+                fontSize = 27;
             }
 
             if(names[i].length > 38){
-                fontSize = 22;
+                fontSize = 23;
             }
 
             pdf.setFontSize(fontSize);
 
-            // =========================
             // POSISI NAMA
-            // CENTER HALAMAN
-            // =========================
-
             pdf.text(
                 names[i],
                 165,
-                74,
+                84,
                 {
                     align:'center'
                 }
@@ -282,13 +449,27 @@ async function generatePDF(){
 
         }
 
-        // DOWNLOAD
-        pdf.save("AZKO-Sertifikat-F4.pdf");
+        setTimeout(() => {
+
+            pdf.save("AZKO-Sertifikat-F4.pdf");
+
+            loading.style.display = 'none';
+
+            button.disabled = false;
+
+            button.innerHTML = 'GENERATE PDF';
+
+        },1200);
 
     }
 
-    // ERROR TEMPLATE
     img.onerror = () => {
+
+        loading.style.display = 'none';
+
+        button.disabled = false;
+
+        button.innerHTML = 'GENERATE PDF';
 
         alert(
             "Template sertifikat.png tidak ditemukan.\n\nPastikan file template berada di folder yang sama dengan file HTML."
