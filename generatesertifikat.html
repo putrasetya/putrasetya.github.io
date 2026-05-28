@@ -262,44 +262,6 @@ LOADING
 }
 
 /* =========================
-INFO
-========================= */
-
-.info{
-
-    margin-top:35px;
-
-    background:#faf7f1;
-
-    border:1px solid #eee;
-
-    border-radius:22px;
-
-    padding:25px;
-
-    line-height:2;
-
-    color:#555;
-
-    font-size:15px;
-
-}
-
-.code{
-
-    background:white;
-
-    border:1px solid #ddd;
-
-    border-radius:8px;
-
-    padding:4px 10px;
-
-    font-weight:600;
-
-}
-
-/* =========================
 RESPONSIVE
 ========================= */
 
@@ -334,7 +296,7 @@ RESPONSIVE
     <h1>AZKO Sertifikat Generator</h1>
 
     <div class="subtitle">
-        Generate otomatis banyak sertifikat ukuran F4 landscape HD siap print dengan preview hasil realtime.
+        Generate otomatis banyak sertifikat ukuran F4 landscape HD siap print dengan preview realtime.
     </div>
 
     <label>
@@ -373,34 +335,6 @@ ahmad fauzi
 
     </div>
 
-    <!-- INFO -->
-    <div class="info">
-
-        <b>Petunjuk:</b>
-
-        <br><br>
-
-        1. Simpan template sertifikat dengan nama:
-        <span class="code">sertifikat.png</span>
-
-        <br>
-
-        2. Taruh file template di folder yang sama dengan file HTML
-
-        <br>
-
-        3. Gunakan resolusi template minimal 3508x2480
-
-        <br>
-
-        4. Klik LIHAT HASIL untuk preview semua nama
-
-        <br>
-
-        5. Klik GENERATE PDF untuk download otomatis
-
-    </div>
-
 </div>
 
 <script>
@@ -426,29 +360,12 @@ function capitalizeName(name){
 }
 
 /* =========================
-PREVIEW SEMUA HASIL
+CREATE CERTIFICATE HTML
 ========================= */
 
-function previewCertificate(){
+function createCertificateHTML(names){
 
-    const names = document
-        .getElementById('names')
-        .value
-        .split('\n')
-        .map(name => capitalizeName(name.trim()))
-        .filter(name => name !== '');
-
-    if(names.length === 0){
-
-        alert("Masukkan minimal 1 nama peserta");
-
-        return;
-
-    }
-
-    const previewWindow = window.open('', '_blank');
-
-    previewWindow.document.write(`
+    return `
 
         <html>
 
@@ -599,7 +516,36 @@ function previewCertificate(){
 
         </html>
 
-    `);
+    `;
+
+}
+
+/* =========================
+PREVIEW
+========================= */
+
+function previewCertificate(){
+
+    const names = document
+        .getElementById('names')
+        .value
+        .split('\n')
+        .map(name => capitalizeName(name.trim()))
+        .filter(name => name !== '');
+
+    if(names.length === 0){
+
+        alert("Masukkan minimal 1 nama peserta");
+
+        return;
+
+    }
+
+    const previewWindow = window.open('', '_blank');
+
+    previewWindow.document.write(
+        createCertificateHTML(names)
+    );
 
 }
 
@@ -641,6 +587,27 @@ async function generatePDF(){
         .split('\n')
         .map(name => capitalizeName(name.trim()))
         .filter(name => name !== '');
+
+    if(names.length === 0){
+
+        alert("Masukkan minimal 1 nama peserta");
+
+        loading.style.display = 'none';
+
+        button.disabled = false;
+
+        button.innerHTML = 'GENERATE PDF';
+
+        return;
+
+    }
+
+    /* PREVIEW HASIL SAMA PERSIS */
+    const previewWindow = window.open('', '_blank');
+
+    previewWindow.document.write(
+        createCertificateHTML(names)
+    );
 
     const img = new Image();
 
@@ -727,7 +694,7 @@ async function generatePDF(){
         button.innerHTML = 'GENERATE PDF';
 
         alert(
-            "Template sertifikat.png tidak ditemukan.\n\nPastikan file template berada di folder yang sama dengan file HTML."
+            "Template sertifikat.png tidak ditemukan."
         );
 
     }
