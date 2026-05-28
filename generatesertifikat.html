@@ -4,76 +4,109 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
-<title>Generator Sertifikat Coffee Maker</title>
+<title>AZKO Sertifikat Generator</title>
+
+<!-- Google Font -->
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Great+Vibes&display=swap" rel="stylesheet">
 
 <!-- jsPDF -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
 <style>
+
 *{
     margin:0;
     padding:0;
     box-sizing:border-box;
-    font-family:Arial, Helvetica, sans-serif;
 }
 
 body{
-    background:#f3f3f3;
-    padding:30px;
+    background:#f2f2f2;
+    font-family:Arial, Helvetica, sans-serif;
+    padding:40px;
 }
 
 .container{
     max-width:900px;
     margin:auto;
     background:#fff;
-    padding:25px;
-    border-radius:20px;
-    box-shadow:0 10px 30px rgba(0,0,0,0.1);
+    padding:30px;
+    border-radius:24px;
+    box-shadow:0 15px 40px rgba(0,0,0,0.12);
 }
 
 h1{
-    margin-bottom:20px;
+    font-family:'Cinzel', serif;
+    font-size:36px;
+    margin-bottom:10px;
     color:#222;
 }
 
+.subtitle{
+    color:#666;
+    margin-bottom:25px;
+    line-height:1.6;
+}
+
 label{
-    font-weight:bold;
-    margin-bottom:10px;
     display:block;
+    font-weight:bold;
+    margin-bottom:12px;
+    font-size:16px;
 }
 
 textarea{
     width:100%;
-    height:250px;
-    padding:15px;
-    border-radius:12px;
-    border:1px solid #ccc;
+    height:260px;
+    border:1px solid #ddd;
+    border-radius:18px;
+    padding:20px;
     resize:none;
     font-size:16px;
-    margin-bottom:20px;
+    line-height:1.7;
+    outline:none;
+}
+
+textarea:focus{
+    border-color:#c59a52;
 }
 
 button{
-    background:#b98b45;
-    color:#fff;
+    margin-top:25px;
+    width:100%;
+    padding:18px;
     border:none;
-    padding:15px 25px;
-    border-radius:12px;
-    font-size:16px;
+    border-radius:18px;
+    background:linear-gradient(135deg,#b78b4f,#d6b173);
+    color:white;
+    font-size:18px;
+    font-weight:bold;
     cursor:pointer;
     transition:0.3s;
 }
 
 button:hover{
     transform:translateY(-2px);
-    opacity:0.9;
+    box-shadow:0 10px 20px rgba(0,0,0,0.15);
 }
 
 .info{
-    margin-top:15px;
-    color:#666;
-    line-height:1.6;
+    margin-top:25px;
+    background:#faf7f2;
+    border:1px solid #eee;
+    border-radius:16px;
+    padding:20px;
+    line-height:1.8;
+    color:#555;
 }
+
+.code{
+    background:#fff;
+    padding:3px 8px;
+    border-radius:8px;
+    border:1px solid #ddd;
+}
+
 </style>
 </head>
 
@@ -81,26 +114,51 @@ button:hover{
 
 <div class="container">
 
-    <h1>Generator Sertifikat PDF F4</h1>
+    <h1>AZKO Citimall Tuban Sertifikat Generator</h1>
+
+    <div class="subtitle">
+        Generate otomatis banyak sertifikat ukuran F4 siap print HD.
+    </div>
 
     <label>
-        Input Nama Peserta (1 nama per baris)
+        Input Nama Peserta
+        <br>
+        <small>
+            (1 nama per baris)
+        </small>
     </label>
 
     <textarea id="names">
+Andi Saputra
 Budi Santoso
-Siti Aisyah
-Ahmad Fauzi
+Siti Rahma
     </textarea>
 
     <button onclick="generatePDF()">
-        Generate PDF Sertifikat
+        GENERATE PDF SERTIFIKAT
     </button>
 
     <div class="info">
-        • Ukuran otomatis F4<br>
-        • Nama otomatis muncul di bagian "Diberikan Kepada"<br>
-        • Semua sertifikat langsung tergabung dalam 1 file PDF
+
+        <b>Petunjuk:</b>
+
+        <br><br>
+
+        1. Simpan template sertifikat Anda dengan nama:
+        <span class="code">sertifikat.png</span>
+
+        <br>
+
+        2. Taruh file template di folder yang sama dengan HTML ini
+
+        <br>
+
+        3. Klik tombol Generate PDF
+
+        <br>
+
+        4. Semua sertifikat otomatis tergabung menjadi 1 PDF ukuran F4
+
     </div>
 
 </div>
@@ -111,23 +169,25 @@ async function generatePDF(){
 
     const { jsPDF } = window.jspdf;
 
-    // Ukuran F4 Landscape
+    // UKURAN F4 LANDSCAPE
     const pdf = new jsPDF({
         orientation: 'landscape',
         unit: 'mm',
-        format: [210, 330]
+        format: [210,330]
     });
 
-    // GANTI DENGAN FILE SERTIFIKAT ANDA
+    // TEMPLATE SERTIFIKAT
     const templateImage = "sertifikat.png";
 
+    // AMBIL DATA NAMA
     const names = document
         .getElementById('names')
         .value
         .split('\n')
-        .map(n => n.trim())
-        .filter(n => n !== '');
+        .map(name => name.trim())
+        .filter(name => name !== '');
 
+    // LOAD TEMPLATE
     const img = new Image();
 
     img.src = templateImage;
@@ -136,11 +196,12 @@ async function generatePDF(){
 
         for(let i = 0; i < names.length; i++){
 
+            // TAMBAH HALAMAN BARU
             if(i > 0){
                 pdf.addPage([210,330], 'landscape');
             }
 
-            // Background sertifikat full F4
+            // BACKGROUND FULL F4
             pdf.addImage(
                 img,
                 'PNG',
@@ -150,28 +211,40 @@ async function generatePDF(){
                 210
             );
 
-            // Nama peserta
-            pdf.setFont("times","italic");
-            pdf.setTextColor(180,140,70);
+            // =========================
+            // NAMA PESERTA
+            // =========================
 
-            // Ukuran font otomatis
-            let fontSize = 28;
+            // FONT SERTIFIKAT ELEGAN
+            pdf.setFont('times','italic');
 
-            if(names[i].length > 25){
-                fontSize = 22;
+            // WARNA EMAS
+            pdf.setTextColor(176,137,72);
+
+            // AUTO FONT SIZE
+            let fontSize = 34;
+
+            if(names[i].length > 18){
+                fontSize = 30;
             }
 
-            if(names[i].length > 35){
-                fontSize = 18;
+            if(names[i].length > 28){
+                fontSize = 25;
+            }
+
+            if(names[i].length > 38){
+                fontSize = 20;
             }
 
             pdf.setFontSize(fontSize);
 
-            // Posisi nama
+            // POSISI NAMA CENTER
+            // SESUAI AREA "DIBERIKAN KEPADA"
+
             pdf.text(
                 names[i],
-                82,
-                72,
+                83,
+                73,
                 {
                     align:'center'
                 }
@@ -179,7 +252,17 @@ async function generatePDF(){
 
         }
 
-        pdf.save("Sertifikat-CoffeeMaker-F4.pdf");
+        // DOWNLOAD PDF
+        pdf.save("AZKO-Sertifikat-F4.pdf");
+
+    }
+
+    // JIKA TEMPLATE TIDAK DITEMUKAN
+    img.onerror = () => {
+
+        alert(
+            "Template sertifikat.png tidak ditemukan.\n\nPastikan file template berada di folder yang sama dengan file HTML."
+        );
 
     }
 
