@@ -4,11 +4,12 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Login Sales Control</title>
+<title>LOGIN</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
 <style>
+
 *{
 margin:0;
 padding:0;
@@ -36,15 +37,10 @@ box-shadow:0 10px 30px rgba(0,0,0,.08);
 
 .logo{
 text-align:center;
-font-size:28px;
+font-size:32px;
 font-weight:700;
-margin-bottom:8px;
-}
-
-.subtitle{
-text-align:center;
-color:#777;
 margin-bottom:30px;
+color:#111827;
 }
 
 label{
@@ -52,6 +48,7 @@ display:block;
 font-size:14px;
 font-weight:600;
 margin-bottom:8px;
+color:#374151;
 }
 
 input{
@@ -79,6 +76,7 @@ display:flex;
 align-items:center;
 font-weight:600;
 color:#111827;
+border:1px solid #e5e7eb;
 }
 
 .loading{
@@ -111,6 +109,7 @@ cursor:not-allowed;
 button:hover:not(:disabled){
 background:#1d4ed8;
 }
+
 </style>
 </head>
 
@@ -119,11 +118,7 @@ background:#1d4ed8;
 <div class="card">
 
 <div class="logo">
-SALES CONTROL
-</div>
-
-<div class="subtitle">
-Masukkan NIK Anda
+LOGIN
 </div>
 
 <label>NIK</label>
@@ -145,7 +140,7 @@ Next
 
 <script>
 
-// GANTI DENGAN URL APPS SCRIPT
+// URL APPS SCRIPT
 const API_URL =
 "https://script.google.com/macros/s/AKfycbx_rSjRmkxXhl8ypq5xnfihwnH9LTfrTTgvjdwVc01f4LeX2re7p-vRVTfYDP1Nh1_oMQ/exec";
 
@@ -158,12 +153,14 @@ document
 const nik = this.value.trim();
 
 if(nik.length < 3){
+
 document.getElementById("namaBox").innerHTML =
 "Nama akan muncul otomatis";
 
 document.getElementById("nextBtn").disabled = true;
 
 return;
+
 }
 
 document.getElementById("namaBox").innerHTML =
@@ -196,6 +193,7 @@ document.getElementById("namaBox").innerHTML =
 
 document.getElementById("nextBtn").disabled =
 true;
+
 }
 
 }catch(err){
@@ -205,6 +203,7 @@ document.getElementById("namaBox").innerHTML =
 
 document.getElementById("nextBtn").disabled =
 true;
+
 }
 
 });
@@ -222,6 +221,7 @@ window.location.href =
 "sales-control.html";
 
 });
+
 </script>
 
 </body>
