@@ -1049,12 +1049,19 @@ function render(
         ];
 
         const allSorted =
-        filteredData
-            .filter(v => v[key] > 0)
-            .sort((a,b)=>a[key]-b[key]);
+filteredData
+    .filter(v => {
 
-        sorted =
-        allSorted.slice(0,3);
+        if(containerId === "proteksiBottom"){
+            return v[key] >= 0;
+        }
+
+        return v[key] > 0;
+    })
+    .sort((a,b)=>a[key]-b[key]);
+
+sorted =
+allSorted.slice(0,3);
 
         sorted = sorted.map((item,index)=>({
 
