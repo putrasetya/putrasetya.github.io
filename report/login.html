@@ -80,11 +80,15 @@ border:1px solid #e5e7eb;
 }
 
 .loading{
-color:#6b7280;
+color:#2563eb;
 }
 
 .notfound{
 color:#ef4444;
+}
+
+.success{
+color:#16a34a;
 }
 
 button{
@@ -126,10 +130,11 @@ LOGIN
 <input
 type="number"
 id="nik"
-placeholder="Masukkan NIK">
+placeholder="Masukkan NIK"
+disabled>
 
 <div class="nama-box" id="namaBox">
-Nama akan muncul otomatis
+<span class="loading">Memuat data akun...</span>
 </div>
 
 <button id="nextBtn" disabled>
@@ -145,66 +150,74 @@ const API_URL =
 "https://script.google.com/macros/s/AKfycbx_rSjRmkxXhl8ypq5xnfihwnH9LTfrTTgvjdwVc01f4LeX2re7p-vRVTfYDP1Nh1_oMQ/exec";
 
 let selectedUser = null;
+let akun = [];
+
+window.addEventListener("load", async () => {
+
+  try {
+
+    const response =
+      await fetch(`${API_URL}?action=getUsers`);
+
+    akun =
+      await response.json();
+
+    document.getElementById("nik").disabled = false;
+
+    document.getElementById("namaBox").innerHTML =
+      "Masukkan NIK";
+
+  } catch (err) {
+
+    document.getElementById("namaBox").innerHTML =
+      '<span class="notfound">Gagal memuat data akun</span>';
+
+    console.error(err);
+
+  }
+
+});
 
 document
 .getElementById("nik")
-.addEventListener("input", async function(){
+.addEventListener("input", function(){
 
-const nik = this.value.trim();
+  const nik = this.value.trim();
 
-if(nik.length < 3){
+  if(nik.length < 1){
 
-document.getElementById("namaBox").innerHTML =
-"Nama akan muncul otomatis";
+    document.getElementById("namaBox").innerHTML =
+      "Masukkan NIK";
 
-document.getElementById("nextBtn").disabled = true;
+    document.getElementById("nextBtn").disabled = true;
 
-return;
+    return;
+  }
 
-}
+  const user =
+    akun.find(x => String(x.nik) === nik);
 
-document.getElementById("namaBox").innerHTML =
-'<span class="loading">Mencari...</span>';
+  if(user){
 
-try{
+    selectedUser = user;
 
-const response =
-await fetch(`${API_URL}?action=getUser&nik=${nik}`);
+    document.getElementById("namaBox").innerHTML =
+      `<span class="success">${user.nama}</span>`;
 
-const data =
-await response.json();
+    document.getElementById("nextBtn").disabled =
+      false;
 
-if(data.success){
+  }else{
 
-selectedUser = data;
+    selectedUser = null;
 
-document.getElementById("namaBox").innerHTML =
-data.nama;
+    document.getElementById("namaBox").innerHTML =
+      '<span class="notfound">NIK tidak ditemukan</span>';
 
-document.getElementById("nextBtn").disabled =
-false;
+    document.getElementById("nextBtn").disabled =
+      true;
 
-}else{
-
-selectedUser = null;
-
-document.getElementById("namaBox").innerHTML =
-'<span class="notfound">NIK tidak ditemukan</span>';
-
-document.getElementById("nextBtn").disabled =
-true;
-
-}
-
-}catch(err){
-
-document.getElementById("namaBox").innerHTML =
-'<span class="notfound">Koneksi gagal</span>';
-
-document.getElementById("nextBtn").disabled =
-true;
-
-}
+  }
 
 });
 
@@ -212,13 +225,13 @@ document
 .getElementById("nextBtn")
 .addEventListener("click",()=>{
 
-localStorage.setItem(
-"user",
-JSON.stringify(selectedUser)
-);
+  localStorage.setItem(
+    "user",
+    JSON.stringify(selectedUser)
+  );
 
-window.location.href =
-"sales-control.html";
+  window.location.href =
+    "sales-control.html";
 
 });
 
