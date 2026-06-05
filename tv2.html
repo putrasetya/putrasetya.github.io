@@ -40,6 +40,60 @@ body{
 }
 
 /* =========================
+BACKGROUND FX
+========================= */
+
+body::before{
+
+    content:"";
+
+    position:fixed;
+
+    inset:0;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(255,255,255,.03),
+            transparent 35%,
+            rgba(255,255,255,.02)
+        );
+
+    pointer-events:none;
+
+    z-index:-2;
+}
+
+body::after{
+
+    content:"";
+
+    position:fixed;
+
+    width:200%;
+    height:200%;
+
+    top:-50%;
+    left:-50%;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            rgba(255,255,255,.04),
+            transparent
+        );
+
+    transform:rotate(25deg);
+
+    animation:none;
+
+    pointer-events:none;
+
+    z-index:-1;
+}
+
+/* =========================
 SLIDES
 ========================= */
 
@@ -54,8 +108,6 @@ SLIDES
 
     padding:
         1vh
-        2vw
-        7vh
         2vw;
 
     display:flex;
@@ -68,12 +120,16 @@ SLIDES
 
     pointer-events:none;
 
-    transition:opacity .5s linear;
+    transition:
+        opacity .5s linear;
 }
 
 .slide.active{
+
     opacity:1;
+
     visibility:visible;
+
     pointer-events:auto;
 }
 
@@ -82,22 +138,118 @@ HEADER
 ========================= */
 
 .header{
+
     text-align:center;
+
     margin-bottom:1vh;
 }
 
 .header h1{
+
     font-size:3vw;
+
     font-weight:900;
+
     letter-spacing:6px;
+
     text-transform:uppercase;
+
+    text-shadow:
+        0 0 20px rgba(255,255,255,.25);
 }
 
 .header p{
+
     margin-top:.2vh;
+
     font-size:1vw;
+
     letter-spacing:4px;
+
     opacity:.9;
+}
+
+/* =========================
+UPDATE TIME
+========================= */
+
+.update-time{
+
+    margin:
+        1vh auto 0 auto;
+
+    width:fit-content;
+
+    padding:
+        1vh
+        2.5vw;
+
+    border-radius:20px;
+
+    background:
+        rgba(0,0,0,.45);
+
+    border:
+        2px solid rgba(255,255,255,.15);
+
+    font-size:1.2vw;
+
+    font-weight:700;
+
+    box-shadow:
+        0 0 20px rgba(0,0,0,.25);
+}
+
+/* =========================
+PAUSE INDICATOR
+========================= */
+
+.pause-indicator{
+
+    position:fixed;
+
+    top:20px;
+    left:20px;
+
+    z-index:9999;
+
+    padding:14px 24px;
+
+    border-radius:18px;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(15,23,42,.92),
+            rgba(30,41,59,.92)
+        );
+
+    border:
+        1px solid rgba(255,255,255,.15);
+
+    font-size:14px;
+
+    font-weight:800;
+
+    letter-spacing:2px;
+
+    box-shadow:
+        0 10px 30px rgba(0,0,0,.45);
+
+    opacity:0;
+
+    transform:
+        translateY(-20px);
+
+    transition:.35s ease;
+}
+
+.pause-indicator.show{
+
+    opacity:1;
+
+    transform:
+        translateY(0);
 }
 
 /* =========================
@@ -105,10 +257,15 @@ RANK LIST
 ========================= */
 
 .rank-list{
+
     display:flex;
+
     flex-direction:column;
+
     gap:1.2vh;
+
     flex:1;
+
     justify-content:space-evenly;
 }
 
@@ -117,48 +274,195 @@ CARD
 ========================= */
 
 .rank-card{
+
     position:relative;
+
     display:flex;
+
     align-items:center;
-    height:24vh;
+
+    height:25vh;
+
     border-radius:34px;
+
     overflow:hidden;
-    border:1px solid rgba(255,255,255,.08);
-    animation:slideRight .5s forwards;
+
+    border:
+        1px solid rgba(255,255,255,.08);
+
+    opacity:0;
+
+    transform:
+        translateX(-40px);
+
+    will-change:auto;
 }
 
-.rank-card:nth-child(1){animation-delay:.1s;}
-.rank-card:nth-child(2){animation-delay:.2s;}
-.rank-card:nth-child(3){animation-delay:.3s;}
+.rank-card.show{
+
+    animation:
+        slideRight .5s forwards;
+}
+
+.rank-card:nth-child(1){
+    animation-delay:.1s;
+}
+
+.rank-card:nth-child(2){
+    animation-delay:.2s;
+}
+
+.rank-card:nth-child(3){
+    animation-delay:.3s;
+}
 
 @keyframes slideRight{
-    from{opacity:0;transform:translateX(-40px);}
-    to{opacity:1;transform:translateX(0);}
+
+    from{
+
+        opacity:0;
+
+        transform:
+            translateX(-40px);
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:
+            translateX(0);
+    }
 }
 
 /* =========================
-COLORS
+TOP CARD
 ========================= */
 
-.gold{background:linear-gradient(135deg,#6b5300,#d4a514,#fff0a6,#d4a514,#6b5300);}
-.silver{background:linear-gradient(135deg,#737373,#d1d5db,#ffffff,#d1d5db,#737373);}
-.bronze{background:linear-gradient(135deg,#6d3f1d,#c87c3d,#efc08c,#c87c3d,#6d3f1d);}
-.red-high{background:linear-gradient(135deg,#7f1d1d,#b91c1c,#dc2626,#ef4444,#f87171);}
-.red-mid{background:linear-gradient(135deg,#4a0404,#7f1d1d,#b91c1c,#dc2626,#ef4444);}
-.red-low{background:linear-gradient(135deg,#2b0000,#4a0404,#7f1d1d,#991b1b,#b91c1b);}
+.gold{
+
+    background:
+        linear-gradient(
+            135deg,
+            #6b5300,
+            #d4a514,
+            #fff0a6,
+            #d4a514,
+            #6b5300
+        );
+}
+
+.silver{
+
+    background:
+        linear-gradient(
+            135deg,
+            #737373,
+            #d1d5db,
+            #ffffff,
+            #d1d5db,
+            #737373
+        );
+}
+
+.bronze{
+
+    background:
+        linear-gradient(
+            135deg,
+            #6d3f1d,
+            #c87c3d,
+            #efc08c,
+            #c87c3d,
+            #6d3f1d
+        );
+}
+
+/* =========================
+BOTTOM CARD
+========================= */
+
+.red-high{
+
+    background:
+        linear-gradient(
+            135deg,
+            #7f1d1d,
+            #b91c1c,
+            #dc2626,
+            #ef4444,
+            #f87171
+        );
+}
+
+.red-mid{
+
+    background:
+        linear-gradient(
+            135deg,
+            #4a0404,
+            #7f1d1d,
+            #b91c1c,
+            #dc2626,
+            #ef4444
+        );
+}
+
+.red-low{
+
+    background:
+        linear-gradient(
+            135deg,
+            #2b0000,
+            #4a0404,
+            #7f1d1d,
+            #991b1b,
+            #b91c1c
+        );
+}
 
 /* =========================
 RANK NUMBER
 ========================= */
 
 .rank-number{
+
     position:absolute;
+
     left:-.5vw;
+
     top:50%;
-    transform:translateY(-50%) skew(-10deg);
+
+    transform:
+        translateY(-50%)
+        skew(-10deg);
+
     font-size:16vw;
+
     font-weight:900;
-    opacity:.18;
+
+    opacity:.20;
+
+    letter-spacing:-10px;
+}
+
+.gold .rank-number{
+    color:#facc15;
+}
+
+.silver .rank-number{
+    color:#e2e8f0;
+}
+
+.bronze .rank-number{
+    color:#fb923c;
+}
+
+.red-high .rank-number,
+.red-mid .rank-number,
+.red-low .rank-number{
+
+    color:#ffffff;
 }
 
 /* =========================
@@ -166,18 +470,28 @@ PHOTO
 ========================= */
 
 .photo-box{
+
     width:20%;
     height:100%;
+
     display:flex;
+
     align-items:flex-end;
+
     justify-content:center;
 }
 
 .photo-box img{
+
     width:100%;
     height:100%;
+
     object-fit:contain;
+
     object-position:center bottom;
+
+    filter:
+        drop-shadow(0 6px 10px rgba(0,0,0,.25));
 }
 
 /* =========================
@@ -185,21 +499,53 @@ EMPLOYEE
 ========================= */
 
 .employee{
+
     flex:1;
+
     padding-left:1.5vw;
+
     overflow:hidden;
 }
 
 .employee-name{
+
     font-size:2vw;
+
     font-weight:900;
+
+    color:#111827;
+
     text-transform:uppercase;
+
+    white-space:nowrap;
+
+    overflow:hidden;
+
+    text-overflow:ellipsis;
 }
 
 .employee-label{
+
     margin-top:.5vh;
-    font-size:1vw;
-    letter-spacing:2px;
+
+    font-size:1.1vw;
+
+    letter-spacing:3px;
+
+    text-transform:uppercase;
+
+    color:#111827;
+}
+
+.red-high .employee-name,
+.red-mid .employee-name,
+.red-low .employee-name,
+
+.red-high .employee-label,
+.red-mid .employee-label,
+.red-low .employee-label{
+
+    color:white;
 }
 
 /* =========================
@@ -207,253 +553,954 @@ SCORE
 ========================= */
 
 .score{
+
     width:31%;
+
     padding-right:1.8vw;
+
     display:flex;
+
     flex-direction:column;
+
     align-items:flex-end;
+
     gap:1vh;
 }
 
+.main-score{
+
+    text-align:right;
+}
+
 .score-value{
-    font-size:2.4vw;
+
+    font-size:2.5vw;
+
     font-weight:900;
+
+    color:#111827;
 }
 
 .score-label{
+
+    margin-top:.2vh;
+
     font-size:.8vw;
+
+    font-weight:700;
+
     letter-spacing:2px;
+
+    color:#111827;
+
+    opacity:.7;
+}
+
+.red-high .score-value,
+.red-mid .score-value,
+.red-low .score-value,
+
+.red-high .score-label,
+.red-mid .score-label,
+.red-low .score-label{
+
+    color:white;
 }
 
 /* =========================
-FOOTER CLEAN ONLY TEXT
+ACH BOX
 ========================= */
 
-.news-bar{
+.ach-box{
 
-    position:fixed;
-    left:0;
-    bottom:0;
-    width:100%;
-    height:5.5vh;
+    padding:
+        1vh
+        1.2vw;
 
-    display:flex;
-    align-items:center;
+    border-radius:22px;
 
-    z-index:999;
+    min-width:9vw;
 
-    background:transparent;
+    text-align:center;
+
+    border:
+        1px solid rgba(255,255,255,.18);
+
+    background:
+        rgba(255,255,255,.12);
 }
 
-.news-clock{
+.ach-title{
 
-    height:100%;
-    display:flex;
-    align-items:center;
-    justify-content:center;
+    font-size:.72vw;
 
-    padding:0 1.2vw;
-
-    background:transparent;
-
-    color:#ffffff;
-
-    font-size:1.1vw;
     font-weight:800;
 
-    white-space:nowrap;
-
-    border-right:1px solid rgba(255,255,255,0.35);
-}
-
-.news-marquee{
-    flex:1;
-    overflow:hidden;
-}
-
-.news-marquee-track{
-
-    white-space:nowrap;
-
-    font-size:1.2vw;
-    font-weight:800;
     letter-spacing:2px;
 
     color:#ffffff;
-
-    padding-left:100%;
-
-    animation:marqueeMove 24s linear infinite;
 }
 
-@keyframes marqueeMove{
-    from{transform:translateX(0);}
-    to{transform:translateX(-100%);}
+.ach-value{
+
+    margin-top:.45vh;
+
+    font-size:1.8vw;
+
+    font-weight:900;
+}
+
+.ach-green{
+    color:#dcfce7 !important;
+}
+
+.ach-green-box{
+
+    background:
+        rgba(22,163,74,.35) !important;
+
+    border:
+        2px solid rgba(74,222,128,.65);
+}
+
+.ach-red{
+    color:#ffe4e6 !important;
+}
+
+.ach-red-box{
+
+    background:
+        rgba(185,28,28,.35) !important;
+
+    border:
+        2px solid rgba(252,165,165,.6);
+}
+
+.ach-normal{
+    color:#ffffff !important;
 }
 
 /* =========================
-RESPONSIVE
+MOBILE
 ========================= */
 
 @media(max-width:768px){
 
-    .header h1{font-size:30px;}
-    .header p{font-size:11px;}
+    body{
+        overflow:auto;
+    }
 
-    .rank-card{height:130px;}
-    .rank-number{font-size:90px !important;}
+    .slide{
+        min-height:100vh;
+        height:auto;
+        padding:12px;
+    }
 
-    .employee-name{font-size:15px;}
-    .employee-label{font-size:10px;}
+    .header h1{
+        font-size:30px;
+    }
 
-    .score-value{font-size:18px;}
-    .score-label{font-size:9px;}
+    .header p{
+        font-size:11px;
+    }
 
-    .news-bar{height:42px;}
-    .news-clock{font-size:10px;padding:0 10px;}
-    .news-marquee-track{font-size:11px;}
+    .rank-card{
+        height:130px;
+    }
+
+    .rank-number{
+        font-size:90px !important;
+    }
+
+    .photo-box{
+        width:95px;
+        min-width:95px;
+    }
+
+    .employee-name{
+        font-size:15px;
+    }
+
+    .employee-label{
+        font-size:10px;
+    }
+
+    .score{
+        width:42%;
+    }
+
+    .score-value{
+        font-size:18px;
+    }
+
+    .score-label{
+        font-size:9px;
+    }
+
+    .ach-box{
+
+        min-width:78px;
+
+        padding:
+            8px
+            10px;
+    }
+
+    .ach-title{
+        font-size:8px;
+    }
+
+    .ach-value{
+        font-size:15px;
+    }
 }
 
 </style>
-
 </head>
 
 <body>
 
-<!-- SLIDES -->
-<div class="slide active"><div class="header"><h1>TOP SALES</h1><p>AZKO CITIMALL TUBAN</p></div><div class="rank-list" id="salesTop"></div></div>
-<div class="slide"><div class="header"><h1>BOTTOM SALES</h1><p>AZKO CITIMALL TUBAN</p></div><div class="rank-list" id="salesBottom"></div></div>
-<div class="slide"><div class="header"><h1>TOP PROTEKSI</h1><p>AZKO CITIMALL TUBAN</p></div><div class="rank-list" id="proteksiTop"></div></div>
-<div class="slide"><div class="header"><h1>BOTTOM PROTEKSI</h1><p>AZKO CITIMALL TUBAN</p></div><div class="rank-list" id="proteksiBottom"></div></div>
-<div class="slide"><div class="header"><h1>TOP TRX</h1><p>AZKO CITIMALL TUBAN</p></div><div class="rank-list" id="trxTop"></div></div>
-<div class="slide"><div class="header"><h1>BOTTOM TRX</h1><p>AZKO CITIMALL TUBAN</p></div><div class="rank-list" id="trxBottom"></div></div>
-
-<!-- FOOTER -->
-<div class="news-bar">
-    <div class="news-clock" id="newsClock">LOADING...</div>
-    <div class="news-marquee">
-        <div class="news-marquee-track">
-            WORK TOGETHER WIN TOGETHER MAKE IT HAPPEN • WORK TOGETHER WIN TOGETHER MAKE IT HAPPEN • WORK TOGETHER WIN TOGETHER MAKE IT HAPPEN •
-        </div>
-    </div>
+<div class="pause-indicator" id="pauseIndicator">
+    ▶ PLAYING
 </div>
+
+<div class="slide active">
+    <div class="header">
+        <h1>TOP SALES</h1>
+        <p>AZKO CITIMALL TUBAN</p>
+        <div class="update-time" id="update1">DATA UPDATE : -</div>
+    </div>
+    <div class="rank-list" id="salesTop"></div>
+</div>
+
+<div class="slide">
+    <div class="header">
+        <h1>BOTTOM SALES</h1>
+        <p>AZKO CITIMALL TUBAN</p>
+        <div class="update-time" id="update2">DATA UPDATE : -</div>
+    </div>
+    <div class="rank-list" id="salesBottom"></div>
+</div>
+
+<div class="slide">
+    <div class="header">
+        <h1>TOP PROTEKSI</h1>
+        <p>AZKO CITIMALL TUBAN</p>
+        <div class="update-time" id="update3">DATA UPDATE : -</div>
+    </div>
+    <div class="rank-list" id="proteksiTop"></div>
+</div>
+
+<div class="slide">
+    <div class="header">
+        <h1>BOTTOM PROTEKSI</h1>
+        <p>AZKO CITIMALL TUBAN</p>
+        <div class="update-time" id="update4">DATA UPDATE : -</div>
+    </div>
+    <div class="rank-list" id="proteksiBottom"></div>
+</div>
+
+<div class="slide">
+    <div class="header">
+        <h1>TOP TRX</h1>
+        <p>AZKO CITIMALL TUBAN</p>
+        <div class="update-time" id="update5">DATA UPDATE : -</div>
+    </div>
+    <div class="rank-list" id="trxTop"></div>
+</div>
+
+<div class="slide">
+    <div class="header">
+        <h1>BOTTOM TRX</h1>
+        <p>AZKO CITIMALL TUBAN</p>
+        <div class="update-time" id="update6">DATA UPDATE : -</div>
+    </div>
+    <div class="rank-list" id="trxBottom"></div>
+</div>
+
+<audio
+    id="bgm"
+    loop
+    autoplay
+    playsinline
+    preload="auto">
+
+    <source
+        src="https://putrasetya.github.io/223am.mp3"
+        type="audio/mpeg">
+
+</audio>
 
 <script>
 
-const URL = "https://script.google.com/macros/s/AKfycbzeehvUo6QYriMFJTR4A88lN6IIHV6Qop9UphkdOTMkRLVxhVuJ13y69momo6h1pn9dTQ/exec";
+const URL =
+"https://script.google.com/macros/s/AKfycbzeehvUo6QYriMFJTR4A88lN6IIHV6Qop9UphkdOTMkRLVxhVuJ13y69momo6h1pn9dTQ/exec";
 
 let lastData = [];
-let current = 0;
+let lastRenderHash = "";
 
-const slides = document.querySelectorAll(".slide");
+/* =========================
+HELPERS
+========================= */
 
-/* DATA */
-function clean(v){
-    return parseFloat((v||"").toString().replace(/[^\d.]/g,""))||0;
+function clean(val){
+
+    if(!val) return 0;
+
+    return parseFloat(
+        val.toString().replace(/[^\d.]/g,'')
+    ) || 0;
 }
 
-function formatSales(v){
-    if(v>=1000000){
-        let x=(v/1000000).toFixed(1);
-        if(x.endsWith(".0")) x=x.replace(".0","");
-        return x.replace(".",",")+" Jt";
+function formatTanggal(date){
+
+    return date.toLocaleString('id-ID',{
+
+        day:'2-digit',
+        month:'long',
+        year:'numeric',
+        hour:'2-digit',
+        minute:'2-digit'
+    });
+}
+
+function setUpdate(text){
+
+    for(let i=1;i<=6;i++){
+
+        const el =
+        document.getElementById("update"+i);
+
+        if(el){
+
+            el.innerHTML =
+            "DATA UPDATE : " + text;
+        }
     }
-    return v.toLocaleString("id-ID");
 }
 
-/* FETCH */
-async function getData(){
-    try{
-        const res=await fetch(URL+"?t="+Date.now());
-        const json=await res.json();
+function isExcluded(dept){
 
-        lastData=json.map(r=>({
-            name:r["EMPLOYEE NAME"]||"-",
-            dept:r["DEPT"]||"-",
-            sales:clean(r["SALES MTD"]),
-            proteksi:clean(r["PROTEKSI"]),
-            trx:clean(r["TRX"]),
-            achSales:clean(r["ACH MTD"]),
-            achProteksi:clean(r["ACH PROTEKSI"]),
-            achTrx:clean(r["ACH BULANAN"]),
-            photo:r["PHOTO"]||""
+    const d =
+    (dept || "").toLowerCase();
+
+    return (
+
+        d.includes("cashier") ||
+        d.includes("kasir") ||
+        d.includes("cs") ||
+        d.includes("customer service")
+    );
+}
+
+/* =========================
+GET DATA
+========================= */
+
+async function getData(){
+
+    try{
+
+        const res =
+        await fetch(URL + "?t=" + Date.now());
+
+        const json =
+        await res.json();
+
+        if(!Array.isArray(json) || json.length === 0){
+
+            return lastData;
+        }
+
+        const mapped = json.map(row => ({
+
+            name:
+                row["EMPLOYEE NAME"] || "UNKNOWN",
+
+            dept:
+                row["DEPT"] || "-",
+
+            sales:
+                clean(row["SALES MTD"]),
+
+            proteksi:
+                clean(row["PROTEKSI"]),
+
+            trx:
+                clean(row["TRX"]),
+
+            achSales:
+                clean(row["ACH MTD"]),
+
+            achProteksi:
+                clean(row["ACH PROTEKSI"]),
+
+            achTrx:
+                clean(row["ACH BULANAN"]),
+
+            photo:
+                row["PHOTO"] || ""
+
         }));
 
-        return lastData;
-    }catch(e){
+        lastData = mapped;
+
+        return mapped;
+
+    }catch(err){
+
+        console.log("GET DATA ERROR:",err);
+
         return lastData;
     }
 }
 
-/* RENDER */
-function render(data,key,achKey,containerId,label){
+function getAchStyle(value){
 
-    const el=document.getElementById(containerId);
+    if(value >= 100){
 
-    let sorted=[...data].sort((a,b)=>b[key]-a[key]).slice(0,3);
+        return {
 
-    const style=["gold","silver","bronze"];
+            valueClass:
+                "ach-value ach-green",
 
-    el.innerHTML=sorted.map((d,i)=>`
-        <div class="rank-card ${style[i]}">
-            <div class="rank-number">${i+1}</div>
+            boxClass:
+                "ach-box ach-green-box"
+        };
+    }
+
+    if(value < 80){
+
+        return {
+
+            valueClass:
+                "ach-value ach-red",
+
+            boxClass:
+                "ach-box ach-red-box"
+        };
+    }
+
+    return {
+
+        valueClass:
+            "ach-value ach-normal",
+
+        boxClass:
+            "ach-box"
+    };
+}
+
+/* =========================
+RENDER
+========================= */
+
+function render(
+    data,
+    key,
+    achKey,
+    achTitle,
+    containerId,
+    label,
+    mode="top"
+){
+
+    const container =
+    document.getElementById(containerId);
+
+    if(!container) return;
+
+    let filteredData = [...data];
+
+    if(
+        containerId === "salesBottom" ||
+        containerId === "trxTop"
+    ){
+
+        filteredData =
+        filteredData.filter(
+            item => !isExcluded(item.dept)
+        );
+    }
+
+    let sorted = [];
+    let styles = [];
+
+    if(mode === "top"){
+
+        styles = [
+            "gold",
+            "silver",
+            "bronze"
+        ];
+
+        sorted =
+        filteredData
+            .filter(v => v[key] > 0)
+            .sort((a,b)=>b[key]-a[key])
+            .slice(0,3);
+
+    }else{
+
+        styles = [
+            "red-high",
+            "red-mid",
+            "red-low"
+        ];
+
+        const allSorted =
+filteredData
+    .filter(v => {
+
+        if(containerId === "proteksiBottom"){
+            return v[key] >= 0;
+        }
+
+        return v[key] > 0;
+    })
+    .sort((a,b)=>a[key]-b[key]);
+
+sorted =
+allSorted.slice(0,3);
+
+        sorted = sorted.map((item,index)=>({
+
+            ...item,
+
+            bottomRank:
+            allSorted.length - index
+        }));
+
+        sorted.reverse();
+    }
+
+    let html = "";
+
+    sorted.forEach((d,i)=>{
+
+        const rank =
+        mode === "top"
+        ? i + 1
+        : d.bottomRank;
+
+        const achStyle =
+        getAchStyle(d[achKey]);
+
+        html += `
+
+        <div class="rank-card show ${styles[i]}">
+
+            <div class="rank-number">
+                ${rank}
+            </div>
+
             <div class="photo-box">
-                <img src="https://drive.google.com/thumbnail?id=${d.photo}&sz=w400">
+
+                <img
+                    src="https://lh3.googleusercontent.com/d/${d.photo}"
+
+                    loading="eager"
+                    decoding="async"
+
+                    onerror="
+                    this.src='https://ui-avatars.com/api/?name=${encodeURIComponent(d.name)}&background=random&color=fff&size=512'
+                    "
+                >
+
             </div>
+
             <div class="employee">
-                <div class="employee-name">${d.name}</div>
-                <div class="employee-label">${d.dept}</div>
-            </div>
-            <div class="score">
-                <div class="score-value">
-                    ${key==="sales"?formatSales(d[key]):d[key].toLocaleString("id-ID")}
+
+                <div class="employee-name">
+                    ${d.name}
                 </div>
-                <div class="score-label">${label}</div>
+
+                <div class="employee-label">
+                    ${d.dept}
+                </div>
+
             </div>
+
+            <div class="score">
+
+                <div class="main-score">
+
+                    <div class="score-value">
+                        ${d[key].toLocaleString('id-ID')}
+                    </div>
+
+                    <div class="score-label">
+                        ${label}
+                    </div>
+
+                </div>
+
+                <div class="${achStyle.boxClass}">
+
+                    <div class="ach-title">
+                        ${achTitle}
+                    </div>
+
+                    <div class="${achStyle.valueClass}">
+                        ${d[achKey].toFixed(1)}%
+                    </div>
+
+                </div>
+
+            </div>
+
         </div>
-    `).join("");
+        `;
+    });
+
+    container.innerHTML = html;
 }
 
-/* SLIDE */
+/* =========================
+SLIDES
+========================= */
+
+const slides =
+document.querySelectorAll(".slide");
+
+let current = 0;
+let isSliding = false;
+
 function nextSlide(){
-    slides[current].classList.remove("active");
-    current=(current+1)%slides.length;
-    slides[current].classList.add("active");
+
+    if(isSliding) return;
+
+    isSliding = true;
+
+    slides[current]
+        .classList.remove("active");
+
+    current++;
+
+    if(current >= slides.length){
+
+        current = 0;
+    }
+
+    setTimeout(()=>{
+
+        slides[current]
+            .classList.add("active");
+
+        isSliding = false;
+
+    },120);
 }
 
-/* CLOCK */
-function clock(){
-    const d=new Date();
+/* =========================
+UPDATE
+========================= */
 
-    const hari=["MINGGU","SENIN","SELASA","RABU","KAMIS","JUMAT","SABTU"];
-    const bulan=["JANUARI","FEBRUARI","MARET","APRIL","MEI","JUNI","JULI","AGUSTUS","SEPTEMBER","OKTOBER","NOVEMBER","DESEMBER"];
-
-    document.getElementById("newsClock").innerHTML=
-    `${hari[d.getDay()]}, ${String(d.getDate()).padStart(2,"0")} ${bulan[d.getMonth()]} ${d.getFullYear()} | ${String(d.getHours()).padStart(2,"0")}:${String(d.getMinutes()).padStart(2,"0")}:${String(d.getSeconds()).padStart(2,"0")}`;
-}
-
-setInterval(clock,1000);
-
-/* LOOP */
 async function update(){
-    const data=await getData();
 
-    render(data,"sales","achSales","salesTop","TOTAL SALES");
-    render(data,"sales","achSales","salesBottom","TOTAL SALES");
-    render(data,"proteksi","achProteksi","proteksiTop","TOTAL PROTEKSI");
-    render(data,"proteksi","achProteksi","proteksiBottom","TOTAL PROTEKSI");
-    render(data,"trx","achTrx","trxTop","TOTAL TRX");
-    render(data,"trx","achTrx","trxBottom","TOTAL TRX");
+    const data =
+    await getData();
+
+    if(!data || data.length === 0){
+
+        return;
+    }
+
+    const newHash =
+    JSON.stringify(data);
+
+    if(newHash === lastRenderHash){
+
+        return;
+    }
+
+    lastRenderHash =
+    newHash;
+
+    render(
+        data,
+        "sales",
+        "achSales",
+        "ACH MTD",
+        "salesTop",
+        "TOTAL SALES",
+        "top"
+    );
+
+    render(
+        data,
+        "sales",
+        "achSales",
+        "ACH MTD",
+        "salesBottom",
+        "TOTAL SALES",
+        "bottom"
+    );
+
+    render(
+        data,
+        "proteksi",
+        "achProteksi",
+        "ACH PROTEKSI",
+        "proteksiTop",
+        "TOTAL PROTEKSI",
+        "top"
+    );
+
+    render(
+        data,
+        "proteksi",
+        "achProteksi",
+        "ACH PROTEKSI",
+        "proteksiBottom",
+        "TOTAL PROTEKSI",
+        "bottom"
+    );
+
+    render(
+        data,
+        "trx",
+        "achTrx",
+        "ACH BULANAN",
+        "trxTop",
+        "TOTAL TRX",
+        "top"
+    );
+
+    render(
+        data,
+        "trx",
+        "achTrx",
+        "ACH BULANAN",
+        "trxBottom",
+        "TOTAL TRX",
+        "bottom"
+    );
+
+    setUpdate(
+        formatTanggal(new Date())
+    );
 }
 
-setInterval(nextSlide,8000);
-setInterval(update,30000);
+/* =========================
+INDICATOR
+========================= */
 
-/* START */
-window.onload=async()=>{
-    await update();
-    clock();
-};
+const pauseIndicator =
+document.getElementById(
+    "pauseIndicator"
+);
+
+function showIndicator(text){
+
+    if(!pauseIndicator) return;
+
+    pauseIndicator.innerHTML = text;
+
+    pauseIndicator.classList.add("show");
+
+    clearTimeout(window.indicatorTimeout);
+
+    window.indicatorTimeout =
+    setTimeout(()=>{
+
+        pauseIndicator.classList.remove("show");
+
+    },1500);
+}
+
+/* =========================
+AUDIO
+========================= */
+
+const bgm =
+document.getElementById("bgm");
+
+if(bgm){
+
+    bgm.volume = 0.35;
+}
+
+async function playMusic(){
+
+    if(!bgm) return;
+
+    try{
+
+        await bgm.play();
+
+    }catch(err){
+
+        console.log(err);
+    }
+}
+
+/* =========================
+LOOP
+========================= */
+
+let isPaused = false;
+
+let slideInterval;
+let updateInterval;
+
+function stopLoop(){
+
+    clearInterval(slideInterval);
+    clearInterval(updateInterval);
+}
+
+function startLoop(){
+
+    stopLoop();
+
+    slideInterval =
+    setInterval(()=>{
+
+        if(!document.hidden){
+
+            nextSlide();
+        }
+
+    },8000);
+
+    updateInterval =
+    setInterval(()=>{
+
+        if(!document.hidden){
+
+            update();
+        }
+
+    },30000);
+}
+
+function togglePause(){
+
+    isPaused = !isPaused;
+
+    if(isPaused){
+
+        stopLoop();
+
+        if(bgm) bgm.pause();
+
+        showIndicator("⏸ PAUSED");
+
+    }else{
+
+        startLoop();
+
+        playMusic();
+
+        showIndicator("▶ PLAYING");
+    }
+}
+
+/* =========================
+FULLSCREEN
+========================= */
+
+async function toggleFullscreen(){
+
+    try{
+
+        if(!document.fullscreenElement){
+
+            await document.documentElement.requestFullscreen();
+
+            showIndicator("🖥 FULLSCREEN");
+
+        }else{
+
+            await document.exitFullscreen();
+
+            showIndicator("❎ EXIT FULLSCREEN");
+        }
+
+    }catch(err){
+
+        console.log(err);
+    }
+}
+
+/* =========================
+CLICK
+========================= */
+
+let clickTimer = null;
+
+document.addEventListener(
+    "click",
+    ()=>{
+
+        if(clickTimer){
+
+            clearTimeout(clickTimer);
+        }
+
+        clickTimer = setTimeout(()=>{
+
+            togglePause();
+
+        },250);
+    }
+);
+
+document.addEventListener(
+    "dblclick",
+    ()=>{
+
+        clearTimeout(clickTimer);
+
+        toggleFullscreen();
+    }
+);
+
+/* =========================
+AUTO CLEAN MEMORY
+========================= */
+
+setInterval(()=>{
+
+    if(window.gc){
+
+        window.gc();
+    }
+
+},300000);
+
+/* =========================
+AUTO REFRESH 6 JAM
+========================= */
+
+setTimeout(()=>{
+
+    location.reload();
+
+},21600000);
+
+/* =========================
+START
+========================= */
+
+window.addEventListener(
+    "load",
+    async ()=>{
+
+        await update();
+
+        startLoop();
+
+        playMusic();
+
+        setTimeout(playMusic,1000);
+
+        setTimeout(playMusic,3000);
+
+        showIndicator("▶ PLAYING");
+    }
+);
 
 </script>
 
