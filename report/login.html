@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Login Sales Control</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Poppins',sans-serif;
+}
+
+body{
+background:#f5f7fb;
+min-height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+padding:20px;
+}
+
+.card{
+width:100%;
+max-width:420px;
+background:white;
+border-radius:24px;
+padding:30px;
+box-shadow:0 10px 30px rgba(0,0,0,.08);
+}
+
+.logo{
+text-align:center;
+font-size:28px;
+font-weight:700;
+margin-bottom:8px;
+}
+
+.subtitle{
+text-align:center;
+color:#777;
+margin-bottom:30px;
+}
+
+label{
+display:block;
+font-size:14px;
+font-weight:600;
+margin-bottom:8px;
+}
+
+input{
+width:100%;
+height:55px;
+border:2px solid #e5e7eb;
+border-radius:14px;
+padding:0 16px;
+font-size:16px;
+outline:none;
+transition:.3s;
+}
+
+input:focus{
+border-color:#2563eb;
+}
+
+.nama-box{
+margin-top:15px;
+background:#f8fafc;
+border-radius:12px;
+padding:15px;
+min-height:60px;
+display:flex;
+align-items:center;
+font-weight:600;
+color:#111827;
+}
+
+.loading{
+color:#6b7280;
+}
+
+.notfound{
+color:#ef4444;
+}
+
+button{
+width:100%;
+height:55px;
+margin-top:20px;
+border:none;
+border-radius:14px;
+background:#2563eb;
+color:white;
+font-size:16px;
+font-weight:600;
+cursor:pointer;
+transition:.3s;
+}
+
+button:disabled{
+background:#cbd5e1;
+cursor:not-allowed;
+}
+
+button:hover:not(:disabled){
+background:#1d4ed8;
+}
+</style>
+</head>
+
+<body>
+
+<div class="card">
+
+<div class="logo">
+SALES CONTROL
+</div>
+
+<div class="subtitle">
+Masukkan NIK Anda
+</div>
+
+<label>NIK</label>
+
+<input
+type="number"
+id="nik"
+placeholder="Masukkan NIK">
+
+<div class="nama-box" id="namaBox">
+Nama akan muncul otomatis
+</div>
+
+<button id="nextBtn" disabled>
+Next
+</button>
+
+</div>
+
+<script>
+
+// GANTI DENGAN URL APPS SCRIPT
+const API_URL =
+"https://script.google.com/macros/s/XXXXXXXXXXXX/exec";
+
+let selectedUser = null;
+
+document
+.getElementById("nik")
+.addEventListener("input", async function(){
+
+const nik = this.value.trim();
+
+if(nik.length < 3){
+document.getElementById("namaBox").innerHTML =
+"Nama akan muncul otomatis";
+
+document.getElementById("nextBtn").disabled = true;
+
+return;
+}
+
+document.getElementById("namaBox").innerHTML =
+'<span class="loading">Mencari...</span>';
+
+try{
+
+const response =
+await fetch(`${API_URL}?action=getUser&nik=${nik}`);
+
+const data =
+await response.json();
+
+if(data.success){
+
+selectedUser = data;
+
+document.getElementById("namaBox").innerHTML =
+data.nama;
+
+document.getElementById("nextBtn").disabled =
+false;
+
+}else{
+
+selectedUser = null;
+
+document.getElementById("namaBox").innerHTML =
+'<span class="notfound">NIK tidak ditemukan</span>';
+
+document.getElementById("nextBtn").disabled =
+true;
+}
+
+}catch(err){
+
+document.getElementById("namaBox").innerHTML =
+'<span class="notfound">Koneksi gagal</span>';
+
+document.getElementById("nextBtn").disabled =
+true;
+}
+
+});
+
+document
+.getElementById("nextBtn")
+.addEventListener("click",()=>{
+
+localStorage.setItem(
+"user",
+JSON.stringify(selectedUser)
+);
+
+window.location.href =
+"sales-control.html";
+
+});
+</script>
+
+</body>
+</html>
