@@ -6,15 +6,10 @@
 
 <title>LOGIN</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 
 <style>
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:'Poppins',sans-serif;
-}
+*{margin:0;padding:0;box-sizing:border-box;font-family:Poppins,sans-serif;}
 
 body{
 background:#f5f7fb;
@@ -36,60 +31,48 @@ box-shadow:0 10px 30px rgba(0,0,0,.08);
 
 .logo{
 text-align:center;
-font-size:32px;
+font-size:28px;
 font-weight:700;
-margin-bottom:30px;
-color:#111827;
+margin-bottom:25px;
 }
 
-label{
-display:block;
-font-size:14px;
-font-weight:600;
-margin-bottom:8px;
-color:#374151;
-}
+label{font-size:14px;font-weight:600;}
 
 input{
 width:100%;
-height:55px;
-border:2px solid #e5e7eb;
-border-radius:14px;
-padding:0 16px;
-font-size:16px;
-outline:none;
+height:50px;
+margin-top:8px;
 margin-bottom:10px;
-}
-
-input:focus{
-border-color:#2563eb;
+border:2px solid #e5e7eb;
+border-radius:12px;
+padding:0 12px;
+font-size:15px;
 }
 
 .nama-box{
 margin-top:10px;
+padding:12px;
+border-radius:10px;
 background:#f8fafc;
-border-radius:12px;
-padding:15px;
-min-height:60px;
+border:1px solid #e5e7eb;
+min-height:50px;
 display:flex;
 align-items:center;
 font-weight:600;
-border:1px solid #e5e7eb;
 }
 
-.loading{color:#2563eb;}
-.notfound{color:#ef4444;}
 .success{color:#16a34a;}
+.notfound{color:#ef4444;}
+.loading{color:#2563eb;}
 
 button{
 width:100%;
-height:55px;
-margin-top:20px;
+height:50px;
+margin-top:15px;
 border:none;
-border-radius:14px;
+border-radius:12px;
 background:#2563eb;
-color:white;
-font-size:16px;
+color:#fff;
 font-weight:600;
 cursor:pointer;
 }
@@ -99,10 +82,7 @@ background:#cbd5e1;
 cursor:not-allowed;
 }
 
-.pin-box{
-margin-top:10px;
-display:none;
-}
+#pinBox{display:none;margin-top:10px;}
 </style>
 </head>
 
@@ -117,8 +97,7 @@ display:none;
 
 <div class="nama-box" id="namaBox">Masukkan NIK</div>
 
-<!-- PIN ADMIN -->
-<div class="pin-box" id="pinBox">
+<div id="pinBox">
 <label>PIN Admin</label>
 <input type="password" id="pin" placeholder="Masukkan PIN">
 </div>
@@ -136,33 +115,40 @@ let allUsers = [];
 let selectedUser = null;
 let pinValid = false;
 
-// load user
+/* =========================
+   LOAD DATA (HYBRID CACHE)
+========================= */
 (async () => {
 
-document.getElementById("namaBox").innerHTML =
-'<span class="loading">Memuat data user...</span>';
+const cache = localStorage.getItem("users");
 
-try {
+if(cache){
+    allUsers = JSON.parse(cache);
+    console.log("Loaded from cache");
+}
 
+try{
     const res = await fetch(`${API_URL}?action=getUsers`);
     const data = await res.json();
 
     if(data.success){
-        allUsers = data.users || [];
-        document.getElementById("namaBox").innerHTML = "Masukkan NIK";
-    }else{
-        document.getElementById("namaBox").innerHTML =
-        '<span class="notfound">Gagal memuat data user</span>';
+        allUsers = data.users;
+
+        // SAVE TO LOCAL STORAGE
+        localStorage.setItem("users", JSON.stringify(allUsers));
+
+        console.log("Updated from server");
     }
 
 }catch(e){
-    document.getElementById("namaBox").innerHTML =
-    '<span class="notfound">Koneksi gagal</span>';
+    console.log("Offline / API error, using cache");
 }
 
 })();
 
-// NIK input
+/* =========================
+   INPUT NIK
+========================= */
 document.getElementById("nik").addEventListener("input", function(){
 
 const nik = this.value.trim();
@@ -189,11 +175,14 @@ if(!user){
 }
 
 selectedUser = user;
+
 document.getElementById("namaBox").innerHTML =
 `<span class="success">${user.nama}</span>`;
 
-// ADMIN
-if(user.status === "admin"){
+/* ADMIN CHECK */
+const status = String(user.status || "").toLowerCase();
+
+if(status === "admin"){
     document.getElementById("pinBox").style.display = "block";
     document.getElementById("nextBtn").disabled = true;
 }else{
@@ -204,7 +193,9 @@ if(user.status === "admin"){
 
 });
 
-// PIN validation
+/* =========================
+   PIN CHECK
+========================= */
 document.getElementById("pin").addEventListener("input", function(){
 
 if(!selectedUser) return;
@@ -221,20 +212,20 @@ if(pin === String(selectedUser.pin)){
 
 });
 
-// NEXT
-document.getElementById("nextBtn").addEventListener("click", () => {
+/* =========================
+   NEXT BUTTON
+========================= */
+document.getElementById("nextBtn").addEventListener("click", ()=>{
 
 if(!selectedUser) return;
 
-// ADMIN
-if(selectedUser.status === "admin"){
-    if(pinValid){
-        localStorage.setItem("user", JSON.stringify(selectedUser));
-        window.location.href = "admin.html";
-    }
+localStorage.setItem("user", JSON.stringify(selectedUser));
+
+const status = String(selectedUser.status || "").toLowerCase();
+
+if(status === "admin" && pinValid){
+    window.location.href = "admin.html";
 }else{
-    // STAFF
-    localStorage.setItem("user", JSON.stringify(selectedUser));
     window.location.href = "index.html";
 }
 
