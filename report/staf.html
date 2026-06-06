@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dashboard Staff</title>
+
+<style>
+body{
+font-family:Poppins,sans-serif;
+background:#f5f7fb;
+padding:20px;
+}
+
+.card{
+background:#fff;
+padding:20px;
+border-radius:16px;
+max-width:600px;
+margin:auto;
+box-shadow:0 10px 25px rgba(0,0,0,.08);
+}
+
+h2{margin-bottom:10px;}
+
+button{
+padding:10px 15px;
+border:none;
+border-radius:10px;
+background:#ef4444;
+color:#fff;
+cursor:pointer;
+margin-top:20px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="card">
+
+<h2 id="welcome">Loading...</h2>
+
+<p>Dashboard Staff</p>
+
+<button onclick="logout()">Logout</button>
+
+</div>
+
+<script>
+
+const user = JSON.parse(localStorage.getItem("user"));
+
+if(!user){
+window.location.href = "login.html";
+}
+
+document.getElementById("welcome").innerText =
+`Selamat datang, ${user.nama}`;
+
+/* logout */
+function logout(){
+localStorage.removeItem("user");
+window.location.href = "login.html";
+}
+
+</script>
+
+</body>
+</html>
