@@ -1042,37 +1042,47 @@ function render(
 
     }else{
 
-        styles = [
-            "red-high",
-            "red-mid",
-            "red-low"
-        ];
+    styles = [
+        "red-high",
+        "red-mid",
+        "red-low"
+    ];
 
-        const allSorted =
-filteredData
-    .filter(v => {
+    let allSorted = [];
 
-        if(containerId === "proteksiBottom"){
-            return v[key] >= 0;
-        }
+    if(containerId === "proteksiBottom"){
 
-        return v[key] > 0;
-    })
-    .sort((a,b)=>a[key]-b[key]);
+        allSorted =
+        filteredData
+            .sort((a,b)=>{
 
-sorted =
-allSorted.slice(0,3);
+                if(a[key] === 0 && b[key] !== 0) return 1;
+                if(a[key] !== 0 && b[key] === 0) return -1;
 
-        sorted = sorted.map((item,index)=>({
+                return a[key] - b[key];
+            });
 
-            ...item,
+    }else{
 
-            bottomRank:
-            allSorted.length - index
-        }));
-
-        sorted.reverse();
+        allSorted =
+        filteredData
+            .filter(v => v[key] > 0)
+            .sort((a,b)=>a[key]-b[key]);
     }
+
+    sorted =
+    allSorted.slice(0,3);
+
+    sorted = sorted.map((item,index)=>({
+
+        ...item,
+
+        bottomRank:
+        allSorted.length - index
+    }));
+
+    sorted.reverse();
+}
 
     let html = "";
 
