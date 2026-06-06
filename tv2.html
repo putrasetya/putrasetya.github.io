@@ -818,33 +818,6 @@ function clean(val){
     ) || 0;
 }
 
-function formatTanggal(date){
-
-    return date.toLocaleString('id-ID',{
-
-        day:'2-digit',
-        month:'long',
-        year:'numeric',
-        hour:'2-digit',
-        minute:'2-digit'
-    });
-}
-
-function setUpdate(text){
-
-    for(let i=1;i<=6;i++){
-
-        const el =
-        document.getElementById("update"+i);
-
-        if(el){
-
-            el.innerHTML =
-            "DATA UPDATE : " + text;
-        }
-    }
-}
-
 function isExcluded(dept){
 
     const d =
