@@ -9,62 +9,48 @@
 body{
 margin:0;
 padding:0;
-font-family:Poppins,sans-serif;
 background:#0f172a;
+height:100vh;
 display:flex;
 justify-content:center;
 align-items:center;
+overflow:hidden;
+}
+
+/* full screen container */
+.container{
+width:100vw;
 height:100vh;
-flex-direction:column;
+display:flex;
+justify-content:center;
+align-items:center;
 }
 
-/* container center */
-.box{
-text-align:center;
-}
-
-/* gambar PNG */
-.box img{
-max-width:300px;
-width:80%;
-height:auto;
-display:block;
-margin:auto;
-}
-
-/* teks opsional */
-.text{
-margin-top:15px;
-color:#fff;
-font-size:18px;
-font-weight:600;
+/* gambar full layar tanpa stretch */
+.container img{
+width:100%;
+height:100%;
+object-fit:contain; /* ini kunci tidak stretch */
 }
 </style>
 </head>
 
 <body>
 
-<div class="box">
+<div class="container">
 
-<!-- GANTI LINK GAMBAR PNG KAMU DI SINI -->
-<img src="salesidtemplate.png" alt="Report Sales ID">
-
-<div class="text" id="info"></div>
+<!-- GANTI GAMBAR KAMU DI SINI -->
+<img src="salesid.png" alt="Report Sales ID">
 
 </div>
 
 <script>
 
-/* ambil user dari login */
 const user = JSON.parse(localStorage.getItem("user"));
 
 if(!user){
 window.location.href = "login.html";
 }
-
-/* optional tampilkan info user */
-document.getElementById("info").innerText =
-`NIK: ${user.nik} | ${user.nama}`;
 
 </script>
 
