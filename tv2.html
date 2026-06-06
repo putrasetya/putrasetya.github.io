@@ -726,11 +726,95 @@ MOBILE
         font-size:15px;
     }
 }
+    #datetimeWidget{
+
+    position:fixed;
+
+    top:85px;
+
+    left:50%;
+
+    transform:translateX(-50%);
+
+    z-index:999;
+
+    display:flex;
+
+    flex-direction:column;
+
+    align-items:center;
+
+    gap:4px;
+
+    pointer-events:none;
+}
+
+#dateLine{
+
+    color:#000;
+
+    font-size:1vw;
+
+    font-weight:700;
+
+    letter-spacing:2px;
+
+    text-transform:uppercase;
+
+    text-shadow:
+        0 2px 10px rgba(255,255,255,.4);
+}
+
+#timeLine{
+
+    padding:6px 18px;
+
+    border-radius:999px;
+
+    background:
+        rgba(255,255,255,.18);
+
+    backdrop-filter:blur(10px);
+
+    border:
+        1px solid rgba(255,255,255,.25);
+
+    color:#000;
+
+    font-size:1.5vw;
+
+    font-weight:900;
+
+    letter-spacing:3px;
+
+    text-shadow:
+        0 2px 10px rgba(255,255,255,.4);
+}
+
+@media(max-width:768px){
+
+    #datetimeWidget{
+        top:70px;
+    }
+
+    #dateLine{
+        font-size:12px;
+    }
+
+    #timeLine{
+        font-size:18px;
+    }
+
+}
 
 </style>
 </head>
 
 <body>
+    <div id="datetimeWidget">
+    <div id="dateLine"></div>
+    <div id="timeLine"></div>
+</div>
 
 <div class="pause-indicator" id="pauseIndicator">
     ▶ PLAYING
@@ -1432,6 +1516,31 @@ setTimeout(()=>{
 
 },21600000);
 
+    function updateDateTime(){
+
+    const now = new Date();
+
+    const hari = [
+        "Minggu","Senin","Selasa",
+        "Rabu","Kamis","Jumat","Sabtu"
+    ];
+
+    const bulan = [
+        "Januari","Februari","Maret",
+        "April","Mei","Juni",
+        "Juli","Agustus","September",
+        "Oktober","November","Desember"
+    ];
+
+    document.getElementById("dateLine").textContent =
+        `${hari[now.getDay()]}, ${now.getDate()} ${bulan[now.getMonth()]} ${now.getFullYear()}`;
+
+    document.getElementById("timeLine").textContent =
+        now.toLocaleTimeString("id-ID");
+}
+
+updateDateTime();
+setInterval(updateDateTime,1000);
 /* =========================
 START
 ========================= */
