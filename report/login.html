@@ -58,7 +58,7 @@ border-radius:14px;
 padding:0 16px;
 font-size:16px;
 outline:none;
-transition:.3s;
+margin-bottom:10px;
 }
 
 input:focus{
@@ -66,7 +66,7 @@ border-color:#2563eb;
 }
 
 .nama-box{
-margin-top:15px;
+margin-top:10px;
 background:#f8fafc;
 border-radius:12px;
 padding:15px;
@@ -77,17 +77,9 @@ font-weight:600;
 border:1px solid #e5e7eb;
 }
 
-.loading{
-color:#2563eb;
-}
-
-.notfound{
-color:#ef4444;
-}
-
-.success{
-color:#16a34a;
-}
+.loading{color:#2563eb;}
+.notfound{color:#ef4444;}
+.success{color:#16a34a;}
 
 button{
 width:100%;
@@ -100,16 +92,16 @@ color:white;
 font-size:16px;
 font-weight:600;
 cursor:pointer;
-transition:.3s;
-}
-
-button:hover:not(:disabled){
-background:#1d4ed8;
 }
 
 button:disabled{
 background:#cbd5e1;
 cursor:not-allowed;
+}
+
+.pin-box{
+margin-top:10px;
+display:none;
 }
 </style>
 </head>
@@ -118,24 +110,20 @@ cursor:not-allowed;
 
 <div class="card">
 
-<div class="logo">
-LOGIN
-</div>
+<div class="logo">LOGIN</div>
 
 <label>NIK</label>
+<input type="number" id="nik" placeholder="Masukkan NIK">
 
-<input
-type="number"
-id="nik"
-placeholder="Masukkan NIK">
+<div class="nama-box" id="namaBox">Masukkan NIK</div>
 
-<div class="nama-box" id="namaBox">
-Masukkan NIK
+<!-- PIN ADMIN -->
+<div class="pin-box" id="pinBox">
+<label>PIN Admin</label>
+<input type="password" id="pin" placeholder="Masukkan PIN">
 </div>
 
-<button id="nextBtn" disabled>
-Next
-</button>
+<button id="nextBtn" disabled>Next</button>
 
 </div>
 
@@ -146,8 +134,9 @@ const API_URL =
 
 let allUsers = [];
 let selectedUser = null;
+let pinValid = false;
 
-// Load semua user sekali saat halaman dibuka
+// load user
 (async () => {
 
 document.getElementById("namaBox").innerHTML =
@@ -155,99 +144,103 @@ document.getElementById("namaBox").innerHTML =
 
 try {
 
-    const response =
-    await fetch(`${API_URL}?action=getUsers`);
-
-    const data =
-    await response.json();
+    const res = await fetch(`${API_URL}?action=getUsers`);
+    const data = await res.json();
 
     if(data.success){
-
         allUsers = data.users || [];
-
-        document.getElementById("namaBox").innerHTML =
-        "Masukkan NIK";
-
+        document.getElementById("namaBox").innerHTML = "Masukkan NIK";
     }else{
-
         document.getElementById("namaBox").innerHTML =
         '<span class="notfound">Gagal memuat data user</span>';
-
     }
 
-}catch(error){
-
-    console.error(error);
-
+}catch(e){
     document.getElementById("namaBox").innerHTML =
     '<span class="notfound">Koneksi gagal</span>';
-
 }
 
 })();
 
-document
-.getElementById("nik")
-.addEventListener("input", function(){
+// NIK input
+document.getElementById("nik").addEventListener("input", function(){
 
 const nik = this.value.trim();
 
+selectedUser = null;
+pinValid = false;
+
+document.getElementById("pinBox").style.display = "none";
+document.getElementById("pin").value = "";
+
 if(nik.length !== 6){
-
-    selectedUser = null;
-
-    document.getElementById("namaBox").innerHTML =
-    "Masukkan NIK";
-
+    document.getElementById("namaBox").innerHTML = "Masukkan NIK";
     document.getElementById("nextBtn").disabled = true;
-
     return;
-
 }
 
-const user =
-allUsers.find(x => String(x.nik) === nik);
+const user = allUsers.find(x => String(x.nik) === nik);
 
-if(user){
-
-    selectedUser = user;
-
-    document.getElementById("namaBox").innerHTML =
-    `<span class="success">${user.nama}</span>`;
-
-    document.getElementById("nextBtn").disabled =
-    false;
-
-}else{
-
-    selectedUser = null;
-
+if(!user){
     document.getElementById("namaBox").innerHTML =
     '<span class="notfound">NIK tidak ditemukan</span>';
+    document.getElementById("nextBtn").disabled = true;
+    return;
+}
 
-    document.getElementById("nextBtn").disabled =
-    true;
+selectedUser = user;
+document.getElementById("namaBox").innerHTML =
+`<span class="success">${user.nama}</span>`;
 
+// ADMIN
+if(user.status === "admin"){
+    document.getElementById("pinBox").style.display = "block";
+    document.getElementById("nextBtn").disabled = true;
+}else{
+    document.getElementById("pinBox").style.display = "none";
+    document.getElementById("nextBtn").disabled = false;
+    pinValid = true;
 }
 
 });
 
-document
-.getElementById("nextBtn")
-.addEventListener("click",()=>{
+// PIN validation
+document.getElementById("pin").addEventListener("input", function(){
 
 if(!selectedUser) return;
 
-localStorage.setItem(
-"user",
-JSON.stringify(selectedUser)
-);
+const pin = this.value.trim();
 
-window.location.href =
-"report.html";
+if(pin === String(selectedUser.pin)){
+    pinValid = true;
+    document.getElementById("nextBtn").disabled = false;
+}else{
+    pinValid = false;
+    document.getElementById("nextBtn").disabled = true;
+}
+
+});
+
+// NEXT
+document.getElementById("nextBtn").addEventListener("click", () => {
+
+if(!selectedUser) return;
+
+// ADMIN
+if(selectedUser.status === "admin"){
+    if(pinValid){
+        localStorage.setItem("user", JSON.stringify(selectedUser));
+        window.location.href = "admin.html";
+    }
+}else{
+    // STAFF
+    localStorage.setItem("user", JSON.stringify(selectedUser));
+    window.location.href = "index.html";
+}
 
 });
 
 </script>
+
 </body>
 </html>
