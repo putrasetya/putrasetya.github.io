@@ -817,6 +817,19 @@ function clean(val){
         val.toString().replace(/[^\d.]/g,'')
     ) || 0;
 }
+    function formatSalesJt(value){
+
+    const jt = value / 1000000;
+
+    const rounded =
+    Math.floor(jt * 10) / 10;
+
+    if(Number.isInteger(rounded)){
+        return `${rounded.toFixed(0)} jt`;
+    }
+
+    return `${rounded.toFixed(1).replace('.',',')} jt`;
+}
 
 function isExcluded(dept){
 
@@ -1065,8 +1078,12 @@ allSorted.slice(0,3);
                 <div class="main-score">
 
                     <div class="score-value">
-                        ${d[key].toLocaleString('id-ID')}
-                    </div>
+    ${
+        key === "sales"
+        ? formatSalesJt(d[key])
+        : d[key].toLocaleString('id-ID')
+    }
+</div>
 
                     <div class="score-label">
                         ${label}
