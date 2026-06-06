@@ -23,6 +23,35 @@ box-shadow:0 10px 25px rgba(0,0,0,.08);
 
 h2{margin-bottom:10px;}
 
+.icon-box{
+display:flex;
+gap:20px;
+margin-top:20px;
+}
+
+.icon{
+flex:1;
+background:#f8fafc;
+border:1px solid #e5e7eb;
+border-radius:14px;
+padding:15px;
+text-align:center;
+cursor:pointer;
+transition:.2s;
+}
+
+.icon:hover{
+transform:scale(1.03);
+background:#eef2ff;
+}
+
+.icon img{
+width:60px;
+height:60px;
+object-fit:contain;
+margin-bottom:10px;
+}
+
 button{
 padding:10px 15px;
 border:none;
@@ -31,6 +60,7 @@ background:#ef4444;
 color:#fff;
 cursor:pointer;
 margin-top:20px;
+width:100%;
 }
 </style>
 </head>
@@ -43,24 +73,62 @@ margin-top:20px;
 
 <p>Dashboard Staff</p>
 
+<!-- ICON MENU -->
+<div class="icon-box">
+
+<div class="icon" onclick="goPage('reportsalesid.html')">
+<img src="https://cdn-icons-png.flaticon.com/512/942/942748.png">
+<div>Report Sales ID</div>
+</div>
+
+<div class="icon" onclick="goPage('reportwablast.html')">
+<img src="https://cdn-icons-png.flaticon.com/512/134/134937.png">
+<div>Report WA Blast</div>
+</div>
+
+</div>
+
 <button onclick="logout()">Logout</button>
 
 </div>
 
 <script>
 
+/* =========================
+   LOAD USER
+========================= */
 const user = JSON.parse(localStorage.getItem("user"));
 
 if(!user){
 window.location.href = "login.html";
 }
 
+/* tampil nama */
 document.getElementById("welcome").innerText =
 `Selamat datang, ${user.nama}`;
 
-/* logout */
+/* =========================
+   NAVIGASI + BAWA DATA
+========================= */
+function goPage(page){
+
+// simpan ulang supaya aman dibaca halaman lain
+localStorage.setItem("user", JSON.stringify(user));
+
+// optional: bisa juga pisah kalau mau
+localStorage.setItem("nik", user.nik);
+localStorage.setItem("nama", user.nama);
+
+window.location.href = page;
+}
+
+/* =========================
+   LOGOUT
+========================= */
 function logout(){
 localStorage.removeItem("user");
+localStorage.removeItem("nik");
+localStorage.removeItem("nama");
 window.location.href = "login.html";
 }
 
