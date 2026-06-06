@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Dashboard</title>
+
+<style>
+body{
+font-family:Poppins,sans-serif;
+background:#0f172a;
+color:#fff;
+padding:20px;
+}
+
+.card{
+background:#1e293b;
+padding:20px;
+border-radius:16px;
+max-width:900px;
+margin:auto;
+}
+
+table{
+width:100%;
+border-collapse:collapse;
+margin-top:20px;
+}
+
+th,td{
+padding:10px;
+border-bottom:1px solid #334155;
+text-align:left;
+}
+
+button{
+padding:10px 15px;
+border:none;
+border-radius:10px;
+background:#ef4444;
+color:#fff;
+cursor:pointer;
+margin-top:20px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="card">
+
+<h2 id="welcome">Admin Panel</h2>
+
+<table>
+<thead>
+<tr>
+<th>NIK</th>
+<th>Nama</th>
+<th>Status</th>
+</tr>
+</thead>
+<tbody id="userTable"></tbody>
+</table>
+
+<button onclick="logout()">Logout</button>
+
+</div>
+
+<script>
+
+const API_URL = "https://script.google.com/macros/s/AKfycbz5-yu44W5DPFVVPHVAZhDylVGNfh0wVVTKoAiixGsLPt6cJd-jokpw7wsLkpo1dMczXA/exec";
+
+const user = JSON.parse(localStorage.getItem("user"));
+
+if(!user || user.status !== "admin"){
+window.location.href = "login.html";
+}
+
+document.getElementById("welcome").innerText =
+`Admin: ${user.nama}`;
+
+/* LOAD USERS */
+async function loadUsers(){
+
+try{
+const res = await fetch(`${API_URL}?action=getUsers`);
+const data = await res.json();
+
+let html = "";
+
+data.users.forEach(u=>{
+html += `
+<tr>
+<td>${u.nik}</td>
+<td>${u.nama}</td>
+<td>${u.status}</td>
+</tr>
+`;
+});
+
+document.getElementById("userTable").innerHTML = html;
+
+}catch(e){
+alert("Gagal load data");
+}
+
+}
+
+loadUsers();
+
+/* logout */
+function logout(){
+localStorage.removeItem("user");
+window.location.href = "login.html";
+}
+
+</script>
+
+</body>
+</html>
