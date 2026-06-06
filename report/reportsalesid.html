@@ -1,1 +1,72 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Report Sales ID</title>
 
+<style>
+body{
+margin:0;
+padding:0;
+font-family:Poppins,sans-serif;
+background:#0f172a;
+display:flex;
+justify-content:center;
+align-items:center;
+height:100vh;
+flex-direction:column;
+}
+
+/* container center */
+.box{
+text-align:center;
+}
+
+/* gambar PNG */
+.box img{
+max-width:300px;
+width:80%;
+height:auto;
+display:block;
+margin:auto;
+}
+
+/* teks opsional */
+.text{
+margin-top:15px;
+color:#fff;
+font-size:18px;
+font-weight:600;
+}
+</style>
+</head>
+
+<body>
+
+<div class="box">
+
+<!-- GANTI LINK GAMBAR PNG KAMU DI SINI -->
+<img src="salesidtemplate.png" alt="Report Sales ID">
+
+<div class="text" id="info"></div>
+
+</div>
+
+<script>
+
+/* ambil user dari login */
+const user = JSON.parse(localStorage.getItem("user"));
+
+if(!user){
+window.location.href = "login.html";
+}
+
+/* optional tampilkan info user */
+document.getElementById("info").innerText =
+`NIK: ${user.nik} | ${user.nama}`;
+
+</script>
+
+</body>
+</html>
