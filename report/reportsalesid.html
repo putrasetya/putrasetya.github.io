@@ -45,25 +45,19 @@ align-items:center;
 .container img{
 width:100%;
 height:100%;
-object-fit:contain; /* tidak stretch */
+object-fit:contain;
 }
 
-/* safety spacing biar tidak ketutup header */
-.spacer{
-height:50px;
-}
 </style>
 </head>
 
 <body>
 
-<!-- LOCK HEADER -->
+<!-- LOCK HEADER (tanpa label) -->
 <div class="topbar">
-<div id="nama">Nama: -</div>
-<div id="nik">NIK: -</div>
+<div id="nama"></div>
+<div id="nik"></div>
 </div>
-
-<div class="spacer"></div>
 
 <!-- IMAGE -->
 <div class="container">
@@ -72,16 +66,15 @@ height:50px;
 
 <script>
 
-/* CHECK LOGIN */
 const user = JSON.parse(localStorage.getItem("user"));
 
 if(!user){
 window.location.href = "login.html";
 }
 
-/* FILL DATA */
-document.getElementById("nama").innerText = "Nama: " + user.nama;
-document.getElementById("nik").innerText = "NIK: " + user.nik;
+/* tampilkan langsung tanpa teks tambahan */
+document.getElementById("nama").innerText = user.nama;
+document.getElementById("nik").innerText = user.nik;
 
 </script>
 
