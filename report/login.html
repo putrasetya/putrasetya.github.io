@@ -142,82 +142,91 @@ Next
 <script>
 
 const API_URL =
-"https://script.google.com/macros/s/AKfycbx_rSjRmkxXhl8ypq5xnfihwnH9LTfrTTgvjdwVc01f4LeX2re7p-vRVTfYDP1Nh1_oMQ/exec";
+"https://script.google.com/macros/s/AKfycbz5-yu44W5DPFVVPHVAZhDylVGNfh0wVVTKoAiixGsLPt6cJd-jokpw7wsLkpo1dMczXA/exec";
 
+let allUsers = [];
 let selectedUser = null;
-let lastNik = "";
+
+// Load semua user sekali saat halaman dibuka
+(async () => {
+
+document.getElementById("namaBox").innerHTML =
+'<span class="loading">Memuat data user...</span>';
+
+try {
+
+    const response =
+    await fetch(`${API_URL}?action=getUsers`);
+
+    const data =
+    await response.json();
+
+    if(data.success){
+
+        allUsers = data.users || [];
+
+        document.getElementById("namaBox").innerHTML =
+        "Masukkan NIK";
+
+    }else{
+
+        document.getElementById("namaBox").innerHTML =
+        '<span class="notfound">Gagal memuat data user</span>';
+
+    }
+
+}catch(error){
+
+    console.error(error);
+
+    document.getElementById("namaBox").innerHTML =
+    '<span class="notfound">Koneksi gagal</span>';
+
+}
+
+})();
 
 document
 .getElementById("nik")
-.addEventListener("input", async function(){
+.addEventListener("input", function(){
 
 const nik = this.value.trim();
 
 if(nik.length !== 6){
 
-document.getElementById("namaBox").innerHTML =
-"Masukkan NIK";
+    selectedUser = null;
 
-document.getElementById("nextBtn").disabled = true;
+    document.getElementById("namaBox").innerHTML =
+    "Masukkan NIK";
 
-selectedUser = null;
+    document.getElementById("nextBtn").disabled = true;
 
-return;
+    return;
 
 }
 
-if(nik === lastNik){
-return;
-}
+const user =
+allUsers.find(x => String(x.nik) === nik);
 
-lastNik = nik;
+if(user){
 
-document.getElementById("namaBox").innerHTML =
-'<span class="loading">Mencari...</span>';
+    selectedUser = user;
 
-try{
+    document.getElementById("namaBox").innerHTML =
+    `<span class="success">${user.nama}</span>`;
 
-const response =
-await fetch(
-`${API_URL}?action=getUser&nik=${nik}`
-);
-
-const data =
-await response.json();
-
-if(data.success){
-
-selectedUser = data;
-
-document.getElementById("namaBox").innerHTML =
-`<span class="success">${data.nama}</span>`;
-
-document.getElementById("nextBtn").disabled =
-false;
+    document.getElementById("nextBtn").disabled =
+    false;
 
 }else{
 
-selectedUser = null;
+    selectedUser = null;
 
-document.getElementById("namaBox").innerHTML =
-'<span class="notfound">NIK tidak ditemukan</span>';
+    document.getElementById("namaBox").innerHTML =
+    '<span class="notfound">NIK tidak ditemukan</span>';
 
-document.getElementById("nextBtn").disabled =
-true;
-
-}
-
-}catch(error){
-
-console.error(error);
-
-selectedUser = null;
-
-document.getElementById("namaBox").innerHTML =
-'<span class="notfound">Koneksi gagal</span>';
-
-document.getElementById("nextBtn").disabled =
-true;
+    document.getElementById("nextBtn").disabled =
+    true;
 
 }
 
@@ -240,6 +249,5 @@ window.location.href =
 });
 
 </script>
-
 </body>
 </html>
