@@ -66,10 +66,26 @@ position:absolute;
 top:275px;
 right:304px;
 }
+  
+#bulanBox{
+position:absolute;
+top:300px;   /* kamu bebas ubah */
+left:105px;  /* kamu bebas ubah */
+background:rgba(255,255,255,0.8);
+color:#000;
+padding:6px 10px;
+border-radius:10px;
+font-size:14px;
+font-weight:600;
+z-index:10;
+}
+  
 </style>
 </head>
 
 <body>
+
+<div id="bulanBox"></div>
 
 <!-- LOCK HEADER (tanpa label) -->
 <div class="topbar">
@@ -83,7 +99,18 @@ right:304px;
 </div>
 
 <script>
+  
+const bulanIndo = [
+"Januari","Februari","Maret","April","Mei","Juni",
+"Juli","Agustus","September","Oktober","November","Desember"
+];
 
+const now = new Date();
+const bulan = bulanIndo[now.getMonth()];
+
+document.getElementById("bulanBox").innerText = bulan;
+
+  
 const user = JSON.parse(localStorage.getItem("user"));
 
 if(!user){
