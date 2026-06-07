@@ -176,6 +176,11 @@ button{
 </div>
 
 <script>
+    (function(){
+    if(!sessionStorage.getItem("nik") || !sessionStorage.getItem("nama")){
+        window.location.replace("login.html");
+    }
+})();
 
 const API_URL = "https://script.google.com/macros/s/AKfycbwFvACNaZjeS8Ueuql78cm19Ha8YwlyytSA9xTQ3cxT4DAO9d6s7VlFdIuN2j9NFjPYgw/exec";
 
