@@ -169,6 +169,11 @@ button{
     <div class="grid" id="grid"></div>
 
     <button onclick="openPIN()">LAPORKAN</button>
+    
+    <div style="display:flex;gap:10px;margin-top:10px;">
+    <button onclick="undo()" style="background:#64748b;">UNDO</button>
+    <button onclick="redo()" style="background:#475569;">REDO</button>
+</div>
 
 </div>
 
@@ -192,6 +197,10 @@ const API_URL = "https://script.google.com/macros/s/AKfycbwFvACNaZjeS8Ueuql78cm1
 
 let dragged = null;
 let dataMap = {};
+
+// 🔥 HISTORY SYSTEM
+let history = [];
+let redoStack = [];
 
 const bulanIndo = ["JANUARI","FEBRUARI","MARET","APRIL","MEI","JUNI","JULI","AGUSTUS","SEPTEMBER","OKTOBER","NOVEMBER","DESEMBER"];
 
@@ -219,12 +228,14 @@ for(let i=1;i<=31;i++){
     cell.ondragover = e => e.preventDefault();
 
     cell.ondrop = e => {
-        e.preventDefault();
-        if(!dragged) return;
+    e.preventDefault();
+    if(!dragged) return;
 
-        cell.innerHTML = `<span>${i}</span><div class="marker ${dragged}"></div>`;
-        dataMap[i] = dragged;
-    };
+    saveState(); // 🔥 SIMPAN BEFORE CHANGE
+
+    dataMap[i] = dragged;
+    renderGrid();
+};
 
     grid.appendChild(cell);
 }
@@ -234,6 +245,46 @@ document.querySelectorAll(".dot").forEach(d=>{
     d.ondragstart = () => dragged = d.dataset.color;
 });
 
+    function saveState(){
+    history.push(JSON.stringify(dataMap));
+    redoStack = []; // reset redo setiap ada action baru
+}
+
+function undo(){
+    if(history.length === 0) return;
+
+    redoStack.push(JSON.stringify(dataMap));
+
+    const prev = history.pop();
+    dataMap = JSON.parse(prev);
+
+    renderGrid();
+}
+
+function redo(){
+    if(redoStack.length === 0) return;
+
+    history.push(JSON.stringify(dataMap));
+
+    const next = redoStack.pop();
+    dataMap = JSON.parse(next);
+
+    renderGrid();
+}
+
+    function renderGrid(){
+
+    document.querySelectorAll(".cell").forEach(cell=>{
+        const day = cell.dataset.day;
+
+        cell.innerHTML = `<span>${day}</span>`;
+
+        if(dataMap[day]){
+            const color = dataMap[day];
+            cell.innerHTML = `<span>${day}</span><div class="marker ${color}"></div>`;
+        }
+    });
+}
 // modal
 function openPIN(){
     document.getElementById("modal").style.display="flex";
