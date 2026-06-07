@@ -233,8 +233,8 @@ async function submitReport(){
     const pin = document.getElementById("pin").value;
 
     const payload = {
-        nik: user.nik,
-        nama: user.nama,
+        nik: sessionStorage.getItem("nik"),
+        nama: sessionStorage.getItem("nama"),
         pin: pin,
         bulan: bulan,
         data: dataMap
