@@ -188,10 +188,11 @@ const now = new Date();
 const bulan = bulanIndo[now.getMonth()];
 
 // SESSION
-const user = JSON.parse(sessionStorage.getItem("user"));
+const nik = sessionStorage.getItem("nik");
+const nama = sessionStorage.getItem("nama");
 
-document.getElementById("nik").innerText = user?.nik || "-";
-document.getElementById("nama").innerText = user?.nama || "-";
+document.getElementById("nik").innerText = nik || "-";
+document.getElementById("nama").innerText = nama || "-";
 document.getElementById("periode").innerText = bulan;
 
 // GRID 1-31
