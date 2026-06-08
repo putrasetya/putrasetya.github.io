@@ -489,7 +489,7 @@ img.src=found||"";
 
 namaInput.oninput=(e)=>{
 
-let v=e.target.value||"NAMA";
+let v=(e.target.value || "NAMA").toUpperCase();
 
 updatePhoto(v);
 
