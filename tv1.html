@@ -10,6 +10,10 @@
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 
 <style>
+   /* SEMUA TULISAN WARNA PUTIH KECUALI ACH */
+    body *{color:#fff!important;}
+    .ach-green{color:#dcfce7!important;}
+.ach-red{color:#ffe4e6!important;}
 
 *{
     margin:0;
@@ -845,7 +849,7 @@ MOBILE
 
 <div class="slide active">
     <div class="header">
-        <h1>TOP SALES</h1>
+        <h1>TOP ACH MTD SALES</h1>
         <p>AZKO CITIMALL TUBAN</p>
     </div>
     <div class="rank-list" id="salesTop"></div>
@@ -853,7 +857,7 @@ MOBILE
 
 <div class="slide">
     <div class="header">
-        <h1>BOTTOM SALES</h1>
+        <h1>BOTTOM ACH MTD SALES</h1>
         <p>AZKO CITIMALL TUBAN</p>
     </div>
     <div class="rank-list" id="salesBottom"></div>
@@ -1071,10 +1075,11 @@ function render(
 
     let filteredData = [...data];
 
-    if(
-        containerId === "salesBottom" ||
-        containerId === "trxTop"
-    ){
+   if(
+    containerId === "salesTop" ||
+    containerId === "salesBottom" ||
+    containerId === "trxTop"
+  ){
 
         filteredData =
         filteredData.filter(
@@ -1087,11 +1092,24 @@ function render(
 
     if(mode === "top"){
 
-        styles = [
-            "gold",
-            "silver",
-            "bronze"
-        ];
+    styles = [
+        "gold",
+        "silver",
+        "bronze"
+    ];
+
+    if(
+        containerId === "salesTop" ||
+        containerId === "salesBottom"
+    ){
+
+        sorted =
+        filteredData
+            .filter(v => v.achSales > 0)
+            .sort((a,b)=>b.achSales-a.achSales)
+            .slice(0,3);
+
+    }else{
 
         sorted =
         filteredData
@@ -1099,7 +1117,9 @@ function render(
             .sort((a,b)=>b[key]-a[key])
             .slice(0,3);
 
-    }else{
+    }
+
+}else{
 
         styles = [
             "red-high",
@@ -1107,17 +1127,30 @@ function render(
             "red-low"
         ];
 
-        const allSorted =
-filteredData
-    .filter(v => {
+        let allSorted;
 
-        if(containerId === "proteksiBottom"){
-            return v[key] >= 0;
-        }
+if(containerId === "salesBottom"){
 
-        return v[key] > 0;
-    })
-    .sort((a,b)=>a[key]-b[key]);
+    allSorted =
+    filteredData
+        .filter(v => v.achSales > 0)
+        .sort((a,b)=>a.achSales-b.achSales);
+
+}else{
+
+    allSorted =
+    filteredData
+        .filter(v => {
+
+            if(containerId === "proteksiBottom"){
+                return v[key] >= 0;
+            }
+
+            return v[key] > 0;
+        })
+        .sort((a,b)=>a[key]-b[key]);
+
+}
 
 sorted =
 allSorted.slice(0,3);
