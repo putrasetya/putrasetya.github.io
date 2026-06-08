@@ -1071,10 +1071,11 @@ function render(
 
     let filteredData = [...data];
 
-    if(
-        containerId === "salesBottom" ||
-        containerId === "trxTop"
-    ){
+   if(
+    containerId === "salesTop" ||
+    containerId === "salesBottom" ||
+    containerId === "trxTop"
+  ){
 
         filteredData =
         filteredData.filter(
@@ -1087,11 +1088,24 @@ function render(
 
     if(mode === "top"){
 
-        styles = [
-            "gold",
-            "silver",
-            "bronze"
-        ];
+    styles = [
+        "gold",
+        "silver",
+        "bronze"
+    ];
+
+    if(
+        containerId === "salesTop" ||
+        containerId === "salesBottom"
+    ){
+
+        sorted =
+        filteredData
+            .filter(v => v.achSales > 0)
+            .sort((a,b)=>b.achSales-a.achSales)
+            .slice(0,3);
+
+    }else{
 
         sorted =
         filteredData
@@ -1099,7 +1113,9 @@ function render(
             .sort((a,b)=>b[key]-a[key])
             .slice(0,3);
 
-    }else{
+    }
+
+}else{
 
         styles = [
             "red-high",
@@ -1107,17 +1123,30 @@ function render(
             "red-low"
         ];
 
-        const allSorted =
-filteredData
-    .filter(v => {
+        let allSorted;
 
-        if(containerId === "proteksiBottom"){
-            return v[key] >= 0;
-        }
+if(containerId === "salesBottom"){
 
-        return v[key] > 0;
-    })
-    .sort((a,b)=>a[key]-b[key]);
+    allSorted =
+    filteredData
+        .filter(v => v.achSales > 0)
+        .sort((a,b)=>a.achSales-b.achSales);
+
+}else{
+
+    allSorted =
+    filteredData
+        .filter(v => {
+
+            if(containerId === "proteksiBottom"){
+                return v[key] >= 0;
+            }
+
+            return v[key] > 0;
+        })
+        .sort((a,b)=>a[key]-b[key]);
+
+}
 
 sorted =
 allSorted.slice(0,3);
