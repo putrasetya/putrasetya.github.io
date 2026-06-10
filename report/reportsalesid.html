@@ -319,7 +319,9 @@ async function saveRealtime(day, color){
 
         const res = await fetch(API_URL,{
             method:"POST",
-            mode:"no-cors",
+            headers:{
+                "Content-Type":"application/json"
+            },
             body:JSON.stringify({
                 action:"saveRealtime",
                 nik:sessionStorage.getItem("nik"),
@@ -329,15 +331,13 @@ async function saveRealtime(day, color){
             })
         });
 
-        console.log("request terkirim");
+        const text = await res.text();
+        console.log(text);
 
     }catch(err){
-
-        alert(err.message);
         console.error(err);
-
+        alert(err.message);
     }
-
 }
     
 // modal
