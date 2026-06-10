@@ -317,33 +317,25 @@ function redo(){
     
 async function saveRealtime(day, color){
 
-    console.log("Kirim:", day, color);
+    const nik = sessionStorage.getItem("nik");
+
+    const url =
+      API_URL +
+      "?action=saveRealtime" +
+      "&nik=" + encodeURIComponent(nik) +
+      "&bulan=" + encodeURIComponent(bulan) +
+      "&day=" + day +
+      "&color=" + color;
 
     try{
 
-        const res = await fetch(API_URL,{
-            method:"POST",
-            headers:{
-                "Content-Type":"application/json"
-            },
-            body:JSON.stringify({
-                action:"saveRealtime",
-                nik:sessionStorage.getItem("nik"),
-                bulan:bulan,
-                day:day,
-                color:color
-            })
-        });
-
-        console.log("Status:", res.status);
+        const res = await fetch(url);
 
         const txt = await res.text();
 
-        console.log("Respon:", txt);
+        console.log(txt);
 
     }catch(err){
-
-        console.error("ERROR FETCH:", err);
 
         alert(err.message);
 
