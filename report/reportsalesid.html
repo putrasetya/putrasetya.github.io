@@ -8,20 +8,6 @@
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 
 <style>
-   .badge{
-width:18px;
-height:18px;
-border-radius:50%;
-position:absolute;
-bottom:5px;
-right:5px;
-box-shadow:0 3px 8px rgba(0,0,0,.2);
-}
-
-.badge.green{background:#22c55e;}
-.badge.yellow{background:#eab308;}
-.badge.red{background:#ef4444;}
-   
 body{
 margin:0;
 font-family:Poppins,sans-serif;
@@ -43,12 +29,13 @@ padding:20px;
 box-shadow:0 10px 25px rgba(0,0,0,.08);
 }
 
-/* HEADER */
+/* TITLE */
 h2{
 text-align:center;
 margin-bottom:10px;
 }
 
+/* INFO USER */
 .info{
 display:flex;
 flex-direction:column;
@@ -59,7 +46,7 @@ margin-bottom:15px;
 color:#333;
 }
 
-/* DRAG COLORS */
+/* PALETTE */
 .palette{
 display:flex;
 justify-content:center;
@@ -78,7 +65,7 @@ cursor:grab;
 .yellow{background:#eab308;}
 .red{background:#ef4444;}
 
-/* GRID TANGGAL */
+/* GRID */
 .grid{
 display:grid;
 grid-template-columns:repeat(7,1fr);
@@ -86,6 +73,7 @@ gap:8px;
 margin-top:10px;
 }
 
+/* CELL */
 .day{
 height:50px;
 border:1px solid #ddd;
@@ -95,8 +83,8 @@ position:relative;
 overflow:hidden;
 }
 
-/* angka tanggal */
-.day span{
+/* DATE NUMBER */
+.date{
 position:absolute;
 top:5px;
 left:6px;
@@ -104,13 +92,28 @@ font-size:11px;
 color:#666;
 }
 
+/* BADGE POSITION */
+.badge-container{
+position:absolute;
+bottom:5px;
+right:5px;
+}
+
+/* BADGE */
+.badge{
+width:18px;
+height:18px;
+border-radius:50%;
+box-shadow:0 3px 8px rgba(0,0,0,.2);
+}
+
+.badge.green{background:#22c55e;}
+.badge.yellow{background:#eab308;}
+.badge.red{background:#ef4444;}
 
 /* RESPONSIVE */
 @media(max-width:600px){
-.day{
-height:40px;
-font-size:12px;
-}
+.day{height:40px;}
 }
 </style>
 </head>
@@ -127,14 +130,14 @@ font-size:12px;
 <div id="periode">Periode: -</div>
 </div>
 
-<!-- COLOR PALETTE -->
+<!-- PALETTE -->
 <div class="palette">
 <div class="circle green" draggable="true" data-color="green"></div>
 <div class="circle yellow" draggable="true" data-color="yellow"></div>
 <div class="circle red" draggable="true" data-color="red"></div>
 </div>
 
-<!-- GRID TANGGAL -->
+<!-- GRID -->
 <div class="grid" id="grid"></div>
 
 </div>
@@ -142,7 +145,7 @@ font-size:12px;
 <script>
 
 /* =========================
-   SESSION USER
+   SESSION LOGIN (TETAP)
 ========================= */
 const user = JSON.parse(localStorage.getItem("user"));
 
@@ -176,34 +179,39 @@ for(let i=1;i<=31;i++){
 const div = document.createElement("div");
 div.className = "day";
 div.dataset.day = i;
-div.innerHTML = `<span>${i}</span>`;
 
+/* struktur stabil */
+div.innerHTML = `
+<span class="date">${i}</span>
+<div class="badge-container"></div>
+`;
+
+/* drag over wajib */
 div.addEventListener("dragover", e=>{
 e.preventDefault();
 });
 
+/* drop event FIX */
 div.addEventListener("drop", e=>{
 e.preventDefault();
 
-let color = e.dataTransfer.getData("color");
+const color = e.dataTransfer.getData("color");
 const day = div.dataset.day;
 
-/* safety check */
-if(!color){
-console.log("warna kosong");
-return;
-}
+/* target container */
+const container = div.querySelector(".badge-container");
 
-color = color.trim();
+/* reset isi lama */
+container.innerHTML = "";
 
-/* hapus lama */
-div.querySelector(".badge")?.remove();
-
-/* buat baru */
+/* buat badge */
 const badge = document.createElement("div");
 badge.className = "badge " + color;
-div.appendChild(badge);
 
+/* nempel */
+container.appendChild(badge);
+
+/* kirim ke sheet */
 sendToSheet(day, color);
 });
 
@@ -215,22 +223,12 @@ grid.appendChild(div);
 ========================= */
 document.querySelectorAll(".circle").forEach(item=>{
 item.addEventListener("dragstart", e=>{
-e.dataTransfer.setData("color", item.dataset.color.trim());
+e.dataTransfer.setData("color", item.dataset.color);
 });
 });
 
 /* =========================
-   COLOR MAP
-========================= */
-function getColor(color){
-if(color==="green") return "#22c55e";
-if(color==="yellow") return "#eab308";
-if(color==="red") return "#ef4444";
-return "#fff";
-}
-
-/* =========================
-   SEND TO APPS SCRIPT
+   SEND TO SHEET
 ========================= */
 function sendToSheet(day, color){
 
