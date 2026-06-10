@@ -248,14 +248,20 @@ for(let i=1;i<=31;i++){
 
     cell.ondragover = e => e.preventDefault();
 
-    cell.ondrop = e => {
+    cell.ondrop = async e => {
+
     e.preventDefault();
+
     if(!dragged) return;
 
-    saveState(); // 🔥 SIMPAN BEFORE CHANGE
+    saveState();
 
     dataMap[i] = dragged;
+
     renderGrid();
+
+    await saveRealtime(i, dragged);
+
 };
 
     grid.appendChild(cell);
@@ -305,6 +311,30 @@ function redo(){
             cell.innerHTML = `<span>${day}</span><div class="marker ${color}"></div>`;
         }
     });
+}
+
+    async function saveRealtime(day, color){
+
+    try{
+
+        await fetch(API_URL,{
+            method:"POST",
+            headers:{
+                "Content-Type":"application/json"
+            },
+            body:JSON.stringify({
+                action:"saveRealtime",
+                nik: sessionStorage.getItem("nik"),
+                bulan: bulan,
+                day: day,
+                color: color
+            })
+        });
+
+    }catch(err){
+        console.error(err);
+    }
+
 }
 // modal
 function openPIN(){
