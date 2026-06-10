@@ -191,6 +191,8 @@ div.addEventListener("dragover", e=>{
 e.preventDefault();
 });
 
+div.addEventListener("touchstart", ()=>{}, {passive:true});
+
 div.addEventListener("drop", e=>{
 e.preventDefault();
 
