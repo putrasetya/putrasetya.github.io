@@ -29,13 +29,12 @@ padding:20px;
 box-shadow:0 10px 25px rgba(0,0,0,.08);
 }
 
-/* TITLE */
 h2{
 text-align:center;
 margin-bottom:10px;
 }
 
-/* INFO USER */
+/* INFO */
 .info{
 display:flex;
 flex-direction:column;
@@ -58,7 +57,7 @@ margin:15px 0;
 width:40px;
 height:40px;
 border-radius:50%;
-cursor:grab;
+cursor:pointer;
 }
 
 .green{background:#22c55e;}
@@ -70,7 +69,6 @@ cursor:grab;
 display:grid;
 grid-template-columns:repeat(7,1fr);
 gap:8px;
-margin-top:10px;
 }
 
 /* CELL */
@@ -83,7 +81,7 @@ position:relative;
 overflow:hidden;
 }
 
-/* DATE NUMBER */
+/* DATE */
 .date{
 position:absolute;
 top:5px;
@@ -92,14 +90,13 @@ font-size:11px;
 color:#666;
 }
 
-/* BADGE POSITION */
+/* BADGE */
 .badge-container{
 position:absolute;
 bottom:5px;
 right:5px;
 }
 
-/* BADGE */
 .badge{
 width:18px;
 height:18px;
@@ -170,7 +167,28 @@ const periode = `${bulanID[now.getMonth()]} ${now.getFullYear()}`;
 document.getElementById("periode").innerText = "Periode: " + periode;
 
 /* =========================
-   CREATE GRID 1-31
+   STATE FALLBACK (PENTING)
+========================= */
+window.selectedColor = null;
+
+/* =========================
+   PALETTE SELECT (MOBILE + PC)
+========================= */
+document.querySelectorAll(".circle").forEach(item=>{
+
+item.addEventListener("click", ()=>{
+window.selectedColor = item.dataset.color;
+});
+
+item.addEventListener("dragstart", e=>{
+e.dataTransfer.setData("color", item.dataset.color);
+window.selectedColor = item.dataset.color;
+});
+
+});
+
+/* =========================
+   CREATE GRID
 ========================= */
 const grid = document.getElementById("grid");
 
@@ -180,64 +198,44 @@ const div = document.createElement("div");
 div.className = "day";
 div.dataset.day = i;
 
-/* struktur stabil */
 div.innerHTML = `
 <span class="date">${i}</span>
 <div class="badge-container"></div>
 `;
 
-/* drag over wajib */
+/* DRAG OVER */
 div.addEventListener("dragover", e=>{
 e.preventDefault();
 });
 
-div.addEventListener("touchstart", ()=>{}, {passive:true});
-
+/* DROP */
 div.addEventListener("drop", e=>{
 e.preventDefault();
 
-let color = e.dataTransfer.getData("color");
+/* AMBIL DARI DRAG ATAU CLICK */
+let color = e.dataTransfer.getData("color") || window.selectedColor;
 
-/* 🔥 CLEAN & AMANKAN DATA */
 color = (color || "").trim().toLowerCase();
 
-const day = div.dataset.day;
-
-console.log("COLOR =", color);
-
-/* validasi ketat */
-if(!["green","yellow","red"].includes(color)){
-console.log("COLOR INVALID:", color);
+if(!color){
+console.log("COLOR EMPTY");
 return;
 }
 
 const container = div.querySelector(".badge-container");
 container.innerHTML = "";
 
-/* 🔥 FIX: paksa class benar */
 const badge = document.createElement("div");
-badge.classList.add("badge", color);
+badge.className = "badge " + color;
 
 container.appendChild(badge);
 
-/* kirim ke sheet */
-sendToSheet(day, color);
+/* SEND */
+sendToSheet(i, color);
 });
 
 grid.appendChild(div);
 }
-
-/* =========================
-   DRAG START
-========================= */
-document.querySelectorAll(".circle").forEach(item=>{
-item.addEventListener("dragstart", e=>{
-e.dataTransfer.setData(
-"color",
-item.dataset.color.trim().toLowerCase()
-);
-});
-});
 
 /* =========================
    SEND TO SHEET
