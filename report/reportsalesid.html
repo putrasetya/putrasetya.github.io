@@ -3,68 +3,101 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Report Sales ID</title>
+<title>Sales Control Daily</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 
 <style>
 body{
+margin:0;
 font-family:Poppins,sans-serif;
-background:#f5f7fb;
-padding:20px;
+background:#f1f5f9;
+display:flex;
+justify-content:center;
+align-items:center;
+min-height:100vh;
+padding:15px;
 }
 
+/* CARD */
 .card{
+width:100%;
+max-width:900px;
 background:#fff;
-max-width:700px;
-margin:auto;
+border-radius:18px;
 padding:20px;
-border-radius:16px;
 box-shadow:0 10px 25px rgba(0,0,0,.08);
 }
 
-.header{
-display:flex;
-justify-content:space-between;
-align-items:center;
-margin-bottom:15px;
-}
-
-.user-box{
-background:#eef2ff;
-padding:10px 15px;
-border-radius:12px;
-font-size:14px;
-}
-
+/* HEADER */
 h2{
-margin:0;
+text-align:center;
+margin-bottom:10px;
 }
 
-input, button{
-width:100%;
-padding:12px;
-margin-top:10px;
-border-radius:10px;
-border:1px solid #ddd;
+.info{
+display:flex;
+flex-direction:column;
+gap:5px;
+text-align:center;
 font-size:14px;
+margin-bottom:15px;
+color:#333;
 }
 
-button{
-background:#2563eb;
-color:#fff;
-border:none;
-cursor:pointer;
-transition:.2s;
+/* DRAG COLORS */
+.palette{
+display:flex;
+justify-content:center;
+gap:15px;
+margin:15px 0;
 }
 
-button:hover{
-background:#1e40af;
+.circle{
+width:40px;
+height:40px;
+border-radius:50%;
+cursor:grab;
 }
 
-.back{
-background:#ef4444;
-margin-top:15px;
+.green{background:#22c55e;}
+.yellow{background:#eab308;}
+.red{background:#ef4444;}
+
+/* GRID TANGGAL */
+.grid{
+display:grid;
+grid-template-columns:repeat(7,1fr);
+gap:8px;
+margin-top:10px;
+}
+
+.day{
+height:50px;
+border:1px solid #ddd;
+border-radius:10px;
+display:flex;
+justify-content:center;
+align-items:center;
+font-size:13px;
+background:#fafafa;
+position:relative;
+}
+
+.day span{
+position:absolute;
+top:3px;
+left:5px;
+font-size:11px;
+color:#666;
+}
+
+/* RESPONSIVE */
+@media(max-width:600px){
+.day{
+height:40px;
+font-size:12px;
+}
 }
 </style>
 </head>
@@ -73,82 +106,128 @@ margin-top:15px;
 
 <div class="card">
 
-<!-- HEADER USER -->
-<div class="header">
-<h2>Report Sales ID</h2>
-<div class="user-box" id="userBox">Loading...</div>
+<h2>SALES CONTROL DAILY</h2>
+
+<div class="info">
+<div id="nik">NIK: -</div>
+<div id="nama">Nama: -</div>
+<div id="periode">Periode: -</div>
 </div>
 
-<!-- FORM -->
-<input type="text" id="article" placeholder="Input Article">
-<input type="number" id="qty" placeholder="Input Qty">
+<!-- COLOR PALETTE -->
+<div class="palette">
+<div class="circle green" draggable="true" data-color="green"></div>
+<div class="circle yellow" draggable="true" data-color="yellow"></div>
+<div class="circle red" draggable="true" data-color="red"></div>
+</div>
 
-<button onclick="sendData()">Kirim</button>
-
-<button class="back" onclick="back()">Kembali</button>
+<!-- GRID TANGGAL -->
+<div class="grid" id="grid"></div>
 
 </div>
 
 <script>
 
 /* =========================
-   LOAD SESSION USER
+   SESSION USER
 ========================= */
 const user = JSON.parse(localStorage.getItem("user"));
 
 if(!user){
-window.location.href = "login.html";
+window.location.href="login.html";
 }
 
-document.getElementById("userBox").innerHTML =
-`NIK: ${user.nik}<br>Nama: ${user.nama}`;
+document.getElementById("nik").innerText = "NIK: " + user.nik;
+document.getElementById("nama").innerText = "Nama: " + user.nama;
 
 /* =========================
-   BACK TO DASHBOARD
+   PERIODE INDONESIA
 ========================= */
-function back(){
-window.location.href = "staf.html";
+const bulanID = [
+"Januari","Februari","Maret","April","Mei","Juni",
+"Juli","Agustus","September","Oktober","November","Desember"
+];
+
+const now = new Date();
+const periode = `${bulanID[now.getMonth()]} ${now.getFullYear()}`;
+
+document.getElementById("periode").innerText = "Periode: " + periode;
+
+/* =========================
+   CREATE GRID 1-31
+========================= */
+const grid = document.getElementById("grid");
+
+for(let i=1;i<=31;i++){
+
+const div = document.createElement("div");
+div.className = "day";
+div.dataset.day = i;
+div.innerHTML = `<span>${i}</span>`;
+
+/* DROP EVENT */
+div.addEventListener("dragover", e=>{
+e.preventDefault();
+});
+
+div.addEventListener("drop", e=>{
+e.preventDefault();
+
+const color = e.dataTransfer.getData("color");
+const day = div.dataset.day;
+
+/* warna UI */
+div.style.background = getColor(color);
+
+/* kirim ke apps script */
+sendToSheet(day, color);
+});
+
+grid.appendChild(div);
 }
 
 /* =========================
-   KIRIM DATA (SIAP APPS SCRIPT)
+   DRAG START
 ========================= */
-function sendData(){
+document.querySelectorAll(".circle").forEach(item=>{
+item.addEventListener("dragstart", e=>{
+e.dataTransfer.setData("color", item.dataset.color);
+});
+});
 
-const article = document.getElementById("article").value;
-const qty = document.getElementById("qty").value;
-
-if(!article || !qty){
-alert("Lengkapi data!");
-return;
+/* =========================
+   COLOR MAP
+========================= */
+function getColor(color){
+if(color==="green") return "#22c55e";
+if(color==="yellow") return "#eab308";
+if(color==="red") return "#ef4444";
+return "#fff";
 }
 
-/* payload */
-const payload = {
-nik: user.nik,
-nama: user.nama,
-article: article,
-qty: qty,
-timestamp: new Date().toISOString()
-};
+/* =========================
+   SEND TO APPS SCRIPT
+========================= */
+function sendToSheet(day, color){
 
-/* GANTI LINK INI DENGAN APPS SCRIPT KAMU */
-fetch("https://script.google.com/macros/s/YOUR_SCRIPT_URL/exec", {
-method: "POST",
-body: JSON.stringify(payload),
-headers: {
-"Content-Type": "application/json"
+fetch("https://script.google.com/macros/s/YOUR_SCRIPT_URL/exec?action=saveRealtime",{
+method:"POST",
+body:JSON.stringify({
+nik:user.nik,
+bulan:periode,
+day:day,
+color:color
+}),
+headers:{
+"Content-Type":"application/json"
 }
 })
-.then(res => res.json())
-.then(res => {
-alert("Data berhasil dikirim!");
-document.getElementById("article").value = "";
-document.getElementById("qty").value = "";
+.then(res=>res.json())
+.then(res=>{
+console.log("saved",res);
 })
-.catch(err => {
-console.error(err);
-alert("Gagal kirim data!");
+.catch(err=>{
+console.log(err);
 });
 
 }
