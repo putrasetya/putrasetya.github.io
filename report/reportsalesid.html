@@ -242,18 +242,11 @@ grid.appendChild(div);
 ========================= */
 function sendToSheet(day, color){
 
-fetch("https://script.google.com/macros/s/YOUR_SCRIPT_URL/exec?action=saveRealtime",{
-method:"POST",
-body:JSON.stringify({
-nik:user.nik,
-bulan:periode,
-day:day,
-color:color
-}),
-headers:{
-"Content-Type":"application/json"
-}
-})
+fetch("https://script.google.com/macros/s/AKfycbwFvACNaZjeS8Ueuql78cm19Ha8YwlyytSA9xTQ3cxT4DAO9d6s7VlFdIuN2j9NFjPYgw/exec?action=saveRealtime&nik="
++ user.nik +
+"&bulan=" + encodeURIComponent(periode) +
+"&day=" + day +
+"&color=" + color)
 .then(res=>res.json())
 .then(res=>{
 console.log("saved",res);
