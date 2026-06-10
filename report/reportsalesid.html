@@ -185,18 +185,25 @@ e.preventDefault();
 div.addEventListener("drop", e=>{
 e.preventDefault();
 
-const color = e.dataTransfer.getData("color");
+let color = e.dataTransfer.getData("color");
 const day = div.dataset.day;
 
-/* hapus badge lama kalau ada */
+/* safety check */
+if(!color){
+console.log("warna kosong");
+return;
+}
+
+color = color.trim();
+
+/* hapus lama */
 div.querySelector(".badge")?.remove();
 
-/* buat badge baru */
+/* buat baru */
 const badge = document.createElement("div");
-badge.className = `badge ${color}`;
+badge.className = "badge " + color;
 div.appendChild(badge);
 
-/* kirim ke spreadsheet */
 sendToSheet(day, color);
 });
 
@@ -208,7 +215,7 @@ grid.appendChild(div);
 ========================= */
 document.querySelectorAll(".circle").forEach(item=>{
 item.addEventListener("dragstart", e=>{
-e.dataTransfer.setData("color", item.dataset.color);
+e.dataTransfer.setData("color", item.dataset.color.trim());
 });
 });
 
