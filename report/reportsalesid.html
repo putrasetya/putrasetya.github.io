@@ -312,30 +312,38 @@ function redo(){
         }
     });
 }
-
-    async function saveRealtime(day, color){
+    
+async function saveRealtime(day, color){
 
     try{
 
-        await fetch(API_URL,{
+        const res = await fetch(API_URL,{
             method:"POST",
             headers:{
                 "Content-Type":"application/json"
             },
             body:JSON.stringify({
                 action:"saveRealtime",
-                nik: sessionStorage.getItem("nik"),
-                bulan: bulan,
-                day: day,
-                color: color
+                nik:sessionStorage.getItem("nik"),
+                bulan:bulan,
+                day:day,
+                color:color
             })
         });
 
+        const text = await res.text();
+
+        alert(text);
+
     }catch(err){
+
+        alert(err.message);
         console.error(err);
+
     }
 
 }
+    
 // modal
 function openPIN(){
     document.getElementById("modal").style.display="flex";
