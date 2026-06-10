@@ -315,6 +315,8 @@ function redo(){
     
 async function saveRealtime(day, color){
 
+    console.log("Kirim:", day, color);
+
     try{
 
         const res = await fetch(API_URL,{
@@ -331,12 +333,18 @@ async function saveRealtime(day, color){
             })
         });
 
-        const text = await res.text();
-        console.log(text);
+        console.log("Status:", res.status);
+
+        const txt = await res.text();
+
+        console.log("Respon:", txt);
 
     }catch(err){
-        console.error(err);
+
+        console.error("ERROR FETCH:", err);
+
         alert(err.message);
+
     }
 }
     
