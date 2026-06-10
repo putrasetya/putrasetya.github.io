@@ -326,18 +326,22 @@ async function saveRealtime(day, color){
       "&day=" + day +
       "&color=" + color;
 
-    try{
-
+    try {
         const res = await fetch(url);
 
-        const txt = await res.text();
-alert(txt);
-console.log(txt);
+        const data = await res.json(); // ✅ PENTING (bukan text)
 
-    }catch(err){
+        console.log("Response:", data);
 
-        alert(err.message);
+        if(!data.success){
+            console.error("Gagal simpan:", data.message);
+        }
 
+        // ❌ HAPUS ALERT TOTAL (ini penyebab popup)
+        // alert(data.message);
+
+    } catch(err){
+        console.error(err);
     }
 }
     
