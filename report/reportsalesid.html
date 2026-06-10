@@ -90,22 +90,20 @@ margin-top:10px;
 height:50px;
 border:1px solid #ddd;
 border-radius:10px;
-display:flex;
-justify-content:center;
-align-items:center;
-font-size:13px;
 background:#fafafa;
 position:relative;
-overflow:hidden; /* penting biar badge nempel rapi */
+overflow:hidden;
 }
 
+/* angka tanggal */
 .day span{
 position:absolute;
-top:3px;
-left:5px;
+top:5px;
+left:6px;
 font-size:11px;
 color:#666;
 }
+
 
 /* RESPONSIVE */
 @media(max-width:600px){
@@ -180,17 +178,23 @@ div.className = "day";
 div.dataset.day = i;
 div.innerHTML = `<span>${i}</span>`;
 
+div.addEventListener("dragover", e=>{
+e.preventDefault();
+});
+
 div.addEventListener("drop", e=>{
 e.preventDefault();
 
 const color = e.dataTransfer.getData("color");
 const day = div.dataset.day;
 
-/* SNAP VISUAL (LINGKARAN NEMPEL) */
-div.innerHTML = `
-<span>${day}</span>
-<div class="badge ${color}"></div>
-`;
+/* hapus badge lama kalau ada */
+div.querySelector(".badge")?.remove();
+
+/* buat badge baru */
+const badge = document.createElement("div");
+badge.className = `badge ${color}`;
+div.appendChild(badge);
 
 /* kirim ke spreadsheet */
 sendToSheet(day, color);
