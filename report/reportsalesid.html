@@ -165,21 +165,19 @@ div.className = "day";
 div.dataset.day = i;
 div.innerHTML = `<span>${i}</span>`;
 
-/* DROP EVENT */
-div.addEventListener("dragover", e=>{
-e.preventDefault();
-});
-
 div.addEventListener("drop", e=>{
 e.preventDefault();
 
 const color = e.dataTransfer.getData("color");
 const day = div.dataset.day;
 
-/* warna UI */
-div.style.background = getColor(color);
+/* SNAP VISUAL (LINGKARAN NEMPEL) */
+div.innerHTML = `
+<span>${day}</span>
+<div class="badge ${color}"></div>
+`;
 
-/* kirim ke apps script */
+/* kirim ke spreadsheet */
 sendToSheet(day, color);
 });
 
