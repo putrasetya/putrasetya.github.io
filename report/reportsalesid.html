@@ -191,24 +191,31 @@ div.addEventListener("dragover", e=>{
 e.preventDefault();
 });
 
-/* drop event FIX */
 div.addEventListener("drop", e=>{
 e.preventDefault();
 
-const color = e.dataTransfer.getData("color");
+let color = e.dataTransfer.getData("color");
+
+/* 🔥 CLEAN & AMANKAN DATA */
+color = (color || "").trim().toLowerCase();
+
 const day = div.dataset.day;
 
-/* target container */
-const container = div.querySelector(".badge-container");
+console.log("COLOR =", color);
 
-/* reset isi lama */
+/* validasi ketat */
+if(!["green","yellow","red"].includes(color)){
+console.log("COLOR INVALID:", color);
+return;
+}
+
+const container = div.querySelector(".badge-container");
 container.innerHTML = "";
 
-/* buat badge */
+/* 🔥 FIX: paksa class benar */
 const badge = document.createElement("div");
-badge.className = "badge " + color;
+badge.classList.add("badge", color);
 
-/* nempel */
 container.appendChild(badge);
 
 /* kirim ke sheet */
@@ -223,7 +230,10 @@ grid.appendChild(div);
 ========================= */
 document.querySelectorAll(".circle").forEach(item=>{
 item.addEventListener("dragstart", e=>{
-e.dataTransfer.setData("color", item.dataset.color);
+e.dataTransfer.setData(
+"color",
+item.dataset.color.trim().toLowerCase()
+);
 });
 });
 
@@ -254,6 +264,7 @@ console.log(err);
 
 }
 
+   console.log("DROP COLOR RAW:", e.dataTransfer.getData("color"));
 </script>
 
 </body>
