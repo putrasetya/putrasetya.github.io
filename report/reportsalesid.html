@@ -225,7 +225,8 @@ let redoStack = [];
 const bulanIndo = ["JANUARI","FEBRUARI","MARET","APRIL","MEI","JUNI","JULI","AGUSTUS","SEPTEMBER","OKTOBER","NOVEMBER","DESEMBER"];
 
 const now = new Date();
-const bulan = bulanIndo[now.getMonth()];
+const tahun = now.getFullYear();
+const bulan = `${bulanIndo[now.getMonth()]} ${tahun}`;
 
 // SESSION
 const nik = sessionStorage.getItem("nik");
