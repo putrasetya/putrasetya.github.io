@@ -227,7 +227,7 @@ const bulanIndo = ["JANUARI","FEBRUARI","MARET","APRIL","MEI","JUNI","JULI","AGU
 
 const now = new Date();
 const tahun = now.getFullYear();
-const bulan = `${bulanIndo[now.getMonth()]} ${tahun}`;
+const bulan = `${bulanIndo[now.getMonth()]}_${tahun}`;
 
 // SESSION
 const nik = sessionStorage.getItem("nik");
