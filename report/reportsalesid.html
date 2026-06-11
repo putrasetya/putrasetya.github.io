@@ -244,21 +244,51 @@ grid.appendChild(div);
 
 function sendToSheet(day, color){
 
-fetch(
+const url =
 "https://script.google.com/macros/s/AKfycbwFvACNaZjeS8Ueuql78cm19Ha8YwlyytSA9xTQ3cxT4DAO9d6s7VlFdIuN2j9NFjPYgw/exec"
 + "?action=saveRealtime"
 + "&nik=" + encodeURIComponent(user.nik)
-+ "&nama=" + encodeURIComponent(user.nama)
 + "&bulan=" + encodeURIComponent(periode)
 + "&day=" + day
-+ "&color=" + color
-)
-.then(res=>res.json())
-.then(res=>{
-console.log("SAVED:", res);
++ "&color=" + color;
+
+console.log("REQUEST =", url);
+
+fetch(url)
+.then(response => response.json())
+.then(data => {
+
+console.log("RESPONSE =", data);
+
+if(data.success){
+
+console.log(
+"BERHASIL -> ROW:",
+data.row,
+"COL:",
+data.col
+);
+
+}else{
+
+alert(
+"Gagal menyimpan\n\n" +
+(data.message || "Unknown Error")
+);
+
+console.log(data);
+
+}
+
 })
-.catch(err=>{
-console.log(err);
+.catch(error => {
+
+console.error(error);
+
+alert(
+"Koneksi ke Apps Script gagal"
+);
+
 });
 
 }
