@@ -162,7 +162,8 @@ const bulanID = [
 ];
 
 const now = new Date();
-const periode = `${bulanID[now.getMonth()]} ${now.getFullYear()}`;
+const periode =
+bulanID[now.getMonth()] + " " + now.getFullYear();
 
 document.getElementById("periode").innerText = "Periode: " + periode;
 
