@@ -108,6 +108,16 @@ box-shadow:0 3px 8px rgba(0,0,0,.2);
 .badge.yellow{background:#eab308;}
 .badge.red{background:#ef4444;}
 
+.circle{
+touch-action:none;
+user-select:none;
+-webkit-user-select:none;
+}
+
+.drag-ghost{
+pointer-events:none;
+}
+
 /* RESPONSIVE */
 @media(max-width:600px){
 .day{height:40px;}
@@ -150,8 +160,11 @@ if(!user){
 window.location.href="login.html";
 }
 
-document.getElementById("nik").innerText = "NIK: " + user.nik;
-document.getElementById("nama").innerText = "Nama: " + user.nama;
+document.getElementById("nik").innerText =
+"NIK: " + user.nik;
+
+document.getElementById("nama").innerText =
+"Nama: " + user.nama;
 
 /* =========================
    PERIODE INDONESIA
@@ -162,40 +175,25 @@ const bulanID = [
 ];
 
 const now = new Date();
+
 const periode =
-bulanID[now.getMonth()] + " " + now.getFullYear();
+bulanID[now.getMonth()] +
+" " +
+now.getFullYear();
 
-document.getElementById("periode").innerText = "Periode: " + periode;
-
-/* =========================
-   STATE FALLBACK (PENTING)
-========================= */
-window.selectedColor = null;
+document.getElementById("periode").innerText =
+"Periode: " + periode;
 
 /* =========================
-   PALETTE SELECT (MOBILE + PC)
+   GRID
 ========================= */
-document.querySelectorAll(".circle").forEach(item=>{
 
-item.addEventListener("click", ()=>{
-window.selectedColor = item.dataset.color;
-});
-
-item.addEventListener("dragstart", e=>{
-e.dataTransfer.setData("color", item.dataset.color);
-window.selectedColor = item.dataset.color;
-});
-
-});
-
-/* =========================
-   CREATE GRID
-========================= */
 const grid = document.getElementById("grid");
 
 for(let i=1;i<=31;i++){
 
 const div = document.createElement("div");
+
 div.className = "day";
 div.dataset.day = i;
 
@@ -204,45 +202,205 @@ div.innerHTML = `
 <div class="badge-container"></div>
 `;
 
-/* DRAG OVER */
-div.addEventListener("dragover", e=>{
-e.preventDefault();
-});
+grid.appendChild(div);
 
-/* DROP */
-div.addEventListener("drop", e=>{
-e.preventDefault();
-
-/* AMBIL DARI DRAG ATAU CLICK */
-let color = e.dataTransfer.getData("color") || window.selectedColor;
-
-color = (color || "").trim().toLowerCase();
-
-if(!color){
-console.log("COLOR EMPTY");
-return;
 }
 
-const container = div.querySelector(".badge-container");
-container.innerHTML = "";
+/* =========================
+   DESKTOP DRAG
+========================= */
 
-const badge = document.createElement("div");
-badge.className = "badge " + color;
+let selectedColor = null;
 
-container.appendChild(badge);
+document.querySelectorAll(".circle").forEach(circle=>{
 
-/* SEND */
-sendToSheet(i, color);
+circle.addEventListener("click",()=>{
+
+selectedColor =
+circle.dataset.color;
+
 });
 
-grid.appendChild(div);
+circle.addEventListener("dragstart",e=>{
+
+selectedColor =
+circle.dataset.color;
+
+e.dataTransfer.setData(
+"color",
+circle.dataset.color
+);
+
+});
+
+});
+
+document.querySelectorAll(".day").forEach(day=>{
+
+day.addEventListener("dragover",e=>{
+
+e.preventDefault();
+
+});
+
+day.addEventListener("drop",e=>{
+
+e.preventDefault();
+
+let color =
+e.dataTransfer.getData("color");
+
+if(!color) return;
+
+setBadge(day,color);
+
+});
+
+});
+
+/* =========================
+   TABLET GHOST DRAG
+========================= */
+
+let ghost = null;
+let dragColor = null;
+
+document.querySelectorAll(".circle").forEach(circle=>{
+
+circle.addEventListener("touchstart",function(e){
+
+const touch = e.touches[0];
+
+dragColor =
+this.dataset.color;
+
+ghost =
+document.createElement("div");
+
+ghost.className =
+"drag-ghost " + dragColor;
+
+ghost.style.position = "fixed";
+ghost.style.width = "40px";
+ghost.style.height = "40px";
+ghost.style.borderRadius = "50%";
+ghost.style.pointerEvents = "none";
+ghost.style.zIndex = "99999";
+ghost.style.left =
+touch.clientX + "px";
+ghost.style.top =
+touch.clientY + "px";
+ghost.style.transform =
+"translate(-50%,-50%)";
+ghost.style.boxShadow =
+"0 5px 15px rgba(0,0,0,.3)";
+
+if(dragColor==="green")
+ghost.style.background="#22c55e";
+
+if(dragColor==="yellow")
+ghost.style.background="#eab308";
+
+if(dragColor==="red")
+ghost.style.background="#ef4444";
+
+document.body.appendChild(ghost);
+
+},{passive:false});
+
+});
+
+document.addEventListener(
+"touchmove",
+function(e){
+
+if(!ghost) return;
+
+const touch = e.touches[0];
+
+ghost.style.left =
+touch.clientX + "px";
+
+ghost.style.top =
+touch.clientY + "px";
+
+e.preventDefault();
+
+},
+{passive:false}
+);
+
+document.addEventListener(
+"touchend",
+function(e){
+
+if(!ghost || !dragColor)
+return;
+
+const touch =
+e.changedTouches[0];
+
+const target =
+document.elementFromPoint(
+touch.clientX,
+touch.clientY
+);
+
+const day =
+target?.closest(".day");
+
+if(day){
+
+setBadge(
+day,
+dragColor
+);
+
+}
+
+ghost.remove();
+
+ghost = null;
+dragColor = null;
+
+}
+);
+
+/* =========================
+   SET BADGE
+========================= */
+
+function setBadge(day,color){
+
+const container =
+day.querySelector(
+".badge-container"
+);
+
+container.innerHTML = "";
+
+const badge =
+document.createElement("div");
+
+badge.className =
+"badge " + color;
+
+container.appendChild(
+badge
+);
+
+sendToSheet(
+day.dataset.day,
+color
+);
+
 }
 
 /* =========================
    SEND TO SHEET
 ========================= */
 
-function sendToSheet(day, color){
+function sendToSheet(day,color){
 
 const url =
 "https://script.google.com/macros/s/AKfycbwFvACNaZjeS8Ueuql78cm19Ha8YwlyytSA9xTQ3cxT4DAO9d6s7VlFdIuN2j9NFjPYgw/exec"
@@ -251,40 +409,23 @@ const url =
 + "&nama=" + encodeURIComponent(user.nama)
 + "&bulan=" + encodeURIComponent(periode)
 + "&day=" + day
-+ "&color=" + color
-
-console.log("REQUEST =", url);
++ "&color=" + color;
 
 fetch(url)
-.then(response => response.json())
-.then(data => {
+.then(r=>r.json())
+.then(data=>{
 
-console.log("RESPONSE =", data);
-
-if(data.success){
-
-console.log(
-"BERHASIL -> ROW:",
-data.row,
-"COL:",
-data.col
-);
-
-}else{
+if(!data.success){
 
 alert(
 "Gagal menyimpan\n\n" +
-(data.message || "Unknown Error")
+(data.message || "")
 );
-
-console.log(data);
 
 }
 
 })
-.catch(error => {
-
-console.error(error);
+.catch(()=>{
 
 alert(
 "Koneksi ke Apps Script gagal"
@@ -293,7 +434,8 @@ alert(
 });
 
 }
-</script>
+
+   </script>
 
 </body>
 </html>
