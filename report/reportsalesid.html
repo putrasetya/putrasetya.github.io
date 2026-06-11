@@ -248,9 +248,10 @@ const url =
 "https://script.google.com/macros/s/AKfycbwFvACNaZjeS8Ueuql78cm19Ha8YwlyytSA9xTQ3cxT4DAO9d6s7VlFdIuN2j9NFjPYgw/exec"
 + "?action=saveRealtime"
 + "&nik=" + encodeURIComponent(user.nik)
++ "&nama=" + encodeURIComponent(user.nama)
 + "&bulan=" + encodeURIComponent(periode)
 + "&day=" + day
-+ "&color=" + color;
++ "&color=" + color
 
 console.log("REQUEST =", url);
 
