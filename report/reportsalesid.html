@@ -400,7 +400,9 @@ color
    SEND TO SHEET
 ========================= */
 
-function sendToSheet(day,color){
+function sendToSheet(day, color){
+
+console.log("USER =", user);
 
 const url =
 "https://script.google.com/macros/s/AKfycbwFvACNaZjeS8Ueuql78cm19Ha8YwlyytSA9xTQ3cxT4DAO9d6s7VlFdIuN2j9NFjPYgw/exec"
@@ -411,28 +413,13 @@ const url =
 + "&day=" + day
 + "&color=" + color;
 
+console.log(url);
+
 fetch(url)
 .then(r=>r.json())
 .then(data=>{
-
-if(!data.success){
-
-alert(
-"Gagal menyimpan\n\n" +
-(data.message || "")
-);
-
-}
-
-})
-.catch(()=>{
-
-alert(
-"Koneksi ke Apps Script gagal"
-);
-
+console.log("RESPONSE =", data);
 });
-
 }
 
    </script>
