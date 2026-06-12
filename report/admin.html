@@ -5,70 +5,168 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Admin Dashboard</title>
 
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
 <style>
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Poppins',sans-serif;
+}
+
 body{
-font-family:Poppins,sans-serif;
 background:#0f172a;
+min-height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+padding:20px;
 color:#fff;
-padding:20px;
 }
 
-.card{
-background:#1e293b;
-padding:20px;
-border-radius:16px;
-max-width:900px;
-margin:auto;
-}
-
-table{
+.container{
 width:100%;
-border-collapse:collapse;
-margin-top:20px;
+max-width:900px;
 }
 
-th,td{
-padding:10px;
-border-bottom:1px solid #334155;
-text-align:left;
+.header{
+text-align:center;
+margin-bottom:35px;
 }
 
-button{
-padding:10px 15px;
-border:none;
-border-radius:10px;
-background:#ef4444;
-color:#fff;
+.avatar{
+width:100px;
+height:100px;
+border-radius:50%;
+background:#1e293b;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:48px;
+margin:auto;
+margin-bottom:15px;
+box-shadow:0 10px 25px rgba(0,0,0,.3);
+}
+
+h1{
+font-size:30px;
+margin-bottom:5px;
+}
+
+.subtitle{
+color:#94a3b8;
+}
+
+.menu-grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+gap:20px;
+}
+
+.menu-card{
+background:#1e293b;
+border-radius:20px;
+padding:25px;
 cursor:pointer;
-margin-top:20px;
+transition:.25s;
+box-shadow:0 10px 25px rgba(0,0,0,.25);
 }
+
+.menu-card:hover{
+transform:translateY(-6px);
+}
+
+.icon{
+font-size:48px;
+margin-bottom:15px;
+}
+
+.card-title{
+font-size:20px;
+font-weight:700;
+margin-bottom:8px;
+}
+
+.card-desc{
+font-size:14px;
+color:#cbd5e1;
+line-height:1.5;
+}
+
+.logout-btn{
+margin-top:25px;
+width:100%;
+padding:14px;
+border:none;
+border-radius:12px;
+background:#ef4444;
+color:white;
+font-size:15px;
+font-weight:600;
+cursor:pointer;
+}
+
+.logout-btn:hover{
+opacity:.9;
+}
+
+.footer{
+text-align:center;
+margin-top:20px;
+color:#64748b;
+font-size:12px;
+}
+
 </style>
 </head>
 
 <body>
 
-<div class="card">
+<div class="container">
 
-<h2 id="welcome">Admin Panel</h2>
+<div class="header">
 
-<table>
-<thead>
-<tr>
-<th>NIK</th>
-<th>Nama</th>
-<th>Status</th>
-</tr>
-</thead>
-<tbody id="userTable"></tbody>
-</table>
+<div class="avatar">👨‍💼</div>
 
-<button onclick="logout()">Logout</button>
+<h1 id="welcome">Halo Admin</h1>
+
+<div class="subtitle">
+Selamat datang di Dashboard Monitoring
+</div>
+
+</div>
+
+<div class="menu-grid">
+
+<div class="menu-card"
+onclick="window.location.href='monitoringsalescontroldaily.html'">
+
+<div class="icon">📊</div>
+
+<div class="card-title">
+Monitoring Sales Control Daily
+</div>
+
+<div class="card-desc">
+Monitoring perolehan Green, Yellow dan Red seluruh staff berdasarkan periode yang dipilih.
+</div>
+
+</div>
+
+</div>
+
+<button class="logout-btn" onclick="logout()">
+Logout
+</button>
+
+<div class="footer">
+Sales Control Dashboard
+</div>
 
 </div>
 
 <script>
-
-const API_URL = "https://script.google.com/macros/s/AKfycbz5-yu44W5DPFVVPHVAZhDylVGNfh0wVVTKoAiixGsLPt6cJd-jokpw7wsLkpo1dMczXA/exec";
 
 const user = JSON.parse(localStorage.getItem("user"));
 
@@ -77,38 +175,8 @@ window.location.href = "login.html";
 }
 
 document.getElementById("welcome").innerText =
-`Admin: ${user.nama}`;
+`Halo, ${user.nama}`;
 
-/* LOAD USERS */
-async function loadUsers(){
-
-try{
-const res = await fetch(`${API_URL}?action=getUsers`);
-const data = await res.json();
-
-let html = "";
-
-data.users.forEach(u=>{
-html += `
-<tr>
-<td>${u.nik}</td>
-<td>${u.nama}</td>
-<td>${u.status}</td>
-</tr>
-`;
-});
-
-document.getElementById("userTable").innerHTML = html;
-
-}catch(e){
-alert("Gagal load data");
-}
-
-}
-
-loadUsers();
-
-/* logout */
 function logout(){
 localStorage.removeItem("user");
 window.location.href = "login.html";
