@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Tiket Approval</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Poppins,sans-serif;
+}
+
+body{
+min-height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+padding:20px;
+color:#fff;
+transition:.3s;
+}
+
+.ticket{
+width:100%;
+max-width:450px;
+padding:30px;
+border-radius:28px;
+backdrop-filter:blur(8px);
+background:rgba(255,255,255,.12);
+box-shadow:0 15px 40px rgba(0,0,0,.25);
+text-align:center;
+}
+
+.ticket-icon{
+font-size:100px;
+margin-bottom:10px;
+}
+
+.title{
+font-size:28px;
+font-weight:700;
+margin-bottom:5px;
+}
+
+.subtitle{
+opacity:.9;
+margin-bottom:25px;
+}
+
+.approver{
+font-size:34px;
+font-weight:700;
+margin-bottom:25px;
+}
+
+.line{
+height:1px;
+background:rgba(255,255,255,.25);
+margin:20px 0;
+}
+
+.info{
+text-align:left;
+display:flex;
+flex-direction:column;
+gap:10px;
+font-size:15px;
+}
+
+.info-row{
+display:flex;
+justify-content:space-between;
+gap:10px;
+}
+
+.info-label{
+opacity:.85;
+}
+
+.info-value{
+font-weight:600;
+text-align:right;
+}
+
+.footer{
+margin-top:25px;
+font-size:13px;
+opacity:.9;
+}
+
+.countdown{
+font-size:18px;
+font-weight:700;
+margin-top:10px;
+}
+
+</style>
+</head>
+<body>
+
+<div class="ticket">
+
+<div class="ticket-icon">🎫</div>
+
+<div class="title">APPROVED</div>
+
+<div class="subtitle">Approval By Duty</div>
+
+<div class="approver" id="approver">-</div>
+
+<div class="line"></div>
+
+<div class="info">
+
+<div class="info-row">
+<div class="info-label">Nama User</div>
+<div class="info-value" id="userNama"></div>
+</div>
+
+<div class="info-row">
+<div class="info-label">NIK User</div>
+<div class="info-value" id="userNik"></div>
+</div>
+
+<div class="info-row">
+<div class="info-label">Tanggal</div>
+<div class="info-value" id="tanggal"></div>
+</div>
+
+<div class="info-row">
+<div class="info-label">Jam</div>
+<div class="info-value" id="jam"></div>
+</div>
+
+<div class="info-row">
+<div class="info-label">Tanggal Ke</div>
+<div class="info-value" id="hari"></div>
+</div>
+
+</div>
+
+<div class="line"></div>
+
+<div class="footer">
+Kembali otomatis ke halaman input dalam
+</div>
+
+<div class="countdown" id="countdown">
+5
+</div>
+
+</div>
+
+<script>
+
+/* CEGAH AKSES LANGSUNG */
+const ticket =
+JSON.parse(
+sessionStorage.getItem("ticketData")
+);
+
+if(!ticket){
+
+window.location.href =
+"login.html";
+
+}
+
+/* WARNA BACKGROUND */
+
+if(ticket.warna === "green"){
+
+document.body.style.background =
+"linear-gradient(135deg,#22c55e,#15803d)";
+
+}
+
+if(ticket.warna === "yellow"){
+
+document.body.style.background =
+"linear-gradient(135deg,#eab308,#ca8a04)";
+
+}
+
+if(ticket.warna === "red"){
+
+document.body.style.background =
+"linear-gradient(135deg,#ef4444,#b91c1c)";
+
+}
+
+/* DATA */
+
+document.getElementById("approver").innerText =
+ticket.approver;
+
+document.getElementById("userNama").innerText =
+ticket.userNama;
+
+document.getElementById("userNik").innerText =
+ticket.userNik;
+
+document.getElementById("tanggal").innerText =
+ticket.tanggal;
+
+document.getElementById("jam").innerText =
+ticket.jam;
+
+document.getElementById("hari").innerText =
+ticket.day;
+
+/* COUNTDOWN */
+
+let s = 5;
+
+const cd =
+document.getElementById("countdown");
+
+const timer =
+setInterval(()=>{
+
+s--;
+
+cd.innerText = s;
+
+if(s <= 0){
+
+clearInterval(timer);
+
+window.location.href =
+"reportsalesid.html";
+
+}
+
+},1000);
+
+</script>
+
+</body>
+</html>
