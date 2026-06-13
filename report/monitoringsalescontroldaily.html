@@ -289,8 +289,10 @@ let currentSort =
 localStorage.getItem("dashboardSort")
 || "green";
 
-/* PERIODE AKTIF SELAMA HALAMAN DIBUKA */
-let activePeriode = "";
+/* PERIODE AKTIF */
+let activePeriode =
+sessionStorage.getItem("activePeriode")
+|| "";
 
 /* =========================
    LOAD PERIODE
@@ -564,6 +566,7 @@ dashboardData.length;
    FILTER PERIODE
 ========================= */
 
+
 document
 .getElementById("periodeFilter")
 .addEventListener(
@@ -573,11 +576,16 @@ document
 activePeriode =
 document.getElementById("periodeFilter").value;
 
+sessionStorage.setItem(
+"activePeriode",
+activePeriode
+);
+
 loadDashboard();
 
 }
 );
-
+   
 /* =========================
    AUTO REFRESH 30 DETIK
 ========================= */
@@ -594,7 +602,9 @@ loadDashboard();
 
 function logout(){
 
-activePeriode = "";
+sessionStorage.removeItem(
+"activePeriode"
+);
 
 localStorage.removeItem("user");
 
