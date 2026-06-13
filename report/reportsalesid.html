@@ -65,6 +65,20 @@ cursor:pointer;
 .red{background:#ef4444;}
 
 /* GRID */
+.weekdays{
+display:grid;
+grid-template-columns:repeat(7,1fr);
+gap:8px;
+margin-bottom:8px;
+}
+
+.weekdays div{
+text-align:center;
+font-size:13px;
+font-weight:600;
+color:#64748b;
+padding:6px 0;
+}
 .grid{
 display:grid;
 grid-template-columns:repeat(7,1fr);
@@ -145,6 +159,16 @@ pointer-events:none;
 </div>
 
 <!-- GRID -->
+<div class="weekdays">
+<div>Sen</div>
+<div>Sel</div>
+<div>Rab</div>
+<div>Kam</div>
+<div>Jum</div>
+<div>Sab</div>
+<div>Min</div>
+</div>
+
 <div class="grid" id="grid"></div>
 
 </div>
@@ -189,16 +213,55 @@ document.getElementById("periode").innerText =
    GRID
 ========================= */
 
-const grid = document.getElementById("grid");
+const grid =
+document.getElementById("grid");
 
-for(let i=1;i<=31;i++){
+/* HARI PERTAMA BULAN */
+const firstDay =
+new Date(
+now.getFullYear(),
+now.getMonth(),
+1
+);
 
-const div = document.createElement("div");
+/* UBAH MINGGU DIMULAI SENIN */
+let startDay =
+firstDay.getDay();
 
-div.className = "day";
-div.dataset.day = i;
+startDay =
+startDay === 0 ? 6 : startDay - 1;
 
-div.innerHTML = `
+/* KOTAK KOSONG */
+for(let i=0;i<startDay;i++){
+
+const empty =
+document.createElement("div");
+
+empty.style.visibility="hidden";
+
+grid.appendChild(empty);
+
+}
+
+/* JUMLAH HARI BULAN */
+const totalDays =
+new Date(
+now.getFullYear(),
+now.getMonth()+1,
+0
+).getDate();
+
+/* BUAT TANGGAL */
+for(let i=1;i<=totalDays;i++){
+
+const div =
+document.createElement("div");
+
+div.className="day";
+
+div.dataset.day=i;
+
+div.innerHTML=`
 <span class="date">${i}</span>
 <div class="badge-container"></div>
 `;
