@@ -364,6 +364,56 @@ color
 
 }
 
+/* ============================
+FUNCTION LOAD DATA CARD UNTUK DITAMPILKAN DI USER
+=============================== */
+
+async function loadSavedData(){
+
+const url =
+"https://script.google.com/macros/s/AKfycbwFvACNaZjeS8Ueuql78cm19Ha8YwlyytSA9xTQ3cxT4DAO9d6s7VlFdIuN2j9NFjPYgw/exec"
++ "?action=getUserMonthData"
++ "&nik=" + encodeURIComponent(user.nik)
++ "&periode=" + encodeURIComponent(periode);
+
+try{
+
+const res = await fetch(url);
+
+const data = await res.json();
+
+if(!data.days) return;
+
+Object.entries(data.days)
+.forEach(([day,color])=>{
+
+const cell =
+document.querySelector(
+`.day[data-day="${day}"]`
+);
+
+if(cell){
+
+const container =
+cell.querySelector(
+".badge-container"
+);
+
+container.innerHTML =
+`<div class="badge ${color}"></div>`;
+
+}
+
+});
+
+}catch(err){
+
+console.error(err);
+
+}
+
+}
+
 /* =========================
    SEND TO SHEET
 ========================= */
@@ -390,6 +440,7 @@ console.log("RESPONSE =", data);
 });
 }
 
+loadSavedData();
    </script>
 
 </body>
