@@ -71,6 +71,35 @@ justify-content:center;
 gap:15px;
 margin:15px 0;
 }
+.color-item{
+display:flex;
+flex-direction:column;
+align-items:center;
+gap:8px;
+}
+
+.color-label{
+font-size:12px;
+font-weight:600;
+color:#475569;
+text-align:center;
+min-height:32px;
+display:flex;
+align-items:center;
+justify-content:center;
+}
+.color-item:nth-child(1) .color-label{
+color:#16a34a;
+}
+
+.color-item:nth-child(2) .color-label{
+color:#ca8a04;
+}
+
+.color-item:nth-child(3) .color-label{
+color:#dc2626;
+}
+
 
 .circle{
 width:48px;
@@ -199,9 +228,22 @@ pointer-events:none;
 
 <!-- PALETTE -->
 <div class="palette">
+
+<div class="color-item">
+<div class="color-label">≥ 95%</div>
 <div class="circle green" data-color="green"></div>
+</div>
+
+<div class="color-item">
+<div class="color-label">94,99% - 85%</div>
 <div class="circle yellow" data-color="yellow"></div>
+</div>
+
+<div class="color-item">
+<div class="color-label">&lt; 85%</div>
 <div class="circle red" data-color="red"></div>
+</div>
+
 </div>
 
 <!-- GRID -->
