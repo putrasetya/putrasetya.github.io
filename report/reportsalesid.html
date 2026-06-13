@@ -340,8 +340,11 @@ color:#fff;
 /* =========================
    SESSION LOGIN (TETAP)
 ========================= */
-const user = JSON.parse(localStorage.getItem("user"));
+const API_URL =
+"https://script.google.com/macros/s/AKfycbwFvACNaZjeS8Ueuql78cm19Ha8YwlyytSA9xTQ3cxT4DAO9d6s7VlFdIuN2j9NFjPYgw/exec";
 
+const user = JSON.parse(localStorage.getItem("user"));
+   
 if(!user){
 window.location.href="login.html";
 }
@@ -668,6 +671,60 @@ pendingDay = null;
 pendingColor = null;
 
 }
+
+async function approvePin(){
+
+const pin =
+document
+.getElementById("approvalPin")
+.value
+.trim();
+
+if(!pin){
+
+alert("Masukkan PIN");
+
+return;
+
+}
+
+try{
+
+const res =
+await fetch(
+API_URL
++ "?action=verifyPin"
++ "&pin="
++ encodeURIComponent(pin)
+);
+
+const data =
+await res.json();
+
+if(!data.success){
+
+alert("PIN tidak valid");
+
+return;
+
+}
+
+alert(
+"Approved By : " +
+data.nama
+);
+
+closePinModal();
+
+}catch(err){
+
+console.error(err);
+
+alert("Gagal verifikasi PIN");
+
+}
+
+}
    
 /* =========================
    SEND TO SHEET
@@ -718,7 +775,8 @@ Cancel
 </button>
 
 <button
-class="btn-approve">
+class="btn-approve"
+onclick="approvePin()">
 Approve
 </button>
 
