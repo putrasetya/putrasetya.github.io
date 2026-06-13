@@ -314,7 +314,44 @@ document.getElementById("periodeFilter");
 select.innerHTML="";
 
 const periods =
-(data.periods || []).reverse();
+(data.periods || []);
+
+   const bulanMap = {
+JANUARI:1,
+FEBRUARI:2,
+MARET:3,
+APRIL:4,
+MEI:5,
+JUNI:6,
+JULI:7,
+AGUSTUS:8,
+SEPTEMBER:9,
+OKTOBER:10,
+NOVEMBER:11,
+DESEMBER:12
+};
+
+periods.sort((a,b)=>{
+
+const [bulanA,tahunA] =
+a.toUpperCase().split(" ");
+
+const [bulanB,tahunB] =
+b.toUpperCase().split(" ");
+
+const nilaiA =
+(Number(tahunA)*100) +
+bulanMap[bulanA];
+
+const nilaiB =
+(Number(tahunB)*100) +
+bulanMap[bulanB];
+
+return nilaiA - nilaiB;
+
+});
+
+
 
 periods.forEach(p=>{
 
