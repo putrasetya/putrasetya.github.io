@@ -709,12 +709,41 @@ return;
 
 }
 
-alert(
-"Approved By : " +
-data.nama
+/* TAMPILKAN BADGE */
+setBadge(
+pendingDay,
+pendingColor
+);
+
+/* SIMPAN DATA TIKET */
+sessionStorage.setItem(
+"ticketData",
+JSON.stringify({
+
+approver:data.nama,
+
+approverNik:data.nik,
+
+warna:pendingColor,
+
+tanggal:new Date().toLocaleDateString("id-ID"),
+
+jam:new Date().toLocaleTimeString("id-ID"),
+
+userNik:user.nik,
+
+userNama:user.nama,
+
+day:pendingDay.dataset.day
+
+})
 );
 
 closePinModal();
+
+/* REDIRECT */
+window.location.href =
+"tiketpulang.html";
 
 }catch(err){
 
