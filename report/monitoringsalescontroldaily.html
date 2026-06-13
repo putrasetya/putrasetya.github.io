@@ -289,6 +289,9 @@ let currentSort =
 localStorage.getItem("dashboardSort")
 || "green";
 
+/* PERIODE AKTIF SELAMA HALAMAN DIBUKA */
+let activePeriode = "";
+
 /* =========================
    LOAD PERIODE
 ========================= */
@@ -308,9 +311,10 @@ document.getElementById("periodeFilter");
 
 select.innerHTML="";
 
-(data.periods || [])
-.reverse()
-.forEach(p=>{
+const periods =
+(data.periods || []).reverse();
+
+periods.forEach(p=>{
 
 const o =
 document.createElement("option");
@@ -321,6 +325,54 @@ o.textContent = p;
 select.appendChild(o);
 
 });
+
+const bulanIndonesia = [
+"JANUARI",
+"FEBRUARI",
+"MARET",
+"APRIL",
+"MEI",
+"JUNI",
+"JULI",
+"AGUSTUS",
+"SEPTEMBER",
+"OKTOBER",
+"NOVEMBER",
+"DESEMBER"
+];
+
+const now = new Date();
+
+const periodeSekarang =
+bulanIndonesia[now.getMonth()] +
+" " +
+now.getFullYear();
+
+if(
+activePeriode &&
+periods.includes(activePeriode)
+){
+
+select.value = activePeriode;
+
+}else{
+
+const ditemukan =
+periods.find(
+p =>
+String(p).toUpperCase() ===
+periodeSekarang
+);
+
+if(ditemukan){
+
+select.value = ditemukan;
+
+}
+
+}
+
+activePeriode = select.value;
 
 await loadDashboard();
 
@@ -516,7 +568,14 @@ document
 .getElementById("periodeFilter")
 .addEventListener(
 "change",
-loadDashboard
+()=>{
+
+activePeriode =
+document.getElementById("periodeFilter").value;
+
+loadDashboard();
+
+}
 );
 
 /* =========================
@@ -534,6 +593,8 @@ loadDashboard();
 ========================= */
 
 function logout(){
+
+activePeriode = "";
 
 localStorage.removeItem("user");
 
