@@ -130,6 +130,11 @@ background:#3b82f6;
 box-shadow:0 0 20px rgba(59,130,246,.7);
 }
 
+.sort-btn.nik-active{
+background:#8b5cf6;
+box-shadow:0 0 20px rgba(139,92,246,.7);
+}
+
 .logout{
 background:#ef4444;
 color:#fff;
@@ -300,6 +305,10 @@ Sort By :
 
 <button id="btnNama" class="sort-btn" onclick="sortData('nama')">
 🔤 Nama
+</button>
+
+<button id="btnNik" class="sort-btn" onclick="sortData('nik')">
+🆔 NIK
 </button>
 
 
@@ -580,6 +589,17 @@ dashboardData.sort(
 
 }
 
+if(type==="nik"){
+
+dashboardData.sort((a,b)=>
+String(a.nik).localeCompare(
+String(b.nik),
+undefined,
+{numeric:true}
+));
+
+}
+
 renderTable();
 updateSortButtons();
 
@@ -595,7 +615,8 @@ btn.classList.remove(
 "green-active",
 "yellow-active",
 "red-active",
-"nama-active"
+"nama-active",
+"nik-active"
 );
 
 });
@@ -628,6 +649,13 @@ document.getElementById("btnNama")
 
 }
 
+if(currentSort==="nik"){
+
+document.getElementById("btnNik")
+.classList.add("active","nik-active");
+
+}
+
 }
 
 /* =========================
@@ -648,10 +676,14 @@ tg += r.green;
 ty += r.yellow;
 tr += r.red;
 
+
 let rank = "-";
 
 /* MEDALI HANYA SAAT SORT PERFORMA */
-if(currentSort!=="nama"){
+if(
+currentSort!=="nama" &&
+currentSort!=="nik"
+){
 
 rank = i + 1;
 
