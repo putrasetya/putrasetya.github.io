@@ -321,7 +321,7 @@ Sort By :
 
 <thead>
 <tr>
-<th>Rank</th>
+<th id="rankHeader">Rank</th>
 <th>Nama</th>
 <th>🟢</th>
 <th>🟡</th>
@@ -677,25 +677,25 @@ ty += r.yellow;
 tr += r.red;
 
 
-let rank = "-";
+let rank = i + 1;
 
-/* MEDALI HANYA SAAT SORT PERFORMA */
-if(
-currentSort!=="nama" &&
-currentSort!=="nik"
-){
+if(currentSort==="nik"){
+
+rank = r.nik;
+
+}
+else if(currentSort==="nama"){
 
 rank = i + 1;
 
-if(i===0){
-rank="🥇";
 }
-else if(i===1){
-rank="🥈";
-}
-else if(i===2){
-rank="🥉";
-}
+else{
+
+rank = i + 1;
+
+if(i===0) rank="🥇";
+else if(i===1) rank="🥈";
+else if(i===2) rank="🥉";
 
 }
 
@@ -744,6 +744,25 @@ tr;
 
 document.getElementById("totalStaff").innerText =
 dashboardData.length;
+
+const rankHeader =
+document.getElementById("rankHeader");
+
+if(currentSort==="nik"){
+
+rankHeader.innerText = "NIK";
+
+}
+else if(currentSort==="nama"){
+
+rankHeader.innerText = "No";
+
+}
+else{
+
+rankHeader.innerText = "Rank";
+
+}
 
 }
 
