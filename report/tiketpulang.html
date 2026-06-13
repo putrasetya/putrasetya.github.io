@@ -148,7 +148,7 @@ margin-top:10px;
 <div class="line"></div>
 
 <div class="footer">
-Kembali otomatis ke halaman input dalam
+Tunjukan tiket ini ke LP sebagai bukti.
 </div>
 
 <div class="countdown" id="countdown">
@@ -217,7 +217,7 @@ ticket.day;
 
 /* COUNTDOWN */
 
-let s = 5;
+let s = 3600;
 
 const cd =
 document.getElementById("countdown");
@@ -227,7 +227,14 @@ setInterval(()=>{
 
 s--;
 
-cd.innerText = s;
+const h = Math.floor(s / 3600);
+const m = Math.floor((s % 3600) / 60);
+const sec = s % 60;
+
+cd.innerText =
+String(h).padStart(2,"0") + ":" +
+String(m).padStart(2,"0") + ":" +
+String(sec).padStart(2,"0");
 
 if(s <= 0){
 
