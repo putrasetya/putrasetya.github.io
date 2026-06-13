@@ -102,6 +102,32 @@ color:#fff;
 background:#334155;
 color:#fff;
 cursor:pointer;
+transition:.25s;
+}
+
+.sort-btn.active{
+transform:translateY(-2px);
+box-shadow:0 0 15px rgba(255,255,255,.25);
+}
+   .sort-btn.green-active{
+background:#22c55e;
+box-shadow:0 0 20px rgba(34,197,94,.7);
+}
+
+.sort-btn.yellow-active{
+background:#eab308;
+box-shadow:0 0 20px rgba(234,179,8,.7);
+color:#000;
+}
+
+.sort-btn.red-active{
+background:#ef4444;
+box-shadow:0 0 20px rgba(239,68,68,.7);
+}
+
+.sort-btn.nama-active{
+background:#3b82f6;
+box-shadow:0 0 20px rgba(59,130,246,.7);
 }
 
 .logout{
@@ -214,19 +240,19 @@ MONITORING SALES CONTROL DAILY
 
 <select id="periodeFilter"></select>
 
-<button class="sort-btn" onclick="sortData('green')">
+<button id="btnGreen" class="sort-btn" onclick="sortData('green')">
 🟢 Green
 </button>
 
-<button class="sort-btn" onclick="sortData('yellow')">
+<button id="btnYellow" class="sort-btn" onclick="sortData('yellow')">
 🟡 Yellow
 </button>
 
-<button class="sort-btn" onclick="sortData('red')">
+<button id="btnRed" class="sort-btn" onclick="sortData('red')">
 🔴 Red
 </button>
 
-<button class="sort-btn" onclick="sortData('nama')">
+<button id="btnNama" class="sort-btn" onclick="sortData('nama')">
 🔤 Nama
 </button>
 
@@ -511,6 +537,52 @@ dashboardData.sort(
 }
 
 renderTable();
+updateSortButtons();
+
+}
+   
+   function updateSortButtons(){
+
+document.querySelectorAll(".sort-btn")
+.forEach(btn=>{
+
+btn.classList.remove(
+"active",
+"green-active",
+"yellow-active",
+"red-active",
+"nama-active"
+);
+
+});
+
+if(currentSort==="green"){
+
+document.getElementById("btnGreen")
+.classList.add("active","green-active");
+
+}
+
+if(currentSort==="yellow"){
+
+document.getElementById("btnYellow")
+.classList.add("active","yellow-active");
+
+}
+
+if(currentSort==="red"){
+
+document.getElementById("btnRed")
+.classList.add("active","red-active");
+
+}
+
+if(currentSort==="nama"){
+
+document.getElementById("btnNama")
+.classList.add("active","nama-active");
+
+}
 
 }
 
