@@ -280,6 +280,12 @@ background:#cbd5e1;
 background:#22c55e;
 color:#fff;
 }
+
+.disabled-day{
+  opacity: 0.35;
+  pointer-events: none;
+  filter: grayscale(1);
+}
    
 /* RESPONSIVE */
 @media(max-width:600px){
@@ -416,8 +422,32 @@ now.getMonth()+1,
 0
 ).getDate();
 
+/* HARI INI */
+const todayDate = now.getDate();
+
 /* BUAT TANGGAL */
 for(let i=1;i<=totalDays;i++){
+
+const div =
+document.createElement("div");
+
+div.className = "day";
+div.dataset.day = i;
+
+/* CHECK HARI INI */
+const isToday = (i === todayDate);
+
+if(!isToday){
+  div.classList.add("disabled-day");
+}
+
+div.innerHTML = `
+  <span class="date">${i}</span>
+  <div class="badge-container"></div>
+`;
+
+grid.appendChild(div);
+}
 
 const div =
 document.createElement("div");
@@ -551,16 +581,16 @@ touch.clientY
 const day =
 target?.closest(".day");
 
+
 if(day && dragColor){
 
-pendingDay = day;
+  if(day.classList.contains("disabled-day")) return;
 
-pendingColor = dragColor;
+  pendingDay = day;
+  pendingColor = dragColor;
 
-openPinModal();
-
+  openPinModal();
 }
-
 ghost.remove();
 
 ghost = null;
