@@ -288,25 +288,13 @@ color:#fff;
 .today{
 border:3px solid #2563eb;
 box-shadow:
-0 0 0 3px rgba(37,99,235,.15),
-0 8px 20px rgba(37,99,235,.25);
+0 0 0 2px rgba(37,99,235,.20);
 }
 
 .today .date{
 color:#2563eb;
 font-weight:700;
-}
-
-.today-label{
-position:absolute;
-top:5px;
-right:5px;
-font-size:10px;
-background:#2563eb;
-color:#fff;
-padding:2px 6px;
-border-radius:10px;
-font-weight:600;
+font-size:14px;
 }
    
 /* RESPONSIVE */
@@ -467,7 +455,6 @@ if(isToday){
 
 div.innerHTML = `
 <span class="date">${i}</span>
-${isToday ? '<span class="today-label">Hari Ini</span>' : ''}
 <div class="badge-container"></div>
 `;
 
