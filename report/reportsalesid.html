@@ -770,7 +770,7 @@ display.classList.add("placeholder");
 
 function addPin(num){
 
-if(pinValue.length >= 6)
+if(pinValue.length >= 8)
 return;
 
 pinValue += num;
@@ -823,6 +823,14 @@ pendingColor = null;
 async function approvePin(){
 
 const pin = pinValue;
+
+if(pin.length > 8){
+
+alert("PIN maksimal 8 digit");
+
+return;
+
+}
 
 if(!pin){
 
