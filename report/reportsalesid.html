@@ -258,6 +258,51 @@ box-sizing:border-box;
 margin-bottom:15px;
 }
 
+.pin-display{
+height:55px;
+border:1px solid #cbd5e1;
+border-radius:12px;
+display:flex;
+justify-content:center;
+align-items:center;
+font-size:28px;
+letter-spacing:8px;
+font-weight:700;
+margin-bottom:15px;
+background:#f8fafc;
+}
+
+.keypad{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:10px;
+margin-bottom:15px;
+}
+
+.key{
+height:55px;
+border:none;
+border-radius:12px;
+font-size:20px;
+font-weight:700;
+background:#f1f5f9;
+cursor:pointer;
+}
+
+.key:active{
+transform:scale(.96);
+}
+
+.key-clear{
+background:#ef4444;
+color:white;
+}
+
+.key-back{
+background:#64748b;
+color:white;
+}
+
 .modal-actions{
 display:flex;
 gap:10px;
@@ -676,11 +721,51 @@ console.error(err);
 
 }
 
+let pinValue = "";
+
+function updatePinDisplay(){
+
+const display =
+document.getElementById("pinDisplay");
+
+display.innerHTML =
+pinValue.length
+? "•".repeat(pinValue.length)
+: "••••";
+
+}
+
+function addPin(num){
+
+if(pinValue.length >= 6)
+return;
+
+pinValue += num;
+
+updatePinDisplay();
+
+}
+
+function clearPin(){
+
+pinValue = "";
+
+updatePinDisplay();
+
+}
+
+function backPin(){
+
+pinValue = pinValue.slice(0,-1);
+
+updatePinDisplay();
+
+}
+
 function openPinModal(){
 
-document
-.getElementById("approvalPin")
-.value = "";
+pinValue = "";
+updatePinDisplay();
 
 document
 .getElementById("pinModal")
@@ -694,6 +779,9 @@ document
 .getElementById("pinModal")
 .classList.remove("show");
 
+pinValue = "";
+updatePinDisplay();
+
 pendingDay = null;
 pendingColor = null;
 
@@ -701,11 +789,7 @@ pendingColor = null;
 
 async function approvePin(){
 
-const pin =
-document
-.getElementById("approvalPin")
-.value
-.trim();
+const pin = pinValue;
 
 if(!pin){
 
@@ -817,18 +901,30 @@ loadSavedData();
 
 <h3>Approval By Duty</h3>
 
-<input type="text" style="display:none">
-<input type="password" style="display:none">
 
-<input
-type="password"
-inputmode="numeric"
-id="approvalPin"
-placeholder="Masukkan PIN"
-autocomplete="new-password"
-autocapitalize="off"
-autocorrect="off"
-spellcheck="false">
+<div id="pinDisplay" class="pin-display">
+••••
+</div>
+
+<div class="keypad">
+
+<button class="key" onclick="addPin('1')">1</button>
+<button class="key" onclick="addPin('2')">2</button>
+<button class="key" onclick="addPin('3')">3</button>
+
+<button class="key" onclick="addPin('4')">4</button>
+<button class="key" onclick="addPin('5')">5</button>
+<button class="key" onclick="addPin('6')">6</button>
+
+<button class="key" onclick="addPin('7')">7</button>
+<button class="key" onclick="addPin('8')">8</button>
+<button class="key" onclick="addPin('9')">9</button>
+
+<button class="key key-clear" onclick="clearPin()">C</button>
+<button class="key" onclick="addPin('0')">0</button>
+<button class="key key-back" onclick="backPin()">⌫</button>
+
+</div>
 
 
 <div class="modal-actions">
