@@ -909,21 +909,13 @@ pendingColor = null;
 async function approvePin(){
 
 const pin = pinValue;
-
-if(!data.success){
-
-showAlert(
-"PIN Salah",
-data.message || "PIN yang Anda masukkan tidak valid."
-);
-
-return;
-
-}
    
 if(pin.length > 8){
 
-alert("PIN maksimal 8 digit");
+showAlert(
+"PIN Terlalu Panjang",
+"PIN maksimal 8 digit."
+);
 
 return;
 
@@ -931,7 +923,10 @@ return;
 
 if(!pin){
 
-alert("Masukkan PIN");
+showAlert(
+"PIN Kosong",
+"Silakan masukkan PIN terlebih dahulu."
+);
 
 return;
 
@@ -952,7 +947,10 @@ await res.json();
 
 if(!data.success){
 
-alert("PIN tidak valid");
+showAlert(
+"PIN Salah",
+data.message || "PIN yang Anda masukkan tidak valid."
+);
 
 return;
 
@@ -994,11 +992,15 @@ closePinModal();
 window.location.href =
 "tiketpulang.html";
 
-}catch(err){
+}
+catch(err){
 
 console.error(err);
 
-alert("Gagal verifikasi PIN");
+showAlert(
+"Terjadi Kesalahan",
+"Gagal melakukan verifikasi PIN."
+);
 
 }
 
