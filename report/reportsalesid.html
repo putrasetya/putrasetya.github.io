@@ -282,8 +282,31 @@ color:#fff;
 }
 
 .disabled-day{
-  opacity: 0.9;
   pointer-events: none;
+}
+
+.today{
+border:3px solid #2563eb;
+box-shadow:
+0 0 0 3px rgba(37,99,235,.15),
+0 8px 20px rgba(37,99,235,.25);
+}
+
+.today .date{
+color:#2563eb;
+font-weight:700;
+}
+
+.today-label{
+position:absolute;
+top:5px;
+right:5px;
+font-size:10px;
+background:#2563eb;
+color:#fff;
+padding:2px 6px;
+border-radius:10px;
+font-weight:600;
 }
    
 /* RESPONSIVE */
@@ -436,13 +459,16 @@ div.dataset.day = i;
 /* CHECK HARI INI */
 const isToday = (i === todayDate);
 
-if(!isToday){
+if(isToday){
+  div.classList.add("today");
+}else{
   div.classList.add("disabled-day");
 }
 
 div.innerHTML = `
-  <span class="date">${i}</span>
-  <div class="badge-container"></div>
+<span class="date">${i}</span>
+${isToday ? '<span class="today-label">Hari Ini</span>' : ''}
+<div class="badge-container"></div>
 `;
 
 grid.appendChild(div);
