@@ -175,6 +175,20 @@ border:1px solid rgba(255,255,255,.15);
 box-shadow:0 10px 25px rgba(0,0,0,.15);
 }
 
+#qrcode{
+display:flex;
+justify-content:center;
+margin-bottom:20px;
+}
+
+#qrcode canvas,
+#qrcode img{
+background:white;
+padding:10px;
+border-radius:16px;
+box-shadow:
+0 10px 30px rgba(0,0,0,.2);
+}
 </style>
 </head>
 <body>
@@ -182,9 +196,7 @@ box-shadow:0 10px 25px rgba(0,0,0,.15);
 <div class="ticket">
 <img src="azkocitimalltuban.png" class="logo" alt="Logo">
 
-<div style="text-align:center">
-<div class="ticket-icon" id="ticketIcon">🟢</div>
-</div>
+<div id="qrcode"></div>
 
 <div class="approver-label">APPROVED BY</div>
 <div class="approver" id="approver">-</div>
@@ -239,6 +251,34 @@ document.getElementById("userNama").innerText=ticket.userNama || "-";
 document.getElementById("userNik").innerText=ticket.userNik || "-";
 document.getElementById("tanggal").innerText=ticket.tanggal || "-";
 document.getElementById("jam").innerText=ticket.jam || "-";
+
+const qrData = JSON.stringify({
+
+nikUser: ticket.userNik,
+namaUser: ticket.userNama,
+
+approver: ticket.approver,
+
+tanggal: ticket.tanggal,
+jam: ticket.jam,
+
+warna: ticket.warna,
+
+expired:
+new Date(
+Date.now() + 3600000
+).toISOString()
+
+});
+
+new QRCode(
+document.getElementById("qrcode"),
+{
+text: qrData,
+width: 180,
+height: 180
+}
+);
 
 const cd =
 document.getElementById("countdown");
@@ -309,5 +349,6 @@ updateCountdown,
 );
 </script>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 </body>
 </html>
