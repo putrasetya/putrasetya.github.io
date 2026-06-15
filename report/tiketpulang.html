@@ -23,9 +23,9 @@ width:100%;
 max-width:480px;
 padding:30px;
 border-radius:30px;
-background:rgba(255,255,255,.12);
+background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.15);
 backdrop-filter:blur(10px);
-box-shadow:0 20px 50px rgba(0,0,0,.25);
+box-shadow:0 25px 60px rgba(0,0,0,.35);
 animation:fadeIn .5s ease;
 overflow:hidden;
 }
@@ -48,7 +48,7 @@ to{opacity:1;transform:translateY(0)}
 }
 
 .logo{
-width:120px;
+width:300px;filter:drop-shadow(0 8px 20px rgba(255,255,255,.25));
 max-width:80%;
 margin:0 auto 15px;
 display:block;
@@ -66,7 +66,7 @@ margin-bottom:15px;
 }
 
 .ticket-icon{
-font-size:72px;
+font-size:60px;
 margin-bottom:10px;
 }
 
@@ -151,20 +151,47 @@ background:rgba(255,255,255,.15);
 .approver{font-size:24px}
 .title{font-size:24px}
 }
+
+.ticket::marker{content:''}
+.watermark{
+position:absolute;
+inset:0;
+display:flex;
+justify-content:center;
+align-items:center;
+opacity:.06;
+pointer-events:none;
+font-size:220px;
+font-weight:700;
+}
+.approver{
+font-size:36px!important;
+text-shadow:0 0 18px rgba(255,255,255,.35);
+}
+.ticket-no{
+background:rgba(255,255,255,.1);
+padding:8px 14px;
+border-radius:999px;
+display:inline-block;
+left:50%;
+position:relative;
+transform:translateX(-50%);
+}
+.countdown{
+border:1px solid rgba(255,255,255,.15);
+box-shadow:0 10px 25px rgba(0,0,0,.15);
+}
+
 </style>
 </head>
 <body>
 
-<div class="ticket">
+<div class="ticket"><div class="watermark">AZKO</div>
 <img src="azkocitimalltuban.png" class="logo" alt="Logo">
 
 <div style="text-align:center">
-<div class="status-badge">✓ APPROVED</div>
 <div class="ticket-icon" id="ticketIcon">🟢</div>
 </div>
-
-<div class="title">APPROVED</div>
-<div class="subtitle">Approval By Duty</div>
 
 <div class="approver-label">APPROVED BY</div>
 <div class="approver" id="approver">-</div>
@@ -177,9 +204,7 @@ background:rgba(255,255,255,.15);
 <div class="info-row"><div class="info-label">Nama User</div><div class="info-value" id="userNama"></div></div>
 <div class="info-row"><div class="info-label">NIK User</div><div class="info-value" id="userNik"></div></div>
 <div class="info-row"><div class="info-label">Tanggal</div><div class="info-value" id="tanggal"></div></div>
-<div class="info-row"><div class="info-label">Jam</div><div class="info-value" id="jam"></div></div>
-<div class="info-row"><div class="info-label">Tanggal Ke</div><div class="info-value" id="hari"></div></div>
-</div>
+<div class="info-row"><div class="info-label">Jam</div><div class="info-value" id="jam"></div></div></div>
 
 <div class="line"></div>
 
