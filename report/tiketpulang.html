@@ -48,10 +48,13 @@ to{opacity:1;transform:translateY(0)}
 }
 
 .logo{
-width:300px;filter:drop-shadow(0 8px 20px rgba(255,255,255,.25));
-max-width:80%;
-margin:0 auto 15px;
+width:340px;
+max-width:90%;
+margin:0 auto 20px;
 display:block;
+filter:drop-shadow(
+0 10px 25px rgba(255,255,255,.35)
+);
 }
 
 .status-badge{
@@ -153,17 +156,7 @@ background:rgba(255,255,255,.15);
 }
 
 .ticket::marker{content:''}
-.watermark{
-position:absolute;
-inset:0;
-display:flex;
-justify-content:center;
-align-items:center;
-opacity:.06;
-pointer-events:none;
-font-size:220px;
-font-weight:700;
-}
+
 .approver{
 font-size:36px!important;
 text-shadow:0 0 18px rgba(255,255,255,.35);
@@ -186,7 +179,7 @@ box-shadow:0 10px 25px rgba(0,0,0,.15);
 </head>
 <body>
 
-<div class="ticket"><div class="watermark">AZKO</div>
+<div class="ticket">
 <img src="azkocitimalltuban.png" class="logo" alt="Logo">
 
 <div style="text-align:center">
@@ -246,28 +239,74 @@ document.getElementById("userNama").innerText=ticket.userNama || "-";
 document.getElementById("userNik").innerText=ticket.userNik || "-";
 document.getElementById("tanggal").innerText=ticket.tanggal || "-";
 document.getElementById("jam").innerText=ticket.jam || "-";
-document.getElementById("hari").innerText=ticket.day || "-";
 
-let s = 3600;
-const cd = document.getElementById("countdown");
+const cd =
+document.getElementById("countdown");
 
-const timer = setInterval(()=>{
-s--;
+let expireTime =
+localStorage.getItem(
+"ticketExpireTime"
+);
 
-const h = Math.floor(s/3600);
-const m = Math.floor((s%3600)/60);
-const sec = s%60;
+if(!expireTime){
+
+expireTime =
+Date.now() + (3600 * 1000);
+
+localStorage.setItem(
+"ticketExpireTime",
+expireTime
+);
+
+}
+
+function updateCountdown(){
+
+const remaining =
+Math.max(
+0,
+Math.floor(
+(Number(expireTime) - Date.now()) / 1000
+)
+);
+
+const h =
+Math.floor(remaining / 3600);
+
+const m =
+Math.floor(
+(remaining % 3600) / 60
+);
+
+const sec =
+remaining % 60;
 
 cd.innerText =
-String(h).padStart(2,"0")+":"+
-String(m).padStart(2,"0")+":"+
+String(h).padStart(2,"0")
++ ":" +
+String(m).padStart(2,"0")
++ ":" +
 String(sec).padStart(2,"0");
 
-if(s<=0){
-clearInterval(timer);
-window.location.href="reportsalesid.html";
+if(remaining <= 0){
+
+localStorage.removeItem(
+"ticketExpireTime"
+);
+
+window.location.href =
+"reportsalesid.html";
+
 }
-},1000);
+
+}
+
+updateCountdown();
+
+setInterval(
+updateCountdown,
+1000
+);
 </script>
 
 </body>
