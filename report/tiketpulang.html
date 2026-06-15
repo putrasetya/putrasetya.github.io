@@ -4,18 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>Tiket Approval</title>
-
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
-
 <style>
-
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:Poppins,sans-serif;
-}
-
+*{margin:0;padding:0;box-sizing:border-box;font-family:Poppins,sans-serif}
 body{
 min-height:100vh;
 display:flex;
@@ -24,53 +15,109 @@ align-items:center;
 padding:20px;
 color:#fff;
 transition:.3s;
+overflow:hidden;
+}
+.ticket{
+position:relative;
+width:100%;
+max-width:480px;
+padding:30px;
+border-radius:30px;
+background:rgba(255,255,255,.12);
+backdrop-filter:blur(10px);
+box-shadow:0 20px 50px rgba(0,0,0,.25);
+animation:fadeIn .5s ease;
+overflow:hidden;
+}
+.ticket:before,.ticket:after{
+content:"";
+position:absolute;
+width:34px;
+height:34px;
+border-radius:50%;
+background:rgba(255,255,255,.25);
+top:50%;
+transform:translateY(-50%);
+}
+.ticket:before{left:-17px}
+.ticket:after{right:-17px}
+
+@keyframes fadeIn{
+from{opacity:0;transform:translateY(20px)}
+to{opacity:1;transform:translateY(0)}
 }
 
-.ticket{
-width:100%;
-max-width:450px;
-padding:30px;
-border-radius:28px;
-backdrop-filter:blur(8px);
-background:rgba(255,255,255,.12);
-box-shadow:0 15px 40px rgba(0,0,0,.25);
-text-align:center;
+.logo{
+width:120px;
+max-width:80%;
+margin:0 auto 15px;
+display:block;
+}
+
+.status-badge{
+display:inline-block;
+padding:8px 18px;
+border-radius:999px;
+background:rgba(255,255,255,.18);
+border:1px solid rgba(255,255,255,.25);
+font-size:13px;
+font-weight:700;
+margin-bottom:15px;
 }
 
 .ticket-icon{
-font-size:100px;
+font-size:72px;
 margin-bottom:10px;
 }
 
 .title{
 font-size:28px;
 font-weight:700;
-margin-bottom:5px;
+text-align:center;
 }
 
 .subtitle{
+text-align:center;
 opacity:.9;
-margin-bottom:25px;
+margin-bottom:20px;
 }
 
 .approver{
-font-size:34px;
+text-align:center;
+font-size:30px;
 font-weight:700;
-margin-bottom:25px;
+letter-spacing:1px;
+margin-bottom:10px;
+}
+
+.approver-label{
+text-align:center;
+font-size:12px;
+letter-spacing:2px;
+opacity:.8;
+margin-bottom:5px;
+}
+
+.ticket-no{
+text-align:center;
+font-size:13px;
+opacity:.85;
+margin-bottom:15px;
 }
 
 .line{
 height:1px;
-background:rgba(255,255,255,.25);
-margin:20px 0;
+background:rgba(255,255,255,.2);
+margin:18px 0;
 }
 
 .info{
-text-align:left;
+background:rgba(255,255,255,.08);
+border-radius:18px;
+padding:18px;
 display:flex;
 flex-direction:column;
-gap:10px;
-font-size:15px;
+gap:12px;
 }
 
 .info-row{
@@ -79,174 +126,123 @@ justify-content:space-between;
 gap:10px;
 }
 
-.info-label{
-opacity:.85;
-}
-
-.info-value{
-font-weight:600;
-text-align:right;
-}
+.info-label{opacity:.85}
+.info-value{font-weight:600;text-align:right}
 
 .footer{
-margin-top:25px;
+margin-top:20px;
+text-align:center;
 font-size:13px;
 opacity:.9;
 }
 
 .countdown{
-font-size:18px;
+margin-top:15px;
+text-align:center;
+font-size:26px;
 font-weight:700;
-margin-top:10px;
+padding:12px;
+border-radius:14px;
+background:rgba(255,255,255,.15);
 }
 
+@media(max-width:600px){
+.ticket{padding:22px}
+.approver{font-size:24px}
+.title{font-size:24px}
+}
 </style>
 </head>
 <body>
 
 <div class="ticket">
+<img src="azkocitimalltuban.png" class="logo" alt="Logo">
 
-<div class="ticket-icon">🎫</div>
+<div style="text-align:center">
+<div class="status-badge">✓ APPROVED</div>
+<div class="ticket-icon" id="ticketIcon">🟢</div>
+</div>
 
 <div class="title">APPROVED</div>
-
 <div class="subtitle">Approval By Duty</div>
 
+<div class="approver-label">APPROVED BY</div>
 <div class="approver" id="approver">-</div>
+
+<div class="ticket-no" id="ticketNo"></div>
 
 <div class="line"></div>
 
 <div class="info">
-
-<div class="info-row">
-<div class="info-label">Nama User</div>
-<div class="info-value" id="userNama"></div>
-</div>
-
-<div class="info-row">
-<div class="info-label">NIK User</div>
-<div class="info-value" id="userNik"></div>
-</div>
-
-<div class="info-row">
-<div class="info-label">Tanggal</div>
-<div class="info-value" id="tanggal"></div>
-</div>
-
-<div class="info-row">
-<div class="info-label">Jam</div>
-<div class="info-value" id="jam"></div>
-</div>
-
-<div class="info-row">
-<div class="info-label">Tanggal Ke</div>
-<div class="info-value" id="hari"></div>
-</div>
-
+<div class="info-row"><div class="info-label">Nama User</div><div class="info-value" id="userNama"></div></div>
+<div class="info-row"><div class="info-label">NIK User</div><div class="info-value" id="userNik"></div></div>
+<div class="info-row"><div class="info-label">Tanggal</div><div class="info-value" id="tanggal"></div></div>
+<div class="info-row"><div class="info-label">Jam</div><div class="info-value" id="jam"></div></div>
+<div class="info-row"><div class="info-label">Tanggal Ke</div><div class="info-value" id="hari"></div></div>
 </div>
 
 <div class="line"></div>
 
 <div class="footer">
-Tunjukan tiket ini ke LP sebagai bukti.
+Tunjukan tiket ini ke LP sebagai bukti approval.
 </div>
 
-<div class="countdown" id="countdown">
-5
-</div>
+<div class="countdown" id="countdown">01:00:00</div>
 
 </div>
 
 <script>
-
-/* CEGAH AKSES LANGSUNG */
-const ticket =
-JSON.parse(
-sessionStorage.getItem("ticketData")
-);
+const ticket = JSON.parse(sessionStorage.getItem("ticketData"));
 
 if(!ticket){
-
-window.location.href =
-"login.html";
-
+window.location.href="login.html";
 }
 
-/* WARNA BACKGROUND */
+document.getElementById("ticketNo").innerText =
+"TKT-" + Date.now().toString().slice(-8);
 
-if(ticket.warna === "green"){
-
-document.body.style.background =
-"linear-gradient(135deg,#22c55e,#15803d)";
-
+if(ticket.warna==="green"){
+document.body.style.background="linear-gradient(135deg,#22c55e,#15803d)";
+document.getElementById("ticketIcon").innerHTML="🟢";
 }
 
-if(ticket.warna === "yellow"){
-
-document.body.style.background =
-"linear-gradient(135deg,#eab308,#ca8a04)";
-
+if(ticket.warna==="yellow"){
+document.body.style.background="linear-gradient(135deg,#eab308,#ca8a04)";
+document.getElementById("ticketIcon").innerHTML="🟡";
 }
 
-if(ticket.warna === "red"){
-
-document.body.style.background =
-"linear-gradient(135deg,#ef4444,#b91c1c)";
-
+if(ticket.warna==="red"){
+document.body.style.background="linear-gradient(135deg,#ef4444,#b91c1c)";
+document.getElementById("ticketIcon").innerHTML="🔴";
 }
 
-/* DATA */
-
-document.getElementById("approver").innerText =
-ticket.approver;
-
-document.getElementById("userNama").innerText =
-ticket.userNama;
-
-document.getElementById("userNik").innerText =
-ticket.userNik;
-
-document.getElementById("tanggal").innerText =
-ticket.tanggal;
-
-document.getElementById("jam").innerText =
-ticket.jam;
-
-document.getElementById("hari").innerText =
-ticket.day;
-
-/* COUNTDOWN */
+document.getElementById("approver").innerText=ticket.approver || "-";
+document.getElementById("userNama").innerText=ticket.userNama || "-";
+document.getElementById("userNik").innerText=ticket.userNik || "-";
+document.getElementById("tanggal").innerText=ticket.tanggal || "-";
+document.getElementById("jam").innerText=ticket.jam || "-";
+document.getElementById("hari").innerText=ticket.day || "-";
 
 let s = 3600;
+const cd = document.getElementById("countdown");
 
-const cd =
-document.getElementById("countdown");
-
-const timer =
-setInterval(()=>{
-
+const timer = setInterval(()=>{
 s--;
 
-const h = Math.floor(s / 3600);
-const m = Math.floor((s % 3600) / 60);
-const sec = s % 60;
+const h = Math.floor(s/3600);
+const m = Math.floor((s%3600)/60);
+const sec = s%60;
 
 cd.innerText =
-String(h).padStart(2,"0") + ":" +
-String(m).padStart(2,"0") + ":" +
+String(h).padStart(2,"0")+":"+
+String(m).padStart(2,"0")+":"+
 String(sec).padStart(2,"0");
 
-if(s <= 0){
-
+if(s<=0){
 clearInterval(timer);
-
-window.location.href =
-"reportsalesid.html";
-
+window.location.href="reportsalesid.html";
 }
-
 },1000);
-
 </script>
 
 </body>
