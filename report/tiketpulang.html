@@ -175,19 +175,20 @@ border:1px solid rgba(255,255,255,.15);
 box-shadow:0 10px 25px rgba(0,0,0,.15);
 }
 
-#qrcode{
+#barcodeContainer{
 display:flex;
 justify-content:center;
 margin-bottom:20px;
+background:white;
+padding:12px;
+border-radius:16px;
+box-shadow:0 10px 30px rgba(0,0,0,.2);
 }
 
-#qrcode canvas,
-#qrcode img{
-background:white;
-padding:10px;
-border-radius:16px;
-box-shadow:
-0 10px 30px rgba(0,0,0,.2);
+#barcode{
+width:100%;
+max-width:320px;
+height:90px;
 }
 </style>
 </head>
@@ -196,7 +197,9 @@ box-shadow:
 <div class="ticket">
 <img src="azkocitimalltuban.png" class="logo" alt="Logo">
 
-<div id="qrcode"></div>
+<div id="barcodeContainer">
+  <svg id="barcode"></svg>
+</div>
 
 <div class="approver-label">APPROVED BY</div>
 <div class="approver" id="approver">-</div>
@@ -221,7 +224,7 @@ Tunjukan tiket ini ke LP sebagai bukti approval.
 
 </div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script> 
+<script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.6/dist/JsBarcode.all.min.js"></script>
 <script>
 const ticket = JSON.parse(sessionStorage.getItem("ticketData"));
 
@@ -251,31 +254,21 @@ document.getElementById("userNik").innerText=ticket.userNik || "-";
 document.getElementById("tanggal").innerText=ticket.tanggal || "-";
 document.getElementById("jam").innerText=ticket.jam || "-";
 
-const qrData = JSON.stringify({
+const barcodeData =
+"TKT-" +
+(ticket.userNik || "") +
+"-" +
+Date.now();
 
-nikUser: ticket.userNik,
-namaUser: ticket.userNama,
-
-approver: ticket.approver,
-
-tanggal: ticket.tanggal,
-jam: ticket.jam,
-
-warna: ticket.warna,
-
-expired:
-new Date(
-Date.now() + 3600000
-).toISOString()
-
-});
-
-new QRCode(
-document.getElementById("qrcode"),
+JsBarcode(
+"#barcode",
+barcodeData,
 {
-text: qrData,
-width: 180,
-height: 180
+format:"CODE128",
+displayValue:true,
+fontSize:16,
+height:80,
+margin:5
 }
 );
 
