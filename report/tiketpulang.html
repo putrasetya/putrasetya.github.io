@@ -101,13 +101,6 @@ opacity:.8;
 margin-bottom:5px;
 }
 
-.ticket-no{
-text-align:center;
-font-size:13px;
-opacity:.85;
-margin-bottom:15px;
-}
-
 .line{
 height:1px;
 background:rgba(255,255,255,.2);
@@ -161,15 +154,7 @@ background:rgba(255,255,255,.15);
 font-size:36px!important;
 text-shadow:0 0 18px rgba(255,255,255,.35);
 }
-.ticket-no{
-background:rgba(255,255,255,.1);
-padding:8px 14px;
-border-radius:999px;
-display:inline-block;
-left:50%;
-position:relative;
-transform:translateX(-50%);
-}
+
 .countdown{
 border:1px solid rgba(255,255,255,.15);
 box-shadow:0 10px 25px rgba(0,0,0,.15);
@@ -215,8 +200,6 @@ Valid Digital Pass
 <div class="approver-label">APPROVED BY</div>
 <div class="approver" id="approver">-</div>
 
-<div class="ticket-no" id="ticketNo"></div>
-
 <div class="line"></div>
 
 <div class="info">
@@ -242,10 +225,6 @@ const ticket = JSON.parse(sessionStorage.getItem("ticketData"));
 if(!ticket){
 window.location.href="login.html";
 }
-
-document.getElementById("ticketNo").innerText =
-"TKT-" + Date.now().toString().slice(-8);
-
 
 if(ticket.warna==="green"){
 document.body.style.background="linear-gradient(135deg,#22c55e,#15803d)";
