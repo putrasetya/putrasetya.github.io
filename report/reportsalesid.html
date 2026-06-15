@@ -272,6 +272,13 @@ margin-bottom:15px;
 background:#f8fafc;
 }
 
+.pin-display.placeholder{
+color:#94a3b8;
+font-size:16px;
+letter-spacing:0;
+font-weight:500;
+}
+
 .keypad{
 display:grid;
 grid-template-columns:repeat(3,1fr);
@@ -728,10 +735,21 @@ function updatePinDisplay(){
 const display =
 document.getElementById("pinDisplay");
 
+if(pinValue.length){
+
 display.innerHTML =
-pinValue.length
-? "•".repeat(pinValue.length)
-: "••••";
+"•".repeat(pinValue.length);
+
+display.classList.remove("placeholder");
+
+}else{
+
+display.innerHTML =
+"Masukkan PIN";
+
+display.classList.add("placeholder");
+
+}
 
 }
 
@@ -902,8 +920,8 @@ loadSavedData();
 <h3>Approval By Duty</h3>
 
 
-<div id="pinDisplay" class="pin-display">
-••••
+<div id="pinDisplay" class="pin-display placeholder">
+Masukkan PIN
 </div>
 
 <div class="keypad">
