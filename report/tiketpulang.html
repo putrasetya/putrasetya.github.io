@@ -221,6 +221,7 @@ Tunjukan tiket ini ke LP sebagai bukti approval.
 
 </div>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script> 
 <script>
 const ticket = JSON.parse(sessionStorage.getItem("ticketData"));
 
@@ -231,19 +232,17 @@ window.location.href="login.html";
 document.getElementById("ticketNo").innerText =
 "TKT-" + Date.now().toString().slice(-8);
 
+
 if(ticket.warna==="green"){
 document.body.style.background="linear-gradient(135deg,#22c55e,#15803d)";
-document.getElementById("ticketIcon").innerHTML="🟢";
 }
-
+  
 if(ticket.warna==="yellow"){
 document.body.style.background="linear-gradient(135deg,#eab308,#ca8a04)";
-document.getElementById("ticketIcon").innerHTML="🟡";
 }
 
 if(ticket.warna==="red"){
 document.body.style.background="linear-gradient(135deg,#ef4444,#b91c1c)";
-document.getElementById("ticketIcon").innerHTML="🔴";
 }
 
 document.getElementById("approver").innerText=ticket.approver || "-";
@@ -349,6 +348,5 @@ updateCountdown,
 );
 </script>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 </body>
 </html>
