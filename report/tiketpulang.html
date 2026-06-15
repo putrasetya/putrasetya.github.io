@@ -190,6 +190,14 @@ width:100%;
 max-width:320px;
 height:90px;
 }
+
+.barcode-label{
+text-align:center;
+font-size:11px;
+letter-spacing:2px;
+opacity:.8;
+margin-top:8px;
+}
 </style>
 </head>
 <body>
@@ -199,6 +207,9 @@ height:90px;
 
 <div id="barcodeContainer">
   <svg id="barcode"></svg>
+</div>
+<div class="barcode-label">
+Valid Digital Pass
 </div>
 
 <div class="approver-label">APPROVED BY</div>
@@ -265,7 +276,7 @@ JsBarcode(
 barcodeData,
 {
 format:"CODE128",
-displayValue:true,
+displayValue:false,
 fontSize:16,
 height:80,
 margin:5
