@@ -56,13 +56,28 @@ box-shadow:0 2px 8px rgba(0,0,0,.05);
 }
 
 .info div{
-font-weight:500;
+display:grid;
+grid-template-columns:90px 1fr;
+align-items:center;
+gap:10px;
+}
+
+.info label{
+font-weight:600;
+color:#64748b;
+}
+
+.info label::after{
+content:":";
+float:right;
+margin-right:10px;
 }
 
 .info span{
 font-weight:700;
 color:#0f172a;
 }
+
 
 /* PALETTE */
 .palette{
@@ -418,10 +433,10 @@ window.location.href="login.html";
 }
 
 document.getElementById("nik").innerHTML =
-"NIK : <span>" + user.nik + "</span>";
+"<label>NIK</label><span>" + user.nik + "</span>";
 
 document.getElementById("nama").innerHTML =
-"Nama : <span>" + user.nama + "</span>";
+"<label>Nama</label><span>" + user.nama + "</span>";
 
 /* =========================
    PERIODE INDONESIA
@@ -440,7 +455,7 @@ now.getFullYear();
   
 
 document.getElementById("periode").innerHTML =
-"Periode : <span>" + periode + "</span>";
+"<label>Periode</label><span>" + periode + "</span>";
 
 /* =========================
    GRID
