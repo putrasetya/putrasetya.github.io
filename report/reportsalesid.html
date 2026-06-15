@@ -363,6 +363,72 @@ color:#2563eb;
 font-weight:700;
 font-size:14px;
 }
+
+.custom-alert{
+position:fixed;
+inset:0;
+background:rgba(15,23,42,.55);
+display:none;
+justify-content:center;
+align-items:center;
+z-index:99999;
+backdrop-filter:blur(4px);
+}
+
+.custom-alert.show{
+display:flex;
+}
+
+.custom-alert-box{
+width:90%;
+max-width:320px;
+background:#fff;
+border-radius:20px;
+padding:25px;
+text-align:center;
+animation:popup .25s ease;
+}
+
+@keyframes popup{
+from{
+transform:scale(.9);
+opacity:0;
+}
+to{
+transform:scale(1);
+opacity:1;
+}
+}
+
+.alert-icon{
+font-size:42px;
+margin-bottom:10px;
+}
+
+.alert-title{
+font-size:20px;
+font-weight:700;
+color:#0f172a;
+margin-bottom:8px;
+}
+
+.alert-message{
+font-size:14px;
+color:#64748b;
+margin-bottom:20px;
+line-height:1.5;
+}
+
+.alert-btn{
+width:100%;
+height:45px;
+border:none;
+border-radius:12px;
+background:#ef4444;
+color:#fff;
+font-weight:600;
+font-size:15px;
+}
    
 /* RESPONSIVE */
 @media(max-width:600px){
@@ -795,6 +861,26 @@ updatePinDisplay();
 
 }
 
+function showAlert(title,message){
+
+document.querySelector(".alert-title").textContent = title;
+
+document.querySelector(".alert-message").textContent = message;
+
+document
+.getElementById("customAlert")
+.classList.add("show");
+
+}
+
+function closeAlert(){
+
+document
+.getElementById("customAlert")
+.classList.remove("show");
+
+}  
+   
 function openPinModal(){
 
 pinValue = "";
@@ -824,6 +910,17 @@ async function approvePin(){
 
 const pin = pinValue;
 
+if(!data.success){
+
+showAlert(
+"PIN Salah",
+data.message || "PIN yang Anda masukkan tidak valid."
+);
+
+return;
+
+}
+   
 if(pin.length > 8){
 
 alert("PIN maksimal 8 digit");
@@ -986,6 +1083,19 @@ Approve
 
 </div>
 
+</div>
+
+<div id="customAlert" class="custom-alert">
+  <div class="custom-alert-box">
+    <div class="alert-icon">⚠️</div>
+    <div class="alert-title">PIN Salah</div>
+    <div class="alert-message">
+      PIN yang Anda masukkan tidak valid.
+    </div>
+    <button onclick="closeAlert()" class="alert-btn">
+      OK
+    </button>
+  </div>
 </div>
 </body>
 </html>
