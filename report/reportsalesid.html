@@ -968,11 +968,32 @@ return;
 
 } 
    
-/* TAMPILKAN BADGE */
-setBadge(
-pendingDay,
+/* SIMPAN KE SPREADSHEET DULU */
+const saveResult =
+await sendToSheet(
+pendingDay.dataset.day,
 pendingColor
 );
+
+if(!saveResult.success){
+
+showAlert(
+"Gagal Simpan",
+saveResult.message ||
+"Data tidak berhasil disimpan ke Spreadsheet."
+);
+
+return;
+}
+
+/* BARU TAMPILKAN BADGE */
+const container =
+pendingDay.querySelector(
+".badge-container"
+);
+
+container.innerHTML =
+`<div class="badge ${pendingColor}"></div>`;
 
 /* SIMPAN DATA TIKET */
 sessionStorage.setItem(
@@ -1038,25 +1059,11 @@ const url =
 + "&day=" + day
 + "&color=" + color;
 
-try{
-
 const res = await fetch(url);
 
 const data = await res.json();
 
-console.log("SAVE RESULT =", data);
-
 return data;
-
-}catch(err){
-
-console.error(err);
-
-return {
-success:false
-};
-
-}
 
 }
 
