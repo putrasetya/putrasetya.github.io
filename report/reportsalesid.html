@@ -752,11 +752,6 @@ container.appendChild(
 badge
 );
 
-sendToSheet(
-day.dataset.day,
-color
-);
-
 }
 
 /* ============================
@@ -956,6 +951,23 @@ return;
 
 }
 
+const result =
+await sendToSheet(
+pendingDay.dataset.day,
+pendingColor
+);
+
+if(!result.success){
+
+showAlert(
+"Gagal",
+"Data tidak berhasil disimpan ke Spreadsheet."
+);
+
+return;
+
+} 
+   
 /* TAMPILKAN BADGE */
 setBadge(
 pendingDay,
@@ -1015,9 +1027,7 @@ showAlert(
    SEND TO SHEET
 ========================= */
 
-function sendToSheet(day, color){
-
-console.log("USER =", user);
+async function sendToSheet(day,color){
 
 const url =
 "https://script.google.com/macros/s/AKfycbwFvACNaZjeS8Ueuql78cm19Ha8YwlyytSA9xTQ3cxT4DAO9d6s7VlFdIuN2j9NFjPYgw/exec"
@@ -1028,13 +1038,26 @@ const url =
 + "&day=" + day
 + "&color=" + color;
 
-console.log(url);
+try{
 
-fetch(url)
-.then(r=>r.json())
-.then(data=>{
-console.log("RESPONSE =", data);
-});
+const res = await fetch(url);
+
+const data = await res.json();
+
+console.log("SAVE RESULT =", data);
+
+return data;
+
+}catch(err){
+
+console.error(err);
+
+return {
+success:false
+};
+
+}
+
 }
 
 loadSavedData();
