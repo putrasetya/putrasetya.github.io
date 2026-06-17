@@ -429,6 +429,63 @@ color:#fff;
 font-weight:600;
 font-size:15px;
 }
+
+.server-loading{
+position:fixed;
+inset:0;
+background:rgba(15,23,42,.75);
+backdrop-filter:blur(6px);
+display:none;
+justify-content:center;
+align-items:center;
+z-index:999999;
+}
+
+.server-loading.show{
+display:flex;
+}
+
+.server-box{
+text-align:center;
+color:#fff;
+}
+
+.server-spinner{
+width:80px;
+height:80px;
+border:6px solid rgba(255,255,255,.15);
+border-top:6px solid #22c55e;
+border-radius:50%;
+animation:spin 1s linear infinite;
+margin:0 auto 20px;
+box-shadow:
+0 0 25px rgba(34,197,94,.5);
+}
+
+@keyframes spin{
+0%{transform:rotate(0deg);}
+100%{transform:rotate(360deg);}
+}
+
+.server-title{
+font-size:22px;
+font-weight:700;
+margin-bottom:10px;
+}
+
+.server-status{
+font-size:15px;
+opacity:.9;
+}
+
+.server-success .server-spinner{
+animation:none;
+border:none;
+width:auto;
+height:auto;
+font-size:80px;
+color:#22c55e;
+}
    
 /* RESPONSIVE */
 @media(max-width:600px){
@@ -874,7 +931,60 @@ document
 .getElementById("customAlert")
 .classList.remove("show");
 
-}  
+}
+
+function showServerLoading(status){
+
+document
+.getElementById("serverLoading")
+.classList.add("show");
+
+document
+.getElementById("serverStatus")
+.innerText = status;
+
+}
+
+function updateServerLoading(status){
+
+document
+.getElementById("serverStatus")
+.innerText = status;
+
+}
+
+function showServerSuccess(){
+
+const icon =
+document.getElementById("serverIcon");
+
+icon.className =
+"server-spinner server-success";
+
+icon.innerHTML = "✓";
+
+document
+.getElementById("serverStatus")
+.innerText =
+"Data berhasil dikirim";
+
+}
+
+function hideServerLoading(){
+
+document
+.getElementById("serverLoading")
+.classList.remove("show");
+
+const icon =
+document.getElementById("serverIcon");
+
+icon.className =
+"server-spinner";
+
+icon.innerHTML = "";
+
+}
    
 function openPinModal(){
 
@@ -904,6 +1014,9 @@ pendingColor = null;
 async function approvePin(){
 
 const pin = pinValue;
+showServerLoading(
+"Verifikasi PIN..."
+);
    
 if(pin.length > 8){
 
@@ -940,6 +1053,10 @@ API_URL
 const data =
 await res.json();
 
+updateServerLoading(
+"PIN valid, menyiapkan data..."
+);
+
 if(!data.success){
 
 showAlert(
@@ -950,6 +1067,10 @@ data.message || "PIN yang Anda masukkan tidak valid."
 return;
 
 }
+
+updateServerLoading(
+"Menyimpan ke Spreadsheet..."
+);
    
 /* SIMPAN KE SPREADSHEET DULU */
 const saveResult =
@@ -960,6 +1081,8 @@ pendingColor
 
 if(!saveResult.success){
 
+hideServerLoading();
+   
 showAlert(
 "Gagal Simpan",
 saveResult.message ||
@@ -977,6 +1100,14 @@ pendingDay.querySelector(
 
 container.innerHTML =
 `<div class="badge ${pendingColor}"></div>`;
+
+showServerSuccess();
+
+await new Promise(resolve =>
+setTimeout(resolve,1200)
+);
+
+hideServerLoading();
 
 /* SIMPAN DATA TIKET */
 sessionStorage.setItem(
@@ -1116,6 +1247,24 @@ Approve
       OK
     </button>
   </div>
+</div>
+
+<div id="serverLoading" class="server-loading">
+
+<div class="server-box">
+
+<div id="serverIcon" class="server-spinner"></div>
+
+<div class="server-title">
+Mengirim Data
+</div>
+
+<div id="serverStatus" class="server-status">
+Menghubungi server...
+</div>
+
+</div>
+
 </div>
 </body>
 </html>
