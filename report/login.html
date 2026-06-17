@@ -99,7 +99,17 @@ cursor:not-allowed;
 
 <div id="pinBox">
 <label>PIN Admin</label>
-<input type="password" id="pin" placeholder="Masukkan PIN">
+<input
+type="tel"
+id="pin"
+maxlength="8"
+inputmode="numeric"
+autocomplete="off"
+autocorrect="off"
+autocapitalize="off"
+spellcheck="false"
+name="approval_pin"
+placeholder="Masukkan PIN">
 </div>
 
 <button id="nextBtn" disabled>Next</button>
