@@ -439,6 +439,7 @@ display:none;
 justify-content:center;
 align-items:center;
 z-index:999999;
+pointer-events:all;
 }
 
 .server-loading.show{
@@ -1014,9 +1015,6 @@ pendingColor = null;
 async function approvePin(){
 
 const pin = pinValue;
-showServerLoading(
-"Verifikasi PIN..."
-);
    
 if(pin.length > 8){
 
@@ -1040,6 +1038,10 @@ return;
 
 }
 
+showServerLoading(
+"Verifikasi PIN..."
+);
+   
 try{
 
 const res =
@@ -1058,6 +1060,8 @@ updateServerLoading(
 );
 
 if(!data.success){
+
+hideServerLoading();
 
 showAlert(
 "PIN Salah",
@@ -1148,6 +1152,8 @@ window.location.href =
 catch(err){
 
 console.error(err);
+
+hideServerLoading();
 
 showAlert(
 "Terjadi Kesalahan",
