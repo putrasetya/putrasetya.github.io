@@ -950,23 +950,6 @@ data.message || "PIN yang Anda masukkan tidak valid."
 return;
 
 }
-
-const result =
-await sendToSheet(
-pendingDay.dataset.day,
-pendingColor
-);
-
-if(!result.success){
-
-showAlert(
-"Gagal",
-"Data tidak berhasil disimpan ke Spreadsheet."
-);
-
-return;
-
-} 
    
 /* SIMPAN KE SPREADSHEET DULU */
 const saveResult =
