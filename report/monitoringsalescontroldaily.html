@@ -203,7 +203,137 @@ opacity:.9;
 transform:translateY(-2px);
 }
 
-   
+ .calendar-modal{
+position:fixed;
+inset:0;
+background:rgba(0,0,0,.75);
+backdrop-filter:blur(6px);
+display:none;
+justify-content:center;
+align-items:center;
+z-index:99999;
+animation:fadeIn .25s ease;
+}
+
+.calendar-modal.show{
+display:flex;
+}
+
+.calendar-box{
+width:95%;
+max-width:900px;
+background:#1e293b;
+border-radius:24px;
+padding:25px;
+position:relative;
+box-shadow:
+0 25px 60px rgba(0,0,0,.5);
+}
+
+.calendar-close{
+position:absolute;
+top:15px;
+right:15px;
+width:42px;
+height:42px;
+border:none;
+border-radius:50%;
+background:#ef4444;
+color:#fff;
+font-size:20px;
+cursor:pointer;
+}
+
+.calendar-header{
+text-align:center;
+margin-bottom:20px;
+}
+
+.calendar-header h2{
+margin-bottom:5px;
+}
+
+.calendar-stats{
+display:flex;
+justify-content:center;
+gap:15px;
+margin-bottom:20px;
+flex-wrap:wrap;
+}
+
+.stat{
+padding:10px 18px;
+border-radius:12px;
+font-weight:700;
+}
+
+.green-stat{
+background:#14532d;
+}
+
+.yellow-stat{
+background:#713f12;
+}
+
+.red-stat{
+background:#7f1d1d;
+}
+
+.weekdays-cal{
+display:grid;
+grid-template-columns:repeat(7,1fr);
+gap:8px;
+margin-bottom:10px;
+}
+
+.weekdays-cal div{
+background:#0f172a;
+padding:10px;
+text-align:center;
+border-radius:10px;
+font-weight:700;
+}
+
+.calendar-grid{
+display:grid;
+grid-template-columns:repeat(7,1fr);
+gap:8px;
+}
+
+.calendar-day{
+height:60px;
+background:#0f172a;
+border-radius:12px;
+position:relative;
+}
+
+.calendar-date{
+position:absolute;
+top:5px;
+left:8px;
+font-size:12px;
+}
+
+.calendar-badge{
+width:20px;
+height:20px;
+border-radius:50%;
+position:absolute;
+right:5px;
+bottom:5px;
+}
+
+.calendar-badge.green{
+background:#22c55e;
+}
+
+.calendar-badge.yellow{
+background:#eab308;
+}
+
+.calendar-badge.red{
+background:#ef4444;
+}  
 
 @media(max-width:768px){
 
@@ -700,7 +830,7 @@ else if(i===2) rank="🥉";
 }
 
 html += `
-<tr>
+<tr onclick="showCalendar('${r.nik}','${r.nama}')">
 
 <td>${rank}</td>
 
@@ -816,6 +946,128 @@ window.location.href="login.html";
 
 }
 
+async function showCalendar(nik,nama){
+
+document
+.getElementById("calendarModal")
+.classList.add("show");
+
+document
+.getElementById("calNama")
+.innerText = nama;
+
+document
+.getElementById("calNik")
+.innerText = nik;
+
+const periode =
+document.getElementById("periodeFilter").value;
+
+const res =
+await fetch(
+API_URL +
+"?action=getUserMonthData" +
+"&nik=" + encodeURIComponent(nik) +
+"&periode=" + encodeURIComponent(periode)
+);
+
+const data =
+await res.json();
+
+const days =
+data.days || {};
+
+let green=0;
+let yellow=0;
+let red=0;
+
+const grid =
+document.getElementById("calendarGrid");
+
+grid.innerHTML = "";
+
+const now = new Date();
+
+const firstDay =
+new Date(
+now.getFullYear(),
+now.getMonth(),
+1
+);
+
+let startDay =
+firstDay.getDay();
+
+startDay =
+startDay===0 ? 6 : startDay-1;
+
+for(let i=0;i<startDay;i++){
+
+const empty =
+document.createElement("div");
+
+grid.appendChild(empty);
+
+}
+
+const totalDays =
+new Date(
+now.getFullYear(),
+now.getMonth()+1,
+0
+).getDate();
+
+for(let i=1;i<=totalDays;i++){
+
+const div =
+document.createElement("div");
+
+div.className =
+"calendar-day";
+
+let badge="";
+
+if(days[i]){
+
+badge =
+`<div class="calendar-badge ${days[i]}"></div>`;
+
+if(days[i]==="green") green++;
+if(days[i]==="yellow") yellow++;
+if(days[i]==="red") red++;
+
+}
+
+div.innerHTML = `
+<div class="calendar-date">${i}</div>
+${badge}
+`;
+
+grid.appendChild(div);
+
+}
+
+document
+.getElementById("calGreen")
+.innerText = green;
+
+document
+.getElementById("calYellow")
+.innerText = yellow;
+
+document
+.getElementById("calRed")
+.innerText = red;
+
+}
+
+function closeCalendar(){
+
+document
+.getElementById("calendarModal")
+.classList.remove("show");
+
+}   
 /* =========================
    START
 ========================= */
@@ -824,5 +1076,57 @@ loadPeriods();
 
 </script>
 
+<div id="calendarModal" class="calendar-modal">
+
+<div class="calendar-box">
+
+<button class="calendar-close"
+onclick="closeCalendar()">
+✕
+</button>
+
+<div class="calendar-header">
+
+<h2 id="calNama">Nama Staff</h2>
+
+<div id="calNik">
+NIK
+</div>
+
+</div>
+
+<div class="calendar-stats">
+
+<div class="stat green-stat">
+🟢 <span id="calGreen">0</span>
+</div>
+
+<div class="stat yellow-stat">
+🟡 <span id="calYellow">0</span>
+</div>
+
+<div class="stat red-stat">
+🔴 <span id="calRed">0</span>
+</div>
+
+</div>
+
+<div class="weekdays-cal">
+<div>Sen</div>
+<div>Sel</div>
+<div>Rab</div>
+<div>Kam</div>
+<div>Jum</div>
+<div>Sab</div>
+<div>Min</div>
+</div>
+
+<div id="calendarGrid"
+class="calendar-grid">
+</div>
+
+</div>
+
+</div>   
 </body>
 </html>
