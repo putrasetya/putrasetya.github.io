@@ -153,7 +153,9 @@ Sales Control Dashboard
 
 <script>
 
-const user = JSON.parse(localStorage.getItem("user"));
+const user =
+JSON.parse(sessionStorage.getItem("user")) ||
+JSON.parse(localStorage.getItem("user"));
 
 if(!user || user.status !== "admin"){
 window.location.href = "login.html";
