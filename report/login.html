@@ -235,8 +235,15 @@ sessionStorage.setItem("nama", selectedUser.nama);
 sessionStorage.setItem("status", selectedUser.status || "");
 sessionStorage.setItem("pin", selectedUser.pin || "");
 
-// optional backup (boleh tetap)
-localStorage.setItem("user", JSON.stringify(selectedUser));
+sessionStorage.setItem(
+"user",
+JSON.stringify(selectedUser)
+);
+
+localStorage.setItem(
+"user",
+JSON.stringify(selectedUser)
+);
 
 const status = String(selectedUser.status || "").toLowerCase();
 
