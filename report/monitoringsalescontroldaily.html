@@ -16,8 +16,8 @@ font-family:Poppins,sans-serif;
 }
 
 body{
-background:#0f172a;
-color:#fff;
+background:#f1f5f9;
+color:#0f172a;
 padding:15px;
 }
 
@@ -41,7 +41,7 @@ font-weight:700;
 }
 
 .admin{
-color:#cbd5e1;
+color:#64748b;
 font-size:14px;
 }
 
@@ -53,9 +53,10 @@ margin-bottom:20px;
 }
 
 .card{
-background:#1e293b;
+background:#ffffff;
 padding:18px;
 border-radius:16px;
+box-shadow:0 4px 15px rgba(0,0,0,.08);
 }
 
 .card-value{
@@ -94,13 +95,15 @@ border-radius:10px;
 }
 
 select{
-background:#1e293b;
-color:#fff;
+background:#fff;
+color:#0f172a;
+border:1px solid #cbd5e1;
 }
 
 .sort-btn{
-background:#334155;
-color:#fff;
+background:#fff;
+color:#0f172a;
+border:1px solid #cbd5e1;
 cursor:pointer;
 transition:.25s;
 }
@@ -143,9 +146,10 @@ cursor:pointer;
 }
 
 .table-wrap{
-background:#1e293b;
+background:#fff;
 border-radius:16px;
 overflow:hidden;
+box-shadow:0 4px 15px rgba(0,0,0,.08);
 }
 
 table{
@@ -154,17 +158,21 @@ border-collapse:collapse;
 }
 
 th{
-background:#0b1220;
+background:#f8fafc;
 padding:14px;
+color:#334155;
+border-bottom:2px solid #e2e8f0;
 }
 
 td{
 padding:14px;
-border-bottom:1px solid #334155;
+border-bottom:1px solid #e2e8f0;
+color:#0f172a;
 }
 
 tr:hover{
-background:#263449;
+background:#f8fafc;
+cursor:pointer;
 }
 
 .dot{
@@ -206,7 +214,7 @@ transform:translateY(-2px);
 .calendar-modal{
 position:fixed;
 inset:0;
-background:rgba(15,23,42,.8);
+background:rgba(0,0,0,.35);
 backdrop-filter:blur(5px);
 display:none;
 justify-content:center;
@@ -289,7 +297,8 @@ margin-bottom:10px;
 }
 
 .weekdays-cal div{
-background:#0f172a;
+background:#e2e8f0;
+color:#334155;
 padding:10px;
 text-align:center;
 border-radius:10px;
