@@ -225,6 +225,10 @@ z-index:999999;
 padding:10px;
 }
 
+.calendar-modal.show{
+display:flex;
+}
+   
 .calendar-box{
 width:100%;
 max-width:850px;
@@ -1007,12 +1011,31 @@ document.getElementById("calendarGrid");
 
 grid.innerHTML = "";
 
-const now = new Date();
+const periodeMap = {
+JANUARI:0,
+FEBRUARI:1,
+MARET:2,
+APRIL:3,
+MEI:4,
+JUNI:5,
+JULI:6,
+AGUSTUS:7,
+SEPTEMBER:8,
+OKTOBER:9,
+NOVEMBER:10,
+DESEMBER:11
+};
+
+const [bulan,tahun] =
+periode.toUpperCase().split(" ");
+
+const bulanIndex =
+periodeMap[bulan];
 
 const firstDay =
 new Date(
-now.getFullYear(),
-now.getMonth(),
+parseInt(tahun),
+bulanIndex,
 1
 );
 
@@ -1033,8 +1056,8 @@ grid.appendChild(empty);
 
 const totalDays =
 new Date(
-now.getFullYear(),
-now.getMonth()+1,
+parseInt(tahun),
+bulanIndex + 1,
 0
 ).getDate();
 
@@ -1091,8 +1114,6 @@ document
 .classList.remove("show");
 
 }
-
-}   
 /* =========================
    START
 ========================= */
