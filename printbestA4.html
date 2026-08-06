@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Best Sales Award Generator</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
+<style>
+
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+body{
+    background:#111;
+    color:white;
+    font-family:'Montserrat',sans-serif;
+    padding:20px;
+}
+
+.container{
+    display:flex;
+    gap:30px;
+    justify-content:center;
+    flex-wrap:wrap;
+}
+
+
+/* PANEL */
+
+.panel{
+    width:350px;
+    background:#1b1b1b;
+    padding:25px;
+    border-radius:20px;
+}
+
+.title{
+    text-align:center;
+    font-size:28px;
+    font-weight:900;
+    color:#ffd400;
+    margin-bottom:20px;
+}
+
+label{
+    display:block;
+    font-size:12px;
+    opacity:.7;
+    margin-bottom:5px;
+}
+
+input,select{
+
+    width:100%;
+    height:45px;
+    border-radius:10px;
+    border:none;
+    padding:0 12px;
+    margin-bottom:15px;
+    font-weight:700;
+
+}
+
+
+button{
+
+    width:100%;
+    height:48px;
+    border:none;
+    border-radius:10px;
+    background:#e60000;
+    color:white;
+    font-weight:900;
+    cursor:pointer;
+    margin-top:8px;
+
+}
+
+
+
+/* AREA PRINT */
+
+.sheet{
+
+    width:29.7cm;
+    height:21cm;
+    background:white;
+    padding:1.5cm;
+    display:flex;
+    gap:1cm;
+}
+
+
+/* KARTU */
+
+.card{
+
+    width:12.5cm;
+    height:18cm;
+    background:white;
+    border-radius:20px;
+    overflow:hidden;
+    position:relative;
+    color:#111;
+    border:1px solid #ddd;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+
+}
+
+
+.card-header{
+
+    width:100%;
+    height:1.5cm;
+    background:#111;
+    color:#ffd400;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-size:22px;
+    font-weight:900;
+
+}
+
+
+.photo{
+
+    margin-top:15px;
+    width:7cm;
+    height:7cm;
+    border-radius:50%;
+    object-fit:cover;
+    background:#eee;
+
+}
+
+
+
+.name{
+
+    margin-top:15px;
+    font-size:24px;
+    font-weight:900;
+    text-align:center;
+
+}
+
+
+
+.category{
+
+    margin-top:15px;
+    font-size:18px;
+    font-weight:900;
+    color:#d00000;
+
+}
+
+
+.value{
+
+    margin-top:10px;
+    font-size:34px;
+    font-weight:900;
+}
+
+
+
+.footer{
+
+    position:absolute;
+    bottom:20px;
+    font-size:14px;
+    font-weight:700;
+
+}
+
+
+
+/* HILANG SAAT PRINT */
+
+@media print{
+
+    body{
+        background:white;
+        padding:0;
+    }
+
+    .panel{
+        display:none;
+    }
+
+    .sheet{
+        display:flex;
+        padding:1.5cm;
+    }
+
+}
+
+
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<div class="container">
+
+
+<div class="panel">
+
+
+<div class="title">
+AWARD GENERATOR
+</div>
+
+
+<label>Kategori</label>
+
+<select id="kategori">
+
+<option value="SALES">
+BEST SALES
+</option>
+
+<option value="PROTEKSI">
+BEST PROTEKSI
+</option>
+
+<option value="TRANSAKSI">
+BEST TRANSAKSI
+</option>
+
+</select>
+
+
+
+<label>Nama Sales</label>
+
+<input id="namaInput" placeholder="Masukkan nama">
+
+
+<label>Angka</label>
+
+<input id="angkaInput" placeholder="Masukkan angka">
+
+
+<button onclick="generate()">
+GENERATE
+</button>
+
+
+<button onclick="window.print()">
+PRINT A4
+</button>
+
+
+<button onclick="downloadPNG()">
+DOWNLOAD PNG
+</button>
+
+
+</div>
+
+
+
+
+
+<div class="sheet" id="sheet">
+
+
+
+<div class="card" id="card1">
+
+
+<div class="card-header">
+BEST
+</div>
+
+
+<img class="photo" id="foto1">
+
+
+<div class="name" id="nama1">
+NAMA
+</div>
+
+
+<div class="category" id="kat1">
+BEST SALES
+</div>
+
+
+<div class="value" id="nilai1">
+0
+</div>
+
+
+<div class="footer">
+AZKO CHAMPION
+</div>
+
+
+</div>
+
+
+
+
+
+<div class="card" id="card2">
+
+
+<div class="card-header">
+BEST
+</div>
+
+
+<img class="photo" id="foto2">
+
+
+<div class="name" id="nama2">
+NAMA
+</div>
+
+
+<div class="category" id="kat2">
+BEST SALES
+</div>
+
+
+<div class="value" id="nilai2">
+0
+</div>
+
+<script>
+
+
+/* =========================
+ DATABASE FOTO SALES
+ GANTI LINK FOTO DISINI
+========================= */
+
+
+const people=[
+
+{
+keywords:["PUTRA","put"],
+name:"PUTRA SETYA",
+photo:"https://lh3.googleusercontent.com/d/1Pxw-wIUKTcyA_inIcqpYY833f_3AtZe2=w1000"
+},
+
+
+{
+keywords:["AFI","avi","api"],
+name:"AFI",
+photo:"https://lh3.googleusercontent.com/d/12pjk_-ZJhbqbPZDzdH4sJSkE5qWwzrf7=w1000"
+},
+
+
+{
+keywords:["GHOFUR","GHO","GO"],
+name:"GHOFUR",
+photo:"https://lh3.googleusercontent.com/d/13OG6tf86ZIg6uUIn0yU6TwqweCSkLNfw=w1000"
+}
+
+];
+
+
+
+/* =========================
+ CARI FOTO BERDASARKAN NAMA
+========================= */
+
+
+function findPerson(nama){
+
+
+let text=nama.toUpperCase();
+
+
+return people.find(p=>
+
+p.keywords.some(k=>
+
+text.includes(k.toUpperCase())
+
+)
+
+);
+
+
+}
+
+
+
+
+
+/* =========================
+ FORMAT ANGKA
+========================= */
+
+
+function formatNilai(kategori,angka){
+
+
+angka=angka.replace(/[^0-9]/g,"");
+
+
+if(kategori=="SALES"){
+
+
+let juta=parseInt(angka||0)/1000000;
+
+
+return juta.toFixed(1)
+.replace(".",",")
++" JT";
+
+
+}
+
+
+
+if(kategori=="PROTEKSI"){
+
+
+return angka+" PROTEKSI";
+
+
+}
+
+
+
+if(kategori=="TRANSAKSI"){
+
+
+return angka+" TRANSAKSI";
+
+
+}
+
+
+}
+
+
+
+
+
+/* =========================
+ GENERATE KARTU
+========================= */
+
+
+function generate(){
+
+
+
+let kategori=
+document.getElementById("kategori").value;
+
+
+
+let nama=
+document.getElementById("namaInput").value;
+
+
+
+let angka=
+document.getElementById("angkaInput").value;
+
+
+
+let data=findPerson(nama);
+
+
+
+
+let foto="";
+
+let namaFix=nama.toUpperCase();
+
+
+
+if(data){
+
+foto=data.photo;
+
+namaFix=data.name;
+
+}
+
+
+
+
+for(let i=1;i<=2;i++){
+
+
+document.getElementById("foto"+i).src=foto;
+
+
+document.getElementById("nama"+i)
+.innerText=namaFix;
+
+
+
+document.getElementById("kat"+i)
+.innerText=
+"BEST "+kategori;
+
+
+
+document.getElementById("nilai"+i)
+.innerText=
+formatNilai(kategori,angka);
+
+
+}
+
+
+
+}
+
+
+
+
+/* =========================
+ DOWNLOAD PNG
+========================= */
+
+
+async function downloadPNG(){
+
+
+let canvas=
+await html2canvas(
+
+document.getElementById("sheet"),
+
+{
+scale:3,
+useCORS:true
+}
+
+);
+
+
+
+let link=document.createElement("a");
+
+
+let nama=
+document.getElementById("namaInput")
+.value || "AWARD";
+
+
+link.download=
+nama+"_AWARD.png";
+
+
+link.href=
+canvas.toDataURL("image/png");
+
+
+link.click();
+
+
+}
+
+
+
+</script>
+
+
+</body>
+</html>
+<div class="footer">
+AZKO CHAMPION
+</div>
+
+
+</div>
+
+
+
+</div>
+
+
+</div>
