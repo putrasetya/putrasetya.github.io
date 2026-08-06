@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Login | AZ•KO</title>
+<style>
+  body {
+    margin:0;
+    font-family: Arial, sans-serif;
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:#fff;
+  }
+  .login-container {
+    text-align:center;
+    width:90%;
+    max-width:350px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:16px;
+  }
+  .login-container img {
+    max-width:150px;
+  }
+  input {
+    width:100%;
+    padding:12px;
+    border:1px solid #ccc;
+    border-radius:6px;
+    font-size:16px;
+    box-sizing:border-box;
+  }
+  button {
+    width:100%;
+    padding:12px;
+    border:none;
+    border-radius:6px;
+    background:#000;   /* tombol hitam */
+    color:#fff;
+    font-size:16px;
+    cursor:pointer;
+  }
+</style>
+</head>
+<body>
+
+<div class="login-container">
+  <img src="logo.png" alt="AZ•KO Logo">
+  <input type="text" id="username" placeholder="Username">
+  <button onclick="checkUsername()">Lanjutkan</button>
+</div>
+
+<script>
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbw-C9LksZ_UoOMotoaEoNOPg7F_eK09DoexsD8ViF9kls3eod3Kt5uDlvcb-TmV7O-T/exec";
+
+function checkUsername(){
+  const username = document.getElementById("username").value.trim();
+  if(!username) return alert("Masukkan username!");
+
+  fetch(SCRIPT_URL)
+    .then(res => res.json())
+    .then(data => {
+      const userExists = data.some(u => u.username.toString().trim() === username);
+      if(userExists){
+        localStorage.setItem("tempUser", username);
+        window.location.href = "confirmpin.html";
+      } else {
+        alert("Username tidak ditemukan!");
+      }
+    })
+    .catch(err => {
+      console.error(err);
+      alert("Gagal menghubungkan ke server.");
+    });
+}
+</script>
+
+</body>
+</html>
