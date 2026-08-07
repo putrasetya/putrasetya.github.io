@@ -426,10 +426,15 @@ angka=String(angka || "0")
 
 if(jenis=="SALES"){
 
-return (angka/1000000)
-.toFixed(1)
-.replace(".",",")
-+" JT";
+let juta = nilai / 1000000;
+
+let hasil = juta.toFixed(1)
+.replace(".",",");
+
+// hapus ,0 jika angka bulat
+hasil = hasil.replace(",0","");
+
+return hasil + " JT";
 
 }
 
