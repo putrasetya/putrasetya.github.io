@@ -183,12 +183,14 @@ margin:0;
 
 @media screen{
 
+.container{
+    align-items:flex-start;
+}
+
 .sheet{
-
-/* Preview A4 di layar */
-max-width:100%;
-box-shadow:0 0 20px rgba(0,0,0,.4);
-
+    flex:none;
+    width:297mm !important;
+    height:210mm !important;
 }
 
 }
@@ -197,28 +199,28 @@ box-shadow:0 0 20px rgba(0,0,0,.4);
 
 html,
 body{
-width:297mm;
-height:210mm;
-margin:0;
-padding:0;
-background:white;
-}
-
-.container{
-display:block;
+    width:297mm;
+    height:210mm;
+    margin:0;
+    padding:0;
 }
 
 .panel{
-display:none !important;
+    display:none !important;
+}
+
+.container{
+    display:block !important;
 }
 
 .sheet{
-width:297mm !important;
-height:210mm !important;
-margin:0 !important;
-padding:1.5cm !important;
-overflow:hidden !important;
-page-break-after:avoid;
+    width:297mm !important;
+    height:210mm !important;
+    margin:0 !important;
+    padding:1.5cm !important;
+    overflow:hidden !important;
+    break-after:avoid-page;
+    page-break-after:avoid;
 }
 
 }
