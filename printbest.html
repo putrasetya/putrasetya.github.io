@@ -345,7 +345,7 @@ NAMA
 </div>
 
 <div class="tahun">
-#<span id="tahun"></span>
+#<span class="tahunAngka"></span>
 </div>
 
 </div>
@@ -639,7 +639,9 @@ document.addEventListener("DOMContentLoaded", function(){
     cekJenis();
 });
 
-document.getElementById("tahun").innerHTML = new Date().getFullYear();
+document.querySelectorAll(".tahunAngka").forEach(function(el){
+    el.innerHTML = new Date().getFullYear();
+});
     
 </script>
 
