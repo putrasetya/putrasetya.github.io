@@ -211,7 +211,7 @@ AWARD GENERATOR
 </h2>
 
 
-<select id="jenis">
+<select id="jenis" onchange="cekJenis()">
 
 <option value="SALES">
 BEST SALES
@@ -475,6 +475,52 @@ return "0";
 
 }
 
+function formatInputRupiah(input){
+
+let angka = input.value.replace(/[^0-9]/g,"");
+
+if(angka){
+    input.value = Number(angka).toLocaleString("id-ID");
+}else{
+    input.value = "";
+}
+
+}
+
+
+function cekJenis(){
+
+let jenis = document.getElementById("jenis").value;
+
+let inputs=[
+document.getElementById("angkaInput1"),
+document.getElementById("angkaInput2")
+];
+
+
+inputs.forEach(input=>{
+
+    input.value="";
+
+    if(jenis=="SALES"){
+
+        input.placeholder="Nominal Rupiah";
+
+        input.oninput=function(){
+            formatInputRupiah(this);
+        };
+
+    }else{
+
+        input.placeholder="Angka";
+
+        input.oninput=null;
+
+    }
+
+});
+
+}    
 function generate(){
 
 let jenis=document.getElementById("jenis").value;
