@@ -138,6 +138,23 @@ font-weight:bold;
 
 }
 
+.input-group{
+display:flex;
+gap:10px;
+margin-bottom:10px;
+}
+
+.input-card{
+flex:1;
+}
+
+.input-card h3{
+color:#ffd400;
+font-size:14px;
+margin:5px 0;
+text-align:center;
+}
+
 /* ===== UPDATE A4 LANDSCAPE ===== */
 
 
@@ -223,15 +240,30 @@ BEST TRANSAKSI
 
 </select>
 
+<div class="input-group">
 
-<input id="namaInput1" placeholder="Nama Sales Card 1">
+<div class="input-card">
 
-<input id="angkaInput1" placeholder="Angka Card 1">
+<h3>CARD 1</h3>
+
+<input id="namaInput1" placeholder="Nama Sales">
+
+<input id="angkaInput1" placeholder="Angka">
+
+</div>
 
 
-<input id="namaInput2" placeholder="Nama Sales Card 2">
+<div class="input-card">
 
-<input id="angkaInput2" placeholder="Angka Card 2">
+<h3>CARD 2</h3>
+
+<input id="namaInput2" placeholder="Nama Sales">
+
+<input id="angkaInput2" placeholder="Angka">
+
+</div>
+
+</div>
 
 
 <button onclick="generate()">
