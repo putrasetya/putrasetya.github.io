@@ -209,6 +209,11 @@ display:block !important;
 .nilai{
     font-family:"FranklinDemi", Arial, sans-serif;
 }
+
+.labelJenis{
+    font-size:25px;
+    font-weight:900;
+}
 </style>
 
 </head>
@@ -475,14 +480,14 @@ return hasil + " JT";
 
 if(jenis=="PROTEKSI"){
 
-return angka.toLocaleString("id-ID") + " PROTEKSI";
+return angka.toLocaleString("id-ID") + "<br><span class='labelJenis'>PROTEKSI</span>";
 
 }
 
 
 if(jenis=="TRANSAKSI"){
 
-return angka.toLocaleString("id-ID") + " TRANSAKSI";
+return angka.toLocaleString("id-ID") + "<br><span class='labelJenis'>TRANSAKSI</span>";
 
 }
 
