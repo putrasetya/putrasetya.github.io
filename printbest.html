@@ -433,7 +433,6 @@ let juta = angka / 1000000;
 let hasil = juta.toFixed(1)
 .replace(".",",");
 
-// hapus ,0 jika bulat
 hasil = hasil.replace(",0","");
 
 return hasil + " JT";
@@ -448,25 +447,16 @@ return angka.toLocaleString("id-ID") + " PROTEKSI";
 }
 
 
+if(jenis=="TRANSAKSI"){
+
 return angka.toLocaleString("id-ID") + " TRANSAKSI";
 
-
 }
 
 
-if(jenis=="PROTEKSI"){
-
-return angka+" PROTEKSI";
+return "0";
 
 }
-
-
-return angka+" TRANSAKSI";
-
-
-}
-
-
 
 function generate(){
 
