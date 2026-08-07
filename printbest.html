@@ -167,7 +167,61 @@ display:none;
 
 }
 
+/* ===== UPDATE A4 LANDSCAPE ===== */
 
+.sheet{
+width:297mm !important;
+height:210mm !important;
+margin:auto;
+overflow:hidden;
+}
+
+@page{
+size:A4 landscape;
+margin:0;
+}
+
+@media screen{
+
+.sheet{
+
+/* Preview A4 di layar */
+max-width:100%;
+box-shadow:0 0 20px rgba(0,0,0,.4);
+
+}
+
+}
+
+@media print{
+
+html,
+body{
+width:297mm;
+height:210mm;
+margin:0;
+padding:0;
+background:white;
+}
+
+.container{
+display:block;
+}
+
+.panel{
+display:none !important;
+}
+
+.sheet{
+width:297mm !important;
+height:210mm !important;
+margin:0 !important;
+padding:1.5cm !important;
+overflow:hidden !important;
+page-break-after:avoid;
+}
+
+}
 
 </style>
 
@@ -215,7 +269,7 @@ GENERATE
 </button>
 
 
-<button onclick="window.print()">
+<button onclick="printA4()">
 PRINT A4 LANDSCAPE
 </button>
 
@@ -438,7 +492,22 @@ a.click();
 }
 
 
+function printA4(){
 
+const style=document.createElement("style");
+
+style.innerHTML=`
+@page{
+size:A4 landscape;
+margin:0;
+}
+`;
+
+document.head.appendChild(style);
+
+window.print();
+
+}
 </script>
 
 
