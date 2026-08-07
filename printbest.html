@@ -420,21 +420,36 @@ return "";
 
 function formatNilai(jenis,angka){
 
-angka=String(angka || "0")
-.replace(/[^0-9]/g,"");
+angka = Number(
+String(angka || "0")
+.replace(/[^0-9]/g,"")
+);
 
 
 if(jenis=="SALES"){
 
-let juta = nilai / 1000000;
+let juta = angka / 1000000;
 
 let hasil = juta.toFixed(1)
 .replace(".",",");
 
-// hapus ,0 jika angka bulat
+// hapus ,0 jika bulat
 hasil = hasil.replace(",0","");
 
 return hasil + " JT";
+
+}
+
+
+if(jenis=="PROTEKSI"){
+
+return angka.toLocaleString("id-ID") + " PROTEKSI";
+
+}
+
+
+return angka.toLocaleString("id-ID") + " TRANSAKSI";
+
 
 }
 
@@ -470,13 +485,13 @@ let foto=cariFoto(nama);
 
 let namaFix=nama.toUpperCase();
   
+let nilai=formatNilai(jenis,angka);
 
+document.getElementById("nilai"+i).innerHTML = nilai;
+    
 document.getElementById("foto"+i).src=foto;
 
 document.getElementById("nama"+i).innerHTML=namaFix;
-
-document.getElementById("nilai"+i).innerHTML=
-formatNilai(jenis,angka);
 
 
 }
