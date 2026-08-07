@@ -193,6 +193,19 @@ display:block !important;
 }
 
 }
+
+@font-face{
+    font-family:"FranklinDemi";
+    src:url("font/ITC Franklin Gothic Demi Compressed.otf") format("opentype");
+    font-weight:normal;
+    font-style:normal;
+}
+
+
+.nama,
+.nilai{
+    font-family:"FranklinDemi", Arial, sans-serif;
+}
 </style>
 
 </head>
@@ -553,13 +566,14 @@ document.getElementById("nama"+i).innerHTML=namaFix;
 
 async function downloadPNG(){
 
+await document.fonts.ready;
+
 let canvas=await html2canvas(
 document.getElementById("sheet"),
 {
-scale:3
+    scale:3
 }
 );
-
 
 let a=document.createElement("a");
 
