@@ -65,18 +65,21 @@ cursor:pointer;
 
 }
 
+
 .card{
 
 width:12.5cm;
 height:18cm;
 background:white;
-border:1px solid #ddd;
+
+border:3px solid #000; /* lebih tebal */
+
 position:relative;
 text-align:center;
 overflow:hidden;
 
 }
-
+    
 .photo{
 
 width:7cm;
@@ -179,8 +182,9 @@ display:block !important;
 @media print{
 
 .card{
-    width:12.5cm !important;
-    height:18cm !important;
+    border:3px solid #000 !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
 }
 
 .sheet{
