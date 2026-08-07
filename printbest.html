@@ -386,35 +386,37 @@ photo:"https://lh3.googleusercontent.com/d/1ocD_L6dq5XcleWt1AIBQeA8iUJ2xKNUn=w10
 ];
 
 
-
 function cariFoto(nama){
 
 let text = nama.toUpperCase().trim();
 
+let words = text.split(/\s+/);
+
 for(let p of people){
 
-for(let k of p.keywords){
+    for(let k of p.keywords){
 
-let key=k.toUpperCase();
+        let key = k.toUpperCase().trim();
 
-if(
-text===key ||
-text.includes(" "+key+" ") ||
-text.startsWith(key+" ") ||
-text.endsWith(" "+key)
-){
+        for(let w of words){
 
-return p.photo;
+            if(
+                w.startsWith(key) &&
+                w.length >= key.length
+            ){
+                return p.photo;
+            }
 
-}
+        }
 
-}
+    }
 
 }
 
 return "";
 
 }
+
 
 function formatNilai(jenis,angka){
 
