@@ -224,10 +224,14 @@ BEST TRANSAKSI
 </select>
 
 
-<input id="namaInput" placeholder="Nama Sales">
+<input id="namaInput1" placeholder="Nama Sales Card 1">
+
+<input id="angkaInput1" placeholder="Angka Card 1">
 
 
-<input id="angkaInput" placeholder="Angka">
+<input id="namaInput2" placeholder="Nama Sales Card 2">
+
+<input id="angkaInput2" placeholder="Angka Card 2">
 
 
 <button onclick="generate()">
@@ -396,9 +400,12 @@ function generate(){
 
 let jenis=document.getElementById("jenis").value;
 
-let nama=document.getElementById("namaInput").value;
 
-let angka=document.getElementById("angkaInput").value;
+for(let i=1;i<=2;i++){
+
+let nama=document.getElementById("namaInput"+i).value;
+
+let angka=document.getElementById("angkaInput"+i).value;
 
 
 let data=cariFoto(nama);
@@ -417,9 +424,6 @@ foto=data.photo;
 }
 
 
-
-for(let i=1;i<=2;i++){
-
 document.getElementById("foto"+i).src=foto;
 
 document.getElementById("nama"+i).innerHTML=namaFix;
@@ -430,12 +434,10 @@ document.getElementById("kategori"+i).innerHTML=
 document.getElementById("nilai"+i).innerHTML=
 formatNilai(jenis,angka);
 
-}
-
 
 }
 
-
+}
 
 async function downloadPNG(){
 
