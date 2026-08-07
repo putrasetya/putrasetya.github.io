@@ -65,21 +65,6 @@ cursor:pointer;
 
 }
 
-
-.sheet{
-
-width:29.7cm;
-height:21cm;
-background:white;
-padding:1.5cm;
-display:flex;
-gap:1cm;
-align-items:flex-start;
-overflow:auto;
-
-}
-
-
 .card{
 
 width:12.5cm;
@@ -153,20 +138,6 @@ font-weight:bold;
 
 }
 
-
-@media print{
-
-body{
-padding:0;
-background:white;
-}
-
-.panel{
-display:none;
-}
-
-}
-
 /* ===== UPDATE A4 LANDSCAPE ===== */
 
 
@@ -197,52 +168,24 @@ size:A4 landscape;
 margin:0;
 }
 
-@media screen{
-
-.container{
-    align-items:flex-start;
-}
-
-}
-
 @media print{
 
 html,
 body{
-    width:297mm;
-    height:210mm;
-    margin:0;
-    padding:0;
+width:297mm;
+height:210mm;
+margin:0;
+padding:0;
+background:white;
 }
 
 .panel{
-    display:none !important;
+display:none !important;
 }
 
 .container{
-    display:block !important;
+display:block !important;
 }
-
-.sheet{
-
-width:297mm !important;
-height:210mm !important;
-
-background:white;
-
-padding:1.5cm;
-
-display:flex;
-
-justify-content:center;
-
-align-items:center;
-
-gap:1.7cm;
-
-margin:auto;
-
-overflow:hidden;
 
 }
 
