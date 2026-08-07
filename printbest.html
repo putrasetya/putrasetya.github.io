@@ -300,18 +300,87 @@ NAMA
 <script>
 
 
+
 const people=[
 
 {
-keywords:["PUTRA","put"],
-name:"PUTRA SETYA",
-photo:""
+keywords:["AFI","avi","api"],
+photo:"https://lh3.googleusercontent.com/d/12pjk_-ZJhbqbPZDzdH4sJSkE5qWwzrf7=w1000"
 },
 
 {
-keywords:["AFI","avi"],
-name:"AFI",
-photo:""
+keywords:["PUTRA","put"],
+photo:"https://lh3.googleusercontent.com/d/1Pxw-wIUKTcyA_inIcqpYY833f_3AtZe2=w1000"
+},
+
+{
+keywords:["GO","gh","GHO","GHOFUR"],
+photo:"https://lh3.googleusercontent.com/d/13OG6tf86ZIg6uUIn0yU6TwqweCSkLNfw=w1000"
+},
+
+{
+keywords:["hep","hap"],
+photo:"https://lh3.googleusercontent.com/d/16tuEFyNqC9DqdLtx7sjjEd8RsGKegskG=w1000"
+},
+
+{
+keywords:["imam","pak imam"],
+photo:"https://lh3.googleusercontent.com/d/1kMjqQ1keHMCqwRAFk9yzZJoLDexL4QU9=w1000"
+},
+
+{
+keywords:["ja","mus"],
+photo:"https://lh3.googleusercontent.com/d/11jXuXx1onUlvJ3ULT351x90BVKH_47GF=w1000"
+},
+
+{
+keywords:["arip","arif"],
+photo:"https://lh3.googleusercontent.com/d/1HYYysdMbzW89vpo_YI7_E-mwfbxXT6lW=w1000"
+},
+
+{
+keywords:["arc","art"],
+photo:"https://lh3.googleusercontent.com/d/1bFl3Jy3m1PrpD7dVoPvo_Ks3JM_4hNY7=w1000"
+},
+
+{
+keywords:["sho"],
+photo:"https://lh3.googleusercontent.com/d/1qszknso1K93EsFJdKc07dCatTg4B51Gz=w1000"
+},
+
+{
+keywords:["pak navi","navi"],
+photo:"https://lh3.googleusercontent.com/d/11XA9MyqVHh5TlnWnRRUrs6T92fwx5tIb=w1000"
+},
+
+{
+keywords:["rifa","pai"],
+photo:"https://lh3.googleusercontent.com/d/1Op2tYuOs8SNbBLnfcmztcij-_h4q1B1M=w1000"
+},
+
+{
+keywords:["bud"],
+photo:"https://lh3.googleusercontent.com/d/1s3OEJyXr-_i5p8D0hKw-aCCbcgLQwWxi=w1000"
+},
+
+{
+keywords:["sali"],
+photo:"https://lh3.googleusercontent.com/d/1O4U8DkXFf77qJjzXx4VNvnkVHQDu6gnt=w1000"
+},
+
+{
+keywords:["lul"],
+photo:"https://lh3.googleusercontent.com/d/1fGkhYA-LcBd2M086mMGgjCgnH0SyHqUH=w1000"
+},
+
+{
+keywords:["rah","ima"],
+photo:"https://lh3.googleusercontent.com/d/1tNq1Uah-5x5_kPkujr1gCR5jiLuKrGQQ=w1000"
+},
+
+{
+keywords:["sher"],
+photo:"https://lh3.googleusercontent.com/d/1ocD_L6dq5XcleWt1AIBQeA8iUJ2xKNUn=w1000"
 }
 
 ];
@@ -320,17 +389,26 @@ photo:""
 
 function cariFoto(nama){
 
-nama=nama.toUpperCase();
+let up=nama.toUpperCase();
 
-return people.find(p=>
-p.keywords.some(k=>
-nama.includes(k.toUpperCase())
+let found=null;
+
+for(let p of people){
+
+if(
+p.keywords.some(
+k=>up.includes(k.toUpperCase())
 )
-);
+){
+found=p.photo;
+break;
+}
 
 }
 
+return found;
 
+}
 
 function formatNilai(jenis,angka){
 
@@ -374,21 +452,11 @@ let nama=document.getElementById("namaInput"+i).value;
 let angka=document.getElementById("angkaInput"+i).value;
 
 
-let data=cariFoto(nama);
 
+let foto=cariFoto(nama);
 
 let namaFix=nama.toUpperCase();
-
-let foto="";
-
-
-if(data){
-
-namaFix=data.name;
-foto=data.photo;
-
-}
-
+  
 
 document.getElementById("foto"+i).src=foto;
 
