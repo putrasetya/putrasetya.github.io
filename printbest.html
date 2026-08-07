@@ -389,24 +389,30 @@ photo:"https://lh3.googleusercontent.com/d/1ocD_L6dq5XcleWt1AIBQeA8iUJ2xKNUn=w10
 
 function cariFoto(nama){
 
-let up=nama.toUpperCase();
-
-let found=null;
+let text = nama.toUpperCase().trim();
 
 for(let p of people){
 
+for(let k of p.keywords){
+
+let key=k.toUpperCase();
+
 if(
-p.keywords.some(
-k=>up.includes(k.toUpperCase())
-)
+text===key ||
+text.includes(" "+key+" ") ||
+text.startsWith(key+" ") ||
+text.endsWith(" "+key)
 ){
-found=p.photo;
-break;
+
+return p.photo;
+
+}
+
 }
 
 }
 
-return found;
+return "";
 
 }
 
