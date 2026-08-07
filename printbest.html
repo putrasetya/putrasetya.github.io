@@ -325,7 +325,7 @@ NAMA
 </div>
 
 <div class="tahun">
-#2026
+#<span id="tahun"></span>
 </div>
 
 </div>
@@ -345,7 +345,7 @@ NAMA
 </div>
 
 <div class="tahun">
-#2026
+#<span id="tahun"></span>
 </div>
 
 </div>
@@ -638,6 +638,9 @@ window.print();
 document.addEventListener("DOMContentLoaded", function(){
     cekJenis();
 });
+
+document.getElementById("tahun").innerHTML = new Date().getFullYear();
+    
 </script>
 
 
