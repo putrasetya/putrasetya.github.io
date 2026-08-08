@@ -290,6 +290,18 @@ button{
     gap:8px;
 }
 
+.crop-notif{
+    display:none;
+    margin-top:10px;
+    padding:11px 14px;
+    background:#d50000;
+    color:#fff;
+    border-radius:8px;
+    text-align:center;
+    font-size:13px;
+    font-weight:700;
+}
+    
 </style>
 </head>
 
@@ -360,12 +372,16 @@ button{
 
 <div class="modal-box">
 
-<img id="cropImage">
+    <img id="cropImage">
 
-<div class="modal-actions">
-<button onclick="cropSave()">CROP</button>
-<button onclick="closeModal()">BATAL</button>
-</div>
+    <div class="crop-notif" id="cropNotif">
+        Atur struk terlebih dahulu agar terlihat jelas.
+    </div>
+
+    <div class="modal-actions">
+        <button onclick="cropSave()">CROP</button>
+        <button onclick="closeModal()">BATAL</button>
+    </div>
 
 </div>
 
@@ -524,57 +540,122 @@ s.innerText="Rp "+f;
 
 /* CROPPER */
 
+
 let cropper;
+let cropHasChanged=false;
 
 uploadInput.onchange=(e)=>{
 
-let file=e.target.files[0];
+    let file=e.target.files[0];
 
-if(!file) return;
+    if(!file) return;
 
-let reader=new FileReader();
+    let reader=new FileReader();
 
-reader.onload=(ev)=>{
+    reader.onload=(ev)=>{
 
-document.getElementById("modal").style.display="flex";
+        document.getElementById("modal").style.display="flex";
 
-document.getElementById("cropImage").src=ev.target.result;
+        document.getElementById("cropImage").src=ev.target.result;
 
-setTimeout(()=>{
+        cropHasChanged=false;
 
-if(cropper) cropper.destroy();
+        const notif=document.getElementById("cropNotif");
 
-cropper=new Cropper(
-document.getElementById("cropImage"),
-{
-aspectRatio:1,
-viewMode:1
-}
-);
+        if(notif){
+            notif.style.display="none";
+        }
 
-},200);
+        setTimeout(()=>{
+
+            if(cropper){
+                cropper.destroy();
+            }
+
+            cropper=new Cropper(
+                document.getElementById("cropImage"),
+                {
+                    aspectRatio:1,
+                    viewMode:1,
+
+                    cropmove:function(){
+                        cropHasChanged=true;
+                    },
+
+                    zoom:function(){
+                        cropHasChanged=true;
+                    },
+
+                    cropend:function(){
+                        cropHasChanged=true;
+                    }
+                }
+            );
+
+        },200);
+
+    };
+
+    reader.readAsDataURL(file);
 
 };
 
-reader.readAsDataURL(file);
-
-};
 
 function cropSave(){
 
-let canvas=cropper.getCroppedCanvas({
-width:300,
-height:300
-});
+    const notif=document.getElementById("cropNotif");
 
-document.getElementById("uploadPreview").src=
-canvas.toDataURL("image/png");
+    if(!cropper || !cropHasChanged){
 
-if(cropper) cropper.destroy();
+        if(notif){
 
-document.getElementById("modal").style.display="none";
+            notif.innerText=
+                "Atur struk terlebih dahulu agar terlihat jelas.";
+
+            notif.style.display="block";
+
+            setTimeout(()=>{
+                notif.style.display="none";
+            },3000);
+
+        }
+
+        return;
+    }
+
+    const canvas=cropper.getCroppedCanvas({
+        width:300,
+        height:300
+    });
+
+    if(!canvas){
+
+        if(notif){
+
+            notif.innerText=
+                "Crop belum siap. Silakan atur kembali.";
+
+            notif.style.display="block";
+
+        }
+
+        return;
+    }
+
+    document.getElementById("uploadPreview").src=
+        canvas.toDataURL("image/png");
+
+    if(cropper){
+
+        cropper.destroy();
+        cropper=null;
+
+    }
+
+    document.getElementById("modal").style.display="none";
 
 }
+
 
 function closeModal(){
 
