@@ -21,6 +21,13 @@
     box-sizing:border-box;
 }
 
+@font-face{
+    font-family:'FranklinDemiCompressed';
+    src:url('font/ITC Franklin Gothic Demi Compressed.otf') format('opentype');
+    font-weight:normal;
+    font-style:normal;
+}
+
 body{
     background:#000;
     font-family:'Montserrat',sans-serif;
@@ -186,21 +193,24 @@ button{
 }
 
 .nama3{
+    position:absolute;
     bottom:42px;
-    font-family:'Poppins',sans-serif;
-    font-weight:900;
+    width:100%;
+    text-align:center;
+    z-index:10;
+    font-family:'FranklinDemiCompressed',sans-serif;
+    font-weight:normal;
     font-size:18px;
 }
-
-/* SALES */
 
 .sales{
     position:absolute;
     bottom:14px;
     width:100%;
     text-align:center;
-    font-family:'Poppins',sans-serif;
-    font-weight:700;
+    z-index:10;
+    font-family:'FranklinDemiCompressed',sans-serif;
+    font-weight:normal;
     font-size:18px;
     white-space:nowrap;
 }
@@ -573,57 +583,63 @@ document.getElementById("modal").style.display="none";
 
 }
 
+
 /* DOWNLOAD */
 
 async function downloadPoster(){
 
-const btn=document.getElementById("downloadBtn");
+    const btn=document.getElementById("downloadBtn");
+    const spinner=document.getElementById("spinner");
+    const text=document.getElementById("btnText");
 
-const spinner=document.getElementById("spinner");
+    btn.disabled=true;
 
-const text=document.getElementById("btnText");
+    spinner.style.display="inline-block";
 
-btn.disabled=true;
+    text.innerText="PROCESSING...";
 
-spinner.style.display="inline-block";
+    /* Pastikan font Franklin sudah dimuat */
+    await document.fonts.load(
+        "18px FranklinDemiCompressed"
+    );
 
-text.innerText="PROCESSING...";
+    await document.fonts.ready;
 
-await new Promise(r=>setTimeout(r,300));
+    await new Promise(r=>setTimeout(r,300));
 
-const canvas=await html2canvas(
-document.getElementById("poster"),
-{
-scale:3,
-useCORS:true,
-backgroundColor:null
-}
-);
+    const canvas=await html2canvas(
+        document.getElementById("poster"),
+        {
+            scale:3,
+            useCORS:true,
+            backgroundColor:null
+        }
+    );
 
-const nama=
-document.getElementById("namaInput").value||"NAMA";
+    const nama=
+        document.getElementById("namaInput").value||"NAMA";
 
-const sales=
-document.getElementById("salesInput")
-.value.replace(/[^0-9]/g,"")||"0";
+    const sales=
+        document.getElementById("salesInput")
+        .value.replace(/[^0-9]/g,"")||"0";
 
-const a=document.createElement("a");
+    const a=document.createElement("a");
 
-a.download=`${nama}_${sales}.png`;
+    a.download=`${nama}_${sales}.png`;
 
-a.href=canvas.toDataURL("image/png");
+    a.href=canvas.toDataURL("image/png");
 
-a.click();
+    a.click();
 
-setTimeout(()=>{
+    setTimeout(()=>{
 
-btn.disabled=false;
+        btn.disabled=false;
 
-spinner.style.display="none";
+        spinner.style.display="none";
 
-text.innerText="DOWNLOAD POSTER";
+        text.innerText="DOWNLOAD POSTER";
 
-},800);
+    },800);
 
 }
 
