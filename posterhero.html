@@ -624,9 +624,9 @@ function cropSave(){
     }
 
     const canvas=cropper.getCroppedCanvas({
-        width:300,
-        height:300
-    });
+    imageSmoothingEnabled:true,
+    imageSmoothingQuality:'high'
+});
 
     if(!canvas){
 
