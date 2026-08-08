@@ -3,11 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Admin Dashboard</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
 
 <style>
+
 *{
 margin:0;
 padding:0;
@@ -16,33 +18,32 @@ font-family:'Poppins',sans-serif;
 }
 
 body{
-background:#0f172a;
+background:#f1f5f9;
 min-height:100vh;
 display:flex;
 justify-content:center;
 align-items:center;
 padding:20px;
-color:#fff;
+color:#0f172a;
 }
 
 .container{
 width:100%;
-max-width:900px;
+max-width:1000px;
 }
 
 .header{
 text-align:center;
 margin-bottom:35px;
-padding-top:10px;
 }
 
 h1{
 font-size:30px;
-margin-bottom:5px;
+margin-bottom:8px;
 }
 
 .subtitle{
-color:#94a3b8;
+color:#64748b;
 }
 
 .menu-grid{
@@ -52,22 +53,32 @@ gap:20px;
 }
 
 .menu-card{
-background:#1e293b;
+
+background:white;
 border-radius:20px;
 padding:25px;
 cursor:pointer;
 transition:.25s;
-box-shadow:0 10px 25px rgba(0,0,0,.25);
+
+box-shadow:
+0 10px 25px rgba(15,23,42,.08);
+
+border:1px solid #e2e8f0;
+
 }
 
 .menu-card:hover{
 transform:translateY(-6px);
+box-shadow:
+0 15px 30px rgba(15,23,42,.15);
 }
+
 
 .icon{
 font-size:48px;
 margin-bottom:15px;
 }
+
 
 .card-title{
 font-size:20px;
@@ -75,46 +86,68 @@ font-weight:700;
 margin-bottom:8px;
 }
 
+
 .card-desc{
 font-size:14px;
-color:#cbd5e1;
+color:#475569;
 line-height:1.5;
 }
 
+
 .logout-btn{
+
 margin-top:25px;
 width:100%;
 padding:14px;
+
 border:none;
 border-radius:12px;
+
 background:#ef4444;
+
 color:white;
+
 font-size:15px;
 font-weight:600;
+
 cursor:pointer;
+
 }
+
 
 .logout-btn:hover{
 opacity:.9;
 }
 
+
 .footer{
+
 text-align:center;
+
 margin-top:20px;
-color:#64748b;
+
+color:#94a3b8;
+
 font-size:12px;
+
 }
 
 </style>
+
 </head>
+
 
 <body>
 
+
 <div class="container">
+
 
 <div class="header">
 
-<h1 id="welcome">Halo Admin</h1>
+<h1 id="welcome">
+Halo Admin
+</h1>
 
 <div class="subtitle">
 Selamat datang di Dashboard Monitoring
@@ -122,7 +155,11 @@ Selamat datang di Dashboard Monitoring
 
 </div>
 
+
+
 <div class="menu-grid">
+
+
 
 <div class="menu-card"
 onclick="window.location.href='monitoringsalescontroldaily.html'">
@@ -139,37 +176,114 @@ Monitoring perolehan Green, Yellow dan Red seluruh staff berdasarkan periode yan
 
 </div>
 
+
+
+
+<div class="menu-card"
+onclick="window.location.href='https://putrasetya.github.io/posterhero.html'">
+
+<div class="icon">🖨️</div>
+
+<div class="card-title">
+Print Poster Today Hero
 </div>
+
+<div class="card-desc">
+Membuat dan mencetak poster Today Hero dengan cepat.
+</div>
+
+</div>
+
+
+
+
+<div class="menu-card"
+onclick="window.location.href='https://putrasetya.github.io/bestprint.html'">
+
+<div class="icon">🏆</div>
+
+<div class="card-title">
+Print Best Sales / Proteksi / Transaksi
+</div>
+
+<div class="card-desc">
+Mencetak penghargaan Best Sales, Best Proteksi dan Best Transaksi.
+</div>
+
+</div>
+
+
+
+
+<div class="menu-card"
+onclick="window.location.href='https://putrasetya.github.io/tv1.html'">
+
+<div class="icon">📺</div>
+
+<div class="card-title">
+TV Monitoring
+</div>
+
+<div class="card-desc">
+Menampilkan leaderboard dan monitoring performa di layar TV.
+</div>
+
+</div>
+
+
+
+</div>
+
+
 
 <button class="logout-btn" onclick="logout()">
 Logout
 </button>
 
+
+
 <div class="footer">
 Sales Control Dashboard
 </div>
 
+
 </div>
 
+
+
 <script>
+
 
 const user =
 JSON.parse(sessionStorage.getItem("user")) ||
 JSON.parse(localStorage.getItem("user"));
 
+
 if(!user || user.status !== "admin"){
-window.location.href = "login.html";
+
+window.location.href="login.html";
+
 }
+
 
 document.getElementById("welcome").innerText =
 `Halo, ${user.nama}`;
 
+
+
 function logout(){
+
 localStorage.removeItem("user");
-window.location.href = "login.html";
+
+sessionStorage.removeItem("user");
+
+window.location.href="login.html";
+
 }
 
+
 </script>
+
 
 </body>
 </html>
