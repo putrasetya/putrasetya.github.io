@@ -1010,10 +1010,21 @@ GET FOTO
 
 function getPhoto(nik){
 
+    if(nik === null || nik === undefined){
+        return "";
+    }
+
     const employeeNik =
-        (nik || "")
-        .toString()
-        .trim();
+        String(nik)
+        .trim()
+        .replace(/\.0+$/, "");
+
+    console.log(
+        "NIK:",
+        employeeNik,
+        "FOTO:",
+        photoRules[employeeNik]
+    );
 
     return photoRules[employeeNik] || "";
 }
@@ -1101,50 +1112,38 @@ async function getData(){
         }
 
         const mapped =
-            json.map(row => ({
+    json.map(row => ({
 
-                nik:
-        row["NIK"] || "",
+        nik:
+            row["NIK"] || "",
 
-                name:
-                    row["EMPLOYEE NAME"] ||
-                    "UNKNOWN",
+        name:
+            row["EMPLOYEE NAME"] ||
+            "UNKNOWN",
 
-                dept:
-                    row["DEPT"] ||
-                    "-",
+        dept:
+            row["DEPT"] ||
+            "-",
 
-                sales:
-                    clean(
-                        row["SALES MTD"]
-                    ),
+        sales:
+            clean(row["SALES MTD"]),
 
-                proteksi:
-                    clean(
-                        row["PROTEKSI"]
-                    ),
+        proteksi:
+            clean(row["PROTEKSI"]),
 
-                trx:
-                    clean(
-                        row["TRX"]
-                    ),
+        trx:
+            clean(row["TRX"]),
 
-                achSales:
-                    clean(
-                        row["ACH MTD"]
-                    ),
+        achSales:
+            clean(row["ACH MTD"]),
 
-                achProteksi:
-                    clean(
-                        row["ACH PROTEKSI"]
-                    ),
+        achProteksi:
+            clean(row["ACH PROTEKSI"]),
 
-                achTrx:
-                    clean(
-                        row["ACH BULANAN"]
-                    )
+        achTrx:
+            clean(row["ACH BULANAN"])
 
-            }));
+    }));
 
         lastData =
             mapped;
@@ -1441,11 +1440,8 @@ function render(
         */
 
         const photoSrc =
-            photo ||
-
-            `https://ui-avatars.com/api/?name=${encodeURIComponent(
-                d.name
-            )}&background=random&color=fff&size=512`;
+    photo ||
+    `https://ui-avatars.com/api/?name=${encodeURIComponent(d.name)}&background=random&color=fff&size=512`;
 
 
         html += `
@@ -1460,20 +1456,14 @@ function render(
             <div class="photo-box">
 
                 <img
-
-                    src="${photoSrc}"
-
-                    loading="eager"
-
-                    decoding="async"
-
-                    onerror="
-                        this.src='https://ui-avatars.com/api/?name=${encodeURIComponent(
-                            d.name
-                        )}&background=random&color=fff&size=512'
-                    "
-
-                >
+    src="${photoSrc}"
+    loading="eager"
+    decoding="async"
+    onerror="
+        this.onerror=null;
+        this.src='https://ui-avatars.com/api/?name=${encodeURIComponent(d.name)}&background=random&color=fff&size=512';
+    "
+>
 
             </div>
 
