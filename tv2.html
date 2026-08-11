@@ -10,8 +10,12 @@
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 
 <style>
-   /* SHADOW TULISAN DI DALAM CARD*/
-   .employee-name,
+
+/* =========================
+SHADOW TULISAN
+========================= */
+
+.employee-name,
 .employee-label,
 .score-value,
 .score-label,
@@ -20,13 +24,23 @@
 
     text-shadow:
         0 2px 6px rgba(0,0,0,.9);
-
 }
-   
-   /* SEMUA TULISAN WARNA PUTIH KECUALI ACH */
-    body *{color:#fff!important;}
-    .ach-green{color:#dcfce7!important;}
-.ach-red{color:#ffe4e6!important;}
+
+/* =========================
+WARNA TEXT
+========================= */
+
+body *{
+    color:#fff !important;
+}
+
+.ach-green{
+    color:#dcfce7 !important;
+}
+
+.ach-red{
+    color:#ffe4e6 !important;
+}
 
 *{
     margin:0;
@@ -740,7 +754,12 @@ MOBILE
         font-size:15px;
     }
 }
-    #datetimeWidget{
+
+/* =========================
+DATE TIME
+========================= */
+
+#datetimeWidget{
 
     position:fixed;
 
@@ -841,14 +860,14 @@ MOBILE
 
         min-width:120px;
     }
-
 }
 
 </style>
 </head>
 
 <body>
-    <div id="datetimeWidget">
+
+<div id="datetimeWidget">
     <div id="dateLine"></div>
     <div id="timeLine"></div>
 </div>
@@ -858,51 +877,87 @@ MOBILE
 </div>
 
 <div class="slide active">
+
     <div class="header">
+
         <h1>TOP ACH MTD SALES</h1>
+
         <p>AZKO CITIMALL TUBAN</p>
+
     </div>
+
     <div class="rank-list" id="salesTop"></div>
+
 </div>
 
 <div class="slide">
+
     <div class="header">
+
         <h1>BOTTOM ACH MTD SALES</h1>
+
         <p>AZKO CITIMALL TUBAN</p>
+
     </div>
+
     <div class="rank-list" id="salesBottom"></div>
+
 </div>
 
 <div class="slide">
+
     <div class="header">
+
         <h1>TOP PROTEKSI</h1>
+
         <p>AZKO CITIMALL TUBAN</p>
+
     </div>
+
     <div class="rank-list" id="proteksiTop"></div>
+
 </div>
 
 <div class="slide">
+
     <div class="header">
+
         <h1>BOTTOM PROTEKSI</h1>
+
         <p>AZKO CITIMALL TUBAN</p>
+
     </div>
+
     <div class="rank-list" id="proteksiBottom"></div>
+
 </div>
 
 <div class="slide">
+
     <div class="header">
+
         <h1>TOP TRX</h1>
+
         <p>AZKO CITIMALL TUBAN</p>
+
     </div>
+
     <div class="rank-list" id="trxTop"></div>
+
 </div>
 
 <div class="slide">
+
     <div class="header">
+
         <h1>BOTTOM TRX</h1>
+
         <p>AZKO CITIMALL TUBAN</p>
+
     </div>
+
     <div class="rank-list" id="trxBottom"></div>
+
 </div>
 
 <audio
@@ -920,15 +975,87 @@ MOBILE
 
 <script>
 
+/* =====================================================
+GOOGLE APPS SCRIPT
+===================================================== */
+
 const URL =
 "https://script.google.com/macros/s/AKfycbzeehvUo6QYriMFJTR4A88lN6IIHV6Qop9UphkdOTMkRLVxhVuJ13y69momo6h1pn9dTQ/exec";
 
+
+/* =====================================================
+PHOTO MAP
+===================================================== */
+
+/*
+    MASUKKAN FOTO DI SINI
+
+    Format:
+
+    "NAMA DI SPREADSHEET": "foto/nama-file.png"
+
+    Contoh:
+
+    "PUTRA SETYA": "foto/putra.png"
+
+    Nama di Spreadsheet boleh huruf besar/kecil.
+*/
+
+const photoMap = {
+
+   "PUTRA": "foto/putra.png",
+   "BUDI": "foto/budi.png",
+   "JAIDUN": "foto/jaidun.png",
+   "ARCHIE": "foto/archie.png",
+   "GHOFUR": "foto/ghofur.png",
+   "SALIM": "foto/salim.png",
+   "AVIF": "foto/avif.png",
+   "SHERLY": "foto/sherly.png",
+   "NAFI": "foto/nafi.png",
+   "IMAM": "foto/imam.png",
+   "RIFAI": "foto/rifai.png",
+   "SHOHIB": "foto/shohib.png",
+   "ARIF": "foto/arif.png",
+   "LULUK": "foto/luluk.png",
+   "RAHMA": "foto/ima.png",
+   "HEPI": "foto/hepi.png",
+
+    // Contoh tambahan:
+    // "ARCHIE": "foto/archie.png",
+    // "BUDI": "foto/budi.png",
+    // "SITI": "foto/siti.png",
+
+};
+
+
+/* =====================================================
+GET FOTO
+===================================================== */
+
+function getPhoto(name){
+
+    const key =
+        (name || "")
+        .toString()
+        .trim()
+        .toUpperCase();
+
+    return photoMap[key] || "";
+}
+
+
+/* =====================================================
+DATA
+===================================================== */
+
 let lastData = [];
+
 let lastRenderHash = "";
 
-/* =========================
+
+/* =====================================================
 HELPERS
-========================= */
+===================================================== */
 
 function clean(val){
 
@@ -938,24 +1065,30 @@ function clean(val){
         val.toString().replace(/[^\d.]/g,'')
     ) || 0;
 }
-    function formatSalesJt(value){
 
-    const jt = value / 1000000;
+
+function formatSalesJt(value){
+
+    const jt =
+        value / 1000000;
 
     const rounded =
-    Math.floor(jt * 10) / 10;
+        Math.floor(jt * 10) / 10;
 
     if(Number.isInteger(rounded)){
+
         return `${rounded.toFixed(0)} jt`;
+
     }
 
     return `${rounded.toFixed(1).replace('.',',')} jt`;
 }
 
+
 function isExcluded(dept){
 
     const d =
-    (dept || "").toLowerCase();
+        (dept || "").toLowerCase();
 
     return (
 
@@ -963,70 +1096,99 @@ function isExcluded(dept){
         d.includes("kasir") ||
         d.includes("cs") ||
         d.includes("customer service")
+
     );
 }
 
-/* =========================
+
+/* =====================================================
 GET DATA
-========================= */
+===================================================== */
 
 async function getData(){
 
     try{
 
         const res =
-        await fetch(URL + "?t=" + Date.now());
+            await fetch(
+                URL + "?t=" + Date.now()
+            );
 
         const json =
-        await res.json();
+            await res.json();
 
-        if(!Array.isArray(json) || json.length === 0){
+        if(
+            !Array.isArray(json) ||
+            json.length === 0
+        ){
 
             return lastData;
+
         }
 
-        const mapped = json.map(row => ({
+        const mapped =
+            json.map(row => ({
 
-            name:
-                row["EMPLOYEE NAME"] || "UNKNOWN",
+                name:
+                    row["EMPLOYEE NAME"] ||
+                    "UNKNOWN",
 
-            dept:
-                row["DEPT"] || "-",
+                dept:
+                    row["DEPT"] ||
+                    "-",
 
-            sales:
-                clean(row["SALES MTD"]),
+                sales:
+                    clean(
+                        row["SALES MTD"]
+                    ),
 
-            proteksi:
-                clean(row["PROTEKSI"]),
+                proteksi:
+                    clean(
+                        row["PROTEKSI"]
+                    ),
 
-            trx:
-                clean(row["TRX"]),
+                trx:
+                    clean(
+                        row["TRX"]
+                    ),
 
-            achSales:
-                clean(row["ACH MTD"]),
+                achSales:
+                    clean(
+                        row["ACH MTD"]
+                    ),
 
-            achProteksi:
-                clean(row["ACH PROTEKSI"]),
+                achProteksi:
+                    clean(
+                        row["ACH PROTEKSI"]
+                    ),
 
-            achTrx:
-                clean(row["ACH BULANAN"]),
+                achTrx:
+                    clean(
+                        row["ACH BULANAN"]
+                    )
 
-            photo:
-                row["PHOTO"] || ""
+            }));
 
-        }));
-
-        lastData = mapped;
+        lastData =
+            mapped;
 
         return mapped;
 
     }catch(err){
 
-        console.log("GET DATA ERROR:",err);
+        console.log(
+            "GET DATA ERROR:",
+            err
+        );
 
         return lastData;
     }
 }
+
+
+/* =====================================================
+ACH STYLE
+===================================================== */
 
 function getAchStyle(value){
 
@@ -1039,7 +1201,9 @@ function getAchStyle(value){
 
             boxClass:
                 "ach-box ach-green-box"
+
         };
+
     }
 
     if(value < 80){
@@ -1051,7 +1215,9 @@ function getAchStyle(value){
 
             boxClass:
                 "ach-box ach-red-box"
+
         };
+
     }
 
     return {
@@ -1061,12 +1227,14 @@ function getAchStyle(value){
 
         boxClass:
             "ach-box"
+
     };
 }
 
-/* =========================
+
+/* =====================================================
 RENDER
-========================= */
+===================================================== */
 
 function render(
     data,
@@ -1079,114 +1247,229 @@ function render(
 ){
 
     const container =
-    document.getElementById(containerId);
+        document.getElementById(
+            containerId
+        );
 
     if(!container) return;
 
-    let filteredData = [...data];
 
-   if(
-    containerId === "salesTop" ||
-    containerId === "salesBottom" ||
-    containerId === "trxTop"
-  ){
+    let filteredData =
+        [...data];
+
+
+    /* FILTER KASIR / CS */
+
+    if(
+
+        containerId === "salesTop" ||
+        containerId === "salesBottom" ||
+        containerId === "trxTop"
+
+    ){
 
         filteredData =
-        filteredData.filter(
-            item => !isExcluded(item.dept)
-        );
+            filteredData.filter(
+                item =>
+                    !isExcluded(item.dept)
+            );
+
     }
 
+
     let sorted = [];
+
     let styles = [];
+
+
+    /* =========================
+    TOP
+    ========================= */
 
     if(mode === "top"){
 
-    styles = [
-        "gold",
-        "silver",
-        "bronze"
-    ];
+        styles = [
 
-    if(
-        containerId === "salesTop" ||
-        containerId === "salesBottom"
-    ){
+            "gold",
+            "silver",
+            "bronze"
 
-        sorted =
-        filteredData
-            .filter(v => v.achSales > 0)
-            .sort((a,b)=>b.achSales-a.achSales)
-            .slice(0,3);
+        ];
+
+
+        if(
+
+            containerId === "salesTop" ||
+            containerId === "salesBottom"
+
+        ){
+
+            sorted =
+                filteredData
+
+                .filter(
+                    v =>
+                        v.achSales > 0
+                )
+
+                .sort(
+                    (a,b) =>
+                        b.achSales -
+                        a.achSales
+                )
+
+                .slice(0,3);
+
+
+        }else{
+
+            sorted =
+                filteredData
+
+                .filter(
+                    v =>
+                        v[key] > 0
+                )
+
+                .sort(
+                    (a,b) =>
+                        b[key] -
+                        a[key]
+                )
+
+                .slice(0,3);
+
+        }
+
 
     }else{
 
-        sorted =
-        filteredData
-            .filter(v => v[key] > 0)
-            .sort((a,b)=>b[key]-a[key])
-            .slice(0,3);
-
-    }
-
-}else{
+        /* =========================
+        BOTTOM
+        ========================= */
 
         styles = [
+
             "red-high",
             "red-mid",
             "red-low"
+
         ];
+
 
         let allSorted;
 
-if(containerId === "salesBottom"){
 
-    allSorted =
-    filteredData
-        .filter(v => v.achSales > 0)
-        .sort((a,b)=>a.achSales-b.achSales);
+        if(
+            containerId === "salesBottom"
+        ){
 
-}else{
+            allSorted =
+                filteredData
 
-    allSorted =
-    filteredData
-        .filter(v => {
+                .filter(
+                    v =>
+                        v.achSales > 0
+                )
 
-            if(containerId === "proteksiBottom"){
-                return v[key] >= 0;
-            }
+                .sort(
+                    (a,b) =>
+                        a.achSales -
+                        b.achSales
+                );
 
-            return v[key] > 0;
-        })
-        .sort((a,b)=>a[key]-b[key]);
 
-}
+        }else{
 
-sorted =
-allSorted.slice(0,3);
+            allSorted =
+                filteredData
 
-        sorted = sorted.map((item,index)=>({
+                .filter(v => {
 
-            ...item,
+                    if(
+                        containerId ===
+                        "proteksiBottom"
+                    ){
 
-            bottomRank:
-            allSorted.length - index
-        }));
+                        return v[key] >= 0;
+
+                    }
+
+                    return v[key] > 0;
+
+                })
+
+                .sort(
+                    (a,b) =>
+                        a[key] -
+                        b[key]
+                );
+
+        }
+
+
+        sorted =
+            allSorted.slice(0,3);
+
+
+        sorted =
+            sorted.map(
+                (item,index) => ({
+
+                    ...item,
+
+                    bottomRank:
+                        allSorted.length -
+                        index
+
+                })
+            );
+
 
         sorted.reverse();
+
     }
 
+
     let html = "";
+
 
     sorted.forEach((d,i)=>{
 
         const rank =
-        mode === "top"
-        ? i + 1
-        : d.bottomRank;
+
+            mode === "top"
+
+            ? i + 1
+
+            : d.bottomRank;
+
 
         const achStyle =
-        getAchStyle(d[achKey]);
+            getAchStyle(
+                d[achKey]
+            );
+
+
+        const photo =
+            getPhoto(d.name);
+
+
+        /*
+            Jika foto ditemukan:
+            gunakan foto lokal.
+
+            Jika tidak ditemukan:
+            gunakan avatar.
+        */
+
+        const photoSrc =
+            photo ||
+
+            `https://ui-avatars.com/api/?name=${encodeURIComponent(
+                d.name
+            )}&background=random&color=fff&size=512`;
+
 
         html += `
 
@@ -1196,59 +1479,89 @@ allSorted.slice(0,3);
                 ${rank}
             </div>
 
+
             <div class="photo-box">
 
                 <img
-                    src="https://lh3.googleusercontent.com/d/${d.photo}"
+
+                    src="${photoSrc}"
 
                     loading="eager"
+
                     decoding="async"
 
                     onerror="
-                    this.src='https://ui-avatars.com/api/?name=${encodeURIComponent(d.name)}&background=random&color=fff&size=512'
+                        this.src='https://ui-avatars.com/api/?name=${encodeURIComponent(
+                            d.name
+                        )}&background=random&color=fff&size=512'
                     "
+
                 >
 
             </div>
 
+
             <div class="employee">
 
                 <div class="employee-name">
+
                     ${d.name}
+
                 </div>
 
+
                 <div class="employee-label">
+
                     ${d.dept}
+
                 </div>
 
             </div>
+
 
             <div class="score">
 
                 <div class="main-score">
 
                     <div class="score-value">
-    ${
-        key === "sales"
-        ? formatSalesJt(d[key])
-        : d[key].toLocaleString('id-ID')
-    }
-</div>
+
+                        ${
+                            key === "sales"
+
+                            ? formatSalesJt(
+                                d[key]
+                            )
+
+                            : d[key].toLocaleString(
+                                'id-ID'
+                            )
+                        }
+
+                    </div>
+
 
                     <div class="score-label">
+
                         ${label}
+
                     </div>
 
                 </div>
 
+
                 <div class="${achStyle.boxClass}">
 
                     <div class="ach-title">
+
                         ${achTitle}
+
                     </div>
 
+
                     <div class="${achStyle.valueClass}">
+
                         ${d[achKey].toFixed(1)}%
+
                     </div>
 
                 </div>
@@ -1256,72 +1569,110 @@ allSorted.slice(0,3);
             </div>
 
         </div>
+
         `;
+
     });
 
-    container.innerHTML = html;
+
+    container.innerHTML =
+        html;
+
 }
 
-/* =========================
+
+/* =====================================================
 SLIDES
-========================= */
+===================================================== */
 
 const slides =
-document.querySelectorAll(".slide");
+    document.querySelectorAll(
+        ".slide"
+    );
+
 
 let current = 0;
+
 let isSliding = false;
+
 
 function nextSlide(){
 
     if(isSliding) return;
 
+
     isSliding = true;
 
+
     slides[current]
-        .classList.remove("active");
+        .classList.remove(
+            "active"
+        );
+
 
     current++;
 
-    if(current >= slides.length){
+
+    if(
+        current >= slides.length
+    ){
 
         current = 0;
+
     }
+
 
     setTimeout(()=>{
 
         slides[current]
-            .classList.add("active");
+            .classList.add(
+                "active"
+            );
 
         isSliding = false;
 
     },120);
+
 }
 
-/* =========================
+
+/* =====================================================
 UPDATE
-========================= */
+===================================================== */
 
 async function update(){
 
     const data =
-    await getData();
+        await getData();
 
-    if(!data || data.length === 0){
+
+    if(
+        !data ||
+        data.length === 0
+    ){
 
         return;
+
     }
+
 
     const newHash =
-    JSON.stringify(data);
+        JSON.stringify(data);
 
-    if(newHash === lastRenderHash){
+
+    if(
+        newHash ===
+        lastRenderHash
+    ){
 
         return;
+
     }
 
+
     lastRenderHash =
-    newHash;
+        newHash;
+
 
     render(
         data,
@@ -1333,6 +1684,7 @@ async function update(){
         "top"
     );
 
+
     render(
         data,
         "sales",
@@ -1342,6 +1694,7 @@ async function update(){
         "TOTAL SALES",
         "bottom"
     );
+
 
     render(
         data,
@@ -1353,6 +1706,7 @@ async function update(){
         "top"
     );
 
+
     render(
         data,
         "proteksi",
@@ -1362,6 +1716,7 @@ async function update(){
         "TOTAL PROTEKSI",
         "bottom"
     );
+
 
     render(
         data,
@@ -1373,6 +1728,7 @@ async function update(){
         "top"
     );
 
+
     render(
         data,
         "trx",
@@ -1382,50 +1738,73 @@ async function update(){
         "TOTAL TRX",
         "bottom"
     );
+
 }
 
-/* =========================
+
+/* =====================================================
 INDICATOR
-========================= */
+===================================================== */
 
 const pauseIndicator =
-document.getElementById(
-    "pauseIndicator"
-);
+    document.getElementById(
+        "pauseIndicator"
+    );
+
 
 function showIndicator(text){
 
-    if(!pauseIndicator) return;
+    if(!pauseIndicator)
+        return;
 
-    pauseIndicator.innerHTML = text;
 
-    pauseIndicator.classList.add("show");
+    pauseIndicator.innerHTML =
+        text;
 
-    clearTimeout(window.indicatorTimeout);
+
+    pauseIndicator.classList.add(
+        "show"
+    );
+
+
+    clearTimeout(
+        window.indicatorTimeout
+    );
+
 
     window.indicatorTimeout =
-    setTimeout(()=>{
+        setTimeout(()=>{
 
-        pauseIndicator.classList.remove("show");
+            pauseIndicator.classList.remove(
+                "show"
+            );
 
-    },1500);
+        },1500);
+
 }
 
-/* =========================
+
+/* =====================================================
 AUDIO
-========================= */
+===================================================== */
 
 const bgm =
-document.getElementById("bgm");
+    document.getElementById(
+        "bgm"
+    );
+
 
 if(bgm){
 
     bgm.volume = 0.35;
+
 }
+
 
 async function playMusic(){
 
     if(!bgm) return;
+
 
     try{
 
@@ -1434,60 +1813,90 @@ async function playMusic(){
     }catch(err){
 
         console.log(err);
+
     }
+
 }
 
-/* =========================
+
+/* =====================================================
 LOOP
-========================= */
+===================================================== */
 
 let isPaused = false;
 
 let slideInterval;
+
 let updateInterval;
+
 
 function stopLoop(){
 
-    clearInterval(slideInterval);
-    clearInterval(updateInterval);
+    clearInterval(
+        slideInterval
+    );
+
+    clearInterval(
+        updateInterval
+    );
+
 }
+
 
 function startLoop(){
 
     stopLoop();
 
+
     slideInterval =
-    setInterval(()=>{
+        setInterval(()=>{
 
-        if(!document.hidden){
+            if(
+                !document.hidden
+            ){
 
-            nextSlide();
-        }
+                nextSlide();
 
-    },8000);
+            }
+
+        },8000);
+
 
     updateInterval =
-    setInterval(()=>{
+        setInterval(()=>{
 
-        if(!document.hidden){
+            if(
+                !document.hidden
+            ){
 
-            update();
-        }
+                update();
 
-    },30000);
+            }
+
+        },30000);
+
 }
+
 
 function togglePause(){
 
-    isPaused = !isPaused;
+    isPaused =
+        !isPaused;
+
 
     if(isPaused){
 
         stopLoop();
 
-        if(bgm) bgm.pause();
 
-        showIndicator("⏸ PAUSED");
+        if(bgm)
+            bgm.pause();
+
+
+        showIndicator(
+            "⏸ PAUSED"
+        );
+
 
     }else{
 
@@ -1495,42 +1904,65 @@ function togglePause(){
 
         playMusic();
 
-        showIndicator("▶ PLAYING");
+
+        showIndicator(
+            "▶ PLAYING"
+        );
+
     }
+
 }
 
-/* =========================
+
+/* =====================================================
 FULLSCREEN
-========================= */
+===================================================== */
 
 async function toggleFullscreen(){
 
     try{
 
-        if(!document.fullscreenElement){
+        if(
+            !document.fullscreenElement
+        ){
 
-            await document.documentElement.requestFullscreen();
+            await document
+                .documentElement
+                .requestFullscreen();
 
-            showIndicator("🖥 FULLSCREEN");
+
+            showIndicator(
+                "🖥 FULLSCREEN"
+            );
+
 
         }else{
 
-            await document.exitFullscreen();
+            await document
+                .exitFullscreen();
 
-            showIndicator("❎ EXIT FULLSCREEN");
+
+            showIndicator(
+                "❎ EXIT FULLSCREEN"
+            );
+
         }
 
     }catch(err){
 
         console.log(err);
+
     }
+
 }
 
-/* =========================
+
+/* =====================================================
 CLICK
-========================= */
+===================================================== */
 
 let clickTimer = null;
+
 
 document.addEventListener(
     "click",
@@ -1538,43 +1970,57 @@ document.addEventListener(
 
         if(clickTimer){
 
-            clearTimeout(clickTimer);
+            clearTimeout(
+                clickTimer
+            );
+
         }
 
-        clickTimer = setTimeout(()=>{
 
-            togglePause();
+        clickTimer =
+            setTimeout(()=>{
 
-        },250);
+                togglePause();
+
+            },250);
+
     }
 );
+
 
 document.addEventListener(
     "dblclick",
     ()=>{
 
-        clearTimeout(clickTimer);
+        clearTimeout(
+            clickTimer
+        );
+
 
         toggleFullscreen();
+
     }
 );
 
-/* =========================
+
+/* =====================================================
 AUTO CLEAN MEMORY
-========================= */
+===================================================== */
 
 setInterval(()=>{
 
     if(window.gc){
 
         window.gc();
+
     }
 
 },300000);
 
-/* =========================
+
+/* =====================================================
 AUTO REFRESH 6 JAM
-========================= */
+===================================================== */
 
 setTimeout(()=>{
 
@@ -1582,34 +2028,78 @@ setTimeout(()=>{
 
 },21600000);
 
-    function updateDateTime(){
 
-    const now = new Date();
+/* =====================================================
+DATE TIME
+===================================================== */
+
+function updateDateTime(){
+
+    const now =
+        new Date();
+
 
     const hari = [
-        "Minggu","Senin","Selasa",
-        "Rabu","Kamis","Jumat","Sabtu"
+
+        "Minggu",
+        "Senin",
+        "Selasa",
+        "Rabu",
+        "Kamis",
+        "Jumat",
+        "Sabtu"
+
     ];
+
 
     const bulan = [
-        "Januari","Februari","Maret",
-        "April","Mei","Juni",
-        "Juli","Agustus","September",
-        "Oktober","November","Desember"
+
+        "Januari",
+        "Februari",
+        "Maret",
+        "April",
+        "Mei",
+        "Juni",
+        "Juli",
+        "Agustus",
+        "September",
+        "Oktober",
+        "November",
+        "Desember"
+
     ];
 
-    document.getElementById("dateLine").textContent =
+
+    document.getElementById(
+        "dateLine"
+    ).textContent =
+
         `${hari[now.getDay()]}, ${now.getDate()} ${bulan[now.getMonth()]} ${now.getFullYear()}`;
 
-    document.getElementById("timeLine").textContent =
-        now.toLocaleTimeString("id-ID");
+
+    document.getElementById(
+        "timeLine"
+    ).textContent =
+
+        now.toLocaleTimeString(
+            "id-ID"
+        );
+
 }
 
+
 updateDateTime();
-setInterval(updateDateTime,1000);
-/* =========================
+
+
+setInterval(
+    updateDateTime,
+    1000
+);
+
+
+/* =====================================================
 START
-========================= */
+===================================================== */
 
 window.addEventListener(
     "load",
@@ -1621,11 +2111,20 @@ window.addEventListener(
 
         playMusic();
 
-        setTimeout(playMusic,1000);
+        setTimeout(
+            playMusic,
+            1000
+        );
 
-        setTimeout(playMusic,3000);
+        setTimeout(
+            playMusic,
+            3000
+        );
 
-        showIndicator("▶ PLAYING");
+        showIndicator(
+            "▶ PLAYING"
+        );
+
     }
 );
 
