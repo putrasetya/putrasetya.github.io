@@ -983,48 +983,25 @@ const URL =
 "https://script.google.com/macros/s/AKfycbzeehvUo6QYriMFJTR4A88lN6IIHV6Qop9UphkdOTMkRLVxhVuJ13y69momo6h1pn9dTQ/exec";
 
 
-/* =====================================================
-PHOTO MAP
-===================================================== */
-
-/*
-    MASUKKAN FOTO DI SINI
-
-    Format:
-
-    "NAMA DI SPREADSHEET": "foto/nama-file.png"
-
-    Contoh:
-
-    "PUTRA SETYA": "foto/putra.png"
-
-    Nama di Spreadsheet boleh huruf besar/kecil.
-*/
-
-const photoMap = {
-
-   "PUTRA": "foto/putra.png",
-   "BUDI": "foto/budi.png",
-   "JAIDUN": "foto/jaidun.png",
-   "ARCHIE": "foto/archie.png",
-   "GHOFUR": "foto/ghofur.png",
-   "SALIM": "foto/salim.png",
-   "AVIF": "foto/avif.png",
-   "SHERLY": "foto/sherly.png",
-   "NAFI": "foto/nafi.png",
-   "IMAM": "foto/imam.png",
-   "RIFAI": "foto/rifai.png",
-   "SHOHIB": "foto/shohib.png",
-   "ARIF": "foto/arif.png",
-   "LULUK": "foto/luluk.png",
-   "RAHMA": "foto/ima.png",
-   "HEPI": "foto/hepi.png",
-
-    // Contoh tambahan:
-    // "ARCHIE": "foto/archie.png",
-    // "BUDI": "foto/budi.png",
-    // "SITI": "foto/siti.png",
-
+const photoRules = {
+    "137391": "foto/putra.png",
+    "193976": "foto/archie.png",
+    "114636": "foto/budi.png",
+    "183549": "foto/jaidun.png",
+    "193978": "foto/ghofur.png",
+    "194018": "foto/salim.png",
+    "129403": "foto/nafi.png",
+    "193977": "foto/avif.png",
+    "195964": "foto/sherly.png",
+    "94880": "foto/imam.png",
+    "105194": "foto/shohib.png",
+    "161295": "foto/arif.png",
+    "134576": "foto/rifai.png",
+    "136049": "foto/luluk.png",
+    "193979": "foto/ima.png",
+    "193980": "foto/hepi.png",
+    "149296": "foto/ifa.png"
+    
 };
 
 
@@ -1032,17 +1009,15 @@ const photoMap = {
 GET FOTO
 ===================================================== */
 
-function getPhoto(name){
+function getPhoto(nik){
 
-    const key =
-        (name || "")
+    const employeeNik =
+        (nik || "")
         .toString()
-        .trim()
-        .toUpperCase();
+        .trim();
 
-    return photoMap[key] || "";
+    return photoRules[employeeNik] || "";
 }
-
 
 /* =====================================================
 DATA
@@ -1128,6 +1103,9 @@ async function getData(){
 
         const mapped =
             json.map(row => ({
+
+                nik:
+        row["NIK"] || "",
 
                 name:
                     row["EMPLOYEE NAME"] ||
@@ -1452,7 +1430,7 @@ function render(
 
 
         const photo =
-            getPhoto(d.name);
+            getPhoto(d.nik);
 
 
         /*
