@@ -1115,7 +1115,9 @@ async function getData(){
     json.map(row => ({
 
         nik:
-            row["NIK"] || "",
+    row["NIP"] ||
+    row["NIK"] ||
+    "",
 
         name:
             row["EMPLOYEE NAME"] ||
