@@ -1,73 +1,1006 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
+
 <meta charset="UTF-8">
-<title>AZKO TV LEADERBOARD</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>AZKO ULTRA TV DISPLAY</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 
 <style>
-body{
+
+/* =========================
+SHADOW TULISAN
+========================= */
+
+.employee-name,
+.employee-label,
+.score-value,
+.score-label,
+.header h1,
+.header p{
+
+    text-shadow:
+        0 2px 6px rgba(0,0,0,.9);
+}
+
+
+/* =========================
+WARNA TEXT
+========================= */
+
+body *{
+    color:#fff !important;
+}
+
+.ach-green{
+    color:#dcfce7 !important;
+}
+
+.ach-red{
+    color:#ffe4e6 !important;
+}
+
+*{
     margin:0;
-    font-family:Arial;
-    background:#020617;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html,
+body{
+    width:100%;
+    height:100%;
+}
+
+body{
+    font-family:'Poppins',sans-serif;
+    overflow:hidden;
     color:white;
+    cursor:pointer;
+
+    background:
+        linear-gradient(rgba(0,0,0,.25),rgba(0,0,0,.25)),
+        url('https://putrasetya.github.io/backgroundtv.png');
+
+    background-position:center center;
+    background-repeat:no-repeat;
+    background-size:cover;
 }
 
-/* HEADER */
-.header{
-    text-align:center;
-    padding:15px;
-    font-size:28px;
-    font-weight:bold;
-    background:#22c55e;
+
+/* =========================
+BACKGROUND FX
+========================= */
+
+body::before{
+
+    content:"";
+
+    position:fixed;
+
+    inset:0;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(255,255,255,.03),
+            transparent 35%,
+            rgba(255,255,255,.02)
+        );
+
+    pointer-events:none;
+
+    z-index:-2;
 }
 
-/* SECTION TITLE */
-h2{
-    text-align:center;
-    margin:15px 0;
+body::after{
+
+    content:"";
+
+    position:fixed;
+
+    width:200%;
+    height:200%;
+
+    top:-50%;
+    left:-50%;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            rgba(255,255,255,.04),
+            transparent
+        );
+
+    transform:rotate(25deg);
+
+    animation:none;
+
+    pointer-events:none;
+
+    z-index:-1;
 }
 
-/* TOP 3 LIST (VERTICAL) */
-.top3-list{
-    padding:20px;
-    font-size:24px;
-}
 
-/* ITEM */
-.item{
+/* =========================
+SLIDES
+========================= */
+
+.slide{
+
+    position:absolute;
+
+    inset:0;
+
+    width:100vw;
+    height:100vh;
+
+    padding:
+        1vh
+        2vw;
+
     display:flex;
-    justify-content:space-between;
-    padding:12px 10px;
-    border-bottom:1px solid #334155;
+
+    flex-direction:column;
+
+    opacity:0;
+
+    visibility:hidden;
+
+    pointer-events:none;
+
+    transition:
+        opacity .5s linear;
 }
 
-/* RANK COLORS */
-.rank-1{
-    background:rgba(251,191,36,0.15);
-    color:#fbbf24;
-    font-weight:bold;
+.slide.active{
+
+    opacity:1;
+
+    visibility:visible;
+
+    pointer-events:auto;
 }
 
-.rank-2{
-    background:rgba(148,163,184,0.15);
-    color:#cbd5e1;
-    font-weight:bold;
+
+/* =========================
+HEADER
+========================= */
+
+.header{
+
+    text-align:center;
+
+    margin-bottom:1vh;
 }
 
-.rank-3{
-    background:rgba(180,83,9,0.15);
-    color:#d97706;
-    font-weight:bold;
+.header h1{
+
+    font-size:3vw;
+
+    font-weight:900;
+
+    letter-spacing:6px;
+
+    text-transform:uppercase;
+
+    color:#000000;
 }
 
-/* SLIDE */
-.slide{display:none;}
-.active{display:block;}
+.header p{
 
-/* RESPONSIVE */
-@media (max-width:768px){
-    .top3-list{
+    margin-top:.2vh;
+
+    font-size:1vw;
+
+    letter-spacing:4px;
+
+    color:#000000;
+
+    opacity:.9;
+}
+
+
+/* =========================
+PAUSE INDICATOR
+========================= */
+
+.pause-indicator{
+
+    position:fixed;
+
+    top:20px;
+    left:20px;
+
+    z-index:9999;
+
+    padding:14px 24px;
+
+    border-radius:18px;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(15,23,42,.92),
+            rgba(30,41,59,.92)
+        );
+
+    border:
+        1px solid rgba(255,255,255,.15);
+
+    font-size:14px;
+
+    font-weight:800;
+
+    letter-spacing:2px;
+
+    box-shadow:
+        0 10px 30px rgba(0,0,0,.45);
+
+    opacity:0;
+
+    transform:
+        translateY(-20px);
+
+    transition:.35s ease;
+}
+
+.pause-indicator.show{
+
+    opacity:1;
+
+    transform:
+        translateY(0);
+}
+
+
+/* =========================
+RANK LIST
+========================= */
+
+.rank-list{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:1.2vh;
+
+    flex:1;
+
+    justify-content:space-evenly;
+}
+
+
+/* =========================
+CARD
+========================= */
+
+.rank-card{
+
+    position:relative;
+
+    display:flex;
+
+    align-items:center;
+
+    height:25vh;
+
+    border-radius:34px;
+
+    overflow:hidden;
+
+    border:
+        1px solid rgba(255,255,255,.08);
+
+    opacity:0;
+
+    transform:
+        translateX(-40px);
+
+    will-change:auto;
+}
+
+.rank-card.show{
+
+    animation:
+        slideRight .5s forwards;
+}
+
+.rank-card:nth-child(1){
+    animation-delay:.1s;
+}
+
+.rank-card:nth-child(2){
+    animation-delay:.2s;
+}
+
+.rank-card:nth-child(3){
+    animation-delay:.3s;
+}
+
+@keyframes slideRight{
+
+    from{
+
+        opacity:0;
+
+        transform:
+            translateX(-40px);
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:
+            translateX(0);
+    }
+}
+
+
+/* =========================
+TOP CARD
+========================= */
+
+.gold{
+
+    background:
+        linear-gradient(
+            135deg,
+            #6b5300,
+            #d4a514,
+            #fff0a6,
+            #d4a514,
+            #6b5300
+        );
+}
+
+.silver{
+
+    background:
+        linear-gradient(
+            135deg,
+            #737373,
+            #d1d5db,
+            #ffffff,
+            #d1d5db,
+            #737373
+        );
+}
+
+.bronze{
+
+    background:
+        linear-gradient(
+            135deg,
+            #6d3f1d,
+            #c87c3d,
+            #efc08c,
+            #c87c3d,
+            #6d3f1d
+        );
+}
+
+
+/* =========================
+BOTTOM CARD
+========================= */
+
+.red-high{
+
+    background:
+        linear-gradient(
+            135deg,
+            #7f1d1d,
+            #b91c1c,
+            #dc2626,
+            #ef4444,
+            #f87171
+        );
+}
+
+.red-mid{
+
+    background:
+        linear-gradient(
+            135deg,
+            #4a0404,
+            #7f1d1d,
+            #b91c1c,
+            #dc2626,
+            #ef4444
+        );
+}
+
+.red-low{
+
+    background:
+        linear-gradient(
+            135deg,
+            #2b0000,
+            #4a0404,
+            #7f1d1d,
+            #991b1b,
+            #b91c1c
+        );
+}
+
+
+/* =========================
+RANK NUMBER
+========================= */
+
+.rank-number{
+
+    position:absolute;
+
+    left:-.5vw;
+
+    top:50%;
+
+    transform:
+        translateY(-50%)
+        skew(-10deg);
+
+    font-size:16vw;
+
+    font-weight:900;
+
+    opacity:.20;
+
+    letter-spacing:-10px;
+}
+
+.gold .rank-number{
+    color:#facc15 !important;
+}
+
+.silver .rank-number{
+    color:#e2e8f0 !important;
+}
+
+.bronze .rank-number{
+    color:#fb923c !important;
+}
+
+.red-high .rank-number,
+.red-mid .rank-number,
+.red-low .rank-number{
+
+    color:#ffffff !important;
+}
+
+
+/* =========================
+PHOTO
+========================= */
+
+.photo-box{
+    width:25vh;
+    height:25vh;
+
+    aspect-ratio:1 / 1;
+
+    flex-shrink:0;
+
+    display:flex;
+
+    align-items:flex-end;
+    justify-content:center;
+
+    overflow:hidden;
+
+    position:relative;
+
+    z-index:3;
+}
+
+.photo-box img{
+    width:125%;
+    height:125%;
+
+    max-width:none;
+    max-height:none;
+
+    display:block;
+
+    object-fit:contain;
+    object-position:center bottom;
+
+    filter:
+        drop-shadow(0 6px 10px rgba(0,0,0,.25));
+}
+
+
+/* =========================
+EMPLOYEE
+========================= */
+
+.employee{
+
+    flex:1;
+
+    padding-left:1.5vw;
+
+    padding-right:3vw;
+
+    overflow:visible;
+
+    position:relative;
+
+    z-index:3;
+}
+
+.employee-name{
+
+    font-size:2vw;
+
+    font-weight:900;
+
+    color:#111827;
+
+    text-transform:uppercase;
+
+    white-space:nowrap;
+
+    overflow:visible;
+
+    text-overflow:ellipsis;
+}
+
+.employee-label{
+
+    margin-top:.5vh;
+
+    font-size:1.1vw;
+
+    letter-spacing:3px;
+
+    text-transform:uppercase;
+
+    color:#111827;
+}
+
+.red-high .employee-name,
+.red-mid .employee-name,
+.red-low .employee-name,
+
+.red-high .employee-label,
+.red-mid .employee-label,
+.red-low .employee-label{
+
+    color:white !important;
+}
+
+
+/* =========================
+RANK CHANGE INDICATOR
+DI TENGAH NAMA & PEROLEHAN
+========================= */
+
+.rank-change{
+
+    position:absolute;
+
+    right:-2.2vw;
+
+    top:50%;
+
+    transform:
+        translateY(-50%);
+
+    width:38px;
+    height:38px;
+
+    display:flex;
+
+    align-items:center;
+    justify-content:center;
+
+    font-size:30px;
+
+    font-weight:900;
+
+    line-height:1;
+
+    z-index:10;
+
+    pointer-events:none;
+
+    text-shadow:
+        0 3px 8px rgba(0,0,0,.65);
+}
+
+.rank-up{
+
+    color:#22c55e !important;
+
+}
+
+.rank-down{
+
+    color:#ef4444 !important;
+
+}
+
+@keyframes rankChangePulse{
+
+    0%{
+
+        transform:
+            translateY(-50%)
+            scale(.5);
+
+        opacity:0;
+    }
+
+    60%{
+
+        transform:
+            translateY(-50%)
+            scale(1.2);
+
+        opacity:1;
+    }
+
+    100%{
+
+        transform:
+            translateY(-50%)
+            scale(1);
+
+        opacity:1;
+    }
+}
+
+.rank-change{
+
+    animation:
+        rankChangePulse .6s ease-out;
+}
+
+
+/* =========================
+SCORE
+========================= */
+
+.score{
+
+    width:31%;
+
+    padding-right:1.8vw;
+
+    display:flex;
+
+    flex-direction:column;
+
+    align-items:flex-end;
+
+    gap:1vh;
+
+    position:relative;
+
+    z-index:3;
+}
+
+.main-score{
+
+    text-align:right;
+}
+
+.score-value{
+
+    font-size:2.5vw;
+
+    font-weight:900;
+
+    color:#111827;
+}
+
+.score-label{
+
+    margin-top:.2vh;
+
+    font-size:.8vw;
+
+    font-weight:700;
+
+    letter-spacing:2px;
+
+    color:#111827;
+
+    opacity:.7;
+}
+
+.red-high .score-value,
+.red-mid .score-value,
+.red-low .score-value,
+
+.red-high .score-label,
+.red-mid .score-label,
+.red-low .score-label{
+
+    color:white !important;
+}
+
+
+/* =========================
+ACH BOX
+========================= */
+
+.ach-box{
+
+    padding:
+        1vh
+        1.2vw;
+
+    border-radius:22px;
+
+    min-width:9vw;
+
+    text-align:center;
+
+    border:
+        1px solid rgba(255,255,255,.18);
+
+    background:
+        rgba(255,255,255,.12);
+}
+
+.ach-title{
+
+    font-size:.72vw;
+
+    font-weight:800;
+
+    letter-spacing:2px;
+
+    color:#ffffff;
+}
+
+.ach-value{
+
+    margin-top:.45vh;
+
+    font-size:1.8vw;
+
+    font-weight:900;
+}
+
+.ach-green{
+    color:#dcfce7 !important;
+}
+
+.ach-green-box{
+
+    background:
+        rgba(22,163,74,.35) !important;
+
+    border:
+        2px solid rgba(74,222,128,.65);
+}
+
+.ach-red{
+    color:#ffe4e6 !important;
+}
+
+.ach-red-box{
+
+    background:
+        rgba(185,28,28,.35) !important;
+
+    border:
+        2px solid rgba(252,165,165,.6);
+}
+
+.ach-normal{
+    color:#ffffff !important;
+}
+
+
+/* =========================
+MOBILE
+========================= */
+
+@media(max-width:768px){
+
+    body{
+        overflow:auto;
+    }
+
+    .slide{
+        min-height:100vh;
+        height:auto;
+        padding:12px;
+    }
+
+    .header h1{
+        font-size:30px;
+    }
+
+    .header p{
+        font-size:11px;
+    }
+
+    .rank-card{
+        height:130px;
+    }
+
+    .rank-number{
+        font-size:90px !important;
+    }
+
+    .photo-box{
+        width:95px;
+        min-width:95px;
+    }
+
+    .employee{
+
+        padding-left:1.5vw;
+
+        padding-right:25px;
+
+    }
+
+    .employee-name{
+        font-size:15px;
+    }
+
+    .employee-label{
+        font-size:10px;
+    }
+
+    .score{
+        width:42%;
+    }
+
+    .score-value{
         font-size:18px;
+    }
+
+    .score-label{
+        font-size:9px;
+    }
+
+    .ach-box{
+
+        min-width:78px;
+
+        padding:
+            8px
+            10px;
+    }
+
+    .ach-title{
+        font-size:8px;
+    }
+
+    .ach-value{
+        font-size:15px;
+    }
+
+    .rank-change{
+
+        right:-18px;
+
+        width:30px;
+        height:30px;
+
+        font-size:24px;
+    }
+}
+
+
+/* =========================
+DATE TIME
+========================= */
+
+#datetimeWidget{
+
+    position:fixed;
+
+    top:20px;
+
+    right:25px;
+
+    left:auto;
+
+    transform:none;
+
+    z-index:999;
+
+    display:flex;
+
+    flex-direction:column;
+
+    align-items:flex-end;
+
+    gap:4px;
+
+    pointer-events:none;
+}
+
+#dateLine{
+
+    color:#000 !important;
+
+    font-size:.8vw;
+
+    font-weight:700;
+
+    letter-spacing:2px;
+
+    text-transform:uppercase;
+
+    text-shadow:
+        0 2px 10px rgba(255,255,255,.4);
+}
+
+#timeLine{
+
+    padding:6px 18px;
+
+    border-radius:999px;
+
+    background:
+        rgba(255,255,255,.18);
+
+    backdrop-filter:blur(10px);
+
+    border:
+        1px solid rgba(255,255,255,.25);
+
+    color:#000 !important;
+
+    font-size:1.2vw;
+
+    font-weight:900;
+
+    letter-spacing:3px;
+
+    text-shadow:
+        0 2px 10px rgba(255,255,255,.4);
+}
+
+@media(max-width:768px){
+
+    #datetimeWidget{
+
+        top:81px;
+
+        left:50%;
+
+        right:auto;
+
+        transform:translateX(-50%);
+
+        width:100%;
+
+        align-items:center;
+
+        text-align:center;
+    }
+
+    #dateLine{
+
+        font-size:11px;
+
+        letter-spacing:1px;
+
+        width:100%;
+    }
+
+    #timeLine{
+
+        font-size:18px;
+
+        min-width:120px;
     }
 }
 
@@ -76,101 +1009,1686 @@ h2{
 
 <body>
 
-<div class="header">🔥 AZKO PERFORMANCE LEADERBOARD</div>
+<div id="datetimeWidget">
 
-<!-- SALES -->
+    <div id="dateLine"></div>
+
+    <div id="timeLine"></div>
+
+</div>
+
+
+<div
+    class="pause-indicator"
+    id="pauseIndicator"
+>
+    ▶ PLAYING
+</div>
+
+
+<!-- =========================
+SLIDE 1
+========================= -->
+
 <div class="slide active">
-<h2>TOP SALES</h2>
-<div id="salesList" class="top3-list"></div>
+
+    <div class="header">
+
+        <h1>TOP ACH MTD SALES</h1>
+
+        <p>AZKO CITIMALL TUBAN</p>
+
+    </div>
+
+    <div
+        class="rank-list"
+        id="salesTop"
+    ></div>
+
 </div>
 
-<!-- PROTEKSI -->
+
+<!-- =========================
+SLIDE 2
+========================= -->
+
 <div class="slide">
-<h2>TOP PROTEKSI</h2>
-<div id="proteksiList" class="top3-list"></div>
+
+    <div class="header">
+
+        <h1>BOTTOM ACH MTD SALES</h1>
+
+        <p>AZKO CITIMALL TUBAN</p>
+
+    </div>
+
+    <div
+        class="rank-list"
+        id="salesBottom"
+    ></div>
+
 </div>
 
-<!-- TRX -->
+
+<!-- =========================
+SLIDE 3
+========================= -->
+
 <div class="slide">
-<h2>TOP TRX</h2>
-<div id="trxList" class="top3-list"></div>
+
+    <div class="header">
+
+        <h1>TOP PROTEKSI</h1>
+
+        <p>AZKO CITIMALL TUBAN</p>
+
+    </div>
+
+    <div
+        class="rank-list"
+        id="proteksiTop"
+    ></div>
+
 </div>
+
+
+<!-- =========================
+SLIDE 4
+========================= -->
+
+<div class="slide">
+
+    <div class="header">
+
+        <h1>BOTTOM PROTEKSI</h1>
+
+        <p>AZKO CITIMALL TUBAN</p>
+
+    </div>
+
+    <div
+        class="rank-list"
+        id="proteksiBottom"
+    ></div>
+
+</div>
+
+
+<!-- =========================
+SLIDE 5
+========================= -->
+
+<div class="slide">
+
+    <div class="header">
+
+        <h1>TOP TRX</h1>
+
+        <p>AZKO CITIMALL TUBAN</p>
+
+    </div>
+
+    <div
+        class="rank-list"
+        id="trxTop"
+    ></div>
+
+</div>
+
+
+<!-- =========================
+SLIDE 6
+========================= -->
+
+<div class="slide">
+
+    <div class="header">
+
+        <h1>BOTTOM TRX</h1>
+
+        <p>AZKO CITIMALL TUBAN</p>
+
+    </div>
+
+    <div
+        class="rank-list"
+        id="trxBottom"
+    ></div>
+
+</div>
+
+
+<!-- =========================
+AUDIO
+========================= -->
+
+<audio
+    id="bgm"
+    loop
+    autoplay
+    playsinline
+    preload="auto"
+>
+
+    <source
+        src="https://putrasetya.github.io/jingleazkoboomsale.mp3"
+        type="audio/mpeg"
+    >
+
+</audio>
+
 
 <script>
 
-const URL = "https://script.google.com/macros/s/AKfycbzeehvUo6QYriMFJTR4A88lN6IIHV6Qop9UphkdOTMkRLVxhVuJ13y69momo6h1pn9dTQ/exec";
+/* =====================================================
+GOOGLE APPS SCRIPT
+===================================================== */
 
-function clean(v){
-    return parseInt((v||"0").toString().replace(/[^\d]/g,'')) || 0;
+const URL =
+"https://script.google.com/macros/s/AKfycbzeehvUo6QYriMFJTR4A88lN6IIHV6Qop9UphkdOTMkRLVxhVuJ13y69momo6h1pn9dTQ/exec";
+
+
+/* =====================================================
+PHOTO RULES
+===================================================== */
+
+const photoRules = {
+
+    "137391":
+        "https://putrasetya.github.io/foto/putra.png",
+
+    "193976":
+        "https://putrasetya.github.io/foto/archi.png",
+
+    "114636":
+        "https://putrasetya.github.io/foto/budi.png",
+
+    "183549":
+        "https://putrasetya.github.io/foto/jaidun.png",
+
+    "193978":
+        "https://putrasetya.github.io/foto/ghofur.png",
+
+    "194018":
+        "https://putrasetya.github.io/foto/salim.png",
+
+    "129403":
+        "https://putrasetya.github.io/foto/nafi.png",
+
+    "193977":
+        "https://putrasetya.github.io/foto/avif.png",
+
+    "195964":
+        "https://putrasetya.github.io/foto/sherly.png",
+
+    "94880":
+        "https://putrasetya.github.io/foto/imam.png",
+
+    "105194":
+        "https://putrasetya.github.io/foto/shohib.png",
+
+    "161295":
+        "https://putrasetya.github.io/foto/arif.png",
+
+    "134576":
+        "https://putrasetya.github.io/foto/rifai.png",
+
+    "136049":
+        "https://putrasetya.github.io/foto/luluk.png",
+
+    "193979":
+        "https://putrasetya.github.io/foto/ima.png",
+
+    "193980":
+        "https://putrasetya.github.io/foto/hepi.png",
+
+    "149296":
+        "https://putrasetya.github.io/foto/ifa.png"
+
+};
+
+
+/* =====================================================
+GET FOTO
+===================================================== */
+
+function getPhoto(nik){
+
+    if(
+        nik === null ||
+        nik === undefined
+    ){
+
+        return "";
+
+    }
+
+    const employeeNik =
+        String(nik)
+        .trim()
+        .replace(/\.0+$/, "");
+
+    console.log(
+        "NIK:",
+        employeeNik,
+        "FOTO:",
+        photoRules[employeeNik]
+    );
+
+    return (
+        photoRules[employeeNik] ||
+        ""
+    );
+
 }
 
-/* DATA */
+
+/* =====================================================
+DATA
+===================================================== */
+
+let lastData = [];
+
+let lastRenderHash = "";
+
+
+/* =====================================================
+LOCAL STORAGE RANK MEMORY
+===================================================== */
+
+const RANK_STORAGE_KEY =
+    "azko_tv_previous_rank_v1";
+
+let previousRanks = {};
+
+try{
+
+    previousRanks =
+        JSON.parse(
+            localStorage.getItem(
+                RANK_STORAGE_KEY
+            )
+        ) || {};
+
+}catch(err){
+
+    console.log(
+        "LOCAL STORAGE ERROR:",
+        err
+    );
+
+    previousRanks = {};
+
+}
+
+
+/* =====================================================
+HELPERS
+===================================================== */
+
+function clean(val){
+
+    if(!val)
+        return 0;
+
+    return parseFloat(
+        val.toString().replace(/[^\d.]/g,'')
+    ) || 0;
+
+}
+
+
+function formatSalesJt(value){
+
+    const jt =
+        value / 1000000;
+
+    const rounded =
+        Math.floor(jt * 10) / 10;
+
+    if(Number.isInteger(rounded)){
+
+        return `${rounded.toFixed(0)} jt`;
+
+    }
+
+    return `${rounded.toFixed(1).replace('.',',')} jt`;
+
+}
+
+
+function isExcluded(dept){
+
+    const d =
+        (dept || "").toLowerCase();
+
+    return (
+
+        d.includes("cashier") ||
+        d.includes("kasir") ||
+        d.includes("cs") ||
+        d.includes("customer service")
+
+    );
+
+}
+
+
+/* =====================================================
+GET DATA
+===================================================== */
+
 async function getData(){
-    let res = await fetch(URL);
-    let data = await res.json();
 
-    return data.map(r=>({
-        name: r["EMPLOYEE NAME"] || "Unknown",
-        sales: clean(r["SALES MTD"]),
-        proteksi: clean(r["PROTEKSI"]),
-        trx: clean(r["TRX"])
-    }));
+    try{
+
+        const res =
+            await fetch(
+                URL + "?t=" + Date.now()
+            );
+
+        const json =
+            await res.json();
+
+        if(
+            !Array.isArray(json) ||
+            json.length === 0
+        ){
+
+            return lastData;
+
+        }
+
+
+        const mapped =
+            json.map(row => ({
+
+                nik:
+                    row["NIP"] ||
+                    row["NIK"] ||
+                    "",
+
+                name:
+                    row["EMPLOYEE NAME"] ||
+                    "UNKNOWN",
+
+                dept:
+                    row["DEPT"] ||
+                    "-",
+
+                sales:
+                    clean(
+                        row["SALES MTD"]
+                    ),
+
+                proteksi:
+                    clean(
+                        row["PROTEKSI"]
+                    ),
+
+                trx:
+                    clean(
+                        row["TRX"]
+                    ),
+
+                achSales:
+                    clean(
+                        row["ACH MTD"]
+                    ),
+
+                achProteksi:
+                    clean(
+                        row["ACH PROTEKSI"]
+                    ),
+
+                achTrx:
+                    clean(
+                        row["ACH BULANAN"]
+                    )
+
+            }));
+
+
+        lastData =
+            mapped;
+
+        return mapped;
+
+
+    }catch(err){
+
+        console.log(
+            "GET DATA ERROR:",
+            err
+        );
+
+        return lastData;
+
+    }
+
 }
 
-/* RENDER TOP 3 LIST ONLY */
-function renderTop3(data,key,id){
 
-    let top3 = data
-        .filter(d=>d[key]>0)
-        .sort((a,b)=>b[key]-a[key])
-        .slice(0,3);
+/* =====================================================
+ACH STYLE
+===================================================== */
 
-    let html="";
+function getAchStyle(value){
 
-    top3.forEach((d,i)=>{
+    if(value >= 100){
 
-        let cls = "";
-        if(i===0) cls="rank-1";
-        if(i===1) cls="rank-2";
-        if(i===2) cls="rank-3";
+        return {
 
-        html+=`
-        <div class="item ${cls}">
-            <div>#${i+1} ${d.name}</div>
-            <div>${d[key].toLocaleString()}</div>
-        </div>`;
-    });
+            valueClass:
+                "ach-value ach-green",
 
-    document.getElementById(id).innerHTML = html;
+            boxClass:
+                "ach-box ach-green-box"
+
+        };
+
+    }
+
+    if(value < 80){
+
+        return {
+
+            valueClass:
+                "ach-value ach-red",
+
+            boxClass:
+                "ach-box ach-red-box"
+
+        };
+
+    }
+
+    return {
+
+        valueClass:
+            "ach-value ach-normal",
+
+        boxClass:
+            "ach-box"
+
+    };
+
 }
 
-/* UPDATE */
+
+/* =====================================================
+RANK CHANGE
+===================================================== */
+
+function getRankChange(
+    nik,
+    currentRank,
+    type
+){
+
+    const employeeNik =
+        String(nik || "").trim();
+
+    if(!employeeNik){
+
+        return "";
+
+    }
+
+
+    const key =
+        type +
+        "_" +
+        employeeNik;
+
+
+    const previousRank =
+        previousRanks[key];
+
+
+    if(
+        previousRank === undefined ||
+        previousRank === null
+    ){
+
+        return "";
+
+    }
+
+
+    /* NAIK */
+
+    if(
+        currentRank <
+        previousRank
+    ){
+
+        return `
+
+            <div
+                class="rank-change rank-up"
+                title="Naik peringkat"
+            >
+                ▲
+            </div>
+
+        `;
+
+    }
+
+
+    /* TURUN */
+
+    if(
+        currentRank >
+        previousRank
+    ){
+
+        return `
+
+            <div
+                class="rank-change rank-down"
+                title="Turun peringkat"
+            >
+                ▼
+            </div>
+
+        `;
+
+    }
+
+
+    return "";
+
+}
+
+
+/* =====================================================
+BUILD CURRENT RANKS
+===================================================== */
+
+function buildCurrentRanks(data){
+
+    const newRanks = {};
+
+
+    /* SALES */
+
+    [...data]
+
+        .filter(
+            item =>
+                !isExcluded(item.dept) &&
+                item.achSales > 0
+        )
+
+        .sort(
+            (a,b) =>
+                b.achSales -
+                a.achSales
+        )
+
+        .forEach(
+            (item,index)=>{
+
+                const key =
+                    "sales_" +
+                    String(item.nik).trim();
+
+                newRanks[key] =
+                    index + 1;
+
+            }
+        );
+
+
+    /* PROTEKSI */
+
+    [...data]
+
+        .filter(
+            item =>
+                item.proteksi > 0
+        )
+
+        .sort(
+            (a,b) =>
+                b.proteksi -
+                a.proteksi
+        )
+
+        .forEach(
+            (item,index)=>{
+
+                const key =
+                    "proteksi_" +
+                    String(item.nik).trim();
+
+                newRanks[key] =
+                    index + 1;
+
+            }
+        );
+
+
+    /* TRX */
+
+    [...data]
+
+        .filter(
+            item =>
+                !isExcluded(item.dept) &&
+                item.trx > 0
+        )
+
+        .sort(
+            (a,b) =>
+                b.trx -
+                a.trx
+        )
+
+        .forEach(
+            (item,index)=>{
+
+                const key =
+                    "trx_" +
+                    String(item.nik).trim();
+
+                newRanks[key] =
+                    index + 1;
+
+            }
+        );
+
+
+    return newRanks;
+
+}
+
+
+/* =====================================================
+SAVE CURRENT RANK
+===================================================== */
+
+function saveCurrentRanks(data){
+
+    const newRanks =
+        buildCurrentRanks(data);
+
+
+    try{
+
+        localStorage.setItem(
+            RANK_STORAGE_KEY,
+            JSON.stringify(newRanks)
+        );
+
+        previousRanks =
+            newRanks;
+
+    }catch(err){
+
+        console.log(
+            "SAVE RANK ERROR:",
+            err
+        );
+
+    }
+
+}
+
+
+/* =====================================================
+RENDER
+===================================================== */
+
+function render(
+    data,
+    key,
+    achKey,
+    achTitle,
+    containerId,
+    label,
+    mode="top"
+){
+
+    const container =
+        document.getElementById(
+            containerId
+        );
+
+    if(!container)
+        return;
+
+
+    let filteredData =
+        [...data];
+
+
+    /* FILTER KASIR / CS */
+
+    if(
+
+        containerId === "salesTop" ||
+        containerId === "salesBottom" ||
+        containerId === "trxTop"
+
+    ){
+
+        filteredData =
+            filteredData.filter(
+                item =>
+                    !isExcluded(item.dept)
+            );
+
+    }
+
+
+    let sorted = [];
+
+    let styles = [];
+
+
+    /* RANK TYPE */
+
+    const rankType =
+
+        containerId.includes("sales")
+            ? "sales"
+
+            : containerId.includes("proteksi")
+                ? "proteksi"
+
+                : "trx";
+
+
+    /* =========================
+       TOP
+    ========================= */
+
+    if(mode === "top"){
+
+        styles = [
+
+            "gold",
+            "silver",
+            "bronze"
+
+        ];
+
+
+        if(
+
+            containerId === "salesTop" ||
+            containerId === "salesBottom"
+
+        ){
+
+            sorted =
+                filteredData
+
+                .filter(
+                    v =>
+                        v.achSales > 0
+                )
+
+                .sort(
+                    (a,b) =>
+                        b.achSales -
+                        a.achSales
+                )
+
+                .slice(0,3);
+
+
+        }else{
+
+            sorted =
+                filteredData
+
+                .filter(
+                    v =>
+                        v[key] > 0
+                )
+
+                .sort(
+                    (a,b) =>
+                        b[key] -
+                        a[key]
+                )
+
+                .slice(0,3);
+
+        }
+
+
+    }else{
+
+        /* =========================
+           BOTTOM
+        ========================= */
+
+        styles = [
+
+            "red-high",
+            "red-mid",
+            "red-low"
+
+        ];
+
+
+        let allSorted;
+
+
+        if(
+            containerId ===
+            "salesBottom"
+        ){
+
+            allSorted =
+                filteredData
+
+                .filter(
+                    v =>
+                        v.achSales > 0
+                )
+
+                .sort(
+                    (a,b) =>
+                        a.achSales -
+                        b.achSales
+                );
+
+
+        }else{
+
+            allSorted =
+                filteredData
+
+                .filter(v => {
+
+                    if(
+                        containerId ===
+                        "proteksiBottom"
+                    ){
+
+                        return v[key] >= 0;
+
+                    }
+
+                    return v[key] > 0;
+
+                })
+
+                .sort(
+                    (a,b) =>
+                        a[key] -
+                        b[key]
+                );
+
+        }
+
+
+        sorted =
+            allSorted.slice(0,3);
+
+
+        sorted =
+            sorted.map(
+                (item,index) => ({
+
+                    ...item,
+
+                    bottomRank:
+                        allSorted.length -
+                        index
+
+                })
+            );
+
+
+        sorted.reverse();
+
+    }
+
+
+    let html = "";
+
+
+    sorted.forEach(
+        (d,i)=>{
+
+            const rank =
+
+                mode === "top"
+
+                ? i + 1
+
+                : d.bottomRank;
+
+
+            const achStyle =
+                getAchStyle(
+                    d[achKey]
+                );
+
+
+            const photo =
+                getPhoto(
+                    d.nik
+                );
+
+
+            const rankChange =
+                getRankChange(
+                    d.nik,
+                    rank,
+                    rankType
+                );
+
+
+            const avatar =
+                `https://ui-avatars.com/api/?name=${encodeURIComponent(d.name)}&background=random&color=fff&size=512`;
+
+
+            const photoSrc =
+                photo ||
+                avatar;
+
+
+            html += `
+
+                <div
+                    class="rank-card show ${styles[i]}"
+                >
+
+                    <div class="rank-number">
+                        ${rank}
+                    </div>
+
+
+                    <div class="photo-box">
+
+                        <img
+                            src="${photoSrc}"
+                            loading="eager"
+                            decoding="async"
+
+                            onerror="
+                                this.onerror=null;
+                                this.src='${avatar}';
+                            "
+                        >
+
+                    </div>
+
+
+                    <div class="employee">
+
+                        <div class="employee-name">
+
+                            ${d.name}
+
+                            ${rankChange}
+
+                        </div>
+
+
+                        <div class="employee-label">
+
+                            ${d.dept}
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="score">
+
+                        <div class="main-score">
+
+                            <div class="score-value">
+
+                                ${
+                                    key === "sales"
+
+                                    ? formatSalesJt(
+                                        d[key]
+                                    )
+
+                                    : d[key].toLocaleString(
+                                        'id-ID'
+                                    )
+                                }
+
+                            </div>
+
+
+                            <div class="score-label">
+
+                                ${label}
+
+                            </div>
+
+                        </div>
+
+
+                        <div
+                            class="${achStyle.boxClass}"
+                        >
+
+                            <div class="ach-title">
+
+                                ${achTitle}
+
+                            </div>
+
+
+                            <div
+                                class="${achStyle.valueClass}"
+                            >
+
+                                ${d[achKey].toFixed(1)}%
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            `;
+
+        }
+    );
+
+
+    container.innerHTML =
+        html;
+
+}
+
+
+/* =====================================================
+SLIDES
+===================================================== */
+
+const slides =
+    document.querySelectorAll(
+        ".slide"
+    );
+
+
+let current = 0;
+
+let isSliding = false;
+
+
+function nextSlide(){
+
+    if(isSliding)
+        return;
+
+
+    isSliding = true;
+
+
+    slides[current]
+        .classList.remove(
+            "active"
+        );
+
+
+    current++;
+
+
+    if(
+        current >= slides.length
+    ){
+
+        current = 0;
+
+    }
+
+
+    setTimeout(
+        ()=>{
+
+            slides[current]
+                .classList.add(
+                    "active"
+                );
+
+            isSliding = false;
+
+        },
+        120
+    );
+
+}
+
+
+/* =====================================================
+UPDATE
+===================================================== */
+
 async function update(){
-    let data = await getData();
 
-    renderTop3(data,"sales","salesList");
-    renderTop3(data,"proteksi","proteksiList");
-    renderTop3(data,"trx","trxList");
+    const data =
+        await getData();
+
+
+    if(
+        !data ||
+        data.length === 0
+    ){
+
+        return;
+
+    }
+
+
+    const newHash =
+        JSON.stringify(
+            data
+        );
+
+
+    if(
+        newHash ===
+        lastRenderHash
+    ){
+
+        return;
+
+    }
+
+
+    lastRenderHash =
+        newHash;
+
+
+    render(
+        data,
+        "sales",
+        "achSales",
+        "ACH MTD",
+        "salesTop",
+        "TOTAL SALES",
+        "top"
+    );
+
+
+    render(
+        data,
+        "sales",
+        "achSales",
+        "ACH MTD",
+        "salesBottom",
+        "TOTAL SALES",
+        "bottom"
+    );
+
+
+    render(
+        data,
+        "proteksi",
+        "achProteksi",
+        "ACH PROTEKSI",
+        "proteksiTop",
+        "TOTAL PROTEKSI",
+        "top"
+    );
+
+
+    render(
+        data,
+        "proteksi",
+        "achProteksi",
+        "ACH PROTEKSI",
+        "proteksiBottom",
+        "TOTAL PROTEKSI",
+        "bottom"
+    );
+
+
+    render(
+        data,
+        "trx",
+        "achTrx",
+        "ACH BULANAN",
+        "trxTop",
+        "TOTAL TRX",
+        "top"
+    );
+
+
+    render(
+        data,
+        "trx",
+        "achTrx",
+        "ACH BULANAN",
+        "trxBottom",
+        "TOTAL TRX",
+        "bottom"
+    );
+
+
+    /*
+        Ranking terbaru disimpan
+        SETELAH render selesai.
+    */
+
+    saveCurrentRanks(data);
+
 }
 
-/* SLIDE */
-let i=0;
-setInterval(()=>{
-    let slides=document.querySelectorAll(".slide");
-    slides[i].classList.remove("active");
-    i=(i+1)%slides.length;
-    slides[i].classList.add("active");
-},6000);
 
-/* AUTO REFRESH */
-setInterval(update,15000);
+/* =====================================================
+INDICATOR
+===================================================== */
 
-update();
+const pauseIndicator =
+    document.getElementById(
+        "pauseIndicator"
+    );
 
-/* FULLSCREEN */
-document.body.onclick=()=>{
-    document.documentElement.requestFullscreen();
+
+function showIndicator(text){
+
+    if(!pauseIndicator)
+        return;
+
+
+    pauseIndicator.innerHTML =
+        text;
+
+
+    pauseIndicator.classList.add(
+        "show"
+    );
+
+
+    clearTimeout(
+        window.indicatorTimeout
+    );
+
+
+    window.indicatorTimeout =
+        setTimeout(
+            ()=>{
+
+                pauseIndicator.classList.remove(
+                    "show"
+                );
+
+            },
+            1500
+        );
+
 }
+
+
+/* =====================================================
+AUDIO
+===================================================== */
+
+const bgm =
+    document.getElementById(
+        "bgm"
+    );
+
+
+if(bgm){
+
+    bgm.volume = 0.35;
+
+}
+
+
+async function playMusic(){
+
+    if(!bgm)
+        return;
+
+
+    try{
+
+        await bgm.play();
+
+    }catch(err){
+
+        console.log(err);
+
+    }
+
+}
+
+
+/* =====================================================
+LOOP
+===================================================== */
+
+let isPaused = false;
+
+let slideInterval;
+
+let updateInterval;
+
+
+function stopLoop(){
+
+    clearInterval(
+        slideInterval
+    );
+
+    clearInterval(
+        updateInterval
+    );
+
+}
+
+
+function startLoop(){
+
+    stopLoop();
+
+
+    slideInterval =
+        setInterval(
+            ()=>{
+
+                if(
+                    !document.hidden
+                ){
+
+                    nextSlide();
+
+                }
+
+            },
+            8000
+        );
+
+
+    updateInterval =
+        setInterval(
+            ()=>{
+
+                if(
+                    !document.hidden
+                ){
+
+                    update();
+
+                }
+
+            },
+            30000
+        );
+
+}
+
+
+function togglePause(){
+
+    isPaused =
+        !isPaused;
+
+
+    if(isPaused){
+
+        stopLoop();
+
+
+        if(bgm)
+            bgm.pause();
+
+
+        showIndicator(
+            "⏸ PAUSED"
+        );
+
+
+    }else{
+
+        startLoop();
+
+        playMusic();
+
+
+        showIndicator(
+            "▶ PLAYING"
+        );
+
+    }
+
+}
+
+
+/* =====================================================
+FULLSCREEN
+===================================================== */
+
+async function toggleFullscreen(){
+
+    try{
+
+        if(
+            !document.fullscreenElement
+        ){
+
+            await document
+                .documentElement
+                .requestFullscreen();
+
+
+            showIndicator(
+                "🖥 FULLSCREEN"
+            );
+
+
+        }else{
+
+            await document
+                .exitFullscreen();
+
+
+            showIndicator(
+                "❎ EXIT FULLSCREEN"
+            );
+
+        }
+
+    }catch(err){
+
+        console.log(err);
+
+    }
+
+}
+
+
+/* =====================================================
+CLICK
+===================================================== */
+
+let clickTimer = null;
+
+
+document.addEventListener(
+    "click",
+    ()=>{
+
+        if(clickTimer){
+
+            clearTimeout(
+                clickTimer
+            );
+
+        }
+
+
+        clickTimer =
+            setTimeout(
+                ()=>{
+
+                    togglePause();
+
+                },
+                250
+            );
+
+    }
+);
+
+
+document.addEventListener(
+    "dblclick",
+    ()=>{
+
+        clearTimeout(
+            clickTimer
+        );
+
+
+        toggleFullscreen();
+
+    }
+);
+
+
+/* =====================================================
+AUTO CLEAN MEMORY
+===================================================== */
+
+setInterval(
+    ()=>{
+
+        if(window.gc){
+
+            window.gc();
+
+        }
+
+    },
+    300000
+);
+
+
+/* =====================================================
+AUTO REFRESH 6 JAM
+===================================================== */
+
+setTimeout(
+    ()=>{
+
+        location.reload();
+
+    },
+    21600000
+);
+
+
+/* =====================================================
+DATE TIME
+===================================================== */
+
+function updateDateTime(){
+
+    const now =
+        new Date();
+
+
+    const hari = [
+
+        "Minggu",
+        "Senin",
+        "Selasa",
+        "Rabu",
+        "Kamis",
+        "Jumat",
+        "Sabtu"
+
+    ];
+
+
+    const bulan = [
+
+        "Januari",
+        "Februari",
+        "Maret",
+        "April",
+        "Mei",
+        "Juni",
+        "Juli",
+        "Agustus",
+        "September",
+        "Oktober",
+        "November",
+        "Desember"
+
+    ];
+
+
+    document.getElementById(
+        "dateLine"
+    ).textContent =
+
+        `${hari[now.getDay()]}, ${now.getDate()} ${bulan[now.getMonth()]} ${now.getFullYear()}`;
+
+
+    document.getElementById(
+        "timeLine"
+    ).textContent =
+
+        now.toLocaleTimeString(
+            "id-ID"
+        );
+
+}
+
+
+updateDateTime();
+
+
+setInterval(
+    updateDateTime,
+    1000
+);
+
+
+/* =====================================================
+START
+===================================================== */
+
+window.addEventListener(
+    "load",
+    async ()=>{
+
+        await update();
+
+        startLoop();
+
+        playMusic();
+
+        setTimeout(
+            playMusic,
+            1000
+        );
+
+        setTimeout(
+            playMusic,
+            3000
+        );
+
+        showIndicator(
+            "▶ PLAYING"
+        );
+
+    }
+);
 
 </script>
 
