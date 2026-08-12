@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -21,9 +22,11 @@ SHADOW TULISAN
 .score-label,
 .header h1,
 .header p{
+
     text-shadow:
         0 2px 6px rgba(0,0,0,.9);
 }
+
 
 /* =========================
 WARNA TEXT
@@ -41,17 +44,20 @@ body *{
     color:#ffe4e6 !important;
 }
 
+
 *{
     margin:0;
     padding:0;
     box-sizing:border-box;
 }
 
+
 html,
 body{
     width:100%;
     height:100%;
 }
+
 
 body{
     font-family:'Poppins',sans-serif;
@@ -68,13 +74,17 @@ body{
     background-size:cover;
 }
 
+
 /* =========================
 BACKGROUND FX
 ========================= */
 
 body::before{
+
     content:"";
+
     position:fixed;
+
     inset:0;
 
     background:
@@ -86,10 +96,13 @@ body::before{
         );
 
     pointer-events:none;
+
     z-index:-2;
 }
 
+
 body::after{
+
     content:"";
 
     position:fixed;
@@ -117,11 +130,13 @@ body::after{
     z-index:-1;
 }
 
+
 /* =========================
 SLIDES
 ========================= */
 
 .slide{
+
     position:absolute;
 
     inset:0;
@@ -147,42 +162,63 @@ SLIDES
         opacity .5s linear;
 }
 
+
 .slide.active{
+
     opacity:1;
+
     visibility:visible;
+
     pointer-events:auto;
 }
+
 
 /* =========================
 HEADER
 ========================= */
 
 .header{
+
     text-align:center;
+
     margin-bottom:1vh;
 }
 
+
 .header h1{
+
     font-size:3vw;
+
     font-weight:900;
+
     letter-spacing:6px;
+
     text-transform:uppercase;
+
     color:#000000;
 }
 
+
 .header p{
+
     margin-top:.2vh;
+
     font-size:1vw;
+
     letter-spacing:4px;
+
     color:#000000;
+
     opacity:.9;
 }
+
 
 /* =========================
 PAUSE INDICATOR
 ========================= */
 
 .pause-indicator{
+
     position:fixed;
 
     top:20px;
@@ -221,18 +257,22 @@ PAUSE INDICATOR
     transition:.35s ease;
 }
 
+
 .pause-indicator.show{
+
     opacity:1;
 
     transform:
         translateY(0);
 }
 
+
 /* =========================
 RANK LIST
 ========================= */
 
 .rank-list{
+
     display:flex;
 
     flex-direction:column;
@@ -244,11 +284,13 @@ RANK LIST
     justify-content:space-evenly;
 }
 
+
 /* =========================
 CARD
 ========================= */
 
 .rank-card{
+
     position:relative;
 
     display:flex;
@@ -272,26 +314,33 @@ CARD
     will-change:auto;
 }
 
+
 .rank-card.show{
+
     animation:
         slideRight .5s forwards;
 }
+
 
 .rank-card:nth-child(1){
     animation-delay:.1s;
 }
 
+
 .rank-card:nth-child(2){
     animation-delay:.2s;
 }
+
 
 .rank-card:nth-child(3){
     animation-delay:.3s;
 }
 
+
 @keyframes slideRight{
 
     from{
+
         opacity:0;
 
         transform:
@@ -299,6 +348,7 @@ CARD
     }
 
     to{
+
         opacity:1;
 
         transform:
@@ -306,11 +356,13 @@ CARD
     }
 }
 
+
 /* =========================
 TOP CARD
 ========================= */
 
 .gold{
+
     background:
         linear-gradient(
             135deg,
@@ -322,7 +374,9 @@ TOP CARD
         );
 }
 
+
 .silver{
+
     background:
         linear-gradient(
             135deg,
@@ -334,7 +388,9 @@ TOP CARD
         );
 }
 
+
 .bronze{
+
     background:
         linear-gradient(
             135deg,
@@ -346,11 +402,13 @@ TOP CARD
         );
 }
 
+
 /* =========================
 BOTTOM CARD
 ========================= */
 
 .red-high{
+
     background:
         linear-gradient(
             135deg,
@@ -362,7 +420,9 @@ BOTTOM CARD
         );
 }
 
+
 .red-mid{
+
     background:
         linear-gradient(
             135deg,
@@ -374,7 +434,9 @@ BOTTOM CARD
         );
 }
 
+
 .red-low{
+
     background:
         linear-gradient(
             135deg,
@@ -386,11 +448,13 @@ BOTTOM CARD
         );
 }
 
+
 /* =========================
 RANK NUMBER
 ========================= */
 
 .rank-number{
+
     position:absolute;
 
     left:-.5vw;
@@ -410,29 +474,36 @@ RANK NUMBER
     letter-spacing:-10px;
 }
 
+
 .gold .rank-number{
     color:#facc15;
 }
+
 
 .silver .rank-number{
     color:#e2e8f0;
 }
 
+
 .bronze .rank-number{
     color:#fb923c;
 }
 
+
 .red-high .rank-number,
 .red-mid .rank-number,
 .red-low .rank-number{
+
     color:#ffffff;
 }
+
 
 /* =========================
 PHOTO
 ========================= */
 
 .photo-box{
+
     width:25vh;
     height:25vh;
 
@@ -448,7 +519,9 @@ PHOTO
     overflow:hidden;
 }
 
+
 .photo-box img{
+
     width:125%;
     height:125%;
 
@@ -464,6 +537,7 @@ PHOTO
         drop-shadow(0 6px 10px rgba(0,0,0,.25));
 }
 
+
 /* =========================
 EMPLOYEE
 ========================= */
@@ -475,7 +549,10 @@ EMPLOYEE
     padding-left:1.5vw;
 
     overflow:hidden;
+
+    min-width:0;
 }
+
 
 .employee-name{
 
@@ -494,6 +571,7 @@ EMPLOYEE
     text-overflow:ellipsis;
 }
 
+
 .employee-label{
 
     margin-top:.5vh;
@@ -507,6 +585,7 @@ EMPLOYEE
     color:#111827;
 }
 
+
 .red-high .employee-name,
 .red-mid .employee-name,
 .red-low .employee-name,
@@ -518,106 +597,104 @@ EMPLOYEE
     color:white;
 }
 
+
 /* =====================================================
-INDIKATOR PERUBAHAN PERINGKAT
+PERUBAHAN PERINGKAT
 POSISI: TENGAH ANTARA NAMA DAN PEROLEHAN
 ===================================================== */
 
 .rank-change{
 
-    width:5vw;
-
-    min-width:5vw;
-
-    height:100%;
-
-    display:flex;
-
-    align-items:center;
-
-    justify-content:center;
+    width:0;
+    height:0;
 
     flex-shrink:0;
 
+    margin-left:1vw;
+    margin-right:1.4vw;
+
+    opacity:1;
+
+    filter:
+        drop-shadow(0 4px 5px rgba(0,0,0,.55))
+        drop-shadow(0 0 4px rgba(255,255,255,.25));
+
+    transform-origin:center center;
+
     position:relative;
 
-    z-index:10;
+    z-index:5;
 }
 
-.rank-arrow{
 
-    font-size:4.5vw;
+/* =========================
+SEGITIGA NAIK
+========================= */
 
-    line-height:1;
+.rank-change.up{
 
-    font-weight:900;
+    border-left:15px solid transparent;
+    border-right:15px solid transparent;
+    border-bottom:28px solid #22c55e;
 
-    font-family:Arial,sans-serif;
+    filter:
+        drop-shadow(0 4px 5px rgba(0,0,0,.65))
+        drop-shadow(0 0 8px rgba(34,197,94,.55));
+}
 
-    transition:
-        transform .25s ease,
-        filter .25s ease;
+
+/* =========================
+SEGITIGA TURUN
+========================= */
+
+.rank-change.down{
+
+    border-left:15px solid transparent;
+    border-right:15px solid transparent;
+    border-top:28px solid #ef4444;
+
+    filter:
+        drop-shadow(0 4px 5px rgba(0,0,0,.65))
+        drop-shadow(0 0 8px rgba(239,68,68,.55));
+}
+
+
+/* =========================
+ANIMASI LOGO PERUBAHAN
+========================= */
+
+.rank-change.up,
+.rank-change.down{
 
     animation:
-        rankPulse 1.8s ease-in-out infinite;
+        rankChangePulse 1.5s ease-in-out infinite;
 }
 
-/* HIJAU = NAIK */
 
-.rank-arrow.up{
+@keyframes rankChangePulse{
 
-    color:#22c55e !important;
+    0%{
 
-    text-shadow:
-        0 0 5px rgba(34,197,94,.9),
-        0 0 12px rgba(34,197,94,.8),
-        0 0 25px rgba(34,197,94,.55),
-        0 4px 8px rgba(0,0,0,.75);
-
-    filter:
-        drop-shadow(0 0 7px rgba(34,197,94,.9));
-}
-
-/* MERAH = TURUN */
-
-.rank-arrow.down{
-
-    color:#ef4444 !important;
-
-    text-shadow:
-        0 0 5px rgba(239,68,68,.9),
-        0 0 12px rgba(239,68,68,.8),
-        0 0 25px rgba(239,68,68,.55),
-        0 4px 8px rgba(0,0,0,.75);
-
-    filter:
-        drop-shadow(0 0 7px rgba(239,68,68,.9));
-}
-
-/* BELUM ADA PERUBAHAN */
-
-.rank-arrow.same{
-
-    font-size:2.5vw;
-
-    color:rgba(255,255,255,.35) !important;
-
-    text-shadow:
-        0 2px 5px rgba(0,0,0,.5);
-
-    animation:none;
-}
-
-@keyframes rankPulse{
-
-    0%,100%{
         transform:scale(1);
+
+        opacity:.85;
     }
 
     50%{
-        transform:scale(1.12);
+
+        transform:scale(1.18);
+
+        opacity:1;
+    }
+
+    100%{
+
+        transform:scale(1);
+
+        opacity:.85;
     }
 }
+
 
 /* =========================
 SCORE
@@ -638,9 +715,12 @@ SCORE
     gap:1vh;
 }
 
+
 .main-score{
+
     text-align:right;
 }
+
 
 .score-value{
 
@@ -650,6 +730,7 @@ SCORE
 
     color:#111827;
 }
+
 
 .score-label{
 
@@ -666,6 +747,7 @@ SCORE
     opacity:.7;
 }
 
+
 .red-high .score-value,
 .red-mid .score-value,
 .red-low .score-value,
@@ -676,6 +758,7 @@ SCORE
 
     color:white;
 }
+
 
 /* =========================
 ACH BOX
@@ -700,6 +783,7 @@ ACH BOX
         rgba(255,255,255,.12);
 }
 
+
 .ach-title{
 
     font-size:.72vw;
@@ -711,6 +795,7 @@ ACH BOX
     color:#ffffff;
 }
 
+
 .ach-value{
 
     margin-top:.45vh;
@@ -720,10 +805,11 @@ ACH BOX
     font-weight:900;
 }
 
-.ach-green{
 
+.ach-green{
     color:#dcfce7 !important;
 }
+
 
 .ach-green-box{
 
@@ -734,10 +820,11 @@ ACH BOX
         2px solid rgba(74,222,128,.65);
 }
 
-.ach-red{
 
+.ach-red{
     color:#ffe4e6 !important;
 }
+
 
 .ach-red-box{
 
@@ -748,10 +835,11 @@ ACH BOX
         2px solid rgba(252,165,165,.6);
 }
 
-.ach-normal{
 
+.ach-normal{
     color:#ffffff !important;
 }
+
 
 /* =========================
 MOBILE
@@ -827,24 +915,29 @@ MOBILE
         font-size:15px;
     }
 
-    /* indikator tetap terlihat di HP */
+    /* SEGITIGA MOBILE */
+
     .rank-change{
-
-        width:38px;
-
-        min-width:38px;
+        margin-left:5px;
+        margin-right:8px;
     }
 
-    .rank-arrow{
+    .rank-change.up{
 
-        font-size:32px;
+        border-left-width:10px;
+        border-right-width:10px;
+        border-bottom-width:20px;
     }
 
-    .rank-arrow.same{
+    .rank-change.down{
 
-        font-size:18px;
+        border-left-width:10px;
+        border-right-width:10px;
+        border-top-width:20px;
     }
+
 }
+
 
 /* =========================
 DATE TIME
@@ -875,6 +968,7 @@ DATE TIME
     pointer-events:none;
 }
 
+
 #dateLine{
 
     color:#000;
@@ -890,6 +984,7 @@ DATE TIME
     text-shadow:
         0 2px 10px rgba(255,255,255,.4);
 }
+
 
 #timeLine{
 
@@ -916,6 +1011,7 @@ DATE TIME
     text-shadow:
         0 2px 10px rgba(255,255,255,.4);
 }
+
 
 @media(max-width:768px){
 
@@ -958,14 +1054,24 @@ DATE TIME
 
 <body>
 
+
 <div id="datetimeWidget">
+
     <div id="dateLine"></div>
+
     <div id="timeLine"></div>
+
 </div>
+
 
 <div class="pause-indicator" id="pauseIndicator">
     ▶ PLAYING
 </div>
+
+
+<!-- =========================
+SLIDE 1
+========================= -->
 
 <div class="slide active">
 
@@ -981,6 +1087,11 @@ DATE TIME
 
 </div>
 
+
+<!-- =========================
+SLIDE 2
+========================= -->
+
 <div class="slide">
 
     <div class="header">
@@ -994,6 +1105,11 @@ DATE TIME
     <div class="rank-list" id="salesBottom"></div>
 
 </div>
+
+
+<!-- =========================
+SLIDE 3
+========================= -->
 
 <div class="slide">
 
@@ -1009,6 +1125,11 @@ DATE TIME
 
 </div>
 
+
+<!-- =========================
+SLIDE 4
+========================= -->
+
 <div class="slide">
 
     <div class="header">
@@ -1022,6 +1143,11 @@ DATE TIME
     <div class="rank-list" id="proteksiBottom"></div>
 
 </div>
+
+
+<!-- =========================
+SLIDE 5
+========================= -->
 
 <div class="slide">
 
@@ -1037,6 +1163,11 @@ DATE TIME
 
 </div>
 
+
+<!-- =========================
+SLIDE 6
+========================= -->
+
 <div class="slide">
 
     <div class="header">
@@ -1051,6 +1182,11 @@ DATE TIME
 
 </div>
 
+
+<!-- =========================
+AUDIO
+========================= -->
+
 <audio
     id="bgm"
     loop
@@ -1064,6 +1200,7 @@ DATE TIME
 
 </audio>
 
+
 <script>
 
 /* =====================================================
@@ -1075,61 +1212,61 @@ const URL =
 
 
 /* =====================================================
-FOTO
+PHOTO RULES
 ===================================================== */
 
 const photoRules = {
 
     "137391":
-        "https://putrasetya.github.io/foto/putra.png",
+    "https://putrasetya.github.io/foto/putra.png",
 
     "193976":
-        "https://putrasetya.github.io/foto/archi.png",
+    "https://putrasetya.github.io/foto/archi.png",
 
     "114636":
-        "https://putrasetya.github.io/foto/budi.png",
+    "https://putrasetya.github.io/foto/budi.png",
 
     "183549":
-        "https://putrasetya.github.io/foto/jaidun.png",
+    "https://putrasetya.github.io/foto/jaidun.png",
 
     "193978":
-        "https://putrasetya.github.io/foto/ghofur.png",
+    "https://putrasetya.github.io/foto/ghofur.png",
 
     "194018":
-        "https://putrasetya.github.io/foto/salim.png",
+    "https://putrasetya.github.io/foto/salim.png",
 
     "129403":
-        "https://putrasetya.github.io/foto/nafi.png",
+    "https://putrasetya.github.io/foto/nafi.png",
 
     "193977":
-        "https://putrasetya.github.io/foto/avif.png",
+    "https://putrasetya.github.io/foto/avif.png",
 
     "195964":
-        "https://putrasetya.github.io/foto/sherly.png",
+    "https://putrasetya.github.io/foto/sherly.png",
 
     "94880":
-        "https://putrasetya.github.io/foto/imam.png",
+    "https://putrasetya.github.io/foto/imam.png",
 
     "105194":
-        "https://putrasetya.github.io/foto/shohib.png",
+    "https://putrasetya.github.io/foto/shohib.png",
 
     "161295":
-        "https://putrasetya.github.io/foto/arif.png",
+    "https://putrasetya.github.io/foto/arif.png",
 
     "134576":
-        "https://putrasetya.github.io/foto/rifai.png",
+    "https://putrasetya.github.io/foto/rifai.png",
 
     "136049":
-        "https://putrasetya.github.io/foto/luluk.png",
+    "https://putrasetya.github.io/foto/luluk.png",
 
     "193979":
-        "https://putrasetya.github.io/foto/ima.png",
+    "https://putrasetya.github.io/foto/ima.png",
 
     "193980":
-        "https://putrasetya.github.io/foto/hepi.png",
+    "https://putrasetya.github.io/foto/hepi.png",
 
     "149296":
-        "https://putrasetya.github.io/foto/ifa.png"
+    "https://putrasetya.github.io/foto/ifa.png"
 
 };
 
@@ -1140,16 +1277,33 @@ GET FOTO
 
 function getPhoto(nik){
 
-    if(nik === null || nik === undefined){
+    if(
+        nik === null ||
+        nik === undefined
+    ){
+
         return "";
+
     }
 
+
     const employeeNik =
+
         String(nik)
         .trim()
         .replace(/\.0+$/, "");
 
+
+    console.log(
+        "NIK:",
+        employeeNik,
+        "FOTO:",
+        photoRules[employeeNik]
+    );
+
+
     return photoRules[employeeNik] || "";
+
 }
 
 
@@ -1163,158 +1317,201 @@ let lastRenderHash = "";
 
 
 /* =====================================================
-LOCAL STORAGE PERUBAHAN PERINGKAT
+LOCAL STORAGE
+PERINGKAT TERAKHIR
 ===================================================== */
 
 const RANK_STORAGE_KEY =
-    "azko_tv_previous_ranks_v1";
+    "azko_tv_rank_history_v1";
 
-let previousRanks = {};
 
-try{
+function loadRankHistory(){
 
-    previousRanks =
-        JSON.parse(
+    try{
+
+        const saved =
             localStorage.getItem(
                 RANK_STORAGE_KEY
-            ) || "{}"
+            );
+
+        if(!saved){
+
+            return {};
+
+        }
+
+        const parsed =
+            JSON.parse(saved);
+
+        if(
+            parsed &&
+            typeof parsed === "object"
+        ){
+
+            return parsed;
+
+        }
+
+        return {};
+
+    }catch(err){
+
+        console.log(
+            "LOCAL STORAGE READ ERROR:",
+            err
         );
 
-}catch(error){
+        return {};
 
-    previousRanks = {};
+    }
 
 }
 
 
-/* =====================================================
-KEY PERINGKAT
-===================================================== */
-
-function getRankKey(
-    containerId,
-    nik
-){
-
-    return (
-        containerId +
-        "_" +
-        String(nik)
-        .trim()
-    );
-
-}
+let rankHistory =
+    loadRankHistory();
 
 
-/* =====================================================
-AMBIL INDIKATOR PERUBAHAN
-===================================================== */
-
-function getRankChange(
-    containerId,
-    nik,
-    currentRank
-){
-
-    const key =
-        getRankKey(
-            containerId,
-            nik
-        );
-
-    const oldRank =
-        previousRanks[key];
-
-
-    /*
-    Orang baru masuk daftar:
-    belum ada pembanding
-    */
-
-    if(
-        oldRank === undefined ||
-        oldRank === null
-    ){
-
-        return {
-            symbol:"•",
-            type:"same"
-        };
-
-    }
-
-
-    /*
-    Rank lebih kecil = posisi naik
-    Contoh:
-    sebelumnya 3
-    sekarang 1
-    */
-
-    if(
-        currentRank < oldRank
-    ){
-
-        return {
-            symbol:"▲",
-            type:"up"
-        };
-
-    }
-
-
-    /*
-    Rank lebih besar = posisi turun
-    */
-
-    if(
-        currentRank > oldRank
-    ){
-
-        return {
-            symbol:"▼",
-            type:"down"
-        };
-
-    }
-
-
-    return {
-        symbol:"•",
-        type:"same"
-    };
-
-}
-
-
-/* =====================================================
-SIMPAN RANKING TERBARU
-===================================================== */
-
-function saveCurrentRanks(
-    rankData
-){
-
-    previousRanks =
-        rankData;
+function saveRankHistory(){
 
     try{
 
         localStorage.setItem(
             RANK_STORAGE_KEY,
-            JSON.stringify(
-                rankData
-            )
+            JSON.stringify(rankHistory)
         );
 
-    }catch(error){
+    }catch(err){
 
         console.log(
-            "LOCAL STORAGE ERROR:",
-            error
+            "LOCAL STORAGE SAVE ERROR:",
+            err
         );
 
     }
+
+}
+
+
+/* =====================================================
+AMBIL PERUBAHAN PERINGKAT
+===================================================== */
+
+function getRankChange(
+    storageGroup,
+    nik,
+    currentRank
+){
+
+    if(
+        !nik ||
+        currentRank === undefined ||
+        currentRank === null
+    ){
+
+        return "";
+
+    }
+
+
+    const employeeNik =
+        String(nik)
+        .trim()
+        .replace(/\.0+$/, "");
+
+
+    if(!rankHistory[storageGroup]){
+
+        rankHistory[storageGroup] = {};
+
+    }
+
+
+    const previousRank =
+        rankHistory[storageGroup][employeeNik];
+
+
+    /*
+        PERTAMA KALI DILIHAT:
+        tidak menampilkan logo.
+    */
+
+    if(
+        previousRank === undefined ||
+        previousRank === null
+    ){
+
+        return "";
+
+    }
+
+
+    /*
+        Angka rank lebih kecil =
+        posisi lebih tinggi.
+
+        Contoh:
+        3 -> 1 = NAIK
+        1 -> 3 = TURUN
+    */
+
+    if(currentRank < previousRank){
+
+        return "up";
+
+    }
+
+
+    if(currentRank > previousRank){
+
+        return "down";
+
+    }
+
+
+    return "";
+
+}
+
+
+/* =====================================================
+UPDATE PERINGKAT TERAKHIR
+===================================================== */
+
+function saveCurrentRanks(
+    storageGroup,
+    rankedData
+){
+
+    if(!rankHistory[storageGroup]){
+
+        rankHistory[storageGroup] = {};
+
+    }
+
+
+    rankedData.forEach(item => {
+
+        const nik =
+            String(item.nik || "")
+            .trim()
+            .replace(/\.0+$/, "");
+
+
+        if(!nik){
+
+            return;
+
+        }
+
+
+        rankHistory[storageGroup][nik] =
+            item.rank;
+
+    });
+
+
+    saveRankHistory();
 
 }
 
@@ -1326,6 +1523,7 @@ HELPERS
 function clean(val){
 
     if(!val) return 0;
+
 
     return parseFloat(
         val
@@ -1341,14 +1539,17 @@ function formatSalesJt(value){
     const jt =
         value / 1000000;
 
+
     const rounded =
         Math.floor(jt * 10) / 10;
+
 
     if(Number.isInteger(rounded)){
 
         return `${rounded.toFixed(0)} jt`;
 
     }
+
 
     return `${rounded.toFixed(1).replace('.',',')} jt`;
 
@@ -1359,6 +1560,7 @@ function isExcluded(dept){
 
     const d =
         (dept || "").toLowerCase();
+
 
     return (
 
@@ -1382,13 +1584,13 @@ async function getData(){
 
         const res =
             await fetch(
-                URL +
-                "?t=" +
-                Date.now()
+                URL + "?t=" + Date.now()
             );
+
 
         const json =
             await res.json();
+
 
         if(
             !Array.isArray(json) ||
@@ -1401,6 +1603,7 @@ async function getData(){
 
 
         const mapped =
+
             json.map(row => ({
 
                 nik:
@@ -1452,6 +1655,7 @@ async function getData(){
         lastData =
             mapped;
 
+
         return mapped;
 
     }catch(err){
@@ -1460,6 +1664,7 @@ async function getData(){
             "GET DATA ERROR:",
             err
         );
+
 
         return lastData;
 
@@ -1488,6 +1693,7 @@ function getAchStyle(value){
 
     }
 
+
     if(value < 80){
 
         return {
@@ -1501,6 +1707,7 @@ function getAchStyle(value){
         };
 
     }
+
 
     return {
 
@@ -1534,6 +1741,7 @@ function render(
             containerId
         );
 
+
     if(!container) return;
 
 
@@ -1547,16 +1755,15 @@ function render(
 
         containerId === "salesTop" ||
         containerId === "salesBottom" ||
-        containerId === "trxTop"
+        containerId === "trxTop" ||
+        containerId === "trxBottom"
 
     ){
 
         filteredData =
             filteredData.filter(
                 item =>
-                    !isExcluded(
-                        item.dept
-                    )
+                    !isExcluded(item.dept)
             );
 
     }
@@ -1574,9 +1781,11 @@ function render(
     if(mode === "top"){
 
         styles = [
+
             "gold",
             "silver",
             "bronze"
+
         ];
 
 
@@ -1588,6 +1797,7 @@ function render(
         ){
 
             sorted =
+
                 filteredData
 
                 .filter(
@@ -1599,14 +1809,13 @@ function render(
                     (a,b) =>
                         b.achSales -
                         a.achSales
-                )
-
-                .slice(0,3);
+                );
 
 
         }else{
 
             sorted =
+
                 filteredData
 
                 .filter(
@@ -1618,11 +1827,31 @@ function render(
                     (a,b) =>
                         b[key] -
                         a[key]
-                )
-
-                .slice(0,3);
+                );
 
         }
+
+
+        /*
+            Tentukan peringkat aktual
+            sebelum mengambil TOP 3.
+        */
+
+        sorted =
+            sorted.map(
+                (item,index) => ({
+
+                    ...item,
+
+                    actualRank:
+                        index + 1
+
+                })
+            );
+
+
+        sorted =
+            sorted.slice(0,3);
 
 
     }else{
@@ -1632,9 +1861,11 @@ function render(
         ========================= */
 
         styles = [
+
             "red-high",
             "red-mid",
             "red-low"
+
         ];
 
 
@@ -1646,6 +1877,7 @@ function render(
         ){
 
             allSorted =
+
                 filteredData
 
                 .filter(
@@ -1663,6 +1895,7 @@ function render(
         }else{
 
             allSorted =
+
                 filteredData
 
                 .filter(v => {
@@ -1689,23 +1922,48 @@ function render(
         }
 
 
-        sorted =
-            allSorted.slice(0,3);
+        /*
+            Peringkat aktual berdasarkan
+            urutan performa.
+
+            Data terendah tetap mendapatkan
+            peringkat aktual paling rendah.
+        */
+
+        const total =
+            allSorted.length;
 
 
-        sorted =
-            sorted.map(
+        allSorted =
+
+            allSorted.map(
                 (item,index) => ({
 
                     ...item,
 
-                    bottomRank:
-                        allSorted.length -
-                        index
+                    actualRank:
+                        index + 1,
+
+                    totalRank:
+                        total
 
                 })
             );
 
+
+        /*
+            Ambil 3 terbawah.
+        */
+
+        sorted =
+            allSorted.slice(0,3);
+
+
+        /*
+            Agar tampilan tetap seperti
+            sebelumnya: posisi terendah
+            berada di card atas.
+        */
 
         sorted.reverse();
 
@@ -1716,41 +1974,39 @@ function render(
 
 
     /*
-    RANK BARU UNTUK DISIMPAN
+        Storage group khusus setiap slide.
+        Jadi perubahan Sales tidak tercampur
+        dengan Proteksi atau TRX.
     */
 
-    const newRanks = {};
+    const storageGroup =
+        containerId;
+
+
+    /*
+        Simpan rank hanya untuk data
+        yang sedang digunakan.
+    */
+
+    const currentRankData = [];
 
 
     sorted.forEach((d,i)=>{
 
-        const rank =
-
-            mode === "top"
-
-            ? i + 1
-
-            : d.bottomRank;
-
-
-        const rankChange =
-            getRankChange(
-                containerId,
-                d.nik,
-                rank
-            );
-
-
         /*
-        SIMPAN POSISI TERBARU
+            Untuk TOP:
+            rank = peringkat aktual.
+
+            Untuk BOTTOM:
+            rank = peringkat aktual juga.
+
+            Jadi kalau seseorang dari rank 8
+            menjadi rank 5, sistem tahu bahwa
+            peringkatnya naik.
         */
 
-        newRanks[
-            getRankKey(
-                containerId,
-                d.nik
-            )
-        ] = rank;
+        const rank =
+            d.actualRank;
 
 
         const achStyle =
@@ -1760,13 +2016,83 @@ function render(
 
 
         const photo =
-            getPhoto(
-                d.nik
+            getPhoto(d.nik);
+
+
+        /*
+            Ambil status perubahan
+            SEBELUM rank terbaru disimpan.
+        */
+
+        const rankChange =
+            getRankChange(
+                storageGroup,
+                d.nik,
+                rank
             );
 
 
-        const fallback =
-            `https://ui-avatars.com/api/?name=${encodeURIComponent(d.name)}&background=random&color=fff&size=512`;
+        /*
+            Simpan untuk update
+            localStorage setelah render.
+        */
+
+        currentRankData.push({
+
+            nik:
+                d.nik,
+
+            rank:
+                rank
+
+        });
+
+
+        /*
+            HTML segitiga.
+
+            Jika naik:
+            class up.
+
+            Jika turun:
+            class down.
+
+            Jika tetap:
+            kosong.
+        */
+
+        let changeHTML = "";
+
+
+        if(rankChange === "up"){
+
+            changeHTML =
+                `<div
+                    class="rank-change up"
+                    title="Peringkat naik">
+                </div>`;
+
+        }
+
+
+        if(rankChange === "down"){
+
+            changeHTML =
+                `<div
+                    class="rank-change down"
+                    title="Peringkat turun">
+                </div>`;
+
+        }
+
+
+        const photoSrc =
+
+            photo ||
+
+            `https://ui-avatars.com/api/?name=${encodeURIComponent(
+                d.name
+            )}&background=random&color=fff&size=512`;
 
 
         html += `
@@ -1781,13 +2107,14 @@ function render(
             <div class="photo-box">
 
                 <img
-                    src="${photo || fallback}"
+                    src="${photoSrc}"
                     loading="eager"
                     decoding="async"
-
                     onerror="
                         this.onerror=null;
-                        this.src='${fallback}';
+                        this.src='https://ui-avatars.com/api/?name=${encodeURIComponent(
+                            d.name
+                        )}&background=random&color=fff&size=512';
                     "
                 >
 
@@ -1812,32 +2139,9 @@ function render(
             </div>
 
 
-            <!--
-            INDIKATOR PERUBAHAN
-            TEPAT DI TENGAH ANTARA
-            NAMA DAN PEROLEHAN
-            -->
+            <!-- SEGITIGA PERUBAHAN PERINGKAT -->
 
-            <div
-                class="rank-change"
-                title="${
-                    rankChange.type === "up"
-                    ? "Naik peringkat"
-                    : rankChange.type === "down"
-                    ? "Turun peringkat"
-                    : "Tidak berubah"
-                }"
-            >
-
-                <div
-                    class="rank-arrow ${rankChange.type}"
-                >
-
-                    ${rankChange.symbol}
-
-                </div>
-
-            </div>
+            ${changeHTML}
 
 
             <div class="score">
@@ -1901,13 +2205,17 @@ function render(
 
 
     /*
-    Simpan ranking setelah render.
+        Setelah indikator selesai dibuat,
+        sekarang rank terbaru disimpan.
+
+        Ini penting agar perubahan tidak
+        terbaca sebagai perubahan terus-menerus
+        setiap 30 detik.
     */
 
-    Object.assign(
-        window.currentNewRanks ||
-        {},
-        newRanks
+    saveCurrentRanks(
+        storageGroup,
+        currentRankData
     );
 
 }
@@ -1961,6 +2269,7 @@ function nextSlide(){
                 "active"
             );
 
+
         isSliding = false;
 
     },120);
@@ -2004,9 +2313,6 @@ async function update(){
 
     lastRenderHash =
         newHash;
-
-
-    window.currentNewRanks = {};
 
 
     render(
@@ -2072,16 +2378,6 @@ async function update(){
         "trxBottom",
         "TOTAL TRX",
         "bottom"
-    );
-
-
-    /*
-    Setelah semua slide selesai dibandingkan,
-    baru simpan posisi terbaru ke localStorage.
-    */
-
-    saveCurrentRanks(
-        window.currentNewRanks || {}
     );
 
 }
@@ -2180,6 +2476,7 @@ function stopLoop(){
     clearInterval(
         slideInterval
     );
+
 
     clearInterval(
         updateInterval
@@ -2452,19 +2749,24 @@ window.addEventListener(
 
         await update();
 
+
         startLoop();
 
+
         playMusic();
+
 
         setTimeout(
             playMusic,
             1000
         );
 
+
         setTimeout(
             playMusic,
             3000
         );
+
 
         showIndicator(
             "▶ PLAYING"
@@ -2477,3 +2779,4 @@ window.addEventListener(
 
 </body>
 </html>
+```
