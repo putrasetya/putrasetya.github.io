@@ -21,11 +21,9 @@ SHADOW TULISAN
 .score-label,
 .header h1,
 .header p{
-
     text-shadow:
         0 2px 6px rgba(0,0,0,.9);
 }
-
 
 /* =========================
 WARNA TEXT
@@ -70,17 +68,13 @@ body{
     background-size:cover;
 }
 
-
 /* =========================
 BACKGROUND FX
 ========================= */
 
 body::before{
-
     content:"";
-
     position:fixed;
-
     inset:0;
 
     background:
@@ -92,12 +86,10 @@ body::before{
         );
 
     pointer-events:none;
-
     z-index:-2;
 }
 
 body::after{
-
     content:"";
 
     position:fixed;
@@ -125,13 +117,11 @@ body::after{
     z-index:-1;
 }
 
-
 /* =========================
 SLIDES
 ========================= */
 
 .slide{
-
     position:absolute;
 
     inset:0;
@@ -158,59 +148,41 @@ SLIDES
 }
 
 .slide.active{
-
     opacity:1;
-
     visibility:visible;
-
     pointer-events:auto;
 }
-
 
 /* =========================
 HEADER
 ========================= */
 
 .header{
-
     text-align:center;
-
     margin-bottom:1vh;
 }
 
 .header h1{
-
     font-size:3vw;
-
     font-weight:900;
-
     letter-spacing:6px;
-
     text-transform:uppercase;
-
     color:#000000;
 }
 
 .header p{
-
     margin-top:.2vh;
-
     font-size:1vw;
-
     letter-spacing:4px;
-
     color:#000000;
-
     opacity:.9;
 }
-
 
 /* =========================
 PAUSE INDICATOR
 ========================= */
 
 .pause-indicator{
-
     position:fixed;
 
     top:20px;
@@ -250,20 +222,17 @@ PAUSE INDICATOR
 }
 
 .pause-indicator.show{
-
     opacity:1;
 
     transform:
         translateY(0);
 }
 
-
 /* =========================
 RANK LIST
 ========================= */
 
 .rank-list{
-
     display:flex;
 
     flex-direction:column;
@@ -275,13 +244,11 @@ RANK LIST
     justify-content:space-evenly;
 }
 
-
 /* =========================
 CARD
 ========================= */
 
 .rank-card{
-
     position:relative;
 
     display:flex;
@@ -306,7 +273,6 @@ CARD
 }
 
 .rank-card.show{
-
     animation:
         slideRight .5s forwards;
 }
@@ -326,7 +292,6 @@ CARD
 @keyframes slideRight{
 
     from{
-
         opacity:0;
 
         transform:
@@ -334,7 +299,6 @@ CARD
     }
 
     to{
-
         opacity:1;
 
         transform:
@@ -342,13 +306,11 @@ CARD
     }
 }
 
-
 /* =========================
 TOP CARD
 ========================= */
 
 .gold{
-
     background:
         linear-gradient(
             135deg,
@@ -361,7 +323,6 @@ TOP CARD
 }
 
 .silver{
-
     background:
         linear-gradient(
             135deg,
@@ -374,7 +335,6 @@ TOP CARD
 }
 
 .bronze{
-
     background:
         linear-gradient(
             135deg,
@@ -386,13 +346,11 @@ TOP CARD
         );
 }
 
-
 /* =========================
 BOTTOM CARD
 ========================= */
 
 .red-high{
-
     background:
         linear-gradient(
             135deg,
@@ -405,7 +363,6 @@ BOTTOM CARD
 }
 
 .red-mid{
-
     background:
         linear-gradient(
             135deg,
@@ -418,7 +375,6 @@ BOTTOM CARD
 }
 
 .red-low{
-
     background:
         linear-gradient(
             135deg,
@@ -430,13 +386,11 @@ BOTTOM CARD
         );
 }
 
-
 /* =========================
 RANK NUMBER
 ========================= */
 
 .rank-number{
-
     position:absolute;
 
     left:-.5vw;
@@ -457,24 +411,22 @@ RANK NUMBER
 }
 
 .gold .rank-number{
-    color:#facc15 !important;
+    color:#facc15;
 }
 
 .silver .rank-number{
-    color:#e2e8f0 !important;
+    color:#e2e8f0;
 }
 
 .bronze .rank-number{
-    color:#fb923c !important;
+    color:#fb923c;
 }
 
 .red-high .rank-number,
 .red-mid .rank-number,
 .red-low .rank-number{
-
-    color:#ffffff !important;
+    color:#ffffff;
 }
-
 
 /* =========================
 PHOTO
@@ -494,10 +446,6 @@ PHOTO
     justify-content:center;
 
     overflow:hidden;
-
-    position:relative;
-
-    z-index:3;
 }
 
 .photo-box img{
@@ -516,7 +464,6 @@ PHOTO
         drop-shadow(0 6px 10px rgba(0,0,0,.25));
 }
 
-
 /* =========================
 EMPLOYEE
 ========================= */
@@ -527,13 +474,7 @@ EMPLOYEE
 
     padding-left:1.5vw;
 
-    padding-right:3vw;
-
-    overflow:visible;
-
-    position:relative;
-
-    z-index:3;
+    overflow:hidden;
 }
 
 .employee-name{
@@ -548,7 +489,7 @@ EMPLOYEE
 
     white-space:nowrap;
 
-    overflow:visible;
+    overflow:hidden;
 
     text-overflow:ellipsis;
 }
@@ -574,96 +515,109 @@ EMPLOYEE
 .red-mid .employee-label,
 .red-low .employee-label{
 
-    color:white !important;
+    color:white;
 }
 
-
-/* =========================
-RANK CHANGE INDICATOR
-DI TENGAH NAMA & PEROLEHAN
-========================= */
+/* =====================================================
+INDIKATOR PERUBAHAN PERINGKAT
+POSISI: TENGAH ANTARA NAMA DAN PEROLEHAN
+===================================================== */
 
 .rank-change{
 
-    position:absolute;
+    width:5vw;
 
-    right:-2.2vw;
+    min-width:5vw;
 
-    top:50%;
-
-    transform:
-        translateY(-50%);
-
-    width:38px;
-    height:38px;
+    height:100%;
 
     display:flex;
 
     align-items:center;
+
     justify-content:center;
 
-    font-size:30px;
+    flex-shrink:0;
 
-    font-weight:900;
+    position:relative;
+
+    z-index:10;
+}
+
+.rank-arrow{
+
+    font-size:4.5vw;
 
     line-height:1;
 
-    z-index:10;
+    font-weight:900;
 
-    pointer-events:none;
+    font-family:Arial,sans-serif;
 
-    text-shadow:
-        0 3px 8px rgba(0,0,0,.65);
+    transition:
+        transform .25s ease,
+        filter .25s ease;
+
+    animation:
+        rankPulse 1.8s ease-in-out infinite;
 }
 
-.rank-up{
+/* HIJAU = NAIK */
+
+.rank-arrow.up{
 
     color:#22c55e !important;
 
+    text-shadow:
+        0 0 5px rgba(34,197,94,.9),
+        0 0 12px rgba(34,197,94,.8),
+        0 0 25px rgba(34,197,94,.55),
+        0 4px 8px rgba(0,0,0,.75);
+
+    filter:
+        drop-shadow(0 0 7px rgba(34,197,94,.9));
 }
 
-.rank-down{
+/* MERAH = TURUN */
+
+.rank-arrow.down{
 
     color:#ef4444 !important;
 
+    text-shadow:
+        0 0 5px rgba(239,68,68,.9),
+        0 0 12px rgba(239,68,68,.8),
+        0 0 25px rgba(239,68,68,.55),
+        0 4px 8px rgba(0,0,0,.75);
+
+    filter:
+        drop-shadow(0 0 7px rgba(239,68,68,.9));
 }
 
-@keyframes rankChangePulse{
+/* BELUM ADA PERUBAHAN */
 
-    0%{
+.rank-arrow.same{
 
-        transform:
-            translateY(-50%)
-            scale(.5);
+    font-size:2.5vw;
 
-        opacity:0;
-    }
+    color:rgba(255,255,255,.35) !important;
 
-    60%{
+    text-shadow:
+        0 2px 5px rgba(0,0,0,.5);
 
-        transform:
-            translateY(-50%)
-            scale(1.2);
-
-        opacity:1;
-    }
-
-    100%{
-
-        transform:
-            translateY(-50%)
-            scale(1);
-
-        opacity:1;
-    }
+    animation:none;
 }
 
-.rank-change{
+@keyframes rankPulse{
 
-    animation:
-        rankChangePulse .6s ease-out;
+    0%,100%{
+        transform:scale(1);
+    }
+
+    50%{
+        transform:scale(1.12);
+    }
 }
-
 
 /* =========================
 SCORE
@@ -682,14 +636,9 @@ SCORE
     align-items:flex-end;
 
     gap:1vh;
-
-    position:relative;
-
-    z-index:3;
 }
 
 .main-score{
-
     text-align:right;
 }
 
@@ -725,9 +674,8 @@ SCORE
 .red-mid .score-label,
 .red-low .score-label{
 
-    color:white !important;
+    color:white;
 }
-
 
 /* =========================
 ACH BOX
@@ -773,6 +721,7 @@ ACH BOX
 }
 
 .ach-green{
+
     color:#dcfce7 !important;
 }
 
@@ -786,6 +735,7 @@ ACH BOX
 }
 
 .ach-red{
+
     color:#ffe4e6 !important;
 }
 
@@ -799,9 +749,9 @@ ACH BOX
 }
 
 .ach-normal{
+
     color:#ffffff !important;
 }
-
 
 /* =========================
 MOBILE
@@ -838,14 +788,6 @@ MOBILE
     .photo-box{
         width:95px;
         min-width:95px;
-    }
-
-    .employee{
-
-        padding-left:1.5vw;
-
-        padding-right:25px;
-
     }
 
     .employee-name{
@@ -885,17 +827,24 @@ MOBILE
         font-size:15px;
     }
 
+    /* indikator tetap terlihat di HP */
     .rank-change{
 
-        right:-18px;
+        width:38px;
 
-        width:30px;
-        height:30px;
+        min-width:38px;
+    }
 
-        font-size:24px;
+    .rank-arrow{
+
+        font-size:32px;
+    }
+
+    .rank-arrow.same{
+
+        font-size:18px;
     }
 }
-
 
 /* =========================
 DATE TIME
@@ -928,7 +877,7 @@ DATE TIME
 
 #dateLine{
 
-    color:#000 !important;
+    color:#000;
 
     font-size:.8vw;
 
@@ -956,7 +905,7 @@ DATE TIME
     border:
         1px solid rgba(255,255,255,.25);
 
-    color:#000 !important;
+    color:#000;
 
     font-size:1.2vw;
 
@@ -1010,25 +959,13 @@ DATE TIME
 <body>
 
 <div id="datetimeWidget">
-
     <div id="dateLine"></div>
-
     <div id="timeLine"></div>
-
 </div>
 
-
-<div
-    class="pause-indicator"
-    id="pauseIndicator"
->
+<div class="pause-indicator" id="pauseIndicator">
     ▶ PLAYING
 </div>
-
-
-<!-- =========================
-SLIDE 1
-========================= -->
 
 <div class="slide active">
 
@@ -1040,17 +977,9 @@ SLIDE 1
 
     </div>
 
-    <div
-        class="rank-list"
-        id="salesTop"
-    ></div>
+    <div class="rank-list" id="salesTop"></div>
 
 </div>
-
-
-<!-- =========================
-SLIDE 2
-========================= -->
 
 <div class="slide">
 
@@ -1062,17 +991,9 @@ SLIDE 2
 
     </div>
 
-    <div
-        class="rank-list"
-        id="salesBottom"
-    ></div>
+    <div class="rank-list" id="salesBottom"></div>
 
 </div>
-
-
-<!-- =========================
-SLIDE 3
-========================= -->
 
 <div class="slide">
 
@@ -1084,17 +1005,9 @@ SLIDE 3
 
     </div>
 
-    <div
-        class="rank-list"
-        id="proteksiTop"
-    ></div>
+    <div class="rank-list" id="proteksiTop"></div>
 
 </div>
-
-
-<!-- =========================
-SLIDE 4
-========================= -->
 
 <div class="slide">
 
@@ -1106,17 +1019,9 @@ SLIDE 4
 
     </div>
 
-    <div
-        class="rank-list"
-        id="proteksiBottom"
-    ></div>
+    <div class="rank-list" id="proteksiBottom"></div>
 
 </div>
-
-
-<!-- =========================
-SLIDE 5
-========================= -->
 
 <div class="slide">
 
@@ -1128,17 +1033,9 @@ SLIDE 5
 
     </div>
 
-    <div
-        class="rank-list"
-        id="trxTop"
-    ></div>
+    <div class="rank-list" id="trxTop"></div>
 
 </div>
-
-
-<!-- =========================
-SLIDE 6
-========================= -->
 
 <div class="slide">
 
@@ -1150,33 +1047,22 @@ SLIDE 6
 
     </div>
 
-    <div
-        class="rank-list"
-        id="trxBottom"
-    ></div>
+    <div class="rank-list" id="trxBottom"></div>
 
 </div>
-
-
-<!-- =========================
-AUDIO
-========================= -->
 
 <audio
     id="bgm"
     loop
     autoplay
     playsinline
-    preload="auto"
->
+    preload="auto">
 
     <source
         src="https://putrasetya.github.io/jingleazkoboomsale.mp3"
-        type="audio/mpeg"
-    >
+        type="audio/mpeg">
 
 </audio>
-
 
 <script>
 
@@ -1189,7 +1075,7 @@ const URL =
 
 
 /* =====================================================
-PHOTO RULES
+FOTO
 ===================================================== */
 
 const photoRules = {
@@ -1254,13 +1140,8 @@ GET FOTO
 
 function getPhoto(nik){
 
-    if(
-        nik === null ||
-        nik === undefined
-    ){
-
+    if(nik === null || nik === undefined){
         return "";
-
     }
 
     const employeeNik =
@@ -1268,18 +1149,7 @@ function getPhoto(nik){
         .trim()
         .replace(/\.0+$/, "");
 
-    console.log(
-        "NIK:",
-        employeeNik,
-        "FOTO:",
-        photoRules[employeeNik]
-    );
-
-    return (
-        photoRules[employeeNik] ||
-        ""
-    );
-
+    return photoRules[employeeNik] || "";
 }
 
 
@@ -1293,11 +1163,11 @@ let lastRenderHash = "";
 
 
 /* =====================================================
-LOCAL STORAGE RANK MEMORY
+LOCAL STORAGE PERUBAHAN PERINGKAT
 ===================================================== */
 
 const RANK_STORAGE_KEY =
-    "azko_tv_previous_rank_v1";
+    "azko_tv_previous_ranks_v1";
 
 let previousRanks = {};
 
@@ -1307,17 +1177,144 @@ try{
         JSON.parse(
             localStorage.getItem(
                 RANK_STORAGE_KEY
-            )
-        ) || {};
+            ) || "{}"
+        );
 
-}catch(err){
-
-    console.log(
-        "LOCAL STORAGE ERROR:",
-        err
-    );
+}catch(error){
 
     previousRanks = {};
+
+}
+
+
+/* =====================================================
+KEY PERINGKAT
+===================================================== */
+
+function getRankKey(
+    containerId,
+    nik
+){
+
+    return (
+        containerId +
+        "_" +
+        String(nik)
+        .trim()
+    );
+
+}
+
+
+/* =====================================================
+AMBIL INDIKATOR PERUBAHAN
+===================================================== */
+
+function getRankChange(
+    containerId,
+    nik,
+    currentRank
+){
+
+    const key =
+        getRankKey(
+            containerId,
+            nik
+        );
+
+    const oldRank =
+        previousRanks[key];
+
+
+    /*
+    Orang baru masuk daftar:
+    belum ada pembanding
+    */
+
+    if(
+        oldRank === undefined ||
+        oldRank === null
+    ){
+
+        return {
+            symbol:"•",
+            type:"same"
+        };
+
+    }
+
+
+    /*
+    Rank lebih kecil = posisi naik
+    Contoh:
+    sebelumnya 3
+    sekarang 1
+    */
+
+    if(
+        currentRank < oldRank
+    ){
+
+        return {
+            symbol:"▲",
+            type:"up"
+        };
+
+    }
+
+
+    /*
+    Rank lebih besar = posisi turun
+    */
+
+    if(
+        currentRank > oldRank
+    ){
+
+        return {
+            symbol:"▼",
+            type:"down"
+        };
+
+    }
+
+
+    return {
+        symbol:"•",
+        type:"same"
+    };
+
+}
+
+
+/* =====================================================
+SIMPAN RANKING TERBARU
+===================================================== */
+
+function saveCurrentRanks(
+    rankData
+){
+
+    previousRanks =
+        rankData;
+
+    try{
+
+        localStorage.setItem(
+            RANK_STORAGE_KEY,
+            JSON.stringify(
+                rankData
+            )
+        );
+
+    }catch(error){
+
+        console.log(
+            "LOCAL STORAGE ERROR:",
+            error
+        );
+
+    }
 
 }
 
@@ -1328,11 +1325,12 @@ HELPERS
 
 function clean(val){
 
-    if(!val)
-        return 0;
+    if(!val) return 0;
 
     return parseFloat(
-        val.toString().replace(/[^\d.]/g,'')
+        val
+        .toString()
+        .replace(/[^\d.]/g,'')
     ) || 0;
 
 }
@@ -1384,7 +1382,9 @@ async function getData(){
 
         const res =
             await fetch(
-                URL + "?t=" + Date.now()
+                URL +
+                "?t=" +
+                Date.now()
             );
 
         const json =
@@ -1454,7 +1454,6 @@ async function getData(){
 
         return mapped;
 
-
     }catch(err){
 
         console.log(
@@ -1517,228 +1516,6 @@ function getAchStyle(value){
 
 
 /* =====================================================
-RANK CHANGE
-===================================================== */
-
-function getRankChange(
-    nik,
-    currentRank,
-    type
-){
-
-    const employeeNik =
-        String(nik || "").trim();
-
-    if(!employeeNik){
-
-        return "";
-
-    }
-
-
-    const key =
-        type +
-        "_" +
-        employeeNik;
-
-
-    const previousRank =
-        previousRanks[key];
-
-
-    if(
-        previousRank === undefined ||
-        previousRank === null
-    ){
-
-        return "";
-
-    }
-
-
-    /* NAIK */
-
-    if(
-        currentRank <
-        previousRank
-    ){
-
-        return `
-
-            <div
-                class="rank-change rank-up"
-                title="Naik peringkat"
-            >
-                ▲
-            </div>
-
-        `;
-
-    }
-
-
-    /* TURUN */
-
-    if(
-        currentRank >
-        previousRank
-    ){
-
-        return `
-
-            <div
-                class="rank-change rank-down"
-                title="Turun peringkat"
-            >
-                ▼
-            </div>
-
-        `;
-
-    }
-
-
-    return "";
-
-}
-
-
-/* =====================================================
-BUILD CURRENT RANKS
-===================================================== */
-
-function buildCurrentRanks(data){
-
-    const newRanks = {};
-
-
-    /* SALES */
-
-    [...data]
-
-        .filter(
-            item =>
-                !isExcluded(item.dept) &&
-                item.achSales > 0
-        )
-
-        .sort(
-            (a,b) =>
-                b.achSales -
-                a.achSales
-        )
-
-        .forEach(
-            (item,index)=>{
-
-                const key =
-                    "sales_" +
-                    String(item.nik).trim();
-
-                newRanks[key] =
-                    index + 1;
-
-            }
-        );
-
-
-    /* PROTEKSI */
-
-    [...data]
-
-        .filter(
-            item =>
-                item.proteksi > 0
-        )
-
-        .sort(
-            (a,b) =>
-                b.proteksi -
-                a.proteksi
-        )
-
-        .forEach(
-            (item,index)=>{
-
-                const key =
-                    "proteksi_" +
-                    String(item.nik).trim();
-
-                newRanks[key] =
-                    index + 1;
-
-            }
-        );
-
-
-    /* TRX */
-
-    [...data]
-
-        .filter(
-            item =>
-                !isExcluded(item.dept) &&
-                item.trx > 0
-        )
-
-        .sort(
-            (a,b) =>
-                b.trx -
-                a.trx
-        )
-
-        .forEach(
-            (item,index)=>{
-
-                const key =
-                    "trx_" +
-                    String(item.nik).trim();
-
-                newRanks[key] =
-                    index + 1;
-
-            }
-        );
-
-
-    return newRanks;
-
-}
-
-
-/* =====================================================
-SAVE CURRENT RANK
-===================================================== */
-
-function saveCurrentRanks(data){
-
-    const newRanks =
-        buildCurrentRanks(data);
-
-
-    try{
-
-        localStorage.setItem(
-            RANK_STORAGE_KEY,
-            JSON.stringify(newRanks)
-        );
-
-        previousRanks =
-            newRanks;
-
-    }catch(err){
-
-        console.log(
-            "SAVE RANK ERROR:",
-            err
-        );
-
-    }
-
-}
-
-
-/* =====================================================
 RENDER
 ===================================================== */
 
@@ -1757,8 +1534,7 @@ function render(
             containerId
         );
 
-    if(!container)
-        return;
+    if(!container) return;
 
 
     let filteredData =
@@ -1778,7 +1554,9 @@ function render(
         filteredData =
             filteredData.filter(
                 item =>
-                    !isExcluded(item.dept)
+                    !isExcluded(
+                        item.dept
+                    )
             );
 
     }
@@ -1789,31 +1567,16 @@ function render(
     let styles = [];
 
 
-    /* RANK TYPE */
-
-    const rankType =
-
-        containerId.includes("sales")
-            ? "sales"
-
-            : containerId.includes("proteksi")
-                ? "proteksi"
-
-                : "trx";
-
-
     /* =========================
-       TOP
+    TOP
     ========================= */
 
     if(mode === "top"){
 
         styles = [
-
             "gold",
             "silver",
             "bronze"
-
         ];
 
 
@@ -1865,15 +1628,13 @@ function render(
     }else{
 
         /* =========================
-           BOTTOM
+        BOTTOM
         ========================= */
 
         styles = [
-
             "red-high",
             "red-mid",
             "red-low"
-
         ];
 
 
@@ -1881,8 +1642,7 @@ function render(
 
 
         if(
-            containerId ===
-            "salesBottom"
+            containerId === "salesBottom"
         ){
 
             allSorted =
@@ -1955,157 +1715,200 @@ function render(
     let html = "";
 
 
-    sorted.forEach(
-        (d,i)=>{
+    /*
+    RANK BARU UNTUK DISIMPAN
+    */
 
-            const rank =
-
-                mode === "top"
-
-                ? i + 1
-
-                : d.bottomRank;
+    const newRanks = {};
 
 
-            const achStyle =
-                getAchStyle(
-                    d[achKey]
-                );
+    sorted.forEach((d,i)=>{
+
+        const rank =
+
+            mode === "top"
+
+            ? i + 1
+
+            : d.bottomRank;
 
 
-            const photo =
-                getPhoto(
-                    d.nik
-                );
+        const rankChange =
+            getRankChange(
+                containerId,
+                d.nik,
+                rank
+            );
 
 
-            const rankChange =
-                getRankChange(
-                    d.nik,
-                    rank,
-                    rankType
-                );
+        /*
+        SIMPAN POSISI TERBARU
+        */
+
+        newRanks[
+            getRankKey(
+                containerId,
+                d.nik
+            )
+        ] = rank;
 
 
-            const avatar =
-                `https://ui-avatars.com/api/?name=${encodeURIComponent(d.name)}&background=random&color=fff&size=512`;
+        const achStyle =
+            getAchStyle(
+                d[achKey]
+            );
 
 
-            const photoSrc =
-                photo ||
-                avatar;
+        const photo =
+            getPhoto(
+                d.nik
+            );
 
 
-            html += `
+        const fallback =
+            `https://ui-avatars.com/api/?name=${encodeURIComponent(d.name)}&background=random&color=fff&size=512`;
 
-                <div
-                    class="rank-card show ${styles[i]}"
+
+        html += `
+
+        <div class="rank-card show ${styles[i]}">
+
+            <div class="rank-number">
+                ${rank}
+            </div>
+
+
+            <div class="photo-box">
+
+                <img
+                    src="${photo || fallback}"
+                    loading="eager"
+                    decoding="async"
+
+                    onerror="
+                        this.onerror=null;
+                        this.src='${fallback}';
+                    "
                 >
 
-                    <div class="rank-number">
-                        ${rank}
+            </div>
+
+
+            <div class="employee">
+
+                <div class="employee-name">
+
+                    ${d.name}
+
+                </div>
+
+
+                <div class="employee-label">
+
+                    ${d.dept}
+
+                </div>
+
+            </div>
+
+
+            <!--
+            INDIKATOR PERUBAHAN
+            TEPAT DI TENGAH ANTARA
+            NAMA DAN PEROLEHAN
+            -->
+
+            <div
+                class="rank-change"
+                title="${
+                    rankChange.type === "up"
+                    ? "Naik peringkat"
+                    : rankChange.type === "down"
+                    ? "Turun peringkat"
+                    : "Tidak berubah"
+                }"
+            >
+
+                <div
+                    class="rank-arrow ${rankChange.type}"
+                >
+
+                    ${rankChange.symbol}
+
+                </div>
+
+            </div>
+
+
+            <div class="score">
+
+                <div class="main-score">
+
+                    <div class="score-value">
+
+                        ${
+                            key === "sales"
+
+                            ? formatSalesJt(
+                                d[key]
+                            )
+
+                            : d[key].toLocaleString(
+                                'id-ID'
+                            )
+                        }
+
                     </div>
 
 
-                    <div class="photo-box">
+                    <div class="score-label">
 
-                        <img
-                            src="${photoSrc}"
-                            loading="eager"
-                            decoding="async"
-
-                            onerror="
-                                this.onerror=null;
-                                this.src='${avatar}';
-                            "
-                        >
-
-                    </div>
-
-
-                    <div class="employee">
-
-                        <div class="employee-name">
-
-                            ${d.name}
-
-                            ${rankChange}
-
-                        </div>
-
-
-                        <div class="employee-label">
-
-                            ${d.dept}
-
-                        </div>
-
-                    </div>
-
-
-                    <div class="score">
-
-                        <div class="main-score">
-
-                            <div class="score-value">
-
-                                ${
-                                    key === "sales"
-
-                                    ? formatSalesJt(
-                                        d[key]
-                                    )
-
-                                    : d[key].toLocaleString(
-                                        'id-ID'
-                                    )
-                                }
-
-                            </div>
-
-
-                            <div class="score-label">
-
-                                ${label}
-
-                            </div>
-
-                        </div>
-
-
-                        <div
-                            class="${achStyle.boxClass}"
-                        >
-
-                            <div class="ach-title">
-
-                                ${achTitle}
-
-                            </div>
-
-
-                            <div
-                                class="${achStyle.valueClass}"
-                            >
-
-                                ${d[achKey].toFixed(1)}%
-
-                            </div>
-
-                        </div>
+                        ${label}
 
                     </div>
 
                 </div>
 
-            `;
 
-        }
-    );
+                <div class="${achStyle.boxClass}">
+
+                    <div class="ach-title">
+
+                        ${achTitle}
+
+                    </div>
+
+
+                    <div class="${achStyle.valueClass}">
+
+                        ${d[achKey].toFixed(1)}%
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        `;
+
+    });
 
 
     container.innerHTML =
         html;
+
+
+    /*
+    Simpan ranking setelah render.
+    */
+
+    Object.assign(
+        window.currentNewRanks ||
+        {},
+        newRanks
+    );
 
 }
 
@@ -2127,8 +1930,7 @@ let isSliding = false;
 
 function nextSlide(){
 
-    if(isSliding)
-        return;
+    if(isSliding) return;
 
 
     isSliding = true;
@@ -2152,19 +1954,16 @@ function nextSlide(){
     }
 
 
-    setTimeout(
-        ()=>{
+    setTimeout(()=>{
 
-            slides[current]
-                .classList.add(
-                    "active"
-                );
+        slides[current]
+            .classList.add(
+                "active"
+            );
 
-            isSliding = false;
+        isSliding = false;
 
-        },
-        120
-    );
+    },120);
 
 }
 
@@ -2190,9 +1989,7 @@ async function update(){
 
 
     const newHash =
-        JSON.stringify(
-            data
-        );
+        JSON.stringify(data);
 
 
     if(
@@ -2207,6 +2004,9 @@ async function update(){
 
     lastRenderHash =
         newHash;
+
+
+    window.currentNewRanks = {};
 
 
     render(
@@ -2276,11 +2076,13 @@ async function update(){
 
 
     /*
-        Ranking terbaru disimpan
-        SETELAH render selesai.
+    Setelah semua slide selesai dibandingkan,
+    baru simpan posisi terbaru ke localStorage.
     */
 
-    saveCurrentRanks(data);
+    saveCurrentRanks(
+        window.currentNewRanks || {}
+    );
 
 }
 
@@ -2316,16 +2118,13 @@ function showIndicator(text){
 
 
     window.indicatorTimeout =
-        setTimeout(
-            ()=>{
+        setTimeout(()=>{
 
-                pauseIndicator.classList.remove(
-                    "show"
-                );
+            pauseIndicator.classList.remove(
+                "show"
+            );
 
-            },
-            1500
-        );
+        },1500);
 
 }
 
@@ -2349,8 +2148,7 @@ if(bgm){
 
 async function playMusic(){
 
-    if(!bgm)
-        return;
+    if(!bgm) return;
 
 
     try{
@@ -2396,37 +2194,31 @@ function startLoop(){
 
 
     slideInterval =
-        setInterval(
-            ()=>{
+        setInterval(()=>{
 
-                if(
-                    !document.hidden
-                ){
+            if(
+                !document.hidden
+            ){
 
-                    nextSlide();
+                nextSlide();
 
-                }
+            }
 
-            },
-            8000
-        );
+        },8000);
 
 
     updateInterval =
-        setInterval(
-            ()=>{
+        setInterval(()=>{
 
-                if(
-                    !document.hidden
-                ){
+            if(
+                !document.hidden
+            ){
 
-                    update();
+                update();
 
-                }
+            }
 
-            },
-            30000
-        );
+        },30000);
 
 }
 
@@ -2531,14 +2323,11 @@ document.addEventListener(
 
 
         clickTimer =
-            setTimeout(
-                ()=>{
+            setTimeout(()=>{
 
-                    togglePause();
+                togglePause();
 
-                },
-                250
-            );
+            },250);
 
     }
 );
@@ -2563,32 +2352,26 @@ document.addEventListener(
 AUTO CLEAN MEMORY
 ===================================================== */
 
-setInterval(
-    ()=>{
+setInterval(()=>{
 
-        if(window.gc){
+    if(window.gc){
 
-            window.gc();
+        window.gc();
 
-        }
+    }
 
-    },
-    300000
-);
+},300000);
 
 
 /* =====================================================
 AUTO REFRESH 6 JAM
 ===================================================== */
 
-setTimeout(
-    ()=>{
+setTimeout(()=>{
 
-        location.reload();
+    location.reload();
 
-    },
-    21600000
-);
+},21600000);
 
 
 /* =====================================================
