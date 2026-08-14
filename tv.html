@@ -1,367 +1,299 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>AZKO ULTRA TV DISPLAY</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link
+    href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap"
+    rel="stylesheet"
+>
 
 <style>
 
-/* =========================
-SHADOW TULISAN
-========================= */
+/* =========================================================
+   RESET
+========================================================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html,
+body {
+    width: 100%;
+    height: 100%;
+}
+
+body {
+    font-family: "Poppins", sans-serif;
+    overflow: hidden;
+    color: #fff;
+    cursor: pointer;
+
+    background:
+        linear-gradient(
+            rgba(0, 0, 0, .25),
+            rgba(0, 0, 0, .25)
+        ),
+        url("https://putrasetya.github.io/backgroundtv.png");
+
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+
+/* =========================================================
+   GLOBAL TEXT
+========================================================= */
+
+body * {
+    color: #fff !important;
+}
 
 .employee-name,
 .employee-label,
 .score-value,
 .score-label,
 .header h1,
-.header p{
+.header p {
+    text-shadow: 0 2px 6px rgba(0, 0, 0, .9);
+}
 
-    text-shadow:
-        0 2px 6px rgba(0,0,0,.9);
+.ach-green {
+    color: #dcfce7 !important;
+}
+
+.ach-red {
+    color: #ffe4e6 !important;
 }
 
 
-/* =========================
-WARNA TEXT
-========================= */
+/* =========================================================
+   BACKGROUND EFFECT
+========================================================= */
 
-body *{
-    color:#fff !important;
-}
-
-.ach-green{
-    color:#dcfce7 !important;
-}
-
-.ach-red{
-    color:#ffe4e6 !important;
-}
-
-
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-}
-
-
-html,
-body{
-    width:100%;
-    height:100%;
-}
-
-
-body{
-    font-family:'Poppins',sans-serif;
-    overflow:hidden;
-    color:white;
-    cursor:pointer;
-
-    background:
-        linear-gradient(rgba(0,0,0,.25),rgba(0,0,0,.25)),
-        url('https://putrasetya.github.io/backgroundtv.png');
-
-    background-position:center center;
-    background-repeat:no-repeat;
-    background-size:cover;
-}
-
-
-/* =========================
-BACKGROUND FX
-========================= */
-
-body::before{
-
-    content:"";
-
-    position:fixed;
-
-    inset:0;
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
 
     background:
         linear-gradient(
             135deg,
-            rgba(255,255,255,.03),
+            rgba(255, 255, 255, .03),
             transparent 35%,
-            rgba(255,255,255,.02)
+            rgba(255, 255, 255, .02)
         );
 
-    pointer-events:none;
-
-    z-index:-2;
+    pointer-events: none;
+    z-index: -2;
 }
 
+body::after {
+    content: "";
+    position: fixed;
 
-body::after{
+    width: 200%;
+    height: 200%;
 
-    content:"";
-
-    position:fixed;
-
-    width:200%;
-    height:200%;
-
-    top:-50%;
-    left:-50%;
+    top: -50%;
+    left: -50%;
 
     background:
         linear-gradient(
             90deg,
             transparent,
-            rgba(255,255,255,.04),
+            rgba(255, 255, 255, .04),
             transparent
         );
 
-    transform:rotate(25deg);
+    transform: rotate(25deg);
 
-    animation:none;
-
-    pointer-events:none;
-
-    z-index:-1;
+    pointer-events: none;
+    z-index: -1;
 }
 
 
-/* =========================
-SLIDES
-========================= */
+/* =========================================================
+   SLIDE
+========================================================= */
 
-.slide{
+.slide {
+    position: absolute;
+    inset: 0;
 
-    position:absolute;
+    width: 100vw;
+    height: 100vh;
 
-    inset:0;
+    padding: 1vh 2vw;
 
-    width:100vw;
-    height:100vh;
+    display: flex;
+    flex-direction: column;
 
-    padding:
-        1vh
-        2vw;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
 
-    display:flex;
+    transition: opacity .5s linear;
+}
 
-    flex-direction:column;
-
-    opacity:0;
-
-    visibility:hidden;
-
-    pointer-events:none;
-
-    transition:
-        opacity .5s linear;
+.slide.active {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
 }
 
 
-.slide.active{
+/* =========================================================
+   HEADER
+========================================================= */
 
-    opacity:1;
+.header {
+    text-align: center;
+    margin-bottom: 1vh;
+}
 
-    visibility:visible;
+.header h1 {
+    font-size: 3vw;
+    font-weight: 900;
+    letter-spacing: 6px;
+    text-transform: uppercase;
+    color: #000;
+}
 
-    pointer-events:auto;
+.header p {
+    margin-top: .2vh;
+    font-size: 1vw;
+    letter-spacing: 4px;
+    color: #000;
+    opacity: .9;
 }
 
 
-/* =========================
-HEADER
-========================= */
+/* =========================================================
+   PAUSE INDICATOR
+========================================================= */
 
-.header{
+.pause-indicator {
+    position: fixed;
 
-    text-align:center;
+    top: 20px;
+    left: 20px;
 
-    margin-bottom:1vh;
-}
+    z-index: 9999;
 
+    padding: 14px 24px;
 
-.header h1{
-
-    font-size:3vw;
-
-    font-weight:900;
-
-    letter-spacing:6px;
-
-    text-transform:uppercase;
-
-    color:#000000;
-}
-
-
-.header p{
-
-    margin-top:.2vh;
-
-    font-size:1vw;
-
-    letter-spacing:4px;
-
-    color:#000000;
-
-    opacity:.9;
-}
-
-
-/* =========================
-PAUSE INDICATOR
-========================= */
-
-.pause-indicator{
-
-    position:fixed;
-
-    top:20px;
-    left:20px;
-
-    z-index:9999;
-
-    padding:14px 24px;
-
-    border-radius:18px;
+    border-radius: 18px;
 
     background:
         linear-gradient(
             135deg,
-            rgba(15,23,42,.92),
-            rgba(30,41,59,.92)
+            rgba(15, 23, 42, .92),
+            rgba(30, 41, 59, .92)
         );
 
-    border:
-        1px solid rgba(255,255,255,.15);
+    border: 1px solid rgba(255, 255, 255, .15);
 
-    font-size:14px;
+    font-size: 14px;
+    font-weight: 800;
+    letter-spacing: 2px;
 
-    font-weight:800;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, .45);
 
-    letter-spacing:2px;
+    opacity: 0;
 
-    box-shadow:
-        0 10px 30px rgba(0,0,0,.45);
+    transform: translateY(-20px);
 
-    opacity:0;
+    transition: .35s ease;
+}
 
-    transform:
-        translateY(-20px);
-
-    transition:.35s ease;
+.pause-indicator.show {
+    opacity: 1;
+    transform: translateY(0);
 }
 
 
-.pause-indicator.show{
+/* =========================================================
+   RANK LIST
+========================================================= */
 
-    opacity:1;
+.rank-list {
+    display: flex;
+    flex-direction: column;
 
-    transform:
-        translateY(0);
+    gap: 1.2vh;
+
+    flex: 1;
+
+    justify-content: space-evenly;
 }
 
 
-/* =========================
-RANK LIST
-========================= */
+/* =========================================================
+   RANK CARD
+========================================================= */
 
-.rank-list{
+.rank-card {
+    position: relative;
 
-    display:flex;
+    display: flex;
+    align-items: center;
 
-    flex-direction:column;
+    height: 25vh;
 
-    gap:1.2vh;
+    border-radius: 34px;
+    overflow: hidden;
 
-    flex:1;
+    border: 1px solid rgba(255, 255, 255, .08);
 
-    justify-content:space-evenly;
+    opacity: 0;
+
+    transform: translateX(-40px);
+
+    will-change: auto;
 }
 
-
-/* =========================
-CARD
-========================= */
-
-.rank-card{
-
-    position:relative;
-
-    display:flex;
-
-    align-items:center;
-
-    height:25vh;
-
-    border-radius:34px;
-
-    overflow:hidden;
-
-    border:
-        1px solid rgba(255,255,255,.08);
-
-    opacity:0;
-
-    transform:
-        translateX(-40px);
-
-    will-change:auto;
+.rank-card.show {
+    animation: slideRight .5s forwards;
 }
 
-
-.rank-card.show{
-
-    animation:
-        slideRight .5s forwards;
+.rank-card:nth-child(1) {
+    animation-delay: .1s;
 }
 
-
-.rank-card:nth-child(1){
-    animation-delay:.1s;
+.rank-card:nth-child(2) {
+    animation-delay: .2s;
 }
 
-
-.rank-card:nth-child(2){
-    animation-delay:.2s;
+.rank-card:nth-child(3) {
+    animation-delay: .3s;
 }
 
-
-.rank-card:nth-child(3){
-    animation-delay:.3s;
-}
-
-
-@keyframes slideRight{
-
-    from{
-
-        opacity:0;
-
-        transform:
-            translateX(-40px);
+@keyframes slideRight {
+    from {
+        opacity: 0;
+        transform: translateX(-40px);
     }
 
-    to{
-
-        opacity:1;
-
-        transform:
-            translateX(0);
+    to {
+        opacity: 1;
+        transform: translateX(0);
     }
 }
 
 
-/* =========================
-TOP CARD
-========================= */
+/* =========================================================
+   TOP COLORS
+========================================================= */
 
-.gold{
-
+.gold {
     background:
         linear-gradient(
             135deg,
@@ -373,23 +305,19 @@ TOP CARD
         );
 }
 
-
-.silver{
-
+.silver {
     background:
         linear-gradient(
             135deg,
             #737373,
             #d1d5db,
-            #ffffff,
+            #fff,
             #d1d5db,
             #737373
         );
 }
 
-
-.bronze{
-
+.bronze {
     background:
         linear-gradient(
             135deg,
@@ -402,12 +330,11 @@ TOP CARD
 }
 
 
-/* =========================
-BOTTOM CARD
-========================= */
+/* =========================================================
+   BOTTOM COLORS
+========================================================= */
 
-.red-high{
-
+.red-high {
     background:
         linear-gradient(
             135deg,
@@ -419,9 +346,7 @@ BOTTOM CARD
         );
 }
 
-
-.red-mid{
-
+.red-mid {
     background:
         linear-gradient(
             135deg,
@@ -433,9 +358,7 @@ BOTTOM CARD
         );
 }
 
-
-.red-low{
-
+.red-low {
     background:
         linear-gradient(
             135deg,
@@ -448,603 +371,492 @@ BOTTOM CARD
 }
 
 
-/* =========================
-RANK NUMBER
-========================= */
+/* =========================================================
+   RANK NUMBER
+========================================================= */
 
-.rank-number{
+.rank-number {
+    position: absolute;
 
-    position:absolute;
-
-    left:-.5vw;
-
-    top:50%;
+    left: -.5vw;
+    top: 50%;
 
     transform:
         translateY(-50%)
         skew(-10deg);
 
-    font-size:16vw;
+    font-size: 16vw;
+    font-weight: 900;
 
-    font-weight:900;
+    opacity: .20;
 
-    opacity:.20;
-
-    letter-spacing:-10px;
+    letter-spacing: -10px;
 }
 
-
-.gold .rank-number{
-    color:#facc15;
+.gold .rank-number {
+    color: #facc15;
 }
 
-
-.silver .rank-number{
-    color:#e2e8f0;
+.silver .rank-number {
+    color: #e2e8f0;
 }
 
-
-.bronze .rank-number{
-    color:#fb923c;
+.bronze .rank-number {
+    color: #fb923c;
 }
-
 
 .red-high .rank-number,
 .red-mid .rank-number,
-.red-low .rank-number{
-
-    color:#ffffff;
+.red-low .rank-number {
+    color: #fff;
 }
 
 
-/* =========================
-PHOTO
-========================= */
+/* =========================================================
+   PHOTO
+========================================================= */
 
-.photo-box{
+.photo-box {
+    width: 25vh;
+    height: 25vh;
 
-    width:25vh;
-    height:25vh;
+    aspect-ratio: 1 / 1;
 
-    aspect-ratio:1 / 1;
+    flex-shrink: 0;
 
-    flex-shrink:0;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
 
-    display:flex;
-
-    align-items:flex-end;
-    justify-content:center;
-
-    overflow:hidden;
+    overflow: hidden;
 }
 
+.photo-box img {
+    width: 125%;
+    height: 125%;
 
-.photo-box img{
+    max-width: none;
+    max-height: none;
 
-    width:125%;
-    height:125%;
+    display: block;
 
-    max-width:none;
-    max-height:none;
-
-    display:block;
-
-    object-fit:contain;
-    object-position:center bottom;
+    object-fit: contain;
+    object-position: center bottom;
 
     filter:
-        drop-shadow(0 6px 10px rgba(0,0,0,.25));
+        drop-shadow(
+            0 6px 10px rgba(0, 0, 0, .25)
+        );
 }
 
 
-/* =========================
-EMPLOYEE
-========================= */
+/* =========================================================
+   EMPLOYEE
+========================================================= */
 
-.employee{
+.employee {
+    flex: 1;
 
-    flex:1;
+    padding-left: 1.5vw;
 
-    padding-left:1.5vw;
+    overflow: hidden;
 
-    overflow:hidden;
-
-    min-width:0;
+    min-width: 0;
 }
 
+.employee-name {
+    font-size: 2vw;
+    font-weight: 900;
 
-.employee-name{
+    color: #111827;
 
-    font-size:2vw;
+    text-transform: uppercase;
 
-    font-weight:900;
-
-    color:#111827;
-
-    text-transform:uppercase;
-
-    white-space:nowrap;
-
-    overflow:hidden;
-
-    text-overflow:ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
+.employee-label {
+    margin-top: .5vh;
 
-.employee-label{
+    font-size: 1.1vw;
 
-    margin-top:.5vh;
+    letter-spacing: 3px;
 
-    font-size:1.1vw;
+    text-transform: uppercase;
 
-    letter-spacing:3px;
-
-    text-transform:uppercase;
-
-    color:#111827;
+    color: #111827;
 }
-
 
 .red-high .employee-name,
 .red-mid .employee-name,
 .red-low .employee-name,
-
 .red-high .employee-label,
 .red-mid .employee-label,
-.red-low .employee-label{
-
-    color:white;
+.red-low .employee-label {
+    color: #fff;
 }
 
 
-/* =====================================================
-PERUBAHAN PERINGKAT
-POSISI: TENGAH ANTARA NAMA DAN PEROLEHAN
-===================================================== */
+/* =========================================================
+   RANK CHANGE
+========================================================= */
 
-.rank-change{
+.rank-change {
+    width: 0;
+    height: 0;
 
-    width:0;
-    height:0;
+    flex-shrink: 0;
 
-    flex-shrink:0;
+    margin-left: 1vw;
+    margin-right: 1.4vw;
 
-    margin-left:1vw;
-    margin-right:1.4vw;
-
-    opacity:1;
+    opacity: 1;
 
     filter:
-        drop-shadow(0 4px 5px rgba(0,0,0,.55))
-        drop-shadow(0 0 4px rgba(255,255,255,.25));
+        drop-shadow(
+            0 4px 5px rgba(0, 0, 0, .55)
+        )
+        drop-shadow(
+            0 0 4px rgba(255, 255, 255, .25)
+        );
 
-    transform-origin:center center;
+    transform-origin: center center;
 
-    position:relative;
+    position: relative;
 
-    z-index:5;
+    z-index: 5;
 }
 
 
-/* =========================
-SEGITIGA NAIK
-========================= */
+/* NAIK */
 
-.rank-change.up{
-
-    border-left:15px solid transparent;
-    border-right:15px solid transparent;
-    border-bottom:28px solid #22c55e;
+.rank-change.up {
+    border-left: 15px solid transparent;
+    border-right: 15px solid transparent;
+    border-bottom: 28px solid #22c55e;
 
     filter:
-        drop-shadow(0 4px 5px rgba(0,0,0,.65))
-        drop-shadow(0 0 8px rgba(34,197,94,.55));
+        drop-shadow(
+            0 4px 5px rgba(0, 0, 0, .65)
+        )
+        drop-shadow(
+            0 0 8px rgba(34, 197, 94, .55)
+        );
 }
 
 
-/* =========================
-SEGITIGA TURUN
-========================= */
+/* TURUN */
 
-.rank-change.down{
-
-    border-left:15px solid transparent;
-    border-right:15px solid transparent;
-    border-top:28px solid #ef4444;
+.rank-change.down {
+    border-left: 15px solid transparent;
+    border-right: 15px solid transparent;
+    border-top: 28px solid #ef4444;
 
     filter:
-        drop-shadow(0 4px 5px rgba(0,0,0,.65))
-        drop-shadow(0 0 8px rgba(239,68,68,.55));
+        drop-shadow(
+            0 4px 5px rgba(0, 0, 0, .65)
+        )
+        drop-shadow(
+            0 0 8px rgba(239, 68, 68, .55)
+        );
 }
 
 
-/* =========================
-ANIMASI LOGO PERUBAHAN
-========================= */
+/* ANIMASI */
 
 .rank-change.up,
-.rank-change.down{
-
+.rank-change.down {
     animation:
         rankChangePulse 1.5s ease-in-out infinite;
 }
 
-
-@keyframes rankChangePulse{
-
-    0%{
-
-        transform:scale(1);
-
-        opacity:.85;
+@keyframes rankChangePulse {
+    0% {
+        transform: scale(1);
+        opacity: .85;
     }
 
-    50%{
-
-        transform:scale(1.18);
-
-        opacity:1;
+    50% {
+        transform: scale(1.18);
+        opacity: 1;
     }
 
-    100%{
-
-        transform:scale(1);
-
-        opacity:.85;
+    100% {
+        transform: scale(1);
+        opacity: .85;
     }
 }
 
 
-/* =========================
-SCORE
-========================= */
+/* =========================================================
+   SCORE
+========================================================= */
 
-.score{
+.score {
+    width: 31%;
 
-    width:31%;
+    padding-right: 1.8vw;
 
-    padding-right:1.8vw;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
 
-    display:flex;
-
-    flex-direction:column;
-
-    align-items:flex-end;
-
-    gap:1vh;
+    gap: 1vh;
 }
 
-
-.main-score{
-
-    text-align:right;
+.main-score {
+    text-align: right;
 }
 
-
-.score-value{
-
-    font-size:2.5vw;
-
-    font-weight:900;
-
-    color:#111827;
+.score-value {
+    font-size: 2.5vw;
+    font-weight: 900;
+    color: #111827;
 }
 
+.score-label {
+    margin-top: .2vh;
 
-.score-label{
+    font-size: .8vw;
+    font-weight: 700;
 
-    margin-top:.2vh;
+    letter-spacing: 2px;
 
-    font-size:.8vw;
-
-    font-weight:700;
-
-    letter-spacing:2px;
-
-    color:#111827;
-
-    opacity:.7;
+    color: #111827;
+    opacity: .7;
 }
-
 
 .red-high .score-value,
 .red-mid .score-value,
 .red-low .score-value,
-
 .red-high .score-label,
 .red-mid .score-label,
-.red-low .score-label{
-
-    color:white;
+.red-low .score-label {
+    color: #fff;
 }
 
 
-/* =========================
-ACH BOX
-========================= */
+/* =========================================================
+   ACHIEVEMENT
+========================================================= */
 
-.ach-box{
+.ach-box {
+    padding: 1vh 1.2vw;
 
-    padding:
-        1vh
-        1.2vw;
+    border-radius: 22px;
 
-    border-radius:22px;
+    min-width: 9vw;
 
-    min-width:9vw;
+    text-align: center;
 
-    text-align:center;
+    border: 1px solid rgba(255, 255, 255, .18);
 
-    border:
-        1px solid rgba(255,255,255,.18);
+    background: rgba(255, 255, 255, .12);
+}
 
-    background:
-        rgba(255,255,255,.12);
+.ach-title {
+    font-size: .72vw;
+
+    font-weight: 800;
+
+    letter-spacing: 2px;
+
+    color: #fff;
+}
+
+.ach-value {
+    margin-top: .45vh;
+
+    font-size: 1.8vw;
+
+    font-weight: 900;
+}
+
+.ach-green-box {
+    background: rgba(22, 163, 74, .35) !important;
+    border: 2px solid rgba(74, 222, 128, .65);
+}
+
+.ach-red-box {
+    background: rgba(185, 28, 28, .35) !important;
+    border: 2px solid rgba(252, 165, 165, .6);
+}
+
+.ach-normal {
+    color: #fff !important;
 }
 
 
-.ach-title{
+/* =========================================================
+   DATE & TIME
+========================================================= */
 
-    font-size:.72vw;
+#datetimeWidget {
+    position: fixed;
 
-    font-weight:800;
+    top: 20px;
+    right: 25px;
 
-    letter-spacing:2px;
+    z-index: 999;
 
-    color:#ffffff;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+
+    gap: 4px;
+
+    pointer-events: none;
 }
 
+#dateLine {
+    color: #000;
 
-.ach-value{
+    font-size: .8vw;
+    font-weight: 700;
 
-    margin-top:.45vh;
+    letter-spacing: 2px;
 
-    font-size:1.8vw;
-
-    font-weight:900;
-}
-
-
-.ach-green{
-    color:#dcfce7 !important;
-}
-
-
-.ach-green-box{
-
-    background:
-        rgba(22,163,74,.35) !important;
-
-    border:
-        2px solid rgba(74,222,128,.65);
-}
-
-
-.ach-red{
-    color:#ffe4e6 !important;
-}
-
-
-.ach-red-box{
-
-    background:
-        rgba(185,28,28,.35) !important;
-
-    border:
-        2px solid rgba(252,165,165,.6);
-}
-
-
-.ach-normal{
-    color:#ffffff !important;
-}
-
-
-/* =========================
-MOBILE
-========================= */
-
-@media(max-width:768px){
-
-    body{
-        overflow:auto;
-    }
-
-    .slide{
-        min-height:100vh;
-        height:auto;
-        padding:12px;
-    }
-
-    .header h1{
-        font-size:30px;
-    }
-
-    .header p{
-        font-size:11px;
-    }
-
-    .rank-card{
-        height:130px;
-    }
-
-    .rank-number{
-        font-size:90px !important;
-    }
-
-    .photo-box{
-        width:95px;
-        min-width:95px;
-    }
-
-    .employee-name{
-        font-size:15px;
-    }
-
-    .employee-label{
-        font-size:10px;
-    }
-
-    .score{
-        width:42%;
-    }
-
-    .score-value{
-        font-size:18px;
-    }
-
-    .score-label{
-        font-size:9px;
-    }
-
-    .ach-box{
-
-        min-width:78px;
-
-        padding:
-            8px
-            10px;
-    }
-
-    .ach-title{
-        font-size:8px;
-    }
-
-    .ach-value{
-        font-size:15px;
-    }
-
-    /* SEGITIGA MOBILE */
-
-    .rank-change{
-        margin-left:5px;
-        margin-right:8px;
-    }
-
-    .rank-change.up{
-
-        border-left-width:10px;
-        border-right-width:10px;
-        border-bottom-width:20px;
-    }
-
-    .rank-change.down{
-
-        border-left-width:10px;
-        border-right-width:10px;
-        border-top-width:20px;
-    }
-
-}
-
-
-/* =========================
-DATE TIME
-========================= */
-
-#datetimeWidget{
-
-    position:fixed;
-
-    top:20px;
-
-    right:25px;
-
-    left:auto;
-
-    transform:none;
-
-    z-index:999;
-
-    display:flex;
-
-    flex-direction:column;
-
-    align-items:flex-end;
-
-    gap:4px;
-
-    pointer-events:none;
-}
-
-
-#dateLine{
-
-    color:#000;
-
-    font-size:.8vw;
-
-    font-weight:700;
-
-    letter-spacing:2px;
-
-    text-transform:uppercase;
+    text-transform: uppercase;
 
     text-shadow:
-        0 2px 10px rgba(255,255,255,.4);
+        0 2px 10px rgba(255, 255, 255, .4);
 }
 
+#timeLine {
+    padding: 6px 18px;
 
-#timeLine{
+    border-radius: 999px;
 
-    padding:6px 18px;
+    background: rgba(255, 255, 255, .18);
 
-    border-radius:999px;
+    backdrop-filter: blur(10px);
 
-    background:
-        rgba(255,255,255,.18);
+    border: 1px solid rgba(255, 255, 255, .25);
 
-    backdrop-filter:blur(10px);
+    color: #000;
 
-    border:
-        1px solid rgba(255,255,255,.25);
+    font-size: 1.2vw;
+    font-weight: 900;
 
-    color:#000;
-
-    font-size:1.2vw;
-
-    font-weight:900;
-
-    letter-spacing:3px;
+    letter-spacing: 3px;
 
     text-shadow:
-        0 2px 10px rgba(255,255,255,.4);
+        0 2px 10px rgba(255, 255, 255, .4);
 }
 
 
-@media(max-width:768px){
+/* =========================================================
+   MOBILE
+========================================================= */
 
-    #datetimeWidget{
+@media (max-width: 768px) {
 
-        top:81px;
-
-        left:50%;
-
-        right:auto;
-
-        transform:translateX(-50%);
-
-        width:100%;
-
-        align-items:center;
-
-        text-align:center;
+    body {
+        overflow: auto;
     }
 
-    #dateLine{
-
-        font-size:11px;
-
-        letter-spacing:1px;
-
-        width:100%;
+    .slide {
+        min-height: 100vh;
+        height: auto;
+        padding: 12px;
     }
 
-    #timeLine{
+    .header h1 {
+        font-size: 30px;
+    }
 
-        font-size:18px;
+    .header p {
+        font-size: 11px;
+    }
 
-        min-width:120px;
+    .rank-card {
+        height: 130px;
+    }
+
+    .rank-number {
+        font-size: 90px !important;
+    }
+
+    .photo-box {
+        width: 95px;
+        min-width: 95px;
+    }
+
+    .employee-name {
+        font-size: 15px;
+    }
+
+    .employee-label {
+        font-size: 10px;
+    }
+
+    .score {
+        width: 42%;
+    }
+
+    .score-value {
+        font-size: 18px;
+    }
+
+    .score-label {
+        font-size: 9px;
+    }
+
+    .ach-box {
+        min-width: 78px;
+        padding: 8px 10px;
+    }
+
+    .ach-title {
+        font-size: 8px;
+    }
+
+    .ach-value {
+        font-size: 15px;
+    }
+
+    .rank-change {
+        margin-left: 5px;
+        margin-right: 8px;
+    }
+
+    .rank-change.up {
+        border-left-width: 10px;
+        border-right-width: 10px;
+        border-bottom-width: 20px;
+    }
+
+    .rank-change.down {
+        border-left-width: 10px;
+        border-right-width: 10px;
+        border-top-width: 20px;
+    }
+
+    #datetimeWidget {
+        top: 81px;
+
+        left: 50%;
+        right: auto;
+
+        transform: translateX(-50%);
+
+        width: 100%;
+
+        align-items: center;
+        text-align: center;
+    }
+
+    #dateLine {
+        font-size: 11px;
+        letter-spacing: 1px;
+        width: 100%;
+    }
+
+    #timeLine {
+        font-size: 18px;
+        min-width: 120px;
     }
 }
 
@@ -1053,317 +865,269 @@ DATE TIME
 
 <body>
 
+<!-- =====================================================
+     DATE TIME
+===================================================== -->
 
 <div id="datetimeWidget">
-
     <div id="dateLine"></div>
-
     <div id="timeLine"></div>
-
 </div>
 
 
-<div class="pause-indicator" id="pauseIndicator">
+<!-- =====================================================
+     PAUSE INDICATOR
+===================================================== -->
+
+<div
+    class="pause-indicator"
+    id="pauseIndicator"
+>
     ▶ PLAYING
 </div>
 
 
-<!-- =========================
-SLIDE 1
-========================= -->
+<!-- =====================================================
+     SLIDE 1
+===================================================== -->
 
 <div class="slide active">
 
     <div class="header">
-
         <h1>TOP ACH MTD SALES</h1>
-
         <p>AZKO CITIMALL TUBAN</p>
-
     </div>
 
-    <div class="rank-list" id="salesTop"></div>
+    <div
+        class="rank-list"
+        id="salesTop"
+    ></div>
 
 </div>
 
 
-<!-- =========================
-SLIDE 2
-========================= -->
+<!-- =====================================================
+     SLIDE 2
+===================================================== -->
 
 <div class="slide">
 
     <div class="header">
-
         <h1>BOTTOM ACH MTD SALES</h1>
-
         <p>AZKO CITIMALL TUBAN</p>
-
     </div>
 
-    <div class="rank-list" id="salesBottom"></div>
+    <div
+        class="rank-list"
+        id="salesBottom"
+    ></div>
 
 </div>
 
 
-<!-- =========================
-SLIDE 3
-========================= -->
+<!-- =====================================================
+     SLIDE 3
+===================================================== -->
 
 <div class="slide">
 
     <div class="header">
-
         <h1>TOP PROTEKSI</h1>
-
         <p>AZKO CITIMALL TUBAN</p>
-
     </div>
 
-    <div class="rank-list" id="proteksiTop"></div>
+    <div
+        class="rank-list"
+        id="proteksiTop"
+    ></div>
 
 </div>
 
 
-<!-- =========================
-SLIDE 4
-========================= -->
+<!-- =====================================================
+     SLIDE 4
+===================================================== -->
 
 <div class="slide">
 
     <div class="header">
-
         <h1>BOTTOM PROTEKSI</h1>
-
         <p>AZKO CITIMALL TUBAN</p>
-
     </div>
 
-    <div class="rank-list" id="proteksiBottom"></div>
+    <div
+        class="rank-list"
+        id="proteksiBottom"
+    ></div>
 
 </div>
 
 
-<!-- =========================
-SLIDE 5
-========================= -->
+<!-- =====================================================
+     SLIDE 5
+===================================================== -->
 
 <div class="slide">
 
     <div class="header">
-
         <h1>TOP TRX</h1>
-
         <p>AZKO CITIMALL TUBAN</p>
-
     </div>
 
-    <div class="rank-list" id="trxTop"></div>
+    <div
+        class="rank-list"
+        id="trxTop"
+    ></div>
 
 </div>
 
 
-<!-- =========================
-SLIDE 6
-========================= -->
+<!-- =====================================================
+     SLIDE 6
+===================================================== -->
 
 <div class="slide">
 
     <div class="header">
-
         <h1>BOTTOM TRX</h1>
-
         <p>AZKO CITIMALL TUBAN</p>
-
     </div>
 
-    <div class="rank-list" id="trxBottom"></div>
+    <div
+        class="rank-list"
+        id="trxBottom"
+    ></div>
 
 </div>
 
 
-<!-- =========================
-AUDIO
-========================= -->
+<!-- =====================================================
+     AUDIO
+===================================================== -->
 
 <audio
     id="bgm"
     loop
     autoplay
     playsinline
-    preload="auto">
-
+    preload="auto"
+>
     <source
         src="https://putrasetya.github.io/jingleazkoboomsale.mp3"
-        type="audio/mpeg">
-
+        type="audio/mpeg"
+    >
 </audio>
 
 
 <script>
 
-/* =====================================================
-GOOGLE APPS SCRIPT
-===================================================== */
+/* =========================================================
+   GOOGLE APPS SCRIPT
+========================================================= */
 
 const URL =
-"https://script.google.com/macros/s/AKfycbzeehvUo6QYriMFJTR4A88lN6IIHV6Qop9UphkdOTMkRLVxhVuJ13y69momo6h1pn9dTQ/exec";
+    "https://script.google.com/macros/s/AKfycbzeehvUo6QYriMFJTR4A88lN6IIHV6Qop9UphkdOTMkRLVxhVuJ13y69momo6h1pn9dTQ/exec";
 
 
-/* =====================================================
-PHOTO RULES
-===================================================== */
+/* =========================================================
+   FOTO
+========================================================= */
 
 const photoRules = {
 
-    "137391":
-    "https://putrasetya.github.io/foto/putra.png",
-
-    "193976":
-    "https://putrasetya.github.io/foto/archi.png",
-
-    "114636":
-    "https://putrasetya.github.io/foto/budi.png",
-
-    "183549":
-    "https://putrasetya.github.io/foto/jaidun.png",
-
-    "193978":
-    "https://putrasetya.github.io/foto/ghofur.png",
-
-    "194018":
-    "https://putrasetya.github.io/foto/salim.png",
-
-    "129403":
-    "https://putrasetya.github.io/foto/nafi.png",
-
-    "193977":
-    "https://putrasetya.github.io/foto/avif.png",
-
-    "195964":
-    "https://putrasetya.github.io/foto/sherly.png",
-
-    "94880":
-    "https://putrasetya.github.io/foto/imam.png",
-
-    "105194":
-    "https://putrasetya.github.io/foto/shohib.png",
-
-    "161295":
-    "https://putrasetya.github.io/foto/arif.png",
-
-    "134576":
-    "https://putrasetya.github.io/foto/rifai.png",
-
-    "136049":
-    "https://putrasetya.github.io/foto/luluk.png",
-
-    "193979":
-    "https://putrasetya.github.io/foto/ima.png",
-
-    "193980":
-    "https://putrasetya.github.io/foto/hepi.png",
-
-    "149296":
-    "https://putrasetya.github.io/foto/ifa.png"
+    "137391": "https://putrasetya.github.io/foto/putra.png",
+    "193976": "https://putrasetya.github.io/foto/archi.png",
+    "114636": "https://putrasetya.github.io/foto/budi.png",
+    "183549": "https://putrasetya.github.io/foto/jaidun.png",
+    "193978": "https://putrasetya.github.io/foto/ghofur.png",
+    "194018": "https://putrasetya.github.io/foto/salim.png",
+    "129403": "https://putrasetya.github.io/foto/nafi.png",
+    "193977": "https://putrasetya.github.io/foto/avif.png",
+    "195964": "https://putrasetya.github.io/foto/sherly.png",
+    "94880": "https://putrasetya.github.io/foto/imam.png",
+    "105194": "https://putrasetya.github.io/foto/shohib.png",
+    "161295": "https://putrasetya.github.io/foto/arif.png",
+    "134576": "https://putrasetya.github.io/foto/rifai.png",
+    "136049": "https://putrasetya.github.io/foto/luluk.png",
+    "193979": "https://putrasetya.github.io/foto/ima.png",
+    "193980": "https://putrasetya.github.io/foto/hepi.png",
+    "149296": "https://putrasetya.github.io/foto/ifa.png"
 
 };
 
 
-/* =====================================================
-GET FOTO
-===================================================== */
+/* =========================================================
+   GET FOTO
+========================================================= */
 
-function getPhoto(nik){
+function getPhoto(nik) {
 
-    if(
+    if (
         nik === null ||
         nik === undefined
-    ){
-
+    ) {
         return "";
-
     }
 
-
     const employeeNik =
-
         String(nik)
-        .trim()
-        .replace(/\.0+$/, "");
-
-
-    console.log(
-        "NIK:",
-        employeeNik,
-        "FOTO:",
-        photoRules[employeeNik]
-    );
-
+            .trim()
+            .replace(/\.0+$/, "");
 
     return photoRules[employeeNik] || "";
-
 }
 
 
-/* =====================================================
-DATA
-===================================================== */
+/* =========================================================
+   DATA STATE
+========================================================= */
 
 let lastData = [];
-
 let lastRenderHash = "";
 
 
-/* =====================================================
-LOCAL STORAGE
-PERINGKAT TERAKHIR
-===================================================== */
+/* =========================================================
+   LOCAL STORAGE RANK HISTORY
+========================================================= */
 
 const RANK_STORAGE_KEY =
     "azko_tv_rank_history_v1";
 
 
-function loadRankHistory(){
+function loadRankHistory() {
 
-    try{
+    try {
 
         const saved =
             localStorage.getItem(
                 RANK_STORAGE_KEY
             );
 
-        if(!saved){
-
+        if (!saved) {
             return {};
-
         }
 
         const parsed =
             JSON.parse(saved);
 
-        if(
+        if (
             parsed &&
             typeof parsed === "object"
-        ){
-
+        ) {
             return parsed;
-
         }
 
         return {};
 
-    }catch(err){
+    } catch (error) {
 
         console.log(
             "LOCAL STORAGE READ ERROR:",
-            err
+            error
         );
 
         return {};
-
     }
-
 }
 
 
@@ -1371,238 +1135,192 @@ let rankHistory =
     loadRankHistory();
 
 
-function saveRankHistory(){
+function saveRankHistory() {
 
-    try{
+    try {
 
         localStorage.setItem(
             RANK_STORAGE_KEY,
             JSON.stringify(rankHistory)
         );
 
-    }catch(err){
+    } catch (error) {
 
         console.log(
             "LOCAL STORAGE SAVE ERROR:",
-            err
+            error
         );
-
     }
-
 }
 
 
-/* =====================================================
-AMBIL PERUBAHAN PERINGKAT
-===================================================== */
+/* =========================================================
+   RANK CHANGE
+========================================================= */
 
 function getRankChange(
     storageGroup,
     nik,
     currentRank
-){
+) {
 
-    if(
+    if (
         !nik ||
         currentRank === undefined ||
         currentRank === null
-    ){
-
+    ) {
         return "";
-
     }
-
 
     const employeeNik =
         String(nik)
-        .trim()
-        .replace(/\.0+$/, "");
+            .trim()
+            .replace(/\.0+$/, "");
 
-
-    if(!rankHistory[storageGroup]){
-
+    if (!rankHistory[storageGroup]) {
         rankHistory[storageGroup] = {};
-
     }
-
 
     const previousRank =
         rankHistory[storageGroup][employeeNik];
 
-
     /*
-        PERTAMA KALI DILIHAT:
-        tidak menampilkan logo.
+        Pertama kali muncul:
+        tidak menampilkan indikator.
     */
 
-    if(
+    if (
         previousRank === undefined ||
         previousRank === null
-    ){
-
+    ) {
         return "";
-
     }
-
 
     /*
-        Angka rank lebih kecil =
-        posisi lebih tinggi.
+        Rank lebih kecil = posisi lebih tinggi.
 
-        Contoh:
-        3 -> 1 = NAIK
-        1 -> 3 = TURUN
+        3 -> 1 = naik
+        1 -> 3 = turun
     */
 
-    if(currentRank < previousRank){
-
+    if (currentRank < previousRank) {
         return "up";
-
     }
 
-
-    if(currentRank > previousRank){
-
+    if (currentRank > previousRank) {
         return "down";
-
     }
-
 
     return "";
-
 }
 
 
-/* =====================================================
-UPDATE PERINGKAT TERAKHIR
-===================================================== */
+/* =========================================================
+   SAVE CURRENT RANK
+========================================================= */
 
 function saveCurrentRanks(
     storageGroup,
     rankedData
-){
+) {
 
-    if(!rankHistory[storageGroup]){
-
+    if (!rankHistory[storageGroup]) {
         rankHistory[storageGroup] = {};
-
     }
-
 
     rankedData.forEach(item => {
 
         const nik =
             String(item.nik || "")
-            .trim()
-            .replace(/\.0+$/, "");
+                .trim()
+                .replace(/\.0+$/, "");
 
-
-        if(!nik){
-
+        if (!nik) {
             return;
-
         }
-
 
         rankHistory[storageGroup][nik] =
             item.rank;
-
     });
 
-
     saveRankHistory();
-
 }
 
 
-/* =====================================================
-HELPERS
-===================================================== */
+/* =========================================================
+   HELPERS
+========================================================= */
 
-function clean(val){
+function clean(value) {
 
-    if(!val) return 0;
-
+    if (!value) {
+        return 0;
+    }
 
     return parseFloat(
-        val
-        .toString()
-        .replace(/[^\d.]/g,'')
+        value
+            .toString()
+            .replace(/[^\d.]/g, "")
     ) || 0;
-
 }
 
 
-function formatSalesJt(value){
+function formatSalesJt(value) {
 
     const jt =
         value / 1000000;
 
-
     const rounded =
         Math.floor(jt * 10) / 10;
 
-
-    if(Number.isInteger(rounded)){
-
+    if (Number.isInteger(rounded)) {
         return `${rounded.toFixed(0)} jt`;
-
     }
 
-
-    return `${rounded.toFixed(1).replace('.',',')} jt`;
-
+    return `${rounded
+        .toFixed(1)
+        .replace(".", ",")} jt`;
 }
 
 
-function isExcluded(dept){
+function isExcluded(dept) {
 
     const d =
         (dept || "").toLowerCase();
 
-
     return (
-
         d.includes("cashier") ||
         d.includes("kasir") ||
         d.includes("cs") ||
         d.includes("customer service")
-
     );
-
 }
 
 
-/* =====================================================
-GET DATA
-===================================================== */
+/* =========================================================
+   GET DATA
+========================================================= */
 
-async function getData(){
+async function getData() {
 
-    try{
+    try {
 
-        const res =
+        const response =
             await fetch(
                 URL + "?t=" + Date.now()
             );
 
-
         const json =
-            await res.json();
+            await response.json();
 
-
-        if(
+        if (
             !Array.isArray(json) ||
             json.length === 0
-        ){
-
+        ) {
             return lastData;
-
         }
 
-
         const mapped =
-
             json.map(row => ({
 
                 nik:
@@ -1650,80 +1368,64 @@ async function getData(){
 
             }));
 
-
         lastData =
             mapped;
 
-
         return mapped;
 
-    }catch(err){
+    } catch (error) {
 
         console.log(
             "GET DATA ERROR:",
-            err
+            error
         );
 
-
         return lastData;
-
     }
-
 }
 
 
-/* =====================================================
-ACH STYLE
-===================================================== */
+/* =========================================================
+   ACH STYLE
+========================================================= */
 
-function getAchStyle(value){
+function getAchStyle(value) {
 
-    if(value >= 100){
+    if (value >= 100) {
 
         return {
-
             valueClass:
                 "ach-value ach-green",
 
             boxClass:
                 "ach-box ach-green-box"
-
         };
-
     }
 
-
-    if(value < 80){
+    if (value < 80) {
 
         return {
-
             valueClass:
                 "ach-value ach-red",
 
             boxClass:
                 "ach-box ach-red-box"
-
         };
-
     }
 
-
     return {
-
         valueClass:
             "ach-value ach-normal",
 
         boxClass:
             "ach-box"
-
     };
-
 }
 
 
-/* =====================================================
-RENDER
-===================================================== */
+/* =========================================================
+   RENDER
+========================================================= */
 
 function render(
     data,
@@ -1732,102 +1434,88 @@ function render(
     achTitle,
     containerId,
     label,
-    mode="top"
-){
+    mode = "top"
+) {
 
     const container =
         document.getElementById(
             containerId
         );
 
+    if (!container) {
+        return;
+    }
 
-    if(!container) return;
 
+    /* -----------------------------------------------------
+       FILTER DATA
+    ----------------------------------------------------- */
 
     let filteredData =
         [...data];
 
-
-    /* FILTER KASIR / CS */
-
-    if(
-
+    if (
         containerId === "salesTop" ||
         containerId === "salesBottom" ||
         containerId === "trxTop" ||
         containerId === "trxBottom"
-
-    ){
+    ) {
 
         filteredData =
             filteredData.filter(
                 item =>
                     !isExcluded(item.dept)
             );
-
     }
 
 
     let sorted = [];
-
     let styles = [];
 
 
-    /* =========================
-    TOP
-    ========================= */
+    /* =====================================================
+       TOP
+    ===================================================== */
 
-    if(mode === "top"){
+    if (mode === "top") {
 
         styles = [
-
             "gold",
             "silver",
             "bronze"
-
         ];
 
 
-        if(
-
+        if (
             containerId === "salesTop" ||
             containerId === "salesBottom"
-
-        ){
-
-            sorted =
-
-                filteredData
-
-                .filter(
-                    v =>
-                        v.achSales > 0
-                )
-
-                .sort(
-                    (a,b) =>
-                        b.achSales -
-                        a.achSales
-                );
-
-
-        }else{
+        ) {
 
             sorted =
-
                 filteredData
+                    .filter(
+                        item =>
+                            item.achSales > 0
+                    )
+                    .sort(
+                        (a, b) =>
+                            b.achSales -
+                            a.achSales
+                    );
 
-                .filter(
-                    v =>
-                        v[key] > 0
-                )
+        } else {
 
-                .sort(
-                    (a,b) =>
-                        b[key] -
-                        a[key]
-                );
-
+            sorted =
+                filteredData
+                    .filter(
+                        item =>
+                            item[key] > 0
+                    )
+                    .sort(
+                        (a, b) =>
+                            b[key] -
+                            a[key]
+                    );
         }
 
 
@@ -1838,112 +1526,92 @@ function render(
 
         sorted =
             sorted.map(
-                (item,index) => ({
-
+                (item, index) => ({
                     ...item,
-
                     actualRank:
                         index + 1
-
                 })
             );
 
 
         sorted =
-            sorted.slice(0,3);
+            sorted.slice(0, 3);
 
 
-    }else{
+    } else {
 
-        /* =========================
-        BOTTOM
-        ========================= */
+        /* =================================================
+           BOTTOM
+        ================================================= */
 
         styles = [
-
             "red-high",
             "red-mid",
             "red-low"
-
         ];
-
 
         let allSorted;
 
 
-        if(
+        if (
             containerId === "salesBottom"
-        ){
+        ) {
 
             allSorted =
-
                 filteredData
+                    .filter(
+                        item =>
+                            item.achSales > 0
+                    )
+                    .sort(
+                        (a, b) =>
+                            a.achSales -
+                            b.achSales
+                    );
 
-                .filter(
-                    v =>
-                        v.achSales > 0
-                )
-
-                .sort(
-                    (a,b) =>
-                        a.achSales -
-                        b.achSales
-                );
-
-
-        }else{
+        } else {
 
             allSorted =
-
                 filteredData
+                    .filter(item => {
 
-                .filter(v => {
+                        if (
+                            containerId ===
+                            "proteksiBottom"
+                        ) {
+                            return item[key] >= 0;
+                        }
 
-                    if(
-                        containerId ===
-                        "proteksiBottom"
-                    ){
-
-                        return v[key] >= 0;
-
-                    }
-
-                    return v[key] > 0;
-
-                })
-
-                .sort(
-                    (a,b) =>
-                        a[key] -
-                        b[key]
-                );
-
+                        return item[key] > 0;
+                    })
+                    .sort(
+                        (a, b) =>
+                            a[key] -
+                            b[key]
+                    );
         }
 
 
         /*
-            Peringkat aktual berdasarkan
-            urutan performa.
-
-            Data terendah tetap mendapatkan
-            peringkat aktual paling rendah.
+            Rank aktual berdasarkan
+            jumlah seluruh karyawan.
         */
 
         const total =
             allSorted.length;
 
+        allSorted =
+            allSorted.map(
+                (item, index) => ({
+                    ...item,
 
-        allSorted = allSorted.map(
-    (item,index) => ({
-        ...item,
+                    actualRank:
+                        total - index,
 
-        actualRank:
-            total - index,
-
-        totalRank:
-            total
-    })
-);
+                    totalRank:
+                        total
+                })
+            );
 
 
         /*
@@ -1951,72 +1619,42 @@ function render(
         */
 
         sorted =
-            allSorted.slice(0,3);
+            allSorted.slice(0, 3);
 
 
         /*
-            Agar tampilan tetap seperti
-            sebelumnya: posisi terendah
-            berada di card atas.
+            Tampilkan dari rank
+            tertinggi ke terendah.
         */
 
-sorted.reverse();
+        sorted.reverse();
     }
 
 
     let html = "";
 
-
-    /*
-        Storage group khusus setiap slide.
-        Jadi perubahan Sales tidak tercampur
-        dengan Proteksi atau TRX.
-    */
-
     const storageGroup =
         containerId;
-
-
-    /*
-        Simpan rank hanya untuk data
-        yang sedang digunakan.
-    */
 
     const currentRankData = [];
 
 
-    sorted.forEach((d,i)=>{
+    /* =====================================================
+       BUILD CARD
+    ===================================================== */
 
-        /*
-            Untuk TOP:
-            rank = peringkat aktual.
-
-            Untuk BOTTOM:
-            rank = peringkat aktual juga.
-
-            Jadi kalau seseorang dari rank 8
-            menjadi rank 5, sistem tahu bahwa
-            peringkatnya naik.
-        */
+    sorted.forEach((d, i) => {
 
         const rank =
             d.actualRank;
-
 
         const achStyle =
             getAchStyle(
                 d[achKey]
             );
 
-
         const photo =
             getPhoto(d.nik);
-
-
-        /*
-            Ambil status perubahan
-            SEBELUM rank terbaru disimpan.
-        */
 
         const rankChange =
             getRankChange(
@@ -2026,171 +1664,130 @@ sorted.reverse();
             );
 
 
-        /*
-            Simpan untuk update
-            localStorage setelah render.
-        */
-
         currentRankData.push({
-
-            nik:
-                d.nik,
-
-            rank:
-                rank
-
+            nik: d.nik,
+            rank: rank
         });
 
-
-        /*
-            HTML segitiga.
-
-            Jika naik:
-            class up.
-
-            Jika turun:
-            class down.
-
-            Jika tetap:
-            kosong.
-        */
 
         let changeHTML = "";
 
 
-        if(rankChange === "up"){
+        if (rankChange === "up") {
 
-            changeHTML =
-                `<div
+            changeHTML = `
+                <div
                     class="rank-change up"
                     title="Peringkat naik">
-                </div>`;
-
+                </div>
+            `;
         }
 
 
-        if(rankChange === "down"){
+        if (rankChange === "down") {
 
-            changeHTML =
-                `<div
+            changeHTML = `
+                <div
                     class="rank-change down"
                     title="Peringkat turun">
-                </div>`;
-
+                </div>
+            `;
         }
 
 
         const photoSrc =
-
             photo ||
-
             `https://ui-avatars.com/api/?name=${encodeURIComponent(
                 d.name
             )}&background=random&color=fff&size=512`;
 
 
+        const scoreValue =
+            key === "sales"
+                ? formatSalesJt(d[key])
+                : d[key].toLocaleString("id-ID");
+
+
         html += `
 
-        <div class="rank-card show ${styles[i]}">
+            <div
+                class="rank-card show ${styles[i]}"
+            >
 
-            <div class="rank-number">
-                ${rank}
-            </div>
-
-
-            <div class="photo-box">
-
-                <img
-                    src="${photoSrc}"
-                    loading="eager"
-                    decoding="async"
-                    onerror="
-                        this.onerror=null;
-                        this.src='https://ui-avatars.com/api/?name=${encodeURIComponent(
-                            d.name
-                        )}&background=random&color=fff&size=512';
-                    "
-                >
-
-            </div>
+                <div class="rank-number">
+                    ${rank}
+                </div>
 
 
-            <div class="employee">
+                <div class="photo-box">
 
-                <div class="employee-name">
-
-                    ${d.name}
+                    <img
+                        src="${photoSrc}"
+                        loading="eager"
+                        decoding="async"
+                        onerror="
+                            this.onerror=null;
+                            this.src='https://ui-avatars.com/api/?name=${encodeURIComponent(
+                                d.name
+                            )}&background=random&color=fff&size=512';
+                        "
+                    >
 
                 </div>
 
 
-                <div class="employee-label">
+                <div class="employee">
 
-                    ${d.dept}
-
-                </div>
-
-            </div>
-
-
-            <!-- SEGITIGA PERUBAHAN PERINGKAT -->
-
-            ${changeHTML}
-
-
-            <div class="score">
-
-                <div class="main-score">
-
-                    <div class="score-value">
-
-                        ${
-                            key === "sales"
-
-                            ? formatSalesJt(
-                                d[key]
-                            )
-
-                            : d[key].toLocaleString(
-                                'id-ID'
-                            )
-                        }
-
+                    <div class="employee-name">
+                        ${d.name}
                     </div>
 
-
-                    <div class="score-label">
-
-                        ${label}
-
+                    <div class="employee-label">
+                        ${d.dept}
                     </div>
 
                 </div>
 
 
-                <div class="${achStyle.boxClass}">
+                ${changeHTML}
 
-                    <div class="ach-title">
 
-                        ${achTitle}
+                <div class="score">
+
+                    <div class="main-score">
+
+                        <div class="score-value">
+                            ${scoreValue}
+                        </div>
+
+                        <div class="score-label">
+                            ${label}
+                        </div>
 
                     </div>
 
 
-                    <div class="${achStyle.valueClass}">
+                    <div
+                        class="${achStyle.boxClass}"
+                    >
 
-                        ${d[achKey].toFixed(1)}%
+                        <div class="ach-title">
+                            ${achTitle}
+                        </div>
+
+                        <div
+                            class="${achStyle.valueClass}"
+                        >
+                            ${d[achKey].toFixed(1)}%
+                        </div>
 
                     </div>
 
                 </div>
 
             </div>
-
-        </div>
 
         `;
-
     });
 
 
@@ -2199,95 +1796,77 @@ sorted.reverse();
 
 
     /*
-        Setelah indikator selesai dibuat,
-        sekarang rank terbaru disimpan.
-
-        Ini penting agar perubahan tidak
-        terbaca sebagai perubahan terus-menerus
-        setiap 30 detik.
+        Simpan rank setelah
+        indikator selesai dibuat.
     */
 
     saveCurrentRanks(
         storageGroup,
         currentRankData
     );
-
 }
 
 
-/* =====================================================
-SLIDES
-===================================================== */
+/* =========================================================
+   SLIDES
+========================================================= */
 
 const slides =
     document.querySelectorAll(
         ".slide"
     );
 
-
 let current = 0;
-
 let isSliding = false;
 
 
-function nextSlide(){
+function nextSlide() {
 
-    if(isSliding) return;
-
+    if (isSliding) {
+        return;
+    }
 
     isSliding = true;
 
 
     slides[current]
-        .classList.remove(
-            "active"
-        );
+        .classList.remove("active");
 
 
     current++;
 
-
-    if(
+    if (
         current >= slides.length
-    ){
-
+    ) {
         current = 0;
-
     }
 
 
-    setTimeout(()=>{
+    setTimeout(() => {
 
         slides[current]
-            .classList.add(
-                "active"
-            );
-
+            .classList.add("active");
 
         isSliding = false;
 
-    },120);
-
+    }, 120);
 }
 
 
-/* =====================================================
-UPDATE
-===================================================== */
+/* =========================================================
+   UPDATE
+========================================================= */
 
-async function update(){
+async function update() {
 
     const data =
         await getData();
 
-
-    if(
+    if (
         !data ||
         data.length === 0
-    ){
-
+    ) {
         return;
-
     }
 
 
@@ -2295,13 +1874,16 @@ async function update(){
         JSON.stringify(data);
 
 
-    if(
+    /*
+        Jangan render ulang jika
+        data tidak berubah.
+    */
+
+    if (
         newHash ===
         lastRenderHash
-    ){
-
+    ) {
         return;
-
     }
 
 
@@ -2373,13 +1955,12 @@ async function update(){
         "TOTAL TRX",
         "bottom"
     );
-
 }
 
 
-/* =====================================================
-INDICATOR
-===================================================== */
+/* =========================================================
+   INDICATOR
+========================================================= */
 
 const pauseIndicator =
     document.getElementById(
@@ -2387,41 +1968,37 @@ const pauseIndicator =
     );
 
 
-function showIndicator(text){
+function showIndicator(text) {
 
-    if(!pauseIndicator)
+    if (!pauseIndicator) {
         return;
-
+    }
 
     pauseIndicator.innerHTML =
         text;
-
 
     pauseIndicator.classList.add(
         "show"
     );
 
-
     clearTimeout(
         window.indicatorTimeout
     );
 
-
     window.indicatorTimeout =
-        setTimeout(()=>{
+        setTimeout(() => {
 
             pauseIndicator.classList.remove(
                 "show"
             );
 
-        },1500);
-
+        }, 1500);
 }
 
 
-/* =====================================================
-AUDIO
-===================================================== */
+/* =========================================================
+   AUDIO
+========================================================= */
 
 const bgm =
     document.getElementById(
@@ -2429,254 +2006,213 @@ const bgm =
     );
 
 
-if(bgm){
-
+if (bgm) {
     bgm.volume = 0.35;
-
 }
 
 
-async function playMusic(){
+async function playMusic() {
 
-    if(!bgm) return;
+    if (!bgm) {
+        return;
+    }
 
-
-    try{
+    try {
 
         await bgm.play();
 
-    }catch(err){
+    } catch (error) {
 
-        console.log(err);
-
+        console.log(
+            "AUDIO PLAY ERROR:",
+            error
+        );
     }
-
 }
 
 
-/* =====================================================
-LOOP
-===================================================== */
+/* =========================================================
+   LOOP
+========================================================= */
 
 let isPaused = false;
 
 let slideInterval;
-
 let updateInterval;
 
 
-function stopLoop(){
+function stopLoop() {
 
     clearInterval(
         slideInterval
     );
 
-
     clearInterval(
         updateInterval
     );
-
 }
 
 
-function startLoop(){
+function startLoop() {
 
     stopLoop();
 
 
     slideInterval =
-        setInterval(()=>{
+        setInterval(() => {
 
-            if(
-                !document.hidden
-            ){
-
+            if (!document.hidden) {
                 nextSlide();
-
             }
 
-        },8000);
+        }, 8000);
 
 
     updateInterval =
-        setInterval(()=>{
+        setInterval(() => {
 
-            if(
-                !document.hidden
-            ){
-
+            if (!document.hidden) {
                 update();
-
             }
 
-        },30000);
-
+        }, 30000);
 }
 
 
-function togglePause(){
+function togglePause() {
 
     isPaused =
         !isPaused;
 
 
-    if(isPaused){
+    if (isPaused) {
 
         stopLoop();
 
-
-        if(bgm)
+        if (bgm) {
             bgm.pause();
-
+        }
 
         showIndicator(
             "⏸ PAUSED"
         );
 
-
-    }else{
+    } else {
 
         startLoop();
 
         playMusic();
 
-
         showIndicator(
             "▶ PLAYING"
         );
-
     }
-
 }
 
 
-/* =====================================================
-FULLSCREEN
-===================================================== */
+/* =========================================================
+   FULLSCREEN
+========================================================= */
 
-async function toggleFullscreen(){
+async function toggleFullscreen() {
 
-    try{
+    try {
 
-        if(
+        if (
             !document.fullscreenElement
-        ){
+        ) {
 
             await document
                 .documentElement
                 .requestFullscreen();
 
-
             showIndicator(
                 "🖥 FULLSCREEN"
             );
 
-
-        }else{
+        } else {
 
             await document
                 .exitFullscreen();
 
-
             showIndicator(
                 "❎ EXIT FULLSCREEN"
             );
-
         }
 
-    }catch(err){
+    } catch (error) {
 
-        console.log(err);
-
+        console.log(
+            "FULLSCREEN ERROR:",
+            error
+        );
     }
-
 }
 
 
-/* =====================================================
-CLICK
-===================================================== */
+/* =========================================================
+   CLICK CONTROL
+========================================================= */
 
 let clickTimer = null;
 
 
 document.addEventListener(
     "click",
-    ()=>{
+    () => {
 
-        if(clickTimer){
+        if (clickTimer) {
 
             clearTimeout(
                 clickTimer
             );
-
         }
 
-
         clickTimer =
-            setTimeout(()=>{
+            setTimeout(() => {
 
                 togglePause();
 
-            },250);
-
+            }, 250);
     }
 );
 
 
 document.addEventListener(
     "dblclick",
-    ()=>{
+    () => {
 
         clearTimeout(
             clickTimer
         );
 
-
         toggleFullscreen();
-
     }
 );
 
 
-/* =====================================================
-AUTO CLEAN MEMORY
-===================================================== */
+/* =========================================================
+   AUTO REFRESH 6 JAM
+========================================================= */
 
-setInterval(()=>{
-
-    if(window.gc){
-
-        window.gc();
-
-    }
-
-},300000);
-
-
-/* =====================================================
-AUTO REFRESH 6 JAM
-===================================================== */
-
-setTimeout(()=>{
+setTimeout(() => {
 
     location.reload();
 
-},21600000);
+}, 21600000);
 
 
-/* =====================================================
-DATE TIME
-===================================================== */
+/* =========================================================
+   DATE & TIME
+========================================================= */
 
-function updateDateTime(){
+function updateDateTime() {
 
     const now =
         new Date();
 
 
     const hari = [
-
         "Minggu",
         "Senin",
         "Selasa",
@@ -2684,12 +2220,10 @@ function updateDateTime(){
         "Kamis",
         "Jumat",
         "Sabtu"
-
     ];
 
 
     const bulan = [
-
         "Januari",
         "Februari",
         "Maret",
@@ -2702,25 +2236,21 @@ function updateDateTime(){
         "Oktober",
         "November",
         "Desember"
-
     ];
 
 
     document.getElementById(
         "dateLine"
     ).textContent =
-
         `${hari[now.getDay()]}, ${now.getDate()} ${bulan[now.getMonth()]} ${now.getFullYear()}`;
 
 
     document.getElementById(
         "timeLine"
     ).textContent =
-
         now.toLocaleTimeString(
             "id-ID"
         );
-
 }
 
 
@@ -2733,39 +2263,33 @@ setInterval(
 );
 
 
-/* =====================================================
-START
-===================================================== */
+/* =========================================================
+   START
+========================================================= */
 
 window.addEventListener(
     "load",
-    async ()=>{
+    async () => {
 
         await update();
 
-
         startLoop();
 
-
         playMusic();
-
 
         setTimeout(
             playMusic,
             1000
         );
 
-
         setTimeout(
             playMusic,
             3000
         );
 
-
         showIndicator(
             "▶ PLAYING"
         );
-
     }
 );
 
