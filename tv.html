@@ -1933,21 +1933,17 @@ function render(
             allSorted.length;
 
 
-        allSorted =
+        allSorted = allSorted.map(
+    (item,index) => ({
+        ...item,
 
-            allSorted.map(
-                (item,index) => ({
+        actualRank:
+            total - index,
 
-                    ...item,
-
-                    actualRank:
-                        index + 1,
-
-                    totalRank:
-                        total
-
-                })
-            );
+        totalRank:
+            total
+    })
+);
 
 
         /*
@@ -1964,7 +1960,6 @@ function render(
             berada di card atas.
         */
 
-        sorted.reverse();
 
     }
 
