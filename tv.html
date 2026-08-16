@@ -1098,7 +1098,23 @@ let lastRenderHash = "";
 
 const RANK_STORAGE_KEY =
     "azko_tv_rank_history_v1";
+    
+const RANK_CHANGE_STORAGE_KEY =
+    "azko_tv_rank_change_v1";
 
+let rankChangeHistory =
+    JSON.parse(
+        localStorage.getItem(
+            RANK_CHANGE_STORAGE_KEY
+        ) || "{}"
+    );
+
+function saveRankChangeHistory() {
+    localStorage.setItem(
+        RANK_CHANGE_STORAGE_KEY,
+        JSON.stringify(rankChangeHistory)
+    );
+}
 
 function loadRankHistory() {
 
@@ -1170,56 +1186,59 @@ function getRankChange(
     currentRank
 ) {
 
-    if (
-        !nik ||
-        currentRank === undefined ||
-        currentRank === null
-    ) {
-        return "";
-    }
+    if (!nik) return "";
 
     const employeeNik =
         String(nik)
-            .trim()
-            .replace(/\.0+$/, "");
+        .trim()
+        .replace(/\.0+$/, "");
 
     if (!rankHistory[storageGroup]) {
         rankHistory[storageGroup] = {};
     }
 
+    if (!rankChangeHistory[storageGroup]) {
+        rankChangeHistory[storageGroup] = {};
+    }
+
     const previousRank =
         rankHistory[storageGroup][employeeNik];
-
-    /*
-        Pertama kali muncul:
-        tidak menampilkan indikator.
-    */
 
     if (
         previousRank === undefined ||
         previousRank === null
     ) {
-        return "";
+        return (
+            rankChangeHistory[storageGroup][employeeNik]
+            || ""
+        );
     }
 
-    /*
-        Rank lebih kecil = posisi lebih tinggi.
-
-        3 -> 1 = naik
-        1 -> 3 = turun
-    */
-
     if (currentRank < previousRank) {
+
+        rankChangeHistory[storageGroup][employeeNik] =
+            "up";
+
+        saveRankChangeHistory();
+
         return "up";
     }
 
     if (currentRank > previousRank) {
+
+        rankChangeHistory[storageGroup][employeeNik] =
+            "down";
+
+        saveRankChangeHistory();
+
         return "down";
     }
 
-    return "";
+    return (
+        rankChangeHistory[storageGroup][employeeNik]
+        || ""
+    );
 }
-
 
 /* =========================================================
    SAVE CURRENT RANK
