@@ -1096,66 +1096,70 @@ let lastRenderHash = "";
    LOCAL STORAGE RANK HISTORY
 ========================================================= */
 
+
 const RANK_STORAGE_KEY =
-    "azko_tv_rank_history_v1";
+    "azko_tv_rank_history_v2";
+
+let rankHistory = {};
     
-const RANK_CHANGE_STORAGE_KEY =
-    "azko_tv_rank_change_v1";
+try {
 
-let rankChangeHistory =
-    JSON.parse(
+    const saved =
         localStorage.getItem(
-            RANK_CHANGE_STORAGE_KEY
-        ) || "{}"
-    );
-
-function saveRankChangeHistory() {
-    localStorage.setItem(
-        RANK_CHANGE_STORAGE_KEY,
-        JSON.stringify(rankChangeHistory)
-    );
-}
-
-function loadRankHistory() {
-
-    try {
-
-        const saved =
-            localStorage.getItem(
-                RANK_STORAGE_KEY
-            );
-
-        if (!saved) {
-            return {};
-        }
-
-        const parsed =
-            JSON.parse(saved);
-
-        if (
-            parsed &&
-            typeof parsed === "object"
-        ) {
-            return parsed;
-        }
-
-        return {};
-
-    } catch (error) {
-
-        console.log(
-            "LOCAL STORAGE READ ERROR:",
-            error
+            RANK_STORAGE_KEY
         );
 
-        return {};
+    if (saved) {
+        rankHistory = JSON.parse(saved);
     }
+
+} catch (error) {
+
+    console.log(
+        "RANK HISTORY READ ERROR:",
+        error
+    );
+
+    rankHistory = {};
+}
+
+const RANK_CHANGE_STORAGE_KEY =
+    "azko_tv_rank_change_v2";
+
+let rankChangeHistory = {};
+
+try {
+
+    const saved =
+        localStorage.getItem(
+            RANK_CHANGE_STORAGE_KEY
+        );
+
+    if (saved) {
+        rankChangeHistory =
+            JSON.parse(saved);
+    }
+
+} catch (error) {
+
+    console.log(
+        "RANK CHANGE HISTORY ERROR:",
+        error
+    );
+
+    rankChangeHistory = {};
 }
 
 
-let rankHistory =
-    loadRankHistory();
+function saveRankChangeHistory() {
 
+    localStorage.setItem(
+        RANK_CHANGE_STORAGE_KEY,
+        JSON.stringify(
+            rankChangeHistory
+        )
+    );
+}    
 
 function saveRankHistory() {
 
@@ -1169,12 +1173,11 @@ function saveRankHistory() {
     } catch (error) {
 
         console.log(
-            "LOCAL STORAGE SAVE ERROR:",
+            "RANK HISTORY SAVE ERROR:",
             error
         );
     }
 }
-
 
 /* =========================================================
    RANK CHANGE
@@ -1186,12 +1189,15 @@ function getRankChange(
     currentRank
 ) {
 
-    if (!nik) return "";
+    if (!nik) {
+        return "";
+    }
 
     const employeeNik =
         String(nik)
-        .trim()
-        .replace(/\.0+$/, "");
+            .trim()
+            .replace(/\.0+$/, "");
+
 
     if (!rankHistory[storageGroup]) {
         rankHistory[storageGroup] = {};
@@ -1201,44 +1207,73 @@ function getRankChange(
         rankChangeHistory[storageGroup] = {};
     }
 
+
     const previousRank =
         rankHistory[storageGroup][employeeNik];
+
+
+    /*
+       KARYAWAN BARU
+       Belum ada rank sebelumnya.
+    */
 
     if (
         previousRank === undefined ||
         previousRank === null
     ) {
+
         return (
-            rankChangeHistory[storageGroup][employeeNik]
+            rankChangeHistory
+                [storageGroup]
+                [employeeNik]
             || ""
         );
     }
 
+
+    /*
+       RANK BERUBAH
+    */
+
     if (currentRank < previousRank) {
 
-        rankChangeHistory[storageGroup][employeeNik] =
-            "up";
+        rankChangeHistory
+            [storageGroup]
+            [employeeNik] =
+                "up";
 
         saveRankChangeHistory();
 
         return "up";
     }
 
+
     if (currentRank > previousRank) {
 
-        rankChangeHistory[storageGroup][employeeNik] =
-            "down";
+        rankChangeHistory
+            [storageGroup]
+            [employeeNik] =
+                "down";
 
         saveRankChangeHistory();
 
         return "down";
     }
 
+
+    /*
+       RANK TIDAK BERUBAH
+       Pertahankan segitiga
+       terakhir.
+    */
+
     return (
-        rankChangeHistory[storageGroup][employeeNik]
+        rankChangeHistory
+            [storageGroup]
+            [employeeNik]
         || ""
     );
-}
+                           }
 
 /* =========================================================
    SAVE CURRENT RANK
@@ -1253,6 +1288,7 @@ function saveCurrentRanks(
         rankHistory[storageGroup] = {};
     }
 
+
     rankedData.forEach(item => {
 
         const nik =
@@ -1260,18 +1296,136 @@ function saveCurrentRanks(
                 .trim()
                 .replace(/\.0+$/, "");
 
+
         if (!nik) {
             return;
         }
+
 
         rankHistory[storageGroup][nik] =
             item.rank;
     });
 
+
     saveRankHistory();
 }
 
 
+/* =========================================================
+   GLOBAL RANK CALCULATOR
+========================================================= */
+
+function buildGlobalRanks(data) {
+
+    const result = {
+        sales: {},
+        proteksi: {},
+        trx: {}
+    };
+
+
+    /*
+       SALES
+       Ranking berdasarkan ACH MTD
+    */
+
+    const salesData =
+        data
+            .filter(item =>
+                !isExcluded(item.dept) &&
+                item.achSales > 0
+            )
+            .sort(
+                (a, b) =>
+                    b.achSales -
+                    a.achSales
+            );
+
+
+    salesData.forEach(
+        (item, index) => {
+
+            const nik =
+                String(item.nik || "")
+                    .trim()
+                    .replace(/\.0+$/, "");
+
+            if (nik) {
+                result.sales[nik] =
+                    index + 1;
+            }
+        }
+    );
+
+
+    /*
+       PROTEKSI
+    */
+
+    const proteksiData =
+        data
+            .filter(item =>
+                item.proteksi >= 0
+            )
+            .sort(
+                (a, b) =>
+                    b.proteksi -
+                    a.proteksi
+            );
+
+
+    proteksiData.forEach(
+        (item, index) => {
+
+            const nik =
+                String(item.nik || "")
+                    .trim()
+                    .replace(/\.0+$/, "");
+
+            if (nik) {
+                result.proteksi[nik] =
+                    index + 1;
+            }
+        }
+    );
+
+
+    /*
+       TRX
+    */
+
+    const trxData =
+        data
+            .filter(item =>
+                !isExcluded(item.dept) &&
+                item.trx > 0
+            )
+            .sort(
+                (a, b) =>
+                    b.trx -
+                    a.trx
+            );
+
+
+    trxData.forEach(
+        (item, index) => {
+
+            const nik =
+                String(item.nik || "")
+                    .trim()
+                    .replace(/\.0+$/, "");
+
+            if (nik) {
+                result.trx[nik] =
+                    index + 1;
+            }
+        }
+    );
+
+
+    return result;
+    }
+    
 /* =========================================================
    HELPERS
 ========================================================= */
@@ -1459,7 +1613,8 @@ function render(
     achTitle,
     containerId,
     label,
-    mode = "top"
+    mode = "top",
+    globalRanks = null
 ) {
 
     const container =
@@ -1658,8 +1813,28 @@ function render(
 
     let html = "";
 
-    const storageGroup =
-        containerId;
+    let storageGroup = containerId;
+
+if (
+    containerId === "proteksiTop" ||
+    containerId === "proteksiBottom"
+) {
+    storageGroup = "proteksi";
+}
+
+if (
+    containerId === "salesTop" ||
+    containerId === "salesBottom"
+) {
+    storageGroup = "sales";
+}
+
+if (
+    containerId === "trxTop" ||
+    containerId === "trxBottom"
+) {
+    storageGroup = "trx";
+}
 
     const currentRankData = [];
 
@@ -1670,8 +1845,17 @@ function render(
 
     sorted.forEach((d, i) => {
 
-        const rank =
-            d.actualRank;
+        const employeeNik =
+    String(d.nik || "")
+        .trim()
+        .replace(/\.0+$/, "");
+
+
+const rank =
+    globalRanks &&
+    globalRanks[employeeNik] !== undefined
+        ? globalRanks[employeeNik]
+        : d.actualRank;
 
         const achStyle =
             getAchStyle(
@@ -1819,16 +2003,6 @@ function render(
     container.innerHTML =
         html;
 
-
-    /*
-        Simpan rank setelah
-        indikator selesai dibuat.
-    */
-
-    saveCurrentRanks(
-        storageGroup,
-        currentRankData
-    );
 }
 
 
@@ -1914,72 +2088,92 @@ async function update() {
 
     lastRenderHash =
         newHash;
+    
+    const globalRanks =
+    buildGlobalRanks(data);
+
+    render(
+    data,
+    "sales",
+    "achSales",
+    "ACH MTD",
+    "salesTop",
+    "TOTAL SALES",
+    "top",
+    globalRanks.sales
+);
+
+    render(
+    data,
+    "sales",
+    "achSales",
+    "ACH MTD",
+    "salesBottom",
+    "TOTAL SALES",
+    "bottom",
+    globalRanks.sales
+);
+
+    render(
+    data,
+    "proteksi",
+    "achProteksi",
+    "ACH PROTEKSI",
+    "proteksiTop",
+    "TOTAL PROTEKSI",
+    "top",
+    globalRanks.proteksi
+);
 
 
     render(
-        data,
-        "sales",
-        "achSales",
-        "ACH MTD",
-        "salesTop",
-        "TOTAL SALES",
-        "top"
-    );
+    data,
+    "proteksi",
+    "achProteksi",
+    "ACH PROTEKSI",
+    "proteksiBottom",
+    "TOTAL PROTEKSI",
+    "bottom",
+    globalRanks.proteksi
+);
 
 
     render(
-        data,
-        "sales",
-        "achSales",
-        "ACH MTD",
-        "salesBottom",
-        "TOTAL SALES",
-        "bottom"
-    );
-
-
-    render(
-        data,
-        "proteksi",
-        "achProteksi",
-        "ACH PROTEKSI",
-        "proteksiTop",
-        "TOTAL PROTEKSI",
-        "top"
-    );
-
+    data,
+    "trx",
+    "achTrx",
+    "ACH BULANAN",
+    "trxTop",
+    "TOTAL TRX",
+    "top",
+    globalRanks.trx
+);
 
     render(
-        data,
-        "proteksi",
-        "achProteksi",
-        "ACH PROTEKSI",
-        "proteksiBottom",
-        "TOTAL PROTEKSI",
-        "bottom"
-    );
+    data,
+    "trx",
+    "achTrx",
+    "ACH BULANAN",
+    "trxBottom",
+    "TOTAL TRX",
+    "bottom",
+    globalRanks.trx
+);
 
+/* =====================================================
+   SAVE GLOBAL RANK SNAPSHOT
+===================================================== */
 
-    render(
-        data,
-        "trx",
-        "achTrx",
-        "ACH BULANAN",
-        "trxTop",
-        "TOTAL TRX",
-        "top"
-    );
+rankHistory.sales =
+    globalRanks.sales;
 
+rankHistory.proteksi =
+    globalRanks.proteksi;
 
-    render(
-        data,
-        "trx",
-        "achTrx",
-        "ACH BULANAN",
-        "trxBottom",
-        "TOTAL TRX",
-        "bottom"
-    );
+rankHistory.trx =
+    globalRanks.trx;
+
+saveRankHistory();
 }
 
 
