@@ -1778,20 +1778,85 @@ function render(
         */
 
         const total =
-            allSorted.length;
+    globalRanks
+        ? Object.keys(globalRanks).length
+        : allSorted.length;
 
-        allSorted =
-            allSorted.map(
-                (item, index) => ({
-                    ...item,
+/*
+   Simpan rank global masing-masing karyawan
+*/
+allSorted =
+    allSorted.map(item => {
 
-                    actualRank:
-                        total - index,
+        const employeeNik =
+            String(item.nik || "")
+                .trim()
+                .replace(/\.0+$/, "");
 
-                    totalRank:
-                        total
-                })
-            );
+        return {
+            ...item,
+
+            globalRank:
+                globalRanks &&
+                globalRanks[employeeNik] !== undefined
+                    ? globalRanks[employeeNik]
+                    : null
+        };
+    });
+
+
+/*
+   Tetap gunakan RANK GLOBAL
+   untuk menentukan 3 terbawah
+*/
+if (globalRanks) {
+
+    allSorted.sort(
+        (a, b) =>
+            (a.globalRank || 999999) -
+            (b.globalRank || 999999)
+    );
+}
+
+
+/*
+   Ambil 3 karyawan dengan
+   rank global paling bawah
+*/
+sorted =
+    allSorted.slice(-3);
+
+
+/*
+   Urutkan tampilan:
+   15 → 16 → 17
+*/
+sorted.sort(
+    (a, b) =>
+        (a.globalRank || 0) -
+        (b.globalRank || 0)
+);
+
+
+/*
+   Nomor yang DITAMPILKAN
+   mengikuti jumlah karyawan.
+
+   Contoh total 17:
+   15, 16, 17
+*/
+sorted =
+    sorted.map(
+        (item, index) => ({
+            ...item,
+
+            actualRank:
+                total - 2 + index,
+
+            totalRank:
+                total
+        })
+    );
 
 
         /*
@@ -1851,11 +1916,22 @@ if (
         .replace(/\.0+$/, "");
 
 
-const rank =
-    globalRanks &&
-    globalRanks[employeeNik] !== undefined
-        ? globalRanks[employeeNik]
-        : d.actualRank;
+let rank;
+
+if (mode === "bottom") {
+
+    // Nomor yang tampil di Bottom
+    rank = d.actualRank;
+
+} else {
+
+    // Top tetap menggunakan rank global
+    rank =
+        globalRanks &&
+        globalRanks[employeeNik] !== undefined
+            ? globalRanks[employeeNik]
+            : d.actualRank;
+}
 
         const achStyle =
             getAchStyle(
