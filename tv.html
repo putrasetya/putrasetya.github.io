@@ -1851,11 +1851,20 @@ if (
         .replace(/\.0+$/, "");
 
 
-const rank =
+// Rank global untuk logika segitiga
+const globalRank =
     globalRanks &&
     globalRanks[employeeNik] !== undefined
         ? globalRanks[employeeNik]
         : d.actualRank;
+
+// Angka yang ditampilkan di card
+// Bottom mengikuti jumlah karyawan yang benar-benar diranking
+let rank = globalRank;
+
+if (mode === "bottom") {
+    rank = d.actualRank;
+}
 
         const achStyle =
             getAchStyle(
