@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ACH SALES ID</title>
+
     <style>
         * {
             box-sizing: border-box;
@@ -32,12 +33,13 @@
             justify-content: space-between;
         }
 
-        /* Header Rata Tengah */
+        /* HEADER */
         .header {
             width: 100%;
             text-align: center;
             margin-bottom: 8px;
         }
+
         .title {
             font-size: 2rem;
             font-weight: 800;
@@ -46,7 +48,7 @@
             letter-spacing: 1px;
         }
 
-        /* Grid Single Column */
+        /* GRID */
         .rank-grid {
             display: flex;
             flex-direction: column;
@@ -55,7 +57,7 @@
             gap: 2px;
         }
 
-        /* Card Standard */
+        /* CARD STANDARD */
         .rank-card {
             background: white;
             padding: 0 16px;
@@ -68,47 +70,97 @@
             font-weight: 600;
         }
 
-        /* WAKTU DAN WARNA KHUSUS RANKING */
+        /* =========================================
+           WARNA KHUSUS TOP 3
+        ========================================= */
+
+        /* RANK 1 - GOLD */
         .rank-card.rank-1 {
-            background: linear-gradient(90deg, #fffbeb 0%, #fef3c7 100%);
+            background: linear-gradient(
+                90deg,
+                #fffbeb 0%,
+                #fef3c7 50%,
+                #fde68a 100%
+            );
             border: 1.5px solid #f59e0b;
+            box-shadow: 0 2px 8px rgba(245,158,11,0.18);
         }
+
+        /* RANK 2 - SILVER */
         .rank-card.rank-2 {
-            background: linear-gradient(90deg, #f8fafc 0%, #e2e8f0 100%);
+            background: linear-gradient(
+                90deg,
+                #f8fafc 0%,
+                #e2e8f0 50%,
+                #cbd5e1 100%
+            );
             border: 1.5px solid #94a3b8;
+            box-shadow: 0 2px 8px rgba(100,116,139,0.15);
         }
+
+        /* RANK 3 - BRONZE */
         .rank-card.rank-3 {
-            background: linear-gradient(90deg, #fff7ed 0%, #ffedd5 100%);
+            background: linear-gradient(
+                90deg,
+                #fff7ed 0%,
+                #ffedd5 50%,
+                #fed7aa 100%
+            );
             border: 1.5px solid #d97706;
+            box-shadow: 0 2px 8px rgba(217,119,6,0.15);
         }
+
+        /* =========================================
+           5 RANK TERBAWAH
+        ========================================= */
+
         .rank-card.bottom-5 {
-            background: linear-gradient(90deg, #fef2f2 0%, #fee2e2 100%);
+            background: linear-gradient(
+                90deg,
+                #fef2f2 0%,
+                #fee2e2 50%,
+                #fecaca 100%
+            );
             border: 1px solid #fca5a5;
         }
+
+        /* =========================================
+           RANK NUMBER
+        ========================================= */
 
         .rank-num {
             width: 30px;
             color: #475569;
             font-weight: 700;
+            flex-shrink: 0;
         }
-        
+
+        /* =========================================
+           PERUBAHAN RANK
+        ========================================= */
+
         .change {
             width: 40px;
             font-size: 0.75rem;
             font-weight: 700;
+            flex-shrink: 0;
         }
-        .up { color: #16a34a; }
-        .down { color: #dc2626; }
-        .same { color: #94a3b8; }
 
-        .flag {
-            width: 20px;
-            height: 14px;
-            border-radius: 2px;
-            margin-right: 12px;
-            object-fit: cover;
-            box-shadow: 0 0 2px rgba(0,0,0,0.2);
+        .up {
+            color: #16a34a;
         }
+
+        .down {
+            color: #dc2626;
+        }
+
+        .same {
+            color: #94a3b8;
+        }
+
+        /* =========================================
+           NAMA
+        ========================================= */
 
         .player-name {
             flex-grow: 1;
@@ -118,13 +170,23 @@
             text-overflow: ellipsis;
         }
 
+        /* =========================================
+           NILAI / POINTS
+        ========================================= */
+
         .points {
             font-weight: 800;
             color: #0f172a;
+            margin-left: 10px;
+            white-space: nowrap;
         }
 
-        /* RESPONSIVE MOBILE */
+        /* =========================================
+           RESPONSIVE MOBILE
+        ========================================= */
+
         @media (max-width: 768px), (max-aspect-ratio: 1/1) {
+
             body {
                 height: auto;
                 min-height: 100vh;
@@ -153,37 +215,157 @@
         }
     </style>
 </head>
+
 <body>
 
     <div class="container">
+
+        <!-- HEADER -->
         <div class="header">
             <h1 class="title">ACH SALES ID</h1>
         </div>
 
+        <!-- RANKING -->
         <div class="rank-grid">
-            <!-- Top 3 dengan Class Warna Khusus -->
-            <div class="rank-card rank-1"><span class="rank-num">1</span><span class="change same">-</span><img src="https://flagcdn.com/w40/dk.png" class="flag"><span class="player-name">Viktor Axelsen</span><span class="points">98.715</span></div>
-            <div class="rank-card rank-2"><span class="rank-num">2</span><span class="change same">-</span><img src="https://flagcdn.com/w40/cn.png" class="flag"><span class="player-name">Shi Yu Qi</span><span class="points">92.184</span></div>
-            <div class="rank-card rank-3"><span class="rank-num">3</span><span class="change up">▲ 2</span><img src="https://flagcdn.com/w40/id.png" class="flag"><span class="player-name">Jonatan Christie</span><span class="points">89.211</span></div>
-            
-            <!-- Mid Ranks (Standard) -->
-            <div class="rank-card"><span class="rank-num">4</span><span class="change same">-</span><img src="https://flagcdn.com/w40/dk.png" class="flag"><span class="player-name">Anders Antonsen</span><span class="points">87.754</span></div>
-            <div class="rank-card"><span class="rank-num">5</span><span class="change up">▲ 1</span><img src="https://flagcdn.com/w40/jp.png" class="flag"><span class="player-name">Kodai Naraoka</span><span class="points">82.815</span></div>
-            <div class="rank-card"><span class="rank-num">6</span><span class="change up">▲ 1</span><img src="https://flagcdn.com/w40/cn.png" class="flag"><span class="player-name">Li Shifeng</span><span class="points">81.598</span></div>
-            <div class="rank-card"><span class="rank-num">7</span><span class="change down">▼ 4</span><img src="https://flagcdn.com/w40/id.png" class="flag"><span class="player-name">Anthony Sinisuka Ginting</span><span class="points">79.701</span></div>
-            <div class="rank-card"><span class="rank-num">8</span><span class="change same">-</span><img src="https://flagcdn.com/w40/th.png" class="flag"><span class="player-name">Kunlavut Vitidsarn</span><span class="points">78.598</span></div>
-            <div class="rank-card"><span class="rank-num">9</span><span class="change same">-</span><img src="https://flagcdn.com/w40/in.png" class="flag"><span class="player-name">Prannoy H. S.</span><span class="points">75.847</span></div>
-            <div class="rank-card"><span class="rank-num">10</span><span class="change up">▲ 1</span><img src="https://flagcdn.com/w40/my.png" class="flag"><span class="player-name">Lee Zii Jia</span><span class="points">69.856</span></div>
-            <div class="rank-card"><span class="rank-num">11</span><span class="change down">▼ 1</span><img src="https://flagcdn.com/w40/sg.png" class="flag"><span class="player-name">Loh Kean Yew</span><span class="points">68.306</span></div>
-            <div class="rank-card"><span class="rank-num">12</span><span class="change same">-</span><img src="https://flagcdn.com/w40/jp.png" class="flag"><span class="player-name">Kenta Nishimoto</span><span class="points">66.407</span></div>
 
-            <!-- Bottom 5 terbawah (Rank 13 - 17) dengan Class Merah -->
-            <div class="rank-card bottom-5"><span class="rank-num">13</span><span class="change up">▲ 2</span><img src="https://flagcdn.com/w40/tw.png" class="flag"><span class="player-name">Chou Tien Chen</span><span class="points">65.288</span></div>
-            <div class="rank-card bottom-5"><span class="rank-num">14</span><span class="change down">▼ 1</span><img src="https://flagcdn.com/w40/in.png" class="flag"><span class="player-name">Lakshya Sen</span><span class="points">64.221</span></div>
-            <div class="rank-card bottom-5"><span class="rank-num">15</span><span class="change same">-</span><img src="https://flagcdn.com/w40/cn.png" class="flag"><span class="player-name">Lu Guang Zu</span><span class="points">60.101</span></div>
-            <div class="rank-card bottom-5"><span class="rank-num">16</span><span class="change up">▲ 1</span><img src="https://flagcdn.com/w40/hk.png" class="flag"><span class="player-name">Lee Cheuk Yiu</span><span class="points">59.970</span></div>
-            <div class="rank-card bottom-5"><span class="rank-num">17</span><span class="change down">▼ 2</span><img src="https://flagcdn.com/w40/my.png" class="flag"><span class="player-name">Ng Tze Yong</span><span class="points">57.080</span></div>
+            <!-- =====================================
+                 TOP 3
+            ====================================== -->
+
+            <!-- RANK 1 - GOLD -->
+            <div class="rank-card rank-1">
+                <span class="rank-num">1</span>
+                <span class="change same">-</span>
+                <span class="player-name">Viktor Axelsen</span>
+                <span class="points">98.715</span>
+            </div>
+
+            <!-- RANK 2 - SILVER -->
+            <div class="rank-card rank-2">
+                <span class="rank-num">2</span>
+                <span class="change same">-</span>
+                <span class="player-name">Shi Yu Qi</span>
+                <span class="points">92.184</span>
+            </div>
+
+            <!-- RANK 3 - BRONZE -->
+            <div class="rank-card rank-3">
+                <span class="rank-num">3</span>
+                <span class="change up">▲ 2</span>
+                <span class="player-name">Jonatan Christie</span>
+                <span class="points">89.211</span>
+            </div>
+
+
+            <!-- =====================================
+                 MID RANKS
+            ====================================== -->
+
+            <div class="rank-card">
+                <span class="rank-num">4</span>
+                <span class="change same">-</span>
+                <span class="player-name">Anders Antonsen</span>
+                <span class="points">87.754</span>
+            </div>
+
+            <div class="rank-card">
+                <span class="rank-num">5</span>
+                <span class="change up">▲ 1</span>
+                <span class="player-name">Kodai Naraoka</span>
+                <span class="points">82.815</span>
+            </div>
+
+            <div class="rank-card">
+                <span class="rank-num">6</span>
+                <span class="change up">▲ 1</span>
+                <span class="player-name">Li Shifeng</span>
+                <span class="points">81.598</span>
+            </div>
+
+            <div class="rank-card">
+                <span class="rank-num">7</span>
+                <span class="change down">▼ 4</span>
+                <span class="player-name">Anthony Sinisuka Ginting</span>
+                <span class="points">79.701</span>
+            </div>
+
+            <div class="rank-card">
+                <span class="rank-num">8</span>
+                <span class="change same">-</span>
+                <span class="player-name">Kunlavut Vitidsarn</span>
+                <span class="points">78.598</span>
+            </div>
+
+            <div class="rank-card">
+                <span class="rank-num">9</span>
+                <span class="change same">-</span>
+                <span class="player-name">Prannoy H. S.</span>
+                <span class="points">75.847</span>
+            </div>
+
+            <div class="rank-card">
+                <span class="rank-num">10</span>
+                <span class="change up">▲ 1</span>
+                <span class="player-name">Lee Zii Jia</span>
+                <span class="points">69.856</span>
+            </div>
+
+            <div class="rank-card">
+                <span class="rank-num">11</span>
+                <span class="change down">▼ 1</span>
+                <span class="player-name">Loh Kean Yew</span>
+                <span class="points">68.306</span>
+            </div>
+
+            <div class="rank-card">
+                <span class="rank-num">12</span>
+                <span class="change same">-</span>
+                <span class="player-name">Kenta Nishimoto</span>
+                <span class="points">66.407</span>
+            </div>
+
+
+            <!-- =====================================
+                 BOTTOM 5 - MERAH
+            ====================================== -->
+
+            <div class="rank-card bottom-5">
+                <span class="rank-num">13</span>
+                <span class="change up">▲ 2</span>
+                <span class="player-name">Chou Tien Chen</span>
+                <span class="points">65.288</span>
+            </div>
+
+            <div class="rank-card bottom-5">
+                <span class="rank-num">14</span>
+                <span class="change down">▼ 1</span>
+                <span class="player-name">Lakshya Sen</span>
+                <span class="points">64.221</span>
+            </div>
+
+            <div class="rank-card bottom-5">
+                <span class="rank-num">15</span>
+                <span class="change same">-</span>
+                <span class="player-name">Lu Guang Zu</span>
+                <span class="points">60.101</span>
+            </div>
+
+            <div class="rank-card bottom-5">
+                <span class="rank-num">16</span>
+                <span class="change up">▲ 1</span>
+                <span class="player-name">Lee Cheuk Yiu</span>
+                <span class="points">59.970</span>
+            </div>
+
+            <div class="rank-card bottom-5">
+                <span class="rank-num">17</span>
+                <span class="change down">▼ 2</span>
+                <span class="player-name">Ng Tze Yong</span>
+                <span class="points">57.080</span>
+            </div>
+
         </div>
+
     </div>
 
 </body>
