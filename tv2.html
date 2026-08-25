@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ACH SALES ID</title>
+    <title>ACH MTD SALES ID</title>
 
     <style>
         * {
@@ -187,11 +187,27 @@
         ========================================= */
 
         .sales {
+            width: 110px;
             font-weight: 800;
             color: #0f172a;
             margin-left: 10px;
             white-space: nowrap;
             text-align: right;
+            flex-shrink: 0;
+        }
+
+        /* =========================================
+           ACH MTD
+        ========================================= */
+
+        .ach {
+            width: 85px;
+            font-weight: 800;
+            color: #0f172a;
+            margin-left: 15px;
+            white-space: nowrap;
+            text-align: right;
+            flex-shrink: 0;
         }
 
         /* =========================================
@@ -243,6 +259,25 @@
             .rank-card {
                 height: 42px;
                 font-size: 0.9rem;
+                padding: 0 10px;
+            }
+
+            .rank-num {
+                width: 28px;
+            }
+
+            .change {
+                width: 38px;
+            }
+
+            .sales {
+                width: 95px;
+                margin-left: 8px;
+            }
+
+            .ach {
+                width: 70px;
+                margin-left: 10px;
             }
         }
     </style>
@@ -253,7 +288,7 @@
 <div class="container">
 
     <div class="header">
-        <h1 class="title">ACH SALES ID</h1>
+        <h1 class="title">ACH MTD SALES ID</h1>
     </div>
 
     <div class="rank-grid" id="rankGrid">
@@ -303,23 +338,23 @@ const SHEET_URL =
 
 const rankingData = [
 
-    { change: "same",  changeText: "-" },
-    { change: "same",  changeText: "-" },
-    { change: "up",    changeText: "▲ 2" },
-    { change: "same",  changeText: "-" },
-    { change: "up",    changeText: "▲ 1" },
-    { change: "up",    changeText: "▲ 1" },
-    { change: "down",  changeText: "▼ 4" },
-    { change: "same",  changeText: "-" },
-    { change: "same",  changeText: "-" },
-    { change: "up",    changeText: "▲ 1" },
-    { change: "down",  changeText: "▼ 1" },
-    { change: "same",  changeText: "-" },
-    { change: "up",    changeText: "▲ 2" },
-    { change: "down",  changeText: "▼ 1" },
-    { change: "same",  changeText: "-" },
-    { change: "up",    changeText: "▲ 1" },
-    { change: "down",  changeText: "▼ 2" }
+    { change: "same", changeText: "-" },
+    { change: "same", changeText: "-" },
+    { change: "up", changeText: "▲ 2" },
+    { change: "same", changeText: "-" },
+    { change: "up", changeText: "▲ 1" },
+    { change: "up", changeText: "▲ 1" },
+    { change: "down", changeText: "▼ 4" },
+    { change: "same", changeText: "-" },
+    { change: "same", changeText: "-" },
+    { change: "up", changeText: "▲ 1" },
+    { change: "down", changeText: "▼ 1" },
+    { change: "same", changeText: "-" },
+    { change: "up", changeText: "▲ 2" },
+    { change: "down", changeText: "▼ 1" },
+    { change: "same", changeText: "-" },
+    { change: "up", changeText: "▲ 1" },
+    { change: "down", changeText: "▼ 2" }
 
 ];
 
@@ -537,9 +572,7 @@ async function loadEmployeeData() {
                 .map(row => {
 
                     if (!row.c) {
-
                         return null;
-
                     }
 
 
@@ -598,7 +631,7 @@ async function loadEmployeeData() {
 
 
                     /* =================================
-                       SKIP ROW KOSONG
+                       SKIP BARIS KOSONG
                     ================================= */
 
                     if (
@@ -631,7 +664,7 @@ async function loadEmployeeData() {
 
 
         /* =============================================
-           VALIDASI
+           VALIDASI DATA
         ============================================= */
 
         if (
@@ -747,7 +780,7 @@ function renderRanking(
 
 
             /* =====================================
-               WARNA RANK
+               CLASS RANK
             ===================================== */
 
             let rankClass =
@@ -822,6 +855,20 @@ function renderRanking(
 
 
             /* =====================================
+               ACH MTD
+            ===================================== */
+
+            const ach =
+                employee.ach !== "" &&
+                employee.ach !== null &&
+                employee.ach !== undefined
+
+                    ? employee.ach
+
+                    : "-";
+
+
+            /* =====================================
                CREATE CARD
             ===================================== */
 
@@ -868,6 +915,15 @@ function renderRanking(
                     )}
                 </span>
 
+
+                <span
+                    class="ach"
+                >
+                    ${escapeHtml(
+                        String(ach)
+                    )}
+                </span>
+
             `;
 
 
@@ -901,7 +957,7 @@ function parseAchValue(
 
 
     /* =============================================
-       JIKA NUMBER
+       JIKA SUDAH NUMBER
     ============================================= */
 
     if (
@@ -953,13 +1009,6 @@ function parseAchValue(
         text.includes(",")
     ) {
 
-        /*
-           Contoh:
-           105.50,25
-           menjadi
-           10550.25
-        */
-
         text =
             text
                 .replace(/\./g, "")
@@ -970,13 +1019,6 @@ function parseAchValue(
     else if (
         text.includes(",")
     ) {
-
-        /*
-           Contoh:
-           105,50
-           menjadi
-           105.50
-        */
 
         const parts =
             text.split(",");
@@ -1010,15 +1052,6 @@ function parseAchValue(
         text.includes(".")
     ) {
 
-        /*
-           Untuk ACH seperti:
-
-           95.50
-           100.00
-
-           titik dianggap desimal.
-        */
-
         const parts =
             text.split(".");
 
@@ -1028,17 +1061,11 @@ function parseAchValue(
             parts[1].length <= 2
         ) {
 
-            /* Biarkan sebagai desimal */
+            /* Desimal */
 
         }
 
         else {
-
-            /*
-               Jika bentuk:
-               1.250
-               dianggap 1250
-            */
 
             text =
                 text.replace(
@@ -1064,15 +1091,12 @@ function parseAchValue(
     }
 
 
-    /*
-       Jika nilai berasal dari Google Sheets
-       dalam bentuk desimal:
+    /* =============================================
+       GOOGLE SHEETS BISA MEMBERIKAN
+       PERSENTASE SEBAGAI DESIMAL
 
-       0.98715 = 98.715%
-
-       Kita ubah menjadi 98.715
-       supaya ranking tetap benar.
-    */
+       0.98715 → 98.715
+    ============================================= */
 
     if (
         !isPercent &&
@@ -1122,7 +1146,7 @@ loadEmployeeData();
 
 
 /* =====================================================
-   AUTO UPDATE SETIAP 30 DETIK
+   AUTO UPDATE 30 DETIK
 ===================================================== */
 
 setInterval(
