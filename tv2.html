@@ -183,7 +183,7 @@
         }
 
         /* =========================================
-           SALES
+           SALES MTD
         ========================================= */
 
         .sales {
@@ -298,7 +298,7 @@ const SHEET_URL =
 
 /* =====================================================
    DATA PERUBAHAN RANK
-   SEMENTARA MENGGUNAKAN DATA CONTOH
+   SEMENTARA
 ===================================================== */
 
 const rankingData = [
@@ -325,7 +325,7 @@ const rankingData = [
 
 
 /* =====================================================
-   AMBIL DATA GOOGLE SHEETS
+   LOAD DATA GOOGLE SHEETS
 ===================================================== */
 
 async function loadEmployeeData() {
@@ -337,7 +337,7 @@ async function loadEmployeeData() {
     try {
 
         /* =============================================
-           FETCH DATA
+           FETCH GOOGLE SHEETS
         ============================================= */
 
         const response =
@@ -377,7 +377,7 @@ async function loadEmployeeData() {
 
 
         /* =============================================
-           CARI AWAL DAN AKHIR JSON
+           CARI JSON
         ============================================= */
 
         const start =
@@ -416,7 +416,7 @@ async function loadEmployeeData() {
 
 
         /* =============================================
-           CEK DATA
+           VALIDASI DATA
         ============================================= */
 
         if (
@@ -433,7 +433,7 @@ async function loadEmployeeData() {
 
 
         /* =============================================
-           CARI KOLOM EMPLOYEE NAME
+           CARI HEADER EMPLOYEE NAME
         ============================================= */
 
         const employeeColumn =
@@ -450,7 +450,7 @@ async function loadEmployeeData() {
 
 
         /* =============================================
-           CARI KOLOM SALES MTD
+           CARI HEADER SALES MTD
         ============================================= */
 
         const salesColumn =
@@ -467,10 +467,29 @@ async function loadEmployeeData() {
 
 
         /* =============================================
-           VALIDASI KOLOM
+           CARI HEADER ACH MTD
         ============================================= */
 
-        if (employeeColumn === -1) {
+        const achColumn =
+            data.table.cols.findIndex(
+                col =>
+
+                    String(
+                        col.label || ""
+                    )
+                    .trim()
+                    .toUpperCase() ===
+                    "ACH MTD"
+            );
+
+
+        /* =============================================
+           VALIDASI EMPLOYEE NAME
+        ============================================= */
+
+        if (
+            employeeColumn === -1
+        ) {
 
             throw new Error(
                 'Kolom "EMPLOYEE NAME" tidak ditemukan.'
@@ -479,10 +498,31 @@ async function loadEmployeeData() {
         }
 
 
-        if (salesColumn === -1) {
+        /* =============================================
+           VALIDASI SALES MTD
+        ============================================= */
+
+        if (
+            salesColumn === -1
+        ) {
 
             throw new Error(
                 'Kolom "SALES MTD" tidak ditemukan.'
+            );
+
+        }
+
+
+        /* =============================================
+           VALIDASI ACH MTD
+        ============================================= */
+
+        if (
+            achColumn === -1
+        ) {
+
+            throw new Error(
+                'Kolom "ACH MTD" tidak ditemukan.'
             );
 
         }
@@ -496,21 +536,19 @@ async function loadEmployeeData() {
             data.table.rows
                 .map(row => {
 
-                    if (
-                        !row.c
-                    ) {
+                    if (!row.c) {
 
                         return null;
 
                     }
 
 
+                    /* =================================
+                       EMPLOYEE NAME
+                    ================================= */
+
                     const employeeCell =
                         row.c[employeeColumn];
-
-
-                    const salesCell =
-                        row.c[salesColumn];
 
 
                     const employeeName =
@@ -523,6 +561,14 @@ async function loadEmployeeData() {
                             : "";
 
 
+                    /* =================================
+                       SALES MTD
+                    ================================= */
+
+                    const salesCell =
+                        row.c[salesColumn];
+
+
                     const salesValue =
                         salesCell
                             ? (
@@ -532,6 +578,28 @@ async function loadEmployeeData() {
                             )
                             : "";
 
+
+                    /* =================================
+                       ACH MTD
+                    ================================= */
+
+                    const achCell =
+                        row.c[achColumn];
+
+
+                    const achValue =
+                        achCell
+                            ? (
+                                achCell.f ??
+                                achCell.v ??
+                                ""
+                            )
+                            : "";
+
+
+                    /* =================================
+                       SKIP ROW KOSONG
+                    ================================= */
 
                     if (
                         employeeName === ""
@@ -548,7 +616,10 @@ async function loadEmployeeData() {
                             employeeName,
 
                         sales:
-                            salesValue
+                            salesValue,
+
+                        ach:
+                            achValue
 
                     };
 
@@ -560,7 +631,7 @@ async function loadEmployeeData() {
 
 
         /* =============================================
-           VALIDASI DATA
+           VALIDASI
         ============================================= */
 
         if (
@@ -575,7 +646,7 @@ async function loadEmployeeData() {
 
 
         /* =============================================
-           TAMPILKAN
+           RENDER
         ============================================= */
 
         renderRanking(
@@ -634,12 +705,38 @@ function renderRanking(
         "";
 
 
+    /* =============================================
+       SORT BERDASARKAN ACH MTD
+       TERBESAR → TERKECIL
+    ============================================= */
+
+    employeeData.sort(
+        (a, b) => {
+
+            const achA =
+                parseAchValue(
+                    a.ach
+                );
+
+
+            const achB =
+                parseAchValue(
+                    b.ach
+                );
+
+
+            return achB - achA;
+
+        }
+    );
+
+
     const total =
         employeeData.length;
 
 
     /* =============================================
-       LOOP EMPLOYEE
+       RENDER SETELAH SORTING
     ============================================= */
 
     employeeData.forEach(
@@ -650,7 +747,7 @@ function renderRanking(
 
 
             /* =====================================
-               CLASS RANK
+               WARNA RANK
             ===================================== */
 
             let rankClass =
@@ -711,7 +808,7 @@ function renderRanking(
 
 
             /* =====================================
-               SALES
+               SALES MTD
             ===================================== */
 
             const sales =
@@ -785,6 +882,216 @@ function renderRanking(
 
 
 /* =====================================================
+   PARSE ACH MTD
+===================================================== */
+
+function parseAchValue(
+    value
+) {
+
+    if (
+        value === null ||
+        value === undefined ||
+        value === ""
+    ) {
+
+        return 0;
+
+    }
+
+
+    /* =============================================
+       JIKA NUMBER
+    ============================================= */
+
+    if (
+        typeof value === "number"
+    ) {
+
+        return value;
+
+    }
+
+
+    let text =
+        String(value)
+            .trim();
+
+
+    /* =============================================
+       HAPUS SIMBOL
+    ============================================= */
+
+    text =
+        text.replace(
+            /[^\d,.\-%]/g,
+            ""
+        );
+
+
+    /* =============================================
+       DETEKSI PERSENTASE
+    ============================================= */
+
+    const isPercent =
+        text.includes("%");
+
+
+    text =
+        text.replace(
+            "%",
+            ""
+        );
+
+
+    /* =============================================
+       FORMAT ANGKA
+    ============================================= */
+
+    if (
+        text.includes(".") &&
+        text.includes(",")
+    ) {
+
+        /*
+           Contoh:
+           105.50,25
+           menjadi
+           10550.25
+        */
+
+        text =
+            text
+                .replace(/\./g, "")
+                .replace(",", ".");
+
+    }
+
+    else if (
+        text.includes(",")
+    ) {
+
+        /*
+           Contoh:
+           105,50
+           menjadi
+           105.50
+        */
+
+        const parts =
+            text.split(",");
+
+
+        if (
+            parts.length === 2 &&
+            parts[1].length <= 2
+        ) {
+
+            text =
+                parts[0] +
+                "." +
+                parts[1];
+
+        }
+
+        else {
+
+            text =
+                text.replace(
+                    /,/g,
+                    ""
+                );
+
+        }
+
+    }
+
+    else if (
+        text.includes(".")
+    ) {
+
+        /*
+           Untuk ACH seperti:
+
+           95.50
+           100.00
+
+           titik dianggap desimal.
+        */
+
+        const parts =
+            text.split(".");
+
+
+        if (
+            parts.length === 2 &&
+            parts[1].length <= 2
+        ) {
+
+            /* Biarkan sebagai desimal */
+
+        }
+
+        else {
+
+            /*
+               Jika bentuk:
+               1.250
+               dianggap 1250
+            */
+
+            text =
+                text.replace(
+                    /\./g,
+                    ""
+                );
+
+        }
+
+    }
+
+
+    let number =
+        parseFloat(text);
+
+
+    if (
+        isNaN(number)
+    ) {
+
+        return 0;
+
+    }
+
+
+    /*
+       Jika nilai berasal dari Google Sheets
+       dalam bentuk desimal:
+
+       0.98715 = 98.715%
+
+       Kita ubah menjadi 98.715
+       supaya ranking tetap benar.
+    */
+
+    if (
+        !isPercent &&
+        number > 0 &&
+        number < 1
+    ) {
+
+        number =
+            number * 100;
+
+    }
+
+
+    return number;
+
+}
+
+
+/* =====================================================
    ESCAPE HTML
 ===================================================== */
 
@@ -815,7 +1122,7 @@ loadEmployeeData();
 
 
 /* =====================================================
-   AUTO UPDATE 30 DETIK
+   AUTO UPDATE SETIAP 30 DETIK
 ===================================================== */
 
 setInterval(
