@@ -29,17 +29,10 @@
    BODY
 ===================================================== */
 
-html,
 body {
 
-    width: 100%;
-    height: 100%;
-
-    overflow: hidden;
-}
-
-
-body {
+    width: 100vw;
+    height: 100vh;
 
     background:
         linear-gradient(
@@ -49,11 +42,12 @@ body {
         );
 
     display: flex;
-
     justify-content: center;
     align-items: center;
 
-    padding: 10px;
+    padding: 15px;
+
+    overflow: hidden;
 }
 
 
@@ -64,14 +58,13 @@ body {
 .container {
 
     width: 100%;
-    max-width: 1100px;
-
+    max-width: 900px;
     height: 100%;
 
     display: flex;
     flex-direction: column;
 
-    min-height: 0;
+    justify-content: space-between;
 }
 
 
@@ -85,17 +78,13 @@ body {
     height: 100%;
 
     display: none;
-
     flex-direction: column;
-
-    min-height: 0;
 
     overflow: hidden;
 }
 
 
 .slide.active {
-
     display: flex;
 }
 
@@ -108,11 +97,18 @@ body {
 
     width: 100%;
 
+    height: 45px;
+    min-height: 45px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
     text-align: center;
 
-    flex-shrink: 0;
+    margin-bottom: 8px;
 
-    margin-bottom: 6px;
+    flex-shrink: 0;
 }
 
 
@@ -138,17 +134,16 @@ body {
 
     width: 100%;
 
-    flex: 1 1 auto;
-
-    min-height: 0;
-
     display: flex;
-
     flex-direction: column;
 
     justify-content: flex-start;
 
     gap: 2px;
+
+    flex: 1;
+
+    min-height: 0;
 
     overflow: hidden;
 }
@@ -160,36 +155,33 @@ body {
 
 .rank-card {
 
-    width: 100%;
-
-    height: 4.5vh;
-
-    min-height: 30px;
-
-    flex-shrink: 0;
-
     background: white;
 
     padding: 0 16px;
 
+    height: 4.5vh;
+    min-height: 30px;
+
     border-radius: 20px;
 
     display: flex;
-
     align-items: center;
 
     box-shadow:
-        0 1px 4px
-        rgba(0,0,0,0.04);
+        0 1px 4px rgba(0,0,0,0.04);
 
     font-size: 0.85rem;
 
     font-weight: 600;
+
+    flex-shrink: 0;
+
+    overflow: hidden;
 }
 
 
 /* =====================================================
-   RANK 1
+   RANK 1 - GOLD
 ===================================================== */
 
 .rank-card.rank-1 {
@@ -202,8 +194,7 @@ body {
             #fde68a 100%
         );
 
-    border:
-        1.5px solid #f59e0b;
+    border: 1.5px solid #f59e0b;
 
     box-shadow:
         0 2px 8px
@@ -212,7 +203,7 @@ body {
 
 
 /* =====================================================
-   RANK 2
+   RANK 2 - SILVER
 ===================================================== */
 
 .rank-card.rank-2 {
@@ -225,8 +216,7 @@ body {
             #cbd5e1 100%
         );
 
-    border:
-        1.5px solid #94a3b8;
+    border: 1.5px solid #94a3b8;
 
     box-shadow:
         0 2px 8px
@@ -235,7 +225,7 @@ body {
 
 
 /* =====================================================
-   RANK 3
+   RANK 3 - BRONZE
 ===================================================== */
 
 .rank-card.rank-3 {
@@ -248,8 +238,7 @@ body {
             #fed7aa 100%
         );
 
-    border:
-        1.5px solid #d97706;
+    border: 1.5px solid #d97706;
 
     box-shadow:
         0 2px 8px
@@ -258,7 +247,7 @@ body {
 
 
 /* =====================================================
-   BOTTOM 5
+   5 TERBAWAH
 ===================================================== */
 
 .rank-card.bottom-5 {
@@ -271,8 +260,7 @@ body {
             #fecaca 100%
         );
 
-    border:
-        1px solid #fca5a5;
+    border: 1px solid #fca5a5;
 }
 
 
@@ -329,7 +317,7 @@ body {
 
 .employee-name {
 
-    flex: 1 1 auto;
+    flex-grow: 1;
 
     min-width: 0;
 
@@ -511,18 +499,13 @@ body {
     max-aspect-ratio: 1/1
 ) {
 
-    html,
     body {
 
         height: auto;
 
-        min-height: 100%;
+        min-height: 100vh;
 
         overflow: auto;
-    }
-
-
-    body {
 
         align-items: flex-start;
 
@@ -534,7 +517,30 @@ body {
 
         height: auto;
 
-        min-height: 0;
+        min-height: 100vh;
+
+        justify-content: flex-start;
+
+        gap: 10px;
+    }
+
+
+    .slide {
+
+        height: auto;
+
+        min-height: 100vh;
+
+        overflow: visible;
+    }
+
+
+    .header {
+
+        height: auto;
+        min-height: 45px;
+
+        margin-bottom: 8px;
     }
 
 
@@ -565,61 +571,47 @@ body {
 
 
     .rank-num {
-
         width: 28px;
     }
 
 
     .change {
-
         width: 38px;
     }
 
 
     .sales {
-
         width: 95px;
-
         margin-left: 8px;
     }
 
 
     .ach {
-
         width: 70px;
-
         margin-left: 10px;
     }
 
 
     .proteksi {
-
         width: 95px;
-
         margin-left: 8px;
     }
 
 
     .ach-proteksi {
-
         width: 70px;
-
         margin-left: 10px;
     }
 
 
     .transaksi {
-
         width: 95px;
-
         margin-left: 8px;
     }
 
 
     .ach-bulanan {
-
         width: 70px;
-
         margin-left: 10px;
     }
 
@@ -627,159 +619,413 @@ body {
 
 
 /* =====================================================
-   TV LANDSCAPE
-===================================================== */
+   =====================================================
+   KHUSUS TV LANDSCAPE
+   TARGET TV 43 INCH
+   =====================================================
+   ===================================================== */
 
-@media screen and
-(min-width: 1200px) and
-(orientation: landscape) {
+@media screen and (min-width: 1200px) and (orientation: landscape) {
+
+    /* -----------------------------------------------
+       BODY TV
+    ----------------------------------------------- */
 
     body {
 
-        padding: 8px;
+        width: 100vw;
+        height: 100vh;
+
+        padding: 0;
+
+        overflow: hidden;
+
+        display: block;
     }
 
+
+    /* -----------------------------------------------
+       CONTAINER TV
+    ----------------------------------------------- */
 
     .container {
 
-        max-width: 1100px;
+        width: 100vw;
+        max-width: none;
 
-        height: 100%;
+        height: 100vh;
+
+        padding: 10px 20px;
+
+        display: block;
+
+        overflow: hidden;
     }
 
+
+    /* -----------------------------------------------
+       SLIDE TV
+    ----------------------------------------------- */
+
+    .slide {
+
+        width: 100%;
+        height: 100vh;
+
+        display: none;
+
+        flex-direction: column;
+
+        overflow: hidden;
+    }
+
+
+    .slide.active {
+
+        display: flex;
+    }
+
+
+    /* -----------------------------------------------
+       HEADER TV
+    ----------------------------------------------- */
+
+    .header {
+
+        width: 100%;
+
+        height: 42px;
+        min-height: 42px;
+
+        margin: 0 0 5px 0;
+
+        flex-shrink: 0;
+    }
+
+
+    .title {
+
+        font-size: 2rem;
+
+        line-height: 42px;
+    }
+
+
+    /* -----------------------------------------------
+       GRID TV
+       PENTING:
+       17 BARIS SELALU DIBAGI RATA
+    ----------------------------------------------- */
+
+    .rank-grid {
+
+        width: 100%;
+
+        height: calc(100vh - 67px);
+
+        flex: none;
+
+        display: grid;
+
+        grid-template-columns: 1fr;
+
+        grid-template-rows:
+            repeat(17, minmax(0, 1fr));
+
+        gap: 2px;
+
+        overflow: hidden;
+
+        min-height: 0;
+    }
+
+
+    /* -----------------------------------------------
+       CARD TV
+    ----------------------------------------------- */
 
     .rank-card {
 
-        background: #ffffff !important;
+        width: 100%;
+
+        height: auto;
+
+        min-height: 0;
+
+        max-height: none;
+
+        padding: 0 16px;
+
+        border-radius: 16px;
+
+        font-size: 0.85rem;
+
+        line-height: 1;
+
+        flex-shrink: 1;
+
+        overflow: hidden;
     }
 
 
-    .rank-card.rank-1 {
+    /* -----------------------------------------------
+       SEMUA CARD PUTIH DI TV
+    ----------------------------------------------- */
 
-        background: #ffffff !important;
-    }
-
-
-    .rank-card.rank-2 {
-
-        background: #ffffff !important;
-    }
-
-
-    .rank-card.rank-3 {
-
-        background: #ffffff !important;
-    }
-
-
+    .rank-card,
+    .rank-card.rank-1,
+    .rank-card.rank-2,
+    .rank-card.rank-3,
     .rank-card.bottom-5 {
 
         background: #ffffff !important;
     }
 
 
-    /*
-       Proteksi dikontrol JavaScript.
-       CSS hanya memastikan tidak ada overflow.
-    */
+    /* -----------------------------------------------
+       COLUMN TV
+    ----------------------------------------------- */
 
-    #slide2 {
+    .rank-num {
 
-        height: 100%;
-
-        min-height: 0;
-
-        overflow: hidden;
-    }
-
-
-    #slide2 .header {
+        width: 35px;
 
         flex-shrink: 0;
-
-        margin-bottom: 2px;
     }
 
+
+    .change {
+
+        width: 45px;
+
+        flex-shrink: 0;
+    }
+
+
+    .employee-name {
+
+        min-width: 0;
+
+        flex: 1;
+    }
+
+
+    .sales {
+
+        width: 130px;
+
+        margin-left: 12px;
+
+        flex-shrink: 0;
+    }
+
+
+    .ach {
+
+        width: 100px;
+
+        margin-left: 15px;
+
+        flex-shrink: 0;
+    }
+
+
+    .proteksi {
+
+        width: 130px;
+
+        margin-left: 12px;
+
+        flex-shrink: 0;
+    }
+
+
+    .ach-proteksi {
+
+        width: 100px;
+
+        margin-left: 15px;
+
+        flex-shrink: 0;
+    }
+
+
+    .transaksi {
+
+        width: 130px;
+
+        margin-left: 12px;
+
+        flex-shrink: 0;
+    }
+
+
+    .ach-bulanan {
+
+        width: 100px;
+
+        margin-left: 15px;
+
+        flex-shrink: 0;
+    }
+
+
+    /* -----------------------------------------------
+       KHUSUS PROTEKSI
+       PAKSA 17 BARIS
+    ----------------------------------------------- */
 
     #slide2 .rank-grid {
 
-        flex: 1 1 auto;
+        height: calc(100vh - 67px);
 
-        min-height: 0;
+        display: grid;
 
-        height: auto;
+        grid-template-rows:
+            repeat(17, minmax(0, 1fr));
+
+        gap: 2px;
 
         overflow: hidden;
-
-        gap: 1px;
     }
 
 
     #slide2 .rank-card {
+
+        height: auto;
 
         min-height: 0;
 
         max-height: none;
 
-        height: auto;
+        overflow: hidden;
+    }
+
+}
+
+
+/* =====================================================
+   TV SANGAT TINGGI
+   ===================================================== */
+
+@media screen and
+(min-width: 1200px) and
+(min-height: 1000px) and
+(orientation: landscape) {
+
+    .rank-grid {
+
+        height: calc(100vh - 67px);
+    }
+
+}
+
+
+/* =====================================================
+   TV 720P / 768P
+   ===================================================== */
+
+@media screen and
+(min-width: 1200px) and
+(max-height: 800px) and
+(orientation: landscape) {
+
+    .container {
+
+        padding: 6px 15px;
+    }
+
+
+    .header {
+
+        height: 34px;
+        min-height: 34px;
+
+        margin-bottom: 3px;
+    }
+
+
+    .title {
+
+        font-size: 1.6rem;
+
+        line-height: 34px;
+    }
+
+
+    .rank-grid {
+
+        height: calc(100vh - 49px);
+
+        gap: 1px;
+    }
+
+
+    #slide2 .rank-grid {
+
+        height: calc(100vh - 49px);
+
+        gap: 1px;
+    }
+
+
+    .rank-card {
 
         border-radius: 12px;
 
         padding: 0 12px;
 
-        font-size: 0.78rem;
-    }
-
-}
-
-
-/* =====================================================
-   TV BESAR
-===================================================== */
-
-@media screen and
-(min-width: 1800px) and
-(orientation: landscape) {
-
-    .title {
-
-        font-size: 2.2rem;
+        font-size: 0.75rem;
     }
 
 
-    #slide2 .rank-card {
+    .rank-num {
 
-        font-size: 0.9rem;
-
-        border-radius: 14px;
-    }
-
-}
-
-
-/* =====================================================
-   TV SANGAT BESAR / 4K
-===================================================== */
-
-@media screen and
-(min-width: 3000px) and
-(orientation: landscape) {
-
-    .container {
-
-        max-width: 1500px;
+        width: 30px;
     }
 
 
-    .title {
+    .change {
 
-        font-size: 2.8rem;
+        width: 40px;
+
+        font-size: 0.68rem;
     }
 
 
-    #slide2 .rank-card {
+    .sales {
 
-        font-size: 1.1rem;
+        width: 115px;
+    }
+
+
+    .ach {
+
+        width: 90px;
+    }
+
+
+    .proteksi {
+
+        width: 115px;
+    }
+
+
+    .ach-proteksi {
+
+        width: 90px;
+    }
+
+
+    .transaksi {
+
+        width: 115px;
+    }
+
+
+    .ach-bulanan {
+
+        width: 90px;
     }
 
 }
@@ -797,6 +1043,7 @@ body {
 
     <!-- =================================================
          SLIDE 1
+         ACH MTD SALES ID
     ================================================== -->
 
     <div
@@ -827,8 +1074,10 @@ body {
     </div>
 
 
+
     <!-- =================================================
          SLIDE 2
+         PROTEKSI
     ================================================== -->
 
     <div
@@ -859,8 +1108,10 @@ body {
     </div>
 
 
+
     <!-- =================================================
          SLIDE 3
+         TRANSAKSI
     ================================================== -->
 
     <div
@@ -890,7 +1141,9 @@ body {
 
     </div>
 
+
 </div>
+
 
 
 <script>
@@ -908,25 +1161,37 @@ const SHEET_NAME =
 
 
 const SHEET_URL =
+
     "https://docs.google.com/spreadsheets/d/" +
+
     SPREADSHEET_ID +
+
     "/gviz/tq?tqx=out:json&sheet=" +
+
     encodeURIComponent(
         SHEET_NAME
     );
 
 
 /* =====================================================
-   SLIDE
+   SLIDE SETTINGS
 ===================================================== */
 
 const SLIDE_DURATION =
     5000;
 
 
+/* =====================================================
+   CURRENT SLIDE
+===================================================== */
+
 let currentSlide =
     1;
 
+
+/* =====================================================
+   DATA
+===================================================== */
 
 let employeeData =
     [];
@@ -1059,6 +1324,10 @@ async function loadData() {
             text.trim();
 
 
+        /* =============================================
+           BERSIHKAN GVIZ
+        ============================================= */
+
         jsonText =
             jsonText.replace(
                 /^\/\*[\s\S]*?\*\/\s*/,
@@ -1113,7 +1382,7 @@ async function loadData() {
 
 
         /* =============================================
-           HEADER
+           CARI HEADER
         ============================================= */
 
         const employeeColumn =
@@ -1172,74 +1441,75 @@ async function loadData() {
             );
 
 
+        /* =============================================
+           VALIDASI HEADER
+        ============================================= */
+
         const requiredColumns = [
 
-            [
-                employeeColumn,
-                "EMPLOYEE NAME"
-            ],
+            {
+                index: employeeColumn,
+                name: "EMPLOYEE NAME"
+            },
 
-            [
-                codeJobColumn,
-                "CODE JOB"
-            ],
+            {
+                index: codeJobColumn,
+                name: "CODE JOB"
+            },
 
-            [
-                salesColumn,
-                "SALES MTD"
-            ],
+            {
+                index: salesColumn,
+                name: "SALES MTD"
+            },
 
-            [
-                achColumn,
-                "ACH MTD"
-            ],
+            {
+                index: achColumn,
+                name: "ACH MTD"
+            },
 
-            [
-                proteksiColumn,
-                "PROTEKSI"
-            ],
+            {
+                index: proteksiColumn,
+                name: "PROTEKSI"
+            },
 
-            [
-                achProteksiColumn,
-                "ACH PROTEKSI"
-            ],
+            {
+                index: achProteksiColumn,
+                name: "ACH PROTEKSI"
+            },
 
-            [
-                trxColumn,
-                "TRX"
-            ],
+            {
+                index: trxColumn,
+                name: "TRX"
+            },
 
-            [
-                achBulananColumn,
-                "ACH BULANAN"
-            ]
+            {
+                index: achBulananColumn,
+                name: "ACH BULANAN"
+            }
 
         ];
 
 
-        for (
-            const [
-                index,
-                name
-            ]
-            of requiredColumns
-        ) {
+        const missing =
+            requiredColumns.find(
+                column =>
+                    column.index === -1
+            );
 
-            if (
-                index === -1
-            ) {
 
-                throw new Error(
-                    `Header "${name}" tidak ditemukan.`
-                );
+        if (missing) {
 
-            }
+            throw new Error(
+                'Header "' +
+                missing.name +
+                '" tidak ditemukan.'
+            );
 
         }
 
 
         /* =============================================
-           DATA
+           AMBIL SEMUA DATA
         ============================================= */
 
         employeeData =
@@ -1266,6 +1536,14 @@ async function loadData() {
                             );
 
 
+                        const codeJob =
+                            getCellValue(
+                                row.c[
+                                    codeJobColumn
+                                ]
+                            );
+
+
                         if (
                             name === ""
                         ) {
@@ -1281,11 +1559,7 @@ async function loadData() {
                                 name,
 
                             codeJob:
-                                getCellValue(
-                                    row.c[
-                                        codeJobColumn
-                                    ]
-                                ),
+                                codeJob,
 
                             sales:
                                 getCellValue(
@@ -1340,24 +1614,18 @@ async function loadData() {
                 );
 
 
+        /* =============================================
+           RENDER
+        ============================================= */
+
         renderSlide1();
 
         renderSlide2();
 
         renderSlide3();
 
-
-        /*
-           Setelah data selesai dirender,
-           hitung ulang ukuran Proteksi.
-        */
-
-        setTimeout(
-            fitProteksiToScreen,
-            50
-        );
-
     }
+
 
     catch (error) {
 
@@ -1390,7 +1658,7 @@ async function loadData() {
 
 
 /* =====================================================
-   CELL VALUE
+   GET CELL VALUE
 ===================================================== */
 
 function getCellValue(
@@ -1439,7 +1707,7 @@ function findColumn(
 
 
 /* =====================================================
-   EXCLUDE CASHIER / CS
+   FILTER CASHIER / CS
 ===================================================== */
 
 function isExcludedCodeJob(
@@ -1455,8 +1723,11 @@ function isExcludedCodeJob(
 
 
     return (
+
         value === "CASHIER" ||
+
         value === "CS"
+
     );
 
 }
@@ -1464,12 +1735,15 @@ function isExcludedCodeJob(
 
 /* =====================================================
    SLIDE 1
+   ACH MTD SALES ID
 ===================================================== */
 
 function renderSlide1() {
 
     const data =
+
         employeeData
+
             .filter(
                 employee =>
                     !isExcludedCodeJob(
@@ -1478,11 +1752,18 @@ function renderSlide1() {
             );
 
 
+    /* =============================================
+       SORT ACH MTD
+       TERBESAR → TERKECIL
+    ============================================= */
+
     data.sort(
         (a, b) =>
+
             parseNumber(
                 b.ach
             ) -
+
             parseNumber(
                 a.ach
             )
@@ -1500,6 +1781,7 @@ function renderSlide1() {
 
 /* =====================================================
    SLIDE 2
+   PROTEKSI
 ===================================================== */
 
 function renderSlide2() {
@@ -1508,11 +1790,18 @@ function renderSlide2() {
         [...employeeData];
 
 
+    /* =============================================
+       SORT PROTEKSI
+       TERBESAR → TERKECIL
+    ============================================= */
+
     data.sort(
         (a, b) =>
+
             parseNumber(
                 b.proteksi
             ) -
+
             parseNumber(
                 a.proteksi
             )
@@ -1530,12 +1819,15 @@ function renderSlide2() {
 
 /* =====================================================
    SLIDE 3
+   TRANSAKSI
 ===================================================== */
 
 function renderSlide3() {
 
     const data =
+
         employeeData
+
             .filter(
                 employee =>
                     !isExcludedCodeJob(
@@ -1544,11 +1836,18 @@ function renderSlide3() {
             );
 
 
+    /* =============================================
+       SORT TRX
+       TERBESAR → TERKECIL
+    ============================================= */
+
     data.sort(
         (a, b) =>
+
             parseNumber(
                 b.trx
             ) -
+
             parseNumber(
                 a.trx
             )
@@ -1615,6 +1914,10 @@ function renderCards(
                 index + 1;
 
 
+            /* =====================================
+               RANK COLOR
+            ===================================== */
+
             let rankClass =
                 "rank-card";
 
@@ -1657,6 +1960,10 @@ function renderCards(
             }
 
 
+            /* =====================================
+               CHANGE
+            ===================================== */
+
             const changeInfo =
                 rankingData[index] || {
 
@@ -1669,9 +1976,17 @@ function renderCards(
                 };
 
 
+            /* =====================================
+               VALUE
+            ===================================== */
+
             let valueHTML =
                 "";
 
+
+            /* =====================================
+               SLIDE 1
+            ===================================== */
 
             if (
                 type ===
@@ -1680,15 +1995,22 @@ function renderCards(
 
                 valueHTML = `
 
-                    <span class="sales">
+                    <span
+                        class="sales"
+                    >
                         ${escapeHtml(
-                            employee.sales || "-"
+                            employee.sales ||
+                            "-"
                         )}
                     </span>
 
-                    <span class="ach">
+
+                    <span
+                        class="ach"
+                    >
                         ${escapeHtml(
-                            employee.ach || "-"
+                            employee.ach ||
+                            "-"
                         )}
                     </span>
 
@@ -1696,6 +2018,10 @@ function renderCards(
 
             }
 
+
+            /* =====================================
+               SLIDE 2
+            ===================================== */
 
             else if (
                 type ===
@@ -1704,15 +2030,22 @@ function renderCards(
 
                 valueHTML = `
 
-                    <span class="proteksi">
+                    <span
+                        class="proteksi"
+                    >
                         ${escapeHtml(
-                            employee.proteksi || "-"
+                            employee.proteksi ||
+                            "-"
                         )}
                     </span>
 
-                    <span class="ach-proteksi">
+
+                    <span
+                        class="ach-proteksi"
+                    >
                         ${escapeHtml(
-                            employee.achProteksi || "-"
+                            employee.achProteksi ||
+                            "-"
                         )}
                     </span>
 
@@ -1720,6 +2053,10 @@ function renderCards(
 
             }
 
+
+            /* =====================================
+               SLIDE 3
+            ===================================== */
 
             else if (
                 type ===
@@ -1728,15 +2065,22 @@ function renderCards(
 
                 valueHTML = `
 
-                    <span class="transaksi">
+                    <span
+                        class="transaksi"
+                    >
                         ${escapeHtml(
-                            employee.trx || "-"
+                            employee.trx ||
+                            "-"
                         )}
                     </span>
 
-                    <span class="ach-bulanan">
+
+                    <span
+                        class="ach-bulanan"
+                    >
                         ${escapeHtml(
-                            employee.achBulanan || "-"
+                            employee.achBulanan ||
+                            "-"
                         )}
                     </span>
 
@@ -1744,6 +2088,10 @@ function renderCards(
 
             }
 
+
+            /* =====================================
+               CARD
+            ===================================== */
 
             const card =
                 document.createElement(
@@ -1757,21 +2105,31 @@ function renderCards(
 
             card.innerHTML = `
 
-                <span class="rank-num">
+                <span
+                    class="rank-num"
+                >
                     ${rank}
                 </span>
 
-                <span class="change ${changeInfo.change}">
+
+                <span
+                    class="change
+                    ${changeInfo.change}"
+                >
                     ${escapeHtml(
                         changeInfo.changeText
                     )}
                 </span>
 
-                <span class="employee-name">
+
+                <span
+                    class="employee-name"
+                >
                     ${escapeHtml(
                         employee.name
                     )}
                 </span>
+
 
                 ${valueHTML}
 
@@ -1784,282 +2142,6 @@ function renderCards(
 
         }
     );
-
-}
-
-
-/* =====================================================
-   FIT PROTEKSI
-   ==============================================
-   INI BAGIAN UTAMA UNTUK TV
-===================================================== */
-
-function fitProteksiToScreen() {
-
-    const slide =
-        document.getElementById(
-            "slide2"
-        );
-
-
-    const grid =
-        document.getElementById(
-            "rankGrid2"
-        );
-
-
-    if (
-        !slide ||
-        !grid
-    ) {
-
-        return;
-
-    }
-
-
-    const cards =
-        grid.querySelectorAll(
-            ".rank-card"
-        );
-
-
-    if (
-        cards.length === 0
-    ) {
-
-        return;
-
-    }
-
-
-    /*
-       Hanya jalankan mode ini
-       untuk landscape / TV.
-    */
-
-    if (
-        window.innerWidth < 1200 ||
-        window.innerWidth <= window.innerHeight
-    ) {
-
-        return;
-
-    }
-
-
-    /*
-       Ukuran viewport sebenarnya
-       yang diberikan browser TV.
-    */
-
-    const viewportHeight =
-        window.innerHeight;
-
-
-    /*
-       Ambil posisi grid dari viewport.
-    */
-
-    const gridRect =
-        grid.getBoundingClientRect();
-
-
-    /*
-       Tinggi area grid yang benar-benar
-       tersedia.
-    */
-
-    let availableHeight =
-        viewportHeight -
-        gridRect.top -
-        4;
-
-
-    /*
-       Safety margin.
-    */
-
-    availableHeight =
-        Math.max(
-            availableHeight,
-            100
-        );
-
-
-    /*
-       Jumlah rank aktual.
-       Kalau 17, maka dibagi 17.
-    */
-
-    const total =
-        cards.length;
-
-
-    /*
-       Gap antar card.
-    */
-
-    const gap =
-        1;
-
-
-    /*
-       Total gap.
-    */
-
-    const totalGap =
-        gap *
-        Math.max(
-            total - 1,
-            0
-        );
-
-
-    /*
-       Tinggi masing-masing card.
-    */
-
-    let cardHeight =
-        (
-            availableHeight -
-            totalGap
-        ) /
-        total;
-
-
-    /*
-       Jangan sampai terlalu kecil.
-       Untuk TV 43", biasanya masih
-       jauh di atas angka ini.
-    */
-
-    cardHeight =
-        Math.max(
-            cardHeight,
-            1
-        );
-
-
-    /*
-       Terapkan langsung ke semua
-       card Proteksi.
-    */
-
-    cards.forEach(
-        card => {
-
-            card.style.height =
-                cardHeight +
-                "px";
-
-            card.style.minHeight =
-                "0px";
-
-            card.style.maxHeight =
-                cardHeight +
-                "px";
-
-            card.style.flex =
-                "0 0 " +
-                cardHeight +
-                "px";
-
-        }
-    );
-
-
-    /*
-       Pastikan grid tidak membuat
-       scroll.
-    */
-
-    grid.style.height =
-        availableHeight +
-        "px";
-
-    grid.style.maxHeight =
-        availableHeight +
-        "px";
-
-    grid.style.overflow =
-        "hidden";
-
-
-    /*
-       Jika masih ada selisih 1-2 px,
-       kurangi sedikit tinggi semua card.
-    */
-
-    const actualHeight =
-        Array.from(cards)
-            .reduce(
-                (
-                    totalHeight,
-                    card
-                ) =>
-                    totalHeight +
-                    card.getBoundingClientRect()
-                        .height,
-                0
-            );
-
-
-    const actualGap =
-        gap *
-        Math.max(
-            total - 1,
-            0
-        );
-
-
-    const totalUsed =
-        actualHeight +
-        actualGap;
-
-
-    if (
-        totalUsed >
-        availableHeight
-    ) {
-
-        const correction =
-            (
-                totalUsed -
-                availableHeight
-            ) /
-            total;
-
-
-        cards.forEach(
-            card => {
-
-                const newHeight =
-                    Math.max(
-                        cardHeight -
-                        correction -
-                        0.5,
-                        1
-                    );
-
-
-                card.style.height =
-                    newHeight +
-                    "px";
-
-                card.style.maxHeight =
-                    newHeight +
-                    "px";
-
-                card.style.flex =
-                    "0 0 " +
-                    newHeight +
-                    "px";
-
-            }
-        );
-
-    }
 
 }
 
@@ -2097,6 +2179,10 @@ function parseNumber(
             .trim();
 
 
+    /* =============================================
+       HAPUS SIMBOL
+    ============================================= */
+
     text =
         text.replace(
             /[^\d,.\-]/g,
@@ -2112,6 +2198,10 @@ function parseNumber(
 
     }
 
+
+    /* =============================================
+       FORMAT 1.234,56
+    ============================================= */
 
     if (
         text.includes(".") &&
@@ -2130,6 +2220,11 @@ function parseNumber(
                 );
 
     }
+
+
+    /* =============================================
+       FORMAT KOMA
+    ============================================= */
 
     else if (
         text.includes(",")
@@ -2163,6 +2258,11 @@ function parseNumber(
 
     }
 
+
+    /* =============================================
+       FORMAT TITIK
+    ============================================= */
+
     else if (
         text.includes(".")
     ) {
@@ -2172,11 +2272,15 @@ function parseNumber(
 
 
         if (
-            !(
-                parts.length === 2 &&
-                parts[1].length <= 2
-            )
+            parts.length === 2 &&
+            parts[1].length <= 2
         ) {
+
+            /* decimal */
+
+        }
+
+        else {
 
             text =
                 text.replace(
@@ -2195,9 +2299,16 @@ function parseNumber(
         );
 
 
-    return isNaN(number)
-        ? 0
-        : number;
+    if (
+        isNaN(number)
+    ) {
+
+        return 0;
+
+    }
+
+
+    return number;
 
 }
 
@@ -2302,31 +2413,12 @@ function nextSlide() {
             "active"
         );
 
-
-    /*
-       Saat masuk slide Proteksi,
-       hitung ulang ukuran card.
-    */
-
-    if (
-        currentSlide === 2
-    ) {
-
-        requestAnimationFrame(
-            () => {
-
-                fitProteksiToScreen();
-
-            }
-        );
-
-    }
-
 }
 
 
 /* =====================================================
-   SLIDE 5 DETIK
+   ROTASI SLIDE
+   5 DETIK
 ===================================================== */
 
 setInterval(
@@ -2336,65 +2428,20 @@ setInterval(
 
 
 /* =====================================================
-   LOAD DATA
+   LOAD DATA PERTAMA
 ===================================================== */
 
 loadData();
 
 
 /* =====================================================
-   UPDATE DATA 30 DETIK
+   UPDATE DATA
+   30 DETIK
 ===================================================== */
 
 setInterval(
     loadData,
     30000
-);
-
-
-/* =====================================================
-   RESIZE TV / BROWSER
-===================================================== */
-
-window.addEventListener(
-    "resize",
-    () => {
-
-        setTimeout(
-            fitProteksiToScreen,
-            100
-        );
-
-    }
-);
-
-
-/* =====================================================
-   ORIENTATION CHANGE
-===================================================== */
-
-window.addEventListener(
-    "orientationchange",
-    () => {
-
-        setTimeout(
-            fitProteksiToScreen,
-            300
-        );
-
-    }
-);
-
-
-/* =====================================================
-   PERIODIC FIT
-   Untuk browser TV yang viewport-nya
-   berubah setelah halaman dibuka.
-===================================================== */
-
-setInterval(
-    fitProteksiToScreen,
-    1000
 );
 
 </script>
