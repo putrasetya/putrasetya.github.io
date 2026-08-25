@@ -11,7 +11,6 @@
 
 <title>AZKO SALES RANKING</title>
 
-
 <style>
 
 /* =====================================================
@@ -19,18 +18,10 @@
 ===================================================== */
 
 * {
-
     box-sizing: border-box;
-
     margin: 0;
-
     padding: 0;
-
-    font-family:
-        'Segoe UI',
-        Arial,
-        sans-serif;
-
+    font-family: 'Segoe UI', Arial, sans-serif;
 }
 
 
@@ -41,7 +32,6 @@
 body {
 
     width: 100vw;
-
     height: 100vh;
 
     background:
@@ -52,15 +42,12 @@ body {
         );
 
     display: flex;
-
     justify-content: center;
-
     align-items: center;
 
     padding: 15px;
 
     overflow: hidden;
-
 }
 
 
@@ -71,17 +58,32 @@ body {
 .container {
 
     width: 100%;
-
     max-width: 900px;
-
     height: 100%;
 
     display: flex;
-
     flex-direction: column;
 
     justify-content: space-between;
+}
 
+
+/* =====================================================
+   SLIDE
+===================================================== */
+
+.slide {
+
+    width: 100%;
+    height: 100%;
+
+    display: none;
+    flex-direction: column;
+}
+
+
+.slide.active {
+    display: flex;
 }
 
 
@@ -96,7 +98,6 @@ body {
     text-align: center;
 
     margin-bottom: 8px;
-
 }
 
 
@@ -111,31 +112,6 @@ body {
     line-height: 1.1;
 
     letter-spacing: 1px;
-
-}
-
-
-/* =====================================================
-   SLIDE
-===================================================== */
-
-.slide {
-
-    width: 100%;
-
-    height: 100%;
-
-    display: none;
-
-    flex-direction: column;
-
-}
-
-
-.slide.active {
-
-    display: flex;
-
 }
 
 
@@ -154,7 +130,6 @@ body {
     flex-grow: 1;
 
     gap: 2px;
-
 }
 
 
@@ -182,12 +157,11 @@ body {
     font-size: 0.85rem;
 
     font-weight: 600;
-
 }
 
 
 /* =====================================================
-   RANK 1
+   RANK 1 - GOLD
 ===================================================== */
 
 .rank-card.rank-1 {
@@ -200,18 +174,16 @@ body {
             #fde68a 100%
         );
 
-    border:
-        1.5px solid #f59e0b;
+    border: 1.5px solid #f59e0b;
 
     box-shadow:
         0 2px 8px
         rgba(245,158,11,0.18);
-
 }
 
 
 /* =====================================================
-   RANK 2
+   RANK 2 - SILVER
 ===================================================== */
 
 .rank-card.rank-2 {
@@ -224,18 +196,16 @@ body {
             #cbd5e1 100%
         );
 
-    border:
-        1.5px solid #94a3b8;
+    border: 1.5px solid #94a3b8;
 
     box-shadow:
         0 2px 8px
         rgba(100,116,139,0.15);
-
 }
 
 
 /* =====================================================
-   RANK 3
+   RANK 3 - BRONZE
 ===================================================== */
 
 .rank-card.rank-3 {
@@ -248,13 +218,11 @@ body {
             #fed7aa 100%
         );
 
-    border:
-        1.5px solid #d97706;
+    border: 1.5px solid #d97706;
 
     box-shadow:
         0 2px 8px
         rgba(217,119,6,0.15);
-
 }
 
 
@@ -272,9 +240,7 @@ body {
             #fecaca 100%
         );
 
-    border:
-        1px solid #fca5a5;
-
+    border: 1px solid #fca5a5;
 }
 
 
@@ -291,7 +257,6 @@ body {
     font-weight: 700;
 
     flex-shrink: 0;
-
 }
 
 
@@ -308,33 +273,26 @@ body {
     font-weight: 700;
 
     flex-shrink: 0;
-
 }
 
 
 .up {
-
     color: #16a34a;
-
 }
 
 
 .down {
-
     color: #dc2626;
-
 }
 
 
 .same {
-
     color: #94a3b8;
-
 }
 
 
 /* =====================================================
-   EMPLOYEE
+   EMPLOYEE NAME
 ===================================================== */
 
 .employee-name {
@@ -348,12 +306,10 @@ body {
     overflow: hidden;
 
     text-overflow: ellipsis;
-
 }
 
 
 /* =====================================================
-   SLIDE 1
    SALES
 ===================================================== */
 
@@ -372,13 +328,11 @@ body {
     text-align: right;
 
     flex-shrink: 0;
-
 }
 
 
 /* =====================================================
-   SLIDE 1
-   ACH
+   ACH MTD
 ===================================================== */
 
 .ach {
@@ -396,12 +350,10 @@ body {
     text-align: right;
 
     flex-shrink: 0;
-
 }
 
 
 /* =====================================================
-   SLIDE 2
    PROTEKSI
 ===================================================== */
 
@@ -420,12 +372,10 @@ body {
     text-align: right;
 
     flex-shrink: 0;
-
 }
 
 
 /* =====================================================
-   SLIDE 3
    TRANSAKSI
 ===================================================== */
 
@@ -444,12 +394,11 @@ body {
     text-align: right;
 
     flex-shrink: 0;
-
 }
 
 
 /* =====================================================
-   LOADING
+   LOADING / ERROR
 ===================================================== */
 
 .loading,
@@ -460,26 +409,21 @@ body {
     padding: 20px;
 
     font-weight: 600;
-
 }
 
 
 .loading {
-
     color: #475569;
-
 }
 
 
 .error {
-
     color: #dc2626;
-
 }
 
 
 /* =====================================================
-   MOBILE
+   MOBILE / TABLET
 ===================================================== */
 
 @media (
@@ -498,7 +442,6 @@ body {
         overflow: auto;
 
         align-items: flex-start;
-
     }
 
 
@@ -509,21 +452,18 @@ body {
         justify-content: flex-start;
 
         gap: 10px;
-
     }
 
 
     .title {
 
         font-size: 1.5rem;
-
     }
 
 
     .rank-grid {
 
         gap: 6px;
-
     }
 
 
@@ -534,57 +474,40 @@ body {
         font-size: 0.9rem;
 
         padding: 0 10px;
-
     }
 
 
     .rank-num {
-
         width: 28px;
-
     }
 
 
     .change {
-
         width: 38px;
-
     }
 
 
     .sales {
-
         width: 95px;
-
         margin-left: 8px;
-
     }
 
 
     .ach {
-
         width: 70px;
-
         margin-left: 10px;
-
     }
 
 
     .proteksi {
-
         width: 95px;
-
         margin-left: 8px;
-
     }
 
 
     .transaksi {
-
         width: 95px;
-
         margin-left: 8px;
-
     }
 
 }
@@ -602,6 +525,7 @@ body {
 
     <!-- =================================================
          SLIDE 1
+         ACH MTD SALES ID
     ================================================== -->
 
     <div
@@ -635,6 +559,7 @@ body {
 
     <!-- =================================================
          SLIDE 2
+         PROTEKSI
     ================================================== -->
 
     <div
@@ -668,6 +593,7 @@ body {
 
     <!-- =================================================
          SLIDE 3
+         TRANSAKSI
     ================================================== -->
 
     <div
@@ -730,15 +656,28 @@ const SHEET_URL =
 
 
 /* =====================================================
-   SLIDE CONFIG
+   SLIDE SETTINGS
 ===================================================== */
 
-const SLIDE_DURATION =
-    5000;
+const SLIDE_DURATION = 5000;
 
 
 /* =====================================================
-   DATA RANK CHANGE
+   CURRENT SLIDE
+===================================================== */
+
+let currentSlide = 1;
+
+
+/* =====================================================
+   DATA
+===================================================== */
+
+let employeeData = [];
+
+
+/* =====================================================
+   RANK CHANGE
 ===================================================== */
 
 const rankingData = [
@@ -832,28 +771,12 @@ const rankingData = [
 
 
 /* =====================================================
-   DATA GLOBAL
-===================================================== */
-
-let employeeData = [];
-
-
-/* =====================================================
-   CURRENT SLIDE
-===================================================== */
-
-let currentSlide = 1;
-
-
-/* =====================================================
    LOAD DATA
 ===================================================== */
 
 async function loadData() {
 
-
     try {
-
 
         const response =
             await fetch(
@@ -881,7 +804,7 @@ async function loadData() {
 
 
         /* =============================================
-           HAPUS HEADER GVIZ
+           BERSIHKAN GVIZ
         ============================================= */
 
         jsonText =
@@ -938,13 +861,20 @@ async function loadData() {
 
 
         /* =============================================
-           CARI COLUMN
+           CARI HEADER
         ============================================= */
 
         const employeeColumn =
             findColumn(
                 data.table.cols,
                 "EMPLOYEE NAME"
+            );
+
+
+        const codeJobColumn =
+            findColumn(
+                data.table.cols,
+                "CODE JOB"
             );
 
 
@@ -977,7 +907,7 @@ async function loadData() {
 
 
         /* =============================================
-           VALIDASI
+           VALIDASI HEADER
         ============================================= */
 
         if (
@@ -986,6 +916,17 @@ async function loadData() {
 
             throw new Error(
                 'Header "EMPLOYEE NAME" tidak ditemukan.'
+            );
+
+        }
+
+
+        if (
+            codeJobColumn === -1
+        ) {
+
+            throw new Error(
+                'Header "CODE JOB" tidak ditemukan.'
             );
 
         }
@@ -1036,7 +977,7 @@ async function loadData() {
 
 
         /* =============================================
-           AMBIL DATA
+           AMBIL SEMUA DATA
         ============================================= */
 
         employeeData =
@@ -1046,8 +987,9 @@ async function loadData() {
                 .map(
                     row => {
 
-
-                        if (!row.c) {
+                        if (
+                            !row.c
+                        ) {
 
                             return null;
 
@@ -1057,6 +999,12 @@ async function loadData() {
                         const employeeCell =
                             row.c[
                                 employeeColumn
+                            ];
+
+
+                        const codeJobCell =
+                            row.c[
+                                codeJobColumn
                             ];
 
 
@@ -1084,18 +1032,16 @@ async function loadData() {
                             ];
 
 
-
                         const name =
-                            employeeCell
+                            getCellValue(
+                                employeeCell
+                            );
 
-                                ? String(
-                                    employeeCell.f ??
-                                    employeeCell.v ??
-                                    ""
-                                ).trim()
 
-                                : "";
-
+                        const codeJob =
+                            getCellValue(
+                                codeJobCell
+                            );
 
 
                         if (
@@ -1107,11 +1053,13 @@ async function loadData() {
                         }
 
 
-
                         return {
 
                             name:
                                 name,
+
+                            codeJob:
+                                codeJob,
 
                             sales:
                                 getCellValue(
@@ -1144,7 +1092,6 @@ async function loadData() {
                 );
 
 
-
         /* =============================================
            RENDER SEMUA SLIDE
         ============================================= */
@@ -1155,12 +1102,10 @@ async function loadData() {
 
         renderSlide3();
 
-
     }
 
 
     catch (error) {
-
 
         console.error(
             "Gagal mengambil data:",
@@ -1198,7 +1143,6 @@ function getCellValue(
     cell
 ) {
 
-
     if (
         !cell
     ) {
@@ -1226,7 +1170,6 @@ function findColumn(
     target
 ) {
 
-
     return columns.findIndex(
         col =>
 
@@ -1242,15 +1185,47 @@ function findColumn(
 
 
 /* =====================================================
+   CEK CASHIER / CS
+===================================================== */
+
+function isExcludedCodeJob(
+    codeJob
+) {
+
+    const value =
+        String(
+            codeJob || ""
+        )
+        .trim()
+        .toUpperCase();
+
+
+    return (
+        value === "CASHIER" ||
+        value === "CS"
+    );
+
+}
+
+
+/* =====================================================
    SLIDE 1
    ACH MTD SALES ID
+
+   CASHIER & CS DIKECUALIKAN
 ===================================================== */
 
 function renderSlide1() {
 
-
     const data =
-        [...employeeData];
+        employeeData
+
+            .filter(
+                employee =>
+                    !isExcludedCodeJob(
+                        employee.codeJob
+                    )
+            );
 
 
     /* =============================================
@@ -1283,10 +1258,11 @@ function renderSlide1() {
 /* =====================================================
    SLIDE 2
    PROTEKSI
+
+   SEMUA EMPLOYEE
 ===================================================== */
 
 function renderSlide2() {
-
 
     const data =
         [...employeeData];
@@ -1322,13 +1298,21 @@ function renderSlide2() {
 /* =====================================================
    SLIDE 3
    TRANSAKSI
+
+   CASHIER & CS DIKECUALIKAN
 ===================================================== */
 
 function renderSlide3() {
 
-
     const data =
-        [...employeeData];
+        employeeData
+
+            .filter(
+                employee =>
+                    !isExcludedCodeJob(
+                        employee.codeJob
+                    )
+            );
 
 
     /* =============================================
@@ -1368,7 +1352,6 @@ function renderCards(
     type
 ) {
 
-
     const grid =
         document.getElementById(
             gridId
@@ -1377,6 +1360,23 @@ function renderCards(
 
     grid.innerHTML =
         "";
+
+
+    if (
+        data.length === 0
+    ) {
+
+        grid.innerHTML = `
+
+            <div class="error">
+                Tidak ada data employee.
+            </div>
+
+        `;
+
+        return;
+
+    }
 
 
     const total =
@@ -1389,14 +1389,13 @@ function renderCards(
             index
         ) => {
 
-
             const rank =
                 index + 1;
 
 
-            /* =========================================
-               CLASS RANK
-            ========================================= */
+            /* =====================================
+               RANK COLOR
+            ===================================== */
 
             let rankClass =
                 "rank-card";
@@ -1440,9 +1439,9 @@ function renderCards(
             }
 
 
-            /* =========================================
+            /* =====================================
                CHANGE
-            ========================================= */
+            ===================================== */
 
             const changeInfo =
                 rankingData[index] || {
@@ -1456,27 +1455,17 @@ function renderCards(
                 };
 
 
-            /* =========================================
-               CARD
-            ========================================= */
-
-            const card =
-                document.createElement(
-                    "div"
-                );
-
-
-            card.className =
-                rankClass;
-
+            /* =====================================
+               VALUE
+            ===================================== */
 
             let valueHTML =
                 "";
 
 
-            /* =========================================
+            /* =====================================
                SLIDE 1
-            ========================================= */
+            ===================================== */
 
             if (
                 type ===
@@ -1494,6 +1483,7 @@ function renderCards(
                         )}
                     </span>
 
+
                     <span
                         class="ach"
                     >
@@ -1508,9 +1498,9 @@ function renderCards(
             }
 
 
-            /* =========================================
+            /* =====================================
                SLIDE 2
-            ========================================= */
+            ===================================== */
 
             else if (
                 type ===
@@ -1533,9 +1523,9 @@ function renderCards(
             }
 
 
-            /* =========================================
+            /* =====================================
                SLIDE 3
-            ========================================= */
+            ===================================== */
 
             else if (
                 type ===
@@ -1557,6 +1547,19 @@ function renderCards(
 
             }
 
+
+            /* =====================================
+               CARD
+            ===================================== */
+
+            const card =
+                document.createElement(
+                    "div"
+                );
+
+
+            card.className =
+                rankClass;
 
 
             card.innerHTML = `
@@ -1610,7 +1613,6 @@ function parseNumber(
     value
 ) {
 
-
     if (
         value === null ||
         value === undefined ||
@@ -1637,7 +1639,7 @@ function parseNumber(
 
 
     /* =============================================
-       HAPUS SIMBOL NON ANGKA
+       HAPUS SIMBOL
     ============================================= */
 
     text =
@@ -1657,7 +1659,7 @@ function parseNumber(
 
 
     /* =============================================
-       FORMAT INDONESIA
+       FORMAT 1.234,56
     ============================================= */
 
     if (
@@ -1677,6 +1679,11 @@ function parseNumber(
                 );
 
     }
+
+
+    /* =============================================
+       FORMAT KOMA
+    ============================================= */
 
     else if (
         text.includes(",")
@@ -1709,6 +1716,11 @@ function parseNumber(
         }
 
     }
+
+
+    /* =============================================
+       FORMAT TITIK
+    ============================================= */
 
     else if (
         text.includes(".")
@@ -1768,7 +1780,6 @@ function escapeHtml(
     text
 ) {
 
-
     const div =
         document.createElement(
             "div"
@@ -1792,7 +1803,6 @@ function showError(
     gridId,
     message
 ) {
-
 
     const grid =
         document.getElementById(
@@ -1824,12 +1834,10 @@ function showError(
 
 
 /* =====================================================
-   SLIDE ROTATION
-   5 DETIK / SLIDE
+   GANTI SLIDE
 ===================================================== */
 
 function nextSlide() {
-
 
     document
         .getElementById(
@@ -1868,7 +1876,8 @@ function nextSlide() {
 
 
 /* =====================================================
-   MULAI SLIDE
+   ROTASI SLIDE
+   5 DETIK
 ===================================================== */
 
 setInterval(
@@ -1885,7 +1894,8 @@ loadData();
 
 
 /* =====================================================
-   UPDATE DATA SETIAP 30 DETIK
+   UPDATE DATA
+   30 DETIK
 ===================================================== */
 
 setInterval(
@@ -1894,7 +1904,6 @@ setInterval(
 );
 
 </script>
-
 
 </body>
 </html>
