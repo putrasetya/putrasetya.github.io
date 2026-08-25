@@ -9,6 +9,11 @@
     content="width=device-width, initial-scale=1.0"
 >
 
+<meta
+    name="color-scheme"
+    content="light only"
+>
+
 <title>AZKO SALES RANKING</title>
 
 <style>
@@ -22,6 +27,10 @@
     margin: 0;
     padding: 0;
     font-family: 'Segoe UI', Arial, sans-serif;
+}
+
+:root {
+    color-scheme: light only;
 }
 
 
@@ -48,6 +57,8 @@ body {
     padding: 15px;
 
     overflow: hidden;
+
+    color-scheme: light only;
 }
 
 
@@ -79,6 +90,8 @@ body {
 
     display: none;
     flex-direction: column;
+
+    min-height: 0;
 }
 
 
@@ -98,6 +111,8 @@ body {
     text-align: center;
 
     margin-bottom: 8px;
+
+    flex: 0 0 auto;
 }
 
 
@@ -120,29 +135,54 @@ body {
 ===================================================== */
 
 .rank-grid {
+
     display: flex;
+
     flex-direction: column;
+
     justify-content: flex-start;
+
     flex-grow: 1;
+
     gap: 2px;
+
+    min-height: 0;
+
+    overflow: hidden;
 }
+
 
 /* =====================================================
    RANK CARD
 ===================================================== */
 
 .rank-card {
-    background: white;
+
+    background: #ffffff;
+
     padding: 0 16px;
+
     height: 4.5vh;
+
     min-height: 30px;
+
     border-radius: 20px;
+
     display: flex;
+
     align-items: center;
-    box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+
+    box-shadow:
+        0 1px 4px
+        rgba(0,0,0,0.04);
+
     font-size: 0.85rem;
+
     font-weight: 600;
+
     flex-shrink: 0;
+
+    forced-color-adjust: none;
 }
 
 
@@ -160,7 +200,9 @@ body {
             #fde68a 100%
         );
 
-    border: 1.5px solid #f59e0b;
+    border:
+        1.5px solid
+        #f59e0b;
 
     box-shadow:
         0 2px 8px
@@ -182,7 +224,9 @@ body {
             #cbd5e1 100%
         );
 
-    border: 1.5px solid #94a3b8;
+    border:
+        1.5px solid
+        #94a3b8;
 
     box-shadow:
         0 2px 8px
@@ -204,7 +248,9 @@ body {
             #fed7aa 100%
         );
 
-    border: 1.5px solid #d97706;
+    border:
+        1.5px solid
+        #d97706;
 
     box-shadow:
         0 2px 8px
@@ -226,7 +272,9 @@ body {
             #fecaca 100%
         );
 
-    border: 1px solid #fca5a5;
+    border:
+        1px solid
+        #fca5a5;
 }
 
 
@@ -362,12 +410,56 @@ body {
 
 
 /* =====================================================
+   ACH PROTEKSI
+===================================================== */
+
+.ach-proteksi {
+
+    width: 85px;
+
+    font-weight: 800;
+
+    color: #0f172a;
+
+    margin-left: 15px;
+
+    white-space: nowrap;
+
+    text-align: right;
+
+    flex-shrink: 0;
+}
+
+
+/* =====================================================
    TRANSAKSI
 ===================================================== */
 
 .transaksi {
 
     width: 110px;
+
+    font-weight: 800;
+
+    color: #0f172a;
+
+    margin-left: 15px;
+
+    white-space: nowrap;
+
+    text-align: right;
+
+    flex-shrink: 0;
+}
+
+
+/* =====================================================
+   ACH BULANAN
+===================================================== */
+
+.ach-bulanan {
+
+    width: 85px;
 
     font-weight: 800;
 
@@ -450,6 +542,8 @@ body {
     .rank-grid {
 
         gap: 6px;
+
+        overflow: visible;
     }
 
 
@@ -464,36 +558,62 @@ body {
 
 
     .rank-num {
+
         width: 28px;
     }
 
 
     .change {
+
         width: 38px;
     }
 
 
     .sales {
+
         width: 95px;
+
         margin-left: 8px;
     }
 
 
     .ach {
+
         width: 70px;
+
         margin-left: 10px;
     }
 
 
     .proteksi {
+
         width: 95px;
+
         margin-left: 8px;
     }
 
 
+    .ach-proteksi {
+
+        width: 70px;
+
+        margin-left: 10px;
+    }
+
+
     .transaksi {
+
         width: 95px;
+
         margin-left: 8px;
+    }
+
+
+    .ach-bulanan {
+
+        width: 70px;
+
+        margin-left: 10px;
     }
 
 }
@@ -503,67 +623,109 @@ body {
    KHUSUS TV - BACKGROUND CARD PUTIH
 ===================================================== */
 
-@media screen and (min-width: 1200px) and (orientation: landscape) {
+@media screen and
+(min-width: 1200px)
+and (orientation: landscape) {
 
-    .rank-card {
-        background: #ffffff !important;
+    body {
+
+        color-scheme: light only;
+
+        background:
+            linear-gradient(
+                135deg,
+                #e0f2fe 0%,
+                #bae6fd 100%
+            ) !important;
     }
 
-    .rank-card.rank-1 {
-        background: #ffffff !important;
-    }
 
-    .rank-card.rank-2 {
-        background: #ffffff !important;
-    }
-
-    .rank-card.rank-3 {
-        background: #ffffff !important;
-    }
-
+    .rank-card,
+    .rank-card.rank-1,
+    .rank-card.rank-2,
+    .rank-card.rank-3,
     .rank-card.bottom-5 {
-        background: #ffffff !important;
+
+        background:
+            rgb(255,255,255)
+            !important;
+
+        color:
+            #0f172a
+            !important;
+
+        forced-color-adjust:
+            none !important;
+    }
+
+
+    .employee-name,
+    .rank-num,
+    .sales,
+    .ach,
+    .proteksi,
+    .ach-proteksi,
+    .transaksi,
+    .ach-bulanan {
+
+        color:
+            #0f172a
+            !important;
     }
 
 }
 
+
 /* =====================================================
-   TV - PROTEKSI 17 RANK FULL TANPA TERPOTONG
+   TV - SLIDE PROTEKSI 17 RANK FULL
 ===================================================== */
 
-@media screen and (min-width: 1200px) and (orientation: landscape) {
+@media screen and
+(min-width: 1200px)
+and (orientation: landscape) {
 
-    /* Slide tetap memenuhi layar */
     #slide2 {
+
         width: 100%;
+
         height: 100%;
+
         min-height: 0;
+
         overflow: hidden;
     }
 
-    /* Header jangan mengambil terlalu banyak ruang */
+
     #slide2 .header {
-        flex: 0 0 auto;
-        margin-bottom: 6px;
+
+        flex:
+            0 0 auto;
+
+        margin-bottom:
+            6px;
     }
+
 
     #slide2 .title {
-        line-height: 1;
+
+        line-height:
+            1;
     }
 
-    /*
-       AREA RANKING
-       Tingginya otomatis mengambil
-       sisa ruang setelah header
-    */
+
     #slide2 .rank-grid {
+
         width: 100%;
+
         height: auto;
+
         min-height: 0;
 
-        flex: 1 1 auto;
+        flex:
+            1 1 auto;
 
         display: flex;
+
         flex-direction: column;
 
         justify-content: flex-start;
@@ -573,27 +735,69 @@ body {
         overflow: hidden;
     }
 
-    /*
-       17 CARD
-       Semua card membagi tinggi
-       area ranking secara otomatis
-    */
+
     #slide2 .rank-card {
+
         height: auto;
+
         min-height: 0;
+
         max-height: none;
 
-        flex: 1 1 0;
+        flex:
+            1 1 0;
 
         flex-shrink: 1;
 
         padding-top: 0;
+
         padding-bottom: 0;
 
         border-radius: 16px;
     }
 
 }
+
+
+/* =====================================================
+   TV - SLIDE 1 & 3
+   CARD TETAP RAPI
+===================================================== */
+
+@media screen and
+(min-width: 1200px)
+and (orientation: landscape) {
+
+    #slide1 .rank-grid,
+    #slide3 .rank-grid {
+
+        justify-content:
+            flex-start;
+
+        gap: 2px;
+
+        overflow: hidden;
+    }
+
+
+    #slide1 .rank-card,
+    #slide3 .rank-card {
+
+        height:
+            4.2vh;
+
+        min-height:
+            30px;
+
+        max-height:
+            52px;
+
+        flex-shrink:
+            0;
+    }
+
+}
+
 </style>
 
 </head>
@@ -741,21 +945,24 @@ const SHEET_URL =
    SLIDE SETTINGS
 ===================================================== */
 
-const SLIDE_DURATION = 5000;
+const SLIDE_DURATION =
+    5000;
 
 
 /* =====================================================
    CURRENT SLIDE
 ===================================================== */
 
-let currentSlide = 1;
+let currentSlide =
+    1;
 
 
 /* =====================================================
    DATA
 ===================================================== */
 
-let employeeData = [];
+let employeeData =
+    [];
 
 
 /* =====================================================
@@ -981,10 +1188,24 @@ async function loadData() {
             );
 
 
+        const achProteksiColumn =
+            findColumn(
+                data.table.cols,
+                "ACH PROTEKSI"
+            );
+
+
         const trxColumn =
             findColumn(
                 data.table.cols,
                 "TRX"
+            );
+
+
+        const achBulananColumn =
+            findColumn(
+                data.table.cols,
+                "ACH BULANAN"
             );
 
 
@@ -1048,11 +1269,33 @@ async function loadData() {
 
 
         if (
+            achProteksiColumn === -1
+        ) {
+
+            throw new Error(
+                'Header "ACH PROTEKSI" tidak ditemukan.'
+            );
+
+        }
+
+
+        if (
             trxColumn === -1
         ) {
 
             throw new Error(
                 'Header "TRX" tidak ditemukan.'
+            );
+
+        }
+
+
+        if (
+            achBulananColumn === -1
+        ) {
+
+            throw new Error(
+                'Header "ACH BULANAN" tidak ditemukan.'
             );
 
         }
@@ -1108,9 +1351,21 @@ async function loadData() {
                             ];
 
 
+                        const achProteksiCell =
+                            row.c[
+                                achProteksiColumn
+                            ];
+
+
                         const trxCell =
                             row.c[
                                 trxColumn
+                            ];
+
+
+                        const achBulananCell =
+                            row.c[
+                                achBulananColumn
                             ];
 
 
@@ -1158,9 +1413,19 @@ async function loadData() {
                                     proteksiCell
                                 ),
 
+                            achProteksi:
+                                getCellValue(
+                                    achProteksiCell
+                                ),
+
                             trx:
                                 getCellValue(
                                     trxCell
+                                ),
+
+                            achBulanan:
+                                getCellValue(
+                                    achBulananCell
                                 )
 
                         };
@@ -1600,6 +1865,16 @@ function renderCards(
                         )}
                     </span>
 
+
+                    <span
+                        class="ach-proteksi"
+                    >
+                        ${escapeHtml(
+                            employee.achProteksi ||
+                            "-"
+                        )}
+                    </span>
+
                 `;
 
             }
@@ -1621,6 +1896,16 @@ function renderCards(
                     >
                         ${escapeHtml(
                             employee.trx ||
+                            "-"
+                        )}
+                    </span>
+
+
+                    <span
+                        class="ach-bulanan"
+                    >
+                        ${escapeHtml(
+                            employee.achBulanan ||
                             "-"
                         )}
                     </span>
