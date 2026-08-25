@@ -526,6 +526,29 @@ body {
     }
 
 }
+
+/* =====================================================
+   TV - PROTEKSI 17 RANK TANPA TERPOTONG
+===================================================== */
+
+@media screen and (min-width: 1200px) and (orientation: landscape) {
+
+    #slide2 .rank-grid {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        gap: 2px;
+        overflow: hidden;
+    }
+
+    #slide2 .rank-card {
+        height: calc((100vh - 120px) / 17);
+        min-height: 0;
+        max-height: none;
+        flex-shrink: 0;
+    }
+
+}
 </style>
 
 </head>
