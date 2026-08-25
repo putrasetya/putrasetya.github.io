@@ -3,102 +3,90 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ranking Badminton TV</title>
+    <title>Ranking Badminton Top 20</title>
     <style>
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Segoe UI', Arial, sans-serif;
         }
 
         body {
             width: 100vw;
-            height: 100vh;
+            min-height: 100vh;
             background: linear-gradient(135deg, #e0f2fe 0%, #bae6fd 100%);
             display: flex;
             justify-content: center;
             align-items: center;
-            overflow: hidden; /* Menghindari scrollbar di layar TV */
+            padding: 20px;
         }
 
-        .tv-container {
-            width: 95vw;
-            height: 90vh;
-            position: relative;
+        .container {
+            width: 100%;
+            max-width: 1600px;
             display: flex;
             flex-direction: column;
+            gap: 15px;
         }
 
         /* Header */
         .header {
-            margin-bottom: 20px;
+            width: 100%;
         }
         .logo {
-            font-size: 1.8rem;
+            font-size: 1.4rem;
             font-weight: bold;
             color: #1e293b;
-            display: flex;
-            align-items: center;
-            gap: 5px;
         }
         .title {
-            font-size: 2.8rem;
+            font-size: 1.8rem;
             font-weight: 800;
             color: #0f172a;
-            max-width: 65%;
             line-height: 1.2;
-            margin-top: 10px;
+            margin-top: 5px;
         }
 
-        /* Layout Utama Grid 2 Kolom */
-        .content-grid {
+        /* Grid Utama 20 Data */
+        .rank-grid {
             display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px 40px;
-            width: 70%; /* Memberi ruang untuk gambar pemain di kanan */
+            grid-template-columns: repeat(2, 1fr); /* Default 2 Kolom untuk Landscape/TV */
+            gap: 8px 20px;
+            width: 100%;
         }
 
-        /* Item Baris */
+        /* Card Kompak agar 20 Data Muat Layar */
         .rank-card {
             background: white;
-            padding: 12px 24px;
-            border-radius: 50px;
+            padding: 6px 14px;
+            border-radius: 30px;
             display: flex;
             align-items: center;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-            font-size: 1.4rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+            font-size: 0.95rem;
             font-weight: 600;
         }
 
         .rank-num {
-            width: 35px;
-            color: #334155;
+            width: 28px;
+            color: #475569;
+            font-weight: 700;
         }
         
         .change {
-            width: 45px;
-            font-size: 1rem;
-            font-weight: bold;
+            width: 35px;
+            font-size: 0.8rem;
+            font-weight: 700;
         }
         .up { color: #16a34a; }
         .down { color: #dc2626; }
-        .same { color: #64748b; }
-
-        .player-img {
-            width: 45px;
-            height: 45px;
-            border-radius: 50%;
-            background-color: #cbd5e1;
-            margin-right: 15px;
-            object-fit: cover;
-        }
+        .same { color: #94a3b8; }
 
         .flag {
-            width: 30px;
-            height: 20px;
-            border-radius: 4px;
-            margin-right: 15px;
+            width: 22px;
+            height: 15px;
+            border-radius: 2px;
+            margin-right: 10px;
             object-fit: cover;
             box-shadow: 0 0 2px rgba(0,0,0,0.2);
         }
@@ -109,6 +97,7 @@
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
+            padding-right: 10px;
         }
 
         .points {
@@ -116,114 +105,60 @@
             color: #0f172a;
         }
 
-        /* Hero Image (Sisi Kanan) */
-        .hero-image {
-            position: absolute;
-            right: 0;
-            bottom: 0;
-            height: 85%;
-            z-index: 10;
-            pointer-events: none;
+        /* RESPONSIVE UNTUK MOBILE (PORTRAIT) */
+        @media (max-width: 768px) {
+            body {
+                align-items: flex-start;
+                padding: 15px;
+            }
+
+            .title {
+                font-size: 1.3rem;
+            }
+
+            .rank-grid {
+                grid-template-columns: 1fr; /* Jadi 1 Kolom di HP */
+                gap: 8px;
+            }
+
+            .rank-card {
+                padding: 10px 16px;
+                font-size: 0.9rem;
+            }
         }
     </style>
 </head>
 <body>
 
-    <div class="tv-container">
-        <!-- Header -->
+    <div class="container">
         <div class="header">
             <div class="logo">GoodStats</div>
-            <h1 class="title">Ranking Pasca BAC 2024:<br>Ginting Terjun 4 Tingkat, Jojo Naik 2 Tingkat</h1>
+            <h1 class="title">Ranking BWF Tunggal Putra — Top 20</h1>
         </div>
 
-        <!-- Daftar Ranking (Dua Kolom) -->
-        <div class="content-grid">
-            <!-- Kolom Kiri (1-5) -->
-            <div class="rank-card">
-                <span class="rank-num">1</span>
-                <span class="change same">-</span>
-                <img src="https://flagcdn.com/w40/dk.png" class="flag" alt="Denmark">
-                <span class="player-name">Viktor Axelsen</span>
-                <span class="points">98.715</span>
-            </div>
+        <div class="rank-grid">
+            <div class="rank-card"><span class="rank-num">1</span><span class="change same">-</span><img src="https://flagcdn.com/w40/dk.png" class="flag"><span class="player-name">Viktor Axelsen</span><span class="points">98.715</span></div>
+            <div class="rank-card"><span class="rank-num">2</span><span class="change same">-</span><img src="https://flagcdn.com/w40/cn.png" class="flag"><span class="player-name">Shi Yu Qi</span><span class="points">92.184</span></div>
+            <div class="rank-card"><span class="rank-num">3</span><span class="change up">▲ 2</span><img src="https://flagcdn.com/w40/id.png" class="flag"><span class="player-name">Jonatan Christie</span><span class="points">89.211</span></div>
+            <div class="rank-card"><span class="rank-num">4</span><span class="change same">-</span><img src="https://flagcdn.com/w40/dk.png" class="flag"><span class="player-name">Anders Antonsen</span><span class="points">87.754</span></div>
+            <div class="rank-card"><span class="rank-num">5</span><span class="change up">▲ 1</span><img src="https://flagcdn.com/w40/jp.png" class="flag"><span class="player-name">Kodai Naraoka</span><span class="points">82.815</span></div>
+            <div class="rank-card"><span class="rank-num">6</span><span class="change up">▲ 1</span><img src="https://flagcdn.com/w40/cn.png" class="flag"><span class="player-name">Li Shifeng</span><span class="points">81.598</span></div>
+            <div class="rank-card"><span class="rank-num">7</span><span class="change down">▼ 4</span><img src="https://flagcdn.com/w40/id.png" class="flag"><span class="player-name">Anthony Sinisuka Ginting</span><span class="points">79.701</span></div>
+            <div class="rank-card"><span class="rank-num">8</span><span class="change same">-</span><img src="https://flagcdn.com/w40/th.png" class="flag"><span class="player-name">Kunlavut Vitidsarn</span><span class="points">78.598</span></div>
+            <div class="rank-card"><span class="rank-num">9</span><span class="change same">-</span><img src="https://flagcdn.com/w40/in.png" class="flag"><span class="player-name">Prannoy H. S.</span><span class="points">75.847</span></div>
+            <div class="rank-card"><span class="rank-num">10</span><span class="change up">▲ 1</span><img src="https://flagcdn.com/w40/my.png" class="flag"><span class="player-name">Lee Zii Jia</span><span class="points">69.856</span></div>
 
-            <div class="rank-card">
-                <span class="rank-num">2</span>
-                <span class="change same">-</span>
-                <img src="https://flagcdn.com/w40/cn.png" class="flag" alt="China">
-                <span class="player-name">Shi Yu Qi</span>
-                <span class="points">92.184</span>
-            </div>
-
-            <div class="rank-card">
-                <span class="rank-num">3</span>
-                <span class="change up">▲ 2</span>
-                <img src="https://flagcdn.com/w40/id.png" class="flag" alt="Indonesia">
-                <span class="player-name">Jonatan Christie</span>
-                <span class="points">89.211</span>
-            </div>
-
-            <div class="rank-card">
-                <span class="rank-num">4</span>
-                <span class="change same">-</span>
-                <img src="https://flagcdn.com/w40/dk.png" class="flag" alt="Denmark">
-                <span class="player-name">Anders Antonsen</span>
-                <span class="points">87.754</span>
-            </div>
-
-            <div class="rank-card">
-                <span class="rank-num">5</span>
-                <span class="change up">▲ 1</span>
-                <img src="https://flagcdn.com/w40/jp.png" class="flag" alt="Jepang">
-                <span class="player-name">Kodai Naraoka</span>
-                <span class="points">82.815</span>
-            </div>
-
-            <!-- Kolom Kanan (6-10) -->
-            <div class="rank-card">
-                <span class="rank-num">6</span>
-                <span class="change up">▲ 1</span>
-                <img src="https://flagcdn.com/w40/cn.png" class="flag" alt="China">
-                <span class="player-name">Li Shifeng</span>
-                <span class="points">81.598</span>
-            </div>
-
-            <div class="rank-card">
-                <span class="rank-num">7</span>
-                <span class="change down">▼ 4</span>
-                <img src="https://flagcdn.com/w40/id.png" class="flag" alt="Indonesia">
-                <span class="player-name">Anthony Sinisuka Ginting</span>
-                <span class="points">79.701</span>
-            </div>
-
-            <div class="rank-card">
-                <span class="rank-num">8</span>
-                <span class="change same">-</span>
-                <img src="https://flagcdn.com/w40/th.png" class="flag" alt="Thailand">
-                <span class="player-name">Kunlavut Vitidsarn</span>
-                <span class="points">78.598</span>
-            </div>
-
-            <div class="rank-card">
-                <span class="rank-num">9</span>
-                <span class="change same">-</span>
-                <img src="https://flagcdn.com/w40/in.png" class="flag" alt="India">
-                <span class="player-name">Prannoy H. S.</span>
-                <span class="points">75.847</span>
-            </div>
-
-            <div class="rank-card">
-                <span class="rank-num">10</span>
-                <span class="change up">▲ 1</span>
-                <img src="https://flagcdn.com/w40/my.png" class="flag" alt="Malaysia">
-                <span class="player-name">Lee Zii Jia</span>
-                <span class="points">69.856</span>
-            </div>
+            <div class="rank-card"><span class="rank-num">11</span><span class="change down">▼ 1</span><img src="https://flagcdn.com/w40/sg.png" class="flag"><span class="player-name">Loh Kean Yew</span><span class="points">68.306</span></div>
+            <div class="rank-card"><span class="rank-num">12</span><span class="change same">-</span><img src="https://flagcdn.com/w40/jp.png" class="flag"><span class="player-name">Kenta Nishimoto</span><span class="points">66.407</span></div>
+            <div class="rank-card"><span class="rank-num">13</span><span class="change up">▲ 2</span><img src="https://flagcdn.com/w40/tw.png" class="flag"><span class="player-name">Chou Tien Chen</span><span class="points">65.288</span></div>
+            <div class="rank-card"><span class="rank-num">14</span><span class="change down">▼ 1</span><img src="https://flagcdn.com/w40/in.png" class="flag"><span class="player-name">Lakshya Sen</span><span class="points">64.221</span></div>
+            <div class="rank-card"><span class="rank-num">15</span><span class="change same">-</span><img src="https://flagcdn.com/w40/cn.png" class="flag"><span class="player-name">Lu Guang Zu</span><span class="points">60.101</span></div>
+            <div class="rank-card"><span class="rank-num">16</span><span class="change up">▲ 1</span><img src="https://flagcdn.com/w40/hk.png" class="flag"><span class="player-name">Lee Cheuk Yiu</span><span class="points">59.970</span></div>
+            <div class="rank-card"><span class="rank-num">17</span><span class="change down">▼ 2</span><img src="https://flagcdn.com/w40/my.png" class="flag"><span class="player-name">Ng Tze Yong</span><span class="points">57.080</span></div>
+            <div class="rank-card"><span class="rank-num">18</span><span class="change up">▲ 3</span><img src="https://flagcdn.com/w40/fr.png" class="flag"><span class="player-name">Toma Junior Popov</span><span class="points">55.300</span></div>
+            <div class="rank-card"><span class="rank-num">19</span><span class="change same">-</span><img src="https://flagcdn.com/w40/jp.png" class="flag"><span class="player-name">Koki Watanabe</span><span class="points">54.120</span></div>
+            <div class="rank-card"><span class="rank-num">20</span><span class="change down">▼ 1</span><img src="https://flagcdn.com/w40/id.png" class="flag"><span class="player-name">Chico Aura Dwi Wardoyo</span><span class="points">52.910</span></div>
         </div>
-
-        <!-- Gambar Atlet (Optional Placeholder) -->
-        <!-- Ganti src dengan link/gambar PNG transparan atlet kamu -->
-        <!-- <img src="pemain.png" class="hero-image" alt="Pemain"> -->
     </div>
 
 </body>
