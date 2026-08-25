@@ -33,7 +33,10 @@
             justify-content: space-between;
         }
 
-        /* HEADER */
+        /* =========================================
+           HEADER
+        ========================================= */
+
         .header {
             width: 100%;
             text-align: center;
@@ -48,7 +51,10 @@
             letter-spacing: 1px;
         }
 
-        /* GRID */
+        /* =========================================
+           RANKING GRID
+        ========================================= */
+
         .rank-grid {
             display: flex;
             flex-direction: column;
@@ -57,7 +63,10 @@
             gap: 2px;
         }
 
-        /* CARD STANDARD */
+        /* =========================================
+           RANK CARD
+        ========================================= */
+
         .rank-card {
             background: white;
             padding: 0 16px;
@@ -71,10 +80,9 @@
         }
 
         /* =========================================
-           WARNA KHUSUS TOP 3
+           RANK 1 - GOLD
         ========================================= */
 
-        /* RANK 1 - GOLD */
         .rank-card.rank-1 {
             background: linear-gradient(
                 90deg,
@@ -82,11 +90,17 @@
                 #fef3c7 50%,
                 #fde68a 100%
             );
+
             border: 1.5px solid #f59e0b;
-            box-shadow: 0 2px 8px rgba(245,158,11,0.18);
+
+            box-shadow:
+                0 2px 8px rgba(245,158,11,0.18);
         }
 
-        /* RANK 2 - SILVER */
+        /* =========================================
+           RANK 2 - SILVER
+        ========================================= */
+
         .rank-card.rank-2 {
             background: linear-gradient(
                 90deg,
@@ -94,11 +108,17 @@
                 #e2e8f0 50%,
                 #cbd5e1 100%
             );
+
             border: 1.5px solid #94a3b8;
-            box-shadow: 0 2px 8px rgba(100,116,139,0.15);
+
+            box-shadow:
+                0 2px 8px rgba(100,116,139,0.15);
         }
 
-        /* RANK 3 - BRONZE */
+        /* =========================================
+           RANK 3 - BRONZE
+        ========================================= */
+
         .rank-card.rank-3 {
             background: linear-gradient(
                 90deg,
@@ -106,12 +126,15 @@
                 #ffedd5 50%,
                 #fed7aa 100%
             );
+
             border: 1.5px solid #d97706;
-            box-shadow: 0 2px 8px rgba(217,119,6,0.15);
+
+            box-shadow:
+                0 2px 8px rgba(217,119,6,0.15);
         }
 
         /* =========================================
-           5 RANK TERBAWAH
+           BOTTOM 5 - MERAH
         ========================================= */
 
         .rank-card.bottom-5 {
@@ -121,11 +144,12 @@
                 #fee2e2 50%,
                 #fecaca 100%
             );
+
             border: 1px solid #fca5a5;
         }
 
         /* =========================================
-           RANK NUMBER
+           NOMOR RANK
         ========================================= */
 
         .rank-num {
@@ -159,10 +183,10 @@
         }
 
         /* =========================================
-           NAMA
+           EMPLOYEE NAME
         ========================================= */
 
-        .player-name {
+        .employee-name {
             flex-grow: 1;
             color: #0f172a;
             white-space: nowrap;
@@ -171,7 +195,7 @@
         }
 
         /* =========================================
-           NILAI / POINTS
+           POINTS
         ========================================= */
 
         .points {
@@ -182,7 +206,31 @@
         }
 
         /* =========================================
-           RESPONSIVE MOBILE
+           LOADING
+        ========================================= */
+
+        .loading {
+            text-align: center;
+            color: #475569;
+            font-size: 1rem;
+            font-weight: 600;
+            padding: 20px;
+        }
+
+        /* =========================================
+           ERROR
+        ========================================= */
+
+        .error {
+            text-align: center;
+            color: #dc2626;
+            font-size: 0.9rem;
+            font-weight: 600;
+            padding: 20px;
+        }
+
+        /* =========================================
+           MOBILE
         ========================================= */
 
         @media (max-width: 768px), (max-aspect-ratio: 1/1) {
@@ -226,147 +274,431 @@
         </div>
 
         <!-- RANKING -->
-        <div class="rank-grid">
+        <div class="rank-grid" id="rankGrid">
 
-            <!-- =====================================
-                 TOP 3
-            ====================================== -->
-
-            <!-- RANK 1 - GOLD -->
-            <div class="rank-card rank-1">
-                <span class="rank-num">1</span>
-                <span class="change same">-</span>
-                <span class="player-name">Viktor Axelsen</span>
-                <span class="points">98.715</span>
-            </div>
-
-            <!-- RANK 2 - SILVER -->
-            <div class="rank-card rank-2">
-                <span class="rank-num">2</span>
-                <span class="change same">-</span>
-                <span class="player-name">Shi Yu Qi</span>
-                <span class="points">92.184</span>
-            </div>
-
-            <!-- RANK 3 - BRONZE -->
-            <div class="rank-card rank-3">
-                <span class="rank-num">3</span>
-                <span class="change up">▲ 2</span>
-                <span class="player-name">Jonatan Christie</span>
-                <span class="points">89.211</span>
-            </div>
-
-
-            <!-- =====================================
-                 MID RANKS
-            ====================================== -->
-
-            <div class="rank-card">
-                <span class="rank-num">4</span>
-                <span class="change same">-</span>
-                <span class="player-name">Anders Antonsen</span>
-                <span class="points">87.754</span>
-            </div>
-
-            <div class="rank-card">
-                <span class="rank-num">5</span>
-                <span class="change up">▲ 1</span>
-                <span class="player-name">Kodai Naraoka</span>
-                <span class="points">82.815</span>
-            </div>
-
-            <div class="rank-card">
-                <span class="rank-num">6</span>
-                <span class="change up">▲ 1</span>
-                <span class="player-name">Li Shifeng</span>
-                <span class="points">81.598</span>
-            </div>
-
-            <div class="rank-card">
-                <span class="rank-num">7</span>
-                <span class="change down">▼ 4</span>
-                <span class="player-name">Anthony Sinisuka Ginting</span>
-                <span class="points">79.701</span>
-            </div>
-
-            <div class="rank-card">
-                <span class="rank-num">8</span>
-                <span class="change same">-</span>
-                <span class="player-name">Kunlavut Vitidsarn</span>
-                <span class="points">78.598</span>
-            </div>
-
-            <div class="rank-card">
-                <span class="rank-num">9</span>
-                <span class="change same">-</span>
-                <span class="player-name">Prannoy H. S.</span>
-                <span class="points">75.847</span>
-            </div>
-
-            <div class="rank-card">
-                <span class="rank-num">10</span>
-                <span class="change up">▲ 1</span>
-                <span class="player-name">Lee Zii Jia</span>
-                <span class="points">69.856</span>
-            </div>
-
-            <div class="rank-card">
-                <span class="rank-num">11</span>
-                <span class="change down">▼ 1</span>
-                <span class="player-name">Loh Kean Yew</span>
-                <span class="points">68.306</span>
-            </div>
-
-            <div class="rank-card">
-                <span class="rank-num">12</span>
-                <span class="change same">-</span>
-                <span class="player-name">Kenta Nishimoto</span>
-                <span class="points">66.407</span>
-            </div>
-
-
-            <!-- =====================================
-                 BOTTOM 5 - MERAH
-            ====================================== -->
-
-            <div class="rank-card bottom-5">
-                <span class="rank-num">13</span>
-                <span class="change up">▲ 2</span>
-                <span class="player-name">Chou Tien Chen</span>
-                <span class="points">65.288</span>
-            </div>
-
-            <div class="rank-card bottom-5">
-                <span class="rank-num">14</span>
-                <span class="change down">▼ 1</span>
-                <span class="player-name">Lakshya Sen</span>
-                <span class="points">64.221</span>
-            </div>
-
-            <div class="rank-card bottom-5">
-                <span class="rank-num">15</span>
-                <span class="change same">-</span>
-                <span class="player-name">Lu Guang Zu</span>
-                <span class="points">60.101</span>
-            </div>
-
-            <div class="rank-card bottom-5">
-                <span class="rank-num">16</span>
-                <span class="change up">▲ 1</span>
-                <span class="player-name">Lee Cheuk Yiu</span>
-                <span class="points">59.970</span>
-            </div>
-
-            <div class="rank-card bottom-5">
-                <span class="rank-num">17</span>
-                <span class="change down">▼ 2</span>
-                <span class="player-name">Ng Tze Yong</span>
-                <span class="points">57.080</span>
+            <div class="loading">
+                Memuat employee name...
             </div>
 
         </div>
 
     </div>
+
+
+    <script>
+
+        /* =====================================================
+           GOOGLE SPREADSHEET
+        ===================================================== */
+
+        const SPREADSHEET_ID =
+            "16Alf0KUmqeaBx1zlsKfbcM5oPbzc18dBMgtlZYhP66M";
+
+        const SHEET_NAME = "Sheet1";
+
+
+        /* =====================================================
+           URL GOOGLE SHEETS
+        ===================================================== */
+
+        const SHEET_URL =
+            `https://docs.google.com/spreadsheets/d/${SPREADSHEET_ID}/gviz/tq?tqx=out:json&sheet=${encodeURIComponent(SHEET_NAME)}`;
+
+
+        /* =====================================================
+           DATA RANKING CONTOH
+           
+           Bagian ini hanya sebagai data dummy untuk:
+           - change
+           - points
+
+           NAMA EMPLOYEE akan diambil dari spreadsheet.
+        ===================================================== */
+
+        const rankingData = [
+            {
+                change: "same",
+                changeText: "-"
+            },
+            {
+                change: "same",
+                changeText: "-"
+            },
+            {
+                change: "up",
+                changeText: "▲ 2"
+            },
+            {
+                change: "same",
+                changeText: "-"
+            },
+            {
+                change: "up",
+                changeText: "▲ 1"
+            },
+            {
+                change: "up",
+                changeText: "▲ 1"
+            },
+            {
+                change: "down",
+                changeText: "▼ 4"
+            },
+            {
+                change: "same",
+                changeText: "-"
+            },
+            {
+                change: "same",
+                changeText: "-"
+            },
+            {
+                change: "up",
+                changeText: "▲ 1"
+            },
+            {
+                change: "down",
+                changeText: "▼ 1"
+            },
+            {
+                change: "same",
+                changeText: "-"
+            },
+            {
+                change: "up",
+                changeText: "▲ 2"
+            },
+            {
+                change: "down",
+                changeText: "▼ 1"
+            },
+            {
+                change: "same",
+                changeText: "-"
+            },
+            {
+                change: "up",
+                changeText: "▲ 1"
+            },
+            {
+                change: "down",
+                changeText: "▼ 2"
+            }
+        ];
+
+
+        /* =====================================================
+           POINTS CONTOH
+        ===================================================== */
+
+        const pointsData = [
+            "98.715",
+            "92.184",
+            "89.211",
+            "87.754",
+            "82.815",
+            "81.598",
+            "79.701",
+            "78.598",
+            "75.847",
+            "69.856",
+            "68.306",
+            "66.407",
+            "65.288",
+            "64.221",
+            "60.101",
+            "59.970",
+            "57.080"
+        ];
+
+
+        /* =====================================================
+           AMBIL DATA GOOGLE SHEETS
+        ===================================================== */
+
+        async function loadEmployeeNames() {
+
+            const rankGrid =
+                document.getElementById("rankGrid");
+
+            try {
+
+                const response =
+                    await fetch(SHEET_URL);
+
+                if (!response.ok) {
+                    throw new Error(
+                        "Gagal mengakses Google Spreadsheet."
+                    );
+                }
+
+                const text =
+                    await response.text();
+
+
+                /* =========================================
+                   GOOGLE GVIZ MENGEMBALIKAN:
+
+                   google.visualization.Query.setResponse({...});
+                ========================================= */
+
+                const jsonText =
+                    text
+                        .replace(
+                            /^\s*google\.visualization\.Query\.setResponse\(/,
+                            ""
+                        )
+                        .replace(
+                            /\);\s*$/,
+                            ""
+                        );
+
+                const data =
+                    JSON.parse(jsonText);
+
+
+                /* =========================================
+                   AMBIL HEADER
+                ========================================= */
+
+                const headers =
+                    data.table.cols.map(col =>
+                        String(col.label || "")
+                            .trim()
+                            .toLowerCase()
+                    );
+
+
+                /* =========================================
+                   CARI KOLOM "EMPLOYEE NAME"
+                ========================================= */
+
+                const employeeColumn =
+    data.table.cols.findIndex(
+        col =>
+            String(col.label || "").trim() === "EMPLOYEE NAME"
+    );
+
+
+                if (employeeColumn === -1) {
+
+                    throw new Error(
+                        'Kolom "employee name" tidak ditemukan.'
+                    );
+
+                }
+
+
+                /* =========================================
+                   AMBIL SEMUA NAMA EMPLOYEE
+                ========================================= */
+
+                const employeeNames =
+                    data.table.rows
+                        .map(row => {
+
+                            const cell =
+                                row.c[
+                                    employeeColumn
+                                ];
+
+                            if (!cell) {
+                                return "";
+                            }
+
+                            return String(
+                                cell.f ??
+                                cell.v ??
+                                ""
+                            ).trim();
+
+                        })
+                        .filter(name => name !== "");
+
+
+                if (employeeNames.length === 0) {
+
+                    throw new Error(
+                        "Tidak ada employee name di spreadsheet."
+                    );
+
+                }
+
+
+                renderRanking(employeeNames);
+
+
+            } catch (error) {
+
+                console.error(
+                    "ERROR:",
+                    error
+                );
+
+                rankGrid.innerHTML = `
+                    <div class="error">
+                        Gagal mengambil employee name.<br>
+                        <small>${error.message}</small>
+                    </div>
+                `;
+
+            }
+
+        }
+
+
+        /* =====================================================
+           RENDER RANKING
+        ===================================================== */
+
+        function renderRanking(employeeNames) {
+
+            const rankGrid =
+                document.getElementById("rankGrid");
+
+
+            rankGrid.innerHTML = "";
+
+
+            const total =
+                employeeNames.length;
+
+
+            employeeNames.forEach(
+                (employeeName, index) => {
+
+                    const rank =
+                        index + 1;
+
+
+                    /* =====================================
+                       CLASS WARNA
+                    ===================================== */
+
+                    let rankClass =
+                        "rank-card";
+
+
+                    if (rank === 1) {
+
+                        rankClass +=
+                            " rank-1";
+
+                    }
+                    else if (rank === 2) {
+
+                        rankClass +=
+                            " rank-2";
+
+                    }
+                    else if (rank === 3) {
+
+                        rankClass +=
+                            " rank-3";
+
+                    }
+                    else if (
+                        rank > total - 5
+                    ) {
+
+                        rankClass +=
+                            " bottom-5";
+
+                    }
+
+
+                    /* =====================================
+                       CHANGE
+                    ===================================== */
+
+                    const changeInfo =
+                        rankingData[index] || {
+                            change: "same",
+                            changeText: "-"
+                        };
+
+
+                    /* =====================================
+                       POINTS
+                    ===================================== */
+
+                    const points =
+                        pointsData[index] || "-";
+
+
+                    /* =====================================
+                       BUAT CARD
+                    ===================================== */
+
+                    const card =
+                        document.createElement("div");
+
+                    card.className =
+                        rankClass;
+
+
+                    card.innerHTML = `
+                        <span class="rank-num">
+                            ${rank}
+                        </span>
+
+                        <span class="change ${changeInfo.change}">
+                            ${changeInfo.changeText}
+                        </span>
+
+                        <span class="employee-name">
+                            ${escapeHtml(employeeName)}
+                        </span>
+
+                        <span class="points">
+                            ${points}
+                        </span>
+                    `;
+
+
+                    rankGrid.appendChild(card);
+
+                }
+            );
+
+        }
+
+
+        /* =====================================================
+           KEAMANAN TEXT EMPLOYEE NAME
+        ===================================================== */
+
+        function escapeHtml(text) {
+
+            const div =
+                document.createElement("div");
+
+            div.textContent =
+                text;
+
+            return div.innerHTML;
+
+        }
+
+
+        /* =====================================================
+           LOAD DATA SAAT HALAMAN DIBUKA
+        ===================================================== */
+
+        loadEmployeeNames();
+
+
+        /* =====================================================
+           AUTO REFRESH DATA EMPLOYEE
+           SETIAP 30 DETIK
+        ===================================================== */
+
+        setInterval(
+            loadEmployeeNames,
+            30000
+        );
+
+    </script>
 
 </body>
 </html>
