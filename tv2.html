@@ -1,305 +1,705 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ACH MTD SALES ID</title>
 
-    <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Segoe UI', Arial, sans-serif;
-        }
+<meta charset="UTF-8">
 
-        body {
-            width: 100vw;
-            height: 100vh;
-            background: linear-gradient(135deg, #e0f2fe 0%, #bae6fd 100%);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 15px;
-            overflow: hidden;
-        }
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+>
 
-        .container {
-            width: 100%;
-            max-width: 900px;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-        }
+<title>AZKO SALES RANKING</title>
 
-        .header {
-            width: 100%;
-            text-align: center;
-            margin-bottom: 8px;
-        }
 
-        .title {
-            font-size: 2rem;
-            font-weight: 800;
-            color: #0f172a;
-            line-height: 1.1;
-            letter-spacing: 1px;
-        }
+<style>
 
-        .rank-grid {
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            flex-grow: 1;
-            gap: 2px;
-        }
+/* =====================================================
+   RESET
+===================================================== */
 
-        .rank-card {
-            background: white;
-            padding: 0 16px;
-            height: 4.5vh;
-            border-radius: 20px;
-            display: flex;
-            align-items: center;
-            box-shadow: 0 1px 4px rgba(0,0,0,0.04);
-            font-size: 0.85rem;
-            font-weight: 600;
-        }
+* {
 
-        /* =========================================
-           RANK 1 - GOLD
-        ========================================= */
+    box-sizing: border-box;
 
-        .rank-card.rank-1 {
-            background: linear-gradient(
-                90deg,
-                #fffbeb 0%,
-                #fef3c7 50%,
-                #fde68a 100%
-            );
+    margin: 0;
 
-            border: 1.5px solid #f59e0b;
+    padding: 0;
 
-            box-shadow:
-                0 2px 8px rgba(245,158,11,0.18);
-        }
+    font-family:
+        'Segoe UI',
+        Arial,
+        sans-serif;
 
-        /* =========================================
-           RANK 2 - SILVER
-        ========================================= */
+}
 
-        .rank-card.rank-2 {
-            background: linear-gradient(
-                90deg,
-                #f8fafc 0%,
-                #e2e8f0 50%,
-                #cbd5e1 100%
-            );
 
-            border: 1.5px solid #94a3b8;
+/* =====================================================
+   BODY
+===================================================== */
 
-            box-shadow:
-                0 2px 8px rgba(100,116,139,0.15);
-        }
+body {
 
-        /* =========================================
-           RANK 3 - BRONZE
-        ========================================= */
+    width: 100vw;
 
-        .rank-card.rank-3 {
-            background: linear-gradient(
-                90deg,
-                #fff7ed 0%,
-                #ffedd5 50%,
-                #fed7aa 100%
-            );
+    height: 100vh;
 
-            border: 1.5px solid #d97706;
+    background:
+        linear-gradient(
+            135deg,
+            #e0f2fe 0%,
+            #bae6fd 100%
+        );
 
-            box-shadow:
-                0 2px 8px rgba(217,119,6,0.15);
-        }
+    display: flex;
 
-        /* =========================================
-           5 TERBAWAH - MERAH
-        ========================================= */
+    justify-content: center;
 
-        .rank-card.bottom-5 {
-            background: linear-gradient(
-                90deg,
-                #fef2f2 0%,
-                #fee2e2 50%,
-                #fecaca 100%
-            );
+    align-items: center;
 
-            border: 1px solid #fca5a5;
-        }
+    padding: 15px;
 
-        /* =========================================
-           RANK NUMBER
-        ========================================= */
+    overflow: hidden;
 
-        .rank-num {
-            width: 30px;
-            color: #475569;
-            font-weight: 700;
-            flex-shrink: 0;
-        }
+}
 
-        /* =========================================
-           CHANGE
-        ========================================= */
 
-        .change {
-            width: 40px;
-            font-size: 0.75rem;
-            font-weight: 700;
-            flex-shrink: 0;
-        }
+/* =====================================================
+   CONTAINER
+===================================================== */
 
-        .up {
-            color: #16a34a;
-        }
+.container {
 
-        .down {
-            color: #dc2626;
-        }
+    width: 100%;
 
-        .same {
-            color: #94a3b8;
-        }
+    max-width: 900px;
 
-        /* =========================================
-           EMPLOYEE NAME
-        ========================================= */
+    height: 100%;
 
-        .employee-name {
-            flex-grow: 1;
-            color: #0f172a;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
+    display: flex;
 
-        /* =========================================
-           SALES MTD
-        ========================================= */
+    flex-direction: column;
 
-        .sales {
-            width: 110px;
-            font-weight: 800;
-            color: #0f172a;
-            margin-left: 10px;
-            white-space: nowrap;
-            text-align: right;
-            flex-shrink: 0;
-        }
+    justify-content: space-between;
 
-        /* =========================================
-           ACH MTD
-        ========================================= */
+}
 
-        .ach {
-            width: 85px;
-            font-weight: 800;
-            color: #0f172a;
-            margin-left: 15px;
-            white-space: nowrap;
-            text-align: right;
-            flex-shrink: 0;
-        }
 
-        /* =========================================
-           LOADING / ERROR
-        ========================================= */
+/* =====================================================
+   HEADER
+===================================================== */
 
-        .loading,
-        .error {
-            text-align: center;
-            padding: 20px;
-            font-weight: 600;
-        }
+.header {
 
-        .loading {
-            color: #475569;
-        }
+    width: 100%;
 
-        .error {
-            color: #dc2626;
-        }
+    text-align: center;
 
-        /* =========================================
-           MOBILE / TABLET
-        ========================================= */
+    margin-bottom: 8px;
 
-        @media (max-width: 768px), (max-aspect-ratio: 1/1) {
+}
 
-            body {
-                height: auto;
-                min-height: 100vh;
-                overflow: auto;
-                align-items: flex-start;
-            }
 
-            .container {
-                height: auto;
-                justify-content: flex-start;
-                gap: 10px;
-            }
+.title {
 
-            .title {
-                font-size: 1.5rem;
-            }
+    font-size: 2rem;
 
-            .rank-grid {
-                gap: 6px;
-            }
+    font-weight: 800;
 
-            .rank-card {
-                height: 42px;
-                font-size: 0.9rem;
-                padding: 0 10px;
-            }
+    color: #0f172a;
 
-            .rank-num {
-                width: 28px;
-            }
+    line-height: 1.1;
 
-            .change {
-                width: 38px;
-            }
+    letter-spacing: 1px;
 
-            .sales {
-                width: 95px;
-                margin-left: 8px;
-            }
+}
 
-            .ach {
-                width: 70px;
-                margin-left: 10px;
-            }
-        }
-    </style>
+
+/* =====================================================
+   SLIDE
+===================================================== */
+
+.slide {
+
+    width: 100%;
+
+    height: 100%;
+
+    display: none;
+
+    flex-direction: column;
+
+}
+
+
+.slide.active {
+
+    display: flex;
+
+}
+
+
+/* =====================================================
+   RANK GRID
+===================================================== */
+
+.rank-grid {
+
+    display: flex;
+
+    flex-direction: column;
+
+    justify-content: space-between;
+
+    flex-grow: 1;
+
+    gap: 2px;
+
+}
+
+
+/* =====================================================
+   RANK CARD
+===================================================== */
+
+.rank-card {
+
+    background: white;
+
+    padding: 0 16px;
+
+    height: 4.5vh;
+
+    border-radius: 20px;
+
+    display: flex;
+
+    align-items: center;
+
+    box-shadow:
+        0 1px 4px rgba(0,0,0,0.04);
+
+    font-size: 0.85rem;
+
+    font-weight: 600;
+
+}
+
+
+/* =====================================================
+   RANK 1
+===================================================== */
+
+.rank-card.rank-1 {
+
+    background:
+        linear-gradient(
+            90deg,
+            #fffbeb 0%,
+            #fef3c7 50%,
+            #fde68a 100%
+        );
+
+    border:
+        1.5px solid #f59e0b;
+
+    box-shadow:
+        0 2px 8px
+        rgba(245,158,11,0.18);
+
+}
+
+
+/* =====================================================
+   RANK 2
+===================================================== */
+
+.rank-card.rank-2 {
+
+    background:
+        linear-gradient(
+            90deg,
+            #f8fafc 0%,
+            #e2e8f0 50%,
+            #cbd5e1 100%
+        );
+
+    border:
+        1.5px solid #94a3b8;
+
+    box-shadow:
+        0 2px 8px
+        rgba(100,116,139,0.15);
+
+}
+
+
+/* =====================================================
+   RANK 3
+===================================================== */
+
+.rank-card.rank-3 {
+
+    background:
+        linear-gradient(
+            90deg,
+            #fff7ed 0%,
+            #ffedd5 50%,
+            #fed7aa 100%
+        );
+
+    border:
+        1.5px solid #d97706;
+
+    box-shadow:
+        0 2px 8px
+        rgba(217,119,6,0.15);
+
+}
+
+
+/* =====================================================
+   5 TERBAWAH
+===================================================== */
+
+.rank-card.bottom-5 {
+
+    background:
+        linear-gradient(
+            90deg,
+            #fef2f2 0%,
+            #fee2e2 50%,
+            #fecaca 100%
+        );
+
+    border:
+        1px solid #fca5a5;
+
+}
+
+
+/* =====================================================
+   RANK NUMBER
+===================================================== */
+
+.rank-num {
+
+    width: 30px;
+
+    color: #475569;
+
+    font-weight: 700;
+
+    flex-shrink: 0;
+
+}
+
+
+/* =====================================================
+   CHANGE
+===================================================== */
+
+.change {
+
+    width: 40px;
+
+    font-size: 0.75rem;
+
+    font-weight: 700;
+
+    flex-shrink: 0;
+
+}
+
+
+.up {
+
+    color: #16a34a;
+
+}
+
+
+.down {
+
+    color: #dc2626;
+
+}
+
+
+.same {
+
+    color: #94a3b8;
+
+}
+
+
+/* =====================================================
+   EMPLOYEE
+===================================================== */
+
+.employee-name {
+
+    flex-grow: 1;
+
+    color: #0f172a;
+
+    white-space: nowrap;
+
+    overflow: hidden;
+
+    text-overflow: ellipsis;
+
+}
+
+
+/* =====================================================
+   SLIDE 1
+   SALES
+===================================================== */
+
+.sales {
+
+    width: 110px;
+
+    font-weight: 800;
+
+    color: #0f172a;
+
+    margin-left: 10px;
+
+    white-space: nowrap;
+
+    text-align: right;
+
+    flex-shrink: 0;
+
+}
+
+
+/* =====================================================
+   SLIDE 1
+   ACH
+===================================================== */
+
+.ach {
+
+    width: 85px;
+
+    font-weight: 800;
+
+    color: #0f172a;
+
+    margin-left: 15px;
+
+    white-space: nowrap;
+
+    text-align: right;
+
+    flex-shrink: 0;
+
+}
+
+
+/* =====================================================
+   SLIDE 2
+   PROTEKSI
+===================================================== */
+
+.proteksi {
+
+    width: 110px;
+
+    font-weight: 800;
+
+    color: #0f172a;
+
+    margin-left: 15px;
+
+    white-space: nowrap;
+
+    text-align: right;
+
+    flex-shrink: 0;
+
+}
+
+
+/* =====================================================
+   SLIDE 3
+   TRANSAKSI
+===================================================== */
+
+.transaksi {
+
+    width: 110px;
+
+    font-weight: 800;
+
+    color: #0f172a;
+
+    margin-left: 15px;
+
+    white-space: nowrap;
+
+    text-align: right;
+
+    flex-shrink: 0;
+
+}
+
+
+/* =====================================================
+   LOADING
+===================================================== */
+
+.loading,
+.error {
+
+    text-align: center;
+
+    padding: 20px;
+
+    font-weight: 600;
+
+}
+
+
+.loading {
+
+    color: #475569;
+
+}
+
+
+.error {
+
+    color: #dc2626;
+
+}
+
+
+/* =====================================================
+   MOBILE
+===================================================== */
+
+@media (
+    max-width: 768px
+),
+(
+    max-aspect-ratio: 1/1
+) {
+
+    body {
+
+        height: auto;
+
+        min-height: 100vh;
+
+        overflow: auto;
+
+        align-items: flex-start;
+
+    }
+
+
+    .container {
+
+        height: auto;
+
+        justify-content: flex-start;
+
+        gap: 10px;
+
+    }
+
+
+    .title {
+
+        font-size: 1.5rem;
+
+    }
+
+
+    .rank-grid {
+
+        gap: 6px;
+
+    }
+
+
+    .rank-card {
+
+        height: 42px;
+
+        font-size: 0.9rem;
+
+        padding: 0 10px;
+
+    }
+
+
+    .rank-num {
+
+        width: 28px;
+
+    }
+
+
+    .change {
+
+        width: 38px;
+
+    }
+
+
+    .sales {
+
+        width: 95px;
+
+        margin-left: 8px;
+
+    }
+
+
+    .ach {
+
+        width: 70px;
+
+        margin-left: 10px;
+
+    }
+
+
+    .proteksi {
+
+        width: 95px;
+
+        margin-left: 8px;
+
+    }
+
+
+    .transaksi {
+
+        width: 95px;
+
+        margin-left: 8px;
+
+    }
+
+}
+
+</style>
+
 </head>
+
 
 <body>
 
+
 <div class="container">
 
-    <div class="header">
-        <h1 class="title">ACH MTD SALES ID</h1>
-    </div>
 
-    <div class="rank-grid" id="rankGrid">
+    <!-- =================================================
+         SLIDE 1
+    ================================================== -->
 
-        <div class="loading">
-            Memuat data...
+    <div
+        class="slide active"
+        id="slide1"
+    >
+
+        <div class="header">
+
+            <h1 class="title">
+                ACH MTD SALES ID
+            </h1>
+
+        </div>
+
+
+        <div
+            class="rank-grid"
+            id="rankGrid1"
+        >
+
+            <div class="loading">
+                Memuat data...
+            </div>
+
         </div>
 
     </div>
 
+
+
+    <!-- =================================================
+         SLIDE 2
+    ================================================== -->
+
+    <div
+        class="slide"
+        id="slide2"
+    >
+
+        <div class="header">
+
+            <h1 class="title">
+                PROTEKSI
+            </h1>
+
+        </div>
+
+
+        <div
+            class="rank-grid"
+            id="rankGrid2"
+        >
+
+            <div class="loading">
+                Memuat data...
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- =================================================
+         SLIDE 3
+    ================================================== -->
+
+    <div
+        class="slide"
+        id="slide3"
+    >
+
+        <div class="header">
+
+            <h1 class="title">
+                TRANSAKSI
+            </h1>
+
+        </div>
+
+
+        <div
+            class="rank-grid"
+            id="rankGrid3"
+        >
+
+            <div class="loading">
+                Memuat data...
+            </div>
+
+        </div>
+
+    </div>
+
+
 </div>
+
 
 
 <script>
@@ -312,68 +712,148 @@ const SPREADSHEET_ID =
     "16Alf0KUmqeaBx1zlsKfbcM5oPbzc18dBMgtlZYhP66M";
 
 
-/* =====================================================
-   NAMA SHEET
-===================================================== */
-
 const SHEET_NAME =
     "Sheet1";
 
 
+const SHEET_URL =
+
+    "https://docs.google.com/spreadsheets/d/" +
+
+    SPREADSHEET_ID +
+
+    "/gviz/tq?tqx=out:json&sheet=" +
+
+    encodeURIComponent(
+        SHEET_NAME
+    );
+
+
 /* =====================================================
-   GOOGLE GVIZ URL
+   SLIDE CONFIG
 ===================================================== */
 
-const SHEET_URL =
-    "https://docs.google.com/spreadsheets/d/" +
-    SPREADSHEET_ID +
-    "/gviz/tq?tqx=out:json&sheet=" +
-    encodeURIComponent(SHEET_NAME);
+const SLIDE_DURATION =
+    5000;
 
 
 /* =====================================================
-   DATA PERUBAHAN RANK
-   SEMENTARA
+   DATA RANK CHANGE
 ===================================================== */
 
 const rankingData = [
 
-    { change: "same", changeText: "-" },
-    { change: "same", changeText: "-" },
-    { change: "up", changeText: "▲ 2" },
-    { change: "same", changeText: "-" },
-    { change: "up", changeText: "▲ 1" },
-    { change: "up", changeText: "▲ 1" },
-    { change: "down", changeText: "▼ 4" },
-    { change: "same", changeText: "-" },
-    { change: "same", changeText: "-" },
-    { change: "up", changeText: "▲ 1" },
-    { change: "down", changeText: "▼ 1" },
-    { change: "same", changeText: "-" },
-    { change: "up", changeText: "▲ 2" },
-    { change: "down", changeText: "▼ 1" },
-    { change: "same", changeText: "-" },
-    { change: "up", changeText: "▲ 1" },
-    { change: "down", changeText: "▼ 2" }
+    {
+        change: "same",
+        changeText: "-"
+    },
+
+    {
+        change: "same",
+        changeText: "-"
+    },
+
+    {
+        change: "up",
+        changeText: "▲ 2"
+    },
+
+    {
+        change: "same",
+        changeText: "-"
+    },
+
+    {
+        change: "up",
+        changeText: "▲ 1"
+    },
+
+    {
+        change: "up",
+        changeText: "▲ 1"
+    },
+
+    {
+        change: "down",
+        changeText: "▼ 4"
+    },
+
+    {
+        change: "same",
+        changeText: "-"
+    },
+
+    {
+        change: "same",
+        changeText: "-"
+    },
+
+    {
+        change: "up",
+        changeText: "▲ 1"
+    },
+
+    {
+        change: "down",
+        changeText: "▼ 1"
+    },
+
+    {
+        change: "same",
+        changeText: "-"
+    },
+
+    {
+        change: "up",
+        changeText: "▲ 2"
+    },
+
+    {
+        change: "down",
+        changeText: "▼ 1"
+    },
+
+    {
+        change: "same",
+        changeText: "-"
+    },
+
+    {
+        change: "up",
+        changeText: "▲ 1"
+    },
+
+    {
+        change: "down",
+        changeText: "▼ 2"
+    }
 
 ];
 
 
 /* =====================================================
-   LOAD DATA GOOGLE SHEETS
+   DATA GLOBAL
 ===================================================== */
 
-async function loadEmployeeData() {
+let employeeData = [];
 
-    const rankGrid =
-        document.getElementById("rankGrid");
+
+/* =====================================================
+   CURRENT SLIDE
+===================================================== */
+
+let currentSlide = 1;
+
+
+/* =====================================================
+   LOAD DATA
+===================================================== */
+
+async function loadData() {
 
 
     try {
 
-        /* =============================================
-           FETCH GOOGLE SHEETS
-        ============================================= */
 
         const response =
             await fetch(
@@ -396,13 +876,13 @@ async function loadEmployeeData() {
             await response.text();
 
 
-        /* =============================================
-           HAPUS HEADER GOOGLE GVIZ
-        ============================================= */
-
         let jsonText =
             text.trim();
 
+
+        /* =============================================
+           HAPUS HEADER GVIZ
+        ============================================= */
 
         jsonText =
             jsonText.replace(
@@ -410,10 +890,6 @@ async function loadEmployeeData() {
                 ""
             );
 
-
-        /* =============================================
-           CARI JSON
-        ============================================= */
 
         const start =
             jsonText.indexOf("{");
@@ -442,17 +918,11 @@ async function loadEmployeeData() {
             );
 
 
-        /* =============================================
-           PARSE JSON
-        ============================================= */
-
         const data =
-            JSON.parse(jsonText);
+            JSON.parse(
+                jsonText
+            );
 
-
-        /* =============================================
-           VALIDASI DATA
-        ============================================= */
 
         if (
             !data ||
@@ -468,58 +938,46 @@ async function loadEmployeeData() {
 
 
         /* =============================================
-           CARI HEADER EMPLOYEE NAME
+           CARI COLUMN
         ============================================= */
 
         const employeeColumn =
-            data.table.cols.findIndex(
-                col =>
-
-                    String(
-                        col.label || ""
-                    )
-                    .trim()
-                    .toUpperCase() ===
-                    "EMPLOYEE NAME"
+            findColumn(
+                data.table.cols,
+                "EMPLOYEE NAME"
             );
 
-
-        /* =============================================
-           CARI HEADER SALES MTD
-        ============================================= */
 
         const salesColumn =
-            data.table.cols.findIndex(
-                col =>
-
-                    String(
-                        col.label || ""
-                    )
-                    .trim()
-                    .toUpperCase() ===
-                    "SALES MTD"
+            findColumn(
+                data.table.cols,
+                "SALES MTD"
             );
 
-
-        /* =============================================
-           CARI HEADER ACH MTD
-        ============================================= */
 
         const achColumn =
-            data.table.cols.findIndex(
-                col =>
+            findColumn(
+                data.table.cols,
+                "ACH MTD"
+            );
 
-                    String(
-                        col.label || ""
-                    )
-                    .trim()
-                    .toUpperCase() ===
-                    "ACH MTD"
+
+        const proteksiColumn =
+            findColumn(
+                data.table.cols,
+                "PROTEKSI"
+            );
+
+
+        const trxColumn =
+            findColumn(
+                data.table.cols,
+                "TRX"
             );
 
 
         /* =============================================
-           VALIDASI EMPLOYEE NAME
+           VALIDASI
         ============================================= */
 
         if (
@@ -527,37 +985,51 @@ async function loadEmployeeData() {
         ) {
 
             throw new Error(
-                'Kolom "EMPLOYEE NAME" tidak ditemukan.'
+                'Header "EMPLOYEE NAME" tidak ditemukan.'
             );
 
         }
 
-
-        /* =============================================
-           VALIDASI SALES MTD
-        ============================================= */
 
         if (
             salesColumn === -1
         ) {
 
             throw new Error(
-                'Kolom "SALES MTD" tidak ditemukan.'
+                'Header "SALES MTD" tidak ditemukan.'
             );
 
         }
 
-
-        /* =============================================
-           VALIDASI ACH MTD
-        ============================================= */
 
         if (
             achColumn === -1
         ) {
 
             throw new Error(
-                'Kolom "ACH MTD" tidak ditemukan.'
+                'Header "ACH MTD" tidak ditemukan.'
+            );
+
+        }
+
+
+        if (
+            proteksiColumn === -1
+        ) {
+
+            throw new Error(
+                'Header "PROTEKSI" tidak ditemukan.'
+            );
+
+        }
+
+
+        if (
+            trxColumn === -1
+        ) {
+
+            throw new Error(
+                'Header "TRX" tidak ditemukan.'
             );
 
         }
@@ -567,127 +1039,128 @@ async function loadEmployeeData() {
            AMBIL DATA
         ============================================= */
 
-        const employeeData =
+        employeeData =
+
             data.table.rows
-                .map(row => {
 
-                    if (!row.c) {
-                        return null;
+                .map(
+                    row => {
+
+
+                        if (!row.c) {
+
+                            return null;
+
+                        }
+
+
+                        const employeeCell =
+                            row.c[
+                                employeeColumn
+                            ];
+
+
+                        const salesCell =
+                            row.c[
+                                salesColumn
+                            ];
+
+
+                        const achCell =
+                            row.c[
+                                achColumn
+                            ];
+
+
+                        const proteksiCell =
+                            row.c[
+                                proteksiColumn
+                            ];
+
+
+                        const trxCell =
+                            row.c[
+                                trxColumn
+                            ];
+
+
+
+                        const name =
+                            employeeCell
+
+                                ? String(
+                                    employeeCell.f ??
+                                    employeeCell.v ??
+                                    ""
+                                ).trim()
+
+                                : "";
+
+
+
+                        if (
+                            name === ""
+                        ) {
+
+                            return null;
+
+                        }
+
+
+
+                        return {
+
+                            name:
+                                name,
+
+                            sales:
+                                getCellValue(
+                                    salesCell
+                                ),
+
+                            ach:
+                                getCellValue(
+                                    achCell
+                                ),
+
+                            proteksi:
+                                getCellValue(
+                                    proteksiCell
+                                ),
+
+                            trx:
+                                getCellValue(
+                                    trxCell
+                                )
+
+                        };
+
                     }
+                )
 
-
-                    /* =================================
-                       EMPLOYEE NAME
-                    ================================= */
-
-                    const employeeCell =
-                        row.c[employeeColumn];
-
-
-                    const employeeName =
-                        employeeCell
-                            ? String(
-                                employeeCell.f ??
-                                employeeCell.v ??
-                                ""
-                            ).trim()
-                            : "";
-
-
-                    /* =================================
-                       SALES MTD
-                    ================================= */
-
-                    const salesCell =
-                        row.c[salesColumn];
-
-
-                    const salesValue =
-                        salesCell
-                            ? (
-                                salesCell.f ??
-                                salesCell.v ??
-                                ""
-                            )
-                            : "";
-
-
-                    /* =================================
-                       ACH MTD
-                    ================================= */
-
-                    const achCell =
-                        row.c[achColumn];
-
-
-                    const achValue =
-                        achCell
-                            ? (
-                                achCell.f ??
-                                achCell.v ??
-                                ""
-                            )
-                            : "";
-
-
-                    /* =================================
-                       SKIP BARIS KOSONG
-                    ================================= */
-
-                    if (
-                        employeeName === ""
-                    ) {
-
-                        return null;
-
-                    }
-
-
-                    return {
-
-                        name:
-                            employeeName,
-
-                        sales:
-                            salesValue,
-
-                        ach:
-                            achValue
-
-                    };
-
-                })
                 .filter(
                     item =>
                         item !== null
                 );
 
 
-        /* =============================================
-           VALIDASI DATA
-        ============================================= */
-
-        if (
-            employeeData.length === 0
-        ) {
-
-            throw new Error(
-                "Data EMPLOYEE NAME kosong."
-            );
-
-        }
-
 
         /* =============================================
-           RENDER
+           RENDER SEMUA SLIDE
         ============================================= */
 
-        renderRanking(
-            employeeData
-        );
+        renderSlide1();
+
+        renderSlide2();
+
+        renderSlide3();
 
 
-    } catch (error) {
+    }
+
+
+    catch (error) {
+
 
         console.error(
             "Gagal mengambil data:",
@@ -695,25 +1168,22 @@ async function loadEmployeeData() {
         );
 
 
-        rankGrid.innerHTML = `
+        showError(
+            "rankGrid1",
+            error.message
+        );
 
-            <div class="error">
 
-                <b>
-                    Gagal mengambil data.
-                </b>
+        showError(
+            "rankGrid2",
+            error.message
+        );
 
-                <br>
 
-                <small>
-                    ${escapeHtml(
-                        error.message
-                    )}
-                </small>
-
-            </div>
-
-        `;
+        showError(
+            "rankGrid3",
+            error.message
+        );
 
     }
 
@@ -721,67 +1191,212 @@ async function loadEmployeeData() {
 
 
 /* =====================================================
-   RENDER RANKING
+   GET CELL VALUE
 ===================================================== */
 
-function renderRanking(
-    employeeData
+function getCellValue(
+    cell
 ) {
 
-    const rankGrid =
-        document.getElementById(
-            "rankGrid"
-        );
+
+    if (
+        !cell
+    ) {
+
+        return "";
+
+    }
 
 
-    rankGrid.innerHTML =
-        "";
+    return String(
+        cell.f ??
+        cell.v ??
+        ""
+    ).trim();
+
+}
+
+
+/* =====================================================
+   FIND COLUMN
+===================================================== */
+
+function findColumn(
+    columns,
+    target
+) {
+
+
+    return columns.findIndex(
+        col =>
+
+            String(
+                col.label || ""
+            )
+            .trim()
+            .toUpperCase() ===
+            target.toUpperCase()
+    );
+
+}
+
+
+/* =====================================================
+   SLIDE 1
+   ACH MTD SALES ID
+===================================================== */
+
+function renderSlide1() {
+
+
+    const data =
+        [...employeeData];
 
 
     /* =============================================
-       SORT BERDASARKAN ACH MTD
+       SORT ACH MTD
        TERBESAR → TERKECIL
     ============================================= */
 
-    employeeData.sort(
-        (a, b) => {
+    data.sort(
+        (a, b) =>
 
-            const achA =
-                parseAchValue(
-                    a.ach
-                );
+            parseNumber(
+                b.ach
+            ) -
 
-
-            const achB =
-                parseAchValue(
-                    b.ach
-                );
-
-
-            return achB - achA;
-
-        }
+            parseNumber(
+                a.ach
+            )
     );
 
 
-    const total =
-        employeeData.length;
+    renderCards(
+        "rankGrid1",
+        data,
+        "sales-ach"
+    );
+
+}
+
+
+/* =====================================================
+   SLIDE 2
+   PROTEKSI
+===================================================== */
+
+function renderSlide2() {
+
+
+    const data =
+        [...employeeData];
 
 
     /* =============================================
-       RENDER SETELAH SORTING
+       SORT PROTEKSI
+       TERBESAR → TERKECIL
     ============================================= */
 
-    employeeData.forEach(
-        (employee, index) => {
+    data.sort(
+        (a, b) =>
+
+            parseNumber(
+                b.proteksi
+            ) -
+
+            parseNumber(
+                a.proteksi
+            )
+    );
+
+
+    renderCards(
+        "rankGrid2",
+        data,
+        "proteksi"
+    );
+
+}
+
+
+/* =====================================================
+   SLIDE 3
+   TRANSAKSI
+===================================================== */
+
+function renderSlide3() {
+
+
+    const data =
+        [...employeeData];
+
+
+    /* =============================================
+       SORT TRX
+       TERBESAR → TERKECIL
+    ============================================= */
+
+    data.sort(
+        (a, b) =>
+
+            parseNumber(
+                b.trx
+            ) -
+
+            parseNumber(
+                a.trx
+            )
+    );
+
+
+    renderCards(
+        "rankGrid3",
+        data,
+        "transaksi"
+    );
+
+}
+
+
+/* =====================================================
+   RENDER CARDS
+===================================================== */
+
+function renderCards(
+    gridId,
+    data,
+    type
+) {
+
+
+    const grid =
+        document.getElementById(
+            gridId
+        );
+
+
+    grid.innerHTML =
+        "";
+
+
+    const total =
+        data.length;
+
+
+    data.forEach(
+        (
+            employee,
+            index
+        ) => {
+
 
             const rank =
                 index + 1;
 
 
-            /* =====================================
+            /* =========================================
                CLASS RANK
-            ===================================== */
+            ========================================= */
 
             let rankClass =
                 "rank-card";
@@ -815,7 +1430,8 @@ function renderRanking(
             }
 
             else if (
-                rank > total - 5
+                rank >
+                total - 5
             ) {
 
                 rankClass +=
@@ -824,9 +1440,9 @@ function renderRanking(
             }
 
 
-            /* =====================================
-               CHANGE RANK
-            ===================================== */
+            /* =========================================
+               CHANGE
+            ========================================= */
 
             const changeInfo =
                 rankingData[index] || {
@@ -840,37 +1456,9 @@ function renderRanking(
                 };
 
 
-            /* =====================================
-               SALES MTD
-            ===================================== */
-
-            const sales =
-                employee.sales !== "" &&
-                employee.sales !== null &&
-                employee.sales !== undefined
-
-                    ? employee.sales
-
-                    : "-";
-
-
-            /* =====================================
-               ACH MTD
-            ===================================== */
-
-            const ach =
-                employee.ach !== "" &&
-                employee.ach !== null &&
-                employee.ach !== undefined
-
-                    ? employee.ach
-
-                    : "-";
-
-
-            /* =====================================
-               CREATE CARD
-            ===================================== */
+            /* =========================================
+               CARD
+            ========================================= */
 
             const card =
                 document.createElement(
@@ -882,15 +1470,107 @@ function renderRanking(
                 rankClass;
 
 
+            let valueHTML =
+                "";
+
+
+            /* =========================================
+               SLIDE 1
+            ========================================= */
+
+            if (
+                type ===
+                "sales-ach"
+            ) {
+
+                valueHTML = `
+
+                    <span
+                        class="sales"
+                    >
+                        ${escapeHtml(
+                            employee.sales ||
+                            "-"
+                        )}
+                    </span>
+
+                    <span
+                        class="ach"
+                    >
+                        ${escapeHtml(
+                            employee.ach ||
+                            "-"
+                        )}
+                    </span>
+
+                `;
+
+            }
+
+
+            /* =========================================
+               SLIDE 2
+            ========================================= */
+
+            else if (
+                type ===
+                "proteksi"
+            ) {
+
+                valueHTML = `
+
+                    <span
+                        class="proteksi"
+                    >
+                        ${escapeHtml(
+                            employee.proteksi ||
+                            "-"
+                        )}
+                    </span>
+
+                `;
+
+            }
+
+
+            /* =========================================
+               SLIDE 3
+            ========================================= */
+
+            else if (
+                type ===
+                "transaksi"
+            ) {
+
+                valueHTML = `
+
+                    <span
+                        class="transaksi"
+                    >
+                        ${escapeHtml(
+                            employee.trx ||
+                            "-"
+                        )}
+                    </span>
+
+                `;
+
+            }
+
+
+
             card.innerHTML = `
 
-                <span class="rank-num">
+                <span
+                    class="rank-num"
+                >
                     ${rank}
                 </span>
 
 
                 <span
-                    class="change ${changeInfo.change}"
+                    class="change
+                    ${changeInfo.change}"
                 >
                     ${escapeHtml(
                         changeInfo.changeText
@@ -907,27 +1587,12 @@ function renderRanking(
                 </span>
 
 
-                <span
-                    class="sales"
-                >
-                    ${escapeHtml(
-                        String(sales)
-                    )}
-                </span>
-
-
-                <span
-                    class="ach"
-                >
-                    ${escapeHtml(
-                        String(ach)
-                    )}
-                </span>
+                ${valueHTML}
 
             `;
 
 
-            rankGrid.appendChild(
+            grid.appendChild(
                 card
             );
 
@@ -938,12 +1603,13 @@ function renderRanking(
 
 
 /* =====================================================
-   PARSE ACH MTD
+   PARSE NUMBER
 ===================================================== */
 
-function parseAchValue(
+function parseNumber(
     value
 ) {
+
 
     if (
         value === null ||
@@ -955,10 +1621,6 @@ function parseAchValue(
 
     }
 
-
-    /* =============================================
-       JIKA SUDAH NUMBER
-    ============================================= */
 
     if (
         typeof value === "number"
@@ -975,33 +1637,27 @@ function parseAchValue(
 
 
     /* =============================================
-       HAPUS SIMBOL
+       HAPUS SIMBOL NON ANGKA
     ============================================= */
 
     text =
         text.replace(
-            /[^\d,.\-%]/g,
+            /[^\d,.\-]/g,
             ""
         );
 
 
-    /* =============================================
-       DETEKSI PERSENTASE
-    ============================================= */
+    if (
+        text === ""
+    ) {
 
-    const isPercent =
-        text.includes("%");
+        return 0;
 
-
-    text =
-        text.replace(
-            "%",
-            ""
-        );
+    }
 
 
     /* =============================================
-       FORMAT ANGKA
+       FORMAT INDONESIA
     ============================================= */
 
     if (
@@ -1011,8 +1667,14 @@ function parseAchValue(
 
         text =
             text
-                .replace(/\./g, "")
-                .replace(",", ".");
+                .replace(
+                    /\./g,
+                    ""
+                )
+                .replace(
+                    ",",
+                    "."
+                );
 
     }
 
@@ -1061,7 +1723,7 @@ function parseAchValue(
             parts[1].length <= 2
         ) {
 
-            /* Desimal */
+            /* decimal */
 
         }
 
@@ -1078,8 +1740,10 @@ function parseAchValue(
     }
 
 
-    let number =
-        parseFloat(text);
+    const number =
+        parseFloat(
+            text
+        );
 
 
     if (
@@ -1087,25 +1751,6 @@ function parseAchValue(
     ) {
 
         return 0;
-
-    }
-
-
-    /* =============================================
-       GOOGLE SHEETS BISA MEMBERIKAN
-       PERSENTASE SEBAGAI DESIMAL
-
-       0.98715 → 98.715
-    ============================================= */
-
-    if (
-        !isPercent &&
-        number > 0 &&
-        number < 1
-    ) {
-
-        number =
-            number * 100;
 
     }
 
@@ -1123,6 +1768,7 @@ function escapeHtml(
     text
 ) {
 
+
     const div =
         document.createElement(
             "div"
@@ -1139,22 +1785,116 @@ function escapeHtml(
 
 
 /* =====================================================
-   LOAD PERTAMA
+   ERROR
 ===================================================== */
 
-loadEmployeeData();
+function showError(
+    gridId,
+    message
+) {
+
+
+    const grid =
+        document.getElementById(
+            gridId
+        );
+
+
+    grid.innerHTML = `
+
+        <div class="error">
+
+            <b>
+                Gagal mengambil data.
+            </b>
+
+            <br>
+
+            <small>
+                ${escapeHtml(
+                    message
+                )}
+            </small>
+
+        </div>
+
+    `;
+
+}
 
 
 /* =====================================================
-   AUTO UPDATE 30 DETIK
+   SLIDE ROTATION
+   5 DETIK / SLIDE
+===================================================== */
+
+function nextSlide() {
+
+
+    document
+        .getElementById(
+            "slide" +
+            currentSlide
+        )
+        .classList
+        .remove(
+            "active"
+        );
+
+
+    currentSlide++;
+
+
+    if (
+        currentSlide > 3
+    ) {
+
+        currentSlide = 1;
+
+    }
+
+
+    document
+        .getElementById(
+            "slide" +
+            currentSlide
+        )
+        .classList
+        .add(
+            "active"
+        );
+
+}
+
+
+/* =====================================================
+   MULAI SLIDE
 ===================================================== */
 
 setInterval(
-    loadEmployeeData,
+    nextSlide,
+    SLIDE_DURATION
+);
+
+
+/* =====================================================
+   LOAD DATA PERTAMA
+===================================================== */
+
+loadData();
+
+
+/* =====================================================
+   UPDATE DATA SETIAP 30 DETIK
+===================================================== */
+
+setInterval(
+    loadData,
     30000
 );
 
 </script>
+
 
 </body>
 </html>
