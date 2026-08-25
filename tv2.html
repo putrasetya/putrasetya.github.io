@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -7,11 +8,6 @@
 <meta
     name="viewport"
     content="width=device-width, initial-scale=1.0"
->
-
-<meta
-    name="color-scheme"
-    content="light only"
 >
 
 <title>AZKO SALES RANKING</title>
@@ -27,10 +23,6 @@
     margin: 0;
     padding: 0;
     font-family: 'Segoe UI', Arial, sans-serif;
-}
-
-:root {
-    color-scheme: light only;
 }
 
 
@@ -57,8 +49,6 @@ body {
     padding: 15px;
 
     overflow: hidden;
-
-    color-scheme: light only;
 }
 
 
@@ -112,7 +102,7 @@ body {
 
     margin-bottom: 8px;
 
-    flex: 0 0 auto;
+    flex-shrink: 0;
 }
 
 
@@ -144,9 +134,9 @@ body {
 
     flex-grow: 1;
 
-    gap: 2px;
-
     min-height: 0;
+
+    gap: 2px;
 
     overflow: hidden;
 }
@@ -158,7 +148,7 @@ body {
 
 .rank-card {
 
-    background: #ffffff;
+    background: white;
 
     padding: 0 16px;
 
@@ -181,8 +171,6 @@ body {
     font-weight: 600;
 
     flex-shrink: 0;
-
-    forced-color-adjust: none;
 }
 
 
@@ -201,8 +189,7 @@ body {
         );
 
     border:
-        1.5px solid
-        #f59e0b;
+        1.5px solid #f59e0b;
 
     box-shadow:
         0 2px 8px
@@ -225,8 +212,7 @@ body {
         );
 
     border:
-        1.5px solid
-        #94a3b8;
+        1.5px solid #94a3b8;
 
     box-shadow:
         0 2px 8px
@@ -249,8 +235,7 @@ body {
         );
 
     border:
-        1.5px solid
-        #d97706;
+        1.5px solid #d97706;
 
     box-shadow:
         0 2px 8px
@@ -273,8 +258,7 @@ body {
         );
 
     border:
-        1px solid
-        #fca5a5;
+        1px solid #fca5a5;
 }
 
 
@@ -340,6 +324,8 @@ body {
     overflow: hidden;
 
     text-overflow: ellipsis;
+
+    min-width: 0;
 }
 
 
@@ -558,61 +544,47 @@ body {
 
 
     .rank-num {
-
         width: 28px;
     }
 
 
     .change {
-
         width: 38px;
     }
 
 
     .sales {
-
         width: 95px;
-
         margin-left: 8px;
     }
 
 
     .ach {
-
         width: 70px;
-
         margin-left: 10px;
     }
 
 
     .proteksi {
-
         width: 95px;
-
         margin-left: 8px;
     }
 
 
     .ach-proteksi {
-
         width: 70px;
-
         margin-left: 10px;
     }
 
 
     .transaksi {
-
         width: 95px;
-
         margin-left: 8px;
     }
 
 
     .ach-bulanan {
-
         width: 70px;
-
         margin-left: 10px;
     }
 
@@ -620,109 +592,64 @@ body {
 
 
 /* =====================================================
-   KHUSUS TV - BACKGROUND CARD PUTIH
+   KHUSUS TV
+   BACKGROUND CARD PUTIH
 ===================================================== */
 
-@media screen and
-(min-width: 1200px)
-and (orientation: landscape) {
+@media screen and (min-width: 1200px) and (orientation: landscape) {
 
     body {
-
-        color-scheme: light only;
-
-        background:
-            linear-gradient(
-                135deg,
-                #e0f2fe 0%,
-                #bae6fd 100%
-            ) !important;
+        padding: 10px;
     }
 
 
-    .rank-card,
-    .rank-card.rank-1,
-    .rank-card.rank-2,
-    .rank-card.rank-3,
+    .container {
+        max-width: 1100px;
+        height: 100%;
+    }
+
+
+    .rank-card {
+        background: #ffffff !important;
+    }
+
+
+    .rank-card.rank-1 {
+        background: #ffffff !important;
+    }
+
+
+    .rank-card.rank-2 {
+        background: #ffffff !important;
+    }
+
+
+    .rank-card.rank-3 {
+        background: #ffffff !important;
+    }
+
+
     .rank-card.bottom-5 {
-
-        background:
-            rgb(255,255,255)
-            !important;
-
-        color:
-            #0f172a
-            !important;
-
-        forced-color-adjust:
-            none !important;
-    }
-
-
-    .employee-name,
-    .rank-num,
-    .sales,
-    .ach,
-    .proteksi,
-    .ach-proteksi,
-    .transaksi,
-    .ach-bulanan {
-
-        color:
-            #0f172a
-            !important;
+        background: #ffffff !important;
     }
 
 }
 
 
 /* =====================================================
-   TV - SLIDE PROTEKSI 17 RANK FULL
+   TV PROTEKSI
+   PAKSA 17 RANK MASUK DALAM 1 LAYAR
+
+   PERHITUNGAN:
+   tinggi layar
+   dikurangi padding body
+   dikurangi header
+   dikurangi 16 gap
 ===================================================== */
 
-@media screen and
-(min-width: 1200px)
-and (orientation: landscape) {
-
-    #slide2 {
-
-        width: 100%;
-
-        height: 100%;
-
-        min-height: 0;
-
-        overflow: hidden;
-    }
-
-
-    #slide2 .header {
-
-        flex:
-            0 0 auto;
-
-        margin-bottom:
-            6px;
-    }
-
-
-    #slide2 .title {
-
-        line-height:
-            1;
-    }
-
+@media screen and (min-width: 1200px) and (orientation: landscape) {
 
     #slide2 .rank-grid {
-
-        width: 100%;
-
-        height: auto;
-
-        min-height: 0;
-
-        flex:
-            1 1 auto;
 
         display: flex;
 
@@ -730,7 +657,23 @@ and (orientation: landscape) {
 
         justify-content: flex-start;
 
+        align-items: stretch;
+
         gap: 2px;
+
+        height:
+            calc(
+                100vh
+                - 58px
+            );
+
+        max-height:
+            calc(
+                100vh
+                - 58px
+            );
+
+        flex-grow: 0;
 
         overflow: hidden;
     }
@@ -738,22 +681,32 @@ and (orientation: landscape) {
 
     #slide2 .rank-card {
 
-        height: auto;
+        height:
+            calc(
+                (
+                    100vh
+                    - 58px
+                    - 32px
+                ) / 17
+            );
 
         min-height: 0;
 
         max-height: none;
 
         flex:
-            1 1 0;
+            0 0
+            calc(
+                (
+                    100vh
+                    - 58px
+                    - 32px
+                ) / 17
+            );
 
-        flex-shrink: 1;
+        border-radius: 15px;
 
-        padding-top: 0;
-
-        padding-bottom: 0;
-
-        border-radius: 16px;
+        font-size: 0.82rem;
     }
 
 }
@@ -761,39 +714,16 @@ and (orientation: landscape) {
 
 /* =====================================================
    TV - SLIDE 1 & 3
-   CARD TETAP RAPI
-===================================================== */
+   ===================================================== */
 
-@media screen and
-(min-width: 1200px)
-and (orientation: landscape) {
-
-    #slide1 .rank-grid,
-    #slide3 .rank-grid {
-
-        justify-content:
-            flex-start;
-
-        gap: 2px;
-
-        overflow: hidden;
-    }
-
+@media screen and (min-width: 1200px) and (orientation: landscape) {
 
     #slide1 .rank-card,
     #slide3 .rank-card {
 
-        height:
-            4.2vh;
+        height: 4.5vh;
 
-        min-height:
-            30px;
-
-        max-height:
-            52px;
-
-        flex-shrink:
-            0;
+        min-height: 0;
     }
 
 }
@@ -949,17 +879,9 @@ const SLIDE_DURATION =
     5000;
 
 
-/* =====================================================
-   CURRENT SLIDE
-===================================================== */
-
 let currentSlide =
     1;
 
-
-/* =====================================================
-   DATA
-===================================================== */
 
 let employeeData =
     [];
@@ -1092,10 +1014,6 @@ async function loadData() {
             text.trim();
 
 
-        /* =============================================
-           BERSIHKAN GVIZ
-        ============================================= */
-
         jsonText =
             jsonText.replace(
                 /^\/\*[\s\S]*?\*\/\s*/,
@@ -1150,7 +1068,7 @@ async function loadData() {
 
 
         /* =============================================
-           CARI HEADER
+           HEADER
         ============================================= */
 
         const employeeColumn =
@@ -1210,99 +1128,77 @@ async function loadData() {
 
 
         /* =============================================
-           VALIDASI HEADER
+           VALIDASI
         ============================================= */
 
-        if (
-            employeeColumn === -1
+        const requiredColumns = [
+
+            [
+                employeeColumn,
+                "EMPLOYEE NAME"
+            ],
+
+            [
+                codeJobColumn,
+                "CODE JOB"
+            ],
+
+            [
+                salesColumn,
+                "SALES MTD"
+            ],
+
+            [
+                achColumn,
+                "ACH MTD"
+            ],
+
+            [
+                proteksiColumn,
+                "PROTEKSI"
+            ],
+
+            [
+                achProteksiColumn,
+                "ACH PROTEKSI"
+            ],
+
+            [
+                trxColumn,
+                "TRX"
+            ],
+
+            [
+                achBulananColumn,
+                "ACH BULANAN"
+            ]
+
+        ];
+
+
+        for (
+            const [
+                index,
+                name
+            ]
+            of requiredColumns
         ) {
 
-            throw new Error(
-                'Header "EMPLOYEE NAME" tidak ditemukan.'
-            );
+            if (
+                index === -1
+            ) {
 
-        }
+                throw new Error(
+                    `Header "${name}" tidak ditemukan.`
+                );
 
-
-        if (
-            codeJobColumn === -1
-        ) {
-
-            throw new Error(
-                'Header "CODE JOB" tidak ditemukan.'
-            );
-
-        }
-
-
-        if (
-            salesColumn === -1
-        ) {
-
-            throw new Error(
-                'Header "SALES MTD" tidak ditemukan.'
-            );
-
-        }
-
-
-        if (
-            achColumn === -1
-        ) {
-
-            throw new Error(
-                'Header "ACH MTD" tidak ditemukan.'
-            );
-
-        }
-
-
-        if (
-            proteksiColumn === -1
-        ) {
-
-            throw new Error(
-                'Header "PROTEKSI" tidak ditemukan.'
-            );
-
-        }
-
-
-        if (
-            achProteksiColumn === -1
-        ) {
-
-            throw new Error(
-                'Header "ACH PROTEKSI" tidak ditemukan.'
-            );
-
-        }
-
-
-        if (
-            trxColumn === -1
-        ) {
-
-            throw new Error(
-                'Header "TRX" tidak ditemukan.'
-            );
-
-        }
-
-
-        if (
-            achBulananColumn === -1
-        ) {
-
-            throw new Error(
-                'Header "ACH BULANAN" tidak ditemukan.'
-            );
+            }
 
         }
 
 
         /* =============================================
-           AMBIL SEMUA DATA
+           DATA
         ============================================= */
 
         employeeData =
@@ -1321,63 +1217,11 @@ async function loadData() {
                         }
 
 
-                        const employeeCell =
-                            row.c[
-                                employeeColumn
-                            ];
-
-
-                        const codeJobCell =
-                            row.c[
-                                codeJobColumn
-                            ];
-
-
-                        const salesCell =
-                            row.c[
-                                salesColumn
-                            ];
-
-
-                        const achCell =
-                            row.c[
-                                achColumn
-                            ];
-
-
-                        const proteksiCell =
-                            row.c[
-                                proteksiColumn
-                            ];
-
-
-                        const achProteksiCell =
-                            row.c[
-                                achProteksiColumn
-                            ];
-
-
-                        const trxCell =
-                            row.c[
-                                trxColumn
-                            ];
-
-
-                        const achBulananCell =
-                            row.c[
-                                achBulananColumn
-                            ];
-
-
                         const name =
                             getCellValue(
-                                employeeCell
-                            );
-
-
-                        const codeJob =
-                            getCellValue(
-                                codeJobCell
+                                row.c[
+                                    employeeColumn
+                                ]
                             );
 
 
@@ -1396,36 +1240,52 @@ async function loadData() {
                                 name,
 
                             codeJob:
-                                codeJob,
+                                getCellValue(
+                                    row.c[
+                                        codeJobColumn
+                                    ]
+                                ),
 
                             sales:
                                 getCellValue(
-                                    salesCell
+                                    row.c[
+                                        salesColumn
+                                    ]
                                 ),
 
                             ach:
                                 getCellValue(
-                                    achCell
+                                    row.c[
+                                        achColumn
+                                    ]
                                 ),
 
                             proteksi:
                                 getCellValue(
-                                    proteksiCell
+                                    row.c[
+                                        proteksiColumn
+                                    ]
                                 ),
 
                             achProteksi:
                                 getCellValue(
-                                    achProteksiCell
+                                    row.c[
+                                        achProteksiColumn
+                                    ]
                                 ),
 
                             trx:
                                 getCellValue(
-                                    trxCell
+                                    row.c[
+                                        trxColumn
+                                    ]
                                 ),
 
                             achBulanan:
                                 getCellValue(
-                                    achBulananCell
+                                    row.c[
+                                        achBulananColumn
+                                    ]
                                 )
 
                         };
@@ -1440,7 +1300,7 @@ async function loadData() {
 
 
         /* =============================================
-           RENDER SEMUA SLIDE
+           RENDER
         ============================================= */
 
         renderSlide1();
@@ -1451,11 +1311,9 @@ async function loadData() {
 
     }
 
-
     catch (error) {
 
         console.error(
-            "Gagal mengambil data:",
             error
         );
 
@@ -1532,7 +1390,7 @@ function findColumn(
 
 
 /* =====================================================
-   CEK CASHIER / CS
+   EXCLUDE CASHIER / CS
 ===================================================== */
 
 function isExcludedCodeJob(
@@ -1557,16 +1415,13 @@ function isExcludedCodeJob(
 
 /* =====================================================
    SLIDE 1
-   ACH MTD SALES ID
-
-   CASHIER & CS DIKECUALIKAN
+   SORT ACH MTD
 ===================================================== */
 
 function renderSlide1() {
 
     const data =
         employeeData
-
             .filter(
                 employee =>
                     !isExcludedCodeJob(
@@ -1575,18 +1430,11 @@ function renderSlide1() {
             );
 
 
-    /* =============================================
-       SORT ACH MTD
-       TERBESAR → TERKECIL
-    ============================================= */
-
     data.sort(
         (a, b) =>
-
             parseNumber(
                 b.ach
             ) -
-
             parseNumber(
                 a.ach
             )
@@ -1604,9 +1452,7 @@ function renderSlide1() {
 
 /* =====================================================
    SLIDE 2
-   PROTEKSI
-
-   SEMUA EMPLOYEE
+   SORT PROTEKSI
 ===================================================== */
 
 function renderSlide2() {
@@ -1615,18 +1461,11 @@ function renderSlide2() {
         [...employeeData];
 
 
-    /* =============================================
-       SORT PROTEKSI
-       TERBESAR → TERKECIL
-    ============================================= */
-
     data.sort(
         (a, b) =>
-
             parseNumber(
                 b.proteksi
             ) -
-
             parseNumber(
                 a.proteksi
             )
@@ -1644,16 +1483,13 @@ function renderSlide2() {
 
 /* =====================================================
    SLIDE 3
-   TRANSAKSI
-
-   CASHIER & CS DIKECUALIKAN
+   SORT TRX
 ===================================================== */
 
 function renderSlide3() {
 
     const data =
         employeeData
-
             .filter(
                 employee =>
                     !isExcludedCodeJob(
@@ -1662,18 +1498,11 @@ function renderSlide3() {
             );
 
 
-    /* =============================================
-       SORT TRX
-       TERBESAR → TERKECIL
-    ============================================= */
-
     data.sort(
         (a, b) =>
-
             parseNumber(
                 b.trx
             ) -
-
             parseNumber(
                 a.trx
             )
@@ -1740,10 +1569,6 @@ function renderCards(
                 index + 1;
 
 
-            /* =====================================
-               RANK COLOR
-            ===================================== */
-
             let rankClass =
                 "rank-card";
 
@@ -1786,10 +1611,6 @@ function renderCards(
             }
 
 
-            /* =====================================
-               CHANGE
-            ===================================== */
-
             const changeInfo =
                 rankingData[index] || {
 
@@ -1802,17 +1623,13 @@ function renderCards(
                 };
 
 
-            /* =====================================
-               VALUE
-            ===================================== */
-
             let valueHTML =
                 "";
 
 
-            /* =====================================
+            /* =========================================
                SLIDE 1
-            ===================================== */
+            ========================================= */
 
             if (
                 type ===
@@ -1821,22 +1638,15 @@ function renderCards(
 
                 valueHTML = `
 
-                    <span
-                        class="sales"
-                    >
+                    <span class="sales">
                         ${escapeHtml(
-                            employee.sales ||
-                            "-"
+                            employee.sales || "-"
                         )}
                     </span>
 
-
-                    <span
-                        class="ach"
-                    >
+                    <span class="ach">
                         ${escapeHtml(
-                            employee.ach ||
-                            "-"
+                            employee.ach || "-"
                         )}
                     </span>
 
@@ -1845,9 +1655,9 @@ function renderCards(
             }
 
 
-            /* =====================================
+            /* =========================================
                SLIDE 2
-            ===================================== */
+            ========================================= */
 
             else if (
                 type ===
@@ -1856,22 +1666,15 @@ function renderCards(
 
                 valueHTML = `
 
-                    <span
-                        class="proteksi"
-                    >
+                    <span class="proteksi">
                         ${escapeHtml(
-                            employee.proteksi ||
-                            "-"
+                            employee.proteksi || "-"
                         )}
                     </span>
 
-
-                    <span
-                        class="ach-proteksi"
-                    >
+                    <span class="ach-proteksi">
                         ${escapeHtml(
-                            employee.achProteksi ||
-                            "-"
+                            employee.achProteksi || "-"
                         )}
                     </span>
 
@@ -1880,9 +1683,9 @@ function renderCards(
             }
 
 
-            /* =====================================
+            /* =========================================
                SLIDE 3
-            ===================================== */
+            ========================================= */
 
             else if (
                 type ===
@@ -1891,22 +1694,15 @@ function renderCards(
 
                 valueHTML = `
 
-                    <span
-                        class="transaksi"
-                    >
+                    <span class="transaksi">
                         ${escapeHtml(
-                            employee.trx ||
-                            "-"
+                            employee.trx || "-"
                         )}
                     </span>
 
-
-                    <span
-                        class="ach-bulanan"
-                    >
+                    <span class="ach-bulanan">
                         ${escapeHtml(
-                            employee.achBulanan ||
-                            "-"
+                            employee.achBulanan || "-"
                         )}
                     </span>
 
@@ -1914,10 +1710,6 @@ function renderCards(
 
             }
 
-
-            /* =====================================
-               CARD
-            ===================================== */
 
             const card =
                 document.createElement(
@@ -1931,31 +1723,21 @@ function renderCards(
 
             card.innerHTML = `
 
-                <span
-                    class="rank-num"
-                >
+                <span class="rank-num">
                     ${rank}
                 </span>
 
-
-                <span
-                    class="change
-                    ${changeInfo.change}"
-                >
+                <span class="change ${changeInfo.change}">
                     ${escapeHtml(
                         changeInfo.changeText
                     )}
                 </span>
 
-
-                <span
-                    class="employee-name"
-                >
+                <span class="employee-name">
                     ${escapeHtml(
                         employee.name
                     )}
                 </span>
-
 
                 ${valueHTML}
 
@@ -2005,10 +1787,6 @@ function parseNumber(
             .trim();
 
 
-    /* =============================================
-       HAPUS SIMBOL
-    ============================================= */
-
     text =
         text.replace(
             /[^\d,.\-]/g,
@@ -2024,10 +1802,6 @@ function parseNumber(
 
     }
 
-
-    /* =============================================
-       FORMAT 1.234,56
-    ============================================= */
 
     if (
         text.includes(".") &&
@@ -2046,11 +1820,6 @@ function parseNumber(
                 );
 
     }
-
-
-    /* =============================================
-       FORMAT KOMA
-    ============================================= */
 
     else if (
         text.includes(",")
@@ -2084,11 +1853,6 @@ function parseNumber(
 
     }
 
-
-    /* =============================================
-       FORMAT TITIK
-    ============================================= */
-
     else if (
         text.includes(".")
     ) {
@@ -2098,15 +1862,11 @@ function parseNumber(
 
 
         if (
-            parts.length === 2 &&
-            parts[1].length <= 2
+            !(
+                parts.length === 2 &&
+                parts[1].length <= 2
+            )
         ) {
-
-            /* decimal */
-
-        }
-
-        else {
 
             text =
                 text.replace(
@@ -2125,16 +1885,9 @@ function parseNumber(
         );
 
 
-    if (
-        isNaN(number)
-    ) {
-
-        return 0;
-
-    }
-
-
-    return number;
+    return isNaN(number)
+        ? 0
+        : number;
 
 }
 
@@ -2243,8 +1996,7 @@ function nextSlide() {
 
 
 /* =====================================================
-   ROTASI SLIDE
-   5 DETIK
+   SLIDE SETIAP 5 DETIK
 ===================================================== */
 
 setInterval(
@@ -2254,15 +2006,14 @@ setInterval(
 
 
 /* =====================================================
-   LOAD DATA PERTAMA
+   LOAD PERTAMA
 ===================================================== */
 
 loadData();
 
 
 /* =====================================================
-   UPDATE DATA
-   30 DETIK
+   UPDATE DATA 30 DETIK
 ===================================================== */
 
 setInterval(
@@ -2274,3 +2025,4 @@ setInterval(
 
 </body>
 </html>
+```
