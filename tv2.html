@@ -67,7 +67,10 @@
             font-weight: 600;
         }
 
-        /* RANK 1 - GOLD */
+        /* =========================================
+           RANK 1 - GOLD
+        ========================================= */
+
         .rank-card.rank-1 {
             background: linear-gradient(
                 90deg,
@@ -75,11 +78,17 @@
                 #fef3c7 50%,
                 #fde68a 100%
             );
+
             border: 1.5px solid #f59e0b;
-            box-shadow: 0 2px 8px rgba(245,158,11,0.18);
+
+            box-shadow:
+                0 2px 8px rgba(245,158,11,0.18);
         }
 
-        /* RANK 2 - SILVER */
+        /* =========================================
+           RANK 2 - SILVER
+        ========================================= */
+
         .rank-card.rank-2 {
             background: linear-gradient(
                 90deg,
@@ -87,11 +96,17 @@
                 #e2e8f0 50%,
                 #cbd5e1 100%
             );
+
             border: 1.5px solid #94a3b8;
-            box-shadow: 0 2px 8px rgba(100,116,139,0.15);
+
+            box-shadow:
+                0 2px 8px rgba(100,116,139,0.15);
         }
 
-        /* RANK 3 - BRONZE */
+        /* =========================================
+           RANK 3 - BRONZE
+        ========================================= */
+
         .rank-card.rank-3 {
             background: linear-gradient(
                 90deg,
@@ -99,11 +114,17 @@
                 #ffedd5 50%,
                 #fed7aa 100%
             );
+
             border: 1.5px solid #d97706;
-            box-shadow: 0 2px 8px rgba(217,119,6,0.15);
+
+            box-shadow:
+                0 2px 8px rgba(217,119,6,0.15);
         }
 
-        /* 5 TERBAWAH - MERAH */
+        /* =========================================
+           5 TERBAWAH - MERAH
+        ========================================= */
+
         .rank-card.bottom-5 {
             background: linear-gradient(
                 90deg,
@@ -111,8 +132,13 @@
                 #fee2e2 50%,
                 #fecaca 100%
             );
+
             border: 1px solid #fca5a5;
         }
+
+        /* =========================================
+           RANK NUMBER
+        ========================================= */
 
         .rank-num {
             width: 30px;
@@ -120,6 +146,10 @@
             font-weight: 700;
             flex-shrink: 0;
         }
+
+        /* =========================================
+           CHANGE
+        ========================================= */
 
         .change {
             width: 40px;
@@ -140,7 +170,10 @@
             color: #94a3b8;
         }
 
-        /* EMPLOYEE NAME */
+        /* =========================================
+           EMPLOYEE NAME
+        ========================================= */
+
         .employee-name {
             flex-grow: 1;
             color: #0f172a;
@@ -149,12 +182,21 @@
             text-overflow: ellipsis;
         }
 
-        .points {
+        /* =========================================
+           SALES
+        ========================================= */
+
+        .sales {
             font-weight: 800;
             color: #0f172a;
             margin-left: 10px;
             white-space: nowrap;
+            text-align: right;
         }
+
+        /* =========================================
+           LOADING / ERROR
+        ========================================= */
 
         .loading,
         .error {
@@ -170,6 +212,10 @@
         .error {
             color: #dc2626;
         }
+
+        /* =========================================
+           MOBILE / TABLET
+        ========================================= */
 
         @media (max-width: 768px), (max-aspect-ratio: 1/1) {
 
@@ -211,9 +257,11 @@
     </div>
 
     <div class="rank-grid" id="rankGrid">
+
         <div class="loading">
-            Memuat EMPLOYEE NAME...
+            Memuat data...
         </div>
+
     </div>
 
 </div>
@@ -221,410 +269,559 @@
 
 <script>
 
-    /* =====================================================
-       GOOGLE SPREADSHEET
-    ===================================================== */
+/* =====================================================
+   GOOGLE SPREADSHEET
+===================================================== */
 
-    const SPREADSHEET_ID =
-        "16Alf0KUmqeaBx1zlsKfbcM5oPbzc18dBMgtlZYhP66M";
-
-    /*
-       Jika nama tab spreadsheet adalah Sheet1:
-    */
-    const SHEET_NAME = "Sheet1";
+const SPREADSHEET_ID =
+    "16Alf0KUmqeaBx1zlsKfbcM5oPbzc18dBMgtlZYhP66M";
 
 
-    const SHEET_URL =
-        "https://docs.google.com/spreadsheets/d/" +
-        SPREADSHEET_ID +
-        "/gviz/tq?tqx=out:json&sheet=" +
-        encodeURIComponent(SHEET_NAME);
+/* =====================================================
+   NAMA SHEET
+===================================================== */
+
+const SHEET_NAME =
+    "Sheet1";
 
 
-    /* =====================================================
-       DATA CONTOH RANK
-    ===================================================== */
+/* =====================================================
+   GOOGLE GVIZ URL
+===================================================== */
 
-    const rankingData = [
-        { change: "same",  changeText: "-" },
-        { change: "same",  changeText: "-" },
-        { change: "up",    changeText: "▲ 2" },
-        { change: "same",  changeText: "-" },
-        { change: "up",    changeText: "▲ 1" },
-        { change: "up",    changeText: "▲ 1" },
-        { change: "down",  changeText: "▼ 4" },
-        { change: "same",  changeText: "-" },
-        { change: "same",  changeText: "-" },
-        { change: "up",    changeText: "▲ 1" },
-        { change: "down",  changeText: "▼ 1" },
-        { change: "same",  changeText: "-" },
-        { change: "up",    changeText: "▲ 2" },
-        { change: "down",  changeText: "▼ 1" },
-        { change: "same",  changeText: "-" },
-        { change: "up",    changeText: "▲ 1" },
-        { change: "down",  changeText: "▼ 2" }
-    ];
+const SHEET_URL =
+    "https://docs.google.com/spreadsheets/d/" +
+    SPREADSHEET_ID +
+    "/gviz/tq?tqx=out:json&sheet=" +
+    encodeURIComponent(SHEET_NAME);
 
 
-    const pointsData = [
-        "98.715",
-        "92.184",
-        "89.211",
-        "87.754",
-        "82.815",
-        "81.598",
-        "79.701",
-        "78.598",
-        "75.847",
-        "69.856",
-        "68.306",
-        "66.407",
-        "65.288",
-        "64.221",
-        "60.101",
-        "59.970",
-        "57.080"
-    ];
+/* =====================================================
+   DATA PERUBAHAN RANK
+   SEMENTARA MENGGUNAKAN DATA CONTOH
+===================================================== */
+
+const rankingData = [
+
+    { change: "same",  changeText: "-" },
+    { change: "same",  changeText: "-" },
+    { change: "up",    changeText: "▲ 2" },
+    { change: "same",  changeText: "-" },
+    { change: "up",    changeText: "▲ 1" },
+    { change: "up",    changeText: "▲ 1" },
+    { change: "down",  changeText: "▼ 4" },
+    { change: "same",  changeText: "-" },
+    { change: "same",  changeText: "-" },
+    { change: "up",    changeText: "▲ 1" },
+    { change: "down",  changeText: "▼ 1" },
+    { change: "same",  changeText: "-" },
+    { change: "up",    changeText: "▲ 2" },
+    { change: "down",  changeText: "▼ 1" },
+    { change: "same",  changeText: "-" },
+    { change: "up",    changeText: "▲ 1" },
+    { change: "down",  changeText: "▼ 2" }
+
+];
 
 
-    /* =====================================================
-       AMBIL DATA GOOGLE SHEETS
-    ===================================================== */
+/* =====================================================
+   AMBIL DATA GOOGLE SHEETS
+===================================================== */
 
-    async function loadEmployeeNames() {
+async function loadEmployeeData() {
 
-        const rankGrid =
-            document.getElementById("rankGrid");
-
-        try {
-
-            const response =
-                await fetch(
-                    SHEET_URL + "&t=" + Date.now()
-                );
-
-            if (!response.ok) {
-                throw new Error(
-                    "Spreadsheet tidak dapat diakses."
-                );
-            }
-
-            const text =
-                await response.text();
+    const rankGrid =
+        document.getElementById("rankGrid");
 
 
-            /*
-               GOOGLE GVIZ biasanya mengembalikan:
+    try {
 
-               /*O_o*\/
-               google.visualization.Query.setResponse({...});
-            */
+        /* =============================================
+           FETCH DATA
+        ============================================= */
 
-            let jsonText = text.trim();
-
-
-            /* =========================================
-               HAPUS KOMENTAR /*O_o*\/
-            ========================================= */
-
-            jsonText =
-                jsonText.replace(
-                    /^\/\*[\s\S]*?\*\/\s*/,
-                    ""
-                );
-
-
-            /* =========================================
-               AMBIL ISI JSON
-            ========================================= */
-
-            const start =
-                jsonText.indexOf("{");
-
-            const end =
-                jsonText.lastIndexOf("}");
-
-
-            if (
-                start === -1 ||
-                end === -1
-            ) {
-                throw new Error(
-                    "Format data Google Sheets tidak valid."
-                );
-            }
-
-
-            jsonText =
-                jsonText.substring(
-                    start,
-                    end + 1
-                );
-
-
-            const data =
-                JSON.parse(jsonText);
-
-
-            /* =========================================
-               CEK DATA
-            ========================================= */
-
-            if (
-                !data ||
-                !data.table ||
-                !data.table.cols
-            ) {
-                throw new Error(
-                    "Data spreadsheet tidak ditemukan."
-                );
-            }
-
-
-            /* =========================================
-               CARI KOLOM PERSIS:
-               EMPLOYEE NAME
-            ========================================= */
-
-            const employeeColumn =
-                data.table.cols.findIndex(
-                    col =>
-                        String(
-                            col.label || ""
-                        ).trim() ===
-                        "EMPLOYEE NAME"
-                );
-
-
-            if (employeeColumn === -1) {
-
-                throw new Error(
-                    'Kolom "EMPLOYEE NAME" tidak ditemukan.'
-                );
-
-            }
-
-
-            /* =========================================
-               AMBIL NAMA
-            ========================================= */
-
-            const employeeNames =
-                data.table.rows
-                    .map(row => {
-
-                        if (
-                            !row.c ||
-                            !row.c[employeeColumn]
-                        ) {
-                            return "";
-                        }
-
-                        const cell =
-                            row.c[employeeColumn];
-
-                        return String(
-                            cell.f ??
-                            cell.v ??
-                            ""
-                        ).trim();
-
-                    })
-                    .filter(
-                        name => name !== ""
-                    );
-
-
-            if (
-                employeeNames.length === 0
-            ) {
-                throw new Error(
-                    "Kolom EMPLOYEE NAME kosong."
-                );
-            }
-
-
-            /* =========================================
-               TAMPILKAN
-            ========================================= */
-
-            renderRanking(
-                employeeNames
+        const response =
+            await fetch(
+                SHEET_URL +
+                "&t=" +
+                Date.now()
             );
 
 
-        } catch (error) {
+        if (!response.ok) {
 
-            console.error(
-                "Gagal mengambil data:",
-                error
+            throw new Error(
+                "Spreadsheet tidak dapat diakses."
             );
 
-            rankGrid.innerHTML = `
-                <div class="error">
-                    <b>Gagal mengambil employee name.</b>
-                    <br>
-                    <small>
-                        ${escapeHtml(error.message)}
-                    </small>
-                </div>
-            `;
         }
-    }
 
 
-    /* =====================================================
-       RENDER RANKING
-    ===================================================== */
+        const text =
+            await response.text();
 
-    function renderRanking(
-        employeeNames
-    ) {
 
-        const rankGrid =
-            document.getElementById(
-                "rankGrid"
+        /* =============================================
+           HAPUS HEADER GOOGLE GVIZ
+        ============================================= */
+
+        let jsonText =
+            text.trim();
+
+
+        jsonText =
+            jsonText.replace(
+                /^\/\*[\s\S]*?\*\/\s*/,
+                ""
             );
 
-        rankGrid.innerHTML = "";
+
+        /* =============================================
+           CARI AWAL DAN AKHIR JSON
+        ============================================= */
+
+        const start =
+            jsonText.indexOf("{");
 
 
-        const total =
-            employeeNames.length;
+        const end =
+            jsonText.lastIndexOf("}");
 
 
-        employeeNames.forEach(
-            (employeeName, index) => {
+        if (
+            start === -1 ||
+            end === -1
+        ) {
 
-                const rank =
-                    index + 1;
+            throw new Error(
+                "Format data Google Sheets tidak valid."
+            );
 
-
-                /* =====================================
-                   WARNA RANK
-                ===================================== */
-
-                let rankClass =
-                    "rank-card";
+        }
 
 
-                if (rank === 1) {
-
-                    rankClass +=
-                        " rank-1";
-
-                } else if (rank === 2) {
-
-                    rankClass +=
-                        " rank-2";
-
-                } else if (rank === 3) {
-
-                    rankClass +=
-                        " rank-3";
-
-                } else if (
-                    rank > total - 5
-                ) {
-
-                    rankClass +=
-                        " bottom-5";
-                }
+        jsonText =
+            jsonText.substring(
+                start,
+                end + 1
+            );
 
 
-                /* =====================================
-                   CHANGE
-                ===================================== */
+        /* =============================================
+           PARSE JSON
+        ============================================= */
 
-                const changeInfo =
-                    rankingData[index] || {
-                        change: "same",
-                        changeText: "-"
+        const data =
+            JSON.parse(jsonText);
+
+
+        /* =============================================
+           CEK DATA
+        ============================================= */
+
+        if (
+            !data ||
+            !data.table ||
+            !data.table.cols
+        ) {
+
+            throw new Error(
+                "Data spreadsheet tidak ditemukan."
+            );
+
+        }
+
+
+        /* =============================================
+           CARI KOLOM EMPLOYEE NAME
+        ============================================= */
+
+        const employeeColumn =
+            data.table.cols.findIndex(
+                col =>
+
+                    String(
+                        col.label || ""
+                    )
+                    .trim()
+                    .toUpperCase() ===
+                    "EMPLOYEE NAME"
+            );
+
+
+        /* =============================================
+           CARI KOLOM SALES MTD
+        ============================================= */
+
+        const salesColumn =
+            data.table.cols.findIndex(
+                col =>
+
+                    String(
+                        col.label || ""
+                    )
+                    .trim()
+                    .toUpperCase() ===
+                    "SALES MTD"
+            );
+
+
+        /* =============================================
+           VALIDASI KOLOM
+        ============================================= */
+
+        if (employeeColumn === -1) {
+
+            throw new Error(
+                'Kolom "EMPLOYEE NAME" tidak ditemukan.'
+            );
+
+        }
+
+
+        if (salesColumn === -1) {
+
+            throw new Error(
+                'Kolom "SALES MTD" tidak ditemukan.'
+            );
+
+        }
+
+
+        /* =============================================
+           AMBIL DATA
+        ============================================= */
+
+        const employeeData =
+            data.table.rows
+                .map(row => {
+
+                    if (
+                        !row.c
+                    ) {
+
+                        return null;
+
+                    }
+
+
+                    const employeeCell =
+                        row.c[employeeColumn];
+
+
+                    const salesCell =
+                        row.c[salesColumn];
+
+
+                    const employeeName =
+                        employeeCell
+                            ? String(
+                                employeeCell.f ??
+                                employeeCell.v ??
+                                ""
+                            ).trim()
+                            : "";
+
+
+                    const salesValue =
+                        salesCell
+                            ? (
+                                salesCell.f ??
+                                salesCell.v ??
+                                ""
+                            )
+                            : "";
+
+
+                    if (
+                        employeeName === ""
+                    ) {
+
+                        return null;
+
+                    }
+
+
+                    return {
+
+                        name:
+                            employeeName,
+
+                        sales:
+                            salesValue
+
                     };
 
-
-                /* =====================================
-                   POINTS
-                ===================================== */
-
-                const points =
-                    pointsData[index] || "-";
-
-
-                /* =====================================
-                   CARD
-                ===================================== */
-
-                const card =
-                    document.createElement(
-                        "div"
-                    );
-
-                card.className =
-                    rankClass;
-
-
-                card.innerHTML = `
-                    <span class="rank-num">
-                        ${rank}
-                    </span>
-
-                    <span class="change ${changeInfo.change}">
-                        ${changeInfo.changeText}
-                    </span>
-
-                    <span class="employee-name">
-                        ${escapeHtml(employeeName)}
-                    </span>
-
-                    <span class="points">
-                        ${points}
-                    </span>
-                `;
-
-
-                rankGrid.appendChild(
-                    card
+                })
+                .filter(
+                    item =>
+                        item !== null
                 );
 
-            }
-        );
-    }
 
+        /* =============================================
+           VALIDASI DATA
+        ============================================= */
 
-    /* =====================================================
-       ESCAPE HTML
-    ===================================================== */
+        if (
+            employeeData.length === 0
+        ) {
 
-    function escapeHtml(text) {
-
-        const div =
-            document.createElement(
-                "div"
+            throw new Error(
+                "Data EMPLOYEE NAME kosong."
             );
 
-        div.textContent =
-            text;
+        }
 
-        return div.innerHTML;
+
+        /* =============================================
+           TAMPILKAN
+        ============================================= */
+
+        renderRanking(
+            employeeData
+        );
+
+
+    } catch (error) {
+
+        console.error(
+            "Gagal mengambil data:",
+            error
+        );
+
+
+        rankGrid.innerHTML = `
+
+            <div class="error">
+
+                <b>
+                    Gagal mengambil data.
+                </b>
+
+                <br>
+
+                <small>
+                    ${escapeHtml(
+                        error.message
+                    )}
+                </small>
+
+            </div>
+
+        `;
+
     }
 
-
-    /* =====================================================
-       LOAD PERTAMA
-    ===================================================== */
-
-    loadEmployeeNames();
+}
 
 
-    /* =====================================================
-       AUTO UPDATE 30 DETIK
-    ===================================================== */
+/* =====================================================
+   RENDER RANKING
+===================================================== */
 
-    setInterval(
-        loadEmployeeNames,
-        30000
+function renderRanking(
+    employeeData
+) {
+
+    const rankGrid =
+        document.getElementById(
+            "rankGrid"
+        );
+
+
+    rankGrid.innerHTML =
+        "";
+
+
+    const total =
+        employeeData.length;
+
+
+    /* =============================================
+       LOOP EMPLOYEE
+    ============================================= */
+
+    employeeData.forEach(
+        (employee, index) => {
+
+            const rank =
+                index + 1;
+
+
+            /* =====================================
+               CLASS RANK
+            ===================================== */
+
+            let rankClass =
+                "rank-card";
+
+
+            if (
+                rank === 1
+            ) {
+
+                rankClass +=
+                    " rank-1";
+
+            }
+
+            else if (
+                rank === 2
+            ) {
+
+                rankClass +=
+                    " rank-2";
+
+            }
+
+            else if (
+                rank === 3
+            ) {
+
+                rankClass +=
+                    " rank-3";
+
+            }
+
+            else if (
+                rank > total - 5
+            ) {
+
+                rankClass +=
+                    " bottom-5";
+
+            }
+
+
+            /* =====================================
+               CHANGE RANK
+            ===================================== */
+
+            const changeInfo =
+                rankingData[index] || {
+
+                    change:
+                        "same",
+
+                    changeText:
+                        "-"
+
+                };
+
+
+            /* =====================================
+               SALES
+            ===================================== */
+
+            const sales =
+                employee.sales !== "" &&
+                employee.sales !== null &&
+                employee.sales !== undefined
+
+                    ? employee.sales
+
+                    : "-";
+
+
+            /* =====================================
+               CREATE CARD
+            ===================================== */
+
+            const card =
+                document.createElement(
+                    "div"
+                );
+
+
+            card.className =
+                rankClass;
+
+
+            card.innerHTML = `
+
+                <span class="rank-num">
+                    ${rank}
+                </span>
+
+
+                <span
+                    class="change ${changeInfo.change}"
+                >
+                    ${escapeHtml(
+                        changeInfo.changeText
+                    )}
+                </span>
+
+
+                <span
+                    class="employee-name"
+                >
+                    ${escapeHtml(
+                        employee.name
+                    )}
+                </span>
+
+
+                <span
+                    class="sales"
+                >
+                    ${escapeHtml(
+                        String(sales)
+                    )}
+                </span>
+
+            `;
+
+
+            rankGrid.appendChild(
+                card
+            );
+
+        }
     );
+
+}
+
+
+/* =====================================================
+   ESCAPE HTML
+===================================================== */
+
+function escapeHtml(
+    text
+) {
+
+    const div =
+        document.createElement(
+            "div"
+        );
+
+
+    div.textContent =
+        text;
+
+
+    return div.innerHTML;
+
+}
+
+
+/* =====================================================
+   LOAD PERTAMA
+===================================================== */
+
+loadEmployeeData();
+
+
+/* =====================================================
+   AUTO UPDATE 30 DETIK
+===================================================== */
+
+setInterval(
+    loadEmployeeData,
+    30000
+);
 
 </script>
 
