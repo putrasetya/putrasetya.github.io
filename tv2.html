@@ -165,9 +165,8 @@ body {
     flex-shrink: 0;
 }
 
-
 /* =====================================================
-   RANK 1
+   RANK 1 — GOLD PREMIUM
 ===================================================== */
 
 .rank-card.rank-1 {
@@ -175,21 +174,25 @@ body {
     background:
         linear-gradient(
             90deg,
-            #fff9e6,
-            #f9edbd
+            #fff8d6 0%,
+            #f5d76e 25%,
+            #d4af37 50%,
+            #f7df83 75%,
+            #c99a20 100%
         );
 
-    border:
-        1px solid #e4bd58;
+    border: 1px solid #b8860b;
 
     box-shadow:
-        0 2px 6px
-        rgba(160,120,30,0.12);
+        0 3px 10px rgba(184,134,11,0.30),
+        inset 0 1px 0 rgba(255,255,255,0.65);
+
+    color: #4a3500;
 }
 
 
 /* =====================================================
-   RANK 2
+   RANK 2 — SILVER PREMIUM
 ===================================================== */
 
 .rank-card.rank-2 {
@@ -197,21 +200,25 @@ body {
     background:
         linear-gradient(
             90deg,
-            #f4f6f8,
-            #e1e5e9
+            #ffffff 0%,
+            #e8ecef 25%,
+            #bfc5ca 50%,
+            #f1f3f4 75%,
+            #aeb5bb 100%
         );
 
-    border:
-        1px solid #aeb7c0;
+    border: 1px solid #8d969d;
 
     box-shadow:
-        0 2px 6px
-        rgba(80,90,100,0.10);
+        0 3px 10px rgba(80,90,100,0.25),
+        inset 0 1px 0 rgba(255,255,255,0.8);
+
+    color: #303840;
 }
 
 
 /* =====================================================
-   RANK 3
+   RANK 3 — BRONZE PREMIUM
 ===================================================== */
 
 .rank-card.rank-3 {
@@ -219,16 +226,20 @@ body {
     background:
         linear-gradient(
             90deg,
-            #fff5e9,
-            #f5ddc3
+            #ffe6c7 0%,
+            #d99a5b 25%,
+            #b87333 50%,
+            #e0a76d 75%,
+            #9c5a24 100%
         );
 
-    border:
-        1px solid #d5a36a;
+    border: 1px solid #8a4f20;
 
     box-shadow:
-        0 2px 6px
-        rgba(150,90,30,0.10);
+        0 3px 10px rgba(140,80,30,0.28),
+        inset 0 1px 0 rgba(255,255,255,0.55);
+
+    color: #47230d;
 }
 
 
@@ -658,30 +669,43 @@ body {
 
 
     .rank-card.rank-1 {
+    background:
+        linear-gradient(
+            90deg,
+            #fff8d6,
+            #d4af37,
+            #f7df83,
+            #c99a20
+        ) !important;
 
-        background: #f9efca !important;
+    border-color: #b8860b;
+}
 
-        border-color: #d9b957;
+.rank-card.rank-2 {
+    background:
+        linear-gradient(
+            90deg,
+            #ffffff,
+            #bfc5ca,
+            #f1f3f4,
+            #aeb5bb
+        ) !important;
 
-    }
+    border-color: #8d969d;
+}
 
+.rank-card.rank-3 {
+    background:
+        linear-gradient(
+            90deg,
+            #ffe6c7,
+            #b87333,
+            #e0a76d,
+            #9c5a24
+        ) !important;
 
-    .rank-card.rank-2 {
-
-        background: #e9edf0 !important;
-
-        border-color: #aeb7bf;
-
-    }
-
-
-    .rank-card.rank-3 {
-
-        background: #f5e1cc !important;
-
-        border-color: #d3a477;
-
-    }
+    border-color: #8a4f20;
+}
 
 
     .rank-card.bottom-5 {
