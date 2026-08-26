@@ -884,12 +884,39 @@ and (orientation: landscape) {
     box-shadow:
         0 2px 6px rgba(0,0,0,0.08);
 }
+
+.realtime-date {
+    position: fixed;
+    top: 10px;
+    left: 20px;
+
+    font-family: 'TTCommonsCondensed', Arial, sans-serif;
+    font-size: 1.3rem;
+    font-weight: 800;
+
+    color: #26343f;
+
+    letter-spacing: 0.8px;
+
+    z-index: 9999;
+
+    background: rgba(255,255,255,0.65);
+    padding: 4px 10px;
+    border-radius: 8px;
+
+    box-shadow:
+        0 2px 6px rgba(0,0,0,0.08);
+}
 </style>
 
 </head>
 
 
 <body>
+
+<div class="realtime-date" id="realtimeDate">
+    Rabu, 26 Agustus 2026
+</div>
 
 <div class="realtime-clock" id="realtimeClock">
     00:00:00
@@ -2212,6 +2239,36 @@ updateClock();
 
 setInterval(
     updateClock,
+    1000
+);
+
+function updateDate() {
+
+    const now = new Date();
+
+    const options = {
+        weekday: 'long',
+        day: 'numeric',
+        month: 'long',
+        year: 'numeric'
+    };
+
+    const date =
+        now.toLocaleDateString(
+            'id-ID',
+            options
+        );
+
+    document.getElementById(
+        'realtimeDate'
+    ).textContent = date;
+
+}
+
+updateDate();
+
+setInterval(
+    updateDate,
     1000
 );
 </script>
