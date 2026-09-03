@@ -2233,7 +2233,6 @@ function nextSlide() {
     updateSlideTabs();
 }
 
-
 function updateSlideTabs(){
 
     document
@@ -2250,17 +2249,69 @@ function updateSlideTabs(){
     if(activeTab){
         activeTab.classList.add('active');
     }
-}
+
+    }
+
+document
+    .querySelectorAll('.slide-tab')
+    .forEach(tab => {
+
+        tab.style.cursor = 'pointer';
+
+        tab.addEventListener('click', () => {
+
+            const targetSlide =
+                parseInt(
+                    tab.dataset.slide
+                );
+
+            if(targetSlide === currentSlide){
+                return;
+            }
+
+            document
+                .getElementById(
+                    "slide" + currentSlide
+                )
+                .classList
+                .remove("active");
+
+            currentSlide = targetSlide;
+
+            document
+                .getElementById(
+                    "slide" + currentSlide
+                )
+                .classList
+                .add("active");
+
+            updateSlideTabs();
+
+            startSlideTimer(); // reset 20 detik
+
+        });
+
+    });
+
 
 /* =====================================================
    SLIDE SETIAP 5 DETIK
 ===================================================== */
 
-setInterval(
-    nextSlide,
-    SLIDE_DURATION
-);
+let slideTimer;
 
+function startSlideTimer(){
+
+    clearInterval(slideTimer);
+
+    slideTimer = setInterval(
+        nextSlide,
+        SLIDE_DURATION
+    );
+
+}
+
+startSlideTimer();
 
 /* =====================================================
    LOAD PERTAMA
