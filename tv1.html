@@ -1054,6 +1054,19 @@ and (orientation: landscape) {
 .realtime-date {
     display: none !important;
 }
+
+.july,
+.august,
+.september,
+.october,
+.november,
+.december,
+.point{
+    width:70px;
+    text-align:center;
+    font-weight:800;
+    flex-shrink:0;
+}
 </style>
 
 </head>
@@ -1205,7 +1218,7 @@ and (orientation: landscape) {
     <div class="score-column-header">
 
         <div class="score-rank-head">
-            No
+            No.
         </div>
 
         <div class="score-name-head">
@@ -1244,7 +1257,22 @@ and (orientation: landscape) {
 
     <!-- DATA KARYAWAN -->
     <div class="rank-grid" id="rankGrid4">
-        <!-- DATA DARI SHEET AKAN MASUK DI SINI -->
+
+    <div class="rank-card" style="font-weight:800;">
+        <span class="employee-name"
+              style="width:220px;flex:0 0 220px;">
+            NAMA KARYAWAN
+        </span>
+
+        <span class="july">JULI</span>
+        <span class="august">AGUSTUS</span>
+        <span class="september">SEPTEMBER</span>
+        <span class="october">OKTOBER</span>
+        <span class="november">NOVEMBER</span>
+        <span class="december">DESEMBER</span>
+        <span class="point">POIN</span>
+    </div>
+
     </div>
 
 </div>
@@ -1712,6 +1740,8 @@ async function loadData() {
         renderSlide2();
 
         renderSlide3();
+        
+        renderSlide4();
 
     }
 
@@ -1933,7 +1963,47 @@ function renderSlide3() {
 
 }
 
+/* =====================================================
+   SLIDE 4
+   SCORE UPDATE JULI - DESEMBER 2026
+===================================================== */
 
+function renderSlide4() {
+
+    const grid =
+        document.getElementById("rankGrid4");
+
+    grid.innerHTML = "";
+
+    employeeData.forEach(employee => {
+
+        const row =
+            document.createElement("div");
+
+        row.className = "rank-card";
+
+        row.innerHTML = `
+
+            <span class="employee-name"
+                  style="width:220px;flex:0 0 220px;">
+                ${escapeHtml(employee.name)}
+            </span>
+
+            <span class="july">-</span>
+            <span class="august">-</span>
+            <span class="september">-</span>
+            <span class="october">-</span>
+            <span class="november">-</span>
+            <span class="december">-</span>
+            <span class="point">0</span>
+
+        `;
+
+        grid.appendChild(row);
+
+    });
+
+}
 /* =====================================================
    RENDER CARDS
 ===================================================== */
