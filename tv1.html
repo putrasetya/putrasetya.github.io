@@ -3,1632 +3,2340 @@
 <head>
 
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>AZKO ULTRA TV DISPLAY</title>
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+>
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<title>AZKO SALES RANKING</title>
 
 <style>
-   /* SHADOW TULISAN DI DALAM CARD*/
-   .employee-name,
-.employee-label,
-.score-value,
-.score-label,
-.header h1,
-.header p{
 
-    text-shadow:
-        0 2px 6px rgba(0,0,0,.9);
-
-}
-   
-   /* SEMUA TULISAN WARNA PUTIH KECUALI ACH */
-    body *{color:#fff!important;}
-    .ach-green{color:#dcfce7!important;}
-.ach-red{color:#ffe4e6!important;}
-
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
+@font-face{
+    font-family:'TTCommonsCondensed';
+    src:url('https://putrasetya.github.io/font/TT%20Commons%20Pro%20Trial%20Condensed%20ExtraBold.woff2') format('woff2');
+    font-weight:800;
+    font-style:normal;
 }
 
-html,
-body{
-    width:100%;
-    height:100%;
+/* =====================================================
+   RESET
+===================================================== */
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Arial, sans-serif;
 }
 
-body{
-    font-family:'Poppins',sans-serif;
-    overflow:hidden;
-    color:white;
-    cursor:pointer;
 
-    background:
-        linear-gradient(rgba(0,0,0,.25),rgba(0,0,0,.25)),
-        url('https://putrasetya.github.io/backgroundtv.png');
+/* =====================================================
+   BODY
+===================================================== */
 
-    background-position:center center;
-    background-repeat:no-repeat;
-    background-size:cover;
-}
+body {
 
-/* =========================
-BACKGROUND FX
-========================= */
-
-body::before{
-
-    content:"";
-
-    position:fixed;
-
-    inset:0;
+    width: 100vw;
+    height: 100vh;
 
     background:
         linear-gradient(
             135deg,
-            rgba(255,255,255,.03),
-            transparent 35%,
-            rgba(255,255,255,.02)
+            #dbe7ef 0%,
+            #c9d7e1 100%
         );
 
-    pointer-events:none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
-    z-index:-2;
+    padding: 15px;
+
+    overflow: hidden;
 }
 
-body::after{
 
-    content:"";
+/* =====================================================
+   CONTAINER
+===================================================== */
 
-    position:fixed;
+.container {
 
-    width:200%;
-    height:200%;
+    width: 100%;
+    max-width: 900px;
+    height: 100%;
 
-    top:-50%;
-    left:-50%;
+    display: flex;
+    flex-direction: column;
+
+    justify-content: space-between;
+}
+
+
+/* =====================================================
+   SLIDE
+===================================================== */
+
+.slide {
+
+    width: 100%;
+    height: 100%;
+
+    display: none;
+    flex-direction: column;
+}
+
+
+.slide.active {
+    display: flex;
+}
+
+
+/* =====================================================
+   HEADER
+===================================================== */
+
+.header{
+    display:none;
+}
+
+.title{
+    font-family:'TTCommonsCondensed', Arial, sans-serif;
+    font-weight:800;
+    letter-spacing:3px;
+    transform:scaleY(1.02);
+}
+
+
+/* =====================================================
+   RANK GRID
+===================================================== */
+
+.rank-grid {
+
+    display: flex;
+
+    flex-direction: column;
+
+    justify-content: flex-start;
+
+    flex-grow: 1;
+
+    gap: 2px;
+
+    overflow: hidden;
+}
+
+
+/* =====================================================
+   RANK CARD
+===================================================== */
+
+.rank-card {
+
+    background: #ffffff;
+
+    padding: 0 16px;
+
+    height: 4.5vh;
+
+    min-height: 30px;
+
+    border-radius: 16px;
+
+    display: flex;
+
+    align-items: center;
+
+    box-shadow:
+        0 1px 4px rgba(15,23,42,0.08);
+
+    font-size: 0.85rem;
+
+    font-weight: 600;
+
+    flex-shrink: 0;
+}
+
+/* =====================================================
+   RANK 1 — GOLD PREMIUM
+===================================================== */
+
+.rank-card.rank-1 {
 
     background:
         linear-gradient(
             90deg,
-            transparent,
-            rgba(255,255,255,.04),
-            transparent
+            #fff8d6 0%,
+            #f5d76e 25%,
+            #d4af37 50%,
+            #f7df83 75%,
+            #c99a20 100%
         );
 
-    transform:rotate(25deg);
-
-    animation:none;
-
-    pointer-events:none;
-
-    z-index:-1;
-}
-
-/* =========================
-SLIDES
-========================= */
-
-.slide{
-
-    position:absolute;
-
-    inset:0;
-
-    width:100vw;
-    height:100vh;
-
-    padding:
-        1vh
-        2vw;
-
-    display:flex;
-
-    flex-direction:column;
-
-    opacity:0;
-
-    visibility:hidden;
-
-    pointer-events:none;
-
-    transition:
-        opacity .5s linear;
-}
-
-.slide.active{
-
-    opacity:1;
-
-    visibility:visible;
-
-    pointer-events:auto;
-}
-
-/* =========================
-HEADER
-========================= */
-
-.header{
-
-    text-align:center;
-
-    margin-bottom:1vh;
-}
-
-.header h1{
-
-    font-size:3vw;
-
-    font-weight:900;
-
-    letter-spacing:6px;
-
-    text-transform:uppercase;
-
-    color:#000000;
-}
-
-.header p{
-
-    margin-top:.2vh;
-
-    font-size:1vw;
-
-    letter-spacing:4px;
-
-    color:#000000;
-
-    opacity:.9;
-}
-
-/* =========================
-PAUSE INDICATOR
-========================= */
-
-.pause-indicator{
-
-    position:fixed;
-
-    top:20px;
-    left:20px;
-
-    z-index:9999;
-
-    padding:14px 24px;
-
-    border-radius:18px;
-
-    background:
-        linear-gradient(
-            135deg,
-            rgba(15,23,42,.92),
-            rgba(30,41,59,.92)
-        );
-
-    border:
-        1px solid rgba(255,255,255,.15);
-
-    font-size:14px;
-
-    font-weight:800;
-
-    letter-spacing:2px;
+    border: 1px solid #b8860b;
 
     box-shadow:
-        0 10px 30px rgba(0,0,0,.45);
+        0 3px 10px rgba(184,134,11,0.30),
+        inset 0 1px 0 rgba(255,255,255,0.65);
 
-    opacity:0;
-
-    transform:
-        translateY(-20px);
-
-    transition:.35s ease;
+    color: #4a3500;
 }
 
-.pause-indicator.show{
 
-    opacity:1;
+/* =====================================================
+   RANK 2 — SILVER PREMIUM
+===================================================== */
 
-    transform:
-        translateY(0);
-}
-
-/* =========================
-RANK LIST
-========================= */
-
-.rank-list{
-
-    display:flex;
-
-    flex-direction:column;
-
-    gap:1.2vh;
-
-    flex:1;
-
-    justify-content:space-evenly;
-}
-
-/* =========================
-CARD
-========================= */
-
-.rank-card{
-
-    position:relative;
-
-    display:flex;
-
-    align-items:center;
-
-    height:25vh;
-
-    border-radius:34px;
-
-    overflow:hidden;
-
-    border:
-        1px solid rgba(255,255,255,.08);
-
-    opacity:0;
-
-    transform:
-        translateX(-40px);
-
-    will-change:auto;
-}
-
-.rank-card.show{
-
-    animation:
-        slideRight .5s forwards;
-}
-
-.rank-card:nth-child(1){
-    animation-delay:.1s;
-}
-
-.rank-card:nth-child(2){
-    animation-delay:.2s;
-}
-
-.rank-card:nth-child(3){
-    animation-delay:.3s;
-}
-
-@keyframes slideRight{
-
-    from{
-
-        opacity:0;
-
-        transform:
-            translateX(-40px);
-    }
-
-    to{
-
-        opacity:1;
-
-        transform:
-            translateX(0);
-    }
-}
-
-/* =========================
-TOP CARD
-========================= */
-
-.gold{
+.rank-card.rank-2 {
 
     background:
         linear-gradient(
-            135deg,
-            #6b5300,
-            #d4a514,
-            #fff0a6,
-            #d4a514,
-            #6b5300
+            90deg,
+            #ffffff 0%,
+            #e8ecef 25%,
+            #bfc5ca 50%,
+            #f1f3f4 75%,
+            #aeb5bb 100%
         );
+
+    border: 1px solid #8d969d;
+
+    box-shadow:
+        0 3px 10px rgba(80,90,100,0.25),
+        inset 0 1px 0 rgba(255,255,255,0.8);
+
+    color: #303840;
 }
 
-.silver{
+
+/* =====================================================
+   RANK 3 — BRONZE PREMIUM
+===================================================== */
+
+.rank-card.rank-3 {
 
     background:
         linear-gradient(
-            135deg,
-            #737373,
-            #d1d5db,
+            90deg,
+            #ffe6c7 0%,
+            #d99a5b 25%,
+            #b87333 50%,
+            #e0a76d 75%,
+            #9c5a24 100%
+        );
+
+    border: 1px solid #8a4f20;
+
+    box-shadow:
+        0 3px 10px rgba(140,80,30,0.28),
+        inset 0 1px 0 rgba(255,255,255,0.55);
+
+    color: #47230d;
+}
+
+
+/* =====================================================
+   5 TERBAWAH
+===================================================== */
+
+.rank-card.bottom-5 {
+    background: linear-gradient(
+        90deg,
+        #8b1e1e,
+        #651414
+    );
+
+    border: 1px solid #4a0d0d;
+
+    color: #ffffff;
+}
+
+.rank-card.bottom-5 .rank-num,
+.rank-card.bottom-5 .employee-name,
+.rank-card.bottom-5 .sales,
+.rank-card.bottom-5 .ach,
+.rank-card.bottom-5 .proteksi,
+.rank-card.bottom-5 .ach-proteksi,
+.rank-card.bottom-5 .transaksi,
+.rank-card.bottom-5 .ach-bulanan {
+    color: #ffffff;
+}
+
+
+/* =====================================================
+   RANK NUMBER
+===================================================== */
+
+.rank-num {
+
+    width: 30px;
+
+    color: #475569;
+
+    font-weight: 700;
+
+    flex-shrink: 0;
+}
+
+
+/* =====================================================
+   CHANGE
+===================================================== */
+
+.change {
+
+    width: 40px;
+
+    font-size: 0.75rem;
+
+    font-weight: 700;
+
+    flex-shrink: 0;
+}
+
+
+.up {
+    color: #16803c;
+}
+
+
+.down {
+    color: #c53030;
+}
+
+
+.same {
+    color: #8995a1;
+}
+
+
+/* =====================================================
+   EMPLOYEE NAME
+===================================================== */
+
+.employee-name {
+
+    flex-grow: 1;
+
+    color: #17212b;
+
+    white-space: nowrap;
+
+    overflow: hidden;
+
+    text-overflow: ellipsis;
+}
+
+
+/* =====================================================
+   SALES
+===================================================== */
+
+.sales {
+
+    width: 110px;
+
+    font-weight: 800;
+
+    color: #17212b;
+
+    margin-left: 10px;
+
+    white-space: nowrap;
+
+    text-align: right;
+
+    flex-shrink: 0;
+}
+
+
+/* =====================================================
+   ACH MTD
+===================================================== */
+
+.ach {
+
+    width: 85px;
+
+    font-weight: 800;
+
+    color: #17212b;
+
+    margin-left: 15px;
+
+    white-space: nowrap;
+
+    text-align: right;
+
+    flex-shrink: 0;
+}
+
+
+/* =====================================================
+   PROTEKSI
+===================================================== */
+
+.proteksi {
+
+    width: 110px;
+
+    font-weight: 800;
+
+    color: #17212b;
+
+    margin-left: 15px;
+
+    white-space: nowrap;
+
+    text-align: right;
+
+    flex-shrink: 0;
+}
+
+
+/* =====================================================
+   ACH PROTEKSI
+===================================================== */
+
+.ach-proteksi {
+
+    width: 85px;
+
+    font-weight: 800;
+
+    color: #17212b;
+
+    margin-left: 15px;
+
+    white-space: nowrap;
+
+    text-align: right;
+
+    flex-shrink: 0;
+}
+
+
+/* =====================================================
+   TRANSAKSI
+===================================================== */
+
+.transaksi {
+
+    width: 110px;
+
+    font-weight: 800;
+
+    color: #17212b;
+
+    margin-left: 15px;
+
+    white-space: nowrap;
+
+    text-align: right;
+
+    flex-shrink: 0;
+}
+
+
+/* =====================================================
+   ACH BULANAN
+===================================================== */
+
+.ach-bulanan {
+
+    width: 85px;
+
+    font-weight: 800;
+
+    color: #17212b;
+
+    margin-left: 15px;
+
+    white-space: nowrap;
+
+    text-align: right;
+
+    flex-shrink: 0;
+}
+
+
+/* =====================================================
+   LOADING / ERROR
+===================================================== */
+
+.loading,
+.error {
+
+    text-align: center;
+
+    padding: 20px;
+
+    font-weight: 600;
+}
+
+
+.loading {
+    color: #52616d;
+}
+
+
+.error {
+    color: #b83232;
+}
+
+
+/* =====================================================
+   MOBILE / TABLET
+===================================================== */
+
+@media (
+    max-width: 768px
+),
+(
+    max-aspect-ratio: 1/1
+) {
+
+    body {
+
+        height: auto;
+
+        min-height: 100vh;
+
+        overflow: auto;
+
+        align-items: flex-start;
+    }
+
+
+    .container {
+
+        height: auto;
+
+        justify-content: flex-start;
+
+        gap: 10px;
+    }
+
+
+    .title {
+
+        font-size: 1.5rem;
+    }
+
+
+    .rank-grid {
+
+        gap: 6px;
+
+        overflow: visible;
+    }
+
+
+    .rank-card {
+
+        height: 42px;
+
+        font-size: 0.9rem;
+
+        padding: 0 10px;
+    }
+
+
+    .rank-num {
+        width: 28px;
+    }
+
+
+    .change {
+        width: 38px;
+    }
+
+
+    .sales {
+        width: 95px;
+        margin-left: 8px;
+    }
+
+
+    .ach {
+        width: 70px;
+        margin-left: 10px;
+    }
+
+
+    .proteksi {
+        width: 95px;
+        margin-left: 8px;
+    }
+
+
+    .ach-proteksi {
+        width: 70px;
+        margin-left: 10px;
+    }
+
+
+    .transaksi {
+        width: 95px;
+        margin-left: 8px;
+    }
+
+
+    .ach-bulanan {
+        width: 70px;
+        margin-left: 10px;
+    }
+
+}
+
+
+/* =====================================================
+   TV 43 INCH
+   TAMPILAN LEBIH NYAMAN UNTUK MATA
+===================================================== */
+
+@media screen and (min-width: 1200px) and (orientation: landscape) {
+
+    body {
+
+        background:
+            linear-gradient(
+                135deg,
+                #d5e0e7 0%,
+                #c5d2db 100%
+            );
+
+        padding: 10px;
+
+    }
+
+
+    .container {
+
+        max-width: 1100px;
+
+    }
+
+
+    .header {
+
+        margin-bottom: 5px;
+
+    }
+
+
+    .title {
+
+        font-size: 1.8rem;
+
+        color: #26343f;
+
+    }
+
+
+    .rank-grid {
+
+        gap: 2px;
+
+        overflow: hidden;
+
+    }
+
+
+    .rank-card {
+
+        background: #fdfdfd;
+
+        border-color: #d7dde2;
+
+        box-shadow:
+            0 1px 3px
+            rgba(30,45,60,0.08);
+
+        border-radius: 14px;
+
+        color: #26343f;
+
+    }
+
+
+    .rank-card.rank-1 {
+    background:
+        linear-gradient(
+            90deg,
+            #fff8d6,
+            #d4af37,
+            #f7df83,
+            #c99a20
+        ) !important;
+
+    border-color: #b8860b;
+}
+
+.rank-card.rank-2 {
+    background:
+        linear-gradient(
+            90deg,
             #ffffff,
-            #d1d5db,
-            #737373
-        );
+            #bfc5ca,
+            #f1f3f4,
+            #aeb5bb
+        ) !important;
+
+    border-color: #8d969d;
 }
 
-.bronze{
-
+.rank-card.rank-3 {
     background:
         linear-gradient(
-            135deg,
-            #6d3f1d,
-            #c87c3d,
-            #efc08c,
-            #c87c3d,
-            #6d3f1d
+            90deg,
+            #ffe6c7,
+            #b87333,
+            #e0a76d,
+            #9c5a24
+        ) !important;
+
+    border-color: #8a4f20;
+}
+
+
+    .rank-card.bottom-5 {
+    background: #651414 !important;
+    border-color: #4a0d0d;
+}
+
+
+    .employee-name,
+    .sales,
+    .ach,
+    .proteksi,
+    .ach-proteksi,
+    .transaksi,
+    .ach-bulanan {
+
+        color: #26343f;
+
+    }
+
+
+    .rank-num {
+
+        color: #53616c;
+
+    }
+
+
+    .up {
+
+        color: #19733a;
+
+    }
+
+
+    .down {
+
+        color: #b93838;
+
+    }
+
+
+    .same {
+
+        color: #7b8790;
+
+    }
+
+
+    /* =============================================
+       PROTEKSI 17 RANK
+       DIPAKSA MASUK SATU LAYAR TV
+    ============================================= */
+
+    #slide2 .rank-grid {
+
+        height: calc(100vh - 75px);
+
+        flex-grow: 0;
+
+        gap: 2px;
+
+        overflow: hidden;
+
+    }
+
+
+    #slide2 .rank-card {
+
+        height:
+            calc(
+                (100vh - 75px - 32px)
+                / 17
+            );
+
+        min-height: 0;
+
+        max-height: none;
+
+        flex-shrink: 0;
+
+    }
+
+
+    /* =============================================
+       SLIDE 1 & 3
+       MENYESUAIKAN JUMLAH RANK
+    ============================================= */
+
+    #slide1 .rank-card,
+    #slide3 .rank-card {
+
+        height: calc(
+            (100vh - 75px - 32px)
+            / 17
         );
+
+        min-height: 0;
+
+        flex-shrink: 0;
+
+    }
+
 }
 
-/* =========================
-BOTTOM CARD
-========================= */
 
-.red-high{
+/* =====================================================
+   TV LEBIH KECIL
+===================================================== */
 
-    background:
-        linear-gradient(
-            135deg,
-            #7f1d1d,
-            #b91c1c,
-            #dc2626,
-            #ef4444,
-            #f87171
-        );
+@media screen
+and (min-width: 1000px)
+and (max-width: 1199px)
+and (orientation: landscape) {
+
+    .rank-card {
+
+        height: 4.2vh;
+
+    }
+
 }
 
-.red-mid{
 
-    background:
-        linear-gradient(
-            135deg,
-            #4a0404,
-            #7f1d1d,
-            #b91c1c,
-            #dc2626,
-            #ef4444
-        );
+/* =====================================================
+   TV EXTRA LARGE
+===================================================== */
+
+@media screen and (min-width: 1800px) and (orientation: landscape) {
+
+    .container {
+
+        max-width: 1250px;
+
+    }
+
+
+    .title {
+
+        font-size: 2rem;
+
+    }
+
+
+    .rank-card {
+
+        font-size: 0.9rem;
+
+    }
+
 }
 
-.red-low{
-
-    background:
-        linear-gradient(
-            135deg,
-            #2b0000,
-            #4a0404,
-            #7f1d1d,
-            #991b1b,
-            #b91c1c
-        );
+.change {
+    display: none !important;
 }
 
-/* =========================
-RANK NUMBER
-========================= */
+.realtime-clock {
+    position: fixed;
+    top: 10px;
+    right: 20px;
 
-.rank-number{
+    font-family: 'TTCommonsCondensed', Arial, sans-serif;
+    font-size: 1.3rem;
+    font-weight: 800;
 
-    position:absolute;
+    color: #26343f;
 
-    left:-.5vw;
+    letter-spacing: 1.5px;
 
-    top:50%;
+    z-index: 9999;
 
-    transform:
-        translateY(-50%)
-        skew(-10deg);
+    background: rgba(255,255,255,0.65);
+    padding: 4px 10px;
+    border-radius: 8px;
 
-    font-size:16vw;
-
-    font-weight:900;
-
-    opacity:.20;
-
-    letter-spacing:-10px;
+    box-shadow:
+        0 2px 6px rgba(0,0,0,0.08);
 }
 
-.gold .rank-number{
-    color:#facc15;
+.slide-tabs{
+    position: fixed;
+    top: 10px;
+    left: 20px;
+
+    display: flex;
+    gap: 8px;
+
+    z-index: 9999;
 }
 
-.silver .rank-number{
-    color:#e2e8f0;
-}
-
-.bronze .rank-number{
-    color:#fb923c;
-}
-
-.red-high .rank-number,
-.red-mid .rank-number,
-.red-low .rank-number{
-
-    color:#ffffff;
-}
-
-/* =========================
-PHOTO
-========================= */
-
-.photo-box{
-
-    width:20%;
-    height:100%;
-
-    display:flex;
-
-    align-items:flex-end;
-
-    justify-content:center;
-}
-
-.photo-box img{
-
-    width:100%;
-    height:100%;
-
-    object-fit:contain;
-
-    object-position:center bottom;
-
-    filter:
-        drop-shadow(0 6px 10px rgba(0,0,0,.25));
-}
-
-/* =========================
-EMPLOYEE
-========================= */
-
-.employee{
-
-    flex:1;
-
-    padding-left:1.5vw;
-
-    overflow:hidden;
-}
-
-.employee-name{
-
-    font-size:2vw;
-
-    font-weight:900;
-
-    color:#111827;
-
-    text-transform:uppercase;
-
-    white-space:nowrap;
-
-    overflow:hidden;
-
-    text-overflow:ellipsis;
-}
-
-.employee-label{
-
-    margin-top:.5vh;
-
-    font-size:1.1vw;
-
-    letter-spacing:3px;
-
-    text-transform:uppercase;
-
-    color:#111827;
-}
-
-.red-high .employee-name,
-.red-mid .employee-name,
-.red-low .employee-name,
-
-.red-high .employee-label,
-.red-mid .employee-label,
-.red-low .employee-label{
-
-    color:white;
-}
-
-/* =========================
-SCORE
-========================= */
-
-.score{
-
-    width:31%;
-
-    padding-right:1.8vw;
-
-    display:flex;
-
-    flex-direction:column;
-
-    align-items:flex-end;
-
-    gap:1vh;
-}
-
-.main-score{
-
-    text-align:right;
-}
-
-.score-value{
-
-    font-size:2.5vw;
-
-    font-weight:900;
-
-    color:#111827;
-}
-
-.score-label{
-
-    margin-top:.2vh;
-
-    font-size:.8vw;
-
-    font-weight:700;
-
-    letter-spacing:2px;
-
-    color:#111827;
-
-    opacity:.7;
-}
-
-.red-high .score-value,
-.red-mid .score-value,
-.red-low .score-value,
-
-.red-high .score-label,
-.red-mid .score-label,
-.red-low .score-label{
-
-    color:white;
-}
-
-/* =========================
-ACH BOX
-========================= */
-
-.ach-box{
-
-    padding:
-        1vh
-        1.2vw;
-
-    border-radius:22px;
-
-    min-width:9vw;
-
-    text-align:center;
-
-    border:
-        1px solid rgba(255,255,255,.18);
-
-    background:
-        rgba(255,255,255,.12);
-}
-
-.ach-title{
-
-    font-size:.72vw;
-
+.slide-tab{
+    font-family:'TTCommonsCondensed', Arial, sans-serif;
+    font-size:1rem;
     font-weight:800;
 
-    letter-spacing:2px;
+    background: rgba(255,255,255,0.65);
 
-    color:#ffffff;
+    color:#26343f;
+
+    padding: 8px 14px;
+
+    border-radius:8px;
+
+    box-shadow:
+        0 2px 6px rgba(0,0,0,0.08);
+
+    transition: all .3s ease;
 }
 
-.ach-value{
-
-    margin-top:.45vh;
-
-    font-size:1.8vw;
-
-    font-weight:900;
-}
-
-.ach-green{
-    color:#dcfce7 !important;
-}
-
-.ach-green-box{
+.slide-tab.active{
 
     background:
-        rgba(22,163,74,.35) !important;
+        linear-gradient(
+            135deg,
+            #d4af37,
+            #f7df83
+        );
 
-    border:
-        2px solid rgba(74,222,128,.65);
+    color:#4a3500;
+
+    border:1px solid #b8860b;
+
+    box-shadow:
+        0 0 15px rgba(212,175,55,.6);
+
+    transform:scale(1.05);
 }
 
-.ach-red{
-    color:#ffe4e6 !important;
+.realtime-date {
+    position: fixed;
+    top: 10px;
+    left: 20px;
+
+    font-family: 'TTCommonsCondensed', Arial, sans-serif;
+    font-size: 1.3rem;
+    font-weight: 800;
+
+    color: #26343f;
+
+    letter-spacing: 0.8px;
+
+    z-index: 9999;
+
+    background: rgba(255,255,255,0.65);
+    padding: 4px 10px;
+    border-radius: 8px;
+
+    box-shadow:
+        0 2px 6px rgba(0,0,0,0.08);
 }
-
-.ach-red-box{
-
-    background:
-        rgba(185,28,28,.35) !important;
-
-    border:
-        2px solid rgba(252,165,165,.6);
+.realtime-date {
+    display: none !important;
 }
-
-.ach-normal{
-    color:#ffffff !important;
-}
-
-/* =========================
-MOBILE
-========================= */
-
-@media(max-width:768px){
-
-    body{
-        overflow:auto;
-    }
-
-    .slide{
-        min-height:100vh;
-        height:auto;
-        padding:12px;
-    }
-
-    .header h1{
-        font-size:30px;
-    }
-
-    .header p{
-        font-size:11px;
-    }
-
-    .rank-card{
-        height:130px;
-    }
-
-    .rank-number{
-        font-size:90px !important;
-    }
-
-    .photo-box{
-        width:95px;
-        min-width:95px;
-    }
-
-    .employee-name{
-        font-size:15px;
-    }
-
-    .employee-label{
-        font-size:10px;
-    }
-
-    .score{
-        width:42%;
-    }
-
-    .score-value{
-        font-size:18px;
-    }
-
-    .score-label{
-        font-size:9px;
-    }
-
-    .ach-box{
-
-        min-width:78px;
-
-        padding:
-            8px
-            10px;
-    }
-
-    .ach-title{
-        font-size:8px;
-    }
-
-    .ach-value{
-        font-size:15px;
-    }
-}
-    #datetimeWidget{
-
-    position:fixed;
-
-    top:20px;
-
-    right:25px;
-
-    left:auto;
-
-    transform:none;
-
-    z-index:999;
-
-    display:flex;
-
-    flex-direction:column;
-
-    align-items:flex-end;
-
-    gap:4px;
-
-    pointer-events:none;
-}
-
-#dateLine{
-
-    color:#000;
-
-    font-size:.8vw;
-
-    font-weight:700;
-
-    letter-spacing:2px;
-
-    text-transform:uppercase;
-
-    text-shadow:
-        0 2px 10px rgba(255,255,255,.4);
-}
-
-#timeLine{
-
-    padding:6px 18px;
-
-    border-radius:999px;
-
-    background:
-        rgba(255,255,255,.18);
-
-    backdrop-filter:blur(10px);
-
-    border:
-        1px solid rgba(255,255,255,.25);
-
-    color:#000;
-
-    font-size:1.2vw;
-
-    font-weight:900;
-
-    letter-spacing:3px;
-
-    text-shadow:
-        0 2px 10px rgba(255,255,255,.4);
-}
-
-@media(max-width:768px){
-
-    #datetimeWidget{
-
-        top:81px;
-
-        left:50%;
-
-        right:auto;
-
-        transform:translateX(-50%);
-
-        width:100%;
-
-        align-items:center;
-
-        text-align:center;
-    }
-
-    #dateLine{
-
-        font-size:11px;
-
-        letter-spacing:1px;
-
-        width:100%;
-    }
-
-    #timeLine{
-
-        font-size:18px;
-
-        min-width:120px;
-    }
-
-}
-
 </style>
+
 </head>
 
+
 <body>
-    <div id="datetimeWidget">
-    <div id="dateLine"></div>
-    <div id="timeLine"></div>
+
+<div class="realtime-date" id="realtimeDate">
+    Rabu, 26 Agustus 2026
 </div>
 
-<div class="pause-indicator" id="pauseIndicator">
-    ▶ PLAYING
+<div class="realtime-clock" id="realtimeClock">
+    00:00:00
 </div>
 
-<div class="slide active">
-    <div class="header">
-        <h1>TOP ACH MTD SALES</h1>
-        <p>AZKO CITIMALL TUBAN</p>
+<div class="slide-tabs">
+    <div class="slide-tab active" data-slide="1">
+        ACH MTD SALES ID
     </div>
-    <div class="rank-list" id="salesTop"></div>
-</div>
 
-<div class="slide">
-    <div class="header">
-        <h1>BOTTOM ACH MTD SALES</h1>
-        <p>AZKO CITIMALL TUBAN</p>
+    <div class="slide-tab" data-slide="2">
+        PROTEKSI
     </div>
-    <div class="rank-list" id="salesBottom"></div>
-</div>
 
-<div class="slide">
-    <div class="header">
-        <h1>TOP PROTEKSI</h1>
-        <p>AZKO CITIMALL TUBAN</p>
+    <div class="slide-tab" data-slide="3">
+        TRANSAKSI
     </div>
-    <div class="rank-list" id="proteksiTop"></div>
 </div>
 
-<div class="slide">
-    <div class="header">
-        <h1>BOTTOM PROTEKSI</h1>
-        <p>AZKO CITIMALL TUBAN</p>
-    </div>
-    <div class="rank-list" id="proteksiBottom"></div>
-</div>
+<div class="container">
 
-<div class="slide">
-    <div class="header">
-        <h1>TOP TRX</h1>
-        <p>AZKO CITIMALL TUBAN</p>
-    </div>
-    <div class="rank-list" id="trxTop"></div>
-</div>
 
-<div class="slide">
-    <div class="header">
-        <h1>BOTTOM TRX</h1>
-        <p>AZKO CITIMALL TUBAN</p>
-    </div>
-    <div class="rank-list" id="trxBottom"></div>
-</div>
+    <!-- =================================================
+         SLIDE 1
+         ACH MTD SALES ID
+    ================================================== -->
 
-<audio
-    id="bgm"
-    loop
-    autoplay
-    playsinline
-    preload="auto">
+    <div
+        class="slide active"
+        id="slide1"
+    >
 
-    <source
-        src="https://putrasetya.github.io/jingleazkoboomsale.mp3"
-        type="audio/mpeg">
+        <div class="header">
 
-</audio>
+            <h1 class="title">
+                ACH MTD SALES ID
+            </h1>
 
-<script>
+        </div>
 
-const URL =
-"https://script.google.com/macros/s/AKfycbzeehvUo6QYriMFJTR4A88lN6IIHV6Qop9UphkdOTMkRLVxhVuJ13y69momo6h1pn9dTQ/exec";
 
-let lastData = [];
-let lastRenderHash = "";
+        <div
+            class="rank-grid"
+            id="rankGrid1"
+        >
 
-/* =========================
-HELPERS
-========================= */
-
-function clean(val){
-
-    if(!val) return 0;
-
-    return parseFloat(
-        val.toString().replace(/[^\d.]/g,'')
-    ) || 0;
-}
-    function formatSalesJt(value){
-
-    const jt = value / 1000000;
-
-    const rounded =
-    Math.floor(jt * 10) / 10;
-
-    if(Number.isInteger(rounded)){
-        return `${rounded.toFixed(0)} jt`;
-    }
-
-    return `${rounded.toFixed(1).replace('.',',')} jt`;
-}
-
-function isExcluded(dept){
-
-    const d =
-    (dept || "").toLowerCase();
-
-    return (
-
-        d.includes("cashier") ||
-        d.includes("kasir") ||
-        d.includes("cs") ||
-        d.includes("customer service")
-    );
-}
-
-/* =========================
-GET DATA
-========================= */
-
-async function getData(){
-
-    try{
-
-        const res =
-        await fetch(URL + "?t=" + Date.now());
-
-        const json =
-        await res.json();
-
-        if(!Array.isArray(json) || json.length === 0){
-
-            return lastData;
-        }
-
-        const mapped = json.map(row => ({
-
-            name:
-                row["EMPLOYEE NAME"] || "UNKNOWN",
-
-            dept:
-                row["DEPT"] || "-",
-
-            sales:
-                clean(row["SALES MTD"]),
-
-            proteksi:
-                clean(row["PROTEKSI"]),
-
-            trx:
-                clean(row["TRX"]),
-
-            achSales:
-                clean(row["ACH MTD"]),
-
-            achProteksi:
-                clean(row["ACH PROTEKSI"]),
-
-            achTrx:
-                clean(row["ACH BULANAN"]),
-
-            photo:
-                row["PHOTO"] || ""
-
-        }));
-
-        lastData = mapped;
-
-        return mapped;
-
-    }catch(err){
-
-        console.log("GET DATA ERROR:",err);
-
-        return lastData;
-    }
-}
-
-function getAchStyle(value){
-
-    if(value >= 100){
-
-        return {
-
-            valueClass:
-                "ach-value ach-green",
-
-            boxClass:
-                "ach-box ach-green-box"
-        };
-    }
-
-    if(value < 80){
-
-        return {
-
-            valueClass:
-                "ach-value ach-red",
-
-            boxClass:
-                "ach-box ach-red-box"
-        };
-    }
-
-    return {
-
-        valueClass:
-            "ach-value ach-normal",
-
-        boxClass:
-            "ach-box"
-    };
-}
-
-/* =========================
-RENDER
-========================= */
-
-function render(
-    data,
-    key,
-    achKey,
-    achTitle,
-    containerId,
-    label,
-    mode="top"
-){
-
-    const container =
-    document.getElementById(containerId);
-
-    if(!container) return;
-
-    let filteredData = [...data];
-
-   if(
-    containerId === "salesTop" ||
-    containerId === "salesBottom" ||
-    containerId === "trxTop"
-  ){
-
-        filteredData =
-        filteredData.filter(
-            item => !isExcluded(item.dept)
-        );
-    }
-
-    let sorted = [];
-    let styles = [];
-
-    if(mode === "top"){
-
-    styles = [
-        "gold",
-        "silver",
-        "bronze"
-    ];
-
-    if(
-        containerId === "salesTop" ||
-        containerId === "salesBottom"
-    ){
-
-        sorted =
-        filteredData
-            .filter(v => v.achSales > 0)
-            .sort((a,b)=>b.achSales-a.achSales)
-            .slice(0,3);
-
-    }else{
-
-        sorted =
-        filteredData
-            .filter(v => v[key] > 0)
-            .sort((a,b)=>b[key]-a[key])
-            .slice(0,3);
-
-    }
-
-}else{
-
-        styles = [
-            "red-high",
-            "red-mid",
-            "red-low"
-        ];
-
-        let allSorted;
-
-if(containerId === "salesBottom"){
-
-    allSorted =
-    filteredData
-        .filter(v => v.achSales > 0)
-        .sort((a,b)=>a.achSales-b.achSales);
-
-}else{
-
-    allSorted =
-    filteredData
-        .filter(v => {
-
-            if(containerId === "proteksiBottom"){
-                return v[key] >= 0;
-            }
-
-            return v[key] > 0;
-        })
-        .sort((a,b)=>a[key]-b[key]);
-
-}
-
-sorted =
-allSorted.slice(0,3);
-
-        sorted = sorted.map((item,index)=>({
-
-            ...item,
-
-            bottomRank:
-            allSorted.length - index
-        }));
-
-        sorted.reverse();
-    }
-
-    let html = "";
-
-    sorted.forEach((d,i)=>{
-
-        const rank =
-        mode === "top"
-        ? i + 1
-        : d.bottomRank;
-
-        const achStyle =
-        getAchStyle(d[achKey]);
-
-        html += `
-
-        <div class="rank-card show ${styles[i]}">
-
-            <div class="rank-number">
-                ${rank}
-            </div>
-
-            <div class="photo-box">
-
-                <img
-                    src="https://lh3.googleusercontent.com/d/${d.photo}"
-
-                    loading="eager"
-                    decoding="async"
-
-                    onerror="
-                    this.src='https://ui-avatars.com/api/?name=${encodeURIComponent(d.name)}&background=random&color=fff&size=512'
-                    "
-                >
-
-            </div>
-
-            <div class="employee">
-
-                <div class="employee-name">
-                    ${d.name}
-                </div>
-
-                <div class="employee-label">
-                    ${d.dept}
-                </div>
-
-            </div>
-
-            <div class="score">
-
-                <div class="main-score">
-
-                    <div class="score-value">
-    ${
-        key === "sales"
-        ? formatSalesJt(d[key])
-        : d[key].toLocaleString('id-ID')
-    }
-</div>
-
-                    <div class="score-label">
-                        ${label}
-                    </div>
-
-                </div>
-
-                <div class="${achStyle.boxClass}">
-
-                    <div class="ach-title">
-                        ${achTitle}
-                    </div>
-
-                    <div class="${achStyle.valueClass}">
-                        ${d[achKey].toFixed(1)}%
-                    </div>
-
-                </div>
-
+            <div class="loading">
+                Memuat data...
             </div>
 
         </div>
-        `;
-    });
 
-    container.innerHTML = html;
-}
+    </div>
 
-/* =========================
-SLIDES
-========================= */
 
-const slides =
-document.querySelectorAll(".slide");
+    <!-- =================================================
+         SLIDE 2
+         PROTEKSI
+    ================================================== -->
 
-let current = 0;
-let isSliding = false;
+    <div
+        class="slide"
+        id="slide2"
+    >
 
-function nextSlide(){
+        <div class="header">
 
-    if(isSliding) return;
+            <h1 class="title">
+                PROTEKSI
+            </h1>
 
-    isSliding = true;
+        </div>
 
-    slides[current]
-        .classList.remove("active");
 
-    current++;
+        <div
+            class="rank-grid"
+            id="rankGrid2"
+        >
 
-    if(current >= slides.length){
+            <div class="loading">
+                Memuat data...
+            </div>
 
-        current = 0;
+        </div>
+
+    </div>
+
+
+    <!-- =================================================
+         SLIDE 3
+         TRANSAKSI
+    ================================================== -->
+
+    <div
+        class="slide"
+        id="slide3"
+    >
+
+        <div class="header">
+
+            <h1 class="title">
+                TRANSAKSI
+            </h1>
+
+        </div>
+
+
+        <div
+            class="rank-grid"
+            id="rankGrid3"
+        >
+
+            <div class="loading">
+                Memuat data...
+            </div>
+
+        </div>
+
+    </div>
+
+
+</div>
+
+
+<script>
+
+/* =====================================================
+   GOOGLE SPREADSHEET
+===================================================== */
+
+const SPREADSHEET_ID =
+    "16Alf0KUmqeaBx1zlsKfbcM5oPbzc18dBMgtlZYhP66M";
+
+
+const SHEET_NAME =
+    "Sheet1";
+
+
+const SHEET_URL =
+
+    "https://docs.google.com/spreadsheets/d/" +
+
+    SPREADSHEET_ID +
+
+    "/gviz/tq?tqx=out:json&sheet=" +
+
+    encodeURIComponent(
+        SHEET_NAME
+    );
+
+
+/* =====================================================
+   SLIDE SETTINGS
+===================================================== */
+
+const SLIDE_DURATION =
+    20000;
+
+
+let currentSlide =
+    1;
+
+
+let employeeData =
+    [];
+
+
+/* =====================================================
+   RANK CHANGE
+===================================================== */
+
+const rankingData = [
+
+    {
+        change: "same",
+        changeText: "-"
+    },
+
+    {
+        change: "same",
+        changeText: "-"
+    },
+
+    {
+        change: "up",
+        changeText: "▲ 2"
+    },
+
+    {
+        change: "same",
+        changeText: "-"
+    },
+
+    {
+        change: "up",
+        changeText: "▲ 1"
+    },
+
+    {
+        change: "up",
+        changeText: "▲ 1"
+    },
+
+    {
+        change: "down",
+        changeText: "▼ 4"
+    },
+
+    {
+        change: "same",
+        changeText: "-"
+    },
+
+    {
+        change: "same",
+        changeText: "-"
+    },
+
+    {
+        change: "up",
+        changeText: "▲ 1"
+    },
+
+    {
+        change: "down",
+        changeText: "▼ 1"
+    },
+
+    {
+        change: "same",
+        changeText: "-"
+    },
+
+    {
+        change: "up",
+        changeText: "▲ 2"
+    },
+
+    {
+        change: "down",
+        changeText: "▼ 1"
+    },
+
+    {
+        change: "same",
+        changeText: "-"
+    },
+
+    {
+        change: "up",
+        changeText: "▲ 1"
+    },
+
+    {
+        change: "down",
+        changeText: "▼ 2"
     }
 
-    setTimeout(()=>{
+];
 
-        slides[current]
-            .classList.add("active");
 
-        isSliding = false;
+/* =====================================================
+   LOAD DATA
+===================================================== */
 
-    },120);
+async function loadData() {
+
+    try {
+
+        const response =
+            await fetch(
+                SHEET_URL +
+                "&t=" +
+                Date.now()
+            );
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                "Spreadsheet tidak dapat diakses."
+            );
+
+        }
+
+
+        const text =
+            await response.text();
+
+
+        let jsonText =
+            text.trim();
+
+
+        jsonText =
+            jsonText.replace(
+                /^\/\*[\s\S]*?\*\/\s*/,
+                ""
+            );
+
+
+        const start =
+            jsonText.indexOf("{");
+
+
+        const end =
+            jsonText.lastIndexOf("}");
+
+
+        if (
+            start === -1 ||
+            end === -1
+        ) {
+
+            throw new Error(
+                "Format data Google Sheets tidak valid."
+            );
+
+        }
+
+
+        jsonText =
+            jsonText.substring(
+                start,
+                end + 1
+            );
+
+
+        const data =
+            JSON.parse(
+                jsonText
+            );
+
+
+        if (
+            !data ||
+            !data.table ||
+            !data.table.cols
+        ) {
+
+            throw new Error(
+                "Data spreadsheet tidak ditemukan."
+            );
+
+        }
+
+
+        /* =============================================
+           HEADER
+        ============================================= */
+
+        const employeeColumn =
+            findColumn(
+                data.table.cols,
+                "EMPLOYEE NAME"
+            );
+
+
+        const codeJobColumn =
+            findColumn(
+                data.table.cols,
+                "CODE JOB"
+            );
+
+
+        const salesColumn =
+            findColumn(
+                data.table.cols,
+                "SALES MTD"
+            );
+
+
+        const achColumn =
+            findColumn(
+                data.table.cols,
+                "ACH MTD"
+            );
+
+
+        const proteksiColumn =
+            findColumn(
+                data.table.cols,
+                "PROTEKSI"
+            );
+
+
+        const achProteksiColumn =
+            findColumn(
+                data.table.cols,
+                "ACH PROTEKSI"
+            );
+
+
+        const trxColumn =
+            findColumn(
+                data.table.cols,
+                "TRX"
+            );
+
+
+        const achBulananColumn =
+            findColumn(
+                data.table.cols,
+                "ACH BULANAN"
+            );
+
+
+        /* =============================================
+           VALIDASI
+        ============================================= */
+
+        const requiredColumns = [
+
+            [
+                employeeColumn,
+                "EMPLOYEE NAME"
+            ],
+
+            [
+                codeJobColumn,
+                "CODE JOB"
+            ],
+
+            [
+                salesColumn,
+                "SALES MTD"
+            ],
+
+            [
+                achColumn,
+                "ACH MTD"
+            ],
+
+            [
+                proteksiColumn,
+                "PROTEKSI"
+            ],
+
+            [
+                achProteksiColumn,
+                "ACH PROTEKSI"
+            ],
+
+            [
+                trxColumn,
+                "TRX"
+            ],
+
+            [
+                achBulananColumn,
+                "ACH BULANAN"
+            ]
+
+        ];
+
+
+        for (
+            const [
+                index,
+                header
+            ]
+            of requiredColumns
+        ) {
+
+            if (
+                index === -1
+            ) {
+
+                throw new Error(
+                    `Header "${header}" tidak ditemukan.`
+                );
+
+            }
+
+        }
+
+
+        /* =============================================
+           DATA
+        ============================================= */
+
+        employeeData =
+
+            data.table.rows
+
+                .map(
+                    row => {
+
+                        if (
+                            !row.c
+                        ) {
+
+                            return null;
+
+                        }
+
+
+                        const name =
+                            getCellValue(
+                                row.c[
+                                    employeeColumn
+                                ]
+                            );
+
+
+                        if (
+                            name === ""
+                        ) {
+
+                            return null;
+
+                        }
+
+
+                        return {
+
+                            name:
+                                name,
+
+                            codeJob:
+                                getCellValue(
+                                    row.c[
+                                        codeJobColumn
+                                    ]
+                                ),
+
+                            sales:
+                                getCellValue(
+                                    row.c[
+                                        salesColumn
+                                    ]
+                                ),
+
+                            ach:
+                                getCellValue(
+                                    row.c[
+                                        achColumn
+                                    ]
+                                ),
+
+                            proteksi:
+                                getCellValue(
+                                    row.c[
+                                        proteksiColumn
+                                    ]
+                                ),
+
+                            achProteksi:
+                                getCellValue(
+                                    row.c[
+                                        achProteksiColumn
+                                    ]
+                                ),
+
+                            trx:
+                                getCellValue(
+                                    row.c[
+                                        trxColumn
+                                    ]
+                                ),
+
+                            achBulanan:
+                                getCellValue(
+                                    row.c[
+                                        achBulananColumn
+                                    ]
+                                )
+
+                        };
+
+                    }
+                )
+
+                .filter(
+                    item =>
+                        item !== null
+                );
+
+
+        renderSlide1();
+
+        renderSlide2();
+
+        renderSlide3();
+
+    }
+
+
+    catch (error) {
+
+        console.error(
+            error
+        );
+
+
+        showError(
+            "rankGrid1",
+            error.message
+        );
+
+
+        showError(
+            "rankGrid2",
+            error.message
+        );
+
+
+        showError(
+            "rankGrid3",
+            error.message
+        );
+
+    }
+
 }
 
-/* =========================
-UPDATE
-========================= */
 
-async function update(){
+/* =====================================================
+   CELL VALUE
+===================================================== */
+
+function getCellValue(
+    cell
+) {
+
+    if (
+        !cell
+    ) {
+
+        return "";
+
+    }
+
+
+    return String(
+        cell.f ??
+        cell.v ??
+        ""
+    ).trim();
+
+}
+
+
+/* =====================================================
+   FIND COLUMN
+===================================================== */
+
+function findColumn(
+    columns,
+    target
+) {
+
+    return columns.findIndex(
+        col =>
+
+            String(
+                col.label || ""
+            )
+            .trim()
+            .toUpperCase() ===
+            target.toUpperCase()
+    );
+
+}
+
+
+/* =====================================================
+   FILTER CASHIER / CS
+===================================================== */
+
+function isExcludedCodeJob(
+    codeJob
+) {
+
+    const value =
+        String(
+            codeJob || ""
+        )
+        .trim()
+        .toUpperCase();
+
+
+    return (
+
+        value === "CASHIER" ||
+
+        value === "CS"
+
+    );
+
+}
+
+
+/* =====================================================
+   SLIDE 1
+===================================================== */
+
+function renderSlide1() {
 
     const data =
-    await getData();
 
-    if(!data || data.length === 0){
+        employeeData
+
+            .filter(
+                employee =>
+                    !isExcludedCodeJob(
+                        employee.codeJob
+                    )
+            );
+
+
+    data.sort(
+        (a, b) =>
+
+            parseNumber(
+                b.ach
+            ) -
+
+            parseNumber(
+                a.ach
+            )
+    );
+
+
+    renderCards(
+        "rankGrid1",
+        data,
+        "sales-ach"
+    );
+
+}
+
+
+/* =====================================================
+   SLIDE 2
+   SEMUA EMPLOYEE
+===================================================== */
+
+function renderSlide2() {
+
+    const data =
+        [...employeeData];
+
+
+    data.sort(
+        (a, b) =>
+
+            parseNumber(
+                b.proteksi
+            ) -
+
+            parseNumber(
+                a.proteksi
+            )
+    );
+
+
+    renderCards(
+        "rankGrid2",
+        data,
+        "proteksi"
+    );
+
+}
+
+
+/* =====================================================
+   SLIDE 3
+===================================================== */
+
+function renderSlide3() {
+
+    const data =
+
+        employeeData
+
+            .filter(
+                employee =>
+                    !isExcludedCodeJob(
+                        employee.codeJob
+                    )
+            );
+
+
+    data.sort(
+        (a, b) =>
+
+            parseNumber(
+                b.trx
+            ) -
+
+            parseNumber(
+                a.trx
+            )
+    );
+
+
+    renderCards(
+        "rankGrid3",
+        data,
+        "transaksi"
+    );
+
+}
+
+
+/* =====================================================
+   RENDER CARDS
+===================================================== */
+
+function renderCards(
+    gridId,
+    data,
+    type
+) {
+
+    const grid =
+        document.getElementById(
+            gridId
+        );
+
+
+    grid.innerHTML =
+        "";
+
+
+    if (
+        data.length === 0
+    ) {
+
+        grid.innerHTML = `
+
+            <div class="error">
+                Tidak ada data employee.
+            </div>
+
+        `;
 
         return;
+
     }
 
-    const newHash =
-    JSON.stringify(data);
 
-    if(newHash === lastRenderHash){
+    const total =
+        data.length;
 
-        return;
-    }
 
-    lastRenderHash =
-    newHash;
+    data.forEach(
+        (
+            employee,
+            index
+        ) => {
 
-    render(
-        data,
-        "sales",
-        "achSales",
-        "ACH MTD",
-        "salesTop",
-        "TOTAL SALES",
-        "top"
+            const rank =
+                index + 1;
+
+
+            let rankClass =
+                "rank-card";
+
+
+            if (
+                rank === 1
+            ) {
+
+                rankClass +=
+                    " rank-1";
+
+            }
+
+            else if (
+                rank === 2
+            ) {
+
+                rankClass +=
+                    " rank-2";
+
+            }
+
+            else if (
+                rank === 3
+            ) {
+
+                rankClass +=
+                    " rank-3";
+
+            }
+
+            else if (
+                rank >
+                total - 5
+            ) {
+
+                rankClass +=
+                    " bottom-5";
+
+            }
+
+
+            const changeInfo =
+                rankingData[index] || {
+
+                    change:
+                        "same",
+
+                    changeText:
+                        "-"
+
+                };
+
+
+            let valueHTML =
+                "";
+
+
+            /* =====================================
+               SLIDE 1
+            ===================================== */
+
+            if (
+                type ===
+                "sales-ach"
+            ) {
+
+                valueHTML = `
+
+                    <span class="sales">
+                        ${escapeHtml(
+                            employee.sales || "-"
+                        )}
+                    </span>
+
+                    <span class="ach">
+                        ${escapeHtml(
+                            employee.ach || "-"
+                        )}
+                    </span>
+
+                `;
+
+            }
+
+
+            /* =====================================
+               SLIDE 2
+            ===================================== */
+
+            else if (
+                type ===
+                "proteksi"
+            ) {
+
+                valueHTML = `
+
+    <span class="proteksi">
+        ${escapeHtml(
+            employee.proteksi || "-"
+        )}
+    </span>
+
+`;
+
+            }
+
+
+            /* =====================================
+               SLIDE 3
+            ===================================== */
+
+            else if (
+                type ===
+                "transaksi"
+            ) {
+
+                valueHTML = `
+
+    <span class="transaksi">
+        ${escapeHtml(
+            employee.trx || "-"
+        )}
+    </span>
+
+`;
+
+            }
+
+
+            const card =
+                document.createElement(
+                    "div"
+                );
+
+
+            card.className =
+                rankClass;
+
+
+            card.innerHTML = `
+
+                <span class="rank-num">
+                    ${rank}
+                </span>
+
+                <span
+                    class="change ${changeInfo.change}"
+                >
+                    ${escapeHtml(
+                        changeInfo.changeText
+                    )}
+                </span>
+
+                <span class="employee-name">
+                    ${escapeHtml(
+                        employee.name
+                    )}
+                </span>
+
+                ${valueHTML}
+
+            `;
+
+
+            grid.appendChild(
+                card
+            );
+
+        }
     );
 
-    render(
-        data,
-        "sales",
-        "achSales",
-        "ACH MTD",
-        "salesBottom",
-        "TOTAL SALES",
-        "bottom"
-    );
-
-    render(
-        data,
-        "proteksi",
-        "achProteksi",
-        "ACH PROTEKSI",
-        "proteksiTop",
-        "TOTAL PROTEKSI",
-        "top"
-    );
-
-    render(
-        data,
-        "proteksi",
-        "achProteksi",
-        "ACH PROTEKSI",
-        "proteksiBottom",
-        "TOTAL PROTEKSI",
-        "bottom"
-    );
-
-    render(
-        data,
-        "trx",
-        "achTrx",
-        "ACH BULANAN",
-        "trxTop",
-        "TOTAL TRX",
-        "top"
-    );
-
-    render(
-        data,
-        "trx",
-        "achTrx",
-        "ACH BULANAN",
-        "trxBottom",
-        "TOTAL TRX",
-        "bottom"
-    );
 }
 
-/* =========================
-INDICATOR
-========================= */
 
-const pauseIndicator =
-document.getElementById(
-    "pauseIndicator"
+/* =====================================================
+   PARSE NUMBER
+===================================================== */
+
+function parseNumber(
+    value
+) {
+
+    if (
+        value === null ||
+        value === undefined ||
+        value === ""
+    ) {
+
+        return 0;
+
+    }
+
+
+    if (
+        typeof value === "number"
+    ) {
+
+        return value;
+
+    }
+
+
+    let text =
+        String(value)
+            .trim();
+
+
+    text =
+        text.replace(
+            /[^\d,.\-]/g,
+            ""
+        );
+
+
+    if (
+        text === ""
+    ) {
+
+        return 0;
+
+    }
+
+
+    if (
+        text.includes(".") &&
+        text.includes(",")
+    ) {
+
+        text =
+            text
+                .replace(
+                    /\./g,
+                    ""
+                )
+                .replace(
+                    ",",
+                    "."
+                );
+
+    }
+
+    else if (
+        text.includes(",")
+    ) {
+
+        const parts =
+            text.split(",");
+
+
+        if (
+            parts.length === 2 &&
+            parts[1].length <= 2
+        ) {
+
+            text =
+                parts[0] +
+                "." +
+                parts[1];
+
+        }
+
+        else {
+
+            text =
+                text.replace(
+                    /,/g,
+                    ""
+                );
+
+        }
+
+    }
+
+    else if (
+        text.includes(".")
+    ) {
+
+        const parts =
+            text.split(".");
+
+
+        if (
+            !(
+                parts.length === 2 &&
+                parts[1].length <= 2
+            )
+        ) {
+
+            text =
+                text.replace(
+                    /\./g,
+                    ""
+                );
+
+        }
+
+    }
+
+
+    const number =
+        parseFloat(
+            text
+        );
+
+
+    return isNaN(number)
+        ? 0
+        : number;
+
+}
+
+
+/* =====================================================
+   ESCAPE HTML
+===================================================== */
+
+function escapeHtml(
+    text
+) {
+
+    const div =
+        document.createElement(
+            "div"
+        );
+
+
+    div.textContent =
+        text;
+
+
+    return div.innerHTML;
+
+}
+
+
+/* =====================================================
+   ERROR
+===================================================== */
+
+function showError(
+    gridId,
+    message
+) {
+
+    const grid =
+        document.getElementById(
+            gridId
+        );
+
+
+    grid.innerHTML = `
+
+        <div class="error">
+
+            <b>
+                Gagal mengambil data.
+            </b>
+
+            <br>
+
+            <small>
+                ${escapeHtml(
+                    message
+                )}
+            </small>
+
+        </div>
+
+    `;
+
+}
+
+
+/* =====================================================
+   NEXT SLIDE
+===================================================== */
+
+function nextSlide() {
+
+    document
+        .getElementById(
+            "slide" +
+            currentSlide
+        )
+        .classList
+        .remove(
+            "active"
+        );
+
+    currentSlide++;
+
+    if (
+        currentSlide > 3
+    ) {
+        currentSlide = 1;
+    }
+
+    document
+        .getElementById(
+            "slide" +
+            currentSlide
+        )
+        .classList
+        .add(
+            "active"
+        );
+
+    updateSlideTabs();
+}
+
+
+function updateSlideTabs(){
+
+    document
+        .querySelectorAll('.slide-tab')
+        .forEach(tab =>
+            tab.classList.remove('active')
+        );
+
+    const activeTab =
+        document.querySelector(
+            `.slide-tab[data-slide="${currentSlide}"]`
+        );
+
+    if(activeTab){
+        activeTab.classList.add('active');
+    }
+}
+
+/* =====================================================
+   SLIDE SETIAP 5 DETIK
+===================================================== */
+
+setInterval(
+    nextSlide,
+    SLIDE_DURATION
 );
 
-function showIndicator(text){
 
-    if(!pauseIndicator) return;
+/* =====================================================
+   LOAD PERTAMA
+===================================================== */
 
-    pauseIndicator.innerHTML = text;
+loadData();
 
-    pauseIndicator.classList.add("show");
 
-    clearTimeout(window.indicatorTimeout);
+/* =====================================================
+   UPDATE DATA SETIAP 30 DETIK
+===================================================== */
 
-    window.indicatorTimeout =
-    setTimeout(()=>{
-
-        pauseIndicator.classList.remove("show");
-
-    },1500);
-}
-
-/* =========================
-AUDIO
-========================= */
-
-const bgm =
-document.getElementById("bgm");
-
-if(bgm){
-
-    bgm.volume = 0.35;
-}
-
-async function playMusic(){
-
-    if(!bgm) return;
-
-    try{
-
-        await bgm.play();
-
-    }catch(err){
-
-        console.log(err);
-    }
-}
-
-/* =========================
-LOOP
-========================= */
-
-let isPaused = false;
-
-let slideInterval;
-let updateInterval;
-
-function stopLoop(){
-
-    clearInterval(slideInterval);
-    clearInterval(updateInterval);
-}
-
-function startLoop(){
-
-    stopLoop();
-
-    slideInterval =
-    setInterval(()=>{
-
-        if(!document.hidden){
-
-            nextSlide();
-        }
-
-    },8000);
-
-    updateInterval =
-    setInterval(()=>{
-
-        if(!document.hidden){
-
-            update();
-        }
-
-    },30000);
-}
-
-function togglePause(){
-
-    isPaused = !isPaused;
-
-    if(isPaused){
-
-        stopLoop();
-
-        if(bgm) bgm.pause();
-
-        showIndicator("⏸ PAUSED");
-
-    }else{
-
-        startLoop();
-
-        playMusic();
-
-        showIndicator("▶ PLAYING");
-    }
-}
-
-/* =========================
-FULLSCREEN
-========================= */
-
-async function toggleFullscreen(){
-
-    try{
-
-        if(!document.fullscreenElement){
-
-            await document.documentElement.requestFullscreen();
-
-            showIndicator("🖥 FULLSCREEN");
-
-        }else{
-
-            await document.exitFullscreen();
-
-            showIndicator("❎ EXIT FULLSCREEN");
-        }
-
-    }catch(err){
-
-        console.log(err);
-    }
-}
-
-/* =========================
-CLICK
-========================= */
-
-let clickTimer = null;
-
-document.addEventListener(
-    "click",
-    ()=>{
-
-        if(clickTimer){
-
-            clearTimeout(clickTimer);
-        }
-
-        clickTimer = setTimeout(()=>{
-
-            togglePause();
-
-        },250);
-    }
+setInterval(
+    loadData,
+    60000
 );
 
-document.addEventListener(
-    "dblclick",
-    ()=>{
-
-        clearTimeout(clickTimer);
-
-        toggleFullscreen();
-    }
-);
-
-/* =========================
-AUTO CLEAN MEMORY
-========================= */
-
-setInterval(()=>{
-
-    if(window.gc){
-
-        window.gc();
-    }
-
-},300000);
-
-/* =========================
-AUTO REFRESH 6 JAM
-========================= */
-
-setTimeout(()=>{
-
-    location.reload();
-
-},21600000);
-
-    function updateDateTime(){
+function updateClock() {
 
     const now = new Date();
 
-    const hari = [
-        "Minggu","Senin","Selasa",
-        "Rabu","Kamis","Jumat","Sabtu"
-    ];
+    const hours =
+        String(now.getHours()).padStart(2, '0');
 
-    const bulan = [
-        "Januari","Februari","Maret",
-        "April","Mei","Juni",
-        "Juli","Agustus","September",
-        "Oktober","November","Desember"
-    ];
+    const minutes =
+        String(now.getMinutes()).padStart(2, '0');
 
-    document.getElementById("dateLine").textContent =
-        `${hari[now.getDay()]}, ${now.getDate()} ${bulan[now.getMonth()]} ${now.getFullYear()}`;
+    const seconds =
+        String(now.getSeconds()).padStart(2, '0');
 
-    document.getElementById("timeLine").textContent =
-        now.toLocaleTimeString("id-ID");
+    document.getElementById(
+        'realtimeClock'
+    ).textContent =
+        `${hours}:${minutes}:${seconds}`;
+
 }
 
-updateDateTime();
-setInterval(updateDateTime,1000);
-/* =========================
-START
-========================= */
+updateClock();
 
-window.addEventListener(
-    "load",
-    async ()=>{
-
-        await update();
-
-        startLoop();
-
-        playMusic();
-
-        setTimeout(playMusic,1000);
-
-        setTimeout(playMusic,3000);
-
-        showIndicator("▶ PLAYING");
-    }
+setInterval(
+    updateClock,
+    1000
 );
 
+function updateDate() {
+
+    const now = new Date();
+
+    const options = {
+        weekday: 'long',
+        day: 'numeric',
+        month: 'long',
+        year: 'numeric'
+    };
+
+    const date =
+        now.toLocaleDateString(
+            'id-ID',
+            options
+        );
+
+    document.getElementById(
+        'realtimeDate'
+    ).textContent = date;
+
+}
+
+updateDate();
+
+setInterval(
+    updateDate,
+    1000
+);
+
+setTimeout(function autoReload() {
+    location.reload();
+}, 120000);
 </script>
 
 </body>
