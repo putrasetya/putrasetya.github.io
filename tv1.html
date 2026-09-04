@@ -519,41 +519,80 @@ body {
 
 /* KOLOM DATA */
 
-#slide4 .score-month,
-#slide4 .score-point {
+#slide4 .score-month {
 
-    width: 70px;
+    width: 42px;
 
-    margin-left: 6px;
+    margin-left: 3px;
 
-    flex-shrink: 0;
+    text-align: center;
 
-    text-align: right;
+    font-size: 0.7rem;
 
     font-weight: 800;
-
-    white-space: nowrap;
 }
 
 #slide4 .score-point {
-    width: 65px;
+
+    width: 50px;
+
+    margin-left: 4px;
+
+    text-align: right;
+
+    font-size: 0.72rem;
+
+    font-weight: 800;
 }
 
 /* GRID SLIDE 4 */
 
+/* =============================================
+   SLIDE 4
+   PAKSA 17 ORANG MASUK 1 LAYAR
+============================================= */
+
 #slide4 .rank-grid {
-    height: calc(100vh - 110px);
+
+    height: calc(100vh - 75px);
+
     flex-grow: 0;
+
     gap: 2px;
+
     overflow: hidden;
+
 }
 
 #slide4 .rank-card {
-    height: calc((100vh - 110px - 32px) / 17);
+
+    height:
+        calc(
+            (100vh - 75px - 32px)
+            / 17
+        );
+
     min-height: 0;
+
+    max-height: none;
+
     flex-shrink: 0;
+
+    font-size: 0.72rem;
 }
 
+#slide4 .employee-name {
+
+    flex: 1;
+
+    min-width: 120px;
+
+    overflow: hidden;
+
+    text-overflow: ellipsis;
+
+    white-space: nowrap;
+}
 /* =====================================================
    LOADING / ERROR
 ===================================================== */
