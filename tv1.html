@@ -2004,6 +2004,18 @@ function renderSlide3() {
 
 function renderSlide4() {
 
+    const data =
+    employeeData.filter(employee => {
+
+        const codeJob =
+            String(employee.codeJob || "")
+            .trim()
+            .toUpperCase();
+
+        return codeJob !== "SUPERVISOR";
+
+    });
+    
     const grid =
         document.getElementById("rankGrid4");
 
