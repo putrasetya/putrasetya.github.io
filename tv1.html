@@ -2004,103 +2004,160 @@ function renderSlide3() {
 
 function renderSlide4() {
 
+    /* =============================================
+       KHUSUS SLIDE 4
+       EXCLUDE SUPERVISOR
+    ============================================= */
+
     const data =
-    employeeData.filter(employee => {
+        employeeData.filter(employee => {
 
-        const codeJob =
-            String(employee.codeJob || "")
-            .trim()
-            .toUpperCase();
+            const codeJob =
+                String(employee.codeJob || "")
+                    .trim()
+                    .toUpperCase();
 
-        return codeJob !== "SUPERVISOR";
+            return codeJob !== "SUPERVISOR";
 
-    });
-    
+        });
+
+
     const grid =
-        document.getElementById("rankGrid4");
+        document.getElementById(
+            "rankGrid4"
+        );
+
 
     grid.innerHTML = "";
 
-    if (!employeeData || employeeData.length === 0) {
+
+    if (data.length === 0) {
+
         grid.innerHTML = `
             <div class="error">
                 Tidak ada data employee.
             </div>
         `;
+
         return;
+
     }
 
-    employeeData.forEach((employee, index) => {
 
-        const rank = index + 1;
+    const total =
+        data.length;
 
-        let rankClass = "rank-card";
 
-        if (rank === 1) {
-            rankClass += " rank-1";
+    /* =============================================
+       RENDER DATA
+    ============================================= */
+
+    data.forEach(
+        (employee, index) => {
+
+            const rank =
+                index + 1;
+
+
+            let rankClass =
+                "rank-card";
+
+
+            if (rank === 1) {
+
+                rankClass +=
+                    " rank-1";
+
+            }
+
+            else if (rank === 2) {
+
+                rankClass +=
+                    " rank-2";
+
+            }
+
+            else if (rank === 3) {
+
+                rankClass +=
+                    " rank-3";
+
+            }
+
+            else if (
+                rank >
+                total - 5
+            ) {
+
+                rankClass +=
+                    " bottom-5";
+
+            }
+
+
+            const card =
+                document.createElement(
+                    "div"
+                );
+
+
+            card.className =
+                rankClass;
+
+
+            card.innerHTML = `
+
+                <span class="rank-num">
+                    ${rank}
+                </span>
+
+                <span class="change same">
+                    -
+                </span>
+
+                <span class="employee-name">
+                    ${escapeHtml(
+                        employee.name
+                    )}
+                </span>
+
+                <span class="score-month">
+                    -
+                </span>
+
+                <span class="score-month">
+                    -
+                </span>
+
+                <span class="score-month">
+                    -
+                </span>
+
+                <span class="score-month">
+                    -
+                </span>
+
+                <span class="score-month">
+                    -
+                </span>
+
+                <span class="score-month">
+                    -
+                </span>
+
+                <span class="score-point">
+                    0
+                </span>
+
+            `;
+
+
+            grid.appendChild(
+                card
+            );
+
         }
-        else if (rank === 2) {
-            rankClass += " rank-2";
-        }
-        else if (rank === 3) {
-            rankClass += " rank-3";
-        }
-        else if (rank > employeeData.length - 5) {
-            rankClass += " bottom-5";
-        }
-
-        const card =
-            document.createElement("div");
-
-        card.className = rankClass;
-
-        card.innerHTML = `
-
-            <span class="rank-num">
-                ${rank}
-            </span>
-
-            <span class="change same">
-                -
-            </span>
-
-            <span class="employee-name">
-                ${escapeHtml(employee.name)}
-            </span>
-
-            <span class="score-month">
-                -
-            </span>
-
-            <span class="score-month">
-                -
-            </span>
-
-            <span class="score-month">
-                -
-            </span>
-
-            <span class="score-month">
-                -
-            </span>
-
-            <span class="score-month">
-                -
-            </span>
-
-            <span class="score-month">
-                -
-            </span>
-
-            <span class="score-point">
-                0
-            </span>
-
-        `;
-
-        grid.appendChild(card);
-
-    });
+    );
 
 }
 /* =====================================================
