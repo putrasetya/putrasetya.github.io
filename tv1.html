@@ -1420,6 +1420,14 @@ let currentSlide =
 let employeeData =
     [];
 
+let monthlyScoreData = {
+    juli: {},
+    agustus: {},
+    september: {},
+    oktober: {},
+    november: {},
+    desember: {}
+};
 
 /* =====================================================
    RANK CHANGE
@@ -1831,7 +1839,8 @@ async function loadData() {
                     item =>
                         item !== null
                 );
-
+        
+        await loadAllMonthlySheets();
 
         renderSlide1();
 
@@ -1921,7 +1930,258 @@ function findColumn(
 
 }
 
+/* =====================================================
+   LOAD DATA SHEET BULANAN
+===================================================== */
 
+async function loadMonthlySheet(sheetName) {
+
+    const url =
+        "https://docs.google.com/spreadsheets/d/" +
+        SPREADSHEET_ID +
+        "/gviz/tq?tqx=out:json&sheet=" +
+        encodeURIComponent(sheetName) +
+        "&t=" +
+        Date.now();
+
+
+    const response =
+        await fetch(url);
+
+
+    if (!response.ok) {
+
+        throw new Error(
+            `Sheet "${sheetName}" tidak dapat diakses.`
+        );
+
+    }
+
+
+    const text =
+        await response.text();
+
+
+    let jsonText =
+        text.trim();
+
+
+    jsonText =
+        jsonText.replace(
+            /^\/\*[\s\S]*?\*\/\s*/,
+            ""
+        );
+
+
+    const start =
+        jsonText.indexOf("{");
+
+
+    const end =
+        jsonText.lastIndexOf("}");
+
+
+    if (
+        start === -1 ||
+        end === -1
+    ) {
+
+        throw new Error(
+            `Format data sheet "${sheetName}" tidak valid.`
+        );
+
+    }
+
+
+    jsonText =
+        jsonText.substring(
+            start,
+            end + 1
+        );
+
+
+    const data =
+        JSON.parse(
+            jsonText
+        );
+
+
+    if (
+        !data ||
+        !data.table ||
+        !data.table.cols
+    ) {
+
+        throw new Error(
+            `Data sheet "${sheetName}" tidak ditemukan.`
+        );
+
+    }
+
+
+    const employeeColumn =
+        findColumn(
+            data.table.cols,
+            "EMPLOYEE NAME"
+        );
+
+
+    const achColumn =
+        findColumn(
+            data.table.cols,
+            "ACH MTD"
+        );
+
+
+    if (
+        employeeColumn === -1
+    ) {
+
+        throw new Error(
+            `Kolom "EMPLOYEE NAME" tidak ditemukan di sheet "${sheetName}".`
+        );
+
+    }
+
+
+    if (
+        achColumn === -1
+    ) {
+
+        throw new Error(
+            `Kolom "ACH MTD" tidak ditemukan di sheet "${sheetName}".`
+        );
+
+    }
+
+
+    const result = {};
+
+
+    data.table.rows.forEach(
+        row => {
+
+            if (!row.c) {
+                return;
+            }
+
+
+            const employeeName =
+                getCellValue(
+                    row.c[employeeColumn]
+                );
+
+
+            if (
+                employeeName === ""
+            ) {
+
+                return;
+
+            }
+
+
+            const ach =
+                getCellValue(
+                    row.c[achColumn]
+                );
+
+
+            const key =
+                normalizeEmployeeName(
+                    employeeName
+                );
+
+
+            result[key] =
+                ach || "-";
+
+        }
+    );
+
+
+    return result;
+
+}
+
+
+/* =====================================================
+   NORMALIZE NAMA KARYAWAN
+===================================================== */
+
+function normalizeEmployeeName(
+    name
+) {
+
+    return String(
+        name || ""
+    )
+    .trim()
+    .replace(
+        /\s+/g,
+        " "
+    )
+    .toUpperCase();
+
+}
+
+/* =====================================================
+   LOAD SEMUA SHEET JULI - DESEMBER
+===================================================== */
+
+async function loadAllMonthlySheets() {
+
+    const months = {
+
+        juli:
+            "JULI 2026",
+
+        agustus:
+            "AGUSTUS 2026",
+
+        september:
+            "SEPTEMBER 2026",
+
+        oktober:
+            "OKTOBER 2026",
+
+        november:
+            "NOVEMBER 2026",
+
+        desember:
+            "DESEMBER 2026"
+
+    };
+
+
+    for (
+        const [key, sheetName]
+        of Object.entries(months)
+    ) {
+
+        try {
+
+            monthlyScoreData[key] =
+                await loadMonthlySheet(
+                    sheetName
+                );
+
+        }
+
+        catch (error) {
+
+            console.warn(
+                `Sheet "${sheetName}" belum tersedia.`
+            );
+
+
+            monthlyScoreData[key] = {};
+
+        }
+
+    }
+
+}
 /* =====================================================
    FILTER CASHIER / CS
 ===================================================== */
@@ -2159,6 +2419,66 @@ function renderSlide4() {
             }
 
 
+            /* =====================================
+               COCOKKAN NAMA
+            ===================================== */
+
+            const employeeKey =
+                normalizeEmployeeName(
+                    employee.name
+                );
+
+
+            /* =====================================
+               AMBIL DATA BULAN
+            ===================================== */
+
+            const juli =
+                monthlyScoreData
+                    .juli[
+                        employeeKey
+                    ] || "-";
+
+
+            const agustus =
+                monthlyScoreData
+                    .agustus[
+                        employeeKey
+                    ] || "-";
+
+
+            const september =
+                monthlyScoreData
+                    .september[
+                        employeeKey
+                    ] || "-";
+
+
+            const oktober =
+                monthlyScoreData
+                    .oktober[
+                        employeeKey
+                    ] || "-";
+
+
+            const november =
+                monthlyScoreData
+                    .november[
+                        employeeKey
+                    ] || "-";
+
+
+            const desember =
+                monthlyScoreData
+                    .desember[
+                        employeeKey
+                    ] || "-";
+
+
+            /* =====================================
+               BUAT CARD
+            ===================================== */
+
             const card =
                 document.createElement(
                     "div"
@@ -2186,27 +2506,39 @@ function renderSlide4() {
                 </span>
 
                 <span class="score-month">
-                    -
+                    ${escapeHtml(
+                        juli
+                    )}
                 </span>
 
                 <span class="score-month">
-                    -
+                    ${escapeHtml(
+                        agustus
+                    )}
                 </span>
 
                 <span class="score-month">
-                    -
+                    ${escapeHtml(
+                        september
+                    )}
                 </span>
 
                 <span class="score-month">
-                    -
+                    ${escapeHtml(
+                        oktober
+                    )}
                 </span>
 
                 <span class="score-month">
-                    -
+                    ${escapeHtml(
+                        november
+                    )}
                 </span>
 
                 <span class="score-month">
-                    -
+                    ${escapeHtml(
+                        desember
+                    )}
                 </span>
 
                 <span class="score-point">
