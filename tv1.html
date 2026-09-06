@@ -468,7 +468,18 @@ body {
 ===================================================== */
 
 #slide4 .score-column-header {
-    display: flex;
+
+    display: grid;
+
+    grid-template-columns:
+        30px
+        40px
+        minmax(0, 1fr)
+        repeat(6, 70px)
+        70px;
+
+    column-gap: 0;
+
     align-items: center;
 
     width: 100%;
@@ -477,12 +488,15 @@ body {
 
     margin-bottom: 8px;
 
+    padding: 0 16px;
+
     font-family:
         'TTCommonsCondensed',
         Arial,
         sans-serif;
 
     font-size: 0.85rem;
+
     font-weight: 800;
 
     color: #26343f;
@@ -490,56 +504,77 @@ body {
     white-space: nowrap;
 }
 
-.score-rank-head {
+
+/* NO. */
+
+#slide4 .score-rank-head {
+
     width: 30px;
-    flex-shrink: 0;
+
     text-align: center;
+
 }
 
-.score-name-head{
-    flex: 1;
-    min-width: 0;
+
+/* AREA KOSONG UNTUK CHANGE */
+
+#slide4 .score-change-head {
+
+    width: 40px;
+
+}
+
+
+/* NAMA KARYAWAN */
+
+#slide4 .score-name-head {
+
+    width: 100%;
+
+    margin: 0;
+
+    padding: 0;
+
     text-align: left;
-    margin-left: 0;
-    padding-left: 0;
+
 }
 
-.score-month-head{
-    width:70px;
-    flex-shrink:0;
-    margin-left:15px; /* geser ke kiri */
-    text-align:center;
-    font-size:0.68rem;
-    letter-spacing:0.5px;
-}
 
-.score-point-head{
-    width:70px;
-    flex-shrink:0;
-    margin-left:-8px; /* ikut geser */
-    text-align:center;
-}
+/* JULI - DESEMBER */
 
-#slide4 .score-month {
+#slide4 .score-month-head {
+
     width: 70px;
-    margin-left: 8px;
+
+    margin: 0;
+
+    padding: 0;
+
     text-align: center;
-    font-size: 0.72rem;
-    font-weight: 800;
+
+    font-size: 0.68rem;
+
+    letter-spacing: 0.5px;
 }
 
 
-#slide4 .score-point{
-    width:70px;
-    margin-left:8px;
-    text-align:center;
-}
-/* GRID SLIDE 4 */
+/* POIN */
 
-/* =============================================
-   SLIDE 4
-   PAKSA 17 ORANG MASUK 1 LAYAR
-============================================= */
+#slide4 .score-point-head {
+
+    width: 70px;
+
+    margin: 0;
+
+    padding: 0;
+
+    text-align: center;
+}
+
+
+/* =====================================================
+   DATA SLIDE 4
+===================================================== */
 
 #slide4 .rank-grid {
 
@@ -550,10 +585,25 @@ body {
     gap: 2px;
 
     overflow: hidden;
-
 }
 
+
 #slide4 .rank-card {
+
+    display: grid;
+
+    grid-template-columns:
+        30px
+        40px
+        minmax(0, 1fr)
+        repeat(6, 70px)
+        70px;
+
+    column-gap: 0;
+
+    align-items: center;
+
+    width: 100%;
 
     height:
         calc(
@@ -567,25 +617,83 @@ body {
 
     flex-shrink: 0;
 
+    padding: 0 16px;
+
     font-size: 0.72rem;
 }
 
+
+/* NO. */
+
+#slide4 .rank-num {
+
+    width: 30px;
+
+    text-align: center;
+}
+
+
+/* CHANGE */
+
+#slide4 .change {
+
+    width: 40px;
+}
+
+
+/* NAMA KARYAWAN */
+
 #slide4 .employee-name {
 
-    flex: 1;
+    width: 100%;
 
-    min-width: 120px;
+    min-width: 0;
+
+    margin: 0;
+
+    padding: 0;
 
     overflow: hidden;
 
     text-overflow: ellipsis;
 
     white-space: nowrap;
+
+    text-align: left;
 }
 
-.score-change-head {
-    width: 40px;
-    flex-shrink: 0;
+
+/* BULAN */
+
+#slide4 .score-month {
+
+    width: 70px;
+
+    margin: 0;
+
+    padding: 0;
+
+    text-align: center;
+
+    font-size: 0.72rem;
+
+    font-weight: 800;
+}
+
+
+/* POIN */
+
+#slide4 .score-point {
+
+    width: 70px;
+
+    margin: 0;
+
+    padding: 0;
+
+    text-align: center;
+
+    font-weight: 800;
 }
 /* =====================================================
    LOADING / ERROR
@@ -1285,9 +1393,8 @@ and (orientation: landscape) {
     <div class="rank-grid" id="rankGrid4">
 
     <div class="rank-card" style="font-weight:800;">
-        <span class="employee-name"
-              style="width:220px;flex:0 0 220px;">
-            NAMA KARYAWAN
+        <span class="employee-name">
+    NAMA KARYAWAN
         </span>
 
         <span class="july">JULI</span>
