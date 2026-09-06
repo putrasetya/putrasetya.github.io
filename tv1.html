@@ -469,16 +469,7 @@ body {
 
 #slide4 .score-column-header {
 
-    display: grid;
-
-    grid-template-columns:
-        30px
-        40px
-        minmax(0, 1fr)
-        repeat(6, 70px)
-        70px;
-
-    column-gap: 0;
+    display: flex;
 
     align-items: center;
 
@@ -505,23 +496,27 @@ body {
 }
 
 
-/* NO. */
+/* NO */
 
 #slide4 .score-rank-head {
 
     width: 30px;
 
-    text-align: center;
+    flex-shrink: 0;
 
+    text-align: center;
 }
 
 
-/* AREA KOSONG UNTUK CHANGE */
+/* KOLOM CHANGE
+   TETAP ADA SEBAGAI RUANG KOSONG
+*/
 
 #slide4 .score-change-head {
 
     width: 40px;
 
+    flex-shrink: 0;
 }
 
 
@@ -529,14 +524,15 @@ body {
 
 #slide4 .score-name-head {
 
-    width: 100%;
+    flex: 1;
 
-    margin: 0;
+    min-width: 0;
 
-    padding: 0;
+    margin-left: 0;
+
+    padding-left: 0;
 
     text-align: left;
-
 }
 
 
@@ -546,7 +542,9 @@ body {
 
     width: 70px;
 
-    margin: 0;
+    flex-shrink: 0;
+
+    margin-left: 8px;
 
     padding: 0;
 
@@ -564,7 +562,9 @@ body {
 
     width: 70px;
 
-    margin: 0;
+    flex-shrink: 0;
+
+    margin-left: 8px;
 
     padding: 0;
 
@@ -590,21 +590,6 @@ body {
 
 #slide4 .rank-card {
 
-    display: grid;
-
-    grid-template-columns:
-        30px
-        40px
-        minmax(0, 1fr)
-        repeat(6, 70px)
-        70px;
-
-    column-gap: 0;
-
-    align-items: center;
-
-    width: 100%;
-
     height:
         calc(
             (100vh - 75px - 32px)
@@ -617,27 +602,7 @@ body {
 
     flex-shrink: 0;
 
-    padding: 0 16px;
-
     font-size: 0.72rem;
-}
-
-
-/* NO. */
-
-#slide4 .rank-num {
-
-    width: 30px;
-
-    text-align: center;
-}
-
-
-/* CHANGE */
-
-#slide4 .change {
-
-    width: 40px;
 }
 
 
@@ -645,21 +610,19 @@ body {
 
 #slide4 .employee-name {
 
-    width: 100%;
+    flex-grow: 1;
 
     min-width: 0;
 
-    margin: 0;
+    margin-left: 0;
 
-    padding: 0;
+    padding-left: 0;
 
     overflow: hidden;
 
     text-overflow: ellipsis;
 
     white-space: nowrap;
-
-    text-align: left;
 }
 
 
@@ -669,9 +632,9 @@ body {
 
     width: 70px;
 
-    margin: 0;
+    flex-shrink: 0;
 
-    padding: 0;
+    margin-left: 8px;
 
     text-align: center;
 
@@ -687,9 +650,9 @@ body {
 
     width: 70px;
 
-    margin: 0;
+    flex-shrink: 0;
 
-    padding: 0;
+    margin-left: 8px;
 
     text-align: center;
 
@@ -1394,7 +1357,9 @@ and (orientation: landscape) {
 
     <div class="rank-card" style="font-weight:800;">
         <span class="employee-name">
-    NAMA KARYAWAN
+    ${escapeHtml(
+        employee.name
+    )}
         </span>
 
         <span class="july">JULI</span>
