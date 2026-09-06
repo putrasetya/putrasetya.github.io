@@ -1162,6 +1162,30 @@ and (orientation: landscape) {
     font-weight:800;
     flex-shrink:0;
 }
+
+/* =====================================================
+   WARNA ACH MTD - SLIDE 4
+===================================================== */
+
+#slide4 .score-month.ach-blue {
+    background: #2196f3;
+    color: #ffffff;
+}
+
+#slide4 .score-month.ach-green {
+    background: #4caf50;
+    color: #ffffff;
+}
+
+#slide4 .score-month.ach-yellow {
+    background: #ffc107;
+    color: #26343f;
+}
+
+#slide4 .score-month.ach-red {
+    background: #f44336;
+    color: #ffffff;
+}
 </style>
 
 </head>
@@ -2126,6 +2150,48 @@ function normalizeEmployeeName(
 }
 
 /* =====================================================
+   WARNA ACH MTD SLIDE 4
+===================================================== */
+
+function getAchClass(value) {
+
+    if (
+        value === null ||
+        value === undefined ||
+        value === "" ||
+        value === "-"
+    ) {
+        return "";
+    }
+
+    let text =
+        String(value)
+            .replace("%", "")
+            .replace(",", ".")
+            .trim();
+
+    let percentage =
+        parseFloat(text);
+
+    if (isNaN(percentage)) {
+        return "";
+    }
+
+    if (percentage > 100) {
+        return "ach-blue";
+    }
+
+    if (percentage >= 95) {
+        return "ach-green";
+    }
+
+    if (percentage > 85) {
+        return "ach-yellow";
+    }
+
+    return "ach-red";
+}
+/* =====================================================
    LOAD SEMUA SHEET JULI - DESEMBER
 ===================================================== */
 
@@ -2505,41 +2571,29 @@ function renderSlide4() {
                     )}
                 </span>
 
-                <span class="score-month">
-                    ${escapeHtml(
-                        juli
-                    )}
-                </span>
+                <span class="score-month ${getAchClass(juli)}">
+    ${escapeHtml(juli)}
+</span>
 
-                <span class="score-month">
-                    ${escapeHtml(
-                        agustus
-                    )}
-                </span>
+<span class="score-month ${getAchClass(agustus)}">
+    ${escapeHtml(agustus)}
+</span>
 
-                <span class="score-month">
-                    ${escapeHtml(
-                        september
-                    )}
-                </span>
+<span class="score-month ${getAchClass(september)}">
+    ${escapeHtml(september)}
+</span>
 
-                <span class="score-month">
-                    ${escapeHtml(
-                        oktober
-                    )}
-                </span>
+<span class="score-month ${getAchClass(oktober)}">
+    ${escapeHtml(oktober)}
+</span>
 
-                <span class="score-month">
-                    ${escapeHtml(
-                        november
-                    )}
-                </span>
+<span class="score-month ${getAchClass(november)}">
+    ${escapeHtml(november)}
+</span>
 
-                <span class="score-month">
-                    ${escapeHtml(
-                        desember
-                    )}
-                </span>
+<span class="score-month ${getAchClass(desember)}">
+    ${escapeHtml(desember)}
+</span>
 
                 <span class="score-point">
                     0
