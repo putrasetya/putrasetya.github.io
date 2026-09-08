@@ -1915,24 +1915,25 @@ function getCellValue(
 }
 
 
-/* =====================================================
-   FIND COLUMN
-===================================================== */
+function findColumn(columns, target) {
 
-function findColumn(
-    columns,
-    target
-) {
+    const normalizeHeader = value => {
+
+        return String(value || "")
+            .replace(/\u00A0/g, " ")
+            .replace(/\s+/g, " ")
+            .trim()
+            .toUpperCase();
+
+    };
+
+    const targetHeader =
+        normalizeHeader(target);
 
     return columns.findIndex(
         col =>
-
-            String(
-                col.label || ""
-            )
-            .trim()
-            .toUpperCase() ===
-            target.toUpperCase()
+            normalizeHeader(col.label) ===
+            targetHeader
     );
 
 }
@@ -2302,19 +2303,11 @@ function getAchClass(value) {
 /* =====================================================
    HITUNG POIN PER BULAN
 ===================================================== */
+function calculateMonthlyPoint(monthlyData) {
 
-function calculateMonthlyPoint(
-    monthlyData
-) {
-
-    if (
-        !monthlyData
-    ) {
-
+    if (!monthlyData) {
         return 0;
-
     }
-
 
     let point = 0;
 
@@ -2328,15 +2321,14 @@ function calculateMonthlyPoint(
             monthlyData.ach
         );
 
-
-    if (
+    const hasAch =
         monthlyData.ach !== "" &&
-        monthlyData.ach !== "-"
-    ) {
+        monthlyData.ach !== "-";
 
-        if (
-            ach < 85
-        ) {
+
+    if (hasAch) {
+
+        if (ach < 85) {
 
             point -= 1;
 
@@ -2385,13 +2377,14 @@ function calculateMonthlyPoint(
             monthlyData.targetTrx
         );
 
-
-    if (
+    const hasTrx =
         monthlyData.trxMtd !== "" &&
         monthlyData.trxMtd !== "-" &&
         monthlyData.targetTrx !== "" &&
-        monthlyData.targetTrx !== "-"
-    ) {
+        monthlyData.targetTrx !== "-";
+
+
+    if (hasTrx) {
 
         if (
             trxMtd > targetTrx
@@ -2418,13 +2411,14 @@ function calculateMonthlyPoint(
             monthlyData.targetBs
         );
 
-
-    if (
+    const hasBasket =
         monthlyData.basketSize !== "" &&
         monthlyData.basketSize !== "-" &&
         monthlyData.targetBs !== "" &&
-        monthlyData.targetBs !== "-"
-    ) {
+        monthlyData.targetBs !== "-";
+
+
+    if (hasBasket) {
 
         if (
             basketSize > targetBs
@@ -2440,6 +2434,7 @@ function calculateMonthlyPoint(
     return point;
 
 }
+    
 /* =====================================================
    LOAD SEMUA SHEET JULI - DESEMBER
 ===================================================== */
@@ -2891,6 +2886,62 @@ function renderSlide4() {
                 poinNovember +
                 poinDesember;
 
+            console.log(
+    "=============================="
+);
+
+console.log(
+    "KARYAWAN:",
+    employee.name
+);
+
+console.log(
+    "JULI:",
+    juliData,
+    "POIN:",
+    poinJuli
+);
+
+console.log(
+    "AGUSTUS:",
+    agustusData,
+    "POIN:",
+    poinAgustus
+);
+
+console.log(
+    "SEPTEMBER:",
+    septemberData,
+    "POIN:",
+    poinSeptember
+);
+
+console.log(
+    "OKTOBER:",
+    oktoberData,
+    "POIN:",
+    poinOktober
+);
+
+console.log(
+    "NOVEMBER:",
+    novemberData,
+    "POIN:",
+    poinNovember
+);
+
+console.log(
+    "DESEMBER:",
+    desemberData,
+    "POIN:",
+    poinDesember
+);
+
+console.log(
+    "TOTAL POIN:",
+    totalPoin
+);
+
 
             /* =====================================
                DEBUG
@@ -3221,67 +3272,59 @@ function renderCards(
 /* =====================================================
    PARSE NUMBER
 ===================================================== */
-
-function parseNumber(
-    value
-) {
+function parseNumber(value) {
 
     if (
         value === null ||
         value === undefined ||
         value === ""
     ) {
-
         return 0;
-
     }
-
 
     if (
         typeof value === "number"
     ) {
-
         return value;
-
     }
-
 
     let text =
         String(value)
-            .trim();
+            .trim()
+            .replace(/\u00A0/g, " ")
+            .replace(/%/g, "")
+            .replace(/Rp/gi, "")
+            .replace(/\s/g, "");
 
-
-    text =
-        text.replace(
-            /[^\d,.\-]/g,
-            ""
-        );
-
-
-    if (
-        text === ""
-    ) {
-
+    if (text === "" || text === "-") {
         return 0;
-
     }
 
+    /*
+       FORMAT:
+       95,5
+       95.5
+       1.250
+       250.000
+       1.250,50
+    */
 
     if (
-        text.includes(".") &&
-        text.includes(",")
+        text.includes(",") &&
+        text.includes(".")
     ) {
+
+        /*
+           Contoh:
+           1.250,50
+           menjadi
+           1250.50
+        */
 
         text =
             text
-                .replace(
-                    /\./g,
-                    ""
-                )
-                .replace(
-                    ",",
-                    "."
-                );
+                .replace(/\./g, "")
+                .replace(",", ".");
 
     }
 
@@ -3291,7 +3334,6 @@ function parseNumber(
 
         const parts =
             text.split(",");
-
 
         if (
             parts.length === 2 &&
@@ -3308,10 +3350,7 @@ function parseNumber(
         else {
 
             text =
-                text.replace(
-                    /,/g,
-                    ""
-                );
+                text.replace(/,/g, "");
 
         }
 
@@ -3324,37 +3363,43 @@ function parseNumber(
         const parts =
             text.split(".");
 
+        /*
+           95.5
+           102.5
+        */
 
         if (
-            !(
-                parts.length === 2 &&
-                parts[1].length <= 2
-            )
+            parts.length === 2 &&
+            parts[1].length <= 2
         ) {
 
+            // tetap sebagai desimal
+
+        }
+
+        /*
+           1.250
+           250.000
+        */
+
+        else {
+
             text =
-                text.replace(
-                    /\./g,
-                    ""
-                );
+                text.replace(/\./g, "");
 
         }
 
     }
 
-
     const number =
-        parseFloat(
-            text
-        );
-
+        parseFloat(text);
 
     return isNaN(number)
         ? 0
         : number;
 
 }
-
+    
 
 /* =====================================================
    ESCAPE HTML
