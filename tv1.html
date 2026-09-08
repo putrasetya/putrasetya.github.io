@@ -2675,19 +2675,59 @@ function renderSlide4() {
     ============================================= */
 
     const data =
-        employeeData.filter(
-            employee => {
+    employeeData
+        .filter(employee => {
 
-                const codeJob =
-                    String(
-                        employee.codeJob || ""
-                    )
-                    .trim()
-                    .toUpperCase();
+            const codeJob =
+                String(employee.codeJob || "")
+                .trim()
+                .toUpperCase();
 
-                return codeJob !== "SUPERVISOR";
+            return codeJob !== "SUPERVISOR";
 
-            }
+        })
+        .map(employee => {
+
+            const key =
+                normalizeEmployeeName(
+                    employee.name
+                );
+
+            const totalPoin =
+
+                calculateMonthlyPoint(
+                    monthlyScoreData.juli[key]
+                ) +
+
+                calculateMonthlyPoint(
+                    monthlyScoreData.agustus[key]
+                ) +
+
+                calculateMonthlyPoint(
+                    monthlyScoreData.september[key]
+                ) +
+
+                calculateMonthlyPoint(
+                    monthlyScoreData.oktober[key]
+                ) +
+
+                calculateMonthlyPoint(
+                    monthlyScoreData.november[key]
+                ) +
+
+                calculateMonthlyPoint(
+                    monthlyScoreData.desember[key]
+                );
+
+            return {
+                ...employee,
+                totalPoin
+            };
+
+        })
+        .sort(
+            (a, b) =>
+                b.totalPoin - a.totalPoin
         );
 
 
@@ -3029,8 +3069,8 @@ console.log(
                 </span>
 
                 <span class="score-point">
-                    ${totalPoin}
-                </span>
+    ${employee.totalPoin}
+</span>
 
             `;
 
