@@ -1940,7 +1940,7 @@ function findColumn(
 
 /* =====================================================
    LOAD DATA SHEET BULANAN
-   TIDAK BERGANTUNG PADA ROW 1
+   TIDAK PEDULI HEADER ADA DI ROW BERAPA
 ===================================================== */
 
 async function loadMonthlySheet(sheetName) {
@@ -1948,8 +1948,11 @@ async function loadMonthlySheet(sheetName) {
     const url =
         "https://docs.google.com/spreadsheets/d/" +
         SPREADSHEET_ID +
-        "/gviz/tq?tqx=out:json&sheet=" +
+        "/gviz/tq?tqx=out:json" +
+        "&sheet=" +
         encodeURIComponent(sheetName) +
+        "&range=A:ZZ" +
+        "&headers=0" +
         "&t=" +
         Date.now();
 
@@ -2012,13 +2015,15 @@ async function loadMonthlySheet(sheetName) {
 
 
     const data =
-        JSON.parse(jsonText);
+        JSON.parse(
+            jsonText
+        );
 
 
     if (
         !data ||
         !data.table ||
-        !data.table.cols
+        !data.table.rows
     ) {
 
         throw new Error(
@@ -2029,125 +2034,224 @@ async function loadMonthlySheet(sheetName) {
 
 
     /* =============================================
-       CARI HEADER
+       CARI BARIS HEADER
        
-       TIDAK PEDULI HEADER BERADA DI ROW BERAPA
+       TIDAK PEDULI HEADER ADA DI ROW 1,
+       ROW 2, ROW 3, DST.
     ============================================= */
 
-    const employeeColumn =
-        findColumn(
-            data.table.cols,
-            "EMPLOYEE NAME"
-        );
+    let headerRowIndex = -1;
+
+    let employeeColumn = -1;
+
+    let achColumn = -1;
 
 
-    const achColumn =
-        findColumn(
-            data.table.cols,
-            "ACH MTD"
-        );
-
-
-    if (
-        employeeColumn === -1
+    for (
+        let rowIndex = 0;
+        rowIndex < data.table.rows.length;
+        rowIndex++
     ) {
 
-        throw new Error(
-            `Kolom EMPLOYEE NAME tidak ditemukan di ${sheetName}`
-        );
-
-    }
+        const row =
+            data.table.rows[rowIndex];
 
 
-    if (
-        achColumn === -1
-    ) {
+        if (
+            !row ||
+            !row.c
+        ) {
 
-        throw new Error(
-            `Kolom ACH MTD tidak ditemukan di ${sheetName}`
-        );
+            continue;
+
+        }
+
+
+        let foundEmployeeColumn = -1;
+
+        let foundAchColumn = -1;
+
+
+        for (
+            let columnIndex = 0;
+            columnIndex < row.c.length;
+            columnIndex++
+        ) {
+
+            const value =
+                getCellValue(
+                    row.c[columnIndex]
+                )
+                .trim()
+                .replace(
+                    /\s+/g,
+                    " "
+                )
+                .toUpperCase();
+
+
+            if (
+                value === "EMPLOYEE NAME"
+            ) {
+
+                foundEmployeeColumn =
+                    columnIndex;
+
+            }
+
+
+            if (
+                value === "ACH MTD"
+            ) {
+
+                foundAchColumn =
+                    columnIndex;
+
+            }
+
+        }
+
+
+        /* -----------------------------------------
+           HEADER DITEMUKAN
+        ----------------------------------------- */
+
+        if (
+            foundEmployeeColumn !== -1 &&
+            foundAchColumn !== -1
+        ) {
+
+            headerRowIndex =
+                rowIndex;
+
+            employeeColumn =
+                foundEmployeeColumn;
+
+            achColumn =
+                foundAchColumn;
+
+            break;
+
+        }
 
     }
 
 
     /* =============================================
-       SIMPAN DATA
+       VALIDASI HEADER
+    ============================================= */
+
+    if (
+        headerRowIndex === -1
+    ) {
+
+        throw new Error(
+            `Header "EMPLOYEE NAME" dan "ACH MTD" tidak ditemukan di ${sheetName}`
+        );
+
+    }
+
+
+    console.log(
+        `HEADER ${sheetName}:`,
+        {
+            headerRowIndex:
+                headerRowIndex,
+
+            employeeColumn:
+                employeeColumn,
+
+            achColumn:
+                achColumn
+        }
+    );
+
+
+    /* =============================================
+       BACA DATA
        
-       TIDAK ADA LAGI ASUMSI ROW 1
-       
-       Semua row yang memiliki EMPLOYEE NAME
-       akan dibaca.
+       MULAI SETELAH BARIS HEADER
     ============================================= */
 
     const result = {};
 
 
-    data.table.rows.forEach(
-        row => {
+    for (
+        let rowIndex =
+            headerRowIndex + 1;
 
-            if (
-                !row ||
-                !row.c
-            ) {
+        rowIndex <
+            data.table.rows.length;
 
-                return;
+        rowIndex++
+    ) {
 
-            }
-
-
-            const employeeName =
-                getCellValue(
-                    row.c[
-                        employeeColumn
-                    ]
-                );
+        const row =
+            data.table.rows[rowIndex];
 
 
-            /* -------------------------------------
-               ABAIKAN BARIS KOSONG
-            ------------------------------------- */
+        if (
+            !row ||
+            !row.c
+        ) {
 
-            if (
-                !employeeName
-            ) {
-
-                return;
-
-            }
-
-
-            const ach =
-                getCellValue(
-                    row.c[
-                        achColumn
-                    ]
-                );
-
-
-            /* -------------------------------------
-               ABAIKAN JIKA ACH KOSONG
-            ------------------------------------- */
-
-            if (
-                ach === ""
-            ) {
-
-                return;
-
-            }
-
-
-            const key =
-                normalizeEmployeeName(
-                    employeeName
-                );
-
-
-            result[key] =
-                ach;
+            continue;
 
         }
-    );
+
+
+        const employeeName =
+            getCellValue(
+                row.c[
+                    employeeColumn
+                ]
+            );
+
+
+        /* -----------------------------------------
+           ABAIKAN BARIS TANPA NAMA
+        ----------------------------------------- */
+
+        if (
+            !employeeName
+        ) {
+
+            continue;
+
+        }
+
+
+        const ach =
+            getCellValue(
+                row.c[
+                    achColumn
+                ]
+            );
+
+
+        /* -----------------------------------------
+           ABAIKAN ACH KOSONG
+        ----------------------------------------- */
+
+        if (
+            ach === ""
+        ) {
+
+            continue;
+
+        }
+
+
+        const key =
+            normalizeEmployeeName(
+                employeeName
+            );
+
+
+        result[key] =
+            ach;
+
+    }
 
 
     console.log(
