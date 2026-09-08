@@ -1939,6 +1939,7 @@ function findColumn(
 
 /* =====================================================
    LOAD DATA SHEET BULANAN
+   ACH + TRX + TARGET TRX + BASKET SIZE + TARGET BS
 ===================================================== */
 
 async function loadMonthlySheet(sheetName) {
@@ -1951,12 +1952,10 @@ async function loadMonthlySheet(sheetName) {
         "&t=" +
         Date.now();
 
-
     const response =
         await fetch(url, {
             cache: "no-store"
         });
-
 
     if (!response.ok) {
 
@@ -1966,14 +1965,11 @@ async function loadMonthlySheet(sheetName) {
 
     }
 
-
     const text =
         await response.text();
 
-
     let jsonText =
         text.trim();
-
 
     jsonText =
         jsonText.replace(
@@ -1981,14 +1977,11 @@ async function loadMonthlySheet(sheetName) {
             ""
         );
 
-
     const start =
         jsonText.indexOf("{");
 
-
     const end =
         jsonText.lastIndexOf("}");
-
 
     if (
         start === -1 ||
@@ -2001,17 +1994,14 @@ async function loadMonthlySheet(sheetName) {
 
     }
 
-
     jsonText =
         jsonText.substring(
             start,
             end + 1
         );
 
-
     const data =
         JSON.parse(jsonText);
-
 
     if (
         !data ||
@@ -2036,32 +2026,93 @@ async function loadMonthlySheet(sheetName) {
             "EMPLOYEE NAME"
         );
 
-
     const achColumn =
         findColumn(
             data.table.cols,
             "ACH MTD"
         );
 
-
-    if (
-        employeeColumn === -1
-    ) {
-
-        throw new Error(
-            `Kolom EMPLOYEE NAME tidak ditemukan di ${sheetName}`
+    const targetTrxColumn =
+        findColumn(
+            data.table.cols,
+            "TARGET TRX"
         );
 
-    }
+    const trxMtdColumn =
+        findColumn(
+            data.table.cols,
+            "TRX MTD"
+        );
+
+    const targetBsColumn =
+        findColumn(
+            data.table.cols,
+            "TARGET BS"
+        );
+
+    const basketSizeColumn =
+        findColumn(
+            data.table.cols,
+            "BASKET SIZE"
+        );
 
 
-    if (
-        achColumn === -1
+    /* =============================================
+       VALIDASI HEADER
+    ============================================= */
+
+    const requiredColumns = [
+
+        [
+            employeeColumn,
+            "EMPLOYEE NAME"
+        ],
+
+        [
+            achColumn,
+            "ACH MTD"
+        ],
+
+        [
+            targetTrxColumn,
+            "TARGET TRX"
+        ],
+
+        [
+            trxMtdColumn,
+            "TRX MTD"
+        ],
+
+        [
+            targetBsColumn,
+            "TARGET BS"
+        ],
+
+        [
+            basketSizeColumn,
+            "BASKET SIZE"
+        ]
+
+    ];
+
+
+    for (
+        const [
+            index,
+            header
+        ]
+        of requiredColumns
     ) {
 
-        throw new Error(
-            `Kolom ACH MTD tidak ditemukan di ${sheetName}`
-        );
+        if (
+            index === -1
+        ) {
+
+            throw new Error(
+                `Header "${header}" tidak ditemukan di ${sheetName}`
+            );
+
+        }
 
     }
 
@@ -2111,28 +2162,69 @@ async function loadMonthlySheet(sheetName) {
                 );
 
 
+            const targetTrx =
+                getCellValue(
+                    row.c[
+                        targetTrxColumn
+                    ]
+                );
+
+
+            const trxMtd =
+                getCellValue(
+                    row.c[
+                        trxMtdColumn
+                    ]
+                );
+
+
+            const targetBs =
+                getCellValue(
+                    row.c[
+                        targetBsColumn
+                    ]
+                );
+
+
+            const basketSize =
+                getCellValue(
+                    row.c[
+                        basketSizeColumn
+                    ]
+                );
+
+
             const key =
                 normalizeEmployeeName(
                     employeeName
                 );
 
 
-            if (
-                ach !== ""
-            ) {
+            result[key] = {
 
-                result[key] =
-                    ach;
+                ach:
+                    ach,
 
-            }
+                targetTrx:
+                    targetTrx,
+
+                trxMtd:
+                    trxMtd,
+
+                targetBs:
+                    targetBs,
+
+                basketSize:
+                    basketSize
+
+            };
 
         }
     );
 
 
     console.log(
-        "DATA SHEET BULANAN:",
-        sheetName,
+        `DATA SHEET BULANAN: ${sheetName}`,
         result
     );
 
@@ -2140,6 +2232,9 @@ async function loadMonthlySheet(sheetName) {
     return result;
 
 }
+
+
+    
 
 /* =====================================================
    NORMALIZE NAMA KARYAWAN
@@ -2202,6 +2297,148 @@ function getAchClass(value) {
     }
 
     return "ach-red";
+}
+
+/* =====================================================
+   HITUNG POIN PER BULAN
+===================================================== */
+
+function calculateMonthlyPoint(
+    monthlyData
+) {
+
+    if (
+        !monthlyData
+    ) {
+
+        return 0;
+
+    }
+
+
+    let point = 0;
+
+
+    /* =============================================
+       ACH MTD
+    ============================================= */
+
+    const ach =
+        parseNumber(
+            monthlyData.ach
+        );
+
+
+    if (
+        monthlyData.ach !== "" &&
+        monthlyData.ach !== "-"
+    ) {
+
+        if (
+            ach < 85
+        ) {
+
+            point -= 1;
+
+        }
+
+        else if (
+            ach >= 85 &&
+            ach < 95
+        ) {
+
+            point += 1;
+
+        }
+
+        else if (
+            ach >= 95 &&
+            ach <= 100
+        ) {
+
+            point += 2;
+
+        }
+
+        else if (
+            ach > 100
+        ) {
+
+            point += 3;
+
+        }
+
+    }
+
+
+    /* =============================================
+       TRX MTD > TARGET TRX
+    ============================================= */
+
+    const trxMtd =
+        parseNumber(
+            monthlyData.trxMtd
+        );
+
+    const targetTrx =
+        parseNumber(
+            monthlyData.targetTrx
+        );
+
+
+    if (
+        monthlyData.trxMtd !== "" &&
+        monthlyData.trxMtd !== "-" &&
+        monthlyData.targetTrx !== "" &&
+        monthlyData.targetTrx !== "-"
+    ) {
+
+        if (
+            trxMtd > targetTrx
+        ) {
+
+            point += 1;
+
+        }
+
+    }
+
+
+    /* =============================================
+       BASKET SIZE > TARGET BS
+    ============================================= */
+
+    const basketSize =
+        parseNumber(
+            monthlyData.basketSize
+        );
+
+    const targetBs =
+        parseNumber(
+            monthlyData.targetBs
+        );
+
+
+    if (
+        monthlyData.basketSize !== "" &&
+        monthlyData.basketSize !== "-" &&
+        monthlyData.targetBs !== "" &&
+        monthlyData.targetBs !== "-"
+    ) {
+
+        if (
+            basketSize > targetBs
+        ) {
+
+            point += 1;
+
+        }
+
+    }
+
+
+    return point;
+
 }
 /* =====================================================
    LOAD SEMUA SHEET JULI - DESEMBER
@@ -2550,92 +2787,140 @@ function renderSlide4() {
 
 
             /* =====================================
-               DATA MASING-MASING BULAN
-
-               PENTING:
-               SEMUA DIAMBIL DARI
-               monthlyScoreData
+               DATA BULAN
             ===================================== */
 
-            const juli =
+            const juliData =
                 monthlyScoreData.juli[
                     employeeKey
-                ] || "-";
+                ];
 
-
-            const agustus =
+            const agustusData =
                 monthlyScoreData.agustus[
                     employeeKey
-                ] || "-";
+                ];
 
-
-            const september =
+            const septemberData =
                 monthlyScoreData.september[
                     employeeKey
-                ] || "-";
+                ];
 
-
-            const oktober =
+            const oktoberData =
                 monthlyScoreData.oktober[
                     employeeKey
-                ] || "-";
+                ];
 
-
-            const november =
+            const novemberData =
                 monthlyScoreData.november[
                     employeeKey
-                ] || "-";
+                ];
 
-
-            const desember =
+            const desemberData =
                 monthlyScoreData.desember[
                     employeeKey
-                ] || "-";
+                ];
 
 
             /* =====================================
-               DEBUG PUTRA SETYA
+               NILAI ACH UNTUK TAMPILAN
             ===================================== */
 
-            if (
-                employeeKey === "PUTRA SETYA"
-            ) {
+            const juli =
+                juliData?.ach || "-";
 
-                console.log(
-                    "=== DATA PUTRA SETYA SLIDE 4 ==="
+            const agustus =
+                agustusData?.ach || "-";
+
+            const september =
+                septemberData?.ach || "-";
+
+            const oktober =
+                oktoberData?.ach || "-";
+
+            const november =
+                novemberData?.ach || "-";
+
+            const desember =
+                desemberData?.ach || "-";
+
+
+            /* =====================================
+               HITUNG POIN SETIAP BULAN
+            ===================================== */
+
+            const poinJuli =
+                calculateMonthlyPoint(
+                    juliData
                 );
 
-                console.log(
-                    "JULI:",
-                    juli
+            const poinAgustus =
+                calculateMonthlyPoint(
+                    agustusData
                 );
 
-                console.log(
-                    "AGUSTUS:",
-                    agustus
+            const poinSeptember =
+                calculateMonthlyPoint(
+                    septemberData
                 );
 
-                console.log(
-                    "SEPTEMBER:",
-                    september
+            const poinOktober =
+                calculateMonthlyPoint(
+                    oktoberData
                 );
 
-                console.log(
-                    "OKTOBER:",
-                    oktober
+            const poinNovember =
+                calculateMonthlyPoint(
+                    novemberData
                 );
 
-                console.log(
-                    "NOVEMBER:",
-                    november
+            const poinDesember =
+                calculateMonthlyPoint(
+                    desemberData
                 );
 
-                console.log(
-                    "DESEMBER:",
-                    desember
-                );
 
-            }
+            /* =====================================
+               TOTAL SEMUA POIN
+            ===================================== */
+
+            const totalPoin =
+                poinJuli +
+                poinAgustus +
+                poinSeptember +
+                poinOktober +
+                poinNovember +
+                poinDesember;
+
+
+            /* =====================================
+               DEBUG
+            ===================================== */
+
+            console.log(
+                `POIN ${employee.name}`,
+                {
+                    juli:
+                        poinJuli,
+
+                    agustus:
+                        poinAgustus,
+
+                    september:
+                        poinSeptember,
+
+                    oktober:
+                        poinOktober,
+
+                    november:
+                        poinNovember,
+
+                    desember:
+                        poinDesember,
+
+                    total:
+                        totalPoin
+                }
+            );
 
 
             /* =====================================
@@ -2693,7 +2978,7 @@ function renderSlide4() {
                 </span>
 
                 <span class="score-point">
-                    0
+                    ${totalPoin}
                 </span>
 
             `;
