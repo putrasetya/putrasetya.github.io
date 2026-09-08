@@ -1937,8 +1937,10 @@ function findColumn(
 
 }
 
+
 /* =====================================================
    LOAD DATA SHEET BULANAN
+   TIDAK BERGANTUNG PADA ROW 1
 ===================================================== */
 
 async function loadMonthlySheet(sheetName) {
@@ -2027,7 +2029,9 @@ async function loadMonthlySheet(sheetName) {
 
 
     /* =============================================
-       CARI KOLOM
+       CARI HEADER
+       
+       TIDAK PEDULI HEADER BERADA DI ROW BERAPA
     ============================================= */
 
     const employeeColumn =
@@ -2068,6 +2072,11 @@ async function loadMonthlySheet(sheetName) {
 
     /* =============================================
        SIMPAN DATA
+       
+       TIDAK ADA LAGI ASUMSI ROW 1
+       
+       Semua row yang memiliki EMPLOYEE NAME
+       akan dibaca.
     ============================================= */
 
     const result = {};
@@ -2094,6 +2103,10 @@ async function loadMonthlySheet(sheetName) {
                 );
 
 
+            /* -------------------------------------
+               ABAIKAN BARIS KOSONG
+            ------------------------------------- */
+
             if (
                 !employeeName
             ) {
@@ -2111,28 +2124,34 @@ async function loadMonthlySheet(sheetName) {
                 );
 
 
+            /* -------------------------------------
+               ABAIKAN JIKA ACH KOSONG
+            ------------------------------------- */
+
+            if (
+                ach === ""
+            ) {
+
+                return;
+
+            }
+
+
             const key =
                 normalizeEmployeeName(
                     employeeName
                 );
 
 
-            if (
-                ach !== ""
-            ) {
-
-                result[key] =
-                    ach;
-
-            }
+            result[key] =
+                ach;
 
         }
     );
 
 
     console.log(
-        "DATA SHEET BULANAN:",
-        sheetName,
+        `=== DATA ${sheetName} ===`,
         result
     );
 
