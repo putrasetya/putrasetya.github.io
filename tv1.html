@@ -1937,10 +1937,8 @@ function findColumn(
 
 }
 
-
 /* =====================================================
    LOAD DATA SHEET BULANAN
-   TIDAK PEDULI HEADER ADA DI ROW BERAPA
 ===================================================== */
 
 async function loadMonthlySheet(sheetName) {
@@ -1948,11 +1946,8 @@ async function loadMonthlySheet(sheetName) {
     const url =
         "https://docs.google.com/spreadsheets/d/" +
         SPREADSHEET_ID +
-        "/gviz/tq?tqx=out:json" +
-        "&sheet=" +
+        "/gviz/tq?tqx=out:json&sheet=" +
         encodeURIComponent(sheetName) +
-        "&range=A:ZZ" +
-        "&headers=0" +
         "&t=" +
         Date.now();
 
@@ -2015,15 +2010,13 @@ async function loadMonthlySheet(sheetName) {
 
 
     const data =
-        JSON.parse(
-            jsonText
-        );
+        JSON.parse(jsonText);
 
 
     if (
         !data ||
         !data.table ||
-        !data.table.rows
+        !data.table.cols
     ) {
 
         throw new Error(
@@ -2034,228 +2027,112 @@ async function loadMonthlySheet(sheetName) {
 
 
     /* =============================================
-       CARI BARIS HEADER
-       
-       TIDAK PEDULI HEADER ADA DI ROW 1,
-       ROW 2, ROW 3, DST.
+       CARI KOLOM
     ============================================= */
 
-    let headerRowIndex = -1;
-
-    let employeeColumn = -1;
-
-    let achColumn = -1;
-
-
-    for (
-        let rowIndex = 0;
-        rowIndex < data.table.rows.length;
-        rowIndex++
-    ) {
-
-        const row =
-            data.table.rows[rowIndex];
+    const employeeColumn =
+        findColumn(
+            data.table.cols,
+            "EMPLOYEE NAME"
+        );
 
 
-        if (
-            !row ||
-            !row.c
-        ) {
+    const achColumn =
+        findColumn(
+            data.table.cols,
+            "ACH MTD"
+        );
 
-            continue;
-
-        }
-
-
-        let foundEmployeeColumn = -1;
-
-        let foundAchColumn = -1;
-
-
-        for (
-            let columnIndex = 0;
-            columnIndex < row.c.length;
-            columnIndex++
-        ) {
-
-            const value =
-                getCellValue(
-                    row.c[columnIndex]
-                )
-                .trim()
-                .replace(
-                    /\s+/g,
-                    " "
-                )
-                .toUpperCase();
-
-
-            if (
-                value === "EMPLOYEE NAME"
-            ) {
-
-                foundEmployeeColumn =
-                    columnIndex;
-
-            }
-
-
-            if (
-                value === "ACH MTD"
-            ) {
-
-                foundAchColumn =
-                    columnIndex;
-
-            }
-
-        }
-
-
-        /* -----------------------------------------
-           HEADER DITEMUKAN
-        ----------------------------------------- */
-
-        if (
-            foundEmployeeColumn !== -1 &&
-            foundAchColumn !== -1
-        ) {
-
-            headerRowIndex =
-                rowIndex;
-
-            employeeColumn =
-                foundEmployeeColumn;
-
-            achColumn =
-                foundAchColumn;
-
-            break;
-
-        }
-
-    }
-
-
-    /* =============================================
-       VALIDASI HEADER
-    ============================================= */
 
     if (
-        headerRowIndex === -1
+        employeeColumn === -1
     ) {
 
         throw new Error(
-            `Header "EMPLOYEE NAME" dan "ACH MTD" tidak ditemukan di ${sheetName}`
+            `Kolom EMPLOYEE NAME tidak ditemukan di ${sheetName}`
         );
 
     }
 
 
-    console.log(
-        `HEADER ${sheetName}:`,
-        {
-            headerRowIndex:
-                headerRowIndex,
+    if (
+        achColumn === -1
+    ) {
 
-            employeeColumn:
-                employeeColumn,
+        throw new Error(
+            `Kolom ACH MTD tidak ditemukan di ${sheetName}`
+        );
 
-            achColumn:
-                achColumn
-        }
-    );
+    }
 
 
     /* =============================================
-       BACA DATA
-       
-       MULAI SETELAH BARIS HEADER
+       SIMPAN DATA
     ============================================= */
 
     const result = {};
 
 
-    for (
-        let rowIndex =
-            headerRowIndex + 1;
+    data.table.rows.forEach(
+        row => {
 
-        rowIndex <
-            data.table.rows.length;
+            if (
+                !row ||
+                !row.c
+            ) {
 
-        rowIndex++
-    ) {
+                return;
 
-        const row =
-            data.table.rows[rowIndex];
-
-
-        if (
-            !row ||
-            !row.c
-        ) {
-
-            continue;
-
-        }
+            }
 
 
-        const employeeName =
-            getCellValue(
-                row.c[
-                    employeeColumn
-                ]
-            );
+            const employeeName =
+                getCellValue(
+                    row.c[
+                        employeeColumn
+                    ]
+                );
 
 
-        /* -----------------------------------------
-           ABAIKAN BARIS TANPA NAMA
-        ----------------------------------------- */
+            if (
+                !employeeName
+            ) {
 
-        if (
-            !employeeName
-        ) {
+                return;
 
-            continue;
-
-        }
+            }
 
 
-        const ach =
-            getCellValue(
-                row.c[
-                    achColumn
-                ]
-            );
+            const ach =
+                getCellValue(
+                    row.c[
+                        achColumn
+                    ]
+                );
 
 
-        /* -----------------------------------------
-           ABAIKAN ACH KOSONG
-        ----------------------------------------- */
+            const key =
+                normalizeEmployeeName(
+                    employeeName
+                );
 
-        if (
-            ach === ""
-        ) {
 
-            continue;
+            if (
+                ach !== ""
+            ) {
+
+                result[key] =
+                    ach;
+
+            }
 
         }
-
-
-        const key =
-            normalizeEmployeeName(
-                employeeName
-            );
-
-
-        result[key] =
-            ach;
-
-    }
+    );
 
 
     console.log(
-        `=== DATA ${sheetName} ===`,
+        "DATA SHEET BULANAN:",
+        sheetName,
         result
     );
 
