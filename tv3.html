@@ -1279,13 +1279,15 @@ and (orientation:landscape){
     display:flex;
     flex-direction:column;
     gap:2px;
+    overflow:hidden;
 }
 
 #slide2 .rank-card{
-    flex:1;
-    min-height:0;
+    flex:1 1 0;
+    height:auto !important;
+    min-height:0 !important;
+    flex-shrink:1 !important;
 }
-
 
     /* =============================================
        SLIDE 1 & 3
