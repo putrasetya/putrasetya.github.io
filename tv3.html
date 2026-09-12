@@ -1276,33 +1276,15 @@ and (orientation:landscape){
     ============================================= */
 
     #slide2 .rank-grid{
+    display:flex;
+    flex-direction:column;
+    gap:2px;
+}
 
-        height:calc(100vh - 75px);
-
-        flex-grow:0;
-
-        gap:3px;
-
-        overflow:hidden;
-
-    }
-
-
-    #slide2 .rank-card{
-
-        height:
-            calc(
-                (100vh - 75px - 32px)
-                / 17
-            );
-
-        min-height:0;
-
-        max-height:none;
-
-        flex-shrink:0;
-
-    }
+#slide2 .rank-card{
+    flex:1;
+    min-height:0;
+}
 
 
     /* =============================================
