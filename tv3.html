@@ -1271,31 +1271,44 @@ and (orientation:landscape){
 
 
     /* =============================================
-       SLIDE 2
-       17 RANK
-    ============================================= */
+   SLIDE 2 — FIX 17 RANK AGAR NOMOR 17 TIDAK TERPOTONG
+============================================= */
 
-    #slide2{
+#slide2{
     height:100%;
+    min-height:0;
 }
 
 #slide2 .rank-grid{
     display:flex;
     flex-direction:column;
-    gap:1px;
-    flex:1;
+
+    gap:3px;
+
+    height:
+        calc(100vh - 75px - 32px);
+
+    flex:none;
+
     overflow:hidden;
-    height:auto !important;
 }
 
 #slide2 .rank-card{
-    flex:1;
+
+    height:
+        calc(
+            (100vh - 75px - 32px - 48px)
+            / 17
+        );
+
     min-height:0;
-    height:auto !important;
+    max-height:none;
+
+    flex:none;
+
     padding-top:0;
     padding-bottom:0;
 }
-
     /* =============================================
        SLIDE 1 & 3
     ============================================= */
