@@ -247,12 +247,15 @@ JSON.stringify(selectedUser)
 
 const status = String(selectedUser.status || "").toLowerCase();
 
+
 if(status === "admin" && pinValid){
     window.location.href = "admin.html";
+}else if(status === "staf"){
+    window.location.href = "reportsalesid.html";
 }else{
-    window.location.href = "staf.html";
+    window.location.href = "reportsalesid.html";
 }
-
+   
 });
 
 </script>
