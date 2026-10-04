@@ -492,6 +492,147 @@ color:#22c55e;
 @media(max-width:600px){
 .day{height:40px;}
 }
+
+/* =========================
+BOTTOM TASKBAR
+========================= */
+
+.bottom-taskbar{
+position:fixed;
+left:50%;
+bottom:12px;
+transform:translateX(-50%);
+width:calc(100% - 24px);
+max-width:600px;
+height:72px;
+background:rgba(255,255,255,.96);
+backdrop-filter:blur(15px);
+-webkit-backdrop-filter:blur(15px);
+border-radius:22px;
+box-shadow:
+0 10px 30px rgba(15,23,42,.15),
+0 2px 8px rgba(15,23,42,.08);
+display:grid;
+grid-template-columns:repeat(5,1fr);
+align-items:center;
+z-index:99990;
+padding:6px 8px;
+box-sizing:border-box;
+}
+
+/* MENU */
+.taskbar-item{
+height:60px;
+display:flex;
+flex-direction:column;
+align-items:center;
+justify-content:center;
+gap:4px;
+text-decoration:none;
+color:#64748b;
+font-size:10px;
+font-weight:600;
+border-radius:16px;
+transition:.2s;
+position:relative;
+-webkit-tap-highlight-color:transparent;
+}
+
+.taskbar-item i{
+font-size:21px;
+line-height:1;
+}
+
+.taskbar-item span{
+line-height:1;
+}
+
+/* ACTIVE */
+.taskbar-item.active{
+color:#2563eb;
+}
+
+.taskbar-item.active::before{
+content:"";
+position:absolute;
+top:4px;
+width:5px;
+height:5px;
+border-radius:50%;
+background:#2563eb;
+}
+
+/* MENU TENGAH / TICKETING */
+.taskbar-center{
+position:relative;
+}
+
+.taskbar-center .taskbar-icon{
+width:58px;
+height:58px;
+margin-top:-30px;
+border-radius:50%;
+display:flex;
+align-items:center;
+justify-content:center;
+background:#2563eb;
+color:#fff;
+box-shadow:
+0 8px 20px rgba(37,99,235,.35),
+0 0 0 6px #fff;
+}
+
+.taskbar-center .taskbar-icon i{
+font-size:28px;
+}
+
+.taskbar-center span{
+margin-top:3px;
+color:#2563eb;
+font-size:10px;
+font-weight:700;
+}
+
+/* TOUCH */
+.taskbar-item:active{
+transform:scale(.92);
+}
+
+/* AGAR KONTEN TIDAK TERTUTUP TASKBAR */
+body{
+padding-bottom:105px;
+}
+
+/* MOBILE */
+@media(max-width:600px){
+
+.bottom-taskbar{
+bottom:8px;
+width:calc(100% - 16px);
+height:68px;
+border-radius:20px;
+}
+
+.taskbar-item{
+height:56px;
+}
+
+.taskbar-item i{
+font-size:20px;
+}
+
+.taskbar-center .taskbar-icon{
+width:54px;
+height:54px;
+margin-top:-28px;
+}
+
+.taskbar-center .taskbar-icon i{
+font-size:26px;
+}
+
+}
+
 </style>
 </head>
 
