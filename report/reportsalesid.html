@@ -6,7 +6,9 @@
 <title>Sales Control Daily</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
+   
 <style>
 body{
 margin:0;
@@ -493,58 +495,81 @@ color:#22c55e;
 .day{height:40px;}
 }
 
-/* =========================
-BOTTOM TASKBAR
-========================= */
+/* ==========================================
+BOTTOM TASKBAR - SALES CONTROL
+========================================== */
 
 .bottom-taskbar{
 position:fixed;
 left:50%;
-bottom:12px;
+bottom:10px;
 transform:translateX(-50%);
 width:calc(100% - 24px);
-max-width:600px;
+max-width:620px;
 height:72px;
-background:rgba(255,255,255,.96);
-backdrop-filter:blur(15px);
--webkit-backdrop-filter:blur(15px);
-border-radius:22px;
-box-shadow:
-0 10px 30px rgba(15,23,42,.15),
-0 2px 8px rgba(15,23,42,.08);
-display:grid;
-grid-template-columns:repeat(5,1fr);
-align-items:center;
-z-index:99990;
-padding:6px 8px;
+padding:6px 7px;
 box-sizing:border-box;
+
+display:grid;
+grid-template-columns:1fr 1fr 1.15fr 1fr 1fr;
+align-items:center;
+
+background:rgba(255,255,255,.94);
+border:1px solid rgba(255,255,255,.8);
+border-radius:24px;
+
+box-shadow:
+0 12px 35px rgba(15,23,42,.16),
+0 3px 10px rgba(15,23,42,.08);
+
+backdrop-filter:blur(18px);
+-webkit-backdrop-filter:blur(18px);
+
+z-index:99990;
 }
 
-/* MENU */
+/* ITEM */
 .taskbar-item{
 height:60px;
 display:flex;
 flex-direction:column;
 align-items:center;
 justify-content:center;
+
 gap:4px;
+
 text-decoration:none;
 color:#64748b;
-font-size:10px;
+
+font-size:9px;
 font-weight:600;
-border-radius:16px;
-transition:.2s;
+
+border-radius:17px;
+
 position:relative;
+
 -webkit-tap-highlight-color:transparent;
+
+transition:
+transform .18s ease,
+color .18s ease,
+background .18s ease;
 }
 
 .taskbar-item i{
-font-size:21px;
+font-size:20px;
 line-height:1;
 }
 
 .taskbar-item span{
 line-height:1;
+white-space:nowrap;
+}
+
+/* HOVER */
+.taskbar-item:hover{
+color:#2563eb;
+background:rgba(37,99,235,.06);
 }
 
 /* ACTIVE */
@@ -554,81 +579,186 @@ color:#2563eb;
 
 .taskbar-item.active::before{
 content:"";
+
 position:absolute;
 top:4px;
+
 width:5px;
 height:5px;
+
 border-radius:50%;
+
 background:#2563eb;
+
+box-shadow:
+0 0 8px rgba(37,99,235,.55);
 }
 
-/* MENU TENGAH / TICKETING */
+/* ==========================================
+TICKET CENTER
+========================================== */
+
 .taskbar-center{
-position:relative;
+height:72px;
+margin-top:-25px;
+
+display:flex;
+flex-direction:column;
+align-items:center;
+justify-content:flex-end;
+
+gap:4px;
 }
 
 .taskbar-center .taskbar-icon{
 width:58px;
 height:58px;
-margin-top:-30px;
-border-radius:50%;
+
 display:flex;
 align-items:center;
 justify-content:center;
-background:#2563eb;
+
+border-radius:50%;
+
+background:linear-gradient(
+145deg,
+#3b82f6,
+#2563eb
+);
+
 color:#fff;
+
+border:5px solid #fff;
+
 box-shadow:
 0 8px 20px rgba(37,99,235,.35),
-0 0 0 6px #fff;
+0 3px 8px rgba(15,23,42,.12);
+
+transition:
+transform .18s ease,
+box-shadow .18s ease;
 }
 
 .taskbar-center .taskbar-icon i{
-font-size:28px;
+font-size:27px;
 }
 
 .taskbar-center span{
-margin-top:3px;
-color:#2563eb;
-font-size:10px;
+font-size:9px;
 font-weight:700;
+color:#2563eb;
+line-height:1;
 }
 
-/* TOUCH */
+/* ACTIVE CENTER */
+.taskbar-center.active .taskbar-icon{
+background:linear-gradient(
+145deg,
+#2563eb,
+#1d4ed8
+);
+
+box-shadow:
+0 9px 24px rgba(37,99,235,.45),
+0 0 0 2px rgba(37,99,235,.08);
+}
+
+/* TOUCH EFFECT */
 .taskbar-item:active{
 transform:scale(.92);
 }
 
-/* AGAR KONTEN TIDAK TERTUTUP TASKBAR */
+.taskbar-center:active .taskbar-icon{
+transform:scale(.91);
+}
+
+/* ==========================================
+SPACE AGAR TASKBAR TIDAK MENUTUP KONTEN
+========================================== */
+
 body{
 padding-bottom:105px;
 }
 
-/* MOBILE */
+/* ==========================================
+MOBILE
+========================================== */
+
 @media(max-width:600px){
 
 .bottom-taskbar{
-bottom:8px;
 width:calc(100% - 16px);
-height:68px;
-border-radius:20px;
+height:70px;
+
+bottom:8px;
+
+border-radius:22px;
+
+padding:5px 4px;
 }
 
 .taskbar-item{
-height:56px;
+height:58px;
+gap:4px;
+
+font-size:8.5px;
 }
 
 .taskbar-item i{
-font-size:20px;
+font-size:19px;
+}
+
+.taskbar-center{
+height:72px;
+margin-top:-26px;
 }
 
 .taskbar-center .taskbar-icon{
-width:54px;
-height:54px;
-margin-top:-28px;
+width:56px;
+height:56px;
+border-width:5px;
 }
 
 .taskbar-center .taskbar-icon i{
 font-size:26px;
+}
+
+.taskbar-center span{
+font-size:8.5px;
+}
+
+}
+
+/* ==========================================
+VERY SMALL PHONE
+========================================== */
+
+@media(max-width:360px){
+
+.bottom-taskbar{
+width:calc(100% - 10px);
+bottom:5px;
+}
+
+.taskbar-item{
+font-size:7.5px;
+}
+
+.taskbar-item i{
+font-size:18px;
+}
+
+.taskbar-center .taskbar-icon{
+width:53px;
+height:53px;
+}
+
+.taskbar-center .taskbar-icon i{
+font-size:24px;
+}
+
+.taskbar-center span{
+font-size:7.5px;
 }
 
 }
@@ -1413,5 +1543,116 @@ Menghubungi server...
 </div>
 
 </div>
+
+<!-- ==========================================
+     BOTTOM TASKBAR
+     ========================================== -->
+
+<nav class="bottom-taskbar">
+
+  <!-- PENCARIAN INSENTIF -->
+
+<a href="pencarianinsentif.html"
+  class="taskbar-item"
+  data-page="pencarianinsentif.html">
+
+```
+<i class="fa-solid fa-magnifying-glass"></i>
+<span>Pencarian</span>
+```
+
+  </a>
+
+  <!-- CEK INSENTIF -->
+
+<a href="insentif.html"
+  class="taskbar-item"
+  data-page="insentif.html">
+
+```
+<i class="fa-solid fa-rupiah-sign"></i>
+<span>Insentif</span>
+```
+
+  </a>
+
+  <!-- TICKETING -->
+
+<a href="reportsalesid.html"
+  class="taskbar-item taskbar-center"
+  data-page="reportsalesid.html">
+
+```
+<div class="taskbar-icon">
+  <i class="fa-solid fa-ticket"></i>
+</div>
+
+<span>Ticketing</span>
+```
+
+  </a>
+
+  <!-- STATISTIK -->
+
+<a href="statistik.html"
+  class="taskbar-item"
+  data-page="statistik.html">
+
+```
+<i class="fa-solid fa-chart-simple"></i>
+<span>Statistik</span>
+```
+
+  </a>
+
+  <!-- PROFILE -->
+
+<a href="profile.html"
+  class="taskbar-item"
+  data-page="profile.html">
+
+```
+<i class="fa-solid fa-user"></i>
+<span>Profile</span>
+```
+
+  </a>
+
+</nav>
+
+<script>
+
+/* ==========================================
+   ACTIVE TASKBAR MENU
+   ========================================== */
+
+(function(){
+
+const currentPage =
+window.location.pathname
+.split("/")
+.pop()
+.toLowerCase();
+
+document
+.querySelectorAll(".taskbar-item")
+.forEach(item=>{
+
+const page =
+(item.dataset.page || "")
+.toLowerCase();
+
+if(page === currentPage){
+
+item.classList.add("active");
+
+}
+
+});
+
+})();
+
+</script>
+
 </body>
 </html>
