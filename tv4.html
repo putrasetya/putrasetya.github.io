@@ -2037,9 +2037,7 @@ body:has(#slide1.active) .container,body:has(#slide2.active) .container,body:has
 
 </div>
 
-
 <script>
-
 
 /* =====================================================
    GOOGLE SPREADSHEET
@@ -2049,492 +2047,126 @@ const SPREADSHEET_ID =
     "16Alf0KUmqeaBx1zlsKfbcM5oPbzc18dBMgtlZYhP66M";
 
 
-const SHEET_NAME =
-    "Sheet1";
+/*
+   DATA UTAMA
+   Jika data ACH MTD sekarang memang berada di
+   AGUSTUS 2026, ubah menjadi:
+   const SHEET_NAME = "AGUSTUS 2026";
+*/
+const SHEET_NAME = "Sheet1";
 
 
-const SHEET_URL =
+const SLIDE_DURATION = 20000;
 
-    "https://docs.google.com/spreadsheets/d/" +
+let currentSlide = 1;
 
-    SPREADSHEET_ID +
-
-    "/gviz/tq?tqx=out:json&sheet=" +
-
-    encodeURIComponent(
-        SHEET_NAME
-    );
-
-
-/* =====================================================
-   SLIDE SETTINGS
-===================================================== */
-
-const SLIDE_DURATION =
-    20000;
-
-
-let currentSlide =
-    1;
-
-
-let employeeData =
-    [];
-
+let employeeData = [];
 
 let monthlyScoreData = {
-
     juli:{},
-
     agustus:{},
-
     september:{},
-
     oktober:{},
-
     november:{},
-
     desember:{}
-
 };
 
 
 /* =====================================================
-   RANK CHANGE
+   SHEET URL
 ===================================================== */
 
-const rankingData = [
+function getSheetUrl(sheetName){
 
-    {
-        change:"same",
-        changeText:"-"
-    },
+    return (
+        "https://docs.google.com/spreadsheets/d/" +
+        SPREADSHEET_ID +
+        "/gviz/tq?tqx=out:json&sheet=" +
+        encodeURIComponent(sheetName) +
+        "&t=" +
+        Date.now()
+    );
 
-    {
-        change:"same",
-        changeText:"-"
-    },
-
-    {
-        change:"up",
-        changeText:"▲ 2"
-    },
-
-    {
-        change:"same",
-        changeText:"-"
-    },
-
-    {
-        change:"up",
-        changeText:"▲ 1"
-    },
-
-    {
-        change:"up",
-        changeText:"▲ 1"
-    },
-
-    {
-        change:"down",
-        changeText:"▼ 4"
-    },
-
-    {
-        change:"same",
-        changeText:"-"
-    },
-
-    {
-        change:"same",
-        changeText:"-"
-    },
-
-    {
-        change:"up",
-        changeText:"▲ 1"
-    },
-
-    {
-        change:"down",
-        changeText:"▼ 1"
-    },
-
-    {
-        change:"same",
-        changeText:"-"
-    },
-
-    {
-        change:"up",
-        changeText:"▲ 2"
-    },
-
-    {
-        change:"down",
-        changeText:"▼ 1"
-    },
-
-    {
-        change:"same",
-        changeText:"-"
-    },
-
-    {
-        change:"up",
-        changeText:"▲ 1"
-    },
-
-    {
-        change:"down",
-        changeText:"▼ 2"
-    }
-
-];
+}
 
 
 /* =====================================================
-   LOAD DATA
+   NORMALIZE HEADER
 ===================================================== */
 
-async function loadData(){
+function normalizeHeader(value){
 
-    try{
+    return String(value || "")
+        .replace(/\u00A0/g," ")
+        .replace(/\s+/g," ")
+        .trim()
+        .toUpperCase();
 
-        const response =
-            await fetch(
-                SHEET_URL +
-                "&t=" +
-                Date.now()
-            );
+}
 
 
-        if(!response.ok){
+/* =====================================================
+   NORMALIZE NAMA
+===================================================== */
 
-            throw new Error(
-                "Spreadsheet tidak dapat diakses."
-            );
+function normalizeEmployeeName(name){
 
-        }
+    return String(name || "")
+        .trim()
+        .replace(/\s+/g," ")
+        .toUpperCase();
 
+}
 
-        const text =
-            await response.text();
 
+/* =====================================================
+   PARSE GVIZ RESPONSE
+===================================================== */
 
-        let jsonText =
-            text.trim();
+function parseGvizResponse(text){
 
+    let jsonText = String(text || "").trim();
 
-        jsonText =
-            jsonText.replace(
-                /^\/\*[\s\S]*?\*\/\s*/,
-                ""
-            );
+    /*
+       Hapus comment Google:
+       /*O_o*/
+    */
 
+    jsonText = jsonText.replace(
+        /^\/\*[\s\S]*?\*\/\s*/,
+        ""
+    );
 
-        const start =
-            jsonText.indexOf("{");
+    /*
+       Cari objek JSON.
+    */
 
+    const start = jsonText.indexOf("{");
+    const end = jsonText.lastIndexOf("}");
 
-        const end =
-            jsonText.lastIndexOf("}");
+    if(start === -1 || end === -1){
 
-
-        if(
-            start === -1 ||
-            end === -1
-        ){
-
-            throw new Error(
-                "Format data Google Sheets tidak valid."
-            );
-
-        }
-
-
-        jsonText =
-            jsonText.substring(
-                start,
-                end + 1
-            );
-
-
-        const data =
-            JSON.parse(
-                jsonText
-            );
-
-
-        if(
-            !data ||
-            !data.table ||
-            !data.table.cols
-        ){
-
-            throw new Error(
-                "Data spreadsheet tidak ditemukan."
-            );
-
-        }
-
-
-        /* HEADER */
-
-        const employeeColumn =
-            findColumn(
-                data.table.cols,
-                "EMPLOYEE NAME"
-            );
-
-
-        const nipColumn = findColumn(data.table.cols, "NIP");
-
-        const codeJobColumn =
-            findColumn(
-                data.table.cols,
-                "CODE JOB"
-            );
-
-
-        const salesColumn =
-            findColumn(
-                data.table.cols,
-                "SALES MTD"
-            );
-
-
-        const achColumn =
-            findColumn(
-                data.table.cols,
-                "ACH MTD"
-            );
-
-
-        const proteksiColumn =
-            findColumn(
-                data.table.cols,
-                "PROTEKSI"
-            );
-
-
-        const achProteksiColumn =
-            findColumn(
-                data.table.cols,
-                "ACH PROTEKSI"
-            );
-
-
-        const trxColumn =
-            findColumn(
-                data.table.cols,
-                "TRX"
-            );
-
-
-        const achBulananColumn =
-            findColumn(
-                data.table.cols,
-                "ACH BULANAN"
-            );
-
-
-        /* VALIDASI */
-
-        const requiredColumns = [
-
-            [
-                employeeColumn,
-                "EMPLOYEE NAME"
-            ],
-
-            [
-                codeJobColumn,
-                "CODE JOB"
-            ],
-
-            [
-                salesColumn,
-                "SALES MTD"
-            ],
-
-            [
-                achColumn,
-                "ACH MTD"
-            ],
-
-            [
-                proteksiColumn,
-                "PROTEKSI"
-            ],
-
-            [
-                achProteksiColumn,
-                "ACH PROTEKSI"
-            ],
-
-            [
-                trxColumn,
-                "TRX"
-            ],
-
-            [
-                achBulananColumn,
-                "ACH BULANAN"
-            ]
-
-        ];
-
-
-        for(
-            const [
-                index,
-                header
-            ]
-            of requiredColumns
-        ){
-
-            if(index === -1){
-
-                throw new Error(
-                    `Header "${header}" tidak ditemukan.`
-                );
-
-            }
-
-        }
-
-
-        /* DATA */
-
-        employeeData =
-
-            data.table.rows
-
-                .map(
-                    row => {
-
-                        if(!row.c){
-
-                            return null;
-
-                        }
-
-
-                        const name =
-                            getCellValue(
-                                row.c[
-                                    employeeColumn
-                                ]
-                            );
-
-
-                        if(name === ""){
-
-                            return null;
-
-                        }
-
-
-                        return {
-
-                            name:name,
-                            nip: nipColumn >= 0 ? getCellValue(row.c[nipColumn]) : "",
-
-                            codeJob:
-                                getCellValue(
-                                    row.c[
-                                        codeJobColumn
-                                    ]
-                                ),
-
-                            sales:
-                                getCellValue(
-                                    row.c[
-                                        salesColumn
-                                    ]
-                                ),
-
-                            ach:
-                                getCellValue(
-                                    row.c[
-                                        achColumn
-                                    ]
-                                ),
-
-                            proteksi:
-                                getCellValue(
-                                    row.c[
-                                        proteksiColumn
-                                    ]
-                                ),
-
-                            achProteksi:
-                                getCellValue(
-                                    row.c[
-                                        achProteksiColumn
-                                    ]
-                                ),
-
-                            trx:
-                                getCellValue(
-                                    row.c[
-                                        trxColumn
-                                    ]
-                                ),
-
-                            achBulanan:
-                                getCellValue(
-                                    row.c[
-                                        achBulananColumn
-                                    ]
-                                )
-
-                        };
-
-                    }
-                )
-
-                .filter(
-                    item =>
-                        item !== null
-                );
-
-
-        await loadAllMonthlySheets();
-
-
-        renderSlide1();
-
-        renderSlide2();
-
-        renderSlide3();
-
-        renderSlide4();
+        throw new Error(
+            "Respons Google Sheets bukan JSON yang valid."
+        );
 
     }
 
+    jsonText =
+        jsonText.substring(
+            start,
+            end + 1
+        );
 
+    try{
+
+        return JSON.parse(jsonText);
+
+    }
     catch(error){
 
-        console.error(error);
-
-
-        showError(
-            "rankGrid1",
-            error.message
-        );
-
-
-        showError(
-            "rankGrid2",
-            error.message
-        );
-
-
-        showError(
-            "rankGrid3",
-            error.message
+        throw new Error(
+            "JSON Google Sheets tidak dapat dibaca."
         );
 
     }
@@ -2543,7 +2175,7 @@ async function loadData(){
 
 
 /* =====================================================
-   CELL VALUE
+   GET CELL VALUE
 ===================================================== */
 
 function getCellValue(cell){
@@ -2554,7 +2186,6 @@ function getCellValue(cell){
 
     }
 
-
     return String(
         cell.f ??
         cell.v ??
@@ -2564,39 +2195,649 @@ function getCellValue(cell){
 }
 
 
-function findColumn(columns,target){
+/* =====================================================
+   FIND COLUMN FLEXIBLE
+===================================================== */
 
-    const normalizeHeader =
-        value => {
+function findColumn(columns, targets){
 
-            return String(
-                value || ""
-            )
-            .replace(
-                /\u00A0/g,
-                " "
-            )
-            .replace(
-                /\s+/g,
-                " "
-            )
-            .trim()
-            .toUpperCase();
+    if(!Array.isArray(targets)){
 
-        };
+        targets = [targets];
+
+    }
+
+    const normalizedTargets =
+        targets.map(
+            target =>
+                normalizeHeader(target)
+        );
 
 
-    const targetHeader =
-        normalizeHeader(target);
+    for(
+        let i = 0;
+        i < columns.length;
+        i++
+    ){
 
+        const col = columns[i] || {};
 
-    return columns.findIndex(
-        col =>
+        const label =
             normalizeHeader(
                 col.label
-            ) ===
-            targetHeader
+            );
+
+        const id =
+            normalizeHeader(
+                col.id
+            );
+
+
+        if(
+            normalizedTargets.includes(label) ||
+            normalizedTargets.includes(id)
+        ){
+
+            return i;
+
+        }
+
+    }
+
+
+    return -1;
+
+}
+
+
+/* =====================================================
+   FIND COLUMN PARTIAL
+===================================================== */
+
+function findColumnContains(columns, words){
+
+    if(!Array.isArray(words)){
+
+        words = [words];
+
+    }
+
+    const normalizedWords =
+        words.map(
+            word =>
+                normalizeHeader(word)
+        );
+
+
+    for(
+        let i = 0;
+        i < columns.length;
+        i++
+    ){
+
+        const col = columns[i] || {};
+
+        const label =
+            normalizeHeader(
+                col.label
+            );
+
+        const id =
+            normalizeHeader(
+                col.id
+            );
+
+
+        const text =
+            label + " " + id;
+
+
+        if(
+            normalizedWords.some(
+                word =>
+                    text.includes(word)
+            )
+        ){
+
+            return i;
+
+        }
+
+    }
+
+
+    return -1;
+
+}
+
+
+/* =====================================================
+   SHOW STATUS
+===================================================== */
+
+function showStatus(message, type="info"){
+
+    let box =
+        document.getElementById(
+            "dataStatusBox"
+        );
+
+
+    if(!box){
+
+        box =
+            document.createElement(
+                "div"
+            );
+
+        box.id =
+            "dataStatusBox";
+
+
+        box.style.position =
+            "fixed";
+
+        box.style.left =
+            "50%";
+
+        box.style.top =
+            "50%";
+
+        box.style.transform =
+            "translate(-50%,-50%)";
+
+        box.style.zIndex =
+            "999999";
+
+        box.style.maxWidth =
+            "90vw";
+
+        box.style.padding =
+            "20px 24px";
+
+        box.style.borderRadius =
+            "14px";
+
+        box.style.fontFamily =
+            "Arial,sans-serif";
+
+        box.style.fontSize =
+            "15px";
+
+        box.style.lineHeight =
+            "1.5";
+
+        box.style.textAlign =
+            "left";
+
+        box.style.boxShadow =
+            "0 10px 40px rgba(0,0,0,.5)";
+
+        document.body.appendChild(
+            box
+        );
+
+    }
+
+
+    box.style.background =
+        type === "error"
+            ? "#7f1d1d"
+            : "#0f3b57";
+
+    box.style.color =
+        "#ffffff";
+
+    box.innerHTML =
+        message;
+
+}
+
+
+/* =====================================================
+   HIDE STATUS
+===================================================== */
+
+function hideStatus(){
+
+    const box =
+        document.getElementById(
+            "dataStatusBox"
+        );
+
+    if(box){
+
+        box.remove();
+
+    }
+
+}
+
+
+/* =====================================================
+   LOAD DATA UTAMA
+===================================================== */
+
+async function loadData(){
+
+    showStatus(
+        "⏳ Mengambil data Sales Ranking..."
     );
+
+
+    try{
+
+        const url =
+            getSheetUrl(
+                SHEET_NAME
+            );
+
+
+        console.log(
+            "LOAD SHEET:",
+            SHEET_NAME
+        );
+
+
+        const response =
+            await fetch(
+                url,
+                {
+                    cache:"no-store"
+                }
+            );
+
+
+        if(!response.ok){
+
+            throw new Error(
+                "Google Sheets tidak dapat diakses. HTTP " +
+                response.status
+            );
+
+        }
+
+
+        const text =
+            await response.text();
+
+
+        const data =
+            parseGvizResponse(
+                text
+            );
+
+
+        if(
+            !data ||
+            !data.table ||
+            !data.table.cols
+        ){
+
+            throw new Error(
+                "Struktur data Google Sheets tidak ditemukan."
+            );
+
+        }
+
+
+        const columns =
+            data.table.cols;
+
+
+        console.log(
+            "HEADER:",
+            columns
+        );
+
+
+        /*
+           =================================================
+           CARI KOLOM
+           =================================================
+        */
+
+        const employeeColumn =
+            findColumn(
+                columns,
+                [
+                    "EMPLOYEE NAME",
+                    "NAMA KARYAWAN",
+                    "NAMA"
+                ]
+            );
+
+
+        const nipColumn =
+            findColumn(
+                columns,
+                [
+                    "NIP",
+                    "NIK"
+                ]
+            );
+
+
+        const codeJobColumn =
+            findColumn(
+                columns,
+                [
+                    "CODE JOB",
+                    "CODEJOB",
+                    "JOB"
+                ]
+            );
+
+
+        const salesColumn =
+            findColumn(
+                columns,
+                [
+                    "SALES MTD",
+                    "SALES MTD ID",
+                    "SALES"
+                ]
+            );
+
+
+        const achColumn =
+            findColumn(
+                columns,
+                [
+                    "ACH MTD",
+                    "ACH MTD SALES ID",
+                    "ACH"
+                ]
+            );
+
+
+        const proteksiColumn =
+            findColumn(
+                columns,
+                [
+                    "PROTEKSI"
+                ]
+            );
+
+
+        const achProteksiColumn =
+            findColumn(
+                columns,
+                [
+                    "ACH PROTEKSI"
+                ]
+            );
+
+
+        const trxColumn =
+            findColumn(
+                columns,
+                [
+                    "TRX",
+                    "TRANSAKSI",
+                    "TRX MTD",
+                    "TRANSACTION"
+                ]
+            );
+
+
+        const achBulananColumn =
+            findColumn(
+                columns,
+                [
+                    "ACH BULANAN",
+                    "ACH MONTHLY"
+                ]
+            );
+
+
+        /*
+           =================================================
+           VALIDASI MINIMAL
+           =================================================
+        */
+
+        if(employeeColumn === -1){
+
+            throw new Error(
+                'Header "EMPLOYEE NAME" / "NAMA" tidak ditemukan.'
+            );
+
+        }
+
+
+        if(achColumn === -1){
+
+            throw new Error(
+                'Header "ACH MTD" tidak ditemukan.'
+            );
+
+        }
+
+
+        /*
+           Kolom lain tidak lagi membuat seluruh
+           aplikasi gagal.
+        */
+
+
+        employeeData = [];
+
+
+        const rows =
+            data.table.rows || [];
+
+
+        rows.forEach(
+            row => {
+
+                if(
+                    !row ||
+                    !row.c
+                ){
+
+                    return;
+
+                }
+
+
+                const name =
+                    getCellValue(
+                        row.c[
+                            employeeColumn
+                        ]
+                    );
+
+
+                if(!name){
+
+                    return;
+
+                }
+
+
+                const employee = {
+
+                    name:name,
+
+                    nip:
+                        nipColumn >= 0
+                            ? getCellValue(
+                                row.c[
+                                    nipColumn
+                                ]
+                              )
+                            : "",
+
+                    codeJob:
+                        codeJobColumn >= 0
+                            ? getCellValue(
+                                row.c[
+                                    codeJobColumn
+                                ]
+                              )
+                            : "",
+
+                    sales:
+                        salesColumn >= 0
+                            ? getCellValue(
+                                row.c[
+                                    salesColumn
+                                ]
+                              )
+                            : "",
+
+                    ach:
+                        achColumn >= 0
+                            ? getCellValue(
+                                row.c[
+                                    achColumn
+                                ]
+                              )
+                            : "",
+
+                    proteksi:
+                        proteksiColumn >= 0
+                            ? getCellValue(
+                                row.c[
+                                    proteksiColumn
+                                ]
+                              )
+                            : "",
+
+                    achProteksi:
+                        achProteksiColumn >= 0
+                            ? getCellValue(
+                                row.c[
+                                    achProteksiColumn
+                                ]
+                              )
+                            : "",
+
+                    trx:
+                        trxColumn >= 0
+                            ? getCellValue(
+                                row.c[
+                                    trxColumn
+                                ]
+                              )
+                            : "",
+
+                    achBulanan:
+                        achBulananColumn >= 0
+                            ? getCellValue(
+                                row.c[
+                                    achBulananColumn
+                                ]
+                              )
+                            : ""
+
+                };
+
+
+                employeeData.push(
+                    employee
+                );
+
+            }
+        );
+
+
+        if(employeeData.length === 0){
+
+            throw new Error(
+                "Google Sheets berhasil dibaca, tetapi tidak ada data employee."
+            );
+
+        }
+
+
+        /*
+           =================================================
+           LOAD SHEET BULANAN
+           =================================================
+        */
+
+        await loadAllMonthlySheets();
+
+
+        /*
+           =================================================
+           RENDER
+           =================================================
+        */
+
+        renderSlide1();
+
+        renderSlide2();
+
+        renderSlide3();
+
+        renderSlide4();
+
+
+        hideStatus();
+
+
+        console.log(
+            "DATA EMPLOYEE:",
+            employeeData
+        );
+
+
+        console.log(
+            "TOTAL EMPLOYEE:",
+            employeeData.length
+        );
+
+    }
+
+
+    catch(error){
+
+        console.error(
+            "LOAD DATA ERROR:",
+            error
+        );
+
+
+        const message =
+            error?.message ||
+            String(error);
+
+
+        showError(
+            "rankGrid1",
+            message
+        );
+
+
+        showError(
+            "rankGrid2",
+            message
+        );
+
+
+        showError(
+            "rankGrid3",
+            message
+        );
+
+
+        showStatus(
+            `
+            <b>⚠ DATA TIDAK BERHASIL DIMUAT</b>
+            <br><br>
+            ${escapeHtml(message)}
+            <br><br>
+            <small>
+            Periksa nama sheet dan header Google Sheets.
+            </small>
+            `,
+            "error"
+        );
+
+    }
 
 }
 
@@ -2607,24 +2848,9 @@ function findColumn(columns,target){
 
 async function loadMonthlySheet(sheetName){
 
-    const url =
-
-        "https://docs.google.com/spreadsheets/d/" +
-
-        SPREADSHEET_ID +
-
-        "/gviz/tq?tqx=out:json&sheet=" +
-
-        encodeURIComponent(sheetName) +
-
-        "&t=" +
-
-        Date.now();
-
-
     const response =
         await fetch(
-            url,
+            getSheetUrl(sheetName),
             {
                 cache:"no-store"
             }
@@ -2634,7 +2860,7 @@ async function loadMonthlySheet(sheetName){
     if(!response.ok){
 
         throw new Error(
-            `Sheet "${sheetName}" tidak dapat diakses.`
+            `HTTP ${response.status}`
         );
 
     }
@@ -2644,47 +2870,9 @@ async function loadMonthlySheet(sheetName){
         await response.text();
 
 
-    let jsonText =
-        text.trim();
-
-
-    jsonText =
-        jsonText.replace(
-            /^\/\*[\s\S]*?\*\/\s*/,
-            ""
-        );
-
-
-    const start =
-        jsonText.indexOf("{");
-
-
-    const end =
-        jsonText.lastIndexOf("}");
-
-
-    if(
-        start === -1 ||
-        end === -1
-    ){
-
-        throw new Error(
-            `Format data sheet "${sheetName}" tidak valid.`
-        );
-
-    }
-
-
-    jsonText =
-        jsonText.substring(
-            start,
-            end + 1
-        );
-
-
     const data =
-        JSON.parse(
-            jsonText
+        parseGvizResponse(
+            text
         );
 
 
@@ -2695,104 +2883,92 @@ async function loadMonthlySheet(sheetName){
     ){
 
         throw new Error(
-            `Data sheet "${sheetName}" tidak ditemukan.`
+            "Struktur sheet tidak valid."
         );
 
     }
 
 
+    const columns =
+        data.table.cols;
+
+
     const employeeColumn =
         findColumn(
-            data.table.cols,
-            "EMPLOYEE NAME"
+            columns,
+            [
+                "EMPLOYEE NAME",
+                "NAMA KARYAWAN",
+                "NAMA"
+            ]
         );
 
 
     const achColumn =
         findColumn(
-            data.table.cols,
-            "ACH MTD"
+            columns,
+            [
+                "ACH MTD",
+                "ACH"
+            ]
         );
 
 
     const targetTrxColumn =
         findColumn(
-            data.table.cols,
-            "TARGET TRX"
+            columns,
+            [
+                "TARGET TRX"
+            ]
         );
 
 
     const trxMtdColumn =
         findColumn(
-            data.table.cols,
-            "TRX MTD"
+            columns,
+            [
+                "TRX MTD",
+                "TRX",
+                "TRANSAKSI"
+            ]
         );
 
 
     const targetBsColumn =
         findColumn(
-            data.table.cols,
-            "TARGET BS"
+            columns,
+            [
+                "TARGET BS",
+                "TARGET BASKET SIZE"
+            ]
         );
 
 
     const basketSizeColumn =
         findColumn(
-            data.table.cols,
-            "BASKET SIZE"
+            columns,
+            [
+                "BASKET SIZE",
+                "BASKET SIZE MTD",
+                "BS"
+            ]
         );
 
 
-    const requiredColumns = [
+    if(employeeColumn === -1){
 
-        [
-            employeeColumn,
-            "EMPLOYEE NAME"
-        ],
+        throw new Error(
+            'Kolom nama employee tidak ditemukan.'
+        );
 
-        [
-            achColumn,
-            "ACH MTD"
-        ],
-
-        [
-            targetTrxColumn,
-            "TARGET TRX"
-        ],
-
-        [
-            trxMtdColumn,
-            "TRX MTD"
-        ],
-
-        [
-            targetBsColumn,
-            "TARGET BS"
-        ],
-
-        [
-            basketSizeColumn,
-            "BASKET SIZE"
-        ]
-
-    ];
+    }
 
 
-    for(
-        const [
-            index,
-            header
-        ]
-        of requiredColumns
-    ){
+    if(achColumn === -1){
 
-        if(index === -1){
-
-            throw new Error(
-                `Header "${header}" tidak ditemukan di ${sheetName}`
-            );
-
-        }
+        console.warn(
+            `ACH MTD tidak ditemukan di ${sheetName}`
+        );
 
     }
 
@@ -2800,7 +2976,11 @@ async function loadMonthlySheet(sheetName){
     const result = {};
 
 
-    data.table.rows.forEach(
+    const rows =
+        data.table.rows || [];
+
+
+    rows.forEach(
         row => {
 
             if(
@@ -2828,46 +3008,6 @@ async function loadMonthlySheet(sheetName){
             }
 
 
-            const ach =
-                getCellValue(
-                    row.c[
-                        achColumn
-                    ]
-                );
-
-
-            const targetTrx =
-                getCellValue(
-                    row.c[
-                        targetTrxColumn
-                    ]
-                );
-
-
-            const trxMtd =
-                getCellValue(
-                    row.c[
-                        trxMtdColumn
-                    ]
-                );
-
-
-            const targetBs =
-                getCellValue(
-                    row.c[
-                        targetBsColumn
-                    ]
-                );
-
-
-            const basketSize =
-                getCellValue(
-                    row.c[
-                        basketSizeColumn
-                    ]
-                );
-
-
             const key =
                 normalizeEmployeeName(
                     employeeName
@@ -2876,15 +3016,50 @@ async function loadMonthlySheet(sheetName){
 
             result[key] = {
 
-                ach:ach,
+                ach:
+                    achColumn >= 0
+                        ? getCellValue(
+                            row.c[
+                                achColumn
+                            ]
+                          )
+                        : "",
 
-                targetTrx:targetTrx,
+                targetTrx:
+                    targetTrxColumn >= 0
+                        ? getCellValue(
+                            row.c[
+                                targetTrxColumn
+                            ]
+                          )
+                        : "",
 
-                trxMtd:trxMtd,
+                trxMtd:
+                    trxMtdColumn >= 0
+                        ? getCellValue(
+                            row.c[
+                                trxMtdColumn
+                            ]
+                          )
+                        : "",
 
-                targetBs:targetBs,
+                targetBs:
+                    targetBsColumn >= 0
+                        ? getCellValue(
+                            row.c[
+                                targetBsColumn
+                            ]
+                          )
+                        : "",
 
-                basketSize:basketSize
+                basketSize:
+                    basketSizeColumn >= 0
+                        ? getCellValue(
+                            row.c[
+                                basketSizeColumn
+                            ]
+                          )
+                        : ""
 
             };
 
@@ -2893,7 +3068,8 @@ async function loadMonthlySheet(sheetName){
 
 
     console.log(
-        `DATA SHEET BULANAN: ${sheetName}`,
+        "DATA BULANAN:",
+        sheetName,
         result
     );
 
@@ -2904,223 +3080,7 @@ async function loadMonthlySheet(sheetName){
 
 
 /* =====================================================
-   NORMALIZE NAMA
-===================================================== */
-
-function normalizeEmployeeName(name){
-
-    return String(
-        name || ""
-    )
-    .trim()
-    .replace(
-        /\s+/g,
-        " "
-    )
-    .toUpperCase();
-
-}
-
-
-/* =====================================================
-   ACH CLASS
-===================================================== */
-
-function getAchClass(value){
-
-    if(
-        value === null ||
-        value === undefined ||
-        value === "" ||
-        value === "-"
-    ){
-
-        return "";
-
-    }
-
-
-    let text =
-        String(value)
-            .replace("%","")
-            .replace(",",".")
-            .trim();
-
-
-    let percentage =
-        parseFloat(text);
-
-
-    if(isNaN(percentage)){
-
-        return "";
-
-    }
-
-
-    if(percentage > 100){
-
-        return "ach-blue";
-
-    }
-
-
-    if(percentage >= 95){
-
-        return "ach-green";
-
-    }
-
-
-    if(percentage > 85){
-
-        return "ach-yellow";
-
-    }
-
-
-    return "ach-red";
-
-}
-
-
-/* =====================================================
-   HITUNG POIN
-===================================================== */
-
-function calculateMonthlyPoint(monthlyData){
-
-    if(!monthlyData){
-
-        return 0;
-
-    }
-
-
-    let point = 0;
-
-
-    const ach =
-        parseNumber(
-            monthlyData.ach
-        );
-
-
-    const hasAch =
-        monthlyData.ach !== "" &&
-        monthlyData.ach !== "-";
-
-
-    if(hasAch){
-
-        if(ach < 85){
-
-            point -= 1;
-
-        }
-
-        else if(
-            ach >= 85 &&
-            ach < 95
-        ){
-
-            point += 1;
-
-        }
-
-        else if(
-            ach >= 95 &&
-            ach <= 100
-        ){
-
-            point += 2;
-
-        }
-
-        else if(
-            ach > 100
-        ){
-
-            point += 3;
-
-        }
-
-    }
-
-
-    const trxMtd =
-        parseNumber(
-            monthlyData.trxMtd
-        );
-
-
-    const targetTrx =
-        parseNumber(
-            monthlyData.targetTrx
-        );
-
-
-    const hasTrx =
-        monthlyData.trxMtd !== "" &&
-        monthlyData.trxMtd !== "-" &&
-        monthlyData.targetTrx !== "" &&
-        monthlyData.targetTrx !== "-";
-
-
-    if(hasTrx){
-
-        if(
-            trxMtd >
-            targetTrx
-        ){
-
-            point += 1;
-
-        }
-
-    }
-
-
-    const basketSize =
-        parseNumber(
-            monthlyData.basketSize
-        );
-
-
-    const targetBs =
-        parseNumber(
-            monthlyData.targetBs
-        );
-
-
-    const hasBasket =
-        monthlyData.basketSize !== "" &&
-        monthlyData.basketSize !== "-" &&
-        monthlyData.targetBs !== "" &&
-        monthlyData.targetBs !== "-";
-
-
-    if(hasBasket){
-
-        if(
-            basketSize >
-            targetBs
-        ){
-
-            point += 1;
-
-        }
-
-    }
-
-
-    return point;
-
-}
-
-
-/* =====================================================
-   LOAD SEMUA SHEET
+   LOAD SEMUA SHEET BULANAN
 ===================================================== */
 
 async function loadAllMonthlySheets(){
@@ -3169,30 +3129,25 @@ async function loadAllMonthlySheets(){
 
         try{
 
-            const monthlyData =
+            monthlyScoreData[key] =
                 await loadMonthlySheet(
                     sheetName
                 );
 
-
-            monthlyScoreData[key] =
-                monthlyData;
-
-
-            console.log(
-                `Berhasil membaca ${sheetName}`,
-                monthlyData
-            );
 
         }
 
         catch(error){
 
             console.warn(
-                `Sheet "${sheetName}" belum tersedia:`,
+                `Sheet ${sheetName} gagal:`,
                 error
             );
 
+
+            /*
+               Jangan gagalkan aplikasi utama.
+            */
 
             monthlyScoreData[key] = {};
 
@@ -3218,11 +3173,8 @@ function isExcludedCodeJob(codeJob){
 
 
     return (
-
         value === "CASHIER" ||
-
         value === "CS"
-
     );
 
 }
@@ -3235,9 +3187,7 @@ function isExcludedCodeJob(codeJob){
 function renderSlide1(){
 
     const data =
-
         employeeData
-
             .filter(
                 employee =>
                     !isExcludedCodeJob(
@@ -3295,9 +3245,7 @@ function renderSlide2(){
 function renderSlide3(){
 
     const data =
-
         employeeData
-
             .filter(
                 employee =>
                     !isExcludedCodeJob(
@@ -3329,7 +3277,6 @@ function renderSlide3(){
 function renderSlide4(){
 
     const data =
-
         employeeData
 
             .filter(
@@ -3360,33 +3307,27 @@ function renderSlide4(){
                     const totalPoin =
 
                         calculateMonthlyPoint(
-                            monthlyScoreData
-                                .juli[key]
+                            monthlyScoreData.juli[key]
                         ) +
 
                         calculateMonthlyPoint(
-                            monthlyScoreData
-                                .agustus[key]
+                            monthlyScoreData.agustus[key]
                         ) +
 
                         calculateMonthlyPoint(
-                            monthlyScoreData
-                                .september[key]
+                            monthlyScoreData.september[key]
                         ) +
 
                         calculateMonthlyPoint(
-                            monthlyScoreData
-                                .oktober[key]
+                            monthlyScoreData.oktober[key]
                         ) +
 
                         calculateMonthlyPoint(
-                            monthlyScoreData
-                                .november[key]
+                            monthlyScoreData.november[key]
                         ) +
 
                         calculateMonthlyPoint(
-                            monthlyScoreData
-                                .desember[key]
+                            monthlyScoreData.desember[key]
                         );
 
 
@@ -3419,13 +3360,8 @@ function renderSlide4(){
 
     if(data.length === 0){
 
-        grid.innerHTML = `
-
-            <div class="error">
-                Tidak ada data employee.
-            </div>
-
-        `;
+        grid.innerHTML =
+            '<div class="error">Tidak ada data employee.</div>';
 
         return;
 
@@ -3554,115 +3490,13 @@ function renderSlide4(){
                 desemberData?.ach || "-";
 
 
-            const poinJuli =
-                calculateMonthlyPoint(
-                    juliData
-                );
-
-
-            const poinAgustus =
-                calculateMonthlyPoint(
-                    agustusData
-                );
-
-
-            const poinSeptember =
-                calculateMonthlyPoint(
-                    septemberData
-                );
-
-
-            const poinOktober =
-                calculateMonthlyPoint(
-                    oktoberData
-                );
-
-
-            const poinNovember =
-                calculateMonthlyPoint(
-                    novemberData
-                );
-
-
-            const poinDesember =
-                calculateMonthlyPoint(
-                    desemberData
-                );
-
-
             const totalPoin =
-
-                poinJuli +
-                poinAgustus +
-                poinSeptember +
-                poinOktober +
-                poinNovember +
-                poinDesember;
-
-
-            console.log(
-                "=============================="
-            );
-
-
-            console.log(
-                "KARYAWAN:",
-                employee.name
-            );
-
-
-            console.log(
-                "JULI:",
-                juliData,
-                "POIN:",
-                poinJuli
-            );
-
-
-            console.log(
-                "AGUSTUS:",
-                agustusData,
-                "POIN:",
-                poinAgustus
-            );
-
-
-            console.log(
-                "SEPTEMBER:",
-                septemberData,
-                "POIN:",
-                poinSeptember
-            );
-
-
-            console.log(
-                "OKTOBER:",
-                oktoberData,
-                "POIN:",
-                poinOktober
-            );
-
-
-            console.log(
-                "NOVEMBER:",
-                novemberData,
-                "POIN:",
-                poinNovember
-            );
-
-
-            console.log(
-                "DESEMBER:",
-                desemberData,
-                "POIN:",
-                poinDesember
-            );
-
-
-            console.log(
-                "TOTAL POIN:",
-                totalPoin
-            );
+                calculateMonthlyPoint(juliData) +
+                calculateMonthlyPoint(agustusData) +
+                calculateMonthlyPoint(septemberData) +
+                calculateMonthlyPoint(oktoberData) +
+                calculateMonthlyPoint(novemberData) +
+                calculateMonthlyPoint(desemberData);
 
 
             const card =
@@ -3686,9 +3520,7 @@ function renderSlide4(){
                 </span>
 
                 <span class="employee-name">
-                    ${escapeHtml(
-                        employee.name
-                    )}
+                    ${escapeHtml(employee.name)}
                 </span>
 
                 <span class="score-month ${getAchClass(juli)}">
@@ -3716,7 +3548,7 @@ function renderSlide4(){
                 </span>
 
                 <span class="score-point">
-                    ${employee.totalPoin}
+                    ${totalPoin}
                 </span>
 
             `;
@@ -3733,65 +3565,460 @@ function renderSlide4(){
 
 
 /* =====================================================
+   GET ACH CLASS
+===================================================== */
+
+function getAchClass(value){
+
+    if(
+        value === null ||
+        value === undefined ||
+        value === "" ||
+        value === "-"
+    ){
+
+        return "";
+
+    }
+
+
+    let text =
+        String(value)
+            .replace("%","")
+            .replace(",",".")
+            .trim();
+
+
+    const percentage =
+        parseFloat(text);
+
+
+    if(isNaN(percentage)){
+
+        return "";
+
+    }
+
+
+    if(percentage > 100){
+
+        return "ach-blue";
+
+    }
+
+
+    if(percentage >= 95){
+
+        return "ach-green";
+
+    }
+
+
+    if(percentage > 85){
+
+        return "ach-yellow";
+
+    }
+
+
+    return "ach-red";
+
+}
+
+
+/* =====================================================
+   HITUNG POIN
+===================================================== */
+
+function calculateMonthlyPoint(monthlyData){
+
+    if(!monthlyData){
+
+        return 0;
+
+    }
+
+
+    let point = 0;
+
+
+    const ach =
+        parseNumber(
+            monthlyData.ach
+        );
+
+
+    const hasAch =
+        monthlyData.ach !== "" &&
+        monthlyData.ach !== "-";
+
+
+    if(hasAch){
+
+        if(ach < 85){
+
+            point -= 1;
+
+        }
+
+        else if(ach < 95){
+
+            point += 1;
+
+        }
+
+        else if(ach <= 100){
+
+            point += 2;
+
+        }
+
+        else{
+
+            point += 3;
+
+        }
+
+    }
+
+
+    const trxMtd =
+        parseNumber(
+            monthlyData.trxMtd
+        );
+
+
+    const targetTrx =
+        parseNumber(
+            monthlyData.targetTrx
+        );
+
+
+    if(
+        monthlyData.trxMtd !== "" &&
+        monthlyData.trxMtd !== "-" &&
+        monthlyData.targetTrx !== "" &&
+        monthlyData.targetTrx !== "-"
+    ){
+
+        if(
+            trxMtd >
+            targetTrx
+        ){
+
+            point += 1;
+
+        }
+
+    }
+
+
+    const basketSize =
+        parseNumber(
+            monthlyData.basketSize
+        );
+
+
+    const targetBs =
+        parseNumber(
+            monthlyData.targetBs
+        );
+
+
+    if(
+        monthlyData.basketSize !== "" &&
+        monthlyData.basketSize !== "-" &&
+        monthlyData.targetBs !== "" &&
+        monthlyData.targetBs !== "-"
+    ){
+
+        if(
+            basketSize >
+            targetBs
+        ){
+
+            point += 1;
+
+        }
+
+    }
+
+
+    return point;
+
+}
+
+
+/* =====================================================
+   FOTO EMPLOYEE
+===================================================== */
+
+const EMPLOYEE_PHOTOS_BY_NIP = {
+
+    "137391":"putra.png",
+
+    "193976":"archi.png"
+
+};
+
+
+const EMPLOYEE_PHOTOS_BY_NAME = {
+
+    "ARCHIE":"archi.png",
+    "ARCHI":"archi.png",
+    "PUTRA":"putra.png",
+    "BUDI":"budi.png",
+    "JAIDUN":"jaidun.png",
+    "GHOFUR":"ghofur.png",
+    "SALIM":"salim.png",
+    "NAFI":"nafi.png",
+    "AVIF":"avif.png",
+    "SHERLY":"sherly.png",
+    "IMAM":"imam.png",
+    "SHOHIB":"shohib.png",
+    "ARIF":"arif.png",
+    "RIFAI":"rifai.png",
+    "LULUK":"luluk.png",
+    "IMA":"ima.png",
+    "HEPI":"hepi.png",
+    "IFA":"ifa.png"
+
+};
+
+
+function getEmployeePhoto(employee){
+
+    const nip =
+        String(
+            employee.nip || ""
+        ).trim();
+
+
+    let filename =
+        EMPLOYEE_PHOTOS_BY_NIP[nip];
+
+
+    if(!filename){
+
+        const first =
+            normalizeEmployeeName(
+                employee.name
+            ).split(" ")[0];
+
+
+        filename =
+            EMPLOYEE_PHOTOS_BY_NAME[first] ||
+            first
+                .toLowerCase()
+                .replace(
+                    /[^a-z0-9]/g,
+                    ""
+                ) +
+            ".png";
+
+    }
+
+
+    return (
+        "https://putrasetya.github.io/foto/" +
+        encodeURIComponent(filename)
+    );
+
+}
+
+
+/* =====================================================
    RENDER CARDS
 ===================================================== */
 
-/* Hero photo sources: keep the existing GitHub employee photo assets.
-   For unknown NIP, first-name filenames are the existing convention. */
-const EMPLOYEE_PHOTOS_BY_NIP = {
- "137391":"putra.png", "193976":"archi.png"
-};
-const EMPLOYEE_PHOTOS_BY_NAME = {
- "ARCHIE":"archi.png", "ARCHI":"archi.png", "PUTRA":"putra.png",
- "BUDI":"budi.png", "JAIDUN":"jaidun.png", "GHOFUR":"ghofur.png",
- "SALIM":"salim.png", "NAFI":"nafi.png", "AVIF":"avif.png",
- "SHERLY":"sherly.png", "IMAM":"imam.png", "SHOHIB":"shohib.png",
- "ARIF":"arif.png", "RIFAI":"rifai.png", "LULUK":"luluk.png",
- "IMA":"ima.png", "HEPI":"hepi.png", "IFA":"ifa.png"
-};
-function getEmployeePhoto(employee){
- const nip=String(employee.nip||'').trim();
- let filename=EMPLOYEE_PHOTOS_BY_NIP[nip];
- if(!filename){
-   const first=normalizeEmployeeName(employee.name).split(' ')[0];
-   filename=EMPLOYEE_PHOTOS_BY_NAME[first] || first.toLowerCase().replace(/[^a-z0-9]/g,'')+'.png';
- }
- return 'https://putrasetya.github.io/foto/'+encodeURIComponent(filename);
+function renderCards(
+    gridId,
+    data,
+    type
+){
+
+    const grid =
+        document.getElementById(
+            gridId
+        );
+
+
+    grid.innerHTML = "";
+
+
+    if(!data.length){
+
+        grid.innerHTML =
+            '<div class="error">Tidak ada data employee.</div>';
+
+        return;
+
+    }
+
+
+    const sideRows =
+        Math.max(
+            1,
+            Math.ceil(
+                (data.length - 1) / 2
+            )
+        );
+
+
+    grid.style.setProperty(
+        "--rank-rows",
+        sideRows
+    );
+
+
+    const titleMap = {
+
+        "sales-ach":"ACH MTD",
+
+        "proteksi":"PROTEKSI",
+
+        "transaksi":"TRANSAKSI"
+
+    };
+
+
+    data.forEach(
+        (
+            employee,
+            index
+        ) => {
+
+            const rank =
+                index + 1;
+
+
+            const rawValue =
+                type === "sales-ach"
+                    ? employee.ach
+                    : type === "proteksi"
+                        ? employee.proteksi
+                        : employee.trx;
+
+
+            const metric =
+                rawValue === null ||
+                rawValue === undefined ||
+                String(rawValue).trim() === ""
+                    ? "-"
+                    : String(rawValue);
+
+
+            const card =
+                document.createElement(
+                    "div"
+                );
+
+
+            card.className =
+                "rank-card bwf-card" +
+                (
+                    rank === 1
+                        ? " bwf-hero"
+                        : ""
+                );
+
+
+            if(rank > 1){
+
+                const i =
+                    index - 1;
+
+
+                const col =
+                    i < sideRows
+                        ? 1
+                        : 2;
+
+
+                const row =
+                    (
+                        i % sideRows
+                    ) + 2;
+
+
+                card.style.gridColumn =
+                    String(col);
+
+
+                card.style.gridRow =
+                    String(row);
+
+            }
+
+
+            const safeName =
+                escapeHtml(
+                    employee.name
+                );
+
+
+            const safeMetric =
+                escapeHtml(
+                    metric
+                );
+
+
+            card.innerHTML = `
+
+                <span class="rank-num">
+                    ${rank}
+                </span>
+
+                <div class="bwf-card-text">
+
+                    ${
+                        rank === 1
+                            ? `
+                                <span class="bwf-hero-label">
+                                    TOP ${escapeHtml(titleMap[type])}
+                                </span>
+                              `
+                            : ""
+                    }
+
+                    <span
+                        class="employee-name"
+                        title="${safeName}"
+                    >
+                        ${safeName}
+                    </span>
+
+                    <span class="bwf-metric">
+                        ${safeMetric}
+                    </span>
+
+                </div>
+
+                ${
+                    rank === 1
+                        ? `
+                            <img
+                                class="bwf-hero-photo"
+                                src="${getEmployeePhoto(employee)}"
+                                alt="Foto ${safeName}"
+                                onerror="this.style.display='none'"
+                            >
+                          `
+                        : ""
+                }
+
+            `;
+
+
+            grid.appendChild(
+                card
+            );
+
+        }
+    );
+
 }
-function renderCards(gridId,data,type){
- const grid=document.getElementById(gridId);
- grid.innerHTML='';
- if(!data.length){grid.innerHTML='<div class="error">Tidak ada data employee.</div>';return;}
- const sideRows=Math.max(1,Math.ceil((data.length-1)/2));
- grid.style.setProperty('--rank-rows',sideRows);
- const titleMap={'sales-ach':'ACH MTD','proteksi':'PROTEKSI','transaksi':'TRANSAKSI'};
- data.forEach((employee,index)=>{
-   const rank=index+1;
-   const rawValue=type==='sales-ach'?employee.ach:type==='proteksi'?employee.proteksi:employee.trx;
-   const metric=rawValue===null||rawValue===undefined||String(rawValue).trim()===''?'-':String(rawValue);
-   const card=document.createElement('div');
-   card.className='rank-card bwf-card'+(rank===1?' bwf-hero':'');
-   if(rank>1){
-     const i=index-1;
-     const col=i<sideRows?1:2;
-     const row=(i%sideRows)+2;
-     card.style.gridColumn=String(col);
-     card.style.gridRow=String(row);
-   }
-   const safeName=escapeHtml(employee.name);
-   const safeMetric=escapeHtml(metric);
-   card.innerHTML=`
-     <span class="rank-num">${rank}</span>
-     <div class="bwf-card-text">
-       ${rank===1?`<span class="bwf-hero-label">TOP ${escapeHtml(titleMap[type])}</span>`:''}
-       <span class="employee-name" title="${safeName}">${safeName}</span>
-       <span class="bwf-metric">${safeMetric}</span>
-     </div>
-     ${rank===1?`<img class="bwf-hero-photo" src="${getEmployeePhoto(employee)}" alt="Foto ${safeName}" onerror="this.style.display='none'">`:''}
-   `;
-   grid.appendChild(card);
- });
-}
+
 
 /* =====================================================
    PARSE NUMBER
@@ -3822,22 +4049,10 @@ function parseNumber(value){
     let text =
         String(value)
             .trim()
-            .replace(
-                /\u00A0/g,
-                " "
-            )
-            .replace(
-                /%/g,
-                ""
-            )
-            .replace(
-                /Rp/gi,
-                ""
-            )
-            .replace(
-                /\s/g,
-                ""
-            );
+            .replace(/\u00A0/g," ")
+            .replace(/%/g,"")
+            .replace(/Rp/gi,"")
+            .replace(/\s/g,"");
 
 
     if(
@@ -3903,13 +4118,11 @@ function parseNumber(value){
 
 
         if(
-            parts.length === 2 &&
-            parts[1].length <= 2
+            !(
+                parts.length === 2 &&
+                parts[1].length <= 2
+            )
         ){
-
-        }
-
-        else{
 
             text =
                 text.replace(
@@ -3969,6 +4182,13 @@ function showError(
         );
 
 
+    if(!grid){
+
+        return;
+
+    }
+
+
     grid.innerHTML = `
 
         <div class="error">
@@ -3980,9 +4200,7 @@ function showError(
             <br>
 
             <small>
-                ${escapeHtml(
-                    message
-                )}
+                ${escapeHtml(message)}
             </small>
 
         </div>
@@ -3998,15 +4216,20 @@ function showError(
 
 function nextSlide(){
 
-    document
-        .getElementById(
+    const oldSlide =
+        document.getElementById(
             "slide" +
             currentSlide
-        )
-        .classList
-        .remove(
+        );
+
+
+    if(oldSlide){
+
+        oldSlide.classList.remove(
             "active"
         );
+
+    }
 
 
     currentSlide++;
@@ -4021,15 +4244,20 @@ function nextSlide(){
     }
 
 
-    document
-        .getElementById(
+    const newSlide =
+        document.getElementById(
             "slide" +
             currentSlide
-        )
-        .classList
-        .add(
+        );
+
+
+    if(newSlide){
+
+        newSlide.classList.add(
             "active"
         );
+
+    }
 
 
     updateSlideTabs();
@@ -4045,12 +4273,12 @@ function updateSlideTabs(){
 
     document
         .querySelectorAll(
-            '.slide-tab'
+            ".slide-tab"
         )
         .forEach(
             tab =>
                 tab.classList.remove(
-                    'active'
+                    "active"
                 )
         );
 
@@ -4064,7 +4292,7 @@ function updateSlideTabs(){
     if(activeTab){
 
         activeTab.classList.add(
-            'active'
+            "active"
         );
 
     }
@@ -4078,17 +4306,17 @@ function updateSlideTabs(){
 
 document
     .querySelectorAll(
-        '.slide-tab'
+        ".slide-tab"
     )
     .forEach(
         tab => {
 
             tab.style.cursor =
-                'pointer';
+                "pointer";
 
 
             tab.addEventListener(
-                'click',
+                "click",
                 () => {
 
                     const targetSlide =
@@ -4107,30 +4335,40 @@ document
                     }
 
 
-                    document
-                        .getElementById(
+                    const oldSlide =
+                        document.getElementById(
                             "slide" +
                             currentSlide
-                        )
-                        .classList
-                        .remove(
+                        );
+
+
+                    if(oldSlide){
+
+                        oldSlide.classList.remove(
                             "active"
                         );
+
+                    }
 
 
                     currentSlide =
                         targetSlide;
 
 
-                    document
-                        .getElementById(
+                    const newSlide =
+                        document.getElementById(
                             "slide" +
                             currentSlide
-                        )
-                        .classList
-                        .add(
+                        );
+
+
+                    if(newSlide){
+
+                        newSlide.classList.add(
                             "active"
                         );
+
+                    }
 
 
                     updateSlideTabs();
@@ -4179,8 +4417,7 @@ loadData();
 
 
 /* =====================================================
-   UPDATE DATA
-   60 DETIK
+   UPDATE DATA 60 DETIK
 ===================================================== */
 
 setInterval(
@@ -4204,7 +4441,7 @@ function updateClock(){
             now.getHours()
         ).padStart(
             2,
-            '0'
+            "0"
         );
 
 
@@ -4213,7 +4450,7 @@ function updateClock(){
             now.getMinutes()
         ).padStart(
             2,
-            '0'
+            "0"
         );
 
 
@@ -4222,15 +4459,22 @@ function updateClock(){
             now.getSeconds()
         ).padStart(
             2,
-            '0'
+            "0"
         );
 
 
-    document.getElementById(
-        'realtimeClock'
-    ).textContent =
+    const clock =
+        document.getElementById(
+            "realtimeClock"
+        );
 
-        `${hours}:${minutes}:${seconds}`;
+
+    if(clock){
+
+        clock.textContent =
+            `${hours}:${minutes}:${seconds}`;
+
+    }
 
 }
 
@@ -4256,28 +4500,36 @@ function updateDate(){
 
     const options = {
 
-        weekday:'long',
+        weekday:"long",
 
-        day:'numeric',
+        day:"numeric",
 
-        month:'long',
+        month:"long",
 
-        year:'numeric'
+        year:"numeric"
 
     };
 
 
     const date =
         now.toLocaleDateString(
-            'id-ID',
+            "id-ID",
             options
         );
 
 
-    document.getElementById(
-        'realtimeDate'
-    ).textContent =
-        date;
+    const dateElement =
+        document.getElementById(
+            "realtimeDate"
+        );
+
+
+    if(dateElement){
+
+        dateElement.textContent =
+            date;
+
+    }
 
 }
 
@@ -4305,6 +4557,7 @@ setTimeout(
 );
 
 </script>
+
 
 </body>
 </html>
