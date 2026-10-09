@@ -9,34 +9,31 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 
 <style>
-
 *{
-box-sizing:border-box;
+    box-sizing:border-box;
 }
 
 body{
-margin:0;
-padding:20px;
-background:#111;
-font-family:Arial,sans-serif;
+    margin:0;
+    padding:20px;
+    background:#111;
+    font-family:Arial,sans-serif;
 }
 
 .container{
-display:flex;
-gap:30px;
-justify-content:center;
-flex-wrap:wrap;
+    display:flex;
+    gap:30px;
+    justify-content:center;
+    flex-wrap:wrap;
 }
-
 
 .panel{
-background:#222;
-color:white;
-padding:20px;
-width:330px;
-border-radius:15px;
+    background:#222;
+    color:white;
+    padding:20px;
+    width:330px;
+    border-radius:15px;
 }
-
 
 h2{
     text-align:center;
@@ -46,58 +43,44 @@ h2{
     max-width:100%;
 }
 
-
 input,select,button{
-
-width:100%;
-height:45px;
-margin-bottom:12px;
-border-radius:8px;
-border:none;
-padding:10px;
-font-weight:bold;
-
+    width:100%;
+    min-height:45px;
+    margin-bottom:12px;
+    border-radius:8px;
+    border:none;
+    padding:10px;
+    font-weight:bold;
 }
-
 
 button{
-
-background:#e60000;
-color:white;
-cursor:pointer;
-
+    background:#e60000;
+    color:white;
+    cursor:pointer;
 }
-
 
 .card{
-
-width:12.5cm;
-height:18cm;
-background:white;
-
-border:3px solid #000; /* lebih tebal */
-
-position:relative;
-text-align:center;
-overflow:hidden;
-
+    width:12.5cm;
+    height:18cm;
+    flex-shrink:0;
+    background:white;
+    border:3px solid #000;
+    position:relative;
+    text-align:center;
+    overflow:hidden;
 }
-    
+
 .photo{
-
-width:9cm;
-height:9cm;
-
-margin-top:30px;
-
-border-radius:0%;
-object-fit:cover;
-background:#ddd;
-
+    width:9cm;
+    height:9cm;
+    margin-top:30px;
+    border-radius:0%;
+    object-fit:cover;
+    background:#ddd;
 }
 
 .nilai{
-    font-family:"FranklinDemi", Arial, sans-serif;
+    font-family:"FranklinDemi",Arial,sans-serif;
     font-size:55px;
     font-weight:900;
     margin-top:15px;
@@ -105,109 +88,105 @@ background:#ddd;
 }
 
 .nama{
-    font-family:"FranklinDemi", Arial, sans-serif;
+    font-family:"FranklinDemi",Arial,sans-serif;
     font-size:50px;
     font-weight:900;
     margin-top:10px;
     letter-spacing:1px;
 }
 
-
-
 .input-group{
-display:flex;
-gap:10px;
-margin-bottom:10px;
+    display:flex;
+    gap:10px;
+    margin-bottom:10px;
 }
 
 .input-card{
-flex:1;
+    flex:1;
+    min-width:0;
 }
 
 .input-card h3{
-color:#ffd400;
-font-size:14px;
-margin:5px 0;
-text-align:center;
+    color:#ffd400;
+    font-size:14px;
+    margin:5px 0;
+    text-align:center;
 }
 
-/* ===== UPDATE A4 LANDSCAPE ===== */
-
-
-.sheet{
-
-width:297mm !important;
-height:210mm !important;
-
-background:white;
-
-padding:1.5cm;
-
-display:flex;
-
-justify-content:center;
-
-align-items:center;
-
-gap:1.7cm;
-
-margin:auto;
-
-overflow:hidden;
-
-}
-@page{
-size:A4 landscape;
-margin:0;
-}
-
-@media print{
-
-html,
-body{
-width:297mm;
-height:210mm;
-margin:0;
-padding:0;
-background:white;
-}
-
-.panel{
-display:none !important;
-}
-
-.container{
-display:block !important;
-}
-
-}
-
-@media print{
-
-.card{
-    border:3px solid #000 !important;
-    -webkit-print-color-adjust: exact;
-    print-color-adjust: exact;
+.input-card select,
+.input-card input{
+    font-size:12px;
+    padding:7px 5px;
 }
 
 .sheet{
     width:297mm !important;
     height:210mm !important;
+    background:white;
+    padding:1.5cm;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:1.7cm;
+    margin:auto;
+    overflow:hidden;
 }
 
+@page{
+    size:A4 landscape;
+    margin:0;
+}
+
+@media print{
+    html,
+    body{
+        width:297mm;
+        height:210mm;
+        margin:0;
+        padding:0;
+        background:white;
+    }
+
+    .panel{
+        display:none !important;
+    }
+
+    .container{
+        display:block !important;
+        margin:0 !important;
+        padding:0 !important;
+    }
+
+    .sheet{
+        width:297mm !important;
+        height:210mm !important;
+        padding:15mm;
+        gap:17mm;
+        margin:0;
+        overflow:hidden;
+        page-break-inside:avoid;
+        break-inside:avoid;
+    }
+
+    .card{
+        border:3px solid #000 !important;
+        -webkit-print-color-adjust:exact;
+        print-color-adjust:exact;
+    }
 }
 
 @font-face{
     font-family:"FranklinDemi";
-    src:url("font/ITC Franklin Gothic Demi Compressed.otf") format("opentype");
+    src:url("font/ITC Franklin Gothic Demi Compressed.otf")
+         format("opentype");
     font-weight:normal;
     font-style:normal;
 }
 
-
 .nama,
 .nilai{
-    font-family:"FranklinDemi", Arial, sans-serif;
+    font-family:"FranklinDemi",Arial,sans-serif;
+    transform:translateY(40px);
 }
 
 .labelJenis{
@@ -215,13 +194,8 @@ display:block !important;
     font-weight:900;
 }
 
-.nama,
-.nilai{
-    transform:translateY(40px);
-}
-
 .tahun{
-    font-family:"FranklinDemi", Arial, sans-serif;
+    font-family:"FranklinDemi",Arial,sans-serif;
     font-size:35px;
     font-weight:900;
     position:absolute;
@@ -230,423 +204,299 @@ display:block !important;
     text-align:center;
     letter-spacing:1px;
 }
+
+@media screen and (max-width:700px){
+    body{
+        padding:10px;
+    }
+
+    .panel{
+        width:100%;
+        max-width:400px;
+    }
+
+    .sheet{
+        transform-origin:top left;
+    }
+}
 </style>
-
 </head>
-
 
 <body>
 
-
 <div class="container">
 
+    <div class="panel">
 
-<div class="panel">
+        <h2>PRINT BEST SALES/PROTEKSI/TRANSAKSI</h2>
 
-<h2>
-PRINT BEST SALES/PROTEKSI/TRANSAKSI
-</h2>
+        <label for="jenis" style="display:block;margin-bottom:7px;">
+            KATEGORI DEFAULT KEDUA KARTU
+        </label>
 
+        <select id="jenis" onchange="cekJenis()">
+            <option value="SALES">BEST SALES</option>
+            <option value="PROTEKSI">BEST PROTEKSI</option>
+            <option value="TRANSAKSI">BEST TRANSAKSI</option>
+        </select>
 
-<select id="jenis" onchange="cekJenis()">
+        <div class="input-group">
 
-<option value="SALES">
-BEST SALES
-</option>
+            <div class="input-card">
+                <h3>CARD 1</h3>
 
-<option value="PROTEKSI">
-BEST PROTEKSI
-</option>
+                <select id="jenis1" onchange="aturInput(1)">
+                    <option value="SALES">BEST SALES</option>
+                    <option value="PROTEKSI">BEST PROTEKSI</option>
+                    <option value="TRANSAKSI">BEST TRANSAKSI</option>
+                </select>
 
-<option value="TRANSAKSI">
-BEST TRANSAKSI
-</option>
+                <input id="namaInput1" placeholder="Nama Sales">
 
-</select>
+                <input id="angkaInput1" placeholder="Nominal Rupiah"
+                       inputmode="numeric">
+            </div>
 
-<div class="input-group">
+            <div class="input-card">
+                <h3>CARD 2</h3>
 
-<div class="input-card">
+                <select id="jenis2" onchange="aturInput(2)">
+                    <option value="SALES">BEST SALES</option>
+                    <option value="PROTEKSI">BEST PROTEKSI</option>
+                    <option value="TRANSAKSI">BEST TRANSAKSI</option>
+                </select>
 
-<h3>CARD 1</h3>
+                <input id="namaInput2" placeholder="Nama Sales">
 
-<input id="namaInput1" placeholder="Nama Sales">
+                <input id="angkaInput2" placeholder="Nominal Rupiah"
+                       inputmode="numeric">
+            </div>
 
-<input id="angkaInput1" placeholder="Angka">
+        </div>
 
-</div>
+        <button onclick="generate()">GENERATE</button>
 
+        <button onclick="printA4()">PRINT A4 LANDSCAPE</button>
 
-<div class="input-card">
+        <button onclick="downloadPNG()">DOWNLOAD PNG</button>
 
-<h3>CARD 2</h3>
+    </div>
 
-<input id="namaInput2" placeholder="Nama Sales">
+    <div id="sheet" class="sheet">
 
-<input id="angkaInput2" placeholder="Angka">
+        <div class="card">
 
-</div>
+            <img id="foto1" class="photo" alt="Foto Card 1">
 
-</div>
+            <div id="nama1" class="nama">NAMA</div>
 
+            <div id="nilai1" class="nilai">0 JT</div>
 
-<button onclick="generate()">
-GENERATE
-</button>
+            <div class="tahun">#<span class="tahunAngka"></span></div>
 
+        </div>
 
-<button onclick="printA4()">
-PRINT A4 LANDSCAPE
-</button>
+        <div class="card">
 
+            <img id="foto2" class="photo" alt="Foto Card 2">
 
-<button onclick="downloadPNG()">
-DOWNLOAD PNG
-</button>
+            <div id="nama2" class="nama">NAMA</div>
 
+            <div id="nilai2" class="nilai">0 JT</div>
 
-</div>
+            <div class="tahun">#<span class="tahunAngka"></span></div>
 
+        </div>
 
-
-<div id="sheet" class="sheet">
-
-
-<div class="card">
-
-<img id="foto1" class="photo">
-
-<div id="nama1" class="nama">
-NAMA
-</div>
-
-<div id="nilai1" class="nilai">
-0
-</div>
-
-<div class="tahun">
-#<span class="tahunAngka"></span>
-</div>
+    </div>
 
 </div>
-
-
-
-<div class="card">
-
-<img id="foto2" class="photo">
-
-<div id="nama2" class="nama">
-NAMA
-</div>
-
-<div id="nilai2" class="nilai">
-0
-</div>
-
-<div class="tahun">
-#<span class="tahunAngka"></span>
-</div>
-
-</div>
-
-
-</div>
-
-
-</div>
-
-
-
 
 <script>
-
-
-
-const people=[
-
-{
-keywords:["Avif"],
-photo:"foto/avif.png"
-},
-
-{
-keywords:["PUTRA","put"],
-photo:"foto/putra.png"
-},
-
-{
-keywords:["GO","gh","GHO","GHOFUR"],
-photo:"foto/ghofur.png"
-},
-
-{
-keywords:["hep","hap"],
-photo:"foto/hepi.png"
-},
-
-{
-keywords:["imam","pak imam"],
-photo:"foto/imam.png"
-},
-
-{
-keywords:["ja","mus"],
-photo:"foto/jaidun.png"
-},
-
-{
-keywords:["arip","arif"],
-photo:"foto/arif.png"
-},
-
-{
-keywords:["arc"],
-photo:"foto/archi.png"
-},
-
-{
-keywords:["sho"],
-photo:"foto/shohib.png"
-},
-
-{
-keywords:["pak nafi","nafi"],
-photo:"foto/nafi.png"
-},
-
-{
-keywords:["rifa","pai"],
-photo:"foto/rifai.png"
-},
-
-{
-keywords:["bud"],
-photo:"foto/budi.png"
-},
-
-{
-keywords:["sali"],
-photo:"foto/salim.png"
-},
-
-{
-keywords:["lul"],
-photo:"foto/luluk.png"
-},
-
-{
-keywords:["rah","ima"],
-photo:"foto/ima.png"
-},
-
-{
-keywords:["sher"],
-photo:"foto/sherly.png"
-}
-
+const people = [
+    {keywords:["Avif"], photo:"foto/avif.png"},
+    {keywords:["PUTRA","put"], photo:"foto/putra.png"},
+    {keywords:["GO","gh","GHO","GHOFUR"], photo:"foto/ghofur.png"},
+    {keywords:["hep","hap"], photo:"foto/hepi.png"},
+    {keywords:["imam","pak imam"], photo:"foto/imam.png"},
+    {keywords:["ja","mus"], photo:"foto/jaidun.png"},
+    {keywords:["arip","arif"], photo:"foto/arif.png"},
+    {keywords:["arc"], photo:"foto/archi.png"},
+    {keywords:["sho"], photo:"foto/shohib.png"},
+    {keywords:["pak nafi","nafi"], photo:"foto/nafi.png"},
+    {keywords:["rifa","pai"], photo:"foto/rifai.png"},
+    {keywords:["bud"], photo:"foto/budi.png"},
+    {keywords:["sali"], photo:"foto/salim.png"},
+    {keywords:["lul"], photo:"foto/luluk.png"},
+    {keywords:["rah","ima"], photo:"foto/ima.png"},
+    {keywords:["sher"], photo:"foto/sherly.png"}
 ];
 
-
 function cariFoto(nama){
+    let text = nama.toUpperCase().trim();
+    let words = text.split(/\s+/);
 
-let text = nama.toUpperCase().trim();
+    for(let p of people){
+        for(let k of p.keywords){
+            let key = k.toUpperCase().trim();
 
-let words = text.split(/\s+/);
-
-for(let p of people){
-
-    for(let k of p.keywords){
-
-        let key = k.toUpperCase().trim();
-
-        for(let w of words){
-
-            if(
-                w.startsWith(key) &&
-                w.length >= key.length
-            ){
-                return p.photo;
+            for(let w of words){
+                if(w.startsWith(key) && w.length >= key.length){
+                    return p.photo;
+                }
             }
-
         }
-
     }
 
+    return "";
 }
 
-return "";
+function formatNilai(jenis, angka){
+    angka = Number(String(angka || "0").replace(/[^0-9]/g,""));
 
-}
+    if(jenis === "SALES"){
+        let juta = angka / 1000000;
 
+        let hasil = juta.toFixed(1).replace(".",",");
+        hasil = hasil.replace(",0","");
 
-function formatNilai(jenis,angka){
+        return hasil + " JT";
+    }
 
-angka = Number(
-String(angka || "0")
-.replace(/[^0-9]/g,"")
-);
+    if(jenis === "PROTEKSI"){
+        return angka.toLocaleString("id-ID") +
+            "<br><span class='labelJenis' style='position:relative;top:-17px;'>PROTEKSI</span>";
+    }
 
+    if(jenis === "TRANSAKSI"){
+        return angka.toLocaleString("id-ID") +
+            "<br><span class='labelJenis' style='position:relative;top:-17px;'>TRANSAKSI</span>";
+    }
 
-if(jenis=="SALES"){
-
-let juta = angka / 1000000;
-
-let hasil = juta.toFixed(1)
-.replace(".",",");
-
-hasil = hasil.replace(",0","");
-
-return hasil + " JT";
-
-}
-
-
-if(jenis=="PROTEKSI"){
-
-return angka.toLocaleString("id-ID") +
-"<br><span class='labelJenis' style='position:relative;top:-17px;'>PROTEKSI</span>";
-
-}
-
-
-if(jenis=="TRANSAKSI"){
-
-return angka.toLocaleString("id-ID") +
-"<br><span class='labelJenis' style='position:relative;top:-17px;'>TRANSAKSI</span>";
-
-}
-
-
-return "0";
-
+    return "0";
 }
 
 function formatInputRupiah(input){
+    let angka = input.value.replace(/[^0-9]/g,"");
 
-let angka = input.value.replace(/[^0-9]/g,"");
-
-if(angka){
-    input.value = Number(angka).toLocaleString("id-ID");
-}else{
-    input.value = "";
+    if(angka){
+        input.value = Number(angka).toLocaleString("id-ID");
+    }else{
+        input.value = "";
+    }
 }
 
-}
+// Mengatur format input berdasarkan kategori setiap kartu.
+function aturInput(nomor){
+    const jenis = document.getElementById("jenis" + nomor).value;
+    const input = document.getElementById("angkaInput" + nomor);
 
-
-function cekJenis(){
-
-let jenis = document.getElementById("jenis").value;
-
-let inputs=[
-document.getElementById("angkaInput1"),
-document.getElementById("angkaInput2")
-];
-
-
-inputs.forEach(input=>{
-
-    input.value="";
-
-    if(jenis=="SALES"){
-
-        input.placeholder="Nominal Rupiah";
-
-        input.oninput=function(){
+    if(jenis === "SALES"){
+        input.placeholder = "Nominal Rupiah";
+        input.inputMode = "numeric";
+        input.oninput = function(){
             formatInputRupiah(this);
         };
 
+        // Rapikan angka yang sudah terisi saat kategori berubah.
+        formatInputRupiah(input);
     }else{
-
-        input.placeholder="Angka";
-
-        input.oninput=null;
-
+        input.placeholder = "Angka";
+        input.inputMode = "numeric";
+        input.oninput = null;
+        input.value = input.value.replace(/[^0-9]/g,"");
     }
-
-});
-
-}    
-function generate(){
-
-let jenis=document.getElementById("jenis").value;
-
-
-for(let i=1;i<=2;i++){
-
-let nama=document.getElementById("namaInput"+i).value;
-
-let angka=document.getElementById("angkaInput"+i).value;
-
-
-
-let foto=cariFoto(nama);
-
-let namaFix=nama.toUpperCase();
-  
-let nilai=formatNilai(jenis,angka);
-
-document.getElementById("nilai"+i).innerHTML = nilai;
-    
-document.getElementById("foto"+i).src=foto;
-
-document.getElementById("nama"+i).innerHTML=namaFix;
-
-
 }
 
+// Dropdown default tetap tersedia dan mengatur kedua kartu.
+function cekJenis(){
+    const jenis = document.getElementById("jenis").value;
+
+    document.getElementById("jenis1").value = jenis;
+    document.getElementById("jenis2").value = jenis;
+
+    aturInput(1);
+    aturInput(2);
+}
+
+function generate(){
+    for(let i = 1; i <= 2; i++){
+        const jenis = document.getElementById("jenis" + i).value;
+        const nama = document.getElementById("namaInput" + i).value.trim();
+        const angka = document.getElementById("angkaInput" + i).value;
+
+        const foto = cariFoto(nama);
+        const namaFix = nama ? nama.toUpperCase() : "NAMA";
+        const nilai = formatNilai(jenis, angka);
+
+        document.getElementById("nilai" + i).innerHTML = nilai;
+        document.getElementById("nama" + i).textContent = namaFix;
+
+        const img = document.getElementById("foto" + i);
+
+        if(foto){
+            img.src = foto;
+            img.style.visibility = "visible";
+        }else{
+            img.removeAttribute("src");
+            img.style.visibility = "hidden";
+        }
+    }
 }
 
 async function downloadPNG(){
+    if(typeof html2canvas === "undefined"){
+        alert("Library download gambar gagal dimuat. Periksa koneksi internet.");
+        return;
+    }
 
-await document.fonts.ready;
+    generate();
 
-let canvas=await html2canvas(
-document.getElementById("sheet"),
-{
-    scale:3
+    await document.fonts.ready;
+
+    const sheet = document.getElementById("sheet");
+
+    // Tunggu foto tersedia sebelum membuat PNG.
+    const images = Array.from(sheet.querySelectorAll("img"));
+
+    await Promise.all(images.map(img => {
+        if(!img.src) return Promise.resolve();
+
+        if(img.complete && img.naturalWidth > 0){
+            return Promise.resolve();
+        }
+
+        return new Promise(resolve => {
+            img.onload = resolve;
+            img.onerror = resolve;
+        });
+    }));
+
+    const canvas = await html2canvas(sheet, {
+        scale:3,
+        backgroundColor:"#ffffff",
+        useCORS:true
+    });
+
+    const a = document.createElement("a");
+    a.download = "AZKO_AWARD.png";
+    a.href = canvas.toDataURL("image/png");
+    a.click();
 }
-);
-
-let a=document.createElement("a");
-
-a.download="AZKO_AWARD.png";
-
-a.href=canvas.toDataURL();
-
-a.click();
-
-}
-
 
 function printA4(){
-
-const style=document.createElement("style");
-
-style.innerHTML=`
-@page{
-size:A4 landscape;
-margin:0;
-}
-`;
-
-document.head.appendChild(style);
-
-window.print();
-
+    generate();
+    window.print();
 }
 
 document.addEventListener("DOMContentLoaded", function(){
     cekJenis();
-});
 
-document.querySelectorAll(".tahunAngka").forEach(function(el){
-    el.innerHTML = new Date().getFullYear();
+    document.querySelectorAll(".tahunAngka").forEach(function(el){
+        el.textContent = new Date().getFullYear();
+    });
 });
-    
 </script>
-
 
 </body>
 </html>
