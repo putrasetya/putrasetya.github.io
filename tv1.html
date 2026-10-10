@@ -20,41 +20,58 @@
     font-style:normal;
 }
 
+
 /* =====================================================
    RESET
 ===================================================== */
 
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-    font-family: 'Segoe UI', Arial, sans-serif;
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+    font-family:'Segoe UI',Arial,sans-serif;
 }
 
 
 /* =====================================================
    BODY
+   PREMIUM DARK BLUE
 ===================================================== */
 
-body {
+body{
 
-    width: 100vw;
-    height: 100vh;
+    width:100vw;
+    height:100vh;
 
     background:
+        radial-gradient(
+            circle at 10% 10%,
+            rgba(0,183,255,.16),
+            transparent 30%
+        ),
+
+        radial-gradient(
+            circle at 90% 85%,
+            rgba(0,255,170,.10),
+            transparent 28%
+        ),
+
         linear-gradient(
             135deg,
-            #dbe7ef 0%,
-            #c9d7e1 100%
+            #071525 0%,
+            #0b2036 45%,
+            #102b46 100%
         );
 
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    display:flex;
+    justify-content:center;
+    align-items:center;
 
-    padding: 15px;
+    padding:15px;
 
-    overflow: hidden;
+    overflow:hidden;
+
+    color:#ffffff;
 }
 
 
@@ -62,16 +79,17 @@ body {
    CONTAINER
 ===================================================== */
 
-.container {
+.container{
 
-    width: 100%;
-    max-width: 900px;
-    height: 100%;
+    width:100%;
+    max-width:900px;
+    height:100%;
 
-    display: flex;
-    flex-direction: column;
+    display:flex;
+    flex-direction:column;
 
-    justify-content: space-between;
+    justify-content:space-between;
+
 }
 
 
@@ -79,18 +97,19 @@ body {
    SLIDE
 ===================================================== */
 
-.slide {
+.slide{
 
-    width: 100%;
-    height: 100%;
+    width:100%;
+    height:100%;
 
-    display: none;
-    flex-direction: column;
+    display:none;
+    flex-direction:column;
+
 }
 
 
-.slide.active {
-    display: flex;
+.slide.active{
+    display:flex;
 }
 
 
@@ -99,15 +118,24 @@ body {
 ===================================================== */
 
 .header{
-    height: 60px;
+
+    height:60px;
+
     visibility:hidden;
+
 }
 
+
 .title{
-    font-family:'TTCommonsCondensed', Arial, sans-serif;
+
+    font-family:'TTCommonsCondensed',Arial,sans-serif;
+
     font-weight:800;
+
     letter-spacing:3px;
+
     transform:scaleY(1.02);
+
 }
 
 
@@ -115,145 +143,229 @@ body {
    RANK GRID
 ===================================================== */
 
-.rank-grid {
+.rank-grid{
 
-    display: flex;
+    display:flex;
 
-    flex-direction: column;
+    flex-direction:column;
 
-    justify-content: flex-start;
+    justify-content:flex-start;
 
-    flex-grow: 1;
+    flex-grow:1;
 
-    gap: 2px;
+    gap:3px;
 
-    overflow: hidden;
+    overflow:hidden;
+
 }
 
 
 /* =====================================================
    RANK CARD
+   PREMIUM GLASS
 ===================================================== */
 
-.rank-card {
+.rank-card{
 
-    background: #ffffff;
-
-    padding: 0 16px;
-
-    height: 4.5vh;
-
-    min-height: 30px;
-
-    border-radius: 16px;
-
-    display: flex;
-
-    align-items: center;
-
-    box-shadow:
-        0 1px 4px rgba(15,23,42,0.08);
-
-    font-size: 0.85rem;
-
-    font-weight: 600;
-
-    flex-shrink: 0;
-}
-
-/* =====================================================
-   RANK 1 — GOLD PREMIUM
-===================================================== */
-
-.rank-card.rank-1 {
+    position:relative;
 
     background:
         linear-gradient(
             90deg,
-            #fff8d6 0%,
-            #f5d76e 25%,
-            #d4af37 50%,
-            #f7df83 75%,
-            #c99a20 100%
+            rgba(255,255,255,.98),
+            rgba(237,246,252,.96)
         );
 
-    border: 1px solid #b8860b;
+    padding:0 16px;
+
+    height:4.5vh;
+
+    min-height:30px;
+
+    border-radius:13px;
+
+    display:flex;
+
+    align-items:center;
 
     box-shadow:
-        0 3px 10px rgba(184,134,11,0.30),
-        inset 0 1px 0 rgba(255,255,255,0.65);
+        0 3px 8px rgba(0,0,0,.20),
+        inset 0 1px 0 rgba(255,255,255,.95);
 
-    color: #4a3500;
+    font-size:.85rem;
+
+    font-weight:600;
+
+    flex-shrink:0;
+
+    overflow:hidden;
+
+    color:#102030;
+
+}
+
+
+/* AKSEN KIRI */
+
+.rank-card::before{
+
+    content:"";
+
+    position:absolute;
+
+    left:0;
+    top:0;
+
+    width:4px;
+    height:100%;
+
+    background:#0ea5e9;
+
 }
 
 
 /* =====================================================
-   RANK 2 — SILVER PREMIUM
+   RANK 1 — GOLD
 ===================================================== */
 
-.rank-card.rank-2 {
+.rank-card.rank-1{
 
     background:
         linear-gradient(
             90deg,
-            #ffffff 0%,
-            #e8ecef 25%,
-            #bfc5ca 50%,
-            #f1f3f4 75%,
-            #aeb5bb 100%
+            #fff7bd 0%,
+            #ffe16b 22%,
+            #f6c945 48%,
+            #ffd967 75%,
+            #e7ad20 100%
         );
 
-    border: 1px solid #8d969d;
+    border:1px solid #f5c542;
 
     box-shadow:
-        0 3px 10px rgba(80,90,100,0.25),
-        inset 0 1px 0 rgba(255,255,255,0.8);
+        0 4px 16px rgba(245,197,66,.35),
+        inset 0 1px 0 rgba(255,255,255,.85);
 
-    color: #303840;
+    color:#4a3300;
+
+}
+
+
+.rank-card.rank-1::before{
+
+    background:#fff7a8;
+
+    box-shadow:
+        0 0 12px rgba(255,247,168,.9);
+
 }
 
 
 /* =====================================================
-   RANK 3 — BRONZE PREMIUM
+   RANK 2 — SILVER ICE
 ===================================================== */
 
-.rank-card.rank-3 {
+.rank-card.rank-2{
 
     background:
         linear-gradient(
             90deg,
-            #ffe6c7 0%,
-            #d99a5b 25%,
-            #b87333 50%,
-            #e0a76d 75%,
-            #9c5a24 100%
+            #f8fbff 0%,
+            #dce9f2 30%,
+            #b8c9d6 55%,
+            #eef5f9 80%,
+            #b5c5d1 100%
         );
 
-    border: 1px solid #8a4f20;
+    border:1px solid #9db2c1;
 
     box-shadow:
-        0 3px 10px rgba(140,80,30,0.28),
-        inset 0 1px 0 rgba(255,255,255,0.55);
+        0 4px 14px rgba(151,178,195,.28),
+        inset 0 1px 0 rgba(255,255,255,.95);
 
-    color: #47230d;
+    color:#243746;
+
+}
+
+
+.rank-card.rank-2::before{
+
+    background:#b9e9ff;
+
+    box-shadow:
+        0 0 10px rgba(89,205,255,.8);
+
 }
 
 
 /* =====================================================
-   5 TERBAWAH
+   RANK 3 — ORANGE BRONZE
 ===================================================== */
 
-.rank-card.bottom-5 {
-    background: linear-gradient(
-        90deg,
-        #8b1e1e,
-        #651414
-    );
+.rank-card.rank-3{
 
-    border: 1px solid #4a0d0d;
+    background:
+        linear-gradient(
+            90deg,
+            #ffe0bd 0%,
+            #f3b46e 25%,
+            #d9823b 50%,
+            #f2b77b 75%,
+            #c86b2c 100%
+        );
 
-    color: #ffffff;
+    border:1px solid #c66a2c;
+
+    box-shadow:
+        0 4px 14px rgba(217,130,59,.32),
+        inset 0 1px 0 rgba(255,255,255,.7);
+
+    color:#4b230d;
+
 }
+
+
+.rank-card.rank-3::before{
+
+    background:#ffd1a6;
+
+}
+
+
+/* =====================================================
+   BOTTOM 5
+===================================================== */
+
+.rank-card.bottom-5{
+
+    background:
+        linear-gradient(
+            90deg,
+            #67151c 0%,
+            #8f2028 45%,
+            #641017 100%
+        );
+
+    border:1px solid #a62b34;
+
+    color:#ffffff;
+
+    box-shadow:
+        0 3px 10px rgba(220,38,38,.18),
+        inset 0 1px 0 rgba(255,255,255,.10);
+
+}
+
+
+.rank-card.bottom-5::before{
+
+    background:#ff5252;
+
+    box-shadow:
+        0 0 10px rgba(255,82,82,.8);
+
+}
+
 
 .rank-card.bottom-5 .rank-num,
 .rank-card.bottom-5 .employee-name,
@@ -262,8 +374,10 @@ body {
 .rank-card.bottom-5 .proteksi,
 .rank-card.bottom-5 .ach-proteksi,
 .rank-card.bottom-5 .transaksi,
-.rank-card.bottom-5 .ach-bulanan {
-    color: #ffffff;
+.rank-card.bottom-5 .ach-bulanan{
+
+    color:#ffffff;
+
 }
 
 
@@ -271,15 +385,16 @@ body {
    RANK NUMBER
 ===================================================== */
 
-.rank-num {
+.rank-num{
 
-    width: 30px;
+    width:30px;
 
-    color: #475569;
+    color:#425466;
 
-    font-weight: 700;
+    font-weight:800;
 
-    flex-shrink: 0;
+    flex-shrink:0;
+
 }
 
 
@@ -287,30 +402,31 @@ body {
    CHANGE
 ===================================================== */
 
-.change {
+.change{
 
-    width: 40px;
+    width:40px;
 
-    font-size: 0.75rem;
+    font-size:.75rem;
 
-    font-weight: 700;
+    font-weight:700;
 
-    flex-shrink: 0;
+    flex-shrink:0;
+
 }
 
 
-.up {
-    color: #16803c;
+.up{
+    color:#16803c;
 }
 
 
-.down {
-    color: #c53030;
+.down{
+    color:#c53030;
 }
 
 
-.same {
-    color: #8995a1;
+.same{
+    color:#8995a1;
 }
 
 
@@ -318,17 +434,20 @@ body {
    EMPLOYEE NAME
 ===================================================== */
 
-.employee-name {
+.employee-name{
 
-    flex-grow: 1;
+    flex-grow:1;
 
-    color: #17212b;
+    color:#172b3a;
 
-    white-space: nowrap;
+    white-space:nowrap;
 
-    overflow: hidden;
+    overflow:hidden;
 
-    text-overflow: ellipsis;
+    text-overflow:ellipsis;
+
+    font-weight:700;
+
 }
 
 
@@ -336,21 +455,22 @@ body {
    SALES
 ===================================================== */
 
-.sales {
+.sales{
 
-    width: 110px;
+    width:110px;
 
-    font-weight: 800;
+    font-weight:800;
 
-    color: #17212b;
+    color:#172b3a;
 
-    margin-left: 10px;
+    margin-left:10px;
 
-    white-space: nowrap;
+    white-space:nowrap;
 
-    text-align: right;
+    text-align:right;
 
-    flex-shrink: 0;
+    flex-shrink:0;
+
 }
 
 
@@ -358,21 +478,22 @@ body {
    ACH MTD
 ===================================================== */
 
-.ach {
+.ach{
 
-    width: 85px;
+    width:85px;
 
-    font-weight: 800;
+    font-weight:800;
 
-    color: #17212b;
+    color:#172b3a;
 
-    margin-left: 15px;
+    margin-left:15px;
 
-    white-space: nowrap;
+    white-space:nowrap;
 
-    text-align: right;
+    text-align:right;
 
-    flex-shrink: 0;
+    flex-shrink:0;
+
 }
 
 
@@ -380,21 +501,22 @@ body {
    PROTEKSI
 ===================================================== */
 
-.proteksi {
+.proteksi{
 
-    width: 110px;
+    width:110px;
 
-    font-weight: 800;
+    font-weight:800;
 
-    color: #17212b;
+    color:#172b3a;
 
-    margin-left: 15px;
+    margin-left:15px;
 
-    white-space: nowrap;
+    white-space:nowrap;
 
-    text-align: right;
+    text-align:right;
 
-    flex-shrink: 0;
+    flex-shrink:0;
+
 }
 
 
@@ -402,21 +524,22 @@ body {
    ACH PROTEKSI
 ===================================================== */
 
-.ach-proteksi {
+.ach-proteksi{
 
-    width: 85px;
+    width:85px;
 
-    font-weight: 800;
+    font-weight:800;
 
-    color: #17212b;
+    color:#172b3a;
 
-    margin-left: 15px;
+    margin-left:15px;
 
-    white-space: nowrap;
+    white-space:nowrap;
 
-    text-align: right;
+    text-align:right;
 
-    flex-shrink: 0;
+    flex-shrink:0;
+
 }
 
 
@@ -424,21 +547,22 @@ body {
    TRANSAKSI
 ===================================================== */
 
-.transaksi {
+.transaksi{
 
-    width: 110px;
+    width:110px;
 
-    font-weight: 800;
+    font-weight:800;
 
-    color: #17212b;
+    color:#172b3a;
 
-    margin-left: 15px;
+    margin-left:15px;
 
-    white-space: nowrap;
+    white-space:nowrap;
 
-    text-align: right;
+    text-align:right;
 
-    flex-shrink: 0;
+    flex-shrink:0;
+
 }
 
 
@@ -446,129 +570,151 @@ body {
    ACH BULANAN
 ===================================================== */
 
-.ach-bulanan {
+.ach-bulanan{
 
-    width: 85px;
+    width:85px;
 
-    font-weight: 800;
+    font-weight:800;
 
-    color: #17212b;
+    color:#172b3a;
 
-    margin-left: 15px;
+    margin-left:15px;
 
-    white-space: nowrap;
+    white-space:nowrap;
 
-    text-align: right;
+    text-align:right;
 
-    flex-shrink: 0;
+    flex-shrink:0;
+
 }
 
+
 /* =====================================================
-   SLIDE 4 - SCORE UPDATE
+   SLIDE 4 HEADER
 ===================================================== */
 
-#slide4 .score-column-header {
+#slide4 .score-column-header{
 
-    display: flex;
+    display:flex;
 
-    align-items: center;
+    align-items:center;
 
-    width: 100%;
+    width:100%;
 
-    height: 40px;
+    height:44px;
 
-    margin-bottom: 8px;
+    margin-bottom:6px;
 
-    padding: 0 16px;
+    padding:0 16px;
 
     font-family:
         'TTCommonsCondensed',
         Arial,
         sans-serif;
 
-    font-size: 0.85rem;
+    font-size:1rem;
 
-    font-weight: 800;
+    font-weight:800;
 
-    color: #26343f;
+    color:#dcecff;
 
-    white-space: nowrap;
+    white-space:nowrap;
+
 }
 
 
-/* NO */
+/* =====================================================
+   NO
+===================================================== */
 
-#slide4 .score-rank-head {
+#slide4 .score-rank-head{
 
-    width: 30px;
+    width:30px;
 
-    flex-shrink: 0;
+    flex-shrink:0;
 
-    text-align: center;
+    text-align:center;
+
 }
 
 
-/* KOLOM CHANGE
-   TETAP ADA SEBAGAI RUANG KOSONG
-*/
+/* =====================================================
+   CHANGE
+===================================================== */
 
-#slide4 .score-change-head {
+#slide4 .score-change-head{
 
-    width: 40px;
+    width:40px;
 
-    flex-shrink: 0;
+    flex-shrink:0;
+
 }
 
 
-/* NAMA KARYAWAN */
+/* =====================================================
+   NAMA
+===================================================== */
 
-#slide4 .score-name-head {
+#slide4 .score-name-head{
 
-    flex: 1;
+    flex:1;
 
-    min-width: 0;
+    min-width:0;
 
-    margin-left: 0;
+    margin-left:0;
 
-    padding-left: 0;
+    padding-left:0;
 
-    text-align: left;
+    text-align:left;
+
 }
 
 
-/* JULI - DESEMBER */
+/* =====================================================
+   MONTH HEADER
+===================================================== */
 
-#slide4 .score-month-head {
+#slide4 .score-month-head{
 
-    width: 70px;
+    width:70px;
 
-    flex-shrink: 0;
+    flex-shrink:0;
 
-    margin-left: 8px;
+    margin-left:8px;
 
-    padding: 0;
+    padding:0;
 
-    text-align: center;
+    text-align:center;
 
-    font-size: 0.68rem;
+    font-size:0.68rem;
 
-    letter-spacing: 0.5px;
+    letter-spacing:.5px;
+
+    color:#9edcff;
+
 }
 
 
-/* POIN */
+/* =====================================================
+   POINT HEADER
+===================================================== */
 
-#slide4 .score-point-head {
+#slide4 .score-point-head{
 
-    width: 70px;
+    width:70px;
 
-    flex-shrink: 0;
+    flex-shrink:0;
 
-    margin-left: 8px;
+    margin-left:8px;
 
-    padding: 0;
+    padding:0;
 
-    text-align: center;
+    text-align:center;
+
+    color:#ffd85c;
+
+    font-size:1rem;
+
 }
 
 
@@ -576,110 +722,205 @@ body {
    DATA SLIDE 4
 ===================================================== */
 
-#slide4 .rank-grid {
+#slide4 .rank-grid{
 
-    height: calc(100vh - 75px);
+    height:calc(100vh - 75px);
 
-    flex-grow: 0;
+    flex-grow:0;
 
-    gap: 2px;
+    gap:3px;
 
-    overflow: hidden;
+    overflow:hidden;
+
 }
 
 
-#slide4 .rank-card {
-
+#slide4 .rank-card{
     height:
         calc(
             (100vh - 75px - 32px)
             / 17
         );
 
-    min-height: 0;
+    min-height:0;
 
-    max-height: none;
+    max-height:none;
 
-    flex-shrink: 0;
+    flex-shrink:0;
 
-    font-size: 0.72rem;
+    font-size:.85rem;
 }
 
 
-/* NAMA KARYAWAN */
-
-#slide4 .employee-name {
-
-    flex-grow: 1;
-
-    min-width: 0;
-
-    margin-left: 0;
-
-    padding-left: 0;
-
-    overflow: hidden;
-
-    text-overflow: ellipsis;
-
-    white-space: nowrap;
-}
-
-
-/* BULAN */
-
-#slide4 .score-month {
-
-    width: 70px;
-
-    flex-shrink: 0;
-
-    margin-left: 8px;
-
-    text-align: center;
-
-    font-size: 0.72rem;
-
-    font-weight: 800;
-}
-
-
-/* POIN */
-
-#slide4 .score-point {
-
-    width: 70px;
-
-    flex-shrink: 0;
-
-    margin-left: 8px;
-
-    text-align: center;
-
-    font-weight: 800;
-}
 /* =====================================================
-   LOADING / ERROR
+   NAMA SLIDE 4
 ===================================================== */
 
-.loading,
-.error {
+#slide4 .employee-name{
 
-    text-align: center;
+    flex-grow:1;
 
-    padding: 20px;
+    min-width:0;
 
-    font-weight: 600;
+    margin-left:0;
+
+    padding-left:0;
+
+    overflow:hidden;
+
+    text-overflow:ellipsis;
+
+    white-space:nowrap;
+
 }
 
 
-.loading {
-    color: #52616d;
+/* =====================================================
+   BULAN
+===================================================== */
+
+#slide4 .score-month{
+    width:70px;
+    flex-shrink:0;
+    margin-left:8px;
+    text-align:center;
+    font-size:.85rem;
+    font-weight:800;
 }
 
 
-.error {
-    color: #b83232;
+/* =====================================================
+   POIN
+===================================================== */
+
+#slide4 .score-point{
+
+    width:70px;
+
+    flex-shrink:0;
+
+    margin-left:8px;
+
+    text-align:center;
+
+    font-weight:900;
+
+    color:#075985;
+
+}
+
+
+/* =====================================================
+   ACH COLOR SLIDE 4
+===================================================== */
+
+#slide4 .score-month.ach-blue{
+
+    background:
+        linear-gradient(
+            135deg,
+            #0284c7,
+            #38bdf8
+        );
+
+    color:#ffffff;
+
+    border-radius:7px;
+
+    box-shadow:
+        0 0 8px rgba(14,165,233,.45);
+
+}
+
+
+#slide4 .score-month.ach-green{
+
+    background:
+        linear-gradient(
+            135deg,
+            #059669,
+            #34d399
+        );
+
+    color:#ffffff;
+
+    border-radius:7px;
+
+    box-shadow:
+        0 0 8px rgba(16,185,129,.40);
+
+}
+
+
+#slide4 .score-month.ach-yellow{
+
+    background:
+        linear-gradient(
+            135deg,
+            #f59e0b,
+            #facc15
+        );
+
+    color:#422006;
+
+    border-radius:7px;
+
+    box-shadow:
+        0 0 8px rgba(250,204,21,.35);
+
+}
+
+
+#slide4 .score-month.ach-red{
+
+    background:
+        linear-gradient(
+            135deg,
+            #dc2626,
+            #f87171
+        );
+
+    color:#ffffff;
+
+    border-radius:7px;
+
+    box-shadow:
+        0 0 8px rgba(239,68,68,.35);
+
+}
+
+
+/* =====================================================
+   LOADING
+===================================================== */
+
+.loading{
+
+    text-align:center;
+
+    padding:20px;
+
+    font-weight:600;
+
+    color:#b9d7eb;
+
+}
+
+
+/* =====================================================
+   ERROR
+===================================================== */
+
+.error{
+
+    text-align:center;
+
+    padding:20px;
+
+    font-weight:600;
+
+    color:#ff8585;
+
 }
 
 
@@ -688,101 +929,128 @@ body {
 ===================================================== */
 
 @media (
-    max-width: 768px
+    max-width:768px
 ),
 (
-    max-aspect-ratio: 1/1
-) {
+    max-aspect-ratio:1/1
+){
 
-    body {
+    body{
 
-        height: auto;
+        height:auto;
 
-        min-height: 100vh;
+        min-height:100vh;
 
-        overflow: auto;
+        overflow:auto;
 
-        align-items: flex-start;
+        align-items:flex-start;
+
     }
 
 
-    .container {
+    .container{
 
-        height: auto;
+        height:auto;
 
-        justify-content: flex-start;
+        justify-content:flex-start;
 
-        gap: 10px;
+        gap:10px;
+
     }
 
 
-    .title {
+    .title{
 
-        font-size: 1.5rem;
+        font-size:1.5rem;
+
     }
 
 
-    .rank-grid {
+    .rank-grid{
 
-        gap: 6px;
+        gap:6px;
 
-        overflow: visible;
+        overflow:visible;
+
     }
 
 
-    .rank-card {
+    .rank-card{
 
-        height: 42px;
+        height:42px;
 
-        font-size: 0.9rem;
+        font-size:.9rem;
 
-        padding: 0 10px;
+        padding:0 10px;
+
     }
 
 
-    .rank-num {
-        width: 28px;
+    .rank-num{
+
+        width:28px;
+
     }
 
 
-    .change {
-        width: 38px;
+    .change{
+
+        width:38px;
+
     }
 
 
-    .sales {
-        width: 95px;
-        margin-left: 8px;
+    .sales{
+
+        width:95px;
+
+        margin-left:8px;
+
     }
 
 
-    .ach {
-        width: 70px;
-        margin-left: 10px;
+    .ach{
+
+        width:70px;
+
+        margin-left:10px;
+
     }
 
 
-    .proteksi {
-        width: 95px;
-        margin-left: 8px;
+    .proteksi{
+
+        width:95px;
+
+        margin-left:8px;
+
     }
 
 
-    .ach-proteksi {
-        width: 70px;
-        margin-left: 10px;
+    .ach-proteksi{
+
+        width:70px;
+
+        margin-left:10px;
+
     }
 
 
-    .transaksi {
-        width: 95px;
-        margin-left: 8px;
+    .transaksi{
+
+        width:95px;
+
+        margin-left:8px;
+
     }
 
 
-    .ach-bulanan {
-        width: 70px;
-        margin-left: 10px;
+    .ach-bulanan{
+
+        width:70px;
+
+        margin-left:10px;
+
     }
 
 }
@@ -790,118 +1058,155 @@ body {
 
 /* =====================================================
    TV 43 INCH
-   TAMPILAN LEBIH NYAMAN UNTUK MATA
 ===================================================== */
 
-@media screen and (min-width: 1200px) and (orientation: landscape) {
+@media screen
+and (min-width:1200px)
+and (orientation:landscape){
 
-    body {
+    body{
+
+        background:
+
+            radial-gradient(
+                circle at 8% 8%,
+                rgba(0,191,255,.18),
+                transparent 28%
+            ),
+
+            radial-gradient(
+                circle at 92% 90%,
+                rgba(0,255,170,.12),
+                transparent 28%
+            ),
+
+            linear-gradient(
+                135deg,
+                #061321,
+                #0b2137 50%,
+                #0d2942
+            );
+
+        padding:10px;
+
+    }
+
+
+    .container{
+
+        max-width:1100px;
+
+    }
+
+
+    .header{
+
+        margin-bottom:5px;
+
+    }
+
+
+    .title{
+
+        font-size:1.8rem;
+
+        color:#e4f4ff;
+
+    }
+
+
+    .rank-grid{
+
+        gap:3px;
+
+        overflow:hidden;
+
+    }
+
+
+    .rank-card{
 
         background:
             linear-gradient(
-                135deg,
-                #d5e0e7 0%,
-                #c5d2db 100%
+                90deg,
+                #f9fcff,
+                #eaf3f8
             );
 
-        padding: 10px;
-
-    }
-
-
-    .container {
-
-        max-width: 1100px;
-
-    }
-
-
-    .header {
-
-        margin-bottom: 5px;
-
-    }
-
-
-    .title {
-
-        font-size: 1.8rem;
-
-        color: #26343f;
-
-    }
-
-
-    .rank-grid {
-
-        gap: 2px;
-
-        overflow: hidden;
-
-    }
-
-
-    .rank-card {
-
-        background: #fdfdfd;
-
-        border-color: #d7dde2;
+        border-color:#c7d8e2;
 
         box-shadow:
-            0 1px 3px
-            rgba(30,45,60,0.08);
+            0 2px 6px
+            rgba(0,0,0,.20);
 
-        border-radius: 14px;
+        border-radius:12px;
 
-        color: #26343f;
+        color:#203342;
 
     }
 
 
-    .rank-card.rank-1 {
-    background:
-        linear-gradient(
-            90deg,
-            #fff8d6,
-            #d4af37,
-            #f7df83,
-            #c99a20
-        ) !important;
+    .rank-card.rank-1{
 
-    border-color: #b8860b;
-}
+        background:
+            linear-gradient(
+                90deg,
+                #fff7bd,
+                #f6c945,
+                #ffe27a,
+                #dfa91e
+            ) !important;
 
-.rank-card.rank-2 {
-    background:
-        linear-gradient(
-            90deg,
-            #ffffff,
-            #bfc5ca,
-            #f1f3f4,
-            #aeb5bb
-        ) !important;
+        border-color:#e8b82c;
 
-    border-color: #8d969d;
-}
-
-.rank-card.rank-3 {
-    background:
-        linear-gradient(
-            90deg,
-            #ffe6c7,
-            #b87333,
-            #e0a76d,
-            #9c5a24
-        ) !important;
-
-    border-color: #8a4f20;
-}
+    }
 
 
-    .rank-card.bottom-5 {
-    background: #651414 !important;
-    border-color: #4a0d0d;
-}
+    .rank-card.rank-2{
+
+        background:
+            linear-gradient(
+                90deg,
+                #f7fbff,
+                #c8d7e1,
+                #edf4f8,
+                #aebfca
+            ) !important;
+
+        border-color:#98acb9;
+
+    }
+
+
+    .rank-card.rank-3{
+
+        background:
+            linear-gradient(
+                90deg,
+                #ffe1c1,
+                #d9823b,
+                #efa96a,
+                #c2672c
+            ) !important;
+
+        border-color:#c56b30;
+
+    }
+
+
+    .rank-card.bottom-5{
+
+        background:
+            linear-gradient(
+                90deg,
+                #711820,
+                #961f2a,
+                #601017
+            ) !important;
+
+        border-color:#a82a34;
+
+    }
 
 
     .employee-name,
@@ -910,60 +1215,106 @@ body {
     .proteksi,
     .ach-proteksi,
     .transaksi,
-    .ach-bulanan {
+    .ach-bulanan{
 
-        color: #26343f;
-
-    }
-
-
-    .rank-num {
-
-        color: #53616c;
+        color:#203342;
 
     }
 
 
-    .up {
+    .rank-card.bottom-5 .employee-name,
+    .rank-card.bottom-5 .sales,
+    .rank-card.bottom-5 .ach,
+    .rank-card.bottom-5 .proteksi,
+    .rank-card.bottom-5 .ach-proteksi,
+    .rank-card.bottom-5 .transaksi,
+    .rank-card.bottom-5 .ach-bulanan{
 
-        color: #19733a;
+        color:#ffffff;
 
     }
 
 
-    .down {
+    .rank-num{
 
-        color: #b93838;
+        color:#526777;
 
     }
 
 
-    .same {
+    .rank-card.bottom-5 .rank-num{
 
-        color: #7b8790;
+        color:#ffffff;
+
+    }
+
+
+    .up{
+
+        color:#15803d;
+
+    }
+
+
+    .down{
+
+        color:#b91c1c;
+
+    }
+
+
+    .same{
+
+        color:#71808b;
 
     }
 
 
     /* =============================================
-       PROTEKSI 17 RANK
-       DIPAKSA MASUK SATU LAYAR TV
+   SLIDE 2 — FIX 17 RANK AGAR NOMOR 17 TIDAK TERPOTONG
+============================================= */
+
+#slide2{
+    height:100%;
+    min-height:0;
+}
+
+#slide2 .rank-grid{
+    display:flex;
+    flex-direction:column;
+
+    gap:3px;
+
+    height:
+        calc(100vh - 75px - 32px);
+
+    flex:none;
+
+    overflow:hidden;
+}
+
+#slide2 .rank-card{
+
+    height:
+        calc(
+            (100vh - 75px - 32px - 48px)
+            / 17
+        );
+
+    min-height:0;
+    max-height:none;
+
+    flex:none;
+
+    padding-top:0;
+    padding-bottom:0;
+}
+    /* =============================================
+       SLIDE 1 & 3
     ============================================= */
 
-    #slide2 .rank-grid {
-
-        height: calc(100vh - 75px);
-
-        flex-grow: 0;
-
-        gap: 2px;
-
-        overflow: hidden;
-
-    }
-
-
-    #slide2 .rank-card {
+    #slide1 .rank-card,
+    #slide3 .rank-card{
 
         height:
             calc(
@@ -971,31 +1322,9 @@ body {
                 / 17
             );
 
-        min-height: 0;
+        min-height:0;
 
-        max-height: none;
-
-        flex-shrink: 0;
-
-    }
-
-
-    /* =============================================
-       SLIDE 1 & 3
-       MENYESUAIKAN JUMLAH RANK
-    ============================================= */
-
-    #slide1 .rank-card,
-    #slide3 .rank-card {
-
-        height: calc(
-            (100vh - 75px - 32px)
-            / 17
-        );
-
-        min-height: 0;
-
-        flex-shrink: 0;
+        flex-shrink:0;
 
     }
 
@@ -1003,17 +1332,17 @@ body {
 
 
 /* =====================================================
-   TV LEBIH KECIL
+   TV SMALL
 ===================================================== */
 
 @media screen
-and (min-width: 1000px)
-and (max-width: 1199px)
-and (orientation: landscape) {
+and (min-width:1000px)
+and (max-width:1199px)
+and (orientation:landscape){
 
-    .rank-card {
+    .rank-card{
 
-        height: 4.2vh;
+        height:4.2vh;
 
     }
 
@@ -1024,131 +1353,262 @@ and (orientation: landscape) {
    TV EXTRA LARGE
 ===================================================== */
 
-@media screen and (min-width: 1800px) and (orientation: landscape) {
+@media screen
+and (min-width:1800px)
+and (orientation:landscape){
 
-    .container {
+    .container{
 
-        max-width: 1250px;
-
-    }
-
-
-    .title {
-
-        font-size: 2rem;
+        max-width:1250px;
 
     }
 
 
-    .rank-card {
+    .title{
 
-        font-size: 0.9rem;
+        font-size:2rem;
+
+    }
+
+
+    .rank-card{
+
+        font-size:.9rem;
 
     }
 
 }
 
-.change {
-    display: none !important;
+
+/* =====================================================
+   HIDE CHANGE
+===================================================== */
+
+.change{
+
+    display:none !important;
+
 }
 
-.realtime-clock {
-    position: fixed;
-    top: 10px;
-    right: 20px;
 
-    font-family: 'TTCommonsCondensed', Arial, sans-serif;
-    font-size: 1.3rem;
-    font-weight: 800;
+/* =====================================================
+   REALTIME CLOCK
+===================================================== */
 
-    color: #26343f;
+.realtime-clock{
 
-    letter-spacing: 1.5px;
+    position:fixed;
 
-    z-index: 9999;
+    top:10px;
+    right:20px;
 
-    background: rgba(255,255,255,0.65);
-    padding: 4px 10px;
-    border-radius: 8px;
+    font-family:
+        'TTCommonsCondensed',
+        Arial,
+        sans-serif;
 
-    box-shadow:
-        0 2px 6px rgba(0,0,0,0.08);
-}
+    font-size:1.3rem;
 
-.slide-tabs{
-    position: fixed;
-    top: 10px;
-    left: 20px;
-
-    display: flex;
-    gap: 8px;
-
-    z-index: 9999;
-}
-
-.slide-tab{
-    font-family:'TTCommonsCondensed', Arial, sans-serif;
-    font-size:1rem;
     font-weight:800;
 
-    background: rgba(255,255,255,0.65);
+    color:#dff6ff;
 
-    color:#26343f;
+    letter-spacing:1.5px;
 
-    padding: 8px 14px;
+    z-index:9999;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(11,47,72,.92),
+            rgba(9,31,50,.92)
+        );
+
+    padding:5px 12px;
+
+    border-radius:9px;
+
+    border:1px solid rgba(92,211,255,.35);
+
+    box-shadow:
+        0 3px 12px rgba(0,0,0,.30),
+        0 0 12px rgba(0,174,255,.12);
+
+}
+
+
+/* =====================================================
+   SLIDE 5 - POTENSI INSENTIF
+===================================================== */
+
+#rankGrid5 .incentive-value{
+    width:220px;
+    flex-shrink:0;
+    text-align:right;
+    color:#087443;
+    font-family:'Segoe UI',Arial,sans-serif;
+    font-size:.85rem;
+    font-weight:800;
+    white-space:nowrap;
+}
+
+#rankGrid5 .rank-card.rank-1 .incentive-value,
+#rankGrid5 .rank-card.rank-2 .incentive-value,
+#rankGrid5 .rank-card.rank-3 .incentive-value,
+#rankGrid5 .rank-card.bottom-5 .incentive-value{
+    color:inherit;
+}
+
+@media (max-width:700px){
+    #rankGrid5 .incentive-value{
+        width:145px;
+        font-size:.85rem;
+    }
+}
+
+
+/* =====================================================
+   SLIDE TABS
+===================================================== */
+
+.slide-tabs{
+
+    position:fixed;
+
+    top:10px;
+    left:20px;
+
+    display:flex;
+
+    gap:8px;
+
+    z-index:9999;
+
+}
+
+
+/* =====================================================
+   TAB
+===================================================== */
+
+.slide-tab{
+
+    font-family:
+        'TTCommonsCondensed',
+        Arial,
+        sans-serif;
+
+    font-size:1rem;
+
+    font-weight:800;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(20,51,76,.92),
+            rgba(8,31,50,.92)
+        );
+
+    color:#c9e7f7;
+
+    padding:8px 14px;
 
     border-radius:8px;
 
-    box-shadow:
-        0 2px 6px rgba(0,0,0,0.08);
+    border:1px solid
+        rgba(104,194,232,.20);
 
-    transition: all .3s ease;
+    box-shadow:
+        0 3px 10px rgba(0,0,0,.22);
+
+    transition:
+        all .3s ease;
+
 }
+
+
+/* =====================================================
+   TAB ACTIVE
+===================================================== */
 
 .slide-tab.active{
 
     background:
         linear-gradient(
             135deg,
-            #d4af37,
-            #f7df83
+            #f3c63f,
+            #ffe37a,
+            #e8ad24
         );
 
-    color:#4a3500;
+    color:#432f00;
 
-    border:1px solid #b8860b;
+    border:1px solid #ffd85c;
 
     box-shadow:
-        0 0 15px rgba(212,175,55,.6);
+        0 0 18px
+        rgba(255,211,72,.45),
+        0 4px 10px
+        rgba(0,0,0,.20);
 
     transform:scale(1.05);
+
 }
 
-.realtime-date {
-    position: fixed;
-    top: 10px;
-    left: 20px;
 
-    font-family: 'TTCommonsCondensed', Arial, sans-serif;
-    font-size: 1.3rem;
-    font-weight: 800;
+/* =====================================================
+   DATE
+===================================================== */
 
-    color: #26343f;
+.realtime-date{
 
-    letter-spacing: 0.8px;
+    position:fixed;
 
-    z-index: 9999;
+    top:10px;
+    left:20px;
 
-    background: rgba(255,255,255,0.65);
-    padding: 4px 10px;
-    border-radius: 8px;
+    font-family:
+        'TTCommonsCondensed',
+        Arial,
+        sans-serif;
+
+    font-size:1.3rem;
+
+    font-weight:800;
+
+    color:#dff6ff;
+
+    letter-spacing:.8px;
+
+    z-index:9999;
+
+    background:
+        rgba(10,35,55,.85);
+
+    padding:4px 10px;
+
+    border-radius:8px;
 
     box-shadow:
-        0 2px 6px rgba(0,0,0,0.08);
+        0 2px 6px rgba(0,0,0,.18);
+
 }
-.realtime-date {
-    display: none !important;
+
+
+/* =====================================================
+   HIDE DATE
+===================================================== */
+
+.realtime-date{
+
+    display:none !important;
+
 }
+
+
+/* =====================================================
+   MONTH COMMON
+===================================================== */
 
 .july,
 .august,
@@ -1157,35 +1617,137 @@ and (orientation: landscape) {
 .november,
 .december,
 .point{
+
     width:70px;
+
     text-align:center;
+
     font-weight:800;
+
     flex-shrink:0;
+
 }
+
 
 /* =====================================================
-   WARNA ACH MTD - SLIDE 4
+   SLIDE 4 CARD ACCENT
 ===================================================== */
 
-#slide4 .score-month.ach-blue {
-    background: #2196f3;
-    color: #ffffff;
+#slide4 .rank-card::after{
+
+    content:"";
+
+    position:absolute;
+
+    right:0;
+    top:0;
+
+    width:3px;
+    height:100%;
+
+    background:
+        linear-gradient(
+            180deg,
+            #22c1ff,
+            #00e5a0
+        );
+
+    opacity:.7;
+
 }
 
-#slide4 .score-month.ach-green {
-    background: #4caf50;
-    color: #ffffff;
+
+/* =====================================================
+   SLIDE 4 POIN
+===================================================== */
+
+#slide4 .score-point{
+
+    background:
+        linear-gradient(
+            135deg,
+            #e0f7ff,
+            #bdefff
+        );
+
+    border-radius:7px;
+
+    padding:2px 5px;
+
+    box-shadow:
+        inset 0 0 0 1px
+        rgba(14,165,233,.12);
+
 }
 
-#slide4 .score-month.ach-yellow {
-    background: #ffc107;
-    color: #26343f;
+
+/* =====================================================
+   BOTTOM 5 POINT
+===================================================== */
+
+#slide4 .bottom-5 .score-point{
+
+    background:
+        rgba(255,255,255,.14);
+
+    color:#ffffff;
+
 }
 
-#slide4 .score-month.ach-red {
-    background: #f44336;
-    color: #ffffff;
+
+/* =====================================================
+   GOLD POINT
+===================================================== */
+
+#slide4 .rank-1 .score-point{
+
+    background:
+        linear-gradient(
+            135deg,
+            #fff5ad,
+            #ffd84d
+        );
+
+    color:#4a3300;
+
 }
+
+
+/* =====================================================
+   SILVER POINT
+===================================================== */
+
+#slide4 .rank-2 .score-point{
+
+    background:
+        linear-gradient(
+            135deg,
+            #f7fbff,
+            #cbdbe5
+        );
+
+    color:#263746;
+
+}
+
+
+/* =====================================================
+   BRONZE POINT
+===================================================== */
+
+#slide4 .rank-3 .score-point{
+
+    background:
+        linear-gradient(
+            135deg,
+            #ffe6c9,
+            #efa86c
+        );
+
+    color:#4b230d;
+
+}
+
 </style>
 
 </head>
@@ -1193,38 +1755,65 @@ and (orientation: landscape) {
 
 <body>
 
+
 <div class="realtime-date" id="realtimeDate">
     Rabu, 26 Agustus 2026
 </div>
+
 
 <div class="realtime-clock" id="realtimeClock">
     00:00:00
 </div>
 
+
 <div class="slide-tabs">
-    <div class="slide-tab active" data-slide="1">
+
+    <div
+        class="slide-tab active"
+        data-slide="1"
+    >
         ACH MTD SALES ID
     </div>
 
-    <div class="slide-tab" data-slide="2">
+
+    <div
+        class="slide-tab"
+        data-slide="2"
+    >
         PROTEKSI
     </div>
 
-    <div class="slide-tab" data-slide="3">
+
+    <div
+        class="slide-tab"
+        data-slide="3"
+    >
         TRANSAKSI
     </div>
 
-    <div class="slide-tab" data-slide="4">
-    SCORE UPDATE JULI - DESEMBER 2026
+
+    <div
+        class="slide-tab"
+        data-slide="4"
+    >
+        POIN UPDATE JULI - DESEMBER 2026
     </div>
+
+    <div
+        class="slide-tab"
+        data-slide="5"
+    >
+        POTENSI INSENTIF
+    </div>
+
 </div>
+
 
 <div class="container">
 
 
     <!-- =================================================
          SLIDE 1
-         ACH MTD SALES ID
     ================================================== -->
 
     <div
@@ -1257,7 +1846,6 @@ and (orientation: landscape) {
 
     <!-- =================================================
          SLIDE 2
-         PROTEKSI
     ================================================== -->
 
     <div
@@ -1290,7 +1878,6 @@ and (orientation: landscape) {
 
     <!-- =================================================
          SLIDE 3
-         TRANSAKSI
     ================================================== -->
 
     <div
@@ -1320,72 +1907,70 @@ and (orientation: landscape) {
 
     </div>
 
-<!-- =================================================
-     SLIDE 4
-     SCORE UPDATE JULI - DESEMBER 2026
-================================================== -->
 
-<div class="slide" id="slide4">
+    <!-- =================================================
+         SLIDE 4
+    ================================================== -->
 
-    <div class="header">
-        <h1 class="title">
-            POIN UPDATE JULI - DESEMBER 2026
-        </h1>
-    </div>
+    <div
+        class="slide"
+        id="slide4"
+    >
 
-    <!-- JUDUL KOLOM -->
-    <div class="score-column-header">
+        <div class="header">
 
-    <div class="score-rank-head">
-        No.
-    </div>
+            <h1 class="title">
+                POIN UPDATE JULI - DESEMBER 2026
+            </h1>
 
+        </div>
+
+
+        <div class="score-column-header">
+    <div class="score-rank-head"></div>
     <div class="score-change-head"></div>
-
-    <div class="score-name-head">
-        NAMA KARYAWAN
-    </div>
-
-    <div class="score-month-head">
-        JULI
-    </div>
-
-    <div class="score-month-head">
-        AGUSTUS
-    </div>
-
-    <div class="score-month-head">
-        SEPTEMBER
-    </div>
-
-    <div class="score-month-head">
-        OKTOBER
-    </div>
-
-    <div class="score-month-head">
-        NOVEMBER
-    </div>
-
-    <div class="score-month-head">
-        DESEMBER
-    </div>
-
-    <div class="score-point-head">
-        POIN
-    </div>
-
-    </div>
-
-    <!-- DATA KARYAWAN -->
-    <div class="rank-grid" id="rankGrid4">
+    <div class="score-name-head"></div>
+    <div class="score-month-head">JULI</div>
+    <div class="score-month-head">AGUSTUS</div>
+    <div class="score-month-head">SEPTEMBER</div>
+    <div class="score-month-head">OKTOBER</div>
+    <div class="score-month-head">NOVEMBER</div>
+    <div class="score-month-head">DESEMBER</div>
+    <div class="score-point-head">POIN</div>
 </div>
 
-</div>
+
+        <div
+            class="rank-grid"
+            id="rankGrid4"
+        >
+        </div>
+
+    </div>
+
+
+    <!-- =================================================
+         SLIDE 5 - POTENSI INSENTIF
+    ================================================== -->
+
+    <div
+        class="slide"
+        id="slide5"
+    >
+        <div class="header">
+            <h1 class="title">POTENSI INSENTIF</h1>
+        </div>
+
+        <div class="rank-grid" id="rankGrid5">
+            <div class="loading">Memuat data potensi insentif...</div>
+        </div>
+    </div>
 
 </div>
 
 
 <script>
+
 
 /* =====================================================
    GOOGLE SPREADSHEET
@@ -1413,6 +1998,23 @@ const SHEET_URL =
 
 
 /* =====================================================
+   GOOGLE SPREADSHEET - MONITORING INSENTIVE
+===================================================== */
+
+const INCENTIVE_SPREADSHEET_ID =
+    "1bfjopTK9sB6j2b8aRnpTolZGV_eab4LI_PH9t0WwOrw";
+
+const INCENTIVE_SHEET_NAME =
+    "MONITORING INSENTIVE PER SALES ID";
+
+const INCENTIVE_SHEET_URL =
+    "https://docs.google.com/spreadsheets/d/" +
+    INCENTIVE_SPREADSHEET_ID +
+    "/gviz/tq?tqx=out:json&sheet=" +
+    encodeURIComponent(INCENTIVE_SHEET_NAME);
+
+
+/* =====================================================
    SLIDE SETTINGS
 ===================================================== */
 
@@ -1427,14 +2029,26 @@ let currentSlide =
 let employeeData =
     [];
 
+
+let incentiveData = [];
+
+
 let monthlyScoreData = {
-    juli: {},
-    agustus: {},
-    september: {},
-    oktober: {},
-    november: {},
-    desember: {}
+
+    juli:{},
+
+    agustus:{},
+
+    september:{},
+
+    oktober:{},
+
+    november:{},
+
+    desember:{}
+
 };
+
 
 /* =====================================================
    RANK CHANGE
@@ -1443,88 +2057,88 @@ let monthlyScoreData = {
 const rankingData = [
 
     {
-        change: "same",
-        changeText: "-"
+        change:"same",
+        changeText:"-"
     },
 
     {
-        change: "same",
-        changeText: "-"
+        change:"same",
+        changeText:"-"
     },
 
     {
-        change: "up",
-        changeText: "▲ 2"
+        change:"up",
+        changeText:"▲ 2"
     },
 
     {
-        change: "same",
-        changeText: "-"
+        change:"same",
+        changeText:"-"
     },
 
     {
-        change: "up",
-        changeText: "▲ 1"
+        change:"up",
+        changeText:"▲ 1"
     },
 
     {
-        change: "up",
-        changeText: "▲ 1"
+        change:"up",
+        changeText:"▲ 1"
     },
 
     {
-        change: "down",
-        changeText: "▼ 4"
+        change:"down",
+        changeText:"▼ 4"
     },
 
     {
-        change: "same",
-        changeText: "-"
+        change:"same",
+        changeText:"-"
     },
 
     {
-        change: "same",
-        changeText: "-"
+        change:"same",
+        changeText:"-"
     },
 
     {
-        change: "up",
-        changeText: "▲ 1"
+        change:"up",
+        changeText:"▲ 1"
     },
 
     {
-        change: "down",
-        changeText: "▼ 1"
+        change:"down",
+        changeText:"▼ 1"
     },
 
     {
-        change: "same",
-        changeText: "-"
+        change:"same",
+        changeText:"-"
     },
 
     {
-        change: "up",
-        changeText: "▲ 2"
+        change:"up",
+        changeText:"▲ 2"
     },
 
     {
-        change: "down",
-        changeText: "▼ 1"
+        change:"down",
+        changeText:"▼ 1"
     },
 
     {
-        change: "same",
-        changeText: "-"
+        change:"same",
+        changeText:"-"
     },
 
     {
-        change: "up",
-        changeText: "▲ 1"
+        change:"up",
+        changeText:"▲ 1"
     },
 
     {
-        change: "down",
-        changeText: "▼ 2"
+        change:"down",
+        changeText:"▼ 2"
     }
 
 ];
@@ -1534,9 +2148,9 @@ const rankingData = [
    LOAD DATA
 ===================================================== */
 
-async function loadData() {
+async function loadData(){
 
-    try {
+    try{
 
         const response =
             await fetch(
@@ -1546,7 +2160,7 @@ async function loadData() {
             );
 
 
-        if (!response.ok) {
+        if(!response.ok){
 
             throw new Error(
                 "Spreadsheet tidak dapat diakses."
@@ -1578,10 +2192,10 @@ async function loadData() {
             jsonText.lastIndexOf("}");
 
 
-        if (
+        if(
             start === -1 ||
             end === -1
-        ) {
+        ){
 
             throw new Error(
                 "Format data Google Sheets tidak valid."
@@ -1603,11 +2217,11 @@ async function loadData() {
             );
 
 
-        if (
+        if(
             !data ||
             !data.table ||
             !data.table.cols
-        ) {
+        ){
 
             throw new Error(
                 "Data spreadsheet tidak ditemukan."
@@ -1616,9 +2230,7 @@ async function loadData() {
         }
 
 
-        /* =============================================
-           HEADER
-        ============================================= */
+        /* HEADER */
 
         const employeeColumn =
             findColumn(
@@ -1631,6 +2243,13 @@ async function loadData() {
             findColumn(
                 data.table.cols,
                 "CODE JOB"
+            );
+
+
+        const deptColumn =
+            findColumn(
+                data.table.cols,
+                "DEPT"
             );
 
 
@@ -1676,9 +2295,7 @@ async function loadData() {
             );
 
 
-        /* =============================================
-           VALIDASI
-        ============================================= */
+        /* VALIDASI */
 
         const requiredColumns = [
 
@@ -1725,17 +2342,15 @@ async function loadData() {
         ];
 
 
-        for (
+        for(
             const [
                 index,
                 header
             ]
             of requiredColumns
-        ) {
+        ){
 
-            if (
-                index === -1
-            ) {
+            if(index === -1){
 
                 throw new Error(
                     `Header "${header}" tidak ditemukan.`
@@ -1746,9 +2361,7 @@ async function loadData() {
         }
 
 
-        /* =============================================
-           DATA
-        ============================================= */
+        /* DATA */
 
         employeeData =
 
@@ -1757,9 +2370,7 @@ async function loadData() {
                 .map(
                     row => {
 
-                        if (
-                            !row.c
-                        ) {
+                        if(!row.c){
 
                             return null;
 
@@ -1774,9 +2385,7 @@ async function loadData() {
                             );
 
 
-                        if (
-                            name === ""
-                        ) {
+                        if(name === ""){
 
                             return null;
 
@@ -1785,13 +2394,19 @@ async function loadData() {
 
                         return {
 
-                            name:
-                                name,
+                            name:name,
 
                             codeJob:
                                 getCellValue(
                                     row.c[
                                         codeJobColumn
+                                    ]
+                                ),
+
+                            dept:
+                                getCellValue(
+                                    row.c[
+                                        deptColumn
                                     ]
                                 ),
 
@@ -1846,25 +2461,29 @@ async function loadData() {
                     item =>
                         item !== null
                 );
-        
+
+
         await loadAllMonthlySheets();
+
 
         renderSlide1();
 
         renderSlide2();
 
         renderSlide3();
-        
+
         renderSlide4();
+
+        // Muat slide insentif secara terpisah agar error sheet ini
+        // tidak mengganggu empat slide yang sudah ada.
+        loadIncentiveData();
 
     }
 
 
-    catch (error) {
+    catch(error){
 
-        console.error(
-            error
-        );
+        console.error(error);
 
 
         showError(
@@ -1890,16 +2509,126 @@ async function loadData() {
 
 
 /* =====================================================
+   LOAD DATA SLIDE 5 - POTENSI INSENTIF
+===================================================== */
+
+async function loadIncentiveData(){
+    const grid = document.getElementById("rankGrid5");
+
+    try{
+        const response = await fetch(
+            INCENTIVE_SHEET_URL + "&t=" + Date.now(),
+            { cache:"no-store" }
+        );
+
+        if(!response.ok){
+            throw new Error("Spreadsheet monitoring insentif tidak dapat diakses.");
+        }
+
+        let jsonText = (await response.text()).trim();
+        jsonText = jsonText.replace(/^\/\*[\s\S]*?\*\/\s*/, "");
+
+        const start = jsonText.indexOf("{");
+        const end = jsonText.lastIndexOf("}");
+        if(start === -1 || end === -1){
+            throw new Error("Format data Google Sheets insentif tidak valid.");
+        }
+
+        const data = JSON.parse(jsonText.substring(start, end + 1));
+        if(!data || !data.table || !data.table.cols){
+            throw new Error("Data sheet monitoring insentif tidak ditemukan.");
+        }
+
+        const nameColumn = findColumn(data.table.cols, "NAMA SALES");
+        const eligibleColumn = findColumn(data.table.cols, "TOTAL INSENTIF (ELIGIBLE)");
+
+        if(nameColumn === -1){
+            throw new Error('Header "NAMA SALES" tidak ditemukan.');
+        }
+        if(eligibleColumn === -1){
+            throw new Error('Header "TOTAL INSENTIF (ELIGIBLE)" tidak ditemukan.');
+        }
+
+        incentiveData = data.table.rows
+            .map(row => {
+                if(!row || !row.c) return null;
+
+                const name = getCellValue(row.c[nameColumn]);
+                const rawValue = row.c[eligibleColumn]
+                    ? (row.c[eligibleColumn].v ?? row.c[eligibleColumn].f ?? "")
+                    : "";
+
+                if(!name) return null;
+
+                return {
+                    name,
+                    value: rawValue,
+                    amount: parseNumber(rawValue)
+                };
+            })
+            .filter(item => item !== null)
+            .sort((a,b) => b.amount - a.amount);
+
+        renderSlide5();
+    }
+    catch(error){
+        console.error("Gagal memuat potensi insentif:", error);
+        grid.innerHTML = `
+            <div class="error">
+                <b>Gagal mengambil data potensi insentif.</b>
+                <br>
+                <small>${escapeHtml(error.message)}<br>Pastikan sheet dapat diakses melalui link publik.</small>
+            </div>
+        `;
+    }
+}
+
+
+function renderSlide5(){
+    const grid = document.getElementById("rankGrid5");
+    grid.innerHTML = "";
+
+    if(!incentiveData.length){
+        grid.innerHTML = '<div class="error">Tidak ada data potensi insentif.</div>';
+        return;
+    }
+
+    const total = incentiveData.length;
+    incentiveData.forEach((sales, index) => {
+        const rank = index + 1;
+        let rankClass = "rank-card";
+
+        if(rank === 1) rankClass += " rank-1";
+        else if(rank === 2) rankClass += " rank-2";
+        else if(rank === 3) rankClass += " rank-3";
+        else if(rank > total - 5) rankClass += " bottom-5";
+
+        const card = document.createElement("div");
+        card.className = rankClass;
+        card.innerHTML = `
+            <span class="rank-num">${rank}</span>
+            <span class="employee-name">${escapeHtml(sales.name)}</span>
+            <span class="incentive-value">${formatIncentiveRupiah(sales.amount)}</span>
+        `;
+        grid.appendChild(card);
+    });
+}
+
+
+function formatIncentiveRupiah(value){
+    return "Rp " + Number(value || 0).toLocaleString("id-ID", {
+        maximumFractionDigits:0
+    });
+}
+
+
+/* =====================================================
    CELL VALUE
 ===================================================== */
 
-function getCellValue(
-    cell
-) {
+function getCellValue(cell){
 
-    if (
-        !cell
-    ) {
+    if(!cell){
 
         return "";
 
@@ -1915,50 +2644,74 @@ function getCellValue(
 }
 
 
-function findColumn(columns, target) {
+function findColumn(columns,target){
 
-    const normalizeHeader = value => {
+    const normalizeHeader =
+        value => {
 
-        return String(value || "")
-            .replace(/\u00A0/g, " ")
-            .replace(/\s+/g, " ")
+            return String(
+                value || ""
+            )
+            .replace(
+                /\u00A0/g,
+                " "
+            )
+            .replace(
+                /\s+/g,
+                " "
+            )
             .trim()
             .toUpperCase();
 
-    };
+        };
+
 
     const targetHeader =
         normalizeHeader(target);
 
+
     return columns.findIndex(
         col =>
-            normalizeHeader(col.label) ===
+            normalizeHeader(
+                col.label
+            ) ===
             targetHeader
     );
 
 }
 
+
 /* =====================================================
-   LOAD DATA SHEET BULANAN
-   ACH + TRX + TARGET TRX + BASKET SIZE + TARGET BS
+   LOAD MONTHLY SHEET
 ===================================================== */
 
-async function loadMonthlySheet(sheetName) {
+async function loadMonthlySheet(sheetName){
 
     const url =
+
         "https://docs.google.com/spreadsheets/d/" +
+
         SPREADSHEET_ID +
+
         "/gviz/tq?tqx=out:json&sheet=" +
+
         encodeURIComponent(sheetName) +
+
         "&t=" +
+
         Date.now();
 
-    const response =
-        await fetch(url, {
-            cache: "no-store"
-        });
 
-    if (!response.ok) {
+    const response =
+        await fetch(
+            url,
+            {
+                cache:"no-store"
+            }
+        );
+
+
+    if(!response.ok){
 
         throw new Error(
             `Sheet "${sheetName}" tidak dapat diakses.`
@@ -1966,11 +2719,14 @@ async function loadMonthlySheet(sheetName) {
 
     }
 
+
     const text =
         await response.text();
 
+
     let jsonText =
         text.trim();
+
 
     jsonText =
         jsonText.replace(
@@ -1978,16 +2734,19 @@ async function loadMonthlySheet(sheetName) {
             ""
         );
 
+
     const start =
         jsonText.indexOf("{");
+
 
     const end =
         jsonText.lastIndexOf("}");
 
-    if (
+
+    if(
         start === -1 ||
         end === -1
-    ) {
+    ){
 
         throw new Error(
             `Format data sheet "${sheetName}" tidak valid.`
@@ -1995,20 +2754,25 @@ async function loadMonthlySheet(sheetName) {
 
     }
 
+
     jsonText =
         jsonText.substring(
             start,
             end + 1
         );
 
-    const data =
-        JSON.parse(jsonText);
 
-    if (
+    const data =
+        JSON.parse(
+            jsonText
+        );
+
+
+    if(
         !data ||
         !data.table ||
         !data.table.cols
-    ) {
+    ){
 
         throw new Error(
             `Data sheet "${sheetName}" tidak ditemukan.`
@@ -2017,15 +2781,12 @@ async function loadMonthlySheet(sheetName) {
     }
 
 
-    /* =============================================
-       CARI KOLOM
-    ============================================= */
-
     const employeeColumn =
         findColumn(
             data.table.cols,
             "EMPLOYEE NAME"
         );
+
 
     const achColumn =
         findColumn(
@@ -2033,11 +2794,13 @@ async function loadMonthlySheet(sheetName) {
             "ACH MTD"
         );
 
+
     const targetTrxColumn =
         findColumn(
             data.table.cols,
             "TARGET TRX"
         );
+
 
     const trxMtdColumn =
         findColumn(
@@ -2045,11 +2808,13 @@ async function loadMonthlySheet(sheetName) {
             "TRX MTD"
         );
 
+
     const targetBsColumn =
         findColumn(
             data.table.cols,
             "TARGET BS"
         );
+
 
     const basketSizeColumn =
         findColumn(
@@ -2057,10 +2822,6 @@ async function loadMonthlySheet(sheetName) {
             "BASKET SIZE"
         );
 
-
-    /* =============================================
-       VALIDASI HEADER
-    ============================================= */
 
     const requiredColumns = [
 
@@ -2097,17 +2858,15 @@ async function loadMonthlySheet(sheetName) {
     ];
 
 
-    for (
+    for(
         const [
             index,
             header
         ]
         of requiredColumns
-    ) {
+    ){
 
-        if (
-            index === -1
-        ) {
+        if(index === -1){
 
             throw new Error(
                 `Header "${header}" tidak ditemukan di ${sheetName}`
@@ -2118,20 +2877,16 @@ async function loadMonthlySheet(sheetName) {
     }
 
 
-    /* =============================================
-       SIMPAN DATA
-    ============================================= */
-
     const result = {};
 
 
     data.table.rows.forEach(
         row => {
 
-            if (
+            if(
                 !row ||
                 !row.c
-            ) {
+            ){
 
                 return;
 
@@ -2146,9 +2901,7 @@ async function loadMonthlySheet(sheetName) {
                 );
 
 
-            if (
-                !employeeName
-            ) {
+            if(!employeeName){
 
                 return;
 
@@ -2203,20 +2956,15 @@ async function loadMonthlySheet(sheetName) {
 
             result[key] = {
 
-                ach:
-                    ach,
+                ach:ach,
 
-                targetTrx:
-                    targetTrx,
+                targetTrx:targetTrx,
 
-                trxMtd:
-                    trxMtd,
+                trxMtd:trxMtd,
 
-                targetBs:
-                    targetBs,
+                targetBs:targetBs,
 
-                basketSize:
-                    basketSize
+                basketSize:basketSize
 
             };
 
@@ -2235,15 +2983,11 @@ async function loadMonthlySheet(sheetName) {
 }
 
 
-    
-
 /* =====================================================
-   NORMALIZE NAMA KARYAWAN
+   NORMALIZE NAMA
 ===================================================== */
 
-function normalizeEmployeeName(
-    name
-) {
+function normalizeEmployeeName(name){
 
     return String(
         name || ""
@@ -2257,104 +3001,125 @@ function normalizeEmployeeName(
 
 }
 
+
 /* =====================================================
-   WARNA ACH MTD SLIDE 4
+   ACH CLASS
 ===================================================== */
 
-function getAchClass(value) {
+function getAchClass(value){
 
-    if (
+    if(
         value === null ||
         value === undefined ||
         value === "" ||
         value === "-"
-    ) {
+    ){
+
         return "";
+
     }
+
 
     let text =
         String(value)
-            .replace("%", "")
-            .replace(",", ".")
+            .replace("%","")
+            .replace(",",".")
             .trim();
+
 
     let percentage =
         parseFloat(text);
 
-    if (isNaN(percentage)) {
+
+    if(isNaN(percentage)){
+
         return "";
+
     }
 
-    if (percentage > 100) {
+
+    if(percentage > 100){
+
         return "ach-blue";
+
     }
 
-    if (percentage >= 95) {
+
+    if(percentage >= 95){
+
         return "ach-green";
+
     }
 
-    if (percentage > 85) {
+
+    if(percentage > 85){
+
         return "ach-yellow";
+
     }
+
 
     return "ach-red";
+
 }
 
-/* =====================================================
-   HITUNG POIN PER BULAN
-===================================================== */
-function calculateMonthlyPoint(monthlyData) {
 
-    if (!monthlyData) {
+/* =====================================================
+   HITUNG POIN
+===================================================== */
+
+function calculateMonthlyPoint(monthlyData){
+
+    if(!monthlyData){
+
         return 0;
+
     }
+
 
     let point = 0;
 
-
-    /* =============================================
-       ACH MTD
-    ============================================= */
 
     const ach =
         parseNumber(
             monthlyData.ach
         );
 
+
     const hasAch =
         monthlyData.ach !== "" &&
         monthlyData.ach !== "-";
 
 
-    if (hasAch) {
+    if(hasAch){
 
-        if (ach < 85) {
+        if(ach < 85){
 
             point -= 1;
 
         }
 
-        else if (
+        else if(
             ach >= 85 &&
             ach < 95
-        ) {
+        ){
 
             point += 1;
 
         }
 
-        else if (
+        else if(
             ach >= 95 &&
             ach <= 100
-        ) {
+        ){
 
             point += 2;
 
         }
 
-        else if (
+        else if(
             ach > 100
-        ) {
+        ){
 
             point += 3;
 
@@ -2363,19 +3128,17 @@ function calculateMonthlyPoint(monthlyData) {
     }
 
 
-    /* =============================================
-       TRX MTD > TARGET TRX
-    ============================================= */
-
     const trxMtd =
         parseNumber(
             monthlyData.trxMtd
         );
 
+
     const targetTrx =
         parseNumber(
             monthlyData.targetTrx
         );
+
 
     const hasTrx =
         monthlyData.trxMtd !== "" &&
@@ -2384,11 +3147,12 @@ function calculateMonthlyPoint(monthlyData) {
         monthlyData.targetTrx !== "-";
 
 
-    if (hasTrx) {
+    if(hasTrx){
 
-        if (
-            trxMtd > targetTrx
-        ) {
+        if(
+            trxMtd >
+            targetTrx
+        ){
 
             point += 1;
 
@@ -2397,19 +3161,17 @@ function calculateMonthlyPoint(monthlyData) {
     }
 
 
-    /* =============================================
-       BASKET SIZE > TARGET BS
-    ============================================= */
-
     const basketSize =
         parseNumber(
             monthlyData.basketSize
         );
 
+
     const targetBs =
         parseNumber(
             monthlyData.targetBs
         );
+
 
     const hasBasket =
         monthlyData.basketSize !== "" &&
@@ -2418,11 +3180,12 @@ function calculateMonthlyPoint(monthlyData) {
         monthlyData.targetBs !== "-";
 
 
-    if (hasBasket) {
+    if(hasBasket){
 
-        if (
-            basketSize > targetBs
-        ) {
+        if(
+            basketSize >
+            targetBs
+        ){
 
             point += 1;
 
@@ -2434,62 +3197,57 @@ function calculateMonthlyPoint(monthlyData) {
     return point;
 
 }
-    
+
+
 /* =====================================================
-   LOAD SEMUA SHEET JULI - DESEMBER
+   LOAD SEMUA SHEET
 ===================================================== */
 
-async function loadAllMonthlySheets() {
+async function loadAllMonthlySheets(){
 
     const months = {
 
-        juli:
-            "JULI 2026",
+        juli:"JULI 2026",
 
-        agustus:
-            "AGUSTUS 2026",
+        agustus:"AGUSTUS 2026",
 
-        september:
-            "SEPTEMBER 2026",
+        september:"SEPTEMBER 2026",
 
-        oktober:
-            "OKTOBER 2026",
+        oktober:"OKTOBER 2026",
 
-        november:
-            "NOVEMBER 2026",
+        november:"NOVEMBER 2026",
 
-        desember:
-            "DESEMBER 2026"
+        desember:"DESEMBER 2026"
 
     };
 
-
-    /* =============================================
-       RESET DATA BULANAN
-    ============================================= */
 
     monthlyScoreData = {
 
-        juli: {},
-        agustus: {},
-        september: {},
-        oktober: {},
-        november: {},
-        desember: {}
+        juli:{},
+
+        agustus:{},
+
+        september:{},
+
+        oktober:{},
+
+        november:{},
+
+        desember:{}
 
     };
 
 
-    /* =============================================
-       LOAD SATU PER SATU
-    ============================================= */
-
-    for (
-        const [key, sheetName]
+    for(
+        const [
+            key,
+            sheetName
+        ]
         of Object.entries(months)
-    ) {
+    ){
 
-        try {
+        try{
 
             const monthlyData =
                 await loadMonthlySheet(
@@ -2506,10 +3264,9 @@ async function loadAllMonthlySheets() {
                 monthlyData
             );
 
-
         }
 
-        catch (error) {
+        catch(error){
 
             console.warn(
                 `Sheet "${sheetName}" belum tersedia:`,
@@ -2524,13 +3281,13 @@ async function loadAllMonthlySheets() {
     }
 
 }
+
+
 /* =====================================================
    FILTER CASHIER / CS
 ===================================================== */
 
-function isExcludedCodeJob(
-    codeJob
-) {
+function isExcludedCodeJob(codeJob){
 
     const value =
         String(
@@ -2555,7 +3312,7 @@ function isExcludedCodeJob(
    SLIDE 1
 ===================================================== */
 
-function renderSlide1() {
+function renderSlide1(){
 
     const data =
 
@@ -2570,15 +3327,9 @@ function renderSlide1() {
 
 
     data.sort(
-        (a, b) =>
-
-            parseNumber(
-                b.ach
-            ) -
-
-            parseNumber(
-                a.ach
-            )
+        (a,b) =>
+            parseNumber(b.ach) -
+            parseNumber(a.ach)
     );
 
 
@@ -2593,25 +3344,23 @@ function renderSlide1() {
 
 /* =====================================================
    SLIDE 2
-   SEMUA EMPLOYEE
 ===================================================== */
 
-function renderSlide2() {
+function renderSlide2(){
 
     const data =
-        [...employeeData];
+        employeeData.filter(
+            employee =>
+                String(employee.dept || "")
+                    .trim()
+                    .toUpperCase() !== "ONLINE"
+        );
 
 
     data.sort(
-        (a, b) =>
-
-            parseNumber(
-                b.proteksi
-            ) -
-
-            parseNumber(
-                a.proteksi
-            )
+        (a,b) =>
+            parseNumber(b.proteksi) -
+            parseNumber(a.proteksi)
     );
 
 
@@ -2628,7 +3377,7 @@ function renderSlide2() {
    SLIDE 3
 ===================================================== */
 
-function renderSlide3() {
+function renderSlide3(){
 
     const data =
 
@@ -2643,15 +3392,9 @@ function renderSlide3() {
 
 
     data.sort(
-        (a, b) =>
-
-            parseNumber(
-                b.trx
-            ) -
-
-            parseNumber(
-                a.trx
-            )
+        (a,b) =>
+            parseNumber(b.trx) -
+            parseNumber(a.trx)
     );
 
 
@@ -2663,72 +3406,91 @@ function renderSlide3() {
 
 }
 
+
 /* =====================================================
    SLIDE 4
-   SCORE UPDATE JULI - DESEMBER 2026
 ===================================================== */
 
-function renderSlide4() {
-
-    /* =============================================
-       EXCLUDE SUPERVISOR
-    ============================================= */
+function renderSlide4(){
 
     const data =
-    employeeData
-        .filter(employee => {
 
-            const codeJob =
-                String(employee.codeJob || "")
-                .trim()
-                .toUpperCase();
+        employeeData
 
-            return codeJob !== "SUPERVISOR";
+            .filter(
+                employee => {
 
-        })
-        .map(employee => {
+                    const codeJob =
+                        String(
+                            employee.codeJob || ""
+                        )
+                        .trim()
+                        .toUpperCase();
 
-            const key =
-                normalizeEmployeeName(
-                    employee.name
-                );
 
-            const totalPoin =
+                    return codeJob !== "SUPERVISOR";
 
-                calculateMonthlyPoint(
-                    monthlyScoreData.juli[key]
-                ) +
+                }
+            )
 
-                calculateMonthlyPoint(
-                    monthlyScoreData.agustus[key]
-                ) +
+            .map(
+                employee => {
 
-                calculateMonthlyPoint(
-                    monthlyScoreData.september[key]
-                ) +
+                    const key =
+                        normalizeEmployeeName(
+                            employee.name
+                        );
 
-                calculateMonthlyPoint(
-                    monthlyScoreData.oktober[key]
-                ) +
 
-                calculateMonthlyPoint(
-                    monthlyScoreData.november[key]
-                ) +
+                    const totalPoin =
 
-                calculateMonthlyPoint(
-                    monthlyScoreData.desember[key]
-                );
+                        calculateMonthlyPoint(
+                            monthlyScoreData
+                                .juli[key]
+                        ) +
 
-            return {
-                ...employee,
-                totalPoin
-            };
+                        calculateMonthlyPoint(
+                            monthlyScoreData
+                                .agustus[key]
+                        ) +
 
-        })
-        .sort(
-            (a, b) =>
-                b.totalPoin - a.totalPoin
-        );
+                        calculateMonthlyPoint(
+                            monthlyScoreData
+                                .september[key]
+                        ) +
+
+                        calculateMonthlyPoint(
+                            monthlyScoreData
+                                .oktober[key]
+                        ) +
+
+                        calculateMonthlyPoint(
+                            monthlyScoreData
+                                .november[key]
+                        ) +
+
+                        calculateMonthlyPoint(
+                            monthlyScoreData
+                                .desember[key]
+                        );
+
+
+                    return {
+
+                        ...employee,
+
+                        totalPoin
+
+                    };
+
+                }
+            )
+
+            .sort(
+                (a,b) =>
+                    b.totalPoin -
+                    a.totalPoin
+            );
 
 
     const grid =
@@ -2740,14 +3502,14 @@ function renderSlide4() {
     grid.innerHTML = "";
 
 
-    if (
-        data.length === 0
-    ) {
+    if(data.length === 0){
 
         grid.innerHTML = `
+
             <div class="error">
                 Tidak ada data employee.
             </div>
+
         `;
 
         return;
@@ -2773,37 +3535,31 @@ function renderSlide4() {
                 "rank-card";
 
 
-            if (
-                rank === 1
-            ) {
+            if(rank === 1){
 
                 rankClass +=
                     " rank-1";
 
             }
 
-            else if (
-                rank === 2
-            ) {
+            else if(rank === 2){
 
                 rankClass +=
                     " rank-2";
 
             }
 
-            else if (
-                rank === 3
-            ) {
+            else if(rank === 3){
 
                 rankClass +=
                     " rank-3";
 
             }
 
-            else if (
+            else if(
                 rank >
                 total - 5
-            ) {
+            ){
 
                 rankClass +=
                     " bottom-5";
@@ -2811,102 +3567,107 @@ function renderSlide4() {
             }
 
 
-            /* =====================================
-               NAMA KARYAWAN
-            ===================================== */
-
             const employeeKey =
                 normalizeEmployeeName(
                     employee.name
                 );
 
 
-            /* =====================================
-               DATA BULAN
-            ===================================== */
-
             const juliData =
-                monthlyScoreData.juli[
-                    employeeKey
-                ];
+                monthlyScoreData
+                    .juli[
+                        employeeKey
+                    ];
+
 
             const agustusData =
-                monthlyScoreData.agustus[
-                    employeeKey
-                ];
+                monthlyScoreData
+                    .agustus[
+                        employeeKey
+                    ];
+
 
             const septemberData =
-                monthlyScoreData.september[
-                    employeeKey
-                ];
+                monthlyScoreData
+                    .september[
+                        employeeKey
+                    ];
+
 
             const oktoberData =
-                monthlyScoreData.oktober[
-                    employeeKey
-                ];
+                monthlyScoreData
+                    .oktober[
+                        employeeKey
+                    ];
+
 
             const novemberData =
-                monthlyScoreData.november[
-                    employeeKey
-                ];
+                monthlyScoreData
+                    .november[
+                        employeeKey
+                    ];
+
 
             const desemberData =
-                monthlyScoreData.desember[
-                    employeeKey
-                ];
+                monthlyScoreData
+                    .desember[
+                        employeeKey
+                    ];
 
-
-            /* =====================================
-               NILAI ACH UNTUK TAMPILAN
-            ===================================== */
 
             const juli =
                 juliData?.ach || "-";
 
+
             const agustus =
                 agustusData?.ach || "-";
+
 
             const september =
                 septemberData?.ach || "-";
 
+
             const oktober =
                 oktoberData?.ach || "-";
+
 
             const november =
                 novemberData?.ach || "-";
 
+
             const desember =
                 desemberData?.ach || "-";
 
-
-            /* =====================================
-               HITUNG POIN SETIAP BULAN
-            ===================================== */
 
             const poinJuli =
                 calculateMonthlyPoint(
                     juliData
                 );
 
+
             const poinAgustus =
                 calculateMonthlyPoint(
                     agustusData
                 );
+
 
             const poinSeptember =
                 calculateMonthlyPoint(
                     septemberData
                 );
 
+
             const poinOktober =
                 calculateMonthlyPoint(
                     oktoberData
                 );
 
+
             const poinNovember =
                 calculateMonthlyPoint(
                     novemberData
                 );
+
 
             const poinDesember =
                 calculateMonthlyPoint(
@@ -2914,11 +3675,8 @@ function renderSlide4() {
                 );
 
 
-            /* =====================================
-               TOTAL SEMUA POIN
-            ===================================== */
-
             const totalPoin =
+
                 poinJuli +
                 poinAgustus +
                 poinSeptember +
@@ -2926,97 +3684,71 @@ function renderSlide4() {
                 poinNovember +
                 poinDesember;
 
-            console.log(
-    "=============================="
-);
-
-console.log(
-    "KARYAWAN:",
-    employee.name
-);
-
-console.log(
-    "JULI:",
-    juliData,
-    "POIN:",
-    poinJuli
-);
-
-console.log(
-    "AGUSTUS:",
-    agustusData,
-    "POIN:",
-    poinAgustus
-);
-
-console.log(
-    "SEPTEMBER:",
-    septemberData,
-    "POIN:",
-    poinSeptember
-);
-
-console.log(
-    "OKTOBER:",
-    oktoberData,
-    "POIN:",
-    poinOktober
-);
-
-console.log(
-    "NOVEMBER:",
-    novemberData,
-    "POIN:",
-    poinNovember
-);
-
-console.log(
-    "DESEMBER:",
-    desemberData,
-    "POIN:",
-    poinDesember
-);
-
-console.log(
-    "TOTAL POIN:",
-    totalPoin
-);
-
-
-            /* =====================================
-               DEBUG
-            ===================================== */
 
             console.log(
-                `POIN ${employee.name}`,
-                {
-                    juli:
-                        poinJuli,
-
-                    agustus:
-                        poinAgustus,
-
-                    september:
-                        poinSeptember,
-
-                    oktober:
-                        poinOktober,
-
-                    november:
-                        poinNovember,
-
-                    desember:
-                        poinDesember,
-
-                    total:
-                        totalPoin
-                }
+                "=============================="
             );
 
 
-            /* =====================================
-               BUAT CARD
-            ===================================== */
+            console.log(
+                "KARYAWAN:",
+                employee.name
+            );
+
+
+            console.log(
+                "JULI:",
+                juliData,
+                "POIN:",
+                poinJuli
+            );
+
+
+            console.log(
+                "AGUSTUS:",
+                agustusData,
+                "POIN:",
+                poinAgustus
+            );
+
+
+            console.log(
+                "SEPTEMBER:",
+                septemberData,
+                "POIN:",
+                poinSeptember
+            );
+
+
+            console.log(
+                "OKTOBER:",
+                oktoberData,
+                "POIN:",
+                poinOktober
+            );
+
+
+            console.log(
+                "NOVEMBER:",
+                novemberData,
+                "POIN:",
+                poinNovember
+            );
+
+
+            console.log(
+                "DESEMBER:",
+                desemberData,
+                "POIN:",
+                poinDesember
+            );
+
+
+            console.log(
+                "TOTAL POIN:",
+                totalPoin
+            );
+
 
             const card =
                 document.createElement(
@@ -3069,8 +3801,8 @@ console.log(
                 </span>
 
                 <span class="score-point">
-    ${employee.totalPoin}
-</span>
+                    ${employee.totalPoin}
+                </span>
 
             `;
 
@@ -3083,6 +3815,8 @@ console.log(
     );
 
 }
+
+
 /* =====================================================
    RENDER CARDS
 ===================================================== */
@@ -3091,7 +3825,7 @@ function renderCards(
     gridId,
     data,
     type
-) {
+){
 
     const grid =
         document.getElementById(
@@ -3099,13 +3833,10 @@ function renderCards(
         );
 
 
-    grid.innerHTML =
-        "";
+    grid.innerHTML = "";
 
 
-    if (
-        data.length === 0
-    ) {
+    if(data.length === 0){
 
         grid.innerHTML = `
 
@@ -3138,37 +3869,31 @@ function renderCards(
                 "rank-card";
 
 
-            if (
-                rank === 1
-            ) {
+            if(rank === 1){
 
                 rankClass +=
                     " rank-1";
 
             }
 
-            else if (
-                rank === 2
-            ) {
+            else if(rank === 2){
 
                 rankClass +=
                     " rank-2";
 
             }
 
-            else if (
-                rank === 3
-            ) {
+            else if(rank === 3){
 
                 rankClass +=
                     " rank-3";
 
             }
 
-            else if (
+            else if(
                 rank >
                 total - 5
-            ) {
+            ){
 
                 rankClass +=
                     " bottom-5";
@@ -3179,27 +3904,20 @@ function renderCards(
             const changeInfo =
                 rankingData[index] || {
 
-                    change:
-                        "same",
+                    change:"same",
 
-                    changeText:
-                        "-"
+                    changeText:"-"
 
                 };
 
 
-            let valueHTML =
-                "";
+            let valueHTML = "";
 
 
-            /* =====================================
-               SLIDE 1
-            ===================================== */
-
-            if (
+            if(
                 type ===
                 "sales-ach"
-            ) {
+            ){
 
                 valueHTML = `
 
@@ -3220,46 +3938,38 @@ function renderCards(
             }
 
 
-            /* =====================================
-               SLIDE 2
-            ===================================== */
-
-            else if (
+            else if(
                 type ===
                 "proteksi"
-            ) {
+            ){
 
                 valueHTML = `
 
-    <span class="proteksi">
-        ${escapeHtml(
-            employee.proteksi || "-"
-        )}
-    </span>
+                    <span class="proteksi">
+                        ${escapeHtml(
+                            employee.proteksi || "-"
+                        )}
+                    </span>
 
-`;
+                `;
 
             }
 
 
-            /* =====================================
-               SLIDE 3
-            ===================================== */
-
-            else if (
+            else if(
                 type ===
                 "transaksi"
-            ) {
+            ){
 
                 valueHTML = `
 
-    <span class="transaksi">
-        ${escapeHtml(
-            employee.trx || "-"
-        )}
-    </span>
+                    <span class="transaksi">
+                        ${escapeHtml(
+                            employee.trx || "-"
+                        )}
+                    </span>
 
-`;
+                `;
 
             }
 
@@ -3312,73 +4022,84 @@ function renderCards(
 /* =====================================================
    PARSE NUMBER
 ===================================================== */
-function parseNumber(value) {
 
-    if (
+function parseNumber(value){
+
+    if(
         value === null ||
         value === undefined ||
         value === ""
-    ) {
+    ){
+
         return 0;
+
     }
 
-    if (
+
+    if(
         typeof value === "number"
-    ) {
+    ){
+
         return value;
+
     }
+
 
     let text =
         String(value)
             .trim()
-            .replace(/\u00A0/g, " ")
-            .replace(/%/g, "")
-            .replace(/Rp/gi, "")
-            .replace(/\s/g, "");
+            .replace(
+                /\u00A0/g,
+                " "
+            )
+            .replace(
+                /%/g,
+                ""
+            )
+            .replace(
+                /Rp/gi,
+                ""
+            )
+            .replace(
+                /\s/g,
+                ""
+            );
 
-    if (text === "" || text === "-") {
+
+    if(
+        text === "" ||
+        text === "-"
+    ){
+
         return 0;
+
     }
 
-    /*
-       FORMAT:
-       95,5
-       95.5
-       1.250
-       250.000
-       1.250,50
-    */
 
-    if (
+    if(
         text.includes(",") &&
         text.includes(".")
-    ) {
-
-        /*
-           Contoh:
-           1.250,50
-           menjadi
-           1250.50
-        */
+    ){
 
         text =
             text
-                .replace(/\./g, "")
+                .replace(/\./g,"")
                 .replace(",", ".");
 
     }
 
-    else if (
+    else if(
         text.includes(",")
-    ) {
+    ){
 
         const parts =
             text.split(",");
 
-        if (
+
+        if(
             parts.length === 2 &&
             parts[1].length <= 2
-        ) {
+        ){
 
             text =
                 parts[0] +
@@ -3387,67 +4108,62 @@ function parseNumber(value) {
 
         }
 
-        else {
+        else{
 
             text =
-                text.replace(/,/g, "");
+                text.replace(
+                    /,/g,
+                    ""
+                );
 
         }
 
     }
 
-    else if (
+    else if(
         text.includes(".")
-    ) {
+    ){
 
         const parts =
             text.split(".");
 
-        /*
-           95.5
-           102.5
-        */
 
-        if (
+        if(
             parts.length === 2 &&
             parts[1].length <= 2
-        ) {
-
-            // tetap sebagai desimal
+        ){
 
         }
 
-        /*
-           1.250
-           250.000
-        */
-
-        else {
+        else{
 
             text =
-                text.replace(/\./g, "");
+                text.replace(
+                    /\./g,
+                    ""
+                );
 
         }
 
     }
 
+
     const number =
         parseFloat(text);
+
 
     return isNaN(number)
         ? 0
         : number;
 
 }
-    
+
 
 /* =====================================================
    ESCAPE HTML
 ===================================================== */
 
-function escapeHtml(
-    text
-) {
+function escapeHtml(text){
 
     const div =
         document.createElement(
@@ -3471,7 +4187,7 @@ function escapeHtml(
 function showError(
     gridId,
     message
-) {
+){
 
     const grid =
         document.getElementById(
@@ -3506,7 +4222,7 @@ function showError(
    NEXT SLIDE
 ===================================================== */
 
-function nextSlide() {
+function nextSlide(){
 
     document
         .getElementById(
@@ -3518,13 +4234,18 @@ function nextSlide() {
             "active"
         );
 
+
     currentSlide++;
 
-    if (
-        currentSlide > 4
-    ) {
+
+    if(
+        currentSlide > 5
+    ){
+
         currentSlide = 1;
+
     }
+
 
     document
         .getElementById(
@@ -3536,88 +4257,145 @@ function nextSlide() {
             "active"
         );
 
+
     updateSlideTabs();
+
 }
+
+
+/* =====================================================
+   UPDATE TAB
+===================================================== */
 
 function updateSlideTabs(){
 
     document
-        .querySelectorAll('.slide-tab')
-        .forEach(tab =>
-            tab.classList.remove('active')
+        .querySelectorAll(
+            '.slide-tab'
+        )
+        .forEach(
+            tab =>
+                tab.classList.remove(
+                    'active'
+                )
         );
+
 
     const activeTab =
         document.querySelector(
             `.slide-tab[data-slide="${currentSlide}"]`
         );
 
+
     if(activeTab){
-        activeTab.classList.add('active');
-    }
+
+        activeTab.classList.add(
+            'active'
+        );
 
     }
 
-document
-    .querySelectorAll('.slide-tab')
-    .forEach(tab => {
-
-        tab.style.cursor = 'pointer';
-
-        tab.addEventListener('click', () => {
-
-            const targetSlide =
-                parseInt(
-                    tab.dataset.slide
-                );
-
-            if(targetSlide === currentSlide){
-                return;
-            }
-
-            document
-                .getElementById(
-                    "slide" + currentSlide
-                )
-                .classList
-                .remove("active");
-
-            currentSlide = targetSlide;
-
-            document
-                .getElementById(
-                    "slide" + currentSlide
-                )
-                .classList
-                .add("active");
-
-            updateSlideTabs();
-
-            startSlideTimer(); // reset 20 detik
-
-        });
-
-    });
+}
 
 
 /* =====================================================
-   SLIDE SETIAP 5 DETIK
+   TAB CLICK
+===================================================== */
+
+document
+    .querySelectorAll(
+        '.slide-tab'
+    )
+    .forEach(
+        tab => {
+
+            tab.style.cursor =
+                'pointer';
+
+
+            tab.addEventListener(
+                'click',
+                () => {
+
+                    const targetSlide =
+                        parseInt(
+                            tab.dataset.slide
+                        );
+
+
+                    if(
+                        targetSlide ===
+                        currentSlide
+                    ){
+
+                        return;
+
+                    }
+
+
+                    document
+                        .getElementById(
+                            "slide" +
+                            currentSlide
+                        )
+                        .classList
+                        .remove(
+                            "active"
+                        );
+
+
+                    currentSlide =
+                        targetSlide;
+
+
+                    document
+                        .getElementById(
+                            "slide" +
+                            currentSlide
+                        )
+                        .classList
+                        .add(
+                            "active"
+                        );
+
+
+                    updateSlideTabs();
+
+
+                    startSlideTimer();
+
+                }
+            );
+
+        }
+    );
+
+
+/* =====================================================
+   SLIDE TIMER
 ===================================================== */
 
 let slideTimer;
 
+
 function startSlideTimer(){
 
-    clearInterval(slideTimer);
-
-    slideTimer = setInterval(
-        nextSlide,
-        SLIDE_DURATION
+    clearInterval(
+        slideTimer
     );
+
+
+    slideTimer =
+        setInterval(
+            nextSlide,
+            SLIDE_DURATION
+        );
 
 }
 
+
 startSlideTimer();
+
 
 /* =====================================================
    LOAD PERTAMA
@@ -3627,7 +4405,8 @@ loadData();
 
 
 /* =====================================================
-   UPDATE DATA SETIAP 30 DETIK
+   UPDATE DATA
+   60 DETIK
 ===================================================== */
 
 setInterval(
@@ -3635,43 +4414,84 @@ setInterval(
     60000
 );
 
-function updateClock() {
 
-    const now = new Date();
+/* =====================================================
+   CLOCK
+===================================================== */
+
+function updateClock(){
+
+    const now =
+        new Date();
+
 
     const hours =
-        String(now.getHours()).padStart(2, '0');
+        String(
+            now.getHours()
+        ).padStart(
+            2,
+            '0'
+        );
+
 
     const minutes =
-        String(now.getMinutes()).padStart(2, '0');
+        String(
+            now.getMinutes()
+        ).padStart(
+            2,
+            '0'
+        );
+
 
     const seconds =
-        String(now.getSeconds()).padStart(2, '0');
+        String(
+            now.getSeconds()
+        ).padStart(
+            2,
+            '0'
+        );
+
 
     document.getElementById(
         'realtimeClock'
     ).textContent =
+
         `${hours}:${minutes}:${seconds}`;
 
 }
 
+
 updateClock();
+
 
 setInterval(
     updateClock,
     1000
 );
 
-function updateDate() {
 
-    const now = new Date();
+/* =====================================================
+   DATE
+===================================================== */
+
+function updateDate(){
+
+    const now =
+        new Date();
+
 
     const options = {
-        weekday: 'long',
-        day: 'numeric',
-        month: 'long',
-        year: 'numeric'
+
+        weekday:'long',
+
+        day:'numeric',
+
+        month:'long',
+
+        year:'numeric'
+
     };
+
 
     const date =
         now.toLocaleDateString(
@@ -3679,22 +4499,37 @@ function updateDate() {
             options
         );
 
+
     document.getElementById(
         'realtimeDate'
-    ).textContent = date;
+    ).textContent =
+        date;
 
 }
 
+
 updateDate();
+
 
 setInterval(
     updateDate,
     1000
 );
 
-setTimeout(function autoReload() {
-    location.reload();
-}, 120000);
+
+/* =====================================================
+   AUTO RELOAD 2 MENIT
+===================================================== */
+
+setTimeout(
+    function autoReload(){
+
+        location.reload();
+
+    },
+    120000
+);
+
 </script>
 
 </body>
