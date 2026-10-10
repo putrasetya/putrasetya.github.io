@@ -1,300 +1,1070 @@
 <!DOCTYPE html>
-
 <html lang="id">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Sales Control Daily</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
+   
 <style>
-*{box-sizing:border-box}
-
 body{
-margin:0;font-family:Poppins,sans-serif;background:#f1f5f9;
-width:100%;height:100vh;min-height:100vh;
-display:flex;justify-content:center;align-items:center;
-padding:15px 15px 105px;overflow:hidden;
+margin:0;
+font-family:Poppins,sans-serif;
+background:#f1f5f9;
+
+width:100%;
+height:100vh;
+min-height:100vh;
+
+display:flex;
+justify-content:center;
+align-items:center;
+
+padding:15px;
+padding-bottom:100px;
+
+box-sizing:border-box;
+
+overflow:hidden;
+
 overscroll-behavior:none;
 }
 
+/* CARD */
 .card{
-width:100%;max-width:950px;background:#fff;border-radius:24px;
-padding:25px;max-height:calc(100vh - 130px);overflow:hidden;
-box-shadow:0 10px 30px rgba(0,0,0,.08),0 2px 10px rgba(0,0,0,.05);
+width:100%;
+max-width:950px;
+
+background:#fff;
+border-radius:24px;
+
+padding:25px;
+
+box-sizing:border-box;
+
+max-height:calc(100vh - 130px);
+
+overflow:hidden;
+
+box-shadow:
+0 10px 30px rgba(0,0,0,.08),
+0 2px 10px rgba(0,0,0,.05);
 }
 
-h2{text-align:center;margin-bottom:10px;font-size:28px;font-weight:700;color:#0f172a;letter-spacing:.5px}
+h2{
+text-align:center;
+margin-bottom:10px;
+font-size:28px;
+font-weight:700;
+color:#0f172a;
+letter-spacing:.5px;
+}
 
+/* INFO */
 .info{
-display:flex;flex-direction:column;gap:8px;text-align:left;font-size:14px;
-margin-bottom:20px;padding:16px 18px;background:#f8fafc;border-radius:14px;
-color:#334155;box-shadow:0 2px 8px rgba(0,0,0,.05)
+display:flex;
+flex-direction:column;
+gap:8px;
+text-align:left;
+font-size:14px;
+margin-bottom:20px;
+padding:16px 18px;
+background:#f8fafc;
+border-radius:14px;
+color:#334155;
+box-shadow:0 2px 8px rgba(0,0,0,.05);
 }
-.info div{display:grid;grid-template-columns:90px 1fr;align-items:center;gap:10px}
-.info label{font-weight:600;color:#64748b}
-.info label::after{content:":";float:right;margin-right:10px}
-.info span{font-weight:700;color:#0f172a}
 
-.palette{display:flex;justify-content:center;gap:15px;margin:15px 0}
-.color-item{display:flex;flex-direction:column;align-items:center;gap:8px}
-.color-label{
-font-size:12px;font-weight:600;color:#475569;text-align:center;
-min-height:32px;display:flex;align-items:center;justify-content:center
+.info div{
+display:grid;
+grid-template-columns:90px 1fr;
+align-items:center;
+gap:10px;
 }
-.color-item:nth-child(1) .color-label{color:#16a34a}
-.color-item:nth-child(2) .color-label{color:#ca8a04}
-.color-item:nth-child(3) .color-label{color:#dc2626}
+
+.info label{
+font-weight:600;
+color:#64748b;
+}
+
+.info label::after{
+content:":";
+float:right;
+margin-right:10px;
+}
+
+.info span{
+font-weight:700;
+color:#0f172a;
+}
+
+
+/* PALETTE */
+.palette{
+display:flex;
+justify-content:center;
+gap:15px;
+margin:15px 0;
+}
+.color-item{
+display:flex;
+flex-direction:column;
+align-items:center;
+gap:8px;
+}
+
+.color-label{
+font-size:12px;
+font-weight:600;
+color:#475569;
+text-align:center;
+min-height:32px;
+display:flex;
+align-items:center;
+justify-content:center;
+}
+.color-item:nth-child(1) .color-label{
+color:#16a34a;
+}
+
+.color-item:nth-child(2) .color-label{
+color:#ca8a04;
+}
+
+.color-item:nth-child(3) .color-label{
+color:#dc2626;
+}
+
 
 .circle{
-width:48px;height:48px;border-radius:50%;cursor:pointer;transition:.2s;
-box-shadow:0 4px 12px rgba(0,0,0,.15);touch-action:none;
-user-select:none;-webkit-user-select:none
+width:48px;
+height:48px;
+border-radius:50%;
+cursor:pointer;
+transition:.2s;
+box-shadow:0 4px 12px rgba(0,0,0,.15);
 }
-.circle:hover{transform:scale(1.08)}
-.green{background:#22c55e}
-.yellow{background:#eab308}
-.red{background:#ef4444}
-.circle.active{transform:scale(1.15);border:4px solid #fff}
-.circle.green.active{box-shadow:0 0 0 3px #22c55e,0 0 20px rgba(34,197,94,.7)}
-.circle.yellow.active{box-shadow:0 0 0 3px #eab308,0 0 20px rgba(234,179,8,.7)}
-.circle.red.active{box-shadow:0 0 0 3px #ef4444,0 0 20px rgba(239,68,68,.7)}
 
-.weekdays{display:grid;grid-template-columns:repeat(7,1fr);gap:8px;margin-bottom:10px}
+.circle:hover{
+transform:scale(1.08);
+}
+
+.green{background:#22c55e;}
+.yellow{background:#eab308;}
+.red{background:#ef4444;}
+
+.circle.active{
+transform:scale(1.15);
+border:4px solid #fff;
+}
+.circle.green.active{
+box-shadow:
+0 0 0 3px #22c55e,
+0 0 20px rgba(34,197,94,.7);
+}
+
+.circle.yellow.active{
+box-shadow:
+0 0 0 3px #eab308,
+0 0 20px rgba(234,179,8,.7);
+}
+
+.circle.red.active{
+box-shadow:
+0 0 0 3px #ef4444,
+0 0 20px rgba(239,68,68,.7);
+}
+
+/* GRID */
+.weekdays{
+display:grid;
+grid-template-columns:repeat(7,1fr);
+gap:8px;
+margin-bottom:10px;
+}
+
 .weekdays div{
-text-align:center;font-size:13px;font-weight:700;color:#64748b;
-padding:8px 0;background:#f8fafc;border-radius:10px
+text-align:center;
+font-size:13px;
+font-weight:700;
+color:#64748b;
+padding:8px 0;
+background:#f8fafc;
+border-radius:10px;
 }
-.grid{display:grid;grid-template-columns:repeat(7,1fr);gap:8px}
-.day{
-height:60px;background:#f8fafc;border:none;border-radius:14px;
-position:relative;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,.06);transition:.2s
+   
+.grid{
+display:grid;
+grid-template-columns:repeat(7,1fr);
+gap:8px;
 }
-.day:hover{transform:translateY(-2px);box-shadow:0 8px 18px rgba(0,0,0,.12)}
-.date{position:absolute;top:6px;left:8px;font-size:12px;font-weight:600;color:#475569}
-.badge-container{position:absolute;bottom:5px;right:5px}
-.badge{width:22px;height:22px;border-radius:50%;box-shadow:0 4px 10px rgba(0,0,0,.2)}
-.badge.green{background:#22c55e}
-.badge.yellow{background:#eab308}
-.badge.red{background:#ef4444}
-.drag-ghost{pointer-events:none}
-.disabled-day{pointer-events:none}
-.today{border:3px solid #2563eb;box-shadow:0 0 0 2px rgba(37,99,235,.20)}
-.today .date{color:#2563eb;font-weight:700;font-size:14px}
 
-.modal,.custom-alert,.server-loading,.coming-soon-overlay,.incentive-overlay{
-position:fixed;inset:0;justify-content:center;align-items:center
+/* CELL */
+.day{
+height:60px;
+background:#f8fafc;
+border:none;
+border-radius:14px;
+position:relative;
+overflow:hidden;
+box-shadow:
+0 2px 8px rgba(0,0,0,.06);
+transition:.2s;
 }
+.day:hover{
+transform:translateY(-2px);
+box-shadow:
+0 8px 18px rgba(0,0,0,.12);
+}
+
+/* DATE */
+.date{
+position:absolute;
+top:6px;
+left:8px;
+font-size:12px;
+font-weight:600;
+color:#475569;
+}
+
+/* BADGE */
+.badge-container{
+position:absolute;
+bottom:5px;
+right:5px;
+}
+
+.badge{
+width:22px;
+height:22px;
+border-radius:50%;
+box-shadow:
+0 4px 10px rgba(0,0,0,.2);
+}
+
+.badge.green{background:#22c55e;}
+.badge.yellow{background:#eab308;}
+.badge.red{background:#ef4444;}
+
+.circle{
+touch-action:none;
+user-select:none;
+-webkit-user-select:none;
+}
+
+.drag-ghost{
+pointer-events:none;
+}
+
 .modal{
-display:none;background:rgba(0,0,0,.45);z-index:99999
+display:none;
+position:fixed;
+inset:0;
+background:rgba(0,0,0,.45);
+justify-content:center;
+align-items:center;
+z-index:99999;
 }
-.modal.show{display:flex}
-.modal-box{background:#fff;padding:20px;border-radius:16px;width:90%;max-width:320px}
-.modal-box h3{margin:0 0 15px;text-align:center;color:#0f172a}
+
+.modal.show{
+display:flex;
+}
+
+.modal-box{
+background:#fff;
+padding:20px;
+border-radius:16px;
+width:90%;
+max-width:320px;
+}
+
+.modal-box h3{
+margin:0 0 15px;
+text-align:center;
+color:#0f172a;
+}
+
 .modal-box input{
-width:100%;padding:12px;border:1px solid #cbd5e1;border-radius:10px;
-margin-bottom:15px
+width:100%;
+padding:12px;
+border:1px solid #cbd5e1;
+border-radius:10px;
+box-sizing:border-box;
+margin-bottom:15px;
 }
+
 .pin-display{
-height:55px;border:1px solid #cbd5e1;border-radius:12px;
-display:flex;justify-content:center;align-items:center;font-size:28px;
-letter-spacing:8px;font-weight:700;margin-bottom:15px;background:#f8fafc
+height:55px;
+border:1px solid #cbd5e1;
+border-radius:12px;
+display:flex;
+justify-content:center;
+align-items:center;
+font-size:28px;
+letter-spacing:8px;
+font-weight:700;
+margin-bottom:15px;
+background:#f8fafc;
 }
-.pin-display.placeholder{color:#94a3b8;font-size:16px;letter-spacing:0;font-weight:500}
-.keypad{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:15px}
-.key{height:55px;border:none;border-radius:12px;font-size:20px;font-weight:700;background:#f1f5f9;cursor:pointer}
-.key:active{transform:scale(.96)}
-.key-clear{background:#ef4444;color:white}
-.key-back{background:#64748b;color:white}
-.modal-actions{display:flex;gap:10px}
-.modal-actions button{flex:1;padding:12px;border:none;border-radius:10px;cursor:pointer;font-weight:600}
-.btn-cancel{background:#cbd5e1}
-.btn-approve{background:#22c55e;color:#fff}
+
+.pin-display.placeholder{
+color:#94a3b8;
+font-size:16px;
+letter-spacing:0;
+font-weight:500;
+}
+
+.keypad{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:10px;
+margin-bottom:15px;
+}
+
+.key{
+height:55px;
+border:none;
+border-radius:12px;
+font-size:20px;
+font-weight:700;
+background:#f1f5f9;
+cursor:pointer;
+}
+
+.key:active{
+transform:scale(.96);
+}
+
+.key-clear{
+background:#ef4444;
+color:white;
+}
+
+.key-back{
+background:#64748b;
+color:white;
+}
+
+.modal-actions{
+display:flex;
+gap:10px;
+}
+
+.modal-actions button{
+flex:1;
+padding:12px;
+border:none;
+border-radius:10px;
+cursor:pointer;
+font-weight:600;
+}
+
+.btn-cancel{
+background:#cbd5e1;
+}
+
+.btn-approve{
+background:#22c55e;
+color:#fff;
+}
+
+.disabled-day{
+  pointer-events: none;
+}
+
+.today{
+border:3px solid #2563eb;
+box-shadow:
+0 0 0 2px rgba(37,99,235,.20);
+}
+
+.today .date{
+color:#2563eb;
+font-weight:700;
+font-size:14px;
+}
 
 .custom-alert{
-display:none;background:rgba(15,23,42,.55);z-index:99999;
-backdrop-filter:blur(4px)
+position:fixed;
+inset:0;
+background:rgba(15,23,42,.55);
+display:none;
+justify-content:center;
+align-items:center;
+z-index:99999;
+backdrop-filter:blur(4px);
 }
-.custom-alert.show{display:flex}
+
+.custom-alert.show{
+display:flex;
+}
+
 .custom-alert-box{
-width:90%;max-width:320px;background:#fff;border-radius:20px;padding:25px;
-text-align:center;animation:popup .25s ease
+width:90%;
+max-width:320px;
+background:#fff;
+border-radius:20px;
+padding:25px;
+text-align:center;
+animation:popup .25s ease;
 }
+
 @keyframes popup{
-from{transform:scale(.9);opacity:0}
-to{transform:scale(1);opacity:1}
+from{
+transform:scale(.9);
+opacity:0;
 }
-.alert-icon{font-size:42px;margin-bottom:10px}
-.alert-title{font-size:20px;font-weight:700;color:#0f172a;margin-bottom:8px}
-.alert-message{font-size:14px;color:#64748b;margin-bottom:20px;line-height:1.5}
+to{
+transform:scale(1);
+opacity:1;
+}
+}
+
+.alert-icon{
+font-size:42px;
+margin-bottom:10px;
+}
+
+.alert-title{
+font-size:20px;
+font-weight:700;
+color:#0f172a;
+margin-bottom:8px;
+}
+
+.alert-message{
+font-size:14px;
+color:#64748b;
+margin-bottom:20px;
+line-height:1.5;
+}
+
 .alert-btn{
-width:100%;height:45px;border:none;border-radius:12px;
-background:#ef4444;color:#fff;font-weight:600;font-size:15px
+width:100%;
+height:45px;
+border:none;
+border-radius:12px;
+background:#ef4444;
+color:#fff;
+font-weight:600;
+font-size:15px;
 }
 
 .server-loading{
-display:none;background:rgba(15,23,42,.75);backdrop-filter:blur(6px);
-z-index:999999;pointer-events:all
+position:fixed;
+inset:0;
+background:rgba(15,23,42,.75);
+backdrop-filter:blur(6px);
+display:none;
+justify-content:center;
+align-items:center;
+z-index:999999;
+pointer-events:all;
 }
-.server-loading.show{display:flex}
-.server-box{text-align:center;color:#fff}
+
+.server-loading.show{
+display:flex;
+}
+
+.server-box{
+text-align:center;
+color:#fff;
+}
+
 .server-spinner{
-width:80px;height:80px;border:6px solid rgba(255,255,255,.15);
-border-top:6px solid #22c55e;border-radius:50%;
-animation:spin 1s linear infinite;margin:0 auto 20px;
-box-shadow:0 0 25px rgba(34,197,94,.5)
+width:80px;
+height:80px;
+border:6px solid rgba(255,255,255,.15);
+border-top:6px solid #22c55e;
+border-radius:50%;
+animation:spin 1s linear infinite;
+margin:0 auto 20px;
+box-shadow:
+0 0 25px rgba(34,197,94,.5);
 }
-@keyframes spin{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}
-.server-title{font-size:22px;font-weight:700;margin-bottom:10px}
-.server-status{font-size:15px;opacity:.9}
-.server-success .server-spinner{animation:none;border:none;width:auto;height:auto;font-size:80px;color:#22c55e}
+
+@keyframes spin{
+0%{transform:rotate(0deg);}
+100%{transform:rotate(360deg);}
+}
+
+.server-title{
+font-size:22px;
+font-weight:700;
+margin-bottom:10px;
+}
+
+.server-status{
+font-size:15px;
+opacity:.9;
+}
+
+.server-success .server-spinner{
+animation:none;
+border:none;
+width:auto;
+height:auto;
+font-size:80px;
+color:#22c55e;
+}
+   
+/* RESPONSIVE */
+@media(max-width:600px){
+
+body{
+padding:10px;
+padding-bottom:90px;
+
+height:100dvh;
+min-height:100dvh;
+
+overflow:hidden;
+}
+
+.card{
+width:100%;
+
+max-height:calc(100dvh - 105px);
+
+padding:16px;
+
+border-radius:20px;
+
+overflow:hidden;
+}
+
+h2{
+font-size:21px;
+margin-bottom:8px;
+}
+
+.info{
+padding:11px 13px;
+gap:5px;
+margin-bottom:8px;
+font-size:12px;
+}
+
+.info div{
+grid-template-columns:65px 1fr;
+gap:5px;
+}
+
+.palette{
+gap:10px;
+margin:8px 0;
+}
+
+.circle{
+width:38px;
+height:38px;
+}
+
+.color-label{
+font-size:10px;
+min-height:25px;
+}
+
+.weekdays{
+gap:4px;
+margin-bottom:5px;
+}
+
+.weekdays div{
+font-size:10px;
+padding:5px 0;
+border-radius:7px;
+}
+
+.grid{
+gap:4px;
+}
+
+.day{
+height:42px;
+border-radius:9px;
+}
+
+.date{
+top:4px;
+left:6px;
+font-size:10px;
+}
+
+.today .date{
+font-size:11px;
+}
+
+.badge-container{
+bottom:3px;
+right:3px;
+}
+
+.badge{
+width:16px;
+height:16px;
+}
+
+}
+
+@media(max-width:380px){
+
+.card{
+padding:12px;
+max-height:calc(100dvh - 95px);
+}
+
+h2{
+font-size:18px;
+}
+
+.info{
+padding:9px 10px;
+font-size:11px;
+}
+
+.palette{
+gap:7px;
+}
+
+.circle{
+width:34px;
+height:34px;
+}
+
+.day{
+height:36px;
+}
+
+.grid{
+gap:3px;
+}
+
+.weekdays{
+gap:3px;
+}
+
+}
+
+/* ==========================================
+BOTTOM TASKBAR - SALES CONTROL
+========================================== */
 
 .bottom-taskbar{
-position:fixed;left:50%;bottom:10px;transform:translateX(-50%);
-width:calc(100% - 24px);max-width:620px;height:72px;padding:6px 7px;
-display:grid;grid-template-columns:1fr 1fr 1.15fr 1fr 1fr;align-items:center;
-background:rgba(255,255,255,.94);border:1px solid rgba(255,255,255,.8);
-border-radius:24px;box-shadow:0 12px 35px rgba(15,23,42,.16),0 3px 10px rgba(15,23,42,.08);
-backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);z-index:99990
+position:fixed;
+left:50%;
+bottom:10px;
+transform:translateX(-50%);
+width:calc(100% - 24px);
+max-width:620px;
+height:72px;
+padding:6px 7px;
+box-sizing:border-box;
+
+display:grid;
+grid-template-columns:1fr 1fr 1.15fr 1fr 1fr;
+align-items:center;
+
+background:rgba(255,255,255,.94);
+border:1px solid rgba(255,255,255,.8);
+border-radius:24px;
+
+box-shadow:
+0 12px 35px rgba(15,23,42,.16),
+0 3px 10px rgba(15,23,42,.08);
+
+backdrop-filter:blur(18px);
+-webkit-backdrop-filter:blur(18px);
+
+z-index:99990;
 }
+
+/* ITEM */
 .taskbar-item{
-height:60px;display:flex;flex-direction:column;align-items:center;justify-content:center;
-gap:4px;text-decoration:none;color:#64748b;font-size:9px;font-weight:600;
-border-radius:17px;position:relative;-webkit-tap-highlight-color:transparent;
-transition:transform .18s ease,color .18s ease,background .18s ease
+height:60px;
+display:flex;
+flex-direction:column;
+align-items:center;
+justify-content:center;
+
+gap:4px;
+
+text-decoration:none;
+color:#64748b;
+
+font-size:9px;
+font-weight:600;
+
+border-radius:17px;
+
+position:relative;
+
+-webkit-tap-highlight-color:transparent;
+
+transition:
+transform .18s ease,
+color .18s ease,
+background .18s ease;
 }
-.taskbar-item i{font-size:20px;line-height:1}
-.taskbar-item span{line-height:1;white-space:nowrap}
-.taskbar-item:hover{color:#2563eb;background:rgba(37,99,235,.06)}
-.taskbar-item.active{color:#2563eb}
+
+.taskbar-item i{
+font-size:20px;
+line-height:1;
+}
+
+.taskbar-item span{
+line-height:1;
+white-space:nowrap;
+}
+
+/* HOVER */
+.taskbar-item:hover{
+color:#2563eb;
+background:rgba(37,99,235,.06);
+}
+
+/* ACTIVE */
+.taskbar-item.active{
+color:#2563eb;
+}
+
 .taskbar-item.active::before{
-content:"";position:absolute;top:4px;width:5px;height:5px;border-radius:50%;
-background:#2563eb;box-shadow:0 0 8px rgba(37,99,235,.55)
+content:"";
+
+position:absolute;
+top:4px;
+
+width:5px;
+height:5px;
+
+border-radius:50%;
+
+background:#2563eb;
+
+box-shadow:
+0 0 8px rgba(37,99,235,.55);
 }
+
+/* ==========================================
+TICKET CENTER
+========================================== */
+
 .taskbar-center{
-height:72px;margin-top:-25px;display:flex;flex-direction:column;
-align-items:center;justify-content:flex-end;gap:4px
+height:72px;
+margin-top:-25px;
+
+display:flex;
+flex-direction:column;
+align-items:center;
+justify-content:flex-end;
+
+gap:4px;
 }
+
 .taskbar-center .taskbar-icon{
-width:58px;height:58px;display:flex;align-items:center;justify-content:center;
-border-radius:50%;background:linear-gradient(145deg,#3b82f6,#2563eb);
-color:#fff;border:5px solid #fff;
-box-shadow:0 8px 20px rgba(37,99,235,.35),0 3px 8px rgba(15,23,42,.12);
-transition:transform .18s ease,box-shadow .18s ease
+width:58px;
+height:58px;
+
+display:flex;
+align-items:center;
+justify-content:center;
+
+border-radius:50%;
+
+background:linear-gradient(
+145deg,
+#3b82f6,
+#2563eb
+);
+
+color:#fff;
+
+border:5px solid #fff;
+
+box-shadow:
+0 8px 20px rgba(37,99,235,.35),
+0 3px 8px rgba(15,23,42,.12);
+
+transition:
+transform .18s ease,
+box-shadow .18s ease;
 }
-.taskbar-center .taskbar-icon i{font-size:27px}
-.taskbar-center span{font-size:9px;font-weight:700;color:#2563eb;line-height:1}
+
+.taskbar-center .taskbar-icon i{
+font-size:27px;
+}
+
+.taskbar-center span{
+font-size:9px;
+font-weight:700;
+color:#2563eb;
+line-height:1;
+}
+
+/* ACTIVE CENTER */
 .taskbar-center.active .taskbar-icon{
-background:linear-gradient(145deg,#2563eb,#1d4ed8);
-box-shadow:0 9px 24px rgba(37,99,235,.45),0 0 0 2px rgba(37,99,235,.08)
-}
-.taskbar-item:active{transform:scale(.92)}
-.taskbar-center:active .taskbar-icon{transform:scale(.91)}
+background:linear-gradient(
+145deg,
+#2563eb,
+#1d4ed8
+);
 
-.coming-soon-overlay{
-display:none;background:rgba(15,23,42,.55);backdrop-filter:blur(5px);
--webkit-backdrop-filter:blur(5px);z-index:999999;padding:20px
+box-shadow:
+0 9px 24px rgba(37,99,235,.45),
+0 0 0 2px rgba(37,99,235,.08);
 }
-.coming-soon-overlay.show{display:flex}
-.coming-soon-box{
-width:100%;max-width:320px;background:#fff;border-radius:24px;
-padding:28px 22px 22px;text-align:center;box-shadow:0 20px 50px rgba(0,0,0,.20);
-animation:comingSoonPopup .22s ease
-}
-@keyframes comingSoonPopup{
-from{transform:scale(.88);opacity:0}
-to{transform:scale(1);opacity:1}
-}
-.coming-soon-icon{
-width:64px;height:64px;margin:0 auto 15px;border-radius:50%;
-display:flex;align-items:center;justify-content:center;background:#eff6ff;color:#2563eb;font-size:28px
-}
-.coming-soon-title{font-size:20px;font-weight:700;color:#0f172a;margin-bottom:7px}
-.coming-soon-text{font-size:13px;color:#64748b;line-height:1.5;margin-bottom:20px}
-.coming-soon-btn{
-width:100%;height:45px;border:0;border-radius:12px;background:#2563eb;color:#fff;
-font-family:Poppins,sans-serif;font-size:14px;font-weight:600;cursor:pointer
-}
-.coming-soon-btn:active{transform:scale(.97)}
 
-.incentive-overlay{
-display:none;padding:20px;box-sizing:border-box;background:rgba(15,23,42,.58);
-backdrop-filter:blur(5px);-webkit-backdrop-filter:blur(5px);z-index:1000000
+/* TOUCH EFFECT */
+.taskbar-item:active{
+transform:scale(.92);
 }
-.incentive-overlay.show{display:flex}
-.incentive-box{
-width:100%;max-width:340px;box-sizing:border-box;padding:27px 22px 22px;
-border-radius:24px;background:#fff;text-align:center;
-box-shadow:0 22px 60px rgba(0,0,0,.24);animation:comingSoonPopup .22s ease
+
+.taskbar-center:active .taskbar-icon{
+transform:scale(.91);
 }
-.incentive-icon{
-width:66px;height:66px;margin:0 auto 14px;display:flex;align-items:center;
-justify-content:center;border-radius:50%;background:#dcfce7;color:#15803d;font-size:29px
+
+/* ==========================================
+SPACE AGAR TASKBAR TIDAK MENUTUP KONTEN
+========================================== */
+
+body{
+padding-bottom:105px;
 }
-.incentive-title{margin-bottom:8px;color:#0f172a;font-size:19px;font-weight:700}
-.incentive-subtitle{margin-bottom:9px;color:#64748b;font-size:12px}
-.incentive-amount{
-margin:7px 0 12px;color:#15803d;font-size:clamp(25px,7vw,32px);
-line-height:1.25;font-weight:700;overflow-wrap:anywhere
-}
-.incentive-message{margin-bottom:20px;color:#64748b;font-size:12px;line-height:1.5}
-.incentive-close{
-width:100%;height:45px;border:0;border-radius:12px;background:#2563eb;color:#fff;
-font-family:Poppins,sans-serif;font-size:14px;font-weight:600;cursor:pointer
-}
-.incentive-close:active{transform:scale(.98)}
+
+/* ==========================================
+MOBILE
+========================================== */
 
 @media(max-width:600px){
-body{padding:10px 10px 90px;height:100dvh;min-height:100dvh;overflow:hidden}
-.card{width:100%;max-height:calc(100dvh - 105px);padding:16px;border-radius:20px;overflow:hidden}
-h2{font-size:21px;margin-bottom:8px}
-.info{padding:11px 13px;gap:5px;margin-bottom:8px;font-size:12px}
-.info div{grid-template-columns:65px 1fr;gap:5px}
-.palette{gap:10px;margin:8px 0}
-.circle{width:38px;height:38px}
-.color-label{font-size:10px;min-height:25px}
-.weekdays{gap:4px;margin-bottom:5px}
-.weekdays div{font-size:10px;padding:5px 0;border-radius:7px}
-.grid{gap:4px}
-.day{height:42px;border-radius:9px}
-.date{top:4px;left:6px;font-size:10px}
-.today .date{font-size:11px}
-.badge-container{bottom:3px;right:3px}
-.badge{width:16px;height:16px}
-.bottom-taskbar{width:calc(100% - 16px);height:70px;bottom:8px;border-radius:22px;padding:5px 4px}
-.taskbar-item{height:58px;gap:4px;font-size:8.5px}
-.taskbar-item i{font-size:19px}
-.taskbar-center{height:72px;margin-top:-26px}
-.taskbar-center .taskbar-icon{width:56px;height:56px;border-width:5px}
-.taskbar-center .taskbar-icon i{font-size:26px}
-.taskbar-center span{font-size:8.5px}
-}
-@media(max-width:380px){
-.card{padding:12px;max-height:calc(100dvh - 95px)}
-h2{font-size:18px}
-.info{padding:9px 10px;font-size:11px}
-.palette{gap:7px}
-.circle{width:34px;height:34px}
-.day{height:36px}
-.grid,.weekdays{gap:3px}
-}
-@media(max-width:360px){
-.bottom-taskbar{width:calc(100% - 10px);bottom:5px}
-.taskbar-item{font-size:7.5px}
-.taskbar-item i{font-size:18px}
-.taskbar-center .taskbar-icon{width:53px;height:53px}
-.taskbar-center .taskbar-icon i{font-size:24px}
-.taskbar-center span{font-size:7.5px}
-}
-</style>
 
+.bottom-taskbar{
+width:calc(100% - 16px);
+height:70px;
+
+bottom:8px;
+
+border-radius:22px;
+
+padding:5px 4px;
+}
+
+.taskbar-item{
+height:58px;
+gap:4px;
+
+font-size:8.5px;
+}
+
+.taskbar-item i{
+font-size:19px;
+}
+
+.taskbar-center{
+height:72px;
+margin-top:-26px;
+}
+
+.taskbar-center .taskbar-icon{
+width:56px;
+height:56px;
+border-width:5px;
+}
+
+.taskbar-center .taskbar-icon i{
+font-size:26px;
+}
+
+.taskbar-center span{
+font-size:8.5px;
+}
+
+}
+
+/* ==========================================
+VERY SMALL PHONE
+========================================== */
+
+@media(max-width:360px){
+
+.bottom-taskbar{
+width:calc(100% - 10px);
+bottom:5px;
+}
+
+.taskbar-item{
+font-size:7.5px;
+}
+
+.taskbar-item i{
+font-size:18px;
+}
+
+.taskbar-center .taskbar-icon{
+width:53px;
+height:53px;
+}
+
+.taskbar-center .taskbar-icon i{
+font-size:24px;
+}
+
+.taskbar-center span{
+font-size:7.5px;
+}
+
+}
+
+/* ==========================================
+   COMING SOON POPUP
+   ========================================== */
+
+.coming-soon-overlay{
+position:fixed;
+inset:0;
+background:rgba(15,23,42,.55);
+backdrop-filter:blur(5px);
+-webkit-backdrop-filter:blur(5px);
+
+display:none;
+align-items:center;
+justify-content:center;
+
+z-index:999999;
+padding:20px;
+box-sizing:border-box;
+}
+
+.coming-soon-overlay.show{
+display:flex;
+}
+
+.coming-soon-box{
+width:100%;
+max-width:320px;
+
+background:#fff;
+border-radius:24px;
+
+padding:28px 22px 22px;
+
+text-align:center;
+
+box-shadow:
+0 20px 50px rgba(0,0,0,.20);
+
+animation:comingSoonPopup .22s ease;
+}
+
+@keyframes comingSoonPopup{
+from{
+transform:scale(.88);
+opacity:0;
+}
+to{
+transform:scale(1);
+opacity:1;
+}
+}
+
+.coming-soon-icon{
+width:64px;
+height:64px;
+
+margin:0 auto 15px;
+
+border-radius:50%;
+
+display:flex;
+align-items:center;
+justify-content:center;
+
+background:#eff6ff;
+color:#2563eb;
+
+font-size:28px;
+}
+
+.coming-soon-title{
+font-size:20px;
+font-weight:700;
+color:#0f172a;
+
+margin-bottom:7px;
+}
+
+.coming-soon-text{
+font-size:13px;
+color:#64748b;
+
+line-height:1.5;
+
+margin-bottom:20px;
+}
+
+.coming-soon-btn{
+width:100%;
+height:45px;
+
+border:0;
+border-radius:12px;
+
+background:#2563eb;
+color:#fff;
+
+font-family:Poppins,sans-serif;
+font-size:14px;
+font-weight:600;
+
+cursor:pointer;
+}
+
+.coming-soon-btn:active{
+transform:scale(.97);
+}
+
+/* POPUP PEROLEHAN INSENTIF */
+.incentive-overlay{position:fixed;inset:0;display:none;align-items:center;justify-content:center;padding:20px;box-sizing:border-box;background:rgba(15,23,42,.58);backdrop-filter:blur(5px);-webkit-backdrop-filter:blur(5px);z-index:1000000}
+.incentive-overlay.show{display:flex}
+.incentive-box{width:100%;max-width:340px;box-sizing:border-box;padding:27px 22px 22px;border-radius:24px;background:#fff;text-align:center;box-shadow:0 22px 60px rgba(0,0,0,.24);animation:comingSoonPopup .22s ease}
+.incentive-icon{width:66px;height:66px;margin:0 auto 14px;display:flex;align-items:center;justify-content:center;border-radius:50%;background:#dcfce7;color:#15803d;font-size:29px}
+.incentive-title{margin-bottom:8px;color:#0f172a;font-size:19px;font-weight:700}
+.incentive-subtitle{margin-bottom:9px;color:#64748b;font-size:12px}
+.incentive-amount{margin:7px 0 12px;color:#15803d;font-size:clamp(25px,7vw,32px);line-height:1.25;font-weight:700;overflow-wrap:anywhere}
+.incentive-message{margin-bottom:20px;color:#64748b;font-size:12px;line-height:1.5}
+.incentive-close{width:100%;height:45px;border:0;border-radius:12px;background:#2563eb;color:#fff;font-family:Poppins,sans-serif;font-size:14px;font-weight:600;cursor:pointer}
+.incentive-close:active{transform:scale(.98)}
+
+/* POPUP PENCARIAN INSENTIF - FITUR BARU */
+.incentive-search-overlay{position:fixed;inset:0;display:none;align-items:center;justify-content:center;padding:16px;box-sizing:border-box;background:rgba(15,23,42,.62);backdrop-filter:blur(5px);-webkit-backdrop-filter:blur(5px);z-index:1000001}
+.incentive-search-overlay.show{display:flex}
+.incentive-search-box{width:100%;max-width:430px;max-height:min(82dvh,700px);overflow:auto;box-sizing:border-box;padding:24px 20px 20px;border-radius:24px;background:#fff;box-shadow:0 22px 60px rgba(0,0,0,.25);animation:comingSoonPopup .22s ease;text-align:left}
+.incentive-search-heading{display:flex;align-items:center;gap:12px;margin-bottom:7px}
+.incentive-search-heading-icon{flex:0 0 46px;width:46px;height:46px;border-radius:15px;display:flex;align-items:center;justify-content:center;background:#dbeafe;color:#1d4ed8;font-size:20px}
+.incentive-search-title{font-size:19px;line-height:1.25;font-weight:700;color:#0f172a}
+.incentive-search-subtitle{font-size:12px;color:#64748b;line-height:1.45;margin:0 0 18px}
+.incentive-search-label{display:block;font-size:12px;font-weight:700;color:#334155;margin:0 0 7px}
+.incentive-search-input{width:100%;height:48px;box-sizing:border-box;border:1.5px solid #cbd5e1;border-radius:13px;padding:0 14px;font-family:inherit;font-size:15px;color:#0f172a;outline:none;background:#fff}
+.incentive-search-input:focus{border-color:#2563eb;box-shadow:0 0 0 3px rgba(37,99,235,.12)}
+.incentive-search-status{font-size:12px;color:#64748b;line-height:1.5;margin:12px 0}
+.incentive-search-results{display:grid;gap:10px;margin-top:12px}
+.incentive-search-result{border:1px solid #e2e8f0;border-radius:15px;padding:14px;background:#f8fafc}
+.incentive-search-article{font-size:12px;font-weight:700;color:#2563eb;letter-spacing:.3px;margin-bottom:5px;overflow-wrap:anywhere}
+.incentive-search-description{font-size:14px;font-weight:600;color:#0f172a;line-height:1.4;margin-bottom:11px;overflow-wrap:anywhere}
+.incentive-search-value-label{font-size:11px;color:#64748b;margin-bottom:3px}
+.incentive-search-value{font-size:22px;font-weight:800;color:#15803d;line-height:1.25;overflow-wrap:anywhere}
+.incentive-search-close{width:100%;height:44px;border:0;border-radius:12px;background:#0f172a;color:#fff;font-family:inherit;font-size:14px;font-weight:600;margin-top:17px;cursor:pointer}
+.incentive-search-close:active{transform:scale(.98)}
+
+</style>
 </head>
 
 <body>
 
 <div class="card">
+
 <h2>SALES CONTROL DAILY</h2>
 
 <div class="info">
@@ -303,754 +1073,1147 @@ h2{font-size:18px}
 <div id="periode">Periode: -</div>
 </div>
 
+<!-- PALETTE -->
 <div class="palette">
+
 <div class="color-item">
 <div class="color-label">≥ 95%</div>
 <div class="circle green" data-color="green"></div>
 </div>
+
 <div class="color-item">
 <div class="color-label">94,99% - 85%</div>
 <div class="circle yellow" data-color="yellow"></div>
 </div>
+
 <div class="color-item">
 <div class="color-label">&lt; 85%</div>
 <div class="circle red" data-color="red"></div>
 </div>
+
 </div>
 
+<!-- GRID -->
 <div class="weekdays">
-<div>Sen</div><div>Sel</div><div>Rab</div><div>Kam</div>
-<div>Jum</div><div>Sab</div><div>Min</div>
+<div>Sen</div>
+<div>Sel</div>
+<div>Rab</div>
+<div>Kam</div>
+<div>Jum</div>
+<div>Sab</div>
+<div>Min</div>
 </div>
+
 <div class="grid" id="grid"></div>
+
 </div>
-
-<!-- MODAL APPROVAL PIN -->
-
-<div id="pinModal" class="modal">
-<div class="modal-box">
-<h3>Approval By Duty</h3>
-<div id="pinDisplay" class="pin-display placeholder">Masukkan PIN</div>
-<div class="keypad">
-<button class="key" onclick="addPin('1')">1</button>
-<button class="key" onclick="addPin('2')">2</button>
-<button class="key" onclick="addPin('3')">3</button>
-<button class="key" onclick="addPin('4')">4</button>
-<button class="key" onclick="addPin('5')">5</button>
-<button class="key" onclick="addPin('6')">6</button>
-<button class="key" onclick="addPin('7')">7</button>
-<button class="key" onclick="addPin('8')">8</button>
-<button class="key" onclick="addPin('9')">9</button>
-<button class="key key-clear" onclick="clearPin()">C</button>
-<button class="key" onclick="addPin('0')">0</button>
-<button class="key key-back" onclick="backPin()">⌫</button>
-</div>
-<div class="modal-actions">
-<button class="btn-cancel" onclick="closePinModal()">Cancel</button>
-<button class="btn-approve" onclick="approvePin()">Approve</button>
-</div>
-</div>
-</div>
-
-<!-- ALERT -->
-
-<div id="customAlert" class="custom-alert">
-<div class="custom-alert-box">
-<div class="alert-icon">⚠️</div>
-<div class="alert-title">PIN Salah</div>
-<div class="alert-message">PIN yang Anda masukkan tidak valid.</div>
-<button onclick="closeAlert()" class="alert-btn">OK</button>
-</div>
-</div>
-
-<!-- SERVER LOADING -->
-
-<div id="serverLoading" class="server-loading">
-<div class="server-box">
-<div id="serverIcon" class="server-spinner"></div>
-<div class="server-title">Mengirim Data</div>
-<div id="serverStatus" class="server-status">Menghubungi server...</div>
-</div>
-</div>
-
-<!-- POPUP UNDER DEVELOPMENT -->
-
-<div id="comingSoonPopup" class="coming-soon-overlay">
-<div class="coming-soon-box">
-<div class="coming-soon-icon"><i class="fa-solid fa-person-digging"></i></div>
-<div class="coming-soon-title">Under Development</div>
-<div class="coming-soon-text">
-Fitur ini sedang dalam pengembangan.<br>
-<strong>Coming Soon!</strong>
-</div>
-<button class="coming-soon-btn" onclick="closeComingSoon()">OK</button>
-</div>
-</div>
-
-<!-- POPUP PEROLEHAN INSENTIF -->
-
-<div id="incentivePopup" class="incentive-overlay" role="dialog" aria-modal="true" aria-labelledby="incentiveTitle">
-<div class="incentive-box">
-<div class="incentive-icon"><i class="fa-solid fa-sack-dollar"></i></div>
-<div class="incentive-title" id="incentiveTitle">Perolehan Insentif Anda</div>
-<div class="incentive-subtitle" id="incentiveIdentity">Memeriksa data sales...</div>
-<div class="incentive-amount" id="incentiveAmount">Memuat...</div>
-<div class="incentive-message" id="incentiveMessage">Mengambil data dari Monitoring Insentive Per Sales ID.</div>
-<button type="button" class="incentive-close" onclick="closeIncentivePopup()">Tutup</button>
-</div>
-</div>
-
-<!-- TASKBAR -->
-
-<nav class="bottom-taskbar">
-<a href="javascript:void(0)" class="taskbar-item coming-soon-menu">
-<i class="fa-solid fa-magnifying-glass"></i>
-<span>Pencarian</span>
-</a>
-
-<a href="javascript:void(0)" class="taskbar-item incentive-menu" id="incentiveMenu">
-<i class="fa-solid fa-rupiah-sign"></i>
-<span>Insentif</span>
-</a>
-
-<a href="reportsalesid.html" class="taskbar-item taskbar-center" data-page="reportsalesid.html">
-<div class="taskbar-icon"><i class="fa-solid fa-ticket"></i></div>
-<span>Tiket Pulang</span>
-</a>
-
-<a href="javascript:void(0)" class="taskbar-item coming-soon-menu">
-<i class="fa-solid fa-chart-simple"></i>
-<span>Statistik</span>
-</a>
-
-<a href="javascript:void(0)" class="taskbar-item coming-soon-menu">
-<i class="fa-solid fa-user"></i>
-<span>Profile</span>
-</a>
-</nav>
 
 <script>
-/* ==========================================
-   SESSION LOGIN
-   ========================================== */
 
-const API_URL = "https://script.google.com/macros/s/AKfycbwFvACNaZjeS8Ueuql78cm19Ha8YwlyytSA9xTQ3cxT4DAO9d6s7VlFdIuN2j9NFjPYgw/exec";
+/* =========================
+   SESSION LOGIN (TETAP)
+========================= */
+const API_URL =
+"https://script.google.com/macros/s/AKfycbwFvACNaZjeS8Ueuql78cm19Ha8YwlyytSA9xTQ3cxT4DAO9d6s7VlFdIuN2j9NFjPYgw/exec";
 
-let user = null;
-
-try {
-  user = JSON.parse(localStorage.getItem("user") || "null");
-} catch (error) {
-  console.error("Data login tidak valid:", error);
+const user = JSON.parse(localStorage.getItem("user"));
+   
+if(!user){
+window.location.href="login.html";
 }
 
-if (!user) {
-  window.location.href = "login.html";
-}
+document.getElementById("nik").innerHTML =
+"<label>NIK</label><span>" + user.nik + "</span>";
 
-if (user) {
-  document.getElementById("nik").innerHTML =
-    "<label>NIK</label><span></span>";
-  document.querySelector("#nik span").textContent = user.nik || "-";
+document.getElementById("nama").innerHTML =
+"<label>Nama</label><span>" + user.nama + "</span>";
 
-  document.getElementById("nama").innerHTML =
-    "<label>Nama</label><span></span>";
-  document.querySelector("#nama span").textContent = user.nama || "-";
-}
-
-/* ==========================================
+/* =========================
    PERIODE INDONESIA
-   ========================================== */
-
+========================= */
 const bulanID = [
-  "Januari","Februari","Maret","April","Mei","Juni",
-  "Juli","Agustus","September","Oktober","November","Desember"
+"Januari","Februari","Maret","April","Mei","Juni",
+"Juli","Agustus","September","Oktober","November","Desember"
 ];
 
 const now = new Date();
 
-const periode = bulanID[now.getMonth()] + " " + now.getFullYear();
+const periode =
+bulanID[now.getMonth()] +
+" " +
+now.getFullYear();
+  
 
 document.getElementById("periode").innerHTML =
-  "<label>Periode</label><span></span>";
-document.querySelector("#periode span").textContent = periode;
+"<label>Periode</label><span>" + periode + "</span>";
 
-/* ==========================================
-   GRID KALENDER
-   ========================================== */
+/* =========================
+   GRID
+========================= */
 
-const grid = document.getElementById("grid");
+const grid =
+document.getElementById("grid");
 
-const firstDay = new Date(now.getFullYear(), now.getMonth(), 1);
+/* HARI PERTAMA BULAN */
+const firstDay =
+new Date(
+now.getFullYear(),
+now.getMonth(),
+1
+);
 
-let startDay = firstDay.getDay();
-startDay = startDay === 0 ? 6 : startDay - 1;
+/* UBAH MINGGU DIMULAI SENIN */
+let startDay =
+firstDay.getDay();
 
-for (let i = 0; i < startDay; i++) {
-  const empty = document.createElement("div");
-  empty.style.visibility = "hidden";
-  grid.appendChild(empty);
+startDay =
+startDay === 0 ? 6 : startDay - 1;
+
+/* KOTAK KOSONG */
+for(let i=0;i<startDay;i++){
+
+const empty =
+document.createElement("div");
+
+empty.style.visibility="hidden";
+
+grid.appendChild(empty);
+
 }
 
-const totalDays = new Date(now.getFullYear(), now.getMonth() + 1, 0).getDate();
+/* JUMLAH HARI BULAN */
+const totalDays =
+new Date(
+now.getFullYear(),
+now.getMonth()+1,
+0
+).getDate();
+
+/* HARI INI */
 const todayDate = now.getDate();
 
-for (let i = 1; i <= totalDays; i++) {
-  const div = document.createElement("div");
-  div.className = "day";
-  div.dataset.day = i;
+/* BUAT TANGGAL */
+for(let i=1;i<=totalDays;i++){
 
-  if (i === todayDate) {
-    div.classList.add("today");
-  } else {
-    div.classList.add("disabled-day");
-  }
+const div =
+document.createElement("div");
 
-  div.innerHTML = '<span class="date">' + i +
-    '</span><div class="badge-container"></div>';
+div.className = "day";
+div.dataset.day = i;
 
-  grid.appendChild(div);
+/* CHECK HARI INI */
+const isToday = (i === todayDate);
+
+if(isToday){
+  div.classList.add("today");
+}else{
+  div.classList.add("disabled-day");
 }
 
-/* ==========================================
+div.innerHTML = `
+<span class="date">${i}</span>
+<div class="badge-container"></div>
+`;
+
+grid.appendChild(div);
+}
+
+
+/* =========================
    SELECT COLOR
-   ========================================== */
+========================= */
 
 let selectedColor = null;
 let pendingDay = null;
 let pendingColor = null;
 
-document.querySelectorAll(".circle").forEach(circle => {
-  circle.addEventListener("click", () => {
-    selectedColor = circle.dataset.color;
+document.querySelectorAll(".circle").forEach(circle=>{
 
-    document.querySelectorAll(".circle").forEach(c => {
-      c.classList.remove("active");
-    });
+circle.addEventListener("click",()=>{
 
-    circle.classList.add("active");
-  });
+selectedColor =
+circle.dataset.color;
+
+document
+.querySelectorAll(".circle")
+.forEach(c=>c.classList.remove("active"));
+
+circle.classList.add("active");
+
 });
 
-/* ==========================================
-   DRAG WARNA PADA LAYAR SENTUH
-   ========================================== */
+});
+
+/* =========================
+   TABLET GHOST DRAG
+========================= */
 
 let ghost = null;
 let dragColor = null;
 
-document.querySelectorAll(".circle").forEach(circle => {
-  circle.addEventListener("touchstart", function(e) {
-    const touch = e.touches[0];
-    dragColor = this.dataset.color;
+document.querySelectorAll(".circle").forEach(circle=>{
 
-    ghost = document.createElement("div");
-    ghost.className = "drag-ghost " + dragColor;
-    ghost.style.position = "fixed";
-    ghost.style.width = "40px";
-    ghost.style.height = "40px";
-    ghost.style.borderRadius = "50%";
-    ghost.style.pointerEvents = "none";
-    ghost.style.zIndex = "99999";
-    ghost.style.left = touch.clientX + "px";
-    ghost.style.top = touch.clientY + "px";
-    ghost.style.transform = "translate(-50%,-50%)";
-    ghost.style.boxShadow = "0 5px 15px rgba(0,0,0,.3)";
-    ghost.style.background =
-      dragColor === "green" ? "#22c55e" :
-      dragColor === "yellow" ? "#eab308" : "#ef4444";
+circle.addEventListener("touchstart",function(e){
 
-    document.body.appendChild(ghost);
-  }, { passive: true });
+const touch = e.touches[0];
+
+dragColor =
+this.dataset.color;
+
+ghost =
+document.createElement("div");
+
+ghost.className =
+"drag-ghost " + dragColor;
+
+ghost.style.position = "fixed";
+ghost.style.width = "40px";
+ghost.style.height = "40px";
+ghost.style.borderRadius = "50%";
+ghost.style.pointerEvents = "none";
+ghost.style.zIndex = "99999";
+ghost.style.left =
+touch.clientX + "px";
+ghost.style.top =
+touch.clientY + "px";
+ghost.style.transform =
+"translate(-50%,-50%)";
+ghost.style.boxShadow =
+"0 5px 15px rgba(0,0,0,.3)";
+
+if(dragColor==="green")
+ghost.style.background="#22c55e";
+
+if(dragColor==="yellow")
+ghost.style.background="#eab308";
+
+if(dragColor==="red")
+ghost.style.background="#ef4444";
+
+document.body.appendChild(ghost);
+
+},{passive:false});
+
 });
 
-document.addEventListener("touchmove", function(e) {
-  if (!ghost) return;
+document.addEventListener(
+"touchmove",
+function(e){
 
-  const touch = e.touches[0];
-  ghost.style.left = touch.clientX + "px";
-  ghost.style.top = touch.clientY + "px";
-}, { passive: true });
+if(!ghost) return;
 
-document.addEventListener("touchend", function(e) {
-  if (!ghost || !dragColor) return;
+const touch = e.touches[0];
 
-  const touch = e.changedTouches[0];
-  const target = document.elementFromPoint(touch.clientX, touch.clientY);
-  const day = target?.closest(".day");
+ghost.style.left =
+touch.clientX + "px";
 
-  if (day && !day.classList.contains("disabled-day")) {
-    pendingDay = day;
-    pendingColor = dragColor;
-    openPinModal();
-  }
+ghost.style.top =
+touch.clientY + "px";
 
-  ghost.remove();
-  ghost = null;
-  dragColor = null;
-});
+e.preventDefault();
 
-/* ==========================================
-   LOAD DATA KALENDER
-   ========================================== */
+},
+{passive:false}
+);
 
-async function loadSavedData() {
-  if (!user) return;
+document.addEventListener(
+"touchend",
+function(e){
 
-  const url = API_URL +
-    "?action=getUserMonthData" +
-    "&nik=" + encodeURIComponent(user.nik || "") +
-    "&periode=" + encodeURIComponent(periode);
+if(!ghost || !dragColor)
+return;
 
-  try {
-    const res = await fetch(url);
-    const data = await res.json();
+const touch =
+e.changedTouches[0];
 
-    if (!data.days) return;
+const target =
+document.elementFromPoint(
+touch.clientX,
+touch.clientY
+);
 
-    Object.entries(data.days).forEach(([day, color]) => {
-      const cell = document.querySelector('.day[data-day="' + day + '"]');
+const day =
+target?.closest(".day");
 
-      if (cell && ["green", "yellow", "red"].includes(color)) {
-        cell.querySelector(".badge-container").innerHTML =
-          '<div class="badge ' + color + '"></div>';
-      }
-    });
-  } catch (err) {
-    console.error("Gagal memuat data kalender:", err);
-  }
+
+if(day && dragColor){
+
+  if(day.classList.contains("disabled-day")) return;
+
+  pendingDay = day;
+  pendingColor = dragColor;
+
+  openPinModal();
+}
+ghost.remove();
+
+ghost = null;
+dragColor = null;
+
+}
+);
+
+/* =========================
+   SET BADGE
+========================= */
+
+function setBadge(day,color){
+
+const container =
+day.querySelector(
+".badge-container"
+);
+
+container.innerHTML = "";
+
+const badge =
+document.createElement("div");
+
+badge.className =
+"badge " + color;
+
+container.appendChild(
+badge
+);
+
 }
 
-/* ==========================================
-   PIN
-   ========================================== */
+/* ============================
+FUNCTION LOAD DATA CARD UNTUK DITAMPILKAN DI USER
+=============================== */
+
+async function loadSavedData(){
+
+const url =
+"https://script.google.com/macros/s/AKfycbwFvACNaZjeS8Ueuql78cm19Ha8YwlyytSA9xTQ3cxT4DAO9d6s7VlFdIuN2j9NFjPYgw/exec"
++ "?action=getUserMonthData"
++ "&nik=" + encodeURIComponent(user.nik)
++ "&periode=" + encodeURIComponent(periode);
+
+try{
+
+const res = await fetch(url);
+
+const data = await res.json();
+
+if(!data.days) return;
+
+Object.entries(data.days)
+.forEach(([day,color])=>{
+
+const cell =
+document.querySelector(
+`.day[data-day="${day}"]`
+);
+
+if(cell){
+
+const container =
+cell.querySelector(
+".badge-container"
+);
+
+container.innerHTML =
+`<div class="badge ${color}"></div>`;
+
+}
+
+});
+
+}catch(err){
+
+console.error(err);
+
+}
+
+}
 
 let pinValue = "";
 
-function updatePinDisplay() {
-  const display = document.getElementById("pinDisplay");
+function updatePinDisplay(){
 
-  if (pinValue.length) {
-    display.textContent = "•".repeat(pinValue.length);
-    display.classList.remove("placeholder");
-  } else {
-    display.textContent = "Masukkan PIN";
-    display.classList.add("placeholder");
-  }
+const display =
+document.getElementById("pinDisplay");
+
+if(pinValue.length){
+
+display.innerHTML =
+"•".repeat(pinValue.length);
+
+display.classList.remove("placeholder");
+
+}else{
+
+display.innerHTML =
+"Masukkan PIN";
+
+display.classList.add("placeholder");
+
 }
 
-function addPin(num) {
-  if (pinValue.length >= 8) return;
-  pinValue += num;
-  updatePinDisplay();
 }
 
-function clearPin() {
-  pinValue = "";
-  updatePinDisplay();
+function addPin(num){
+
+if(pinValue.length >= 8)
+return;
+
+pinValue += num;
+
+updatePinDisplay();
+
 }
 
-function backPin() {
-  pinValue = pinValue.slice(0, -1);
-  updatePinDisplay();
+function clearPin(){
+
+pinValue = "";
+
+updatePinDisplay();
+
 }
 
-function showAlert(title, message) {
-  document.querySelector(".alert-title").textContent = title;
-  document.querySelector(".alert-message").textContent = message;
-  document.getElementById("customAlert").classList.add("show");
+function backPin(){
+
+pinValue = pinValue.slice(0,-1);
+
+updatePinDisplay();
+
 }
 
-function closeAlert() {
-  document.getElementById("customAlert").classList.remove("show");
+function showAlert(title,message){
+
+document.querySelector(".alert-title").textContent = title;
+
+document.querySelector(".alert-message").textContent = message;
+
+document
+.getElementById("customAlert")
+.classList.add("show");
+
 }
 
-function showServerLoading(status) {
-  document.getElementById("serverLoading").classList.add("show");
-  document.getElementById("serverStatus").textContent = status;
-  document.getElementById("serverIcon").className = "server-spinner";
-  document.getElementById("serverIcon").textContent = "";
+function closeAlert(){
+
+document
+.getElementById("customAlert")
+.classList.remove("show");
+
 }
 
-function updateServerLoading(status) {
-  document.getElementById("serverStatus").textContent = status;
+function showServerLoading(status){
+
+document
+.getElementById("serverLoading")
+.classList.add("show");
+
+document
+.getElementById("serverStatus")
+.innerText = status;
+
 }
 
-function showServerSuccess() {
-  const icon = document.getElementById("serverIcon");
-  icon.className = "server-spinner server-success";
-  icon.textContent = "✓";
-  document.getElementById("serverStatus").textContent = "Data berhasil dikirim";
+function updateServerLoading(status){
+
+document
+.getElementById("serverStatus")
+.innerText = status;
+
 }
 
-function hideServerLoading() {
-  document.getElementById("serverLoading").classList.remove("show");
-  const icon = document.getElementById("serverIcon");
-  icon.className = "server-spinner";
-  icon.textContent = "";
+function showServerSuccess(){
+
+const icon =
+document.getElementById("serverIcon");
+
+icon.className =
+"server-spinner server-success";
+
+icon.innerHTML = "✓";
+
+document
+.getElementById("serverStatus")
+.innerText =
+"Data berhasil dikirim";
+
 }
 
-function openPinModal() {
-  pinValue = "";
-  updatePinDisplay();
-  document.getElementById("pinModal").classList.add("show");
+function hideServerLoading(){
+
+document
+.getElementById("serverLoading")
+.classList.remove("show");
+
+const icon =
+document.getElementById("serverIcon");
+
+icon.className =
+"server-spinner";
+
+icon.innerHTML = "";
+
+}
+   
+function openPinModal(){
+
+pinValue = "";
+updatePinDisplay();
+
+document
+.getElementById("pinModal")
+.classList.add("show");
+
 }
 
-function closePinModal() {
-  document.getElementById("pinModal").classList.remove("show");
-  pinValue = "";
-  updatePinDisplay();
-  pendingDay = null;
-  pendingColor = null;
+function closePinModal(){
+
+document
+.getElementById("pinModal")
+.classList.remove("show");
+
+pinValue = "";
+updatePinDisplay();
+
+pendingDay = null;
+pendingColor = null;
+
 }
 
-/* ==========================================
-   VERIFIKASI DAN SIMPAN DATA
-   ========================================== */
+async function approvePin(){
 
-async function approvePin() {
-  const pin = pinValue;
+const pin = pinValue;
+   
+if(pin.length > 8){
 
-  if (pin.length > 8) {
-    showAlert("PIN Terlalu Panjang", "PIN maksimal 8 digit.");
-    return;
-  }
+showAlert(
+"PIN Terlalu Panjang",
+"PIN maksimal 8 digit."
+);
 
-  if (!pin) {
-    showAlert("PIN Kosong", "Silakan masukkan PIN terlebih dahulu.");
-    return;
-  }
+return;
 
-  if (!pendingDay || !pendingColor) {
-    showAlert("Data Tidak Valid", "Silakan pilih tanggal dan warna terlebih dahulu.");
-    return;
-  }
-
-  showServerLoading("Verifikasi PIN...");
-
-  try {
-    const res = await fetch(
-      API_URL + "?action=verifyPin&pin=" + encodeURIComponent(pin)
-    );
-
-    const data = await res.json();
-
-    updateServerLoading("PIN valid, menyiapkan data...");
-
-    if (!data.success) {
-      hideServerLoading();
-      showAlert("PIN Salah", data.message || "PIN yang Anda masukkan tidak valid.");
-      return;
-    }
-
-    updateServerLoading("Menyimpan ke Server...");
-
-    const saveResult = await sendToSheet(
-      pendingDay.dataset.day,
-      pendingColor
-    );
-
-    if (!saveResult.success) {
-      hideServerLoading();
-      showAlert(
-        "Gagal Simpan",
-        saveResult.message || "Data tidak berhasil disimpan ke Spreadsheet."
-      );
-      return;
-    }
-
-    pendingDay.querySelector(".badge-container").innerHTML =
-      '<div class="badge ' + pendingColor + '"></div>';
-
-    showServerSuccess();
-
-    await new Promise(resolve => setTimeout(resolve, 1200));
-    hideServerLoading();
-
-    sessionStorage.setItem("ticketData", JSON.stringify({
-      approver: data.nama,
-      approverNik: data.nik,
-      warna: pendingColor,
-      tanggal: new Date().toLocaleDateString("id-ID"),
-      jam: new Date().toLocaleTimeString("id-ID"),
-      userNik: user.nik,
-      userNama: user.nama,
-      ticketId: "TKT-" + Date.now(),
-      day: pendingDay.dataset.day
-    }));
-
-    closePinModal();
-    localStorage.removeItem("ticketExpireTime");
-    window.location.href = "tiketpulang.html";
-
-  } catch (err) {
-    console.error(err);
-    hideServerLoading();
-    showAlert("Terjadi Kesalahan", "Gagal melakukan verifikasi PIN.");
-  }
 }
 
-async function sendToSheet(day, color) {
-  const url = API_URL +
-    "?action=saveRealtime" +
-    "&nik=" + encodeURIComponent(user.nik || "") +
-    "&nama=" + encodeURIComponent(user.nama || "") +
-    "&bulan=" + encodeURIComponent(periode) +
-    "&day=" + encodeURIComponent(day) +
-    "&color=" + encodeURIComponent(color);
+if(!pin){
 
-  const res = await fetch(url);
-  return await res.json();
+showAlert(
+"PIN Kosong",
+"Silakan masukkan PIN terlebih dahulu."
+);
+
+return;
+
+}
+
+showServerLoading(
+"Verifikasi PIN..."
+);
+   
+try{
+
+const res =
+await fetch(
+API_URL
++ "?action=verifyPin"
++ "&pin="
++ encodeURIComponent(pin)
+);
+
+const data =
+await res.json();
+
+updateServerLoading(
+"PIN valid, menyiapkan data..."
+);
+
+if(!data.success){
+
+hideServerLoading();
+
+showAlert(
+"PIN Salah",
+data.message || "PIN yang Anda masukkan tidak valid."
+);
+
+return;
+
+}
+
+updateServerLoading(
+"Menyimpan ke Server..."
+);
+   
+/* SIMPAN KE SPREADSHEET DULU */
+const saveResult =
+await sendToSheet(
+pendingDay.dataset.day,
+pendingColor
+);
+
+if(!saveResult.success){
+
+hideServerLoading();
+   
+showAlert(
+"Gagal Simpan",
+saveResult.message ||
+"Data tidak berhasil disimpan ke Spreadsheet."
+);
+
+return;
+}
+
+/* BARU TAMPILKAN BADGE */
+const container =
+pendingDay.querySelector(
+".badge-container"
+);
+
+container.innerHTML =
+`<div class="badge ${pendingColor}"></div>`;
+
+showServerSuccess();
+
+await new Promise(resolve =>
+setTimeout(resolve,1200)
+);
+
+hideServerLoading();
+
+/* SIMPAN DATA TIKET */
+sessionStorage.setItem(
+"ticketData",
+JSON.stringify({
+
+approver:data.nama,
+
+approverNik:data.nik,
+
+warna:pendingColor,
+
+tanggal:new Date().toLocaleDateString("id-ID"),
+
+jam:new Date().toLocaleTimeString("id-ID"),
+
+userNik:user.nik,
+
+userNama:user.nama,
+
+ticketId:"TKT-"+Date.now(),
+
+day:pendingDay.dataset.day
+
+})
+);
+
+closePinModal();
+
+localStorage.removeItem(
+"ticketExpireTime"
+);
+
+window.location.href =
+"tiketpulang.html";
+
+}
+catch(err){
+
+console.error(err);
+
+hideServerLoading();
+
+showAlert(
+"Terjadi Kesalahan",
+"Gagal melakukan verifikasi PIN."
+);
+
+}
+
+}
+   
+/* =========================
+   SEND TO SHEET
+========================= */
+
+async function sendToSheet(day,color){
+
+const url =
+"https://script.google.com/macros/s/AKfycbwFvACNaZjeS8Ueuql78cm19Ha8YwlyytSA9xTQ3cxT4DAO9d6s7VlFdIuN2j9NFjPYgw/exec"
++ "?action=saveRealtime"
++ "&nik=" + encodeURIComponent(user.nik)
++ "&nama=" + encodeURIComponent(user.nama)
++ "&bulan=" + encodeURIComponent(periode)
++ "&day=" + day
++ "&color=" + color;
+
+const res = await fetch(url);
+
+const data = await res.json();
+
+return data;
+
 }
 
 loadSavedData();
+   </script>
 
-/* ==========================================
-   POPUP UNDER DEVELOPMENT
-   HANYA UNTUK MENU DENGAN CLASS COMING-SOON
-   ========================================== */
+<div id="pinModal" class="modal">
 
-document.querySelectorAll(".coming-soon-menu").forEach(menu => {
-  menu.addEventListener("click", function(event) {
-    event.preventDefault();
-    document.getElementById("comingSoonPopup").classList.add("show");
+<div class="modal-box">
+
+<h3>Approval By Duty</h3>
+
+
+<div id="pinDisplay" class="pin-display placeholder">
+Masukkan PIN
+</div>
+
+<div class="keypad">
+
+<button class="key" onclick="addPin('1')">1</button>
+<button class="key" onclick="addPin('2')">2</button>
+<button class="key" onclick="addPin('3')">3</button>
+
+<button class="key" onclick="addPin('4')">4</button>
+<button class="key" onclick="addPin('5')">5</button>
+<button class="key" onclick="addPin('6')">6</button>
+
+<button class="key" onclick="addPin('7')">7</button>
+<button class="key" onclick="addPin('8')">8</button>
+<button class="key" onclick="addPin('9')">9</button>
+
+<button class="key key-clear" onclick="clearPin()">C</button>
+<button class="key" onclick="addPin('0')">0</button>
+<button class="key key-back" onclick="backPin()">⌫</button>
+
+</div>
+
+
+<div class="modal-actions">
+
+<button
+class="btn-cancel"
+onclick="closePinModal()">
+Cancel
+</button>
+
+<button
+class="btn-approve"
+onclick="approvePin()">
+Approve
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+<div id="customAlert" class="custom-alert">
+  <div class="custom-alert-box">
+    <div class="alert-icon">⚠️</div>
+    <div class="alert-title">PIN Salah</div>
+    <div class="alert-message">
+      PIN yang Anda masukkan tidak valid.
+    </div>
+    <button onclick="closeAlert()" class="alert-btn">
+      OK
+    </button>
+  </div>
+</div>
+
+<div id="serverLoading" class="server-loading">
+
+<div class="server-box">
+
+<div id="serverIcon" class="server-spinner"></div>
+
+<div class="server-title">
+Mengirim Data
+</div>
+
+<div id="serverStatus" class="server-status">
+Menghubungi server...
+</div>
+
+</div>
+
+</div>
+
+<!-- ==========================================
+     BOTTOM TASKBAR
+     ========================================== -->
+
+<nav class="bottom-taskbar">
+
+  <!-- PENCARIAN INSENTIF -->
+  <a href="javascript:void(0)"
+     class="taskbar-item incentive-search-menu"
+     data-feature="Pencarian Insentif">
+
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span>Pencarian</span>
+
+  </a>
+
+
+  <!-- CEK INSENTIF -->
+  <a href="javascript:void(0)"
+     class="taskbar-item incentive-menu"
+     data-feature="Insentif">
+
+    <i class="fa-solid fa-rupiah-sign"></i>
+    <span>Insentif</span>
+
+  </a>
+
+
+  <!-- TICKETING -->
+  <a href="reportsalesid.html"
+     class="taskbar-item taskbar-center">
+
+    <div class="taskbar-icon">
+      <i class="fa-solid fa-ticket"></i>
+    </div>
+
+    <span>Tiket Pulang</span>
+
+  </a>
+
+
+  <!-- STATISTIK -->
+  <a href="javascript:void(0)"
+     class="taskbar-item coming-soon-menu"
+     data-feature="Statistik">
+
+    <i class="fa-solid fa-chart-simple"></i>
+    <span>Statistik</span>
+
+  </a>
+
+
+  <!-- PROFILE -->
+  <a href="javascript:void(0)"
+     class="taskbar-item coming-soon-menu"
+     data-feature="Profile">
+
+    <i class="fa-solid fa-user"></i>
+    <span>Profile</span>
+
+  </a>
+
+</nav>
+<div id="comingSoonPopup" class="coming-soon-overlay">
+
+  <div class="coming-soon-box">
+
+    <div class="coming-soon-icon">
+      <i class="fa-solid fa-person-digging"></i>
+    </div>
+
+    <div class="coming-soon-title">
+      Under Development
+    </div>
+
+    <div class="coming-soon-text">
+      Fitur ini sedang dalam pengembangan.<br>
+      <strong>Coming Soon!</strong>
+    </div>
+
+    <button
+      class="coming-soon-btn"
+      onclick="closeComingSoon()">
+      OK
+    </button>
+
+  </div>
+
+</div>
+<!-- POPUP PEROLEHAN INSENTIF -->
+<div id="incentivePopup" class="incentive-overlay" role="dialog" aria-modal="true" aria-labelledby="incentiveTitle">
+  <div class="incentive-box">
+    <div class="incentive-icon"><i class="fa-solid fa-sack-dollar"></i></div>
+    <div class="incentive-title" id="incentiveTitle">Perolehan Insentif Anda</div>
+    <div class="incentive-subtitle" id="incentiveIdentity">Memeriksa data sales...</div>
+    <div class="incentive-amount" id="incentiveAmount">Memuat...</div>
+    <div class="incentive-message" id="incentiveMessage">Mengambil data dari Monitoring Insentive Per Sales ID.</div>
+    <button type="button" class="incentive-close" onclick="closeIncentivePopup()">Tutup</button>
+  </div>
+</div>
+
+<!-- POPUP PENCARIAN INSENTIF -->
+<div id="incentiveSearchPopup" class="incentive-search-overlay" role="dialog" aria-modal="true" aria-labelledby="incentiveSearchTitle">
+  <div class="incentive-search-box">
+    <div class="incentive-search-heading">
+      <div class="incentive-search-heading-icon"><i class="fa-solid fa-magnifying-glass"></i></div>
+      <div class="incentive-search-title" id="incentiveSearchTitle">Pencarian Insentif</div>
+    </div>
+    <p class="incentive-search-subtitle">Masukkan kode ARTICLE untuk melihat deskripsi produk dan nilai insentifnya.</p>
+    <label class="incentive-search-label" for="incentiveArticleInput">ARTICLE PRODUK</label>
+    <input id="incentiveArticleInput" class="incentive-search-input" type="search" placeholder="Contoh: 10012345" autocomplete="off" inputmode="search">
+    <div id="incentiveSearchStatus" class="incentive-search-status">Menyiapkan data insentif...</div>
+    <div id="incentiveSearchResults" class="incentive-search-results" aria-live="polite"></div>
+    <button type="button" class="incentive-search-close" onclick="closeIncentiveSearchPopup()">Tutup</button>
+  </div>
+</div>
+
+<script>
+
+document
+.querySelectorAll(".coming-soon-menu")
+.forEach(menu => {
+
+  menu.addEventListener("click", function(e){
+
+    e.preventDefault();
+
+    document
+      .getElementById("comingSoonPopup")
+      .classList.add("show");
+
   });
+
 });
 
-function closeComingSoon() {
-  document.getElementById("comingSoonPopup").classList.remove("show");
+
+function closeComingSoon(){
+
+  document
+    .getElementById("comingSoonPopup")
+    .classList.remove("show");
+
 }
 
-document.getElementById("comingSoonPopup").addEventListener("click", function(e) {
-  if (e.target === this) closeComingSoon();
+
+/* Klik area luar popup untuk menutup */
+document
+.getElementById("comingSoonPopup")
+.addEventListener("click", function(e){
+
+  if(e.target === this){
+
+    closeComingSoon();
+
+  }
+
 });
 
+</script>
+
+<script>
+
 /* ==========================================
-   ACTIVE TASKBAR
+   ACTIVE TASKBAR MENU
    ========================================== */
 
-(function() {
-  const currentPage = window.location.pathname.split("/").pop().toLowerCase();
+(function(){
 
-  document.querySelectorAll(".taskbar-item").forEach(item => {
-    const href = (item.getAttribute("href") || "").split("/").pop().toLowerCase();
+const currentPage =
+window.location.pathname
+.split("/")
+.pop()
+.toLowerCase();
 
-    if (href && href !== "javascript:void(0)" && href === currentPage) {
-      item.classList.add("active");
-    }
-  });
+document
+.querySelectorAll(".taskbar-item")
+.forEach(item=>{
+
+const page =
+(item.dataset.page || "")
+.toLowerCase();
+
+if(page === currentPage){
+
+item.classList.add("active");
+
+}
+
+});
+
 })();
 
-/* ==========================================
-   PEROLEHAN INSENTIF
-   SUMBER: MONITORING INSENTIVE PER SALES ID
-   ========================================== */
+</script>
 
+
+<script>
+/* INSENTIF LOGIN - MONITORING INSENTIVE PER SALES ID */
 const INCENTIVE_SHEET_ID = "1bfjopTK9sB6j2b8aRnpTolZGV_eab4LI_PH9t0WwOrw";
 const INCENTIVE_TAB_NAME = "MONITORING INSENTIVE PER SALES ID";
+const INCENTIVE_DATA_URL = "https://docs.google.com/spreadsheets/d/" + INCENTIVE_SHEET_ID +
+  "/gviz/tq?tqx=out:json&sheet=" + encodeURIComponent(INCENTIVE_TAB_NAME);
+const rupiahInsentif = new Intl.NumberFormat("id-ID", {style:"currency",currency:"IDR",maximumFractionDigits:0});
 
-const INCENTIVE_DATA_URL =
-  "https://docs.google.com/spreadsheets/d/" +
-  INCENTIVE_SHEET_ID +
-  "/gviz/tq?tqx=out:json&sheet=" +
-  encodeURIComponent(INCENTIVE_TAB_NAME);
-
-const rupiahInsentif = new Intl.NumberFormat("id-ID", {
-  style: "currency",
-  currency: "IDR",
-  maximumFractionDigits: 0
-});
-
-function closeIncentivePopup() {
+function closeIncentivePopup(){
   document.getElementById("incentivePopup").classList.remove("show");
 }
-
-function normalizeIncentiveText(value) {
-  return String(value ?? "")
-    .normalize("NFD")
-    .replace(/[\u0300-\u036f]/g, "")
-    .trim()
-    .replace(/\s+/g, " ")
-    .toLocaleLowerCase("id-ID");
+function normalizeIncentiveText(value){
+  return String(value ?? "").normalize("NFD").replace(/[\u0300-\u036f]/g,"").trim().replace(/\s+/g," ").toLocaleLowerCase("id-ID");
 }
-
-function parseIncentiveAmount(value) {
-  if (typeof value === "number") {
-    return Number.isFinite(value) ? value : 0;
-  }
-
-  let text = String(value ?? "").trim().replace(/[^0-9,.-]/g, "");
-  if (!text) return 0;
-
-  if (text.includes(".") && text.includes(",")) {
-    text = text.replace(/\./g, "").replace(",", ".");
-  } else if (text.includes(",")) {
+function parseIncentiveAmount(value){
+  if(typeof value === "number") return Number.isFinite(value) ? value : 0;
+  let text = String(value ?? "").trim().replace(/[^0-9,.-]/g,"");
+  if(!text) return 0;
+  if(text.includes(".") && text.includes(",")){
+    text = text.replace(/\./g,"").replace(",",".");
+  }else if(text.includes(",")){
     const parts = text.split(",");
-    text = parts.length > 1 && parts[parts.length - 1].length === 3
-      ? text.replace(/,/g, "")
-      : text.replace(",", ".");
-  } else if ((text.match(/\./g) || []).length > 1 || /\.\d{3}$/.test(text)) {
-    text = text.replace(/\./g, "");
+    text = parts.length > 1 && parts[parts.length-1].length === 3 ? text.replace(/,/g,"") : text.replace(",",".");
+  }else if((text.match(/\./g)||[]).length > 1 || /\.\d{3}$/.test(text)){
+    text = text.replace(/\./g,"");
   }
-
   const amount = Number(text);
   return Number.isFinite(amount) ? amount : 0;
 }
-
-function getIncentiveCell(cell) {
-  if (!cell) return "";
-  if (cell.v !== undefined && cell.v !== null) return cell.v;
+function getIncentiveCell(cell){
+  if(!cell) return "";
+  if(cell.v !== undefined && cell.v !== null) return cell.v;
   return cell.f ?? "";
 }
-
-function findIncentiveColumn(columns, names) {
+function findIncentiveColumn(columns,names){
   const wanted = names.map(normalizeIncentiveText);
-
-  return columns.findIndex(col =>
-    wanted.includes(normalizeIncentiveText(col?.label)) ||
-    wanted.includes(normalizeIncentiveText(col?.id))
-  );
+  return columns.findIndex(col => wanted.includes(normalizeIncentiveText(col?.label)) || wanted.includes(normalizeIncentiveText(col?.id)));
 }
-
-async function showLoggedInIncentive() {
-  const popup = document.getElementById("incentivePopup");
-  const identity = document.getElementById("incentiveIdentity");
-  const amountElement = document.getElementById("incentiveAmount");
-  const message = document.getElementById("incentiveMessage");
-
-  // Popup langsung muncul saat menu Insentif ditekan
+async function showLoggedInIncentive(){
+  const popup=document.getElementById("incentivePopup");
+  const identity=document.getElementById("incentiveIdentity");
+  const amountElement=document.getElementById("incentiveAmount");
+  const message=document.getElementById("incentiveMessage");
   popup.classList.add("show");
-
-  identity.textContent = user?.nama
-    ? "Sales: " + user.nama + (user.nik ? " • NIK " + user.nik : "")
-    : "Data pengguna login tidak ditemukan";
-
-  amountElement.textContent = "Memuat...";
-  message.textContent = "Mengambil data insentif terbaru...";
-
-  if (!user) {
-    amountElement.textContent = "—";
-    message.textContent = "Silakan login kembali untuk melihat insentif.";
-    return;
-  }
-
-  try {
-    const response = await fetch(
-      INCENTIVE_DATA_URL + "&_=" + Date.now(),
-      { cache: "no-store" }
-    );
-
-    if (!response.ok) {
-      throw new Error("Spreadsheet tidak dapat diakses.");
+  identity.textContent=user?.nama ? "Sales: "+user.nama+(user.nik ? " • NIK "+user.nik : "") : "Data pengguna login tidak ditemukan";
+  amountElement.textContent="Memuat...";
+  message.textContent="Mengambil data insentif terbaru...";
+  if(!user){amountElement.textContent="—";message.textContent="Silakan login kembali untuk melihat insentif.";return;}
+  try{
+    const response=await fetch(INCENTIVE_DATA_URL+"&_="+Date.now(),{cache:"no-store"});
+    if(!response.ok) throw new Error("Spreadsheet tidak dapat diakses.");
+    const text= (await response.text()).trim();
+    const start=text.indexOf("{"), end=text.lastIndexOf("}");
+    if(start<0 || end<start) throw new Error("Format data Google Sheets tidak valid.");
+    const data=JSON.parse(text.slice(start,end+1));
+    if(!data?.table?.cols || !Array.isArray(data.table.rows)) throw new Error("Data sheet monitoring insentif tidak ditemukan.");
+    const cols=data.table.cols;
+    const nameCol=findIncentiveColumn(cols,["NAMA SALES"]);
+    const valueCol=findIncentiveColumn(cols,["TOTAL INSENTIF (ELIGIBLE)"]);
+    const nikCol=findIncentiveColumn(cols,["NIK","NIP","SALES ID"]);
+    if(nameCol<0) throw new Error('Kolom "NAMA SALES" tidak ditemukan.');
+    if(valueCol<0) throw new Error('Kolom "TOTAL INSENTIF (ELIGIBLE)" tidak ditemukan.');
+    const loggedNik=normalizeIncentiveText(user.nik), loggedName=normalizeIncentiveText(user.nama);
+    let matches=data.table.rows.filter(row=>{
+      if(!row?.c) return false;
+      if(nikCol>=0 && loggedNik) return normalizeIncentiveText(getIncentiveCell(row.c[nikCol]))===loggedNik;
+      return normalizeIncentiveText(getIncentiveCell(row.c[nameCol]))===loggedName;
+    });
+    if(!matches.length && nikCol>=0 && loggedName){
+      matches=data.table.rows.filter(row=>row?.c && normalizeIncentiveText(getIncentiveCell(row.c[nameCol]))===loggedName);
     }
-
-    const rawText = (await response.text()).trim();
-    const start = rawText.indexOf("{");
-    const end = rawText.lastIndexOf("}");
-
-    if (start < 0 || end < start) {
-      throw new Error("Format data Google Sheets tidak valid.");
-    }
-
-    const data = JSON.parse(rawText.slice(start, end + 1));
-
-    if (!data?.table?.cols || !Array.isArray(data.table.rows)) {
-      throw new Error("Data monitoring insentif tidak ditemukan.");
-    }
-
-    const cols = data.table.cols;
-
-    const nameCol = findIncentiveColumn(cols, [
-      "NAMA SALES",
-      "NAMA",
-      "EMPLOYEE NAME",
-      "NAMA KARYAWAN"
-    ]);
-
-    const valueCol = findIncentiveColumn(cols, [
-      "TOTAL INSENTIF (ELIGIBLE)",
-      "TOTAL INSENTIF ELIGIBLE",
-      "TOTAL INSENTIF (ELIGIBLE) RP"
-    ]);
-
-    const nikCol = findIncentiveColumn(cols, [
-      "NIK",
-      "NIP",
-      "SALES ID"
-    ]);
-
-    if (valueCol < 0) {
-      throw new Error('Kolom "TOTAL INSENTIF (ELIGIBLE)" tidak ditemukan.');
-    }
-
-    if (nikCol < 0 && nameCol < 0) {
-      throw new Error("Kolom NIK, NIP, SALES ID, atau nama tidak ditemukan.");
-    }
-
-    const loggedNik = normalizeIncentiveText(user.nik);
-    const loggedName = normalizeIncentiveText(user.nama);
-    const rows = data.table.rows.filter(row => row?.c);
-
-    let matches = [];
-
-    // Cocokkan NIK terlebih dahulu
-    if (nikCol >= 0 && loggedNik) {
-      matches = rows.filter(row =>
-        normalizeIncentiveText(getIncentiveCell(row.c[nikCol])) === loggedNik
-      );
-    }
-
-    // Jika NIK tidak ditemukan, gunakan nama
-    if (!matches.length && nameCol >= 0 && loggedName) {
-      matches = rows.filter(row =>
-        normalizeIncentiveText(getIncentiveCell(row.c[nameCol])) === loggedName
-      );
-    }
-
-    if (!matches.length) {
-      amountElement.textContent = rupiahInsentif.format(0);
-      message.textContent =
-        "Nama/NIK Anda belum ditemukan pada sheet monitoring insentif.";
+    if(!matches.length){
+      amountElement.textContent=rupiahInsentif.format(0);
+      message.textContent="Nama/NIK Anda belum ditemukan pada sheet monitoring insentif.";
       return;
     }
-
-    const total = matches.reduce((sum, row) => {
-      return sum + parseIncentiveAmount(getIncentiveCell(row.c[valueCol]));
-    }, 0);
-
-    amountElement.textContent = rupiahInsentif.format(total);
-    message.textContent =
-      "Total insentif eligible Anda";
-
-  } catch (error) {
-    console.error("Gagal memuat perolehan insentif:", error);
-    amountElement.textContent = "Tidak tersedia";
-    message.textContent =
-      error.message + " Pastikan spreadsheet dapat dibaca oleh halaman web.";
+    const total=matches.reduce((sum,row)=>sum+parseIncentiveAmount(getIncentiveCell(row.c[valueCol])),0);
+    amountElement.textContent=rupiahInsentif.format(total);
+    message.textContent="Total perolehan insentif eligible Anda.";
+  }catch(error){
+    console.error("Gagal memuat perolehan insentif:",error);
+    amountElement.textContent="Tidak tersedia";
+    message.textContent=error.message+" Pastikan spreadsheet dapat dibaca oleh halaman web.";
   }
 }
-
-/* ==========================================
-   EVENT MENU INSENTIF
-   DIPISAH DARI MENU UNDER DEVELOPMENT
-   ========================================== */
-
-document.getElementById("incentiveMenu").addEventListener("click", function(event) {
-  event.preventDefault();
-  event.stopPropagation();
-  showLoggedInIncentive();
+document.querySelectorAll(".incentive-menu").forEach(menu=>menu.addEventListener("click",event=>{
+  event.preventDefault(); showLoggedInIncentive();
+}));
+document.getElementById("incentivePopup").addEventListener("click",event=>{
+  if(event.target===event.currentTarget) closeIncentivePopup();
 });
+document.addEventListener("keydown",event=>{if(event.key==="Escape"){closeIncentivePopup();closeIncentiveSearchPopup();}});
+</script>
 
-document.getElementById("incentivePopup").addEventListener("click", function(event) {
-  if (event.target === this) closeIncentivePopup();
-});
+<script>
+/* PENCARIAN INSENTIF BERDASARKAN ARTICLE */
+const INCENTIVE_SEARCH_TAB_NAME = "MASTER INSENTIVE";
+const INCENTIVE_SEARCH_DATA_URL = "https://docs.google.com/spreadsheets/d/" + INCENTIVE_SHEET_ID +
+  "/gviz/tq?tqx=out:json&sheet=" + encodeURIComponent(INCENTIVE_SEARCH_TAB_NAME);
+let incentiveSearchRows = [];
+let incentiveSearchLoaded = false;
+let incentiveSearchLoading = false;
 
-document.addEventListener("keydown", function(event) {
-  if (event.key === "Escape") {
-    closeIncentivePopup();
-    closeComingSoon();
-    closeAlert();
+function closeIncentiveSearchPopup(){
+  document.getElementById("incentiveSearchPopup").classList.remove("show");
+}
+function escapeIncentiveHtml(value){
+  return String(value ?? "").replace(/[&<>"']/g,char=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[char]));
+}
+function renderIncentiveSearchResults(query){
+  const status=document.getElementById("incentiveSearchStatus");
+  const results=document.getElementById("incentiveSearchResults");
+  results.innerHTML="";
+  if(!incentiveSearchLoaded){
+    status.textContent=incentiveSearchLoading?"Mengambil data insentif...":"Data insentif belum tersedia.";
+    return;
   }
+  const normalizedQuery=normalizeIncentiveText(query);
+  if(!normalizedQuery){
+    status.textContent="Ketik kode ARTICLE untuk mencari produk.";
+    return;
+  }
+  const matches=incentiveSearchRows.filter(item=>normalizeIncentiveText(item.article).includes(normalizedQuery)).slice(0,30);
+  if(!matches.length){
+    status.textContent="ARTICLE tidak ditemukan. Periksa kembali kode yang dimasukkan.";
+    return;
+  }
+  status.textContent=matches.length===1?"Ditemukan 1 produk.":`Ditemukan ${matches.length} produk${matches.length===30?" atau lebih":""}.`;
+  results.innerHTML=matches.map(item=>`<div class="incentive-search-result"><div class="incentive-search-article">ARTICLE: ${escapeIncentiveHtml(item.article)}</div><div class="incentive-search-description">${escapeIncentiveHtml(item.description || "Deskripsi tidak tersedia")}</div><div class="incentive-search-value-label">NILAI INSENTIF</div><div class="incentive-search-value">${escapeIncentiveHtml(rupiahInsentif.format(item.value))}</div></div>`).join("");
+}
+async function loadIncentiveSearchData(){
+  if(incentiveSearchLoaded || incentiveSearchLoading) return;
+  incentiveSearchLoading=true;
+  renderIncentiveSearchResults(document.getElementById("incentiveArticleInput").value);
+  try{
+    const response=await fetch(INCENTIVE_SEARCH_DATA_URL+"&_="+Date.now(),{cache:"no-store"});
+    if(!response.ok) throw new Error("Spreadsheet tidak dapat diakses.");
+    const raw=(await response.text()).trim();
+    const start=raw.indexOf("{"),end=raw.lastIndexOf("}");
+    if(start<0||end<start) throw new Error("Format data Google Sheets tidak valid.");
+    const data=JSON.parse(raw.slice(start,end+1));
+    if(!data?.table?.cols||!Array.isArray(data.table.rows)) throw new Error("Data artikel tidak ditemukan.");
+    const cols=data.table.cols;
+    const articleCol=findIncentiveColumn(cols,["ARTICLE","ARTIKEL"]);
+    const descriptionCol=findIncentiveColumn(cols,["DESCRIPTION","DESKRIPSI","DISC NAME","NAMA PRODUK"]);
+    const valueCol=findIncentiveColumn(cols,["VALUE","NILAI INSENTIF","INSENTIF"]);
+    if(articleCol<0) throw new Error('Kolom "ARTICLE" tidak ditemukan pada tab MASTER INSENTIVE.');
+    if(descriptionCol<0) throw new Error('Kolom "DESCRIPTION" tidak ditemukan pada tab MASTER INSENTIVE.');
+    if(valueCol<0) throw new Error('Kolom "Value" tidak ditemukan pada tab MASTER INSENTIVE.');
+    incentiveSearchRows=data.table.rows.map(row=>{
+      const cells=row?.c||[];
+      return {article:String(getIncentiveCell(cells[articleCol])??"").trim(),description:String(getIncentiveCell(cells[descriptionCol])??"").trim(),value:parseIncentiveAmount(getIncentiveCell(cells[valueCol]))};
+    }).filter(item=>item.article);
+    incentiveSearchLoaded=true;
+    document.getElementById("incentiveSearchStatus").textContent=`Data berhasil dimuat: ${incentiveSearchRows.length} artikel.`;
+    renderIncentiveSearchResults(document.getElementById("incentiveArticleInput").value);
+  }catch(error){
+    console.error("Gagal memuat pencarian insentif:",error);
+    document.getElementById("incentiveSearchStatus").textContent=error.message+" Pastikan spreadsheet dapat dibaca oleh halaman web.";
+  }finally{
+    incentiveSearchLoading=false;
+  }
+}
+function openIncentiveSearchPopup(){
+  const popup=document.getElementById("incentiveSearchPopup");
+  popup.classList.add("show");
+  const input=document.getElementById("incentiveArticleInput");
+  input.value="";
+  document.getElementById("incentiveSearchResults").innerHTML="";
+  document.getElementById("incentiveSearchStatus").textContent="Mengambil data insentif...";
+  loadIncentiveSearchData();
+  setTimeout(()=>input.focus(),100);
+}
+document.querySelectorAll(".incentive-search-menu").forEach(menu=>menu.addEventListener("click",event=>{
+  event.preventDefault();
+  openIncentiveSearchPopup();
+}));
+document.getElementById("incentiveArticleInput").addEventListener("input",event=>renderIncentiveSearchResults(event.target.value));
+document.getElementById("incentiveSearchPopup").addEventListener("click",event=>{
+  if(event.target===event.currentTarget) closeIncentiveSearchPopup();
 });
 </script>
 
