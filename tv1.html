@@ -2549,6 +2549,19 @@ async function loadIncentiveData(){
             throw new Error('Header "TOTAL INSENTIF (ELIGIBLE)" tidak ditemukan.');
         }
 
+        // Buat daftar nama karyawan yang DEPT-nya ONLINE dari data utama.
+        // Normalisasi nama agar perbedaan huruf besar/kecil dan spasi tidak berpengaruh.
+        const onlineNames = new Set(
+            employeeData
+                .filter(item =>
+                    String(item.dept || "")
+                        .trim()
+                        .toUpperCase() === "ONLINE"
+                )
+                .map(item => normalizeEmployeeName(item.name))
+        );
+
+        // Muat data potensi insentif, tetapi kecualikan karyawan DEPT ONLINE.
         incentiveData = data.table.rows
             .map(row => {
                 if(!row || !row.c) return null;
@@ -2559,6 +2572,9 @@ async function loadIncentiveData(){
                     : "";
 
                 if(!name) return null;
+
+                // Jangan tampilkan karyawan yang departemennya ONLINE.
+                if(onlineNames.has(normalizeEmployeeName(name))) return null;
 
                 return {
                     name,
