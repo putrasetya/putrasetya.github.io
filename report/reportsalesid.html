@@ -1055,6 +1055,18 @@ transform:scale(.97);
 .incentive-search-description{font-size:14px;font-weight:600;color:#0f172a;line-height:1.4;margin-bottom:11px;overflow-wrap:anywhere}
 .incentive-search-value-label{font-size:11px;color:#64748b;margin-bottom:3px}
 .incentive-search-value{font-size:22px;font-weight:800;color:#15803d;line-height:1.25;overflow-wrap:anywhere}
+
+/* KETERANGAN TAMBAHAN PROGRAM INSENTIF */
+.incentive-search-details{display:grid;grid-template-columns:1fr;gap:8px;margin-top:13px}
+.incentive-search-detail{padding:10px 12px;border-radius:11px;background:#fff;border:1px solid #e2e8f0}
+.incentive-search-detail-label{font-size:10px;font-weight:700;color:#64748b;letter-spacing:.4px;margin-bottom:4px}
+.incentive-search-detail-value{font-size:13px;font-weight:700;line-height:1.5;color:#0f172a;overflow-wrap:anywhere;white-space:pre-wrap}
+.incentive-search-detail.percent{background:#f0fdf4;border-color:#bbf7d0}
+.incentive-search-detail.percent .incentive-search-detail-value{color:#15803d;font-size:18px}
+.incentive-search-detail.condition{background:#eff6ff;border-color:#bfdbfe}
+.incentive-search-detail.condition .incentive-search-detail-value{color:#1d4ed8}
+.incentive-search-program{display:inline-flex;align-items:center;padding:4px 8px;border-radius:999px;background:#e2e8f0;color:#334155;font-size:10px;font-weight:800;letter-spacing:.5px;margin-bottom:8px}
+
 .incentive-search-close{width:100%;height:44px;border:0;border-radius:12px;background:#0f172a;color:#fff;font-family:inherit;font-size:14px;font-weight:600;margin-top:17px;cursor:pointer}
 .incentive-search-close:active{transform:scale(.98)}
 
@@ -2143,6 +2155,27 @@ function closeIncentiveSearchPopup(){
 function escapeIncentiveHtml(value){
   return String(value ?? "").replace(/[&<>"']/g,char=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[char]));
 }
+// Untuk kolom seperti persen/syarat, utamakan nilai tampilan Google Sheets (cell.f).
+function getIncentiveDisplayCell(cell){
+  if(!cell) return "";
+  if(cell.f !== undefined && cell.f !== null && String(cell.f).trim() !== "") return cell.f;
+  return cell.v ?? "";
+}
+function formatIncentivePercent(value){
+  if(value === undefined || value === null || String(value).trim() === "") return "Tidak dicantumkan";
+  const raw=String(value).trim();
+  if(raw.includes("%")) return raw;
+  if(typeof value === "number"){
+    const number=value < 1 && value > -1 ? value*100 : value;
+    return new Intl.NumberFormat("id-ID",{maximumFractionDigits:2}).format(number)+"%";
+  }
+  const cleaned=raw.replace(/\s/g,"").replace(/%/g,"");
+  const number=parseIncentiveAmount(cleaned);
+  if(!Number.isFinite(number)) return raw;
+  // Nilai desimal seperti 0,1 pada sheet biasanya berarti 10%.
+  const formatted=number < 1 && number > -1 ? number*100 : number;
+  return new Intl.NumberFormat("id-ID",{maximumFractionDigits:2}).format(formatted)+"%";
+}
 function renderIncentiveSearchResults(query){
   const status=document.getElementById("incentiveSearchStatus");
   const results=document.getElementById("incentiveSearchResults");
@@ -2156,13 +2189,24 @@ function renderIncentiveSearchResults(query){
     status.textContent="Ketik kode ARTICLE untuk mencari produk.";
     return;
   }
+  // Jangan gabungkan baris dengan ARTICLE sama: tiap program insentif ditampilkan terpisah.
   const matches=incentiveSearchRows.filter(item=>normalizeIncentiveText(item.article).includes(normalizedQuery)).slice(0,30);
   if(!matches.length){
     status.textContent="ARTICLE tidak ditemukan. Periksa kembali kode yang dimasukkan.";
     return;
   }
-  status.textContent=matches.length===1?"Ditemukan 1 produk.":`Ditemukan ${matches.length} produk${matches.length===30?" atau lebih":""}.`;
-  results.innerHTML=matches.map(item=>`<div class="incentive-search-result"><div class="incentive-search-article">ARTICLE: ${escapeIncentiveHtml(item.article)}</div><div class="incentive-search-description">${escapeIncentiveHtml(item.description || "Deskripsi tidak tersedia")}</div><div class="incentive-search-value-label">NILAI INSENTIF</div><div class="incentive-search-value">${escapeIncentiveHtml(rupiahInsentif.format(item.value))}</div></div>`).join("");
+  status.textContent=matches.length===1?"Ditemukan 1 program insentif.":`Ditemukan ${matches.length} program insentif${matches.length===30?" atau lebih":""}. Jika ARTICLE sama muncul beberapa kali, cek persentase dan syarat pada setiap program.`;
+  results.innerHTML=matches.map((item,index)=>`<div class="incentive-search-result">
+    <div class="incentive-search-program">PROGRAM ${index+1}</div>
+    <div class="incentive-search-article">ARTICLE: ${escapeIncentiveHtml(item.article)}</div>
+    <div class="incentive-search-description">${escapeIncentiveHtml(item.description || "Deskripsi tidak tersedia")}</div>
+    <div class="incentive-search-value-label">NILAI INSENTIF</div>
+    <div class="incentive-search-value">${escapeIncentiveHtml(rupiahInsentif.format(item.value))}</div>
+    <div class="incentive-search-details">
+      <div class="incentive-search-detail percent"><div class="incentive-search-detail-label">INCENTIVE %</div><div class="incentive-search-detail-value">${escapeIncentiveHtml(item.percent || "Tidak dicantumkan")}</div></div>
+      <div class="incentive-search-detail condition"><div class="incentive-search-detail-label">SYARAT TERJUAL DI TOKO</div><div class="incentive-search-detail-value">${escapeIncentiveHtml(item.condition || "Syarat tidak dicantumkan")}</div></div>
+    </div>
+  </div>`).join("");
 }
 async function loadIncentiveSearchData(){
   if(incentiveSearchLoaded || incentiveSearchLoading) return;
@@ -2180,15 +2224,26 @@ async function loadIncentiveSearchData(){
     const articleCol=findIncentiveColumn(cols,["ARTICLE","ARTIKEL"]);
     const descriptionCol=findIncentiveColumn(cols,["DESCRIPTION","DESKRIPSI","DISC NAME","NAMA PRODUK"]);
     const valueCol=findIncentiveColumn(cols,["VALUE","NILAI INSENTIF","INSENTIF"]);
+    const percentCol=findIncentiveColumn(cols,["INCENTIVE %","INCENTIVE%","INCENTIF %","INCENTIF%"]);
+    const conditionCol=findIncentiveColumn(cols,["SYARAT INSENTIF SIZE 2","SYARAT INSENTIF SIZE2","SYARAT TERJUAL DI TOKO"]);
     if(articleCol<0) throw new Error('Kolom "ARTICLE" tidak ditemukan pada tab MASTER INSENTIVE.');
-    if(descriptionCol<0) throw new Error('Kolom "DESCRIPTION" tidak ditemukan pada tab MASTER INSENTIVE.');
-    if(valueCol<0) throw new Error('Kolom "Value" tidak ditemukan pada tab MASTER INSENTIVE.');
+    if(descriptionCol<0) throw new Error('Kolom deskripsi/"DISC NAME" tidak ditemukan pada tab MASTER INSENTIVE.');
+    if(valueCol<0) throw new Error('Kolom "VALUE" tidak ditemukan pada tab MASTER INSENTIVE.');
+    if(percentCol<0) throw new Error('Kolom "Incentive %" tidak ditemukan pada tab MASTER INSENTIVE. Periksa ejaan header kolom.');
+    if(conditionCol<0) throw new Error('Kolom "Syarat insentif Size 2" tidak ditemukan pada tab MASTER INSENTIVE. Periksa ejaan header kolom.');
     incentiveSearchRows=data.table.rows.map(row=>{
       const cells=row?.c||[];
-      return {article:String(getIncentiveCell(cells[articleCol])??"").trim(),description:String(getIncentiveCell(cells[descriptionCol])??"").trim(),value:parseIncentiveAmount(getIncentiveCell(cells[valueCol]))};
+      const valueCell=getIncentiveCell(cells[valueCol]);
+      return {
+        article:String(getIncentiveCell(cells[articleCol])??"").trim(),
+        description:String(getIncentiveCell(cells[descriptionCol])??"").trim(),
+        value:parseIncentiveAmount(valueCell),
+        percent:formatIncentivePercent(getIncentiveDisplayCell(cells[percentCol])),
+        condition:String(getIncentiveDisplayCell(cells[conditionCol])??"").trim()
+      };
     }).filter(item=>item.article);
     incentiveSearchLoaded=true;
-    document.getElementById("incentiveSearchStatus").textContent=`Data berhasil dimuat: ${incentiveSearchRows.length} artikel.`;
+    document.getElementById("incentiveSearchStatus").textContent=`Data berhasil dimuat: ${incentiveSearchRows.length} program insentif.`;
     renderIncentiveSearchResults(document.getElementById("incentiveArticleInput").value);
   }catch(error){
     console.error("Gagal memuat pencarian insentif:",error);
