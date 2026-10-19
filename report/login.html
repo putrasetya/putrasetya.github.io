@@ -169,7 +169,7 @@ pinValid = false;
 document.getElementById("pinBox").style.display = "none";
 document.getElementById("pin").value = "";
 
-if(nik.length !== 6){
+if(nik.length < 5 || nik.length > 6){
     document.getElementById("namaBox").innerHTML = "Masukkan NIK";
     document.getElementById("nextBtn").disabled = true;
     return;
