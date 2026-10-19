@@ -125,35 +125,48 @@ let allUsers = [];
 let selectedUser = null;
 let pinValid = false;
 
+
 /* =========================
    LOAD DATA (HYBRID CACHE)
 ========================= */
+let usersLoaded = false;
+
 (async () => {
+    const cache = localStorage.getItem("users");
 
-const cache = localStorage.getItem("users");
-
-if(cache){
-    allUsers = JSON.parse(cache);
-    console.log("Loaded from cache");
-}
-
-try{
-    const res = await fetch(`${API_URL}?action=getUsers`);
-    const data = await res.json();
-
-    if(data.success){
-        allUsers = data.users;
-
-        // SAVE TO LOCAL STORAGE
-        localStorage.setItem("users", JSON.stringify(allUsers));
-
-        console.log("Updated from server");
+    if (cache) {
+        try {
+            allUsers = JSON.parse(cache);
+            console.log("Loaded from cache:", allUsers.length);
+        } catch (e) {
+            console.error("Cache users rusak:", e);
+            allUsers = [];
+        }
     }
 
-}catch(e){
-    console.log("Offline / API error, using cache");
-}
+    try {
+        const res = await fetch(`${API_URL}?action=getUsers`);
+        if (!res.ok) throw new Error("HTTP " + res.status);
 
+        const data = await res.json();
+
+        if (data.success && Array.isArray(data.users)) {
+            allUsers = data.users;
+            localStorage.setItem("users", JSON.stringify(allUsers));
+            console.log("Updated from server:", allUsers.length);
+        } else {
+            console.error("Respons API tidak sesuai:", data);
+        }
+    } catch (e) {
+        console.error("Gagal mengambil data server:", e);
+    } finally {
+        usersLoaded = true;
+
+        // Periksa kembali NIK yang sudah diketik
+        document.getElementById("nik").dispatchEvent(
+            new Event("input")
+        );
+    }
 })();
 
 /* =========================
@@ -175,7 +188,16 @@ if(nik.length < 5 || nik.length > 6){
     return;
 }
 
-const user = allUsers.find(x => String(x.nik) === nik);
+if (!usersLoaded) {
+    document.getElementById("namaBox").innerHTML =
+        '<span class="loading">Memuat data pengguna...</span>';
+    document.getElementById("nextBtn").disabled = true;
+    return;
+}
+
+const user = allUsers.find(x =>
+    String(x.nik ?? "").trim() === nik
+);
 
 if(!user){
     document.getElementById("namaBox").innerHTML =
