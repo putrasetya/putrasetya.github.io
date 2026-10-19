@@ -195,8 +195,14 @@ if (!usersLoaded) {
     return;
 }
 
+const normalizeNIK = value =>
+    String(value ?? "")
+        .trim()
+        .replace(/\s+/g, "")
+        .replace(/\.0$/, "");
+
 const user = allUsers.find(x =>
-    String(x.nik ?? "").trim() === nik
+    normalizeNIK(x.nik) === normalizeNIK(nik)
 );
 
 if(!user){
