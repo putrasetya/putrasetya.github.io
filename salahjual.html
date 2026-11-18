@@ -1,0 +1,107 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Akses Spreadsheet</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #071525, #163c5c);
+    padding: 20px;
+}
+
+.container {
+    width: 100%;
+    max-width: 420px;
+    background: white;
+    border-radius: 20px;
+    padding: 35px 25px;
+    text-align: center;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.25);
+}
+
+.icon {
+    font-size: 55px;
+    margin-bottom: 20px;
+}
+
+h1 {
+    font-size: 23px;
+    color: #142b40;
+    margin-bottom: 12px;
+}
+
+p {
+    font-size: 14px;
+    color: #718096;
+    line-height: 1.6;
+    margin-bottom: 25px;
+}
+
+.btn {
+    display: block;
+    width: 100%;
+    padding: 16px;
+    background: #16834a;
+    color: white;
+    text-decoration: none;
+    border-radius: 10px;
+    font-size: 15px;
+    font-weight: bold;
+    transition: 0.2s;
+}
+
+.btn:hover {
+    background: #10683a;
+    transform: translateY(-2px);
+}
+
+.footer {
+    margin-top: 25px;
+    font-size: 11px;
+    color: #a0aec0;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="icon">📊</div>
+
+    <h1>Google Spreadsheet</h1>
+
+    <p>
+        Silakan tekan tombol di bawah ini
+        untuk membuka dan melihat dokumen spreadsheet.
+    </p>
+
+    <a class="btn"
+       href="https://docs.google.com/spreadsheets/d/1eyqflzQ54zu-4vET8G2Ls4laNuo1Ab9y/edit?usp=drivesdk&ouid=102104984792722593104&rtpof=true&sd=true"
+       target="_blank"
+       rel="noopener noreferrer">
+       BUKA SPREADSHEET ↗
+    </a>
+
+    <div class="footer">
+        DOCUMENT ACCESS
+    </div>
+
+</div>
+
+</body>
+</html>
